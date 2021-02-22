@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.workbench &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.workbench</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; A workbench. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">NO</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">provides</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">VetoableEvent</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_editor_manager</span> <span class="k">import</span> <span class="n">IEditorManager</span>
+<span class="kn">from</span> <span class="nn">.i_workbench</span> <span class="k">import</span> <span class="n">IWorkbench</span>
+<span class="kn">from</span> <span class="nn">.user_perspective_manager</span> <span class="k">import</span> <span class="n">UserPerspectiveManager</span>
+<span class="kn">from</span> <span class="nn">.workbench_window</span> <span class="k">import</span> <span class="n">WorkbenchWindow</span>
+<span class="kn">from</span> <span class="nn">.window_event</span> <span class="k">import</span> <span class="n">WindowEvent</span><span class="p">,</span> <span class="n">VetoableWindowEvent</span>
+
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Workbench"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">IWorkbench</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Workbench</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A workbench.</span>
+
+<span class="sd">    There is exactly *one* workbench per application. The workbench can create</span>
+<span class="sd">    any number of workbench windows.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IWorkbench&#39; interface -----------------------------------------------</span>
+
+    <span class="c1"># The active workbench window (the last one to get focus).</span>
+    <span class="n">active_window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">WorkbenchWindow</span><span class="p">)</span>
+
+    <span class="c1"># The editor manager is used to create/restore editors.</span>
+    <span class="n">editor_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IEditorManager</span><span class="p">)</span>
+
+    <span class="c1"># The optional application scripting manager.</span>
+    <span class="n">script_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;apptools.appscripting.api.IScriptManager&quot;</span><span class="p">)</span>
+
+    <span class="c1"># A directory on the local file system that we can read and write to at</span>
+    <span class="c1"># will. This is used to persist window layout information, etc.</span>
+    <span class="n">state_location</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># The optional undo manager.</span>
+    <span class="n">undo_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.undo.api.IUndoManager&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The user-defined perspectives manager.</span>
+    <span class="n">user_perspective_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">UserPerspectiveManager</span><span class="p">)</span>
+
+    <span class="c1"># All of the workbench windows created by the workbench.</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">WorkbenchWindow</span><span class="p">)</span>
+
+    <span class="c1"># Workbench lifecycle events -------------------------------------------</span>
+
+    <span class="c1"># Fired when the workbench is about to exit.</span>
+    <span class="c1">#</span>
+    <span class="c1"># This can be caused by either:-</span>
+    <span class="c1">#</span>
+    <span class="c1"># a) The &#39;exit&#39; method being called.</span>
+    <span class="c1"># b) The last open window being closed.</span>
+    <span class="c1">#</span>
+    <span class="n">exiting</span> <span class="o">=</span> <span class="n">VetoableEvent</span><span class="p">()</span>
+
+    <span class="c1"># Fired when the workbench has exited.</span>
+    <span class="n">exited</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+    <span class="c1"># Window lifecycle events ---------------------------------------------#</span>
+
+    <span class="c1"># Fired when a workbench window has been created.</span>
+    <span class="n">window_created</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">WindowEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a workbench window is opening.</span>
+    <span class="n">window_opening</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">VetoableWindowEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a workbench window has been opened.</span>
+    <span class="n">window_opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">WindowEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a workbench window is closing.</span>
+    <span class="n">window_closing</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">VetoableWindowEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a workbench window has been closed.</span>
+    <span class="n">window_closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">WindowEvent</span><span class="p">)</span>
+
+    <span class="c1"># &#39;Workbench&#39; interface ------------------------------------------------</span>
+
+    <span class="c1"># The factory that is used to create workbench windows. This is used in</span>
+    <span class="c1"># the default implementation of &#39;create_window&#39;. If you override that</span>
+    <span class="c1"># method then you obviously don&#39;t need to set this trait!</span>
+    <span class="n">window_factory</span> <span class="o">=</span> <span class="n">Callable</span>
+
+    <span class="c1"># Private interface ----------------------------------------------------</span>
+
+    <span class="c1"># An &#39;explicit&#39; exit is when the the &#39;exit&#39; method is called.</span>
+    <span class="c1"># An &#39;implicit&#39; exit is when the user closes the last open window.</span>
+    <span class="n">_explicit_exit</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWorkbench&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Workbench.create_window"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.create_window">[docs]</a>    <span class="k">def</span> <span class="nf">create_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Factory method that creates a new workbench window. &quot;&quot;&quot;</span>
+
+        <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_factory</span><span class="p">(</span><span class="n">workbench</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+        <span class="c1"># Add on any user-defined perspectives.</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">perspectives</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_perspective_manager</span><span class="o">.</span><span class="n">perspectives</span><span class="p">)</span>
+
+        <span class="c1"># Restore the saved window memento (if there is one).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_window_layout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Listen for the window being activated/opened/closed etc. Activated in</span>
+        <span class="c1"># this context means &#39;gets the focus&#39;.</span>
+        <span class="c1">#</span>
+        <span class="c1"># NOTE: &#39;activated&#39; is not fired on a window when the window first</span>
+        <span class="c1"># opens and gets focus. It is only fired when the window comes from</span>
+        <span class="c1"># lower in the stack to be the active window.</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_window_activated</span><span class="p">,</span> <span class="s2">&quot;activated&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_window_opening</span><span class="p">,</span> <span class="s2">&quot;opening&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_window_opened</span><span class="p">,</span> <span class="s2">&quot;opened&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_window_closing</span><span class="p">,</span> <span class="s2">&quot;closing&quot;</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_window_closed</span><span class="p">,</span> <span class="s2">&quot;closed&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_created</span> <span class="o">=</span> <span class="n">WindowEvent</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">window</span></div>
+
+<div class="viewcode-block" id="Workbench.exit"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.exit">[docs]</a>    <span class="k">def</span> <span class="nf">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Exits the workbench.</span>
+
+<span class="sd">        This closes all open workbench windows.</span>
+
+<span class="sd">        This method is not called when the user clicks the close icon. Nor when</span>
+<span class="sd">        they do an Alt+F4 in Windows. It is only called when the application</span>
+<span class="sd">        menu File-&gt;Exit item is selected.</span>
+
+<span class="sd">        Returns True if the exit succeeded, False if it was vetoed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;**** exiting the workbench ****&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exiting</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="c1"># This flag is checked in &#39;_on_window_closing&#39; to see what kind of</span>
+            <span class="c1"># exit is being performed.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_explicit_exit</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">exited</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_close_all_windows</span><span class="p">()</span>
+
+            <span class="c1"># The degenerate case where no workbench windows have ever been</span>
+            <span class="c1"># created!</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Trait notification.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">exited</span> <span class="o">=</span> <span class="bp">self</span>
+
+                <span class="n">exited</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Whether the exit succeeded or not, we are no longer in the</span>
+            <span class="c1"># process of exiting!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_explicit_exit</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">exited</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exited</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;**** exit of the workbench vetoed ****&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">exited</span></div>
+
+    <span class="c1"># Convenience methods on the active window -----------------------------</span>
+
+<div class="viewcode-block" id="Workbench.edit"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.edit">[docs]</a>    <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Edit an object in the active workbench window. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">use_existing</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Workbench.get_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.get_editor">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the editor that is editing an object.</span>
+
+<span class="sd">        Returns None if no such editor exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">get_editor</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Workbench.get_editor_by_id"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.get_editor_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the editor with the specified Id.</span>
+
+<span class="sd">        Returns None if no such editor exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">get_editor_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+    <span class="c1"># Message dialogs ----</span>
+
+<div class="viewcode-block" id="Workbench.confirm"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.confirm">[docs]</a>    <span class="k">def</span> <span class="nf">confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a confirmation dialog. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Workbench.information"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.information">[docs]</a>    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an information message dialog. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Workbench.warning"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a warning message dialog. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Workbench.error"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench.html#pyface.workbench.workbench.Workbench.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an error message dialog. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Workbench&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Initializers ---------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_state_location_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="c1"># It would be preferable to base this on GUI.state_location.</span>
+        <span class="n">state_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">ETSConfig</span><span class="o">.</span><span class="n">application_home</span><span class="p">,</span>
+            <span class="s2">&quot;pyface&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;workbench&quot;</span><span class="p">,</span>
+            <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">state_location</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">state_location</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;workbench state location is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">state_location</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state_location</span>
+
+    <span class="k">def</span> <span class="nf">_undo_manager_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="c1"># We make sure the undo package is entirely optional.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pyface.undo.api</span> <span class="k">import</span> <span class="n">UndoManager</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">UndoManager</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_user_perspective_manager_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">UserPerspectiveManager</span><span class="p">(</span><span class="n">state_location</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state_location</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;Workbench&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Factory method that creates a new workbench window. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_close_all_windows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes all open windows.</span>
+
+<span class="sd">        Returns True if all windows were closed, False if the user changed</span>
+<span class="sd">        their mind ;^)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># We take a copy of the windows list because as windows are closed</span>
+        <span class="c1"># they are removed from it!</span>
+        <span class="n">windows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">[:]</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+            <span class="c1"># We give the user chance to cancel the exit as each window is</span>
+            <span class="c1"># closed.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">():</span>
+                <span class="n">all_closed</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">all_closed</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">all_closed</span>
+
+    <span class="k">def</span> <span class="nf">_restore_window_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restore the window layout. &quot;&quot;&quot;</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_location</span><span class="p">,</span> <span class="s2">&quot;window_memento&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If the memento class itself has been modified then there</span>
+                <span class="c1"># is a chance that the unpickle will fail. If so then we just</span>
+                <span class="c1"># carry on as if there was no memento!</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+                <span class="n">memento</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+                <span class="c1"># The memento doesn&#39;t actually get used until the window is</span>
+                <span class="c1"># opened, so there is nothing to go wrong in this step!</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">set_memento</span><span class="p">(</span><span class="n">memento</span><span class="p">)</span>
+
+            <span class="c1"># If *anything* goes wrong then simply log the error and carry on</span>
+            <span class="c1"># with no memento!</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;restoring window layout from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_window_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Save the window layout. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Save the window layout.</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_location</span><span class="p">,</span> <span class="s2">&quot;window_memento&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">window</span><span class="o">.</span><span class="n">get_memento</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># Trait change handlers ------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_on_window_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> activated&quot;</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span> <span class="o">=</span> <span class="n">window</span>
+
+    <span class="k">def</span> <span class="nf">_on_window_opening</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_opening</span> <span class="o">=</span> <span class="n">window_event</span> <span class="o">=</span> <span class="n">VetoableWindowEvent</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">window_event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">veto</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_on_window_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="c1"># We maintain a list of all open windows so that (amongst other things)</span>
+        <span class="c1"># we can detect when the user is attempting to close the last one.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># This is necessary because the activated event is not fired when a</span>
+        <span class="c1"># window is first opened and gets focus. It is only fired when the</span>
+        <span class="c1"># window comes from lower in the stack to be the active window.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span> <span class="o">=</span> <span class="n">window</span>
+
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_opened</span> <span class="o">=</span> <span class="n">WindowEvent</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_window_closing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_closing</span> <span class="o">=</span> <span class="n">window_event</span> <span class="o">=</span> <span class="n">VetoableWindowEvent</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">window_event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">veto</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Is this the last open window?</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># If this is an &#39;implicit exit&#39; then make sure that we fire the</span>
+                <span class="c1"># appropriate workbench lifecycle events.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_explicit_exit</span><span class="p">:</span>
+                    <span class="c1"># Event notification.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">exiting</span> <span class="o">=</span> <span class="n">window_event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">window_event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+                        <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">veto</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+                    <span class="c1"># Save the window size, position and layout.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_save_window_layout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_window_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Event notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_closed</span> <span class="o">=</span> <span class="n">WindowEvent</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Was this the last window?</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Event notification.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exited</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

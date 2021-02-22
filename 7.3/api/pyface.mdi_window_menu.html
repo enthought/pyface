@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.mdi_window_menu module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.message_dialog module" href="pyface.message_dialog.html" >
+    <link rel="prev" title="pyface.mdi_application_window module" href="pyface.mdi_application_window.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.message_dialog.html" title="pyface.message_dialog module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.mdi_application_window.html" title="pyface.mdi_application_window module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.mdi_window_menu">
+<span id="pyface-mdi-window-menu-module"></span><h1>pyface.mdi_window_menu module<a class="headerlink" href="#module-pyface.mdi_window_menu" title="Permalink to this headline">¶</a></h1>
+<p>A menu that mimics the standard MDI window menu.</p>
+<p>This is the menu that has the tile/cascade actions etc.</p>
+<dl class="class">
+<dt id="pyface.mdi_window_menu.Cascade">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">Cascade</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Cascade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Cascade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Cascades the windows.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.Cascade.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Cascade.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Cascade.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cascades the windows.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.Tile">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">Tile</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Tile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Tile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Tiles the windows horizontally.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.Tile.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Tile.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Tile.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tiles the windows horizontally.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.ArrangeIcons">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">ArrangeIcons</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#ArrangeIcons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.ArrangeIcons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Arranges the icons.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.ArrangeIcons.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#ArrangeIcons.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.ArrangeIcons.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arranges the icons.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.Next">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">Next</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Activates the next window.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.Next.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Next.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Next.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the next window.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.Previous">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">Previous</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Previous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Activates the previous window.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.Previous.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Previous.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Previous.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the previous window.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.Close">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">Close</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Closes the current window.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.Close.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#Close.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.Close.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the current window.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.CloseAll">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">CloseAll</code><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#CloseAll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.CloseAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.window_action.html#pyface.action.window_action.WindowAction" title="pyface.action.window_action.WindowAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.window_action.WindowAction</span></code></a></p>
+<p>Closes all of the child windows.</p>
+<dl class="method">
+<dt id="pyface.mdi_window_menu.CloseAll.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#CloseAll.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.CloseAll.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the child windows.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.mdi_window_menu.MDIWindowMenu">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.mdi_window_menu.</code><code class="sig-name descname">MDIWindowMenu</code><span class="sig-paren">(</span><em class="sig-param">window</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/mdi_window_menu.html#MDIWindowMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.mdi_window_menu.MDIWindowMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.action.menu_manager.MenuManager</span></code></p>
+<p>A menu that mimics the standard MDI window menus.</p>
+<p>This is the menu that has the tile/cascade actions etc.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.mdi_application_window.html"
+                        title="previous chapter">pyface.mdi_application_window module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.message_dialog.html"
+                        title="next chapter">pyface.message_dialog module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.mdi_window_menu.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

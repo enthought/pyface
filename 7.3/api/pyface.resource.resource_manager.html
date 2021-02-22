@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.resource.resource_manager module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.resource package" href="pyface.resource.html" >
+    <link rel="next" title="pyface.resource.resource_path module" href="pyface.resource.resource_path.html" >
+    <link rel="prev" title="pyface.resource.resource_factory module" href="pyface.resource.resource_factory.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.resource.html" accesskey="U">pyface.resource package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.resource.resource_path.html" title="pyface.resource.resource_path module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.resource.resource_factory.html" title="pyface.resource.resource_factory module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.resource.resource_manager">
+<span id="pyface-resource-resource-manager-module"></span><h1>pyface.resource.resource_manager module<a class="headerlink" href="#module-pyface.resource.resource_manager" title="Permalink to this headline">¶</a></h1>
+<p>The default resource manager.</p>
+<p>A resource manager locates and loads application resources such as images and
+sounds etc.</p>
+<dl class="class">
+<dt id="pyface.resource.resource_manager.ResourceManager">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.resource.resource_manager.</code><code class="sig-name descname">ResourceManager</code><a class="reference internal" href="../_modules/pyface/resource/resource_manager.html#ResourceManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>The default resource manager.</p>
+<p>A resource manager locates and loads application resources such as images
+and sounds etc.</p>
+<dl class="attribute">
+<dt id="pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS">
+<code class="sig-name descname">IMAGE_EXTENSIONS</code><em class="property"> = ['.png', '.jpg', '.bmp', '.gif', '.ico']</em><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.resource.resource_manager.ResourceManager.locate_image">
+<code class="sig-name descname">locate_image</code><span class="sig-paren">(</span><em class="sig-param">image_name</em>, <em class="sig-param">path</em>, <em class="sig-param">size=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/resource/resource_manager.html#ResourceManager.locate_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.locate_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locates an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_name</strong> (<em>str</em>) – Name of the image file.</p></li>
+<li><p><strong>path</strong> (<em>list of</em><em> (</em><em>str</em><em> or </em><em>ModuleType</em><em>)</em>) – Paths from which image files will be searched. Note that for each
+path, a subdirectory named ‘images’ will be search first.
+The first match will be returned.</p></li>
+<li><p><strong>size</strong> (<em>tuple of</em><em> (</em><em>m: int</em><em>, </em><em>n: int</em><em>)</em><em>, </em><em>optional</em>) – Specific size of the image requested. If provided, then
+the subdirectory <code class="docutils literal notranslate"><span class="pre">images/{m}x{n}</span></code> will be searched first,
+followed by the <code class="docutils literal notranslate"><span class="pre">images</span></code> subdirectory and its containing folder.
+Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>image_ref</strong> – ImageReference to the image found, or None if no matching images
+are found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.resource.resource_reference.html#pyface.resource.resource_reference.ImageReference" title="pyface.resource.resource_reference.ImageReference">ImageReference</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.resource.resource_manager.ResourceManager.load_image">
+<code class="sig-name descname">load_image</code><span class="sig-paren">(</span><em class="sig-param">image_name</em>, <em class="sig-param">path</em>, <em class="sig-param">size=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/resource/resource_manager.html#ResourceManager.load_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an image.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.resource.resource_factory.html"
+                        title="previous chapter">pyface.resource.resource_factory module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.resource.resource_path.html"
+                        title="next chapter">pyface.resource.resource_path module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.resource.resource_manager.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

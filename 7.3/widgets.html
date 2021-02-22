@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Widgets &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="next" title="Pyface Applications" href="applications.html" >
+    <link rel="prev" title="Toolkits" href="toolkits.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="applications.html" title="Pyface Applications"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="toolkits.html" title="Toolkits"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="widgets">
+<span id="id1"></span><h1>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline">¶</a></h1>
+<p>A Widget in Pyface is an object wraps a control from the underlying toolkit
+and provides standard traits and methods that abstract the differences
+between the interfaces presented by the toolkit widgets.</p>
+<p>The public API for every widget is provided by the appropriate interface
+class: <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IWidget</span></code></a> and its subclasses such as
+<a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow" title="pyface.i_application_window.IApplicationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">IApplicationWindow</span></code></a> and
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField" title="pyface.fields.i_text_field.ITextField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ITextField</span></code></a>.</p>
+<p>The actual implementation is provided by the corresponding toolkit-dependent
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code> subclass, but with shared functionality split
+into separate mixins: <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.MWidget" title="pyface.i_widget.MWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MWidget</span></code></a> and so on, following
+the general design described in the <a class="reference internal" href="overview.html#overview"><span class="std std-ref">Overview</span></a> section.</p>
+<div class="section" id="lifecycle">
+<h2>Lifecycle<a class="headerlink" href="#lifecycle" title="Permalink to this headline">¶</a></h2>
+<p>When a <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code> instance is created only the traits
+are initialized.  The underlying toolkit widget is not created until the
+widget’s <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create()</span></code> method is called, which is
+responsible for creating the toolkit object, configuring it, and connecting
+handlers that react to changes at the toolkit level or on the traits,
+keeping the state of the Python class synchronised with the state of the
+underlying toolkit object.  The <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create()</span></code> method
+calls the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_control()</span></code> method to create the
+actual toolkit control and configure it, and also calls the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">_add_event_listeners()</span></code> method to handle hooking
+up the different types of change handlers.  Some widget subclasses may do
+additional things in their <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create()</span></code> methods,
+as appropriate for their purpose.</p>
+<p>To destroy the toolkit object, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">destroy()</span></code>
+method is called which cleans up the code that listens for changes to the
+object, and destroys the underlying toolkit control (and, for most toolkits,
+any children).  The <code class="xref py py-meth docutils literal notranslate"><span class="pre">destroy()</span></code> method
+calls the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_remove_event_listeners()</span></code> method to
+handle unhooking of change handlers.  Some widget subclasses may do
+additional things in their <code class="xref py py-meth docutils literal notranslate"><span class="pre">destroy()</span></code> methods.</p>
+</div>
+<div class="section" id="basic-interface">
+<h2>Basic Interface<a class="headerlink" href="#basic-interface" title="Permalink to this headline">¶</a></h2>
+<p>Every widget has a <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.control" title="pyface.i_widget.IWidget.control"><code class="xref py py-attr docutils literal notranslate"><span class="pre">control</span></code></a> trait which
+holds a reference to the toolkit control that is actually doing the work.
+Additionally, there is a <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.parent" title="pyface.i_widget.IWidget.parent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent</span></code></a> trait
+which references the toolkit control which is the parent of the widget’s
+control, however this may be <code class="docutils literal notranslate"><span class="pre">None</span></code> for top-level windows.</p>
+<p>Additionally, every widget has two states associated with it: it can be
+visible or hidden, and it can be enabled or disabled.  The visibile
+state is accessible via the <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.visible" title="pyface.i_widget.IWidget.visible"><code class="xref py py-attr docutils literal notranslate"><span class="pre">visible</span></code></a>
+trait, or by calling <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.show" title="pyface.i_widget.IWidget.show"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show()</span></code></a>.  Similarly
+the enabled state is accessible via the
+<a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.enabled" title="pyface.i_widget.IWidget.enabled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">enabled</span></code></a> trait, or by calling
+<a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.enable" title="pyface.i_widget.IWidget.enable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enable()</span></code></a>.</p>
+</div>
+<div class="section" id="iwidget-subclasses">
+<h2>IWidget Subclasses<a class="headerlink" href="#iwidget-subclasses" title="Permalink to this headline">¶</a></h2>
+<p>The key subclasses/subinterfaces of <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IWidget</span></code></a> include
+the following.</p>
+<div class="section" id="iwindow">
+<h3>IWindow<a class="headerlink" href="#iwindow" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">IWindow</span></code></a> interface represents a top-level
+window, and so provides additional traits such as
+<a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow.size" title="pyface.i_window.IWindow.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>,
+<a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow.position" title="pyface.i_window.IWindow.position"><code class="xref py py-attr docutils literal notranslate"><span class="pre">position</span></code></a> and
+<a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow.title" title="pyface.i_window.IWindow.title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">title</span></code></a>, as well as events for the
+window’s lifecycle and user interactions.</p>
+<p>The <a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow.open" title="pyface.i_window.IWindow.open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open()</span></code></a> and
+<a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow.close" title="pyface.i_window.IWindow.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a> methods provide the standard
+way of bring up non-modal windows and closing them with the option of
+a user veto.</p>
+<p>Additionally there are convenience methods that create message dialogs
+correctly parented to the window.</p>
+</div>
+<div class="section" id="idialog">
+<h3>IDialog<a class="headerlink" href="#idialog" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDialog</span></code></a> interface represents short-lived,
+usually modal, dialog windows.  Often these are standard system dialogs,
+in which case the class is responsible for configuring and invoking them,
+but it also includes subclasses which have custom content.</p>
+<p>For modal dialogs, <a class="reference internal" href="api/pyface.i_dialog.html#pyface.i_dialog.IDialog.open" title="pyface.i_dialog.IDialog.open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open()</span></code></a> is blocking,
+and returns the <a class="reference internal" href="api/pyface.i_dialog.html#pyface.i_dialog.IDialog.return_code" title="pyface.i_dialog.IDialog.return_code"><code class="xref py py-attr docutils literal notranslate"><span class="pre">return_code</span></code></a> of the
+dialog after the user is done.  Typical usage looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dialog</span> <span class="o">=</span> <span class="n">MyModalDialog</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+    <span class="c1"># do something based on dialog state</span>
+    <span class="o">...</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># user cancelled, clean-up if needed and stop</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>For custom dialogs, there are protected methods for creating the contents
+of the dialog and its buttons.  In most cases you will need to, at a minimum,
+override the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_dialog_area()</span></code> method to
+populate the widgets inside the main dialog.</p>
+</div>
+<div class="section" id="iapplicationwindow">
+<h3>IApplicationWindow<a class="headerlink" href="#iapplicationwindow" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow" title="pyface.i_application_window.IApplicationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">IApplicationWindow</span></code></a> interface
+represents a main window of an application with the associated additional
+features which go with these, such as menubars, toolbars, and status bars.
+Users can supply
+<a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow.menu_bar_manager" title="pyface.i_application_window.IApplicationWindow.menu_bar_manager"><code class="xref py py-attr docutils literal notranslate"><span class="pre">menu_bar_manager</span></code></a>,
+<a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow.status_bar_manager" title="pyface.i_application_window.IApplicationWindow.status_bar_manager"><code class="xref py py-attr docutils literal notranslate"><span class="pre">status_bar_manager</span></code></a>
+and <a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow.tool_bar_managers" title="pyface.i_application_window.IApplicationWindow.tool_bar_managers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tool_bar_managers</span></code></a>
+objects to provide the functionality, and the concrete implementations will
+use these to create the toolkit-level objects.</p>
+<p>Writers of custom subclasses will have to override the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_contents()</span></code>
+method to populate the actual contents of the window.</p>
+</div>
+<div class="section" id="ifield">
+<h3>IField<a class="headerlink" href="#ifield" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.fields.i_field.html#pyface.fields.i_field.IField" title="pyface.fields.i_field.IField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IField</span></code></a> interface is the base for widgets
+which present a value to be edited by the user, such as text fields, sliders,
+combo-boxes and so on.  The interface is described in more detail in the
+section on <a class="reference internal" href="fields.html#fields"><span class="std std-ref">Fields</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Widgets</a><ul>
+<li><a class="reference internal" href="#lifecycle">Lifecycle</a></li>
+<li><a class="reference internal" href="#basic-interface">Basic Interface</a></li>
+<li><a class="reference internal" href="#iwidget-subclasses">IWidget Subclasses</a><ul>
+<li><a class="reference internal" href="#iwindow">IWindow</a></li>
+<li><a class="reference internal" href="#idialog">IDialog</a></li>
+<li><a class="reference internal" href="#iapplicationwindow">IApplicationWindow</a></li>
+<li><a class="reference internal" href="#ifield">IField</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="toolkits.html"
+                        title="previous chapter">Toolkits</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="next chapter">Pyface Applications</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/widgets.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

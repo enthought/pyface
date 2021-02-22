@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.gui_application module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.heading_text module" href="pyface.heading_text.html" >
+    <link rel="prev" title="pyface.gui module" href="pyface.gui.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.heading_text.html" title="pyface.heading_text module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.gui.html" title="pyface.gui module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.gui_application">
+<span id="pyface-gui-application-module"></span><h1>pyface.gui_application module<a class="headerlink" href="#module-pyface.gui_application" title="Permalink to this headline">¶</a></h1>
+<p>This module defines a <a class="reference internal" href="#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> subclass of
+<a class="reference internal" href="pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application.Application</span></code></a>.  This adds cross-platform GUI
+application support to the base class via <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application.GUI</span></code>.</p>
+<p>At a minimum this class expects to be provided with a factory that returns
+<a class="reference internal" href="pyface.i_window.html#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_window.IWindow</span></code></a> instances.  For pure Pyface applications
+this is most likely to be a subclass of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application_window.ApplicationWindow</span></code>.</p>
+<dl class="function">
+<dt id="pyface.gui_application.default_window_factory">
+<code class="sig-prename descclassname">pyface.gui_application.</code><code class="sig-name descname">default_window_factory</code><span class="sig-paren">(</span><em class="sig-param">application</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/gui_application.html#default_window_factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.default_window_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default window factory returns an application window.</p>
+<p>This is almost never the right thing, but allows users to get off the
+ground with the base class.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.gui_application.GUIApplication">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.gui_application.</code><code class="sig-name descname">GUIApplication</code><a class="reference internal" href="../_modules/pyface/gui_application.html#GUIApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.GUIApplication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application.Application</span></code></a></p>
+<p>A basic Pyface GUI application.</p>
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.splash_screen">
+<code class="sig-name descname">splash_screen</code><em class="property"> = Instance(ISplashScreen)</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.splash_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>The splash screen for the application. No splash screen by default</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.about_dialog">
+<code class="sig-name descname">about_dialog</code><em class="property"> = Instance(IDialog)</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.about_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>The about dialog for the application.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.icon">
+<code class="sig-name descname">icon</code><em class="property"> = Image</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Icon for the application (used in window titlebars)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.logo">
+<code class="sig-name descname">logo</code><em class="property"> = Image</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.logo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logo of the application (used in splash screens and about dialogs)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.window_factory">
+<code class="sig-name descname">window_factory</code><em class="property"> = Callable(default_window_factory)</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.window_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window factory to use when creating a window for the application.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.window_size">
+<code class="sig-name descname">window_size</code><em class="property"> = Tuple((800, 600))</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.window_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default window size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.active_window">
+<code class="sig-name descname">active_window</code><em class="property"> = Instance(IWindow)</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.active_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently active Window if any</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.windows">
+<code class="sig-name descname">windows</code><em class="property"> = List(Instance(IWindow))</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.windows" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all open windows in the application</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.gui_application.GUIApplication.gui">
+<code class="sig-name descname">gui</code><em class="property"> = ReadOnly</em><a class="headerlink" href="#pyface.gui_application.GUIApplication.gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Pyface GUI instance for the application</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.gui_application.GUIApplication.create_window">
+<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/gui_application.html#GUIApplication.create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.GUIApplication.create_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new application window.</p>
+<p>By default uses the <a class="reference internal" href="#pyface.gui_application.GUIApplication.window_factory" title="pyface.gui_application.GUIApplication.window_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">window_factory</span></code></a> to do this.  Subclasses
+can override if they want to do something different or additional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the window factory.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>window</strong> – The new IWindow instance.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>IWindow instance or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.gui_application.GUIApplication.add_window">
+<code class="sig-name descname">add_window</code><span class="sig-paren">(</span><em class="sig-param">window</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/gui_application.html#GUIApplication.add_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.GUIApplication.add_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new window to the windows we are tracking.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.gui_application.GUIApplication.do_about">
+<code class="sig-name descname">do_about</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/gui_application.html#GUIApplication.do_about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.GUIApplication.do_about" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the about dialog, if it exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.gui_application.GUIApplication.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/gui_application.html#GUIApplication.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.gui_application.GUIApplication.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the application, setting up things that are required</p>
+<p>Subclasses should open at least one ApplicationWindow or subclass in
+their start method, and should call the superclass start() method
+before doing any work themselves.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.gui.html"
+                        title="previous chapter">pyface.gui module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.heading_text.html"
+                        title="next chapter">pyface.heading_text module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.gui_application.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

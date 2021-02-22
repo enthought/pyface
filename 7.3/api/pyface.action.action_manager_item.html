@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.action.action_manager_item module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.action package" href="pyface.action.html" >
+    <link rel="next" title="pyface.action.api module" href="pyface.action.api.html" >
+    <link rel="prev" title="pyface.action.action_manager module" href="pyface.action.action_manager.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.api.html" title="pyface.action.api module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.action_manager.html" title="pyface.action.action_manager module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.action.action_manager_item">
+<span id="pyface-action-action-manager-item-module"></span><h1>pyface.action.action_manager_item module<a class="headerlink" href="#module-pyface.action.action_manager_item" title="Permalink to this headline">¶</a></h1>
+<p>Abstract base class for all action manager items.</p>
+<dl class="class">
+<dt id="pyface.action.action_manager_item.ActionManagerItem">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action_manager_item.</code><code class="sig-name descname">ActionManagerItem</code><a class="reference internal" href="../_modules/pyface/action/action_manager_item.html#ActionManagerItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Abstract base class for all action manager items.</p>
+<p>An action manager item represents a contribution to a shared UI resource
+such as a menu bar, menu or tool bar.</p>
+<p>Action manager items know how to add themselves to menu bars, menus and
+tool bars.  In a tool bar a contribution item is represented as a tool or a
+separator.  In a menu bar a contribution item is a menu, and in a menu
+a contribution item is a menu item or separator.</p>
+<dl class="attribute">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.id">
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The item’s unique identifier (‘unique’ in this case means unique within
+its group)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.parent">
+<code class="sig-name descname">parent</code><em class="property"> = Instance(&quot;pyface.action.api.Group&quot;)</em><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The group the item belongs to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.enabled">
+<code class="sig-name descname">enabled</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the item enabled?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.visible">
+<code class="sig-name descname">visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the item visible?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.add_to_menu">
+<code class="sig-name descname">add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">menu</em>, <em class="sig-param">controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_manager_item.html#ActionManagerItem.add_to_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the item to a menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>toolkit control</em>) – The parent of the new menu item control.</p></li>
+<li><p><strong>menu</strong> (<em>toolkit menu</em>) – The menu to add the action item to.</p></li>
+<li><p><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) – The controller to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.action_manager_item.ActionManagerItem.add_to_toolbar">
+<code class="sig-name descname">add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">tool_bar</em>, <em class="sig-param">image_cache</em>, <em class="sig-param">controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_manager_item.html#ActionManagerItem.add_to_toolbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the item to a tool bar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>toolkit control</em>) – The parent of the new menu item control.</p></li>
+<li><p><strong>tool_bar</strong> (<em>toolkit toolbar</em>) – The toolbar to add the action item to.</p></li>
+<li><p><strong>image_cache</strong> (<em>ImageCache instance</em>) – The image cache for resized images.</p></li>
+<li><p><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) – The controller to use.</p></li>
+<li><p><strong>show_labels</strong> (<em>bool</em>) – Should the toolbar item show a label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.action.action_manager.html"
+                        title="previous chapter">pyface.action.action_manager module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.action.api.html"
+                        title="next chapter">pyface.action.api module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.action.action_manager_item.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

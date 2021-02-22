@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.application module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.application_window module" href="pyface.application_window.html" >
+    <link rel="prev" title="pyface.api module" href="pyface.api.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.application_window.html" title="pyface.application_window module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.api.html" title="pyface.api module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.application">
+<span id="pyface-application-module"></span><h1>pyface.application module<a class="headerlink" href="#module-pyface.application" title="Permalink to this headline">¶</a></h1>
+<p>This module defines the <a class="reference internal" href="#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class for Pyface, Tasks
+and similar applications.  Although the primary use cases are for GUI
+applications, the <a class="reference internal" href="#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class does not have any explicit
+dependency on GUI code, and can be used for CLI or server applications.</p>
+<p>Usual usage is to subclass <a class="reference internal" href="#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a>, overriding at least the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code> method, but usually the
+<a class="reference internal" href="#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a> and <a class="reference internal" href="#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a>
+methods as well.</p>
+<p>However the class can be used as-is by listening to the
+<a class="reference internal" href="#pyface.application.Application.application_initialized" title="pyface.application.Application.application_initialized"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.application_initialized</span></code></a> event and performing
+appropriate work there:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">do_work</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">do_work</span><span class="p">,</span> <span class="s1">&#39;application_initialized&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="exception">
+<dt id="pyface.application.ApplicationException">
+<em class="property">exception </em><code class="sig-prename descclassname">pyface.application.</code><code class="sig-name descname">ApplicationException</code><a class="reference internal" href="../_modules/pyface/application.html#ApplicationException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.ApplicationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception subclass for Application-centric exceptions</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pyface.application.ApplicationExit">
+<em class="property">exception </em><code class="sig-prename descclassname">pyface.application.</code><code class="sig-name descname">ApplicationExit</code><a class="reference internal" href="../_modules/pyface/application.html#ApplicationExit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.ApplicationExit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.application.ApplicationException" title="pyface.application.ApplicationException"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application.ApplicationException</span></code></a></p>
+<p>Exception which indicates application should try to exit.</p>
+<p>If no arguments, then assumed to be a normal exit, otherwise the arguments
+give information about the problem.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.application.ApplicationEvent">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.application.</code><code class="sig-name descname">ApplicationEvent</code><a class="reference internal" href="../_modules/pyface/application.html#ApplicationEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.ApplicationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<p>An event associated with an application</p>
+<dl class="attribute">
+<dt id="pyface.application.ApplicationEvent.application">
+<code class="sig-name descname">application</code><em class="property"> = ReadOnly</em><a class="headerlink" href="#pyface.application.ApplicationEvent.application" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application that the event happened to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.ApplicationEvent.event_type">
+<code class="sig-name descname">event_type</code><em class="property"> = ReadOnly</em><a class="headerlink" href="#pyface.application.ApplicationEvent.event_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of application event.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.application.Application">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.application.</code><code class="sig-name descname">Application</code><a class="reference internal" href="../_modules/pyface/application.html#Application"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<p>A base class for applications.</p>
+<p>This class handles the basic lifecycle of an application and a few
+fundamental facilities.  It is suitable as a base for any application,
+not just GUI applications.</p>
+<dl class="attribute">
+<dt id="pyface.application.Application.name">
+<code class="sig-name descname">name</code><em class="property"> = Str(&quot;Pyface Application&quot;)</em><a class="headerlink" href="#pyface.application.Application.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Human-readable application name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.company">
+<code class="sig-name descname">company</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.application.Application.company" title="Permalink to this definition">¶</a></dt>
+<dd><p>Human-readable company name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.description">
+<code class="sig-name descname">description</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.application.Application.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Human-readable description of the application</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.id">
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.application.Application.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application’s globally unique identifier.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.home">
+<code class="sig-name descname">home</code><em class="property"> = Directory()</em><a class="headerlink" href="#pyface.application.Application.home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Application home directory (for preferences, logging, etc.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.user_data">
+<code class="sig-name descname">user_data</code><em class="property"> = Directory()</em><a class="headerlink" href="#pyface.application.Application.user_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>User data directory (for user files, projects, etc)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.starting">
+<code class="sig-name descname">starting</code><em class="property"> = Event(Instance(ApplicationEvent))</em><a class="headerlink" href="#pyface.application.Application.starting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired when the application is starting. Called immediately before the
+start method is run.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.started">
+<code class="sig-name descname">started</code><em class="property"> = Event(Instance(ApplicationEvent))</em><a class="headerlink" href="#pyface.application.Application.started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upon successful completion of the start method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.application_initialized">
+<code class="sig-name descname">application_initialized</code><em class="property"> = Event(Instance(ApplicationEvent))</em><a class="headerlink" href="#pyface.application.Application.application_initialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired after the GUI event loop has been started during the run method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.exiting">
+<code class="sig-name descname">exiting</code><em class="property"> = VetoableEvent()</em><a class="headerlink" href="#pyface.application.Application.exiting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired when the application is starting. Called immediately before the
+stop method is run.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.stopping">
+<code class="sig-name descname">stopping</code><em class="property"> = Event(Instance(ApplicationEvent))</em><a class="headerlink" href="#pyface.application.Application.stopping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired when the application is starting. Called immediately before the
+stop method is run.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.application.Application.stopped">
+<code class="sig-name descname">stopped</code><em class="property"> = Event(Instance(ApplicationEvent))</em><a class="headerlink" href="#pyface.application.Application.stopped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upon successful completion of the stop method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.application.Application.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/application.html#Application.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the application, setting up things that are required</p>
+<p>Subclasses should call the superclass start() method before doing any
+work themselves.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.application.Application.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/application.html#Application.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the application, cleanly releasing resources if possible.</p>
+<p>Subclasses should call the superclass stop() method after doing any
+work themselves.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.application.Application.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/application.html#Application.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>status</strong> – Whether or not the application ran normally</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.application.Application.exit">
+<code class="sig-name descname">exit</code><span class="sig-paren">(</span><em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/application.html#Application.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application.exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exits the application.</p>
+<p>This method handles a request to shut down the application by the user,
+eg. from a menu.  If force is False, the application can potentially
+veto the close event, leaving the application in the state that it was
+before the exit method was called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default False</em><em>)</em>) – If set, windows will receive no closing events and will be
+destroyed unconditionally. This can be useful for reliably tearing
+down regression tests, but should be used with caution.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyface.application.ApplicationExit" title="pyface.application.ApplicationExit"><strong>ApplicationExit</strong></a> – Some subclasses may trigger the exit by raising ApplicationExit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.application.Application.initialize_application_home">
+<code class="sig-name descname">initialize_application_home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/application.html#Application.initialize_application_home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.application.Application.initialize_application_home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the home directory for the application</p>
+<p>This is where logs, preference files and other config files will be
+stored.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.api.html"
+                        title="previous chapter">pyface.api module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.application_window.html"
+                        title="next chapter">pyface.application_window module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.application.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.color module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.confirmation_dialog module" href="pyface.confirmation_dialog.html" >
+    <link rel="prev" title="pyface.clipboard module" href="pyface.clipboard.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.confirmation_dialog.html" title="pyface.confirmation_dialog module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.clipboard.html" title="pyface.clipboard module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.color">
+<span id="pyface-color-module"></span><h1>pyface.color module<a class="headerlink" href="#module-pyface.color" title="Permalink to this headline">¶</a></h1>
+<p>Color classes and corresponding trait types for Pyface.</p>
+<p>The base Color class holds red, green, blue and alpha channel values as
+a tuple of normalized values from 0.0 to 1.0.  Various property traits
+pull out the individual channel values and supply values for the HSV
+and HSL colour spaces (with and without alpha).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">from_toolkit</span></code> and <code class="docutils literal notranslate"><span class="pre">to_toolkit</span></code> methods allow conversion to and
+from native toolkit color objects.</p>
+<dl class="attribute">
+<dt id="pyface.color.Channel">
+<code class="sig-prename descclassname">pyface.color.</code><code class="sig-name descname">Channel</code><em class="property"> = Range(0.0, 1.0, value=1.0, channel=True)</em><a class="headerlink" href="#pyface.color.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait holding a single channel value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.ChannelTuple">
+<code class="sig-prename descclassname">pyface.color.</code><code class="sig-name descname">ChannelTuple</code><em class="property"> = Tuple(Channel, Channel, Channel)</em><a class="headerlink" href="#pyface.color.ChannelTuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait holding three channel values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.AlphaChannelTuple">
+<code class="sig-prename descclassname">pyface.color.</code><code class="sig-name descname">AlphaChannelTuple</code><em class="property"> = Tuple(Channel, Channel, Channel, Channel)</em><a class="headerlink" href="#pyface.color.AlphaChannelTuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait holding four channel values.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.color.Color">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.color.</code><code class="sig-name descname">Color</code><a class="reference internal" href="../_modules/pyface/color.html#Color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.color.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<p>A mutable specification of a color with alpha.</p>
+<p>This is a class designed to be used by user interface elements which
+need to color some or all of the interface element.  Each color has a
+number of different representations as channel tuples, each channel
+holding a value between 0.0 and 1.0, inclusive.  The standard red,
+green, blue and alpha channels are also provided as convenience
+properties.</p>
+<p>Methods are provided to convert to and from toolkit-specific color
+objects.</p>
+<p>Colors implement equality testing, but are not hashable as they are
+mutable, and so are not suitable for use as dictionary keys.  If you
+need a dictionary key, use an appropriate channel tuple from the
+object.</p>
+<dl class="attribute">
+<dt id="pyface.color.Color.rgba">
+<code class="sig-name descname">rgba</code><em class="property"> = AlphaChannelTuple()</em><a class="headerlink" href="#pyface.color.Color.rgba" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the red, green, blue, and alpha channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.rgb">
+<code class="sig-name descname">rgb</code><em class="property"> = Property(ChannelTuple(), observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the red, green, and blue channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.red">
+<code class="sig-name descname">red</code><em class="property"> = Property(Channel, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.red" title="Permalink to this definition">¶</a></dt>
+<dd><p>The red channel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.green">
+<code class="sig-name descname">green</code><em class="property"> = Property(Channel, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.green" title="Permalink to this definition">¶</a></dt>
+<dd><p>The green channel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.blue">
+<code class="sig-name descname">blue</code><em class="property"> = Property(Channel, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.blue" title="Permalink to this definition">¶</a></dt>
+<dd><p>The blue channel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Property(Channel, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The alpha channel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.hsva">
+<code class="sig-name descname">hsva</code><em class="property"> = Property(AlphaChannelTuple, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.hsva" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the hue, saturation, value, and alpha channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.hsv">
+<code class="sig-name descname">hsv</code><em class="property"> = Property(ChannelTuple, observe='rgb')</em><a class="headerlink" href="#pyface.color.Color.hsv" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the hue, saturation, and value channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.hlsa">
+<code class="sig-name descname">hlsa</code><em class="property"> = Property(AlphaChannelTuple, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.hlsa" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the hue, lightness, saturation, and alpha channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.hls">
+<code class="sig-name descname">hls</code><em class="property"> = Property(ChannelTuple, observe='rgb')</em><a class="headerlink" href="#pyface.color.Color.hls" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple holding the hue, lightness, and saturation channels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.color.Color.is_dark">
+<code class="sig-name descname">is_dark</code><em class="property"> = Property(Bool, observe='rgba')</em><a class="headerlink" href="#pyface.color.Color.is_dark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the color is dark for contrast purposes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.color.Color.from_str">
+<em class="property">classmethod </em><code class="sig-name descname">from_str</code><span class="sig-paren">(</span><em class="sig-param">text</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/color.html#Color.from_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.color.Color.from_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Color object from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – <p>A string holding the representation of the color.  This can be:</p>
+<ul>
+<li><p>a color name, including all CSS color names, plus any additional
+names found in pyface.color.color_table.  The names are
+normalized to lower case and stripped of whitespace, hyphens and
+underscores.</p></li>
+<li><p>a hex representation of the color in the form ‘#RGB’, ‘#RGBA’,
+‘#RRGGBB’, ‘#RRGGBBAA’, ‘#RRRRGGGGBBBB’, or ‘#RRRRGGGGBBBBAAAA’.</p></li>
+</ul>
+</p></li>
+<li><p><strong>**traits</strong> – Any additional trait values to be passed as keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="pyface.util.color_parser.html#pyface.util.color_parser.ColorParseError" title="pyface.util.color_parser.ColorParseError"><strong>ColorParseError</strong></a> – If the string cannot be converted to a valid color.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.color.Color.from_toolkit">
+<em class="property">classmethod </em><code class="sig-name descname">from_toolkit</code><span class="sig-paren">(</span><em class="sig-param">toolkit_color</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/color.html#Color.from_toolkit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.color.Color.from_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Color object from a toolkit color object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>toolkit_color</strong> (<em>toolkit object</em>) – A toolkit color object, such as a Qt QColor or a Wx wx.Colour.</p></li>
+<li><p><strong>**traits</strong> – Any additional trait values to be passed as keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.color.Color.to_toolkit">
+<code class="sig-name descname">to_toolkit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/color.html#Color.to_toolkit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.color.Color.to_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new toolkit color object from a Color object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>toolkit_color</strong> – A toolkit color object, such as a Qt QColor or a Wx wx.Colour.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>toolkit object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.color.Color.hex">
+<code class="sig-name descname">hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/color.html#Color.hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.color.Color.hex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a hex representation of the Color object.</p>
+<p>Note that because the hex value is restricted to 0-255 integer values
+for each channel, the representation is not exact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>hex</strong> – A hex string in standard <code class="docutils literal notranslate"><span class="pre">#RRGGBBAA</span></code> format that represents
+the color.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.clipboard.html"
+                        title="previous chapter">pyface.clipboard module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.confirmation_dialog.html"
+                        title="next chapter">pyface.confirmation_dialog module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.color.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

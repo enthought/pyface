@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.abstract_data_model module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
+    <link rel="next" title="pyface.data_view.abstract_value_type module" href="pyface.data_view.abstract_value_type.html" >
+    <link rel="prev" title="pyface.data_view.abstract_data_exporter module" href="pyface.data_view.abstract_data_exporter.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.data_view.abstract_value_type.html" title="pyface.data_view.abstract_value_type module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.data_view.abstract_data_exporter.html" title="pyface.data_view.abstract_data_exporter module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.data_view.abstract_data_model">
+<span id="pyface-data-view-abstract-data-model-module"></span><h1>pyface.data_view.abstract_data_model module<a class="headerlink" href="#module-pyface.data_view.abstract_data_model" title="Permalink to this headline">¶</a></h1>
+<p>Provides an AbstractDataModel ABC for Pyface data models.</p>
+<p>This module provides an ABC for all data view data models.  This specifies
+the API that the data view widgets expect, and which the underlying
+data is adapted to by the concrete implementations.  Data models are intended
+to be toolkit-independent, and be able to adapt any approximately tabular or
+nested data structure to what the data view system expects.</p>
+<dl class="class">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.abstract_data_model.</code><code class="sig-name descname">AbstractDataModel</code><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasStrictTraits</span></code></p>
+<p>Abstract base class for Pyface data models.</p>
+<p>The data model API is intended to provide a common API for hierarchical
+and tabular data.  This class is concerned with the structure, type and
+values provided by the data, but not with how the data is presented.</p>
+<p>Row and column indices are represented by sequences (usually lists) of
+integers, specifying the index at each level of the hierarchy.  The root
+row and column are represented by empty lists.</p>
+<p>Subclasses need to implement the <code class="docutils literal notranslate"><span class="pre">get_column_count</span></code>,
+<code class="docutils literal notranslate"><span class="pre">can_have_children</span></code> and <code class="docutils literal notranslate"><span class="pre">get_row_count</span></code> methods to return the number
+of columns in a particular row, as well as the hierarchical structure of
+the rows.  Appropriate observers should be set up on the underlaying data
+so that the <code class="docutils literal notranslate"><span class="pre">structure_changed</span></code> event is fired when the values returned
+by these methods would change.</p>
+<p>Subclasses also have to implement the <code class="docutils literal notranslate"><span class="pre">get_value</span></code> and <code class="docutils literal notranslate"><span class="pre">get_value_type</span></code>
+methods.  These expect a row and column index, with root values treated
+specially: the root row corresponds to the values which will be displayed
+in the column headers of the view, and the root column corresponds to the
+values which will be displayed in the row headers of the view.
+The <code class="docutils literal notranslate"><span class="pre">get_value</span></code> returns an arbitrary Python object corresponding to the
+cell being viewed, and the <code class="docutils literal notranslate"><span class="pre">get_value_type</span></code> should return an instance of
+an <code class="docutils literal notranslate"><span class="pre">AbstractValueType</span></code> that adapts the raw value to the data channels
+that the data view expects (eg. text, color, icons, editable value, etc.).
+Implementations should ensure that the <code class="docutils literal notranslate"><span class="pre">values_changed</span></code> event fires
+whenever the data, or the way the data is presented, is updated.</p>
+<p>If the data is to be editable then the subclass should override the
+<code class="docutils literal notranslate"><span class="pre">set_value</span></code> method.  It should attempt to change the underlying data as a
+side-effect or raise DataViewSetError on failure (for example,
+setting an invalid value).  If the underlying data structure cannot be
+listened to internally (such as a numpy array or Pandas data frame),
+<code class="docutils literal notranslate"><span class="pre">set_value</span></code> should also fire the <code class="docutils literal notranslate"><span class="pre">values_changed</span></code> event with
+appropriate values.</p>
+<p>In the cases where the underlying data structure cannot be observed by
+the usual traits mechanisms, the end-user of the code may be responsible
+for ensuring that the <code class="docutils literal notranslate"><span class="pre">structure_changed</span></code> and <code class="docutils literal notranslate"><span class="pre">values_changed</span></code> events
+are fired appropriately.</p>
+<dl class="attribute">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.index_manager">
+<code class="sig-name descname">index_manager</code><em class="property"> = Instance(AbstractIndexManager)</em><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.index_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>The index manager that helps convert toolkit indices to data view
+indices.  This should be an IntIndexManager for non-hierarchical data
+or a TupleIndexManager for hierarchical data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.structure_changed">
+<code class="sig-name descname">structure_changed</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.structure_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when the structure of the data changes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.values_changed">
+<code class="sig-name descname">values_changed</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.values_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when value changes without changes to structure.  This
+should be set to a 4-tuple of (start_row_index, start_column_index,
+end_row_index, end_column_index) indicated the subset of data which
+changed.  These end values are inclusive, unlike standard Python
+slicing notation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.get_column_count">
+<em class="property">abstract </em><code class="sig-name descname">get_column_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.get_column_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>How many columns in the data view model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>column_count</strong> – The number of columns that the data view provides.  This count
+should not include the row header.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>non-negative int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.can_have_children">
+<em class="property">abstract </em><code class="sig-name descname">can_have_children</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.can_have_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.can_have_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not a row can have child rows.</p>
+<p>The root row should always return True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>can_have_children</strong> – Whether or not the row can ever have child rows.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.get_row_count">
+<em class="property">abstract </em><code class="sig-name descname">get_row_count</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.get_row_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>How many child rows the row currently has.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>row_count</strong> – The number of child rows that the row has.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>non-negative int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.get_value">
+<em class="property">abstract </em><code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Python value for the row and column.</p>
+<p>The values for column headers are returned by calling this method with
+row equal to ().  The values for row headers are returned by calling
+this method with column equal to ().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p></li>
+<li><p><strong>column</strong> (<em>sequence of int</em>) – The indices of the column as a sequence of length 0 or 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>value</strong> – The value represented by the given row and column.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewGetError" title="pyface.data_view.data_view_errors.DataViewGetError"><strong>DataViewGetError</strong></a> – If the value cannot be accessed in an expected way.  If this is
+    raised then the error will be ignored and not logged by the
+    data view infrastructure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value">
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the value in the indicated row and column can be set.</p>
+<p>The default method assumes the data is read-only and always
+returns False.</p>
+<p>Whether or a column header can be set is returned by calling this
+method with row equal to ().  Whether or a row header can be set
+is returned by calling this method with column equal to ().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p></li>
+<li><p><strong>column</strong> (<em>sequence of int</em>) – The indices of the column as a sequence of length 0 or 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>can_set_value</strong> – Whether or not the value can be set.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.set_value">
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the Python value for the row and column.</p>
+<p>The default method assumes the data is read-only and always
+returns False.</p>
+<p>The values for column headers can be set by calling this method with
+row equal to ().  The values for row headers can be set by calling
+this method with column equal to ().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p></li>
+<li><p><strong>column</strong> (<em>sequence of int</em>) – The indices of the column as a sequence of length 0 or 1.</p></li>
+<li><p><strong>value</strong> (<em>any</em>) – The new value for the given row and column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewSetError" title="pyface.data_view.data_view_errors.DataViewSetError"><strong>DataViewSetError</strong></a> – If the value cannot be set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.get_value_type">
+<em class="property">abstract </em><code class="sig-name descname">get_value_type</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.get_value_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.get_value_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value type of the given row and column.</p>
+<p>The value type for column headers are returned by calling this method
+with row equal to ().  The value types for row headers are returned
+by calling this method with column equal to ().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<em>sequence of int</em>) – The indices of the row as a sequence from root to leaf.</p></li>
+<li><p><strong>column</strong> (<em>sequence of int</em>) – The indices of the column as a sequence of length 0 or 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>value_type</strong> – The value type of the given row and column, or None if no value
+should be displayed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType" title="pyface.data_view.abstract_value_type.AbstractValueType">AbstractValueType</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.is_row_valid">
+<code class="sig-name descname">is_row_valid</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.is_row_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.is_row_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether or not the given row index refers to a valid row.</p>
+<p>A row index is valid if every value in the tuple is between 0 and the
+number of child rows of the parent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>row</strong> (<em>sequence of int</em>) – The row to check as indices of the row from root to leaf.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>valid</strong> – Whether or not the row index is valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.is_column_valid">
+<code class="sig-name descname">is_column_valid</code><span class="sig-paren">(</span><em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.is_column_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.is_column_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether or not the given column index refers to a valid column.</p>
+<p>A column index is valid if it is the root, or the value is between 0 and
+the number of columns in the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>column</strong> (<em>sequence of int</em>) – The column to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>valid</strong> – Whether or not the column index is valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.iter_rows">
+<code class="sig-name descname">iter_rows</code><span class="sig-paren">(</span><em class="sig-param">start_row=()</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.iter_rows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.iter_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator that yields rows in preorder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_row</strong> (<em>sequence of int</em>) – The row to start at.  The iterator will yeild the row and all
+descendant rows.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><strong>row_index</strong> (<em>sequence of int</em>) – The current row index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.data_view.abstract_data_model.AbstractDataModel.iter_items">
+<code class="sig-name descname">iter_items</code><span class="sig-paren">(</span><em class="sig-param">start_row=()</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_data_model.html#AbstractDataModel.iter_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_data_model.AbstractDataModel.iter_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator that yields rows and columns in preorder.</p>
+<p>This yields pairs of row, column for all rows in preorder
+and and all column indices for all rows, including ().
+Columns are iterated in order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_row</strong> (<em>sequence of int</em>) – The row to start iteration from.</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>row_index, column_index</em> – The current row and column indices.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.data_view.abstract_data_exporter.html"
+                        title="previous chapter">pyface.data_view.abstract_data_exporter module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.data_view.abstract_value_type.html"
+                        title="next chapter">pyface.data_view.abstract_value_type module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.data_view.abstract_data_model.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

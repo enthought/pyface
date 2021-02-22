@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Pyface Applications &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="next" title="Trait Types" href="traits.html" >
+    <link rel="prev" title="Widgets" href="widgets.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="traits.html" title="Trait Types"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="widgets.html" title="Widgets"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="pyface-applications">
+<h1>Pyface Applications<a class="headerlink" href="#pyface-applications" title="Permalink to this headline">¶</a></h1>
+<p>Pyface provides a collection of classes suitable for representing an
+application.  Although the classes are principally designed to work with
+GUI-based applications, the base class <a class="reference internal" href="api/pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class does not
+and so can be used as the basis for command-line or server applications with
+a shared codebase with a GUI application.</p>
+<p>Additionally, the application classes are designed to be forward-compatible
+with Envisage application classes so applications developed using this
+framework can easily be refactored to take advantage of the Envisage’s plug-in
+extensibility if that should be required.</p>
+<div class="section" id="application-interface">
+<h2>Application Interface<a class="headerlink" href="#application-interface" title="Permalink to this headline">¶</a></h2>
+<p>The core of the <a class="reference internal" href="api/pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class’ API are three methods:
+<a class="reference internal" href="api/pyface.application.html#pyface.application.Application.run" title="pyface.application.Application.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.run()</span></code></a>, <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a>, and
+<a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a>.  The <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.run" title="pyface.application.Application.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.run()</span></code></a> method is the
+entry-point of the application, and performs the following steps:</p>
+<ol class="arabic simple">
+<li><p>calls the <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a> method to initialize the
+application’s state.</p></li>
+<li><p>if the start is successful, calls an internal <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code>
+method which does the actual work (such as running the GUI event loop).</p></li>
+<li><p>when the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code> method returns, calls
+<a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a> to release any resources used by the application
+and de-initialize as needed.</p></li>
+</ol>
+<p>Subclasses of the base <a class="reference internal" href="api/pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class will likely override all
+three of these methods, but <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui_application.GUIApplication</span></code></a>
+subclasses may be able to avoid having to touch them, depending on what
+addition resources they need to access.</p>
+<p>In addition to these three methods, there is an <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.exit" title="pyface.application.Application.exit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.exit()</span></code></a>
+method that can be called by code that wants to halt the application at that
+point.  For the base class this simply raises an :py:class:<code class="docutils literal notranslate"><span class="pre">ApplicationExit</span></code>
+exception, but for event loop based classes it may instead call appropriate
+toolkit code to close open windows and stop the application event loop.</p>
+<p>During this life-cycle, the application will emit various Traits events
+indicating the state that it is currently in.  The sequence of events is
+normally <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.starting" title="pyface.application.Application.starting"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.starting</span></code></a>, <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.started" title="pyface.application.Application.started"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.started</span></code></a>
+<a class="reference internal" href="api/pyface.application.html#pyface.application.Application.application_initialized" title="pyface.application.Application.application_initialized"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.application_initialized</span></code></a>,
+<a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stopping" title="pyface.application.Application.stopping"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.stopping</span></code></a>, and <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stopped" title="pyface.application.Application.stopped"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.stopped</span></code></a></p>
+<p>In addition to the core methods and events, the <a class="reference internal" href="api/pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class
+has some traits for metadata about the application, primarily the
+human-readable application name, a description of the application, and a
+globally unique application id.  The application also has traits holding
+platform-dependent “home” and “user” directory paths, which by default are
+provided by <code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code> which give reasonable platform-dependent
+results.</p>
+<div class="section" id="application-example">
+<h3>Application Example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h3>
+<p>A simple command-line application might look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">pyface.application</span> <span class="k">import</span> <span class="n">Application</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Str</span>
+
+<span class="k">class</span> <span class="nc">HelloApplication</span><span class="p">(</span><span class="n">Application</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Simple application subclass that greets a location. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The location being greeted.</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;world&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HelloApplication</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_run</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">HelloApplication</span><span class="p">()</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the location to greet&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="n">app</span><span class="p">)</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="guiapplication-interface">
+<h2>GUIApplication Interface<a class="headerlink" href="#guiapplication-interface" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> subclass is the base class to use for
+Pyface-based GUI applications. This class invokes the Pyface toolkit’s event
+loop in the <code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication._run()</span></code> method, and stops it in the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication._exit()</span></code> method.</p>
+<p>The class has code that tracks application windows through their lifecycle.
+The application has a list <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.windows" title="pyface.gui_application.GUIApplication.windows"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GUIApplication.windows</span></code></a> of all known
+windows.  Windows can be added to the list with the
+<a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.add_window" title="pyface.gui_application.GUIApplication.add_window"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.add_window()</span></code></a> method which also handles opening the
+window.  Windows are automatically removed from the list when they are closed.
+In addition the class has a <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.create_window" title="pyface.gui_application.GUIApplication.create_window"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.create_window()</span></code></a> method
+which by default calls the <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.window_factory" title="pyface.gui_application.GUIApplication.window_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GUIApplication.window_factory</span></code></a> attribute
+and handles setting titles, icons and sizing of the created windows.  Windows
+created by <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.create_window" title="pyface.gui_application.GUIApplication.create_window"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.create_window()</span></code></a> still need to be added to
+the application’s list of windows via <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.add_window" title="pyface.gui_application.GUIApplication.add_window"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.add_window()</span></code></a>.</p>
+<p>The <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.start" title="pyface.gui_application.GUIApplication.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.start()</span></code></a> method of the class must ensure that there
+is at least one open window by the point that the event loop starts,
+particularly with the WxPython backend.  The default
+<a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.start" title="pyface.gui_application.GUIApplication.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.start()</span></code></a> method calls
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication._create_windows()</span></code> to perform the initial set-up of open
+windows.  The default behaviour is to call the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">GUIApplication.create_windows()</span></code> method and then add that window.</p>
+<p>In most cases to use the base <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> class, you will want
+to:</p>
+<ul class="simple">
+<li><p>create a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code>
+that at least overrides the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_contents()</span></code>
+method to create the desired user interface.  Ideally this window should be
+able to work without needing an application, as this helps with reusability.</p></li>
+<li><p>create a window factory function that taskes the application and arbitrary
+other keyword arguments and creates an instance of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code> subclass along with
+any additional application-dependent state that is required. This can
+include application-dependent menus, toolbars, etc. as well as other state
+injected by from application.</p></li>
+</ul>
+<p>While the <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> class can be used without subclassing, for
+complex applications it is likely that the a subclass will need to be used,
+and will likely override the <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.start" title="pyface.gui_application.GUIApplication.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">stop()</span></code> and <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication.create_window" title="pyface.gui_application.GUIApplication.create_window"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_window()</span></code></a>
+methods to perform additional application-specific customization.</p>
+<div class="section" id="guiapplication-example">
+<h3>GUIApplication Example<a class="headerlink" href="#guiapplication-example" title="Permalink to this headline">¶</a></h3>
+<p>The following example shows how to build a simple but functional
+<a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> which provides an interactive Python shell.  The
+application has two parts: a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.application_window.ApplicationWindow</span></code> subclass which is
+responsible for creating the Python shell widget, and a window factory which
+is responsible for creating the windows and populating the menu bar.</p>
+<p>The application window subclass looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">PythonShell</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Instance</span>
+
+<span class="k">class</span> <span class="nc">PythonShellWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An application window that displays a simple Python shell. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The title of the window.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Python Shell&quot;</span>
+
+    <span class="c1">#: The Python shell widget to use.</span>
+    <span class="n">shell</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s1">&#39;pyface.i_python_shell.IPythonShell&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the shell widget. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shell</span> <span class="o">=</span> <span class="n">PythonShell</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">control</span>
+</pre></div>
+</div>
+<p>Note that we don’t (and shouldn’t) need the application to be available for
+this class to work - it is a perfectly good stand-alone class that can
+potentially be re-used in many different contexts.</p>
+<p>While the GUI application window subclass looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">GUIApplication</span>
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">AboutAction</span><span class="p">,</span> <span class="n">CloseWindowAction</span><span class="p">,</span> <span class="n">CreateWindowAction</span><span class="p">,</span> <span class="n">ExitAction</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span>
+    <span class="n">MenuBarManager</span><span class="p">,</span> <span class="n">MenuManager</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">python_shell_window</span> <span class="k">import</span> <span class="n">PythonShellWindow</span>
+
+<span class="k">def</span> <span class="nf">create_python_shell_window</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">PythonShellWindow</span><span class="p">()</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">MenuBarManager</span><span class="p">(</span>
+        <span class="n">MenuManager</span><span class="p">(</span>
+            <span class="n">Group</span><span class="p">(</span><span class="n">CreateWindowAction</span><span class="p">(</span><span class="n">application</span><span class="o">=</span><span class="n">application</span><span class="p">)),</span>
+            <span class="n">Group</span><span class="p">(</span>
+                <span class="n">CloseWindowAction</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">),</span>
+                <span class="n">ExitAction</span><span class="p">(</span><span class="n">application</span><span class="o">=</span><span class="n">application</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;File&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">MenuManager</span><span class="p">(</span>
+            <span class="n">AboutAction</span><span class="p">(</span><span class="n">application</span><span class="o">=</span><span class="n">application</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;Help&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">window</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">GUIApplication</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Python Shell&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;An example application that provides a Python shell.&quot;</span><span class="p">,</span>
+        <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;python_icon&#39;</span><span class="p">,</span>
+        <span class="n">logo</span><span class="o">=</span><span class="s1">&#39;python_logo&#39;</span><span class="p">,</span>
+        <span class="n">window_factory</span><span class="o">=</span><span class="n">create_python_shell_window</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A more complete version of this can be found in the Pyface examples.</p>
+</div>
+</div>
+<div class="section" id="tasksapplication-interface">
+<h2>TasksApplication Interface<a class="headerlink" href="#tasksapplication-interface" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TasksApplication" title="pyface.tasks.tasks_application.TasksApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TasksApplication</span></code></a> class works in a similar way to the
+<a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> class, but instead of the
+supplying a window factory, instead you provide one or more
+<a class="reference internal" href="api/pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TaskFactory" title="pyface.tasks.tasks_application.TaskFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskFactory</span></code></a> instances which provide information about the
+different Tasks that are available for each window.</p>
+<p>In addition the <a class="reference internal" href="api/pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TasksApplication" title="pyface.tasks.tasks_application.TasksApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TasksApplication</span></code></a> has traits that hold extra
+application-specific <code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaAddition</span></code> mechanism,
+and <code class="xref py py-class docutils literal notranslate"><span class="pre">DockPane</span></code> via factories for creating
+the dock panes.</p>
+<p>A complete <a class="reference internal" href="api/pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TasksApplication" title="pyface.tasks.tasks_application.TasksApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TasksApplication</span></code></a> can be as simple as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.tasks.api</span> <span class="k">import</span> <span class="n">TaskFactory</span><span class="p">,</span> <span class="n">TasksApplication</span>
+<span class="kn">from</span> <span class="nn">python_editor_task</span> <span class="k">import</span> <span class="n">PythonEditorTask</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">TasksApplication</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;example_python_editor_application&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Python Editor&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;An example Tasks application that provides a Python editor.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">icon</span><span class="o">=</span><span class="s1">&#39;python_icon&#39;</span><span class="p">,</span>
+        <span class="n">logo</span><span class="o">=</span><span class="s1">&#39;python_logo&#39;</span><span class="p">,</span>
+        <span class="n">task_factories</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">TaskFactory</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;example.python_editor_task&#39;</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Python Editor&quot;</span><span class="p">,</span>
+                <span class="n">factory</span><span class="o">=</span><span class="n">PythonEditorTask</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># invoke the mainloop</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A more complete version of this can be found in the Pyface examples.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pyface Applications</a><ul>
+<li><a class="reference internal" href="#application-interface">Application Interface</a><ul>
+<li><a class="reference internal" href="#application-example">Application Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#guiapplication-interface">GUIApplication Interface</a><ul>
+<li><a class="reference internal" href="#guiapplication-example">GUIApplication Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tasksapplication-interface">TasksApplication Interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="widgets.html"
+                        title="previous chapter">Widgets</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="traits.html"
+                        title="next chapter">Trait Types</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/applications.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

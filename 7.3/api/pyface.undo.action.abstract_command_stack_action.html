@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.undo.action.abstract_command_stack_action module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.undo.action package" href="pyface.undo.action.html" >
+    <link rel="next" title="pyface.undo.action.api module" href="pyface.undo.action.api.html" >
+    <link rel="prev" title="pyface.undo.action package" href="pyface.undo.action.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.undo.html" >pyface.undo package</a></li>
+          <li class="active"><a href="pyface.undo.action.html" accesskey="U">pyface.undo.action package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.undo.action.api.html" title="pyface.undo.action.api module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.undo.action.html" title="pyface.undo.action package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.undo.action.abstract_command_stack_action">
+<span id="pyface-undo-action-abstract-command-stack-action-module"></span><h1>pyface.undo.action.abstract_command_stack_action module<a class="headerlink" href="#module-pyface.undo.action.abstract_command_stack_action" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.undo.action.abstract_command_stack_action.</code><code class="sig-name descname">AbstractCommandStackAction</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/action/abstract_command_stack_action.html#AbstractCommandStackAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.action.Action</span></code></a></p>
+<p>The abstract base class for all actions that operate on a command
+stack.</p>
+<dl class="attribute">
+<dt id="pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction.undo_manager">
+<code class="sig-name descname">undo_manager</code><em class="property"> = Instance(IUndoManager)</em><a class="headerlink" href="#pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction.undo_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>The undo manager.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/action/abstract_command_stack_action.html#AbstractCommandStackAction.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.action.abstract_command_stack_action.AbstractCommandStackAction.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the action is no longer required.</p>
+<p>By default this method does nothing, but this would be a great place to
+unhook trait listeners etc.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.undo.action.html"
+                        title="previous chapter">pyface.undo.action package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.undo.action.api.html"
+                        title="next chapter">pyface.undo.action.api module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.undo.action.abstract_command_stack_action.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

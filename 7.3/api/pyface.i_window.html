@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_window module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.image_cache module" href="pyface.image_cache.html" >
+    <link rel="prev" title="pyface.i_widget module" href="pyface.i_widget.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.image_cache.html" title="pyface.image_cache module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_widget.html" title="pyface.i_widget module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.i_window">
+<span id="pyface-i-window-module"></span><h1>pyface.i_window module<a class="headerlink" href="#module-pyface.i_window" title="Permalink to this headline">¶</a></h1>
+<p>The abstract interface for all pyface top-level windows.</p>
+<dl class="class">
+<dt id="pyface.i_window.IWindow">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_window.</code><code class="sig-name descname">IWindow</code><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_widget.IWidget</span></code></a></p>
+<p>The abstract interface for all pyface top-level windows.</p>
+<p>A pyface top-level window has no visual representation until it is opened
+(ie. its ‘control’ trait will be None until it is opened).</p>
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.position">
+<code class="sig-name descname">position</code><em class="property"> = Tuple()</em><a class="headerlink" href="#pyface.i_window.IWindow.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.size">
+<code class="sig-name descname">size</code><em class="property"> = Tuple()</em><a class="headerlink" href="#pyface.i_window.IWindow.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.title">
+<code class="sig-name descname">title</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_window.IWindow.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.opened">
+<code class="sig-name descname">opened</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.i_window.IWindow.opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been opened.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.opening">
+<code class="sig-name descname">opening</code><em class="property"> = VetoableEvent()</em><a class="headerlink" href="#pyface.i_window.IWindow.opening" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to open.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.activated">
+<code class="sig-name descname">activated</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.i_window.IWindow.activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been activated.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.closed">
+<code class="sig-name descname">closed</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.i_window.IWindow.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been closed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.closing">
+<code class="sig-name descname">closing</code><em class="property"> = VetoableEvent()</em><a class="headerlink" href="#pyface.i_window.IWindow.closing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to be closed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.deactivated">
+<code class="sig-name descname">deactivated</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.i_window.IWindow.deactivated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been deactivated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.open">
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+<p>This fires the <a class="reference internal" href="#pyface.i_window.IWindow.closing" title="pyface.i_window.IWindow.closing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code></a> vetoable event, giving listeners the
+opportunity to veto the opening of the window.</p>
+<p>If the window is opened, the <a class="reference internal" href="#pyface.i_window.IWindow.opened" title="pyface.i_window.IWindow.opened"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opened</span></code></a> event will be fired
+with the IWindow instance as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>opened</strong> – Whether or not the window was opened.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+<p>This fires the <a class="reference internal" href="#pyface.i_window.IWindow.closing" title="pyface.i_window.IWindow.closing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code></a> vetoable event, giving listeners the
+opportunity to veto the closing of the window.  If <code class="xref py py-obj docutils literal notranslate"><span class="pre">force</span></code> is
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code> then the window will close no matter what.</p>
+<p>If the window is closed, the closed event will be fired with the window
+object as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – Whether the window should close despite vetos.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>closed</strong> – Whether or not the window is closed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.confirm">
+<code class="sig-name descname">confirm</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title=None</em>, <em class="sig-param">cancel=False</em>, <em class="sig-param">default=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>cancel</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</p></li>
+<li><p><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) – Which button should be the default button.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Information'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Error'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.IWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_window.MWindow">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_window.</code><code class="sig-name descname">MWindow</code><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWindow interface.</p>
+<p>Implements: close(), confirm(), open()
+Reimplements: _create()</p>
+<dl class="method">
+<dt id="pyface.i_window.MWindow.open">
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+<p>This fires the <code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code> vetoable event, giving listeners the
+opportunity to veto the opening of the window.</p>
+<p>If the window is opened, the <code class="xref py py-attr docutils literal notranslate"><span class="pre">opened</span></code> event will be fired
+with the IWindow instance as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>opened</strong> – Whether or not the window was opened.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+<p>This fires the <code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code> vetoable event, giving listeners the
+opportunity to veto the closing of the window.  If <code class="xref py py-obj docutils literal notranslate"><span class="pre">force</span></code> is
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code> then the window will close no matter what.</p>
+<p>If the window is closed, the closed event will be fired with the window
+object as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – Whether the window should close despite vetos.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>closed</strong> – Whether or not the window is closed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.confirm">
+<code class="sig-name descname">confirm</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title=None</em>, <em class="sig-param">cancel=False</em>, <em class="sig-param">default=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>cancel</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</p></li>
+<li><p><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) – Which button should be the default button.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Information'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Error'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_window.MWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.i_widget.html"
+                        title="previous chapter">pyface.i_widget module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.image_cache.html"
+                        title="next chapter">pyface.image_cache module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.i_window.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

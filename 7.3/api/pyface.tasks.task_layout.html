@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.task_layout module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
+    <link rel="next" title="pyface.tasks.task_pane module" href="pyface.tasks.task_pane.html" >
+    <link rel="prev" title="pyface.tasks.task module" href="pyface.tasks.task.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.tasks.task_pane.html" title="pyface.tasks.task_pane module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.tasks.task.html" title="pyface.tasks.task module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.tasks.task_layout">
+<span id="pyface-tasks-task-layout-module"></span><h1>pyface.tasks.task_layout module<a class="headerlink" href="#module-pyface.tasks.task_layout" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyface.tasks.task_layout.LayoutItem">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">LayoutItem</code><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<p>The base class for all Task-related layout objects.</p>
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutItem.iterleaves">
+<code class="sig-name descname">iterleaves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem.iterleaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem.iterleaves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutItem.pargs">
+<code class="sig-name descname">pargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem.pargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem.pargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutItem.pformat">
+<code class="sig-name descname">pformat</code><span class="sig-paren">(</span><em class="sig-param">indent=0</em>, <em class="sig-param">multiline=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem.pformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem.pformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-format the layout item. Returns a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutItem.pprint">
+<code class="sig-name descname">pprint</code><span class="sig-paren">(</span><em class="sig-param">indent=0</em>, <em class="sig-param">multiline=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem.pprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem.pprint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-prints the layout item.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutItem.pstream">
+<code class="sig-name descname">pstream</code><span class="sig-paren">(</span><em class="sig-param">stream</em>, <em class="sig-param">indent=0</em>, <em class="sig-param">multiline=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutItem.pstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutItem.pstream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-formats the layout item to a stream.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.LayoutContainer">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">LayoutContainer</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.LayoutItem" title="pyface.tasks.task_layout.LayoutItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutItem</span></code></a></p>
+<p>The base class for all layout items that contain other layout items.</p>
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutContainer.iterleaves">
+<code class="sig-name descname">iterleaves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutContainer.iterleaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutContainer.iterleaves" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.LayoutContainer.pargs">
+<code class="sig-name descname">pargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#LayoutContainer.pargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.LayoutContainer.pargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.PaneItem">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">PaneItem</code><span class="sig-paren">(</span><em class="sig-param">id=''</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#PaneItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.PaneItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.LayoutItem" title="pyface.tasks.task_layout.LayoutItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutItem</span></code></a></p>
+<p>A pane in a Task layout.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.PaneItem.width">
+<code class="sig-name descname">width</code><em class="property"> = Int(-1)</em><a class="headerlink" href="#pyface.tasks.task_layout.PaneItem.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the pane in pixels. If not specified, the pane will be
+sized according to its size hint.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.PaneItem.height">
+<code class="sig-name descname">height</code><em class="property"> = Int(-1)</em><a class="headerlink" href="#pyface.tasks.task_layout.PaneItem.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the pane in pixels. If not specified, the pane will be
+sized according to its size hint.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.PaneItem.id">
+<code class="sig-name descname">id</code><em class="property"> = Either(Str, Int, default=&quot;&quot;, pretty_skip=True)</em><a class="headerlink" href="#pyface.tasks.task_layout.PaneItem.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the item. If the item refers to a TaskPane, this is the ID of
+that TaskPane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.task_layout.PaneItem.pargs">
+<code class="sig-name descname">pargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#PaneItem.pargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.PaneItem.pargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.Tabbed">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">Tabbed</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#Tabbed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.Tabbed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.LayoutContainer" title="pyface.tasks.task_layout.LayoutContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutContainer</span></code></a></p>
+<p>A tab area in a Task layout.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.Tabbed.items">
+<code class="sig-name descname">items</code><em class="property"> = List(PaneItem, pretty_skip=True)</em><a class="headerlink" href="#pyface.tasks.task_layout.Tabbed.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tabbed layout can only contain PaneItems as sub-items. Splitters and
+other Tabbed layouts are not allowed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.Tabbed.active_tab">
+<code class="sig-name descname">active_tab</code><em class="property"> = Either(Str, Int, default=&quot;&quot;)</em><a class="headerlink" href="#pyface.tasks.task_layout.Tabbed.active_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the TaskPane which is active in layout. If not specified, the
+first pane is active.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.Splitter">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">Splitter</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#Splitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.Splitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.LayoutContainer" title="pyface.tasks.task_layout.LayoutContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutContainer</span></code></a></p>
+<p>A split area in a Task layout.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.Splitter.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;horizontal&quot;, &quot;vertical&quot;)</em><a class="headerlink" href="#pyface.tasks.task_layout.Splitter.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the splitter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.Splitter.items">
+<code class="sig-name descname">items</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.tasks.task_layout.Splitter.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
+other Splitters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.HSplitter">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">HSplitter</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#HSplitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.HSplitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.Splitter" title="pyface.tasks.task_layout.Splitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.Splitter</span></code></a></p>
+<p>A convenience class for horizontal splitters.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.VSplitter">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">VSplitter</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#VSplitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.VSplitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.Splitter" title="pyface.tasks.task_layout.Splitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.Splitter</span></code></a></p>
+<p>A convenience class for vertical splitters.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.DockLayout">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">DockLayout</code><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#DockLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.DockLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.LayoutItem" title="pyface.tasks.task_layout.LayoutItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutItem</span></code></a></p>
+<p>The layout for a main window’s dock area.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.DockLayout.left">
+<code class="sig-name descname">left</code><em class="property"> = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))</em><a class="headerlink" href="#pyface.tasks.task_layout.DockLayout.left" title="Permalink to this definition">¶</a></dt>
+<dd><p>The layouts for the task’s dock panes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.DockLayout.top_left_corner">
+<code class="sig-name descname">top_left_corner</code><em class="property"> = Enum(&quot;top&quot;, &quot;left&quot;)</em><a class="headerlink" href="#pyface.tasks.task_layout.DockLayout.top_left_corner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assignments of dock areas to the window’s corners. By default, the top
+and bottom dock areas extend into both of the top and both of the
+bottom corners, respectively.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.task_layout.TaskLayout">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_layout.</code><code class="sig-name descname">TaskLayout</code><a class="reference internal" href="../_modules/pyface/tasks/task_layout.html#TaskLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_layout.TaskLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.task_layout.DockLayout" title="pyface.tasks.task_layout.DockLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.DockLayout</span></code></a></p>
+<p>The layout for a Task.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.task_layout.TaskLayout.id">
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.task_layout.TaskLayout.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the task for which this is a layout.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.tasks.task.html"
+                        title="previous chapter">pyface.tasks.task module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.tasks.task_pane.html"
+                        title="next chapter">pyface.tasks.task_pane module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.tasks.task_layout.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

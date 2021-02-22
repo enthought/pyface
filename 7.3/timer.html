@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Timers &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="up" title="Submodules" href="submodules.html" >
+    <link rel="next" title="Undo Framework" href="undo.html" >
+    <link rel="prev" title="Fields" href="fields.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="undo.html" title="Undo Framework"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="fields.html" title="Fields"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="timers">
+<h1>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h1>
+<p>Pyface provides a unified interface for toolkit timers.  There are two levels
+to this inferface: a simple functional interface for simple single-shot
+deferred callbacks, and a more complex interface for application-level timers
+such as heartbeats and periodic monitors.</p>
+<p>It is worth remembering that timers are only as accurate as the underlying
+toolkit and operating system permit; in particular the toolkits usually
+guarantee that they will be called no sooner than any specified delay, but
+they may be called much later (eg. worst case, if an operating system sleep
+occurs between a timer being set and being run, the delay can be arbitrarily
+long).</p>
+<div class="section" id="functional-interface">
+<h2>Functional Interface<a class="headerlink" href="#functional-interface" title="Permalink to this headline">¶</a></h2>
+<p>The basic functional interface is found in <a class="reference internal" href="api/pyface.timer.do_later.html#module-pyface.timer.do_later" title="pyface.timer.do_later"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.timer.do_later</span></code></a>.
+This provides two functions <a class="reference internal" href="api/pyface.timer.do_later.html#pyface.timer.do_later.do_later" title="pyface.timer.do_later.do_later"><code class="xref py py-func docutils literal notranslate"><span class="pre">do_later()</span></code></a> and
+<a class="reference internal" href="api/pyface.timer.do_later.html#pyface.timer.do_later.do_after" title="pyface.timer.do_later.do_after"><code class="xref py py-func docutils literal notranslate"><span class="pre">do_after()</span></code></a>.  These two functions behave in
+essentially the same way, expecting a callback with arguments to be performed
+once at some later time, the difference being that
+<a class="reference internal" href="api/pyface.timer.do_later.html#pyface.timer.do_later.do_later" title="pyface.timer.do_later.do_later"><code class="xref py py-mod docutils literal notranslate"><span class="pre">do_later</span></code></a> hard-codes the time to be 50
+milliseconds.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">do_after</span><span class="p">,</span> <span class="n">do_later</span>
+
+<span class="n">DEFAULT_DELTA</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">report_time</span><span class="p">(</span><span class="n">time_started</span><span class="p">,</span> <span class="n">expected_delay</span><span class="o">=</span><span class="n">DEFAULT_DELTA</span><span class="p">):</span>
+    <span class="n">time_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Time started: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_started</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Time now: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Expected delay: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expected_delay</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Actual delay:   {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span> <span class="o">-</span> <span class="n">time_started</span><span class="p">))</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+<span class="n">delay</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">do_after</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">report_time</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">expected_delay</span><span class="o">=</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+<span class="n">do_later</span><span class="p">(</span><span class="n">report_time</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For historical reasons, the <a class="reference internal" href="api/pyface.timer.do_later.html#module-pyface.timer.do_later" title="pyface.timer.do_later"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.timer.do_later</span></code></a> API expects
+times to be specified in milliseconds instead of seconds.</p>
+</div>
+<p>An alternative functional interface with similar capabilties is available via
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">pyface.timer.timer.CallbackTimer.single_shot()</span></code> class method.</p>
+</div>
+<div class="section" id="timer-classes">
+<h2>Timer Classes<a class="headerlink" href="#timer-classes" title="Permalink to this headline">¶</a></h2>
+<p>For more complex needs, the <a class="reference internal" href="api/pyface.timer.timer.html#module-pyface.timer.timer" title="pyface.timer.timer"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.timer.timer</span></code></a> module provides a
+base timer class and several convenience subclasses for common use cases.</p>
+<div class="section" id="pyfacetimer">
+<h3>PyfaceTimer<a class="headerlink" href="#pyfacetimer" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.timer.PyfaceTimer</span></code> is a base class that can be
+subclassed by providing a <code class="xref py py-meth docutils literal notranslate"><span class="pre">_perform()</span></code>
+method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">PyfaceTimer</span>
+
+<span class="k">class</span> <span class="nc">CustomTimer</span><span class="p">(</span><span class="n">PyfaceTimer</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">_perform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceTimer</span></code> and its subclasses provide a
+number of traits and methods to control the frequency and number of times the
+timer performs its action.  The most important of these is
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">interval</span></code> which determines the time
+until the first call and between any subsequent calls.</p>
+<p>Timers are explicitly started by explicitly calling their
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code> method, or by setting their
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> trait to <code class="docutils literal notranslate"><span class="pre">True</span></code>. By
+default, the timer will repeat indefinately until it is explicitly
+halted via <code class="xref py py-meth docutils literal notranslate"><span class="pre">stop()</span></code> or setting
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> trait to <code class="docutils literal notranslate"><span class="pre">False</span></code> (or by the
+application shutting down).</p>
+<p>Rather than controlling the active state of the timer explicitly, the number of
+invocations of the <code class="xref py py-meth docutils literal notranslate"><span class="pre">perfom()</span></code> method can
+be controlled either via setting the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">repeat</span></code> trait to an explicit number
+of times to repeat and/or setting the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">expire</span></code> trait to a maximum number of
+seconds for the timer to run (which could potentially mean that the timer never
+gets performed).</p>
+<p>For example, a timer which repeats every 0.5 seconds and runs no more than 10
+times and for no longer than 10 seconds can be started like this -</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">CustomTimer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceTimer</span></code> also provides two convenience class
+methods for creating and starting a timer in one line.  The above example
+could instead be written as -</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">timer</span> <span class="o">=</span> <span class="n">CustomTimer</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For the common case of a “single-shot” timer that is only performed once,
+there is the <code class="xref py py-meth docutils literal notranslate"><span class="pre">single_shot()</span></code> class
+method that creates a timer that will be called once after the specified
+interval -</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CustomTimer</span><span class="o">.</span><span class="n">single_shot</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To avoid the Python timer objects being garbage-collected prematurely,
+references are kept to all active timers by Pyface.  This means that you
+can safely create timers without having to explicitly hold a long-term
+reference to them if you do not need it for other reasons.</p>
+</div>
+</div>
+<div class="section" id="callbacktimer">
+<h3>CallbackTimer<a class="headerlink" href="#callbacktimer" title="Permalink to this headline">¶</a></h3>
+<p>Rather than subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceTimer</span></code> for every
+timer that you want, it is often enough to supply a callback function (possibly
+with arguments) to be called by the timer.  Pyface provides the
+<a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.CallbackTimer" title="pyface.timer.timer.CallbackTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">CallbackTimer</span></code></a> class for this purpose.</p>
+<p>This class is meant to be directly instantiated, providing at a minimum a
+callable value for the <code class="xref py py-attr docutils literal notranslate"><span class="pre">callback</span></code>
+trait, along with an optional tuple of
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">args</span></code> and/or optional dict of
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">kwargs</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">CallbackTimer</span>
+
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+
+<span class="n">CallbackTimer</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="n">print_time</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="eventtimer">
+<h3>EventTimer<a class="headerlink" href="#eventtimer" title="Permalink to this headline">¶</a></h3>
+<p>Another common use case is that you want a Traits Event to be fired
+periodically or at some future time.  This permits many possible listeners
+to be called from the same timer, and have them be turned on and turned off
+dynamically, if desired, via
+<a class="reference external" href="https://docs.enthought.com/traits/traits_user_manual/notification.html">Traits’ observe</a>
+(note that observe listeners are required to take a single event argument).
+The <a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.EventTimer" title="pyface.timer.timer.EventTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventTimer</span></code></a> provides this functionality via
+its <code class="xref py py-class docutils literal notranslate"><span class="pre">timeout</span></code> event trait.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">EventTimer</span>
+
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+
+<span class="n">timer</span> <span class="o">=</span> <span class="n">EventTimer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">print_time</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span>
+
+<span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.EventTimer" title="pyface.timer.timer.EventTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventTimer</span></code></a> class is particularly suited to
+be used as an application “heartbeat” that arbitrary code can hook into to be
+run periodically without having to create its own timer.</p>
+</div>
+<div class="section" id="deprecated-classes">
+<h3>Deprecated Classes<a class="headerlink" href="#deprecated-classes" title="Permalink to this headline">¶</a></h3>
+<p>Pyface also provides a deprecated <a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.Timer" title="pyface.timer.timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a>
+class for backwards compatability.  This class shouldn’t be used in new code.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Timers</a><ul>
+<li><a class="reference internal" href="#functional-interface">Functional Interface</a></li>
+<li><a class="reference internal" href="#timer-classes">Timer Classes</a><ul>
+<li><a class="reference internal" href="#pyfacetimer">PyfaceTimer</a></li>
+<li><a class="reference internal" href="#callbacktimer">CallbackTimer</a></li>
+<li><a class="reference internal" href="#eventtimer">EventTimer</a></li>
+<li><a class="reference internal" href="#deprecated-classes">Deprecated Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fields.html"
+                        title="previous chapter">Fields</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="undo.html"
+                        title="next chapter">Undo Framework</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/timer.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

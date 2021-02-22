@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.action.group module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.action package" href="pyface.action.html" >
+    <link rel="next" title="pyface.action.gui_application_action module" href="pyface.action.gui_application_action.html" >
+    <link rel="prev" title="pyface.action.field_action module" href="pyface.action.field_action.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.gui_application_action.html" title="pyface.action.gui_application_action module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.field_action.html" title="pyface.action.field_action module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.action.group">
+<span id="pyface-action-group-module"></span><h1>pyface.action.group module<a class="headerlink" href="#module-pyface.action.group" title="Permalink to this headline">¶</a></h1>
+<p>A group of action manager items.</p>
+<dl class="class">
+<dt id="pyface.action.group.Group">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.action.group.</code><code class="sig-name descname">Group</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A group of action manager items.</p>
+<p>By default, a group declares itself as requiring a separator when it is
+visualized, but this can be changed by setting its ‘separator’ trait to
+False.</p>
+<dl class="attribute">
+<dt id="pyface.action.group.Group.enabled">
+<code class="sig-name descname">enabled</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.group.Group.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the group enabled?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.group.Group.visible">
+<code class="sig-name descname">visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.group.Group.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the group visible?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.group.Group.id">
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.group.Group.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The group’s unique identifier (only needs to be unique within the action
+manager that the group belongs to).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.group.Group.items">
+<code class="sig-name descname">items</code><em class="property"> = Property</em><a class="headerlink" href="#pyface.action.group.Group.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>All of the items in the group.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.group.Group.parent">
+<code class="sig-name descname">parent</code><em class="property"> = Any  # Instance('pyface.action.ActionManager')</em><a class="headerlink" href="#pyface.action.group.Group.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The action manager that the group belongs to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.action.group.Group.separator">
+<code class="sig-name descname">separator</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.group.Group.separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does this group require a separator when it is visualized?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends an item to the group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) – The item to append.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>item</strong> – The actually inserted item.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply appended.
+If the item is an Action instance, an ActionItem is created for the
+action, and that is appended.  If the item is a callable, then an
+Action is created for the callable, and then that is handled as above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.clear">
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all items from the group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.destroy">
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the manager is no longer required.</p>
+<p>By default this method simply calls ‘destroy’ on all items in the
+group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts an item into the group at the specified index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – The position to insert the item.</p></li>
+<li><p><strong>item</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) – The item to insert.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>item</strong> – The actually inserted item.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
+If the item is an Action instance, an ActionItem is created for the
+action, and that is inserted.  If the item is a callable, then an
+Action is created for the callable, and then that is handled as above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an item from the group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>item</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a>) – The item to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.insert_before">
+<code class="sig-name descname">insert_before</code><span class="sig-paren">(</span><em class="sig-param">before</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.insert_before"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.insert_before" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts an item into the group before the specified item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>before</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a>) – The item to insert before.</p></li>
+<li><p><strong>item</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) – The item to insert.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>index, item</strong> – The position inserted, and the item actually inserted.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int, <a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
+If the item is an Action instance, an ActionItem is created for the
+action, and that is inserted.  If the item is a callable, then an
+Action is created for the callable, and then that is handled as above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.insert_after">
+<code class="sig-name descname">insert_after</code><span class="sig-paren">(</span><em class="sig-param">after</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.insert_after"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.insert_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts an item into the group after the specified item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>before</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a>) – The item to insert after.</p></li>
+<li><p><strong>item</strong> (<a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) – The item to insert.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>index, item</strong> – The position inserted, and the item actually inserted.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int, <a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
+If the item is an Action instance, an ActionItem is created for the
+action, and that is inserted.  If the item is a callable, then an
+Action is created for the callable, and then that is handled as above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.find">
+<code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the item with the specified id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – The id of the item</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>item</strong> – The item with the specified Id, or None if no such item exists.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.action.action_manager_item.html#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.action.group.Group.factory">
+<em class="property">classmethod </em><code class="sig-name descname">factory</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Group.factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Group.factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a factory for a group with the given arguments.</p>
+<p>This is particularly useful for passing context to Tasks schema
+additions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.action.group.Separator">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.action.group.</code><code class="sig-name descname">Separator</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/group.html#Separator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.group.Separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.action.group.Group" title="pyface.action.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.group.Group</span></code></a></p>
+<p>A convenience class.</p>
+<p>This is only used in ‘cheap and cheerful’ applications that create menus
+like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file_menu</span> <span class="o">=</span> <span class="n">MenuManager</span><span class="p">(</span>
+    <span class="n">CopyAction</span><span class="p">(),</span>
+    <span class="n">Separator</span><span class="p">(),</span>
+    <span class="n">ExitAction</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Hopefully, ‘Separator’ is more readable than ‘Group’…</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.action.field_action.html"
+                        title="previous chapter">pyface.action.field_action module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.action.gui_application_action.html"
+                        title="next chapter">pyface.action.gui_application_action module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.action.group.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

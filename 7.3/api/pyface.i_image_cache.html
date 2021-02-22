@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_image_cache module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.i_image_resource module" href="pyface.i_image_resource.html" >
+    <link rel="prev" title="pyface.i_heading_text module" href="pyface.i_heading_text.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_image_resource.html" title="pyface.i_image_resource module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_heading_text.html" title="pyface.i_heading_text module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.i_image_cache">
+<span id="pyface-i-image-cache-module"></span><h1>pyface.i_image_cache module<a class="headerlink" href="#module-pyface.i_image_cache" title="Permalink to this headline">¶</a></h1>
+<p>The interface for an image cache.</p>
+<dl class="class">
+<dt id="pyface.i_image_cache.IImageCache">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_image_cache.</code><code class="sig-name descname">IImageCache</code><span class="sig-paren">(</span><em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_image_cache.html#IImageCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_image_cache.IImageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface for an image cache.</p>
+<dl class="method">
+<dt id="pyface.i_image_cache.IImageCache.get_image">
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_image_cache.html#IImageCache.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_image_cache.IImageCache.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scaled image specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>scaled</strong> – The image referred to in the file, scaled to the cache’s width
+and height.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>toolkit image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_image_cache.IImageCache.get_bitmap">
+<code class="sig-name descname">get_bitmap</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_image_cache.html#IImageCache.get_bitmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_image_cache.IImageCache.get_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scaled image specified as a bitmap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>scaled</strong> – The image referred to in the file, scaled to the cache’s width
+and height, as a bitmap.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>toolkit bitmap</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_image_cache.MImageCache">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_image_cache.</code><code class="sig-name descname">MImageCache</code><a class="reference internal" href="../_modules/pyface/i_image_cache.html#MImageCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_image_cache.MImageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IImageCache interface.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.i_heading_text.html"
+                        title="previous chapter">pyface.i_heading_text module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.i_image_resource.html"
+                        title="next chapter">pyface.i_image_resource module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.i_image_cache.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.action.action_controller module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.workbench.action package" href="pyface.workbench.action.html" >
+    <link rel="next" title="pyface.workbench.action.api module" href="pyface.workbench.action.api.html" >
+    <link rel="prev" title="pyface.workbench.action package" href="pyface.workbench.action.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.workbench.html" >pyface.workbench package</a></li>
+          <li class="active"><a href="pyface.workbench.action.html" accesskey="U">pyface.workbench.action package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.workbench.action.api.html" title="pyface.workbench.action.api module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.workbench.action.html" title="pyface.workbench.action package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.workbench.action.action_controller">
+<span id="pyface-workbench-action-action-controller-module"></span><h1>pyface.workbench.action.action_controller module<a class="headerlink" href="#module-pyface.workbench.action.action_controller" title="Permalink to this headline">¶</a></h1>
+<p>The action controller for workbench menu and tool bars.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.action_controller.ActionController">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.action.action_controller.</code><code class="sig-name descname">ActionController</code><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.action_controller.html#pyface.action.action_controller.ActionController" title="pyface.action.action_controller.ActionController"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.action_controller.ActionController</span></code></a></p>
+<p>The action controller for workbench menu and tool bars.</p>
+<p>The controller is used to ‘hook’ the invocation of every action on the menu
+and tool bars. This is done so that additional (and workbench specific)
+information can be added to action events. Currently, we attach a reference
+to the workbench window.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.action_controller.ActionController.perform">
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control an action invocation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.workbench.action.html"
+                        title="previous chapter">pyface.workbench.action package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.workbench.action.api.html"
+                        title="next chapter">pyface.workbench.action.api module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.workbench.action.action_controller.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

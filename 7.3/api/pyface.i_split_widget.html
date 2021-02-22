@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_split_widget module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.i_system_metrics module" href="pyface.i_system_metrics.html" >
+    <link rel="prev" title="pyface.i_splash_screen module" href="pyface.i_splash_screen.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_system_metrics.html" title="pyface.i_system_metrics module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_splash_screen.html" title="pyface.i_splash_screen module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.i_split_widget">
+<span id="pyface-i-split-widget-module"></span><h1>pyface.i_split_widget module<a class="headerlink" href="#module-pyface.i_split_widget" title="Permalink to this headline">¶</a></h1>
+<p>Mix-in class for split widgets.</p>
+<dl class="class">
+<dt id="pyface.i_split_widget.ISplitWidget">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_split_widget.</code><code class="sig-name descname">ISplitWidget</code><a class="reference internal" href="../_modules/pyface/i_split_widget.html#ISplitWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>Mix-in class for split widgets.</p>
+<p>A split widget is one that is split in two either horizontally or
+vertically.</p>
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.direction">
+<code class="sig-name descname">direction</code><em class="property"> = Enum(&quot;vertical&quot;, &quot;vertical&quot;, &quot;horizontal&quot;)</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splitting vertically means there will be a left hand panel and a right
+hand panel, splitting horizontally means there will be a top panel and
+a bottom panel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.ratio">
+<code class="sig-name descname">ratio</code><em class="property"> = Float(0.5)</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ratio of the size of the left/top pane to the right/bottom pane.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.lhs">
+<code class="sig-name descname">lhs</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.lhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional callable that provides the left hand/top panel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.rhs">
+<code class="sig-name descname">rhs</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional callable that provides the right hand/bottom panel.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_split_widget.MSplitWidget">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_split_widget.</code><code class="sig-name descname">MSplitWidget</code><a class="reference internal" href="../_modules/pyface/i_split_widget.html#MSplitWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_split_widget.MSplitWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the ISplitWidget interface.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.i_splash_screen.html"
+                        title="previous chapter">pyface.i_splash_screen module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.i_system_metrics.html"
+                        title="next chapter">pyface.i_system_metrics module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.i_split_widget.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

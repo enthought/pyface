@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Pyface DataViews &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="up" title="Submodules" href="submodules.html" >
+    <link rel="next" title="Fields" href="fields.html" >
+    <link rel="prev" title="Submodules" href="submodules.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="fields.html" title="Fields"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="submodules.html" title="Submodules"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="pyface-dataviews">
+<span id="data-view"></span><h1>Pyface DataViews<a class="headerlink" href="#pyface-dataviews" title="Permalink to this headline">¶</a></h1>
+<p>The Pyface DataView API allows visualization of hierarchical and
+non-hierarchical tabular data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Pyface 7.1.0, the public API for DataView is provisional and may
+change in the future minor releases through until Pyface 8.0</p>
+</div>
+<div class="section" id="indexing">
+<h2>Indexing<a class="headerlink" href="#indexing" title="Permalink to this headline">¶</a></h2>
+<p>The DataView API has a consistent way of indexing that uses tuples of integers
+to represent the rows and columns, as illustrated below:</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="_images/data_view_indices.png"><img alt="an illustration of data view indices" src="_images/data_view_indices.png" style="width: 618.0px; height: 302.0px;" /></a>
+<p class="caption"><span class="caption-text">How DataView Indexing Works.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>A row index corresponds to a list of integer indexes at each level of the
+hierarchy, so the empty tuple <code class="docutils literal notranslate"><span class="pre">()</span></code> represents the root of the hierarchy,
+the tuples <code class="docutils literal notranslate"><span class="pre">(0,)</span></code> and <code class="docutils literal notranslate"><span class="pre">(1,)</span></code> give the two child rows of the root, while
+<code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">1)</span></code> is the second child row of the first child of the root, and so on.</p>
+<p>Column indices follow a similar pattern, but only have the root and one level
+of child indices.</p>
+<p>When interpreting these values, the root row <code class="docutils literal notranslate"><span class="pre">()</span></code> corresponds to the
+<em>column</em> headers, the root column <code class="docutils literal notranslate"><span class="pre">()</span></code> corresponds to the <em>row</em> headers.
+The root row and column indices together refer to the cell in the top-left
+corner.</p>
+<div class="section" id="selections">
+<h3>Selections<a class="headerlink" href="#selections" title="Permalink to this headline">¶</a></h3>
+<p>Implementers of the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget" title="pyface.data_view.i_data_view_widget.IDataViewWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataViewWidget</span></code></a> interface provide a <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection</span></code></a> trait
+that holds a list of tuples of selected row and column index values.  This
+trait is settable, so changes made to the trait are reflected in the selection
+in the view.</p>
+<p>The <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection_type" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection_type</span></code></a> trait describes what gets selected when a user clicks
+on a cell.  It defaults to <code class="docutils literal notranslate"><span class="pre">row</span></code>, which selects entire rows with one click,
+but implementations may optionally support <code class="docutils literal notranslate"><span class="pre">item</span></code> and <code class="docutils literal notranslate"><span class="pre">column</span></code> selection
+as well.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">row</span></code> selection type, the column values are all equal <code class="docutils literal notranslate"><span class="pre">()</span></code> (in other
+words, the indices of the appropriate row header), and users setting the
+values should adhere to that expectation.</p>
+<div class="figure align-default" id="id4">
+<a class="reference internal image-reference" href="_images/row_selection_type.png"><img alt="an illustration of row selection type" src="_images/row_selection_type.png" style="width: 665.0px; height: 349.0px;" /></a>
+<p class="caption"><span class="caption-text">Row selection type.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<p>This corresponds to the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection</span></code></a> being set equal to
+<code class="docutils literal notranslate"><span class="pre">[((0,),</span> <span class="pre">()),</span> <span class="pre">((1,</span> <span class="pre">0),</span> <span class="pre">()),</span> <span class="pre">((1,</span> <span class="pre">2),</span> <span class="pre">())]</span></code>.</p>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">column</span></code> selection type only selects the column values that are children
+of a particular parent row, and so the row provided is that parent row.  Code
+which sets the value of the selection should adhere to that expectation.</p>
+<div class="figure align-default" id="id5">
+<a class="reference internal image-reference" href="_images/column_selection_type.png"><img alt="an illustration of column selection type" src="_images/column_selection_type.png" style="width: 647.0px; height: 334.0px;" /></a>
+<p class="caption"><span class="caption-text">Column selection type.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<p>This corresponds to the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection</span></code></a> being set equal to
+<code class="docutils literal notranslate"><span class="pre">[((),</span> <span class="pre">(2,)),</span> <span class="pre">((0,),</span> <span class="pre">(0,)),</span> <span class="pre">((1,),</span> <span class="pre">(3,))]</span></code>.</p>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">item</span></code> selection type potentially allows any index, specified by both,
+row and column indices. This can include row and column headers provided that
+the view supports selecting them (which is likely dependent on the underlying
+toolkit and platform’s capabilities); in these cases the selected values are
+just the values in the header cells, not the entire row or column.</p>
+<p>The <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection_mode" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection_mode</span></code></a> trait describes the behaviour of selections as the user
+interacts with them.  It defaults to <code class="docutils literal notranslate"><span class="pre">extended</span></code>, which allows the user to
+extend the selection by shift-clicking or other similar platform-dependent
+interactions, but can also take the value <code class="docutils literal notranslate"><span class="pre">single</span></code>, which restricts the
+user to at most one selected thing.</p>
+<p>A change to either the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection_type" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection_type</span></code></a> or the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection_mode" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection_mode</span></code></a> results in the
+<a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection</span></code></a> be cleared.</p>
+<p>Note: with the current implementations, the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.selection" title="pyface.data_view.i_data_view_widget.IDataViewWidget.selection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">selection</span></code></a> list should not be
+mutated, rather the entire list should be replaced on every change.  This
+restriction may be relaxed in the future.</p>
+</div>
+</div>
+<div class="section" id="drag-and-drop">
+<h2>Drag and Drop<a class="headerlink" href="#drag-and-drop" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget" title="pyface.data_view.i_data_view_widget.IDataViewWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataViewWidget</span></code></a> interface provides hooks to support dragging the
+selected values out of the table, or dropping objects onto the data view.
+To provide cross-platform and cross-toolkit compatibility, drag and drop
+operations require the data that is being exported or imported to be
+converted to or from a bytestring in some MIME type.</p>
+<p>The DataView infrastructure provides a <a class="reference internal" href="api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a> named tuple to
+encapsulate the process of converting different data objects to bytes.
+For string objects this conversion might be as simple as encoding the
+text as UTF-8 and declaring it to be a <code class="docutils literal notranslate"><span class="pre">text/plain</span></code> MIME type, but for
+more complex structures there is serialization and deserialization which
+needs to occur.  The <a class="reference internal" href="api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a> objects are expected to provide the
+mimetype of the data, a function to serialize an object, and a function
+to deserialize bytes.</p>
+<p>In practice the sorts of objects being dragged and dropped, can be
+classified as simple scalar values (such as might occur when the selection
+is a single item), 1D collections of values (such as might occur when
+multiple items are selected, or a single row or column is selected),
+or 2D collections of values (such as might occur for extended row or
+column selections).</p>
+<p>The DataView api provides a standard data formats for plain text, CSV,
+and .npy format for scalar, 1D and 2D exports; HTML and JSON formats
+for scalar values, as well as standard serializers and deserializers
+for users to create build their own <a class="reference internal" href="api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a> instances if the defaults
+do not match the needs.</p>
+<div class="section" id="dragging">
+<h3>Dragging<a class="headerlink" href="#dragging" title="Permalink to this headline">¶</a></h3>
+<p>To allow dragging the selection, the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget.exporters" title="pyface.data_view.i_data_view_widget.IDataViewWidget.exporters"><code class="xref py py-attr docutils literal notranslate"><span class="pre">exporters</span></code></a> trait should hold a list
+of <a class="reference internal" href="api/pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter" title="pyface.data_view.abstract_data_exporter.AbstractDataExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataExporter</span></code></a> instances.  This class provides methods to access
+the values to be exported from the selected indices, as well as a reference
+to a <a class="reference internal" href="api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a> that will perform the actual serialization and provides
+the MIME type.</p>
+<p>In practice, users will usually use a standard data exporter, such as the
+<a class="reference internal" href="api/pyface.data_view.exporters.item_exporter.html#pyface.data_view.exporters.item_exporter.ItemExporter" title="pyface.data_view.exporters.item_exporter.ItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemExporter</span></code></a> or <a class="reference internal" href="api/pyface.data_view.exporters.row_exporter.html#pyface.data_view.exporters.row_exporter.RowExporter" title="pyface.data_view.exporters.row_exporter.RowExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">RowExporter</span></code></a>.  Some care should be taken that
+the data exporter provides data in the shape that the <a class="reference internal" href="api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a> expects.
+For example, the <a class="reference internal" href="api/pyface.data_view.exporters.item_exporter.html#pyface.data_view.exporters.item_exporter.ItemExporter" title="pyface.data_view.exporters.item_exporter.ItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemExporter</span></code></a> works best when paired with scalar data
+formats.  In many cases all that is needed to enable dragging data from a
+DataViewWidget is to configure it appropriately:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">control</span> <span class="o">=</span> <span class="n">DataViewWidget</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">selection_mode</span><span class="o">=</span><span class="s1">&#39;extended&#39;</span><span class="p">,</span>
+    <span class="n">exporters</span><span class="o">=</span><span class="p">[</span>
+          <span class="n">RowExporter</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="n">table_format</span><span class="p">),</span>
+          <span class="n">RowExporter</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="n">csv_format</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="o">...</span>
+ <span class="p">)</span>
+</pre></div>
+</div>
+<p>When multiple exporters are provided, _all_ of the supported formats are
+exported as part of the drag operation, and it is up to the target program
+to decide which of the supplied formats it can best handle, if any.</p>
+</div>
+<div class="section" id="dropping">
+<h3>Dropping<a class="headerlink" href="#dropping" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget" title="pyface.data_view.i_data_view_widget.IDataViewWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataViewWidget</span></code></a> supports dropping of objects via the <a class="reference internal" href="api/pyface.i_drop_handler.html#pyface.i_drop_handler.IDropHandler" title="pyface.i_drop_handler.IDropHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDropHandler</span></code></a>
+interface supported by other widgets.  Developers using DataViews can
+handle dropped data by providing a list of <a class="reference internal" href="api/pyface.i_drop_handler.html#pyface.i_drop_handler.IDropHandler" title="pyface.i_drop_handler.IDropHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDropHandler</span></code></a> instances which
+tell the underlying code whether the objects being dropped can be dropped,
+and if so, how to handle the drop operation.</p>
+<p>For example, to handle files being dropped onto the DataView, a DataView could
+use the generic <a class="reference internal" href="api/pyface.drop_handler.html#pyface.drop_handler.FileDropHandler" title="pyface.drop_handler.FileDropHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileDropHandler</span></code></a> class, coupled with a callback to load the
+data from the dropped file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">control</span> <span class="o">=</span> <span class="n">DataViewWidget</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">drop_handlers</span><span class="o">=</span><span class="p">[</span>
+       <span class="n">FileDropHandler</span><span class="p">(</span>
+           <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;.tsv&#39;</span><span class="p">,</span> <span class="s1">&#39;.npy&#39;</span><span class="p">],</span>
+           <span class="n">open_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">,</span>
+       <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="o">...</span>
+ <span class="p">)</span>
+</pre></div>
+</div>
+<p>When multiple drop handlers are supplied, the first one which says it can
+handle the dropped objects is the one which is used.</p>
+<p>There are currently no specific drop handlers for supporting dragging
+data within the table, but this can be supported by custom drop handlers
+that use toolkit code to interact with the underlying toolkit objects.</p>
+</div>
+</div>
+<div class="section" id="index-managers">
+<h2>Index Managers<a class="headerlink" href="#index-managers" title="Permalink to this headline">¶</a></h2>
+<p>These indices need to be converted to and from whatever system the backend
+toolkit uses for indexing and tracking rows.  This conversion is handled
+by an <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.AbstractIndexManager" title="pyface.data_view.index_manager.AbstractIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractIndexManager</span></code></a> instance.  Pyface provides two of these which
+efficiently handle the two common cases: <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.TupleIndexManager" title="pyface.data_view.index_manager.TupleIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">TupleIndexManager</span></code></a> is designed to
+handle general hierarchical models, but needs to cache mementos for all rows
+with children (and on Wx, for all rows); the <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.IntIndexManager" title="pyface.data_view.index_manager.IntIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntIndexManager</span></code></a> can only handle
+non-hierarchical tables, but does so without needing any additional memory
+allocation.</p>
+<p>Unless you are creating a toolkit model or widget that uses the DataView
+infrastructure it is sufficient to simply know to use the <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.IntIndexManager" title="pyface.data_view.index_manager.IntIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntIndexManager</span></code></a>
+when you know that the data will always be a flat table, and <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.TupleIndexManager" title="pyface.data_view.index_manager.TupleIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">TupleIndexManager</span></code></a>
+otherwise.</p>
+</div>
+<div class="section" id="data-models">
+<h2>Data Models<a class="headerlink" href="#data-models" title="Permalink to this headline">¶</a></h2>
+<p>Data to be viewed needs to be exposed to the DataView infrastructure by
+creating a data model for it.  This is a class that implements the
+interface of <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataModel</span></code></a> to display values from a dictionary.</p>
+<div class="figure align-default" id="id6">
+<a class="reference internal image-reference" href="_images/dict_data_model.png"><img alt="an illustration of the DictDataModel" src="_images/dict_data_model.png" style="width: 312.0px; height: 234.0px;" /></a>
+<p class="caption"><span class="caption-text">The DictDataModel example.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>The basic traits for the model might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DictDataModel</span><span class="p">(</span><span class="n">AbstractDataModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A data model that provides data from a dictionary. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The dictionary containing the data.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span>
+
+    <span class="c1">#: The index manager.  Because the data is flat, we use the</span>
+    <span class="c1">#: IntIndexManager.</span>
+    <span class="n">index_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IntIndexManager</span><span class="p">,</span> <span class="p">())</span>
+</pre></div>
+</div>
+<p>The base <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataModel</span></code></a> class requires you to provide an index manager
+so we use an <a class="reference internal" href="api/pyface.data_view.index_manager.html#pyface.data_view.index_manager.IntIndexManager" title="pyface.data_view.index_manager.IntIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntIndexManager</span></code></a> because the data is non-hierarchical for this
+model.</p>
+<div class="section" id="data-structure">
+<h3>Data Structure<a class="headerlink" href="#data-structure" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.get_column_count" title="pyface.data_view.abstract_data_model.AbstractDataModel.get_column_count"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_column_count()</span></code></a> method needs to be implemented to tell the toolkit
+how many columns are in the data model.  For the dict model, keys are
+displayed in the row headers, so there is just one column displaying the
+value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">get_column_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>We can signal to the toolkit that certain rows can never have children
+via the <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.can_have_children" title="pyface.data_view.abstract_data_model.AbstractDataModel.can_have_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">can_have_children()</span></code></a> method.  The dict data model is
+non-hierarchical, so the root has children but no other rows will ever
+have children:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">can_have_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>We need to tell the toolkit how many child rows a particular row has,
+which is done via the <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.get_row_count" title="pyface.data_view.abstract_data_model.AbstractDataModel.get_row_count"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_row_count()</span></code></a> method.  In this example, only the
+root has children, and the number of child rows of the root is the length
+of the dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">get_row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-values">
+<h3>Data Values<a class="headerlink" href="#data-values" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.get_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.get_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_value()</span></code></a> method is used to return the raw value for each location.
+To get the values of the dict data model, we need to determine from the row
+and column index whether or not the cell is a column header and whether
+it corresponds to the keys or the values.  The code looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># this is a column header</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># title of the row headers</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_header</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_header</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row_index</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">())[</span><span class="n">row_index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># the is a row header, so get the key</span>
+                <span class="k">return</span> <span class="n">key</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>Conversion of values into data channels is done by providing a value type
+for each cell that implements the <a class="reference internal" href="api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType" title="pyface.data_view.abstract_value_type.AbstractValueType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractValueType</span></code></a> interface.  The
+<a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.get_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.get_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_value()</span></code></a> method is expected to provide an appropriate data
+type for each item in the table.  For this data model we have three value
+types: the column headers, the keys and the values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1">#: The header data channels.</span>
+    <span class="n">header_value_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractValueType</span><span class="p">)</span>
+
+    <span class="c1">#: The key column data channels.</span>
+    <span class="n">key_value_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractValueType</span><span class="p">)</span>
+
+    <span class="c1">#: The value column data channels.</span>
+    <span class="n">value_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractValueType</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default values of these traits are defined to be <a class="reference internal" href="api/pyface.data_view.value_types.text_value.html#pyface.data_view.value_types.text_value.TextValue" title="pyface.data_view.value_types.text_value.TextValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextValue</span></code></a> instances.
+Users of the model can provide different value types when instantiating,
+for example if the values are known to all be integers then <a class="reference internal" href="api/pyface.data_view.value_types.numeric_value.html#pyface.data_view.value_types.numeric_value.IntValue" title="pyface.data_view.value_types.numeric_value.IntValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntValue</span></code></a>
+could be used instead for the <code class="docutils literal notranslate"><span class="pre">value_type</span></code> trait:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DictDataModel</span><span class="p">(</span><span class="n">value_type</span><span class="o">=</span><span class="n">IntValue</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.get_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.get_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_value()</span></code></a> method uses the indices to select the appropriate
+value types:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">get_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_value_type</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_value_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_type</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType" title="pyface.data_view.abstract_value_type.AbstractValueType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractValueType</span></code></a> interface provides getters (and in some cases setters)
+for various data channels the most obvious of these is the text to display
+in an item, but channels allow checked state, image, color and tooltips
+to also be associated with a value.  How (or even if) these values are
+displayed or used is up to the implementation of the <a class="reference internal" href="api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget" title="pyface.data_view.i_data_view_widget.IDataViewWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataViewWidget</span></code></a>.</p>
+<p>As noted above, the DataView API provides a number of pre-definited value
+type implementations that cover common cases, but where they do not meet the
+needs of a particular design, developers should create their own
+implementations with the desired properties.</p>
+</div>
+<div class="section" id="invalid-values">
+<h3>Invalid Values<a class="headerlink" href="#invalid-values" title="Permalink to this headline">¶</a></h3>
+<p>If no valid value can be generated for some <em>expected</em> reason, value
+generation code can raise a <a class="reference internal" href="api/pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewGetError" title="pyface.data_view.data_view_errors.DataViewGetError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewGetError</span></code></a> exception.  This error
+will be handled and silently ignored by the DataView code, and no value
+will be displayed.  Any other errors raised by value generation are
+assumed to be unexpected and will be logged and re-raised, which is
+likely to cause an application crash.</p>
+</div>
+<div class="section" id="handling-updates">
+<h3>Handling Updates<a class="headerlink" href="#handling-updates" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataModel</span></code></a> class expects that when the data changes, one of
+two trait Events are fired.  If a value is changed, or the value type is
+updated, but the number of rows and columns is unaffected, then the
+<code class="docutils literal notranslate"><span class="pre">values_changed</span></code> trait should be fired with a tuple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="n">start_column_index</span><span class="p">,</span> <span class="n">end_row_index</span><span class="p">,</span> <span class="n">end_column_index</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a major change has occurred, or if the size, shape or layout of the data
+has changed, then the <code class="docutils literal notranslate"><span class="pre">structure_changed</span></code> event should be fired with a
+simple <code class="docutils literal notranslate"><span class="pre">True</span></code> value.</p>
+<p>While it is possible that a data model could require users of the model to
+manually fire these events (and for some opaque, non-traits data structures,
+this may be necessary), where possible it makes sense to use trait observers
+to automatically fire these events when a change occurs.</p>
+<p>For example, we want to listen for changes in the dictionary and its items.
+It is simplest in this case to just indicate that the entire model needs
+updating by firing the <code class="docutils literal notranslate"><span class="pre">structure_changed</span></code> event <a class="footnote-reference brackets" href="#id2" id="id1">1</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;data.items&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">data_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>Changes to the value types also should fire update events, but usually
+these are simply changes to the data, rather than changes to the structure
+of the table.  All value types have an updated event which is fired when
+any state of the type changes.  We can observe these, compute which
+indices are affected, and fire the appropriate event.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;header_value_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">header_values_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">([],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;key_value_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">key_values_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[])</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;value_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">values_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="editing-values">
+<h3>Editing Values<a class="headerlink" href="#editing-values" title="Permalink to this headline">¶</a></h3>
+<p>A model can flag values as being modifiable by implementing the
+<a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">can_set_value()</span></code></a> function.  The default implementation simply returns
+<code class="docutils literal notranslate"><span class="pre">False</span></code> for all items, but subclasses can override this to permit
+modification of the values.  For example, to allow modification of the
+values of the dictionary, we could write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">can_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>A corresponding <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.set_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.set_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_value()</span></code></a> method is needed to actually perform the changes
+to the underlying values.  If for some reason it is impossible to set the
+value (eg. an invalid value is supplied, or <a class="reference internal" href="api/pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel.set_value" title="pyface.data_view.abstract_data_model.AbstractDataModel.set_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_value()</span></code></a> is called with an
+inappropriate row or column value, then a <a class="reference internal" href="api/pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewSetError" title="pyface.data_view.data_view_errors.DataViewSetError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewSetError</span></code></a> should be
+raised:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_set_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+            <span class="n">row_index</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)[</span><span class="n">row_index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataViewSetError</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Even though a data value may be modifiable at the data model level, the
+value types also have the ability to control whether or not the value is
+editable.  For example, subclasses of <a class="reference internal" href="api/pyface.data_view.value_types.editable_value.html#pyface.data_view.value_types.editable_value.EditableValue" title="pyface.data_view.value_types.editable_value.EditableValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">EditableValue</span></code></a>, such as <a class="reference internal" href="api/pyface.data_view.value_types.text_value.html#pyface.data_view.value_types.text_value.TextValue" title="pyface.data_view.value_types.text_value.TextValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextValue</span></code></a>
+and <a class="reference internal" href="api/pyface.data_view.value_types.numeric_value.html#pyface.data_view.value_types.numeric_value.IntValue" title="pyface.data_view.value_types.numeric_value.IntValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntValue</span></code></a> have an <code class="docutils literal notranslate"><span class="pre">is_editable</span></code> trait that controls whether the
+value should be editable in the view (presuming that the underlying value
+can be set).  Other value types can simply prevent editing by ensuring that
+the <a class="reference internal" href="api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value" title="pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_editor_value()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>A more sophisticated implementation might try to work out
+whether the total number of items has changed, and if not, the
+location of the first and last changes in at least some of the
+change events, and then fire <code class="docutils literal notranslate"><span class="pre">values_changed</span></code>.  For simplicty
+we don’t try to do that in this example.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pyface DataViews</a><ul>
+<li><a class="reference internal" href="#indexing">Indexing</a><ul>
+<li><a class="reference internal" href="#selections">Selections</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drag-and-drop">Drag and Drop</a><ul>
+<li><a class="reference internal" href="#dragging">Dragging</a></li>
+<li><a class="reference internal" href="#dropping">Dropping</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#index-managers">Index Managers</a></li>
+<li><a class="reference internal" href="#data-models">Data Models</a><ul>
+<li><a class="reference internal" href="#data-structure">Data Structure</a></li>
+<li><a class="reference internal" href="#data-values">Data Values</a></li>
+<li><a class="reference internal" href="#invalid-values">Invalid Values</a></li>
+<li><a class="reference internal" href="#handling-updates">Handling Updates</a></li>
+<li><a class="reference internal" href="#editing-values">Editing Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="submodules.html"
+                        title="previous chapter">Submodules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fields.html"
+                        title="next chapter">Fields</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/data_view.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

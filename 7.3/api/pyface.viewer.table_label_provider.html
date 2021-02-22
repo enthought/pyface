@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.viewer.table_label_provider module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.viewer package" href="pyface.viewer.html" >
+    <link rel="next" title="pyface.viewer.table_viewer module" href="pyface.viewer.table_viewer.html" >
+    <link rel="prev" title="pyface.viewer.table_content_provider module" href="pyface.viewer.table_content_provider.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.viewer.html" accesskey="U">pyface.viewer package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.viewer.table_viewer.html" title="pyface.viewer.table_viewer module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.viewer.table_content_provider.html" title="pyface.viewer.table_content_provider module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.viewer.table_label_provider">
+<span id="pyface-viewer-table-label-provider-module"></span><h1>pyface.viewer.table_label_provider module<a class="headerlink" href="#module-pyface.viewer.table_label_provider" title="Permalink to this headline">¶</a></h1>
+<p>Base class for all table label providers.</p>
+<dl class="class">
+<dt id="pyface.viewer.table_label_provider.TableLabelProvider">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.table_label_provider.</code><code class="sig-name descname">TableLabelProvider</code><a class="reference internal" href="../_modules/pyface/viewer/table_label_provider.html#TableLabelProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.viewer.label_provider.html#pyface.viewer.label_provider.LabelProvider" title="pyface.viewer.label_provider.LabelProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.viewer.label_provider.LabelProvider</span></code></a></p>
+<p>Base class for all table label providers.</p>
+<p>By default an item has no icon, and ‘str’ is used to generate its label.</p>
+<dl class="method">
+<dt id="pyface.viewer.table_label_provider.TableLabelProvider.get_image">
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">element</em>, <em class="sig-param">column_index=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/table_label_provider.html#TableLabelProvider.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the filename of the label image for an element.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.viewer.table_label_provider.TableLabelProvider.get_text">
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">element</em>, <em class="sig-param">column_index=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/table_label_provider.html#TableLabelProvider.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label text for an element.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.viewer.table_content_provider.html"
+                        title="previous chapter">pyface.viewer.table_content_provider module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.viewer.table_viewer.html"
+                        title="next chapter">pyface.viewer.table_viewer module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.viewer.table_label_provider.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

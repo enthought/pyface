@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tree.tree_model &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tree.tree_model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; Model for tree views. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Event</span>
+
+
+<span class="kn">from</span> <span class="nn">.node_event</span> <span class="k">import</span> <span class="n">NodeEvent</span>
+
+
+<div class="viewcode-block" id="TreeModel"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel">[docs]</a><span class="k">class</span> <span class="nc">TreeModel</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Model for tree views. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;TreeModel&#39; interface ------------------------------------------------</span>
+
+    <span class="c1"># The root of the model.</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># Fired when nodes in the tree have changed in some way that affects their</span>
+    <span class="c1"># appearance but NOT their structure or position in the tree.</span>
+    <span class="n">nodes_changed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when nodes have been inserted into the tree.</span>
+    <span class="n">nodes_inserted</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when nodes have been removed from the tree.</span>
+    <span class="n">nodes_removed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when nodes have been replaced in the tree.</span>
+    <span class="n">nodes_replaced</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fire when the structure of the tree has changed DRASTICALLY from a given</span>
+    <span class="c1"># node down.</span>
+    <span class="n">structure_changed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;TreeModel&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TreeModel.has_children"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if a node has children, otherwise False.</span>
+
+<span class="sd">        This method is provided in case the model has an efficient way to</span>
+<span class="sd">        determine whether or not a node has any children without having to</span>
+<span class="sd">        actually get the children themselves.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_children"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the children of a node. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_drag_value"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_drag_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_drag_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is dragged for a node.</span>
+
+<span class="sd">        By default the drag value is the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="TreeModel.can_drop"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.can_drop">[docs]</a>    <span class="k">def</span> <span class="nf">can_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if a node allows an object to be dropped onto it. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TreeModel.drop"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.drop">[docs]</a>    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Drops an object onto a node. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_image"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">expanded</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the label image for a node.</span>
+
+<span class="sd">        Return None (the default) if no image is required.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_key"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_key">[docs]</a>    <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generate a unique key for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">key</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_selection_value"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_selection_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_selection_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is used when a node is selected.</span>
+
+<span class="sd">        By default the selection value is the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="TreeModel.get_text"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.get_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the label text for a node.</span>
+
+<span class="sd">        Return None if no text is required.  By default we return &#39;str(node)&#39;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TreeModel.can_set_text"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.can_set_text">[docs]</a>    <span class="k">def</span> <span class="nf">can_set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node&#39;s label can be set. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="TreeModel.set_text"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the label text for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TreeModel.is_collapsible"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.is_collapsible">[docs]</a>    <span class="k">def</span> <span class="nf">is_collapsible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is collapsible, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TreeModel.is_draggable"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.is_draggable">[docs]</a>    <span class="k">def</span> <span class="nf">is_draggable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is draggable, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TreeModel.is_editable"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.is_editable">[docs]</a>    <span class="k">def</span> <span class="nf">is_editable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is editable, otherwise False.</span>
+
+<span class="sd">        If the node is editable, its text can be set via the UI.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TreeModel.is_expandable"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.is_expandable">[docs]</a>    <span class="k">def</span> <span class="nf">is_expandable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is expandanble, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TreeModel.add_listener"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.add_listener">[docs]</a>    <span class="k">def</span> <span class="nf">add_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a listener for changes to a node. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TreeModel.remove_listener"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.remove_listener">[docs]</a>    <span class="k">def</span> <span class="nf">remove_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Removes a listener for changes to a node. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TreeModel.fire_nodes_changed"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.fire_nodes_changed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes changed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_changed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TreeModel.fire_nodes_inserted"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.fire_nodes_inserted">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_inserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes inserted event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_inserted</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TreeModel.fire_nodes_removed"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.fire_nodes_removed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_removed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes removed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_removed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TreeModel.fire_nodes_replaced"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.fire_nodes_replaced">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_replaced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">old_children</span><span class="p">,</span> <span class="n">new_children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes removed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_replaced</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span>
+            <span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">old_children</span><span class="o">=</span><span class="n">old_children</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">new_children</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TreeModel.fire_structure_changed"><a class="viewcode-back" href="../../../api/pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel.fire_structure_changed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_structure_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the structure changed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">return</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

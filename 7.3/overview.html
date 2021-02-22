@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Overview &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="next" title="Toolkits" href="toolkits.html" >
+    <link rel="prev" title="Welcome to the Pyface Documentation!" href="index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="toolkits.html" title="Toolkits"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="index.html" title="Welcome to the Pyface Documentation!"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="overview">
+<span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pyface-concepts">
+<h2>Pyface Concepts<a class="headerlink" href="#pyface-concepts" title="Permalink to this headline">¶</a></h2>
+<p>The basic purpose of Pyface is to provide an abstraction layer between the
+interface exposed to the users of the library and the actual implementation
+in terms of the underlying GUI library.  To achieve this, Pyface provides
+three types of object:</p>
+<dl class="simple">
+<dt>Interfaces</dt><dd><p>Interface classes express the public interface for Pyface widgets.  They
+use <a class="reference external" href="http://docs.enthought.com/traits/traits_user_manual/advanced.html#interfaces">Trait’s Interfaces</a>
+to express this.  Interface objects are not meant to be instantiated, but
+should be used to express the types of objects that you expect in a
+toolkit-independent manner.</p>
+</dd>
+<dt>Mixins</dt><dd><p>Mixin classes provide concrete implementations of certain functionality
+for a widget that are not toolkit-dependent, or can be provided purely
+using other parts of the abstract interface.  Concrete implementations
+can choose to inherit from the mixin class to use that common
+functionality.</p>
+</dd>
+<dt>Toolkit Implementations</dt><dd><p>Each toolkit can provide classes that are full implementations of the
+abstract Interfaces using the widgets and other facilities provided by the
+toolkit.</p>
+</dd>
+</dl>
+<p>In addition there is a class heirarchy othogonal to this specifying the
+relationship between different types of widgets. A “dialog” for example, is a
+subclass of “window”, which is in turn a subclass of “widget”.  This heirarchy
+roughly mirrors the typical widget class system of a GUI library, and so
+presents a general framework that can be abstracted between different backends.</p>
+<p>For example, a file dialog is specified using the <a class="reference internal" href="api/pyface.i_file_dialog.html#pyface.i_file_dialog.IFileDialog" title="pyface.i_file_dialog.IFileDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFileDialog</span></code></a>
+interface, which in turn inherits from <a class="reference internal" href="api/pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDialog</span></code></a>,
+<a class="reference internal" href="api/pyface.i_window.html#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">IWindow</span></code></a>, and <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IWidget</span></code></a>, and the full usable interface
+is the combination of these.  The <a class="reference internal" href="api/pyface.i_file_dialog.html#pyface.i_file_dialog.MFileDialog" title="pyface.i_file_dialog.MFileDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MFileDialog</span></code></a> class provides some
+mix-in capabilities around the expression of filters for file types.  And then
+there are two concrete implementations, <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.wx.file_dialog.FileDialog</span></code>
+for wxPython and <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.file_dialog.FileDialog</span></code> for the Qt
+backends.  These toolkit classes in turn inherit from the appropriate toolkit’s
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Dialog</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code> classes, as well
+as the <a class="reference internal" href="api/pyface.i_file_dialog.html#pyface.i_file_dialog.MFileDialog" title="pyface.i_file_dialog.MFileDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">MFileDialog</span></code></a> mixin.</p>
+<p>Finally, the toolkit selected for use determines which backend class is
+actually used when a program is run, allowing a developer to write code like
+the following to generate a platform-independent file dialog:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">FileDialog</span><span class="p">,</span> <span class="n">OK</span>
+
+<span class="k">def</span> <span class="nf">open_python_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Ask the user for a Python file to open &quot;&quot;&quot;</span>
+    <span class="n">dialog</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="n">wildcard</span><span class="o">=</span><span class="n">FileDialog</span><span class="o">.</span><span class="n">WILDCARD_PY</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>There is a lot more to the library than just this, of course, but with this
+framework in mind you can understand how Pyface is intended to be used.</p>
+</div>
+<div class="section" id="building-a-pyface-application">
+<h2>Building A Pyface Application<a class="headerlink" href="#building-a-pyface-application" title="Permalink to this headline">¶</a></h2>
+<p>For a minimal Pyface application, you need to do two things: create a subclass
+of <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code> containing your UI,
+and use the <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui.GUI</span></code> instance to start your application’s
+mainloop.</p>
+<p>This example shows how to create an application window containing a simple text
+label:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">HeadingText</span>
+
+<span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The main application window. &quot;&quot;&quot;</span>
+
+    <span class="c1"># The window title.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Hello World&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the editor. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">HeadingText</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">control</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow" title="pyface.i_application_window.IApplicationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">IApplicationWindow</span></code></a> interface also allows you to provide
+methods for creating menus, toolbars, and so forth.  In this example we have
+used a generic cross-toolkit label widget for our content, but if we are
+willing to forgo cross-platform compatibility we could create toolkit-specific
+widgets instead.</p>
+<p>Having defined your main window class, you then need to create an instance of
+it, open it, and start the event loop.  We do this in a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function
+for our application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">GUI</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Create the GUI.</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">GUI</span><span class="p">()</span>
+
+    <span class="c1"># Create and open the main window.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">MainWindow</span><span class="p">()</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+    <span class="c1"># Start the GUI event loop!</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">start_event_loop</span><span class="p">()</span>
+
+
+<span class="c1"># Application entry point.</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<p>An immediate desire when building a traditional GUI application is to add
+menus and toolbars to allow basic user interaction via the mouse or keyboard
+shortcuts.  Pyface provides these via <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a> objects.</p>
+<p>Actions provide the information needed to display a menu or toolbar item and
+such as the title text, accelerator keys, icon and whether the action has
+“radio” or “toggle” behaviour.  In addition the action needs to supply a
+function to perform when the user activates it.  This is usually done by
+either supplying a callable for the <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.on_perform" title="pyface.action.action.Action.on_perform"><code class="xref py py-attr docutils literal notranslate"><span class="pre">on_perform</span></code></a> trait of the
+<a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a> or by subclassing and overriding the <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.perform" title="pyface.action.action.Action.perform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">perform()</span></code></a>
+method.</p>
+<p>The <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.on_perform" title="pyface.action.action.Action.on_perform"><code class="xref py py-attr docutils literal notranslate"><span class="pre">on_perform</span></code></a> is a callable that should expect no parameters to
+be passed to it, so it should have all the context it needs to do what it
+needs.  At its simplest, the action might look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">Action</span>
+
+<span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
+    <span class="nb">print</span> <span class="s1">&#39;Hello world!&#39;</span>
+
+<span class="n">hello_action</span> <span class="o">=</span> <span class="n">Action</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Say hello&quot;</span><span class="p">,</span>
+    <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;Ctrl+Shift+H&quot;</span><span class="p">,</span>
+    <span class="n">on_perform</span><span class="o">=</span><span class="n">hello_world</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The equivalent written as a subclass of <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a> would look like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">Action</span>
+
+<span class="k">class</span> <span class="nc">HelloAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+
+    <span class="c1">#: The action&#39;s name (displayed on menus/tool bar tools etc).</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
+
+    <span class="c1">#: Keyboard accelerator.</span>
+    <span class="n">accelerator</span> <span class="o">=</span> <span class="s2">&quot;Ctrl+Shift+H&quot;</span>
+
+    <span class="c1">#: A short description of the action used for tooltip text etc.</span>
+    <span class="n">tooltip</span> <span class="o">=</span> <span class="s2">&quot;Say hello&quot;</span>
+
+    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="s1">&#39;Hello world!&#39;</span>
+</pre></div>
+</div>
+<p>Because actions usually require some context, the most common use will be to
+supply a class method as the <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.on_perform" title="pyface.action.action.Action.on_perform"><code class="xref py py-attr docutils literal notranslate"><span class="pre">on_perform</span></code></a> callable.  And for toolbar
+actions, you usually want to supply an <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.image" title="pyface.action.action.Action.image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">image</span></code></a> trait as well.</p>
+<p>Actions can be organized hierarchically into groups within menus and toolbars,
+and a menubar can contain multiple menus.  The following example shows how to
+define a very simple Python editor application with menus:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The main application window. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates a new application window. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Base class constructor.</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
+
+        <span class="c1"># Add a menu bar.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">MenuBarManager</span><span class="p">(</span>
+            <span class="n">MenuManager</span><span class="p">(</span>
+                <span class="n">Group</span><span class="p">(</span>
+                    <span class="n">Action</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;Open...&#39;</span><span class="p">,</span>
+                        <span class="n">accelerator</span><span class="o">=</span><span class="s1">&#39;Ctrl+O&#39;</span><span class="p">,</span>
+                        <span class="n">on_perform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">open_file</span>
+                    <span class="p">),</span>
+                    <span class="n">Action</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;Save&#39;</span><span class="p">,</span>
+                        <span class="n">accelerator</span><span class="o">=</span><span class="s1">&#39;Ctrl+S&#39;</span><span class="p">,</span>
+                        <span class="n">on_perform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_file</span>
+                    <span class="p">),</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;document_group&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Action</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;Close&#39;</span><span class="p">,</span>
+                    <span class="n">accelerator</span><span class="o">=</span><span class="s1">&#39;Ctrl+W&#39;</span><span class="p">,</span>
+                    <span class="n">on_perform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">close</span>
+                <span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&amp;File&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">open_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Open a new file. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">:</span>
+            <span class="n">dlg</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">wildcard</span><span class="o">=</span><span class="s2">&quot;*.py&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">dlg</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">path</span>
+
+    <span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Save the file. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="c1"># If you are trying to save to a file that doesn&#39;t exist,</span>
+                <span class="c1"># open up a FileDialog with a &#39;save as&#39; action.</span>
+                <span class="n">dlg</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span>
+                    <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span>
+                    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;save as&#39;</span><span class="p">,</span>
+                    <span class="n">wildcard</span><span class="o">=</span><span class="s2">&quot;*.py&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dlg</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dlg</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the editor. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span> <span class="o">=</span> <span class="n">PythonEditor</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">control</span>
+</pre></div>
+</div>
+<div class="section" id="toolbars">
+<h3>Toolbars<a class="headerlink" href="#toolbars" title="Permalink to this headline">¶</a></h3>
+<p>Toolbars work in a similar way to menus, each toolbar having a collection of
+groups of actions.  However in addition to the options available to a menu
+item, a toolbar item can have an <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a> that provides a widget
+to embed in the toolbar.  At its simplest this is done by specifying the
+<a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.style" title="pyface.action.action.Action.style"><code class="xref py py-attr docutils literal notranslate"><span class="pre">style</span></code></a> to be <code class="docutils literal notranslate"><span class="pre">&quot;widget&quot;</span></code> and then providing a
+<a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.control_factory" title="pyface.action.action.Action.control_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">control_factory</span></code></a> callable that returns a toolkit object.</p>
+<p>There are two utility subclasses provided to handle common use cases.  The
+<a class="reference internal" href="api/pyface.action.field_action.html#pyface.action.field_action.FieldAction" title="pyface.action.field_action.FieldAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldAction</span></code></a> class takes a
+<a class="reference internal" href="api/pyface.fields.i_field.html#pyface.fields.i_field.IField" title="pyface.fields.i_field.IField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IField</span></code></a> class and a dictionary of parameters
+that specify the behaviour, and use this as the factory to create the
+embedded widget.  <a class="reference internal" href="api/pyface.action.field_action.html#pyface.action.field_action.FieldAction" title="pyface.action.field_action.FieldAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldAction</span></code></a> also overrides the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">perform</span></code> method to pass the new value of the field
+to the <code class="xref py py-class docutils literal notranslate"><span class="pre">on_perform</span></code> method.</p>
+<p>The second is the <a class="reference internal" href="api/pyface.action.traitsui_widget_action.html#pyface.action.traitsui_widget_action.TraitsUIWidgetAction" title="pyface.action.traitsui_widget_action.TraitsUIWidgetAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsUIWidgetAction</span></code></a>
+class which embeds an arbitrary TraitsUI in the toolbar.</p>
+</div>
+</div>
+<div class="section" id="application-frameworks">
+<h2>Application Frameworks<a class="headerlink" href="#application-frameworks" title="Permalink to this headline">¶</a></h2>
+<p>Pyface provides two application frameworks that help in building complex,
+composable interfaces for applications.  The first is Workbench, which is an
+older framework; the second is Tasks, which is newer and more flexible than
+Workbench.  The Tasks framework is under active support, while Workbench is a
+legacy codebase.</p>
+<p>For new projects, it’s recommended that developers should use Tasks if they
+need such an application framework.</p>
+<p>Both these frameworks are designed to be extensible using Envisage plugins,
+and are currently documented as part of the Envisage project’s documentation.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://docs.enthought.com/envisage/envisage_core_documentation/workbench.html">Workbench</a></p></li>
+<li><p><a class="reference external" href="http://docs.enthought.com/envisage/tasks_user_manual/index.html">Tasks</a></p></li>
+</ul>
+<p>Examples of building simple applications in each framework are provided in the
+Pyface examples, and the APIs are auto-documented in these documents.</p>
+</div>
+<div class="section" id="pyface-and-traitsui">
+<h2>Pyface and TraitsUI<a class="headerlink" href="#pyface-and-traitsui" title="Permalink to this headline">¶</a></h2>
+<p>Pyface is generally a lower-level GUI toolkit than TraitsUI, and many users
+will find that TraitsUI provides all that they need.  TraitsUI uses Pyface
+for some of its functionality, and the Workbench and Tasks are designed to
+easily incoprorate UIs built using TraitsUI.</p>
+<p>It is fairly straightforward to use or embed a TraitsUI view into a Pyface
+widget: the basic approach is to call <code class="xref py py-meth docutils literal notranslate"><span class="pre">edit_traits()</span></code> with
+<code class="docutils literal notranslate"><span class="pre">kind='panel'</span></code> from inside the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_control()</span></code> method (or
+equivalent, like <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_contents()</span></code> when embedding in a window
+or dialog) of the widget, extract the toolkit control from the resulting
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">ui</span></code> object, and return or embed that control.</p>
+<p>For example, to embed a TraitsUI View in an <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code>,
+you might do something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Model class representing a person &quot;&quot;&quot;</span>
+
+    <span class="c1">#: the name of the person</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span>
+
+    <span class="c1">#: the age of the person</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+
+    <span class="c1">#: the gender of the person</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">)</span>
+
+    <span class="c1"># a default traits view</span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The main application window. &quot;&quot;&quot;</span>
+
+    <span class="c1"># The size of the window.</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+
+    <span class="c1"># The window title.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;TraitsUI Person&#39;</span>
+
+    <span class="c1"># The traits object to display</span>
+    <span class="n">person</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the editor. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">edit_traits</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;panel&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ui</span><span class="o">.</span><span class="n">control</span>
+</pre></div>
+</div>
+<p>A similar approach can be used when working with Enaml, Matplotlib, or other
+libraries which can produce a toolkit-specific control.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#pyface-concepts">Pyface Concepts</a></li>
+<li><a class="reference internal" href="#building-a-pyface-application">Building A Pyface Application</a></li>
+<li><a class="reference internal" href="#actions">Actions</a><ul>
+<li><a class="reference internal" href="#toolbars">Toolbars</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-frameworks">Application Frameworks</a></li>
+<li><a class="reference internal" href="#pyface-and-traitsui">Pyface and TraitsUI</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the Pyface Documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="toolkits.html"
+                        title="next chapter">Toolkits</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/overview.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

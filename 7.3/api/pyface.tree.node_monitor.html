@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tree.node_monitor module &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="up" title="pyface.tree package" href="pyface.tree.html" >
+    <link rel="next" title="pyface.tree.node_tree module" href="pyface.tree.node_tree.html" >
+    <link rel="prev" title="pyface.tree.node_manager module" href="pyface.tree.node_manager.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.tree.html" accesskey="U">pyface.tree package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.tree.node_tree.html" title="pyface.tree.node_tree module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.tree.node_manager.html" title="pyface.tree.node_manager module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.tree.node_monitor">
+<span id="pyface-tree-node-monitor-module"></span><h1>pyface.tree.node_monitor module<a class="headerlink" href="#module-pyface.tree.node_monitor" title="Permalink to this headline">¶</a></h1>
+<p>A monitor for appearance and structural changes to a node.</p>
+<dl class="class">
+<dt id="pyface.tree.node_monitor.NodeMonitor">
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tree.node_monitor.</code><code class="sig-name descname">NodeMonitor</code><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A monitor for appearance and structural changes to a node.</p>
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start listening to changes to the node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop listening to changes to the node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.fire_nodes_changed">
+<code class="sig-name descname">fire_nodes_changed</code><span class="sig-paren">(</span><em class="sig-param">children=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.fire_nodes_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.fire_nodes_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the nodes changed event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.fire_nodes_inserted">
+<code class="sig-name descname">fire_nodes_inserted</code><span class="sig-paren">(</span><em class="sig-param">children</em>, <em class="sig-param">index=-1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.fire_nodes_inserted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.fire_nodes_inserted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the nodes inserted event.</p>
+<p>If the index is -1 it means the nodes were appended.</p>
+<p>fixme: The tree and model should probably have an ‘appended’ event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.fire_nodes_removed">
+<code class="sig-name descname">fire_nodes_removed</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.fire_nodes_removed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.fire_nodes_removed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the nodes removed event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.fire_nodes_replaced">
+<code class="sig-name descname">fire_nodes_replaced</code><span class="sig-paren">(</span><em class="sig-param">old_children</em>, <em class="sig-param">new_children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.fire_nodes_replaced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.fire_nodes_replaced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the nodes replaced event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tree.node_monitor.NodeMonitor.fire_structure_changed">
+<code class="sig-name descname">fire_structure_changed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_monitor.html#NodeMonitor.fire_structure_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_monitor.NodeMonitor.fire_structure_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the structure changed event.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.tree.node_manager.html"
+                        title="previous chapter">pyface.tree.node_manager module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.tree.node_tree.html"
+                        title="next chapter">pyface.tree.node_tree module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.tree.node_monitor.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
