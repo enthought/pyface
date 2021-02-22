@@ -50,8 +50,8 @@ Build, Tests and Continuous Integration
 
 Maintenance and code reorganization
 
-* Replace use of ``traits`` ``on_trait_change`` with ``observe``. (#882, #881,
-  #880, #870, #864)
+* Replace use of ``traits`` ``on_trait_change`` with ``observe``. (#892, #882,
+  #881, #880, #870, #864)
 * Import from ``traits.api`` where possible. (#866)
 * Expose keyboard focus on Widgets. (#862)
 * Remove support for PySide. (#861)
