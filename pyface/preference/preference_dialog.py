@@ -15,4 +15,4 @@
 
 from pyface.toolkit import toolkit_object
 
-TreeViewer = toolkit_object("preference.preference_dialog:PreferenceDialog")
+PreferencesDialog = toolkit_object("preference.preference_dialog:PreferenceDialog")
