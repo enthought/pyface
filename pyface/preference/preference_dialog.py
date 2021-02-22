@@ -15,4 +15,4 @@
 
 from pyface.toolkit import toolkit_object
 
-PreferencesDialog = toolkit_object("preference.preference_dialog:PreferenceDialog")
+PreferenceDialog = toolkit_object("preference.preference_dialog:PreferenceDialog")
