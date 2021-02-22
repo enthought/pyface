@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.tasks_application module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.tasks_application module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.topological_sort module" href="pyface.tasks.topological_sort.html" >
     <link rel="prev" title="pyface.tasks.task_window_layout module" href="pyface.tasks.task_window_layout.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -93,7 +93,7 @@
 the creation of tasks and corresponding windows.</p>
 <dl class="class">
 <dt id="pyface.tasks.tasks_application.TaskFactory">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TaskFactory</code><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TaskFactory</code><a class="reference internal" href="../_modules/pyface/tasks/tasks_application.html#TaskFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
 <p>A factory for creating a Task with some additional metadata.</p>
 <dl class="attribute">
@@ -114,14 +114,14 @@ created by the factory.</p>
 <code class="sig-name descname">factory</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>A callable with the following signature:</p>
 <blockquote>
-<div><p>callable(<a href="#id1"><span class="problematic" id="id2">**</span></a>traits) -&gt; Task</p>
+<div><p>callable(**traits) -&gt; Task</p>
 </div></blockquote>
 <p>Often this attribute will simply be a Task subclass.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TaskFactory.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/tasks_application.html#TaskFactory.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Task.</p>
 <p>The default implementation simply calls the ‘factory’ attribute.</p>
 </dd></dl>
@@ -130,7 +130,7 @@ created by the factory.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.tasks_application.TasksApplication">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TasksApplication</code><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TasksApplication</code><a class="reference internal" href="../_modules/pyface/tasks/tasks_application.html#TasksApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui_application.GUIApplication</span></code></a></p>
 <p>A base class for Pyface tasks applications.</p>
 <dl class="attribute">
@@ -141,7 +141,7 @@ created by the factory.</p>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.active_task">
-<code class="sig-name descname">active_task</code><em class="property"> = Property(depends_on=&quot;active_window.active_task&quot;)</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.active_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">active_task</code><em class="property"> = Property(observe=&quot;active_window.active_task&quot;)</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.active_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently active Task if any.</p>
 </dd></dl>
 
@@ -172,7 +172,7 @@ window will be created with the first available task factory.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TasksApplication.create_task">
-<code class="sig-name descname">create_task</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_task</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/tasks_application.html#TasksApplication.create_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Task with the specified ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -189,7 +189,7 @@ window will be created with the first available task factory.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TasksApplication.create_window">
-<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">layout=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_window" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">layout=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/tasks_application.html#TasksApplication.create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect task to application and open task in a new window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -257,10 +257,10 @@ window will be created with the first available task factory.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

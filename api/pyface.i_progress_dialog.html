@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_progress_dialog module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.i_progress_dialog module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_python_editor module" href="pyface.i_python_editor.html" >
     <link rel="prev" title="pyface.i_message_dialog module" href="pyface.i_message_dialog.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -91,7 +91,7 @@
 <p>The interface for a dialog that allows the user to open/save files etc.</p>
 <dl class="class">
 <dt id="pyface.i_progress_dialog.IProgressDialog">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_progress_dialog.</code><code class="sig-name descname">IProgressDialog</code><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_progress_dialog.</code><code class="sig-name descname">IProgressDialog</code><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#IProgressDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
 <p>A simple progress dialog window which allows itself to be updated</p>
 <dl class="attribute">
@@ -144,7 +144,7 @@
 
 <dl class="method">
 <dt id="pyface.i_progress_dialog.IProgressDialog.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#IProgressDialog.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the progress bar to the desired value</p>
 <p>If the value is &gt;= the maximum and the progress bar is not contained
 in another panel the parent window will be closed.</p>
@@ -157,7 +157,7 @@ in another panel the parent window will be closed.</p>
 
 <dl class="method">
 <dt id="pyface.i_progress_dialog.IProgressDialog.change_message">
-<code class="sig-name descname">change_message</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">change_message</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#IProgressDialog.change_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the displayed message in the progress dialog</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -170,20 +170,20 @@ in another panel the parent window will be closed.</p>
 
 <dl class="class">
 <dt id="pyface.i_progress_dialog.MProgressDialog">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_progress_dialog.</code><code class="sig-name descname">MProgressDialog</code><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_progress_dialog.</code><code class="sig-name descname">MProgressDialog</code><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#MProgressDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IProgressDialog interface.</p>
 <p>Implements: update()</p>
 <dl class="method">
 <dt id="pyface.i_progress_dialog.MProgressDialog.open">
-<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#MProgressDialog.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open the dialog</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.i_progress_dialog.MProgressDialog.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#MProgressDialog.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the progress bar to the desired value</p>
 <p>If the value is &gt;= the maximum and the progress bar is not contained
 in another panel the parent window will be closed.</p>
@@ -196,7 +196,7 @@ in another panel the parent window will be closed.</p>
 
 <dl class="method">
 <dt id="pyface.i_progress_dialog.MProgressDialog.change_message">
-<code class="sig-name descname">change_message</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">change_message</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_progress_dialog.html#MProgressDialog.change_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the displayed message in the progress dialog</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -255,10 +255,10 @@ in another panel the parent window will be closed.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

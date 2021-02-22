@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.action.action module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.action.action module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.action package" href="pyface.action.html" >
     <link rel="next" title="pyface.action.action_controller module" href="pyface.action.action_controller.html" >
     <link rel="prev" title="pyface.action package" href="pyface.action.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
@@ -92,7 +92,7 @@
 <p>The base class for all actions.</p>
 <dl class="class">
 <dt id="pyface.action.action.Action">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action.</code><code class="sig-name descname">Action</code><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action.</code><code class="sig-name descname">Action</code><a class="reference internal" href="../_modules/pyface/action/action.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The base class for all actions.</p>
 <p>An action is the non-UI side of a command which can be triggered by the end
@@ -177,7 +177,7 @@ is no tooltip, then well, maybe you just hate your users ;^).</p>
 
 <dl class="method">
 <dt id="pyface.action.action.Action.create_control">
-<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.create_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when creating a “widget” style action.</p>
 <p>By default this will call whatever callable is supplied via the
 ‘control_factory’ trait which is a callable that should take the parent
@@ -201,7 +201,7 @@ other styles.</p>
 
 <dl class="method">
 <dt id="pyface.action.action.Action.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the action is no longer required.</p>
 <p>By default this method does nothing, but this would be a great place to
 unhook trait listeners etc.</p>
@@ -209,7 +209,7 @@ unhook trait listeners etc.</p>
 
 <dl class="method">
 <dt id="pyface.action.action.Action.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the action.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -220,7 +220,7 @@ unhook trait listeners etc.</p>
 
 <dl class="method">
 <dt id="pyface.action.action.Action.factory">
-<em class="property">classmethod </em><code class="sig-name descname">factory</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.factory" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">factory</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a factory for an action with the given arguments.</p>
 <p>This is particularly useful for passing context to Tasks schema
 additions.</p>
@@ -276,10 +276,10 @@ additions.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

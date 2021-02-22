@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.task_action_controller module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.action.task_action_controller module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="next" title="pyface.tasks.action.task_action_manager_builder module" href="pyface.tasks.action.task_action_manager_builder.html" >
     <link rel="prev" title="pyface.tasks.action.task_action module" href="pyface.tasks.action.task_action.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -92,27 +92,33 @@
 <span id="pyface-tasks-action-task-action-controller-module"></span><h1>pyface.tasks.action.task_action_controller module<a class="headerlink" href="#module-pyface.tasks.action.task_action_controller" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.action.task_action_controller.TaskActionController">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_action_controller.</code><code class="sig-name descname">TaskActionController</code><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_action_controller.</code><code class="sig-name descname">TaskActionController</code><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_controller.html#TaskActionController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.action.action_controller.html#pyface.action.action_controller.ActionController" title="pyface.action.action_controller.ActionController"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.action_controller.ActionController</span></code></a></p>
 <p>An action controller for menu and tool bars.</p>
 <p>The controller is used to ‘hook’ the invocation of every action on the menu
 and tool bars. This is done so that additional, Task-specific information
 can be added to action events. Currently, we attach a reference to the Task.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.task_action_controller.TaskActionController.task">
+<code class="sig-name descname">task</code><em class="property"> = Instance(Task)</em><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>The task that this is the controller for.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_controller.TaskActionController.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_controller.html#TaskActionController.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control an action invocation.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_controller.TaskActionController.add_to_menu">
-<code class="sig-name descname">add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_controller.html#TaskActionController.add_to_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action item is added to a menu/menubar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_controller.TaskActionController.add_to_toolbar">
-<code class="sig-name descname">add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_controller.html#TaskActionController.add_to_toolbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action item is added to a toolbar.</p>
 </dd></dl>
 
@@ -166,10 +172,10 @@ can be added to action events. Currently, we attach a reference to the Task.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

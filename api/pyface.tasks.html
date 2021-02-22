@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks package &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks package &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="prev" title="pyface.sizers.flow module" href="pyface.sizers.flow.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -94,7 +94,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyface.tasks.action.html">pyface.tasks.action package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyface.tasks.action.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyface.tasks.action.api.html">pyface.tasks.action.api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.tasks.action.api.html">pyface.tasks.action.api module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#actionschemas-and-aliases">ActionSchemas and aliases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#schema-addition">Schema Addition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#tasks-specific-action-controller">Tasks-specific Action Controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#tasks-specific-action-manager-factory">Tasks-specific Action Manager factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#tasks-specific-actions">Tasks-specific Actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.tasks.action.api.html#useful-tasks-actions-and-groups">Useful Tasks Actions and Groups</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.tasks.action.dock_pane_toggle_group.html">pyface.tasks.action.dock_pane_toggle_group module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.tasks.action.listening_action.html">pyface.tasks.action.listening_action module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.tasks.action.schema.html">pyface.tasks.action.schema module</a></li>
@@ -124,7 +132,14 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyface.tasks.advanced_editor_area_pane.html">pyface.tasks.advanced_editor_area_pane module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyface.tasks.api.html">pyface.tasks.api module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tasks.api.html">pyface.tasks.api module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tasks.api.html#tasks-specific-interfaces">Tasks-specific Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tasks.api.html#tasks-tasks-application-and-related-classes">Tasks, Tasks Application and related classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tasks.api.html#tasks-layout">Tasks layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tasks.api.html#traits-specific-tasks-classes">Traits-specific Tasks classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tasks.api.html#enaml-specific-tasks-functionality">Enaml-specific Tasks functionality</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.tasks.dock_pane.html">pyface.tasks.dock_pane module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.tasks.editor.html">pyface.tasks.editor module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.tasks.editor_area_pane.html">pyface.tasks.editor_area_pane module</a></li>
@@ -210,10 +225,10 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

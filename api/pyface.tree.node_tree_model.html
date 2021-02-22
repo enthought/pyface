@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tree.node_tree_model module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tree.node_tree_model module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tree package" href="pyface.tree.html" >
     <link rel="next" title="pyface.tree.node_type module" href="pyface.tree.node_type.html" >
     <link rel="prev" title="pyface.tree.node_tree module" href="pyface.tree.node_tree.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tree.html" accesskey="U">pyface.tree package</a></li> 
@@ -92,12 +92,12 @@
 <p>The model for a tree control with extensible node types.</p>
 <dl class="class">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tree.node_tree_model.</code><code class="sig-name descname">NodeTreeModel</code><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tree.node_tree_model.</code><code class="sig-name descname">NodeTreeModel</code><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel" title="pyface.tree.tree_model.TreeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tree.tree_model.TreeModel</span></code></a></p>
 <p>The model for a tree control with extensible node types.</p>
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.has_children">
-<code class="sig-name descname">has_children</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.has_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_children</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.has_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.has_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if a node has children, otherwise False.</p>
 <p>This method is provided in case the model has an efficient way to
 determine whether or not a node has any children without having to
@@ -106,114 +106,114 @@ actually get the children themselves.</p>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_children">
-<code class="sig-name descname">get_children</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_children</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the children of a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_default_action">
-<code class="sig-name descname">get_default_action</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_default_action" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_default_action</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_default_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_default_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the default action for a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_drag_value">
-<code class="sig-name descname">get_drag_value</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_drag_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_drag_value</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_drag_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_drag_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value that is dragged for a node.</p>
 <p>By default the drag value is the node itself.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.can_drop">
-<code class="sig-name descname">can_drop</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.can_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_drop</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.can_drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.can_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if a node allows an object to be dropped onto it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.drop">
-<code class="sig-name descname">drop</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">drop</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Drops an object onto a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_image">
-<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">selected</em>, <em class="sig-param">expanded</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">selected</em>, <em class="sig-param">expanded</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label image for a node.</p>
 <p>Return None (the default) if no image is required.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_key">
-<code class="sig-name descname">get_key</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_key</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a unique key for a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_selection_value">
-<code class="sig-name descname">get_selection_value</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_selection_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_selection_value</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_selection_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_selection_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value that is used when a node is selected.</p>
 <p>By default the selection value is the node itself.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_text">
-<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label text for a node.</p>
 <p>Return None if no text is required.  By default we return ‘str(node)’.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.can_set_text">
-<code class="sig-name descname">can_set_text</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.can_set_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_text</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.can_set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.can_set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the node’s label can be set.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.set_text">
-<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the label text for a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.is_collapsible">
-<code class="sig-name descname">is_collapsible</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_collapsible" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_collapsible</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.is_collapsible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_collapsible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the node is collapsible, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.is_draggable">
-<code class="sig-name descname">is_draggable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_draggable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_draggable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.is_draggable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_draggable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the node is draggable, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.is_editable">
-<code class="sig-name descname">is_editable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_editable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_editable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.is_editable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_editable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the node is editable, otherwise False.</p>
 <p>If the node is editable, its text can be set via the UI.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.is_expandable">
-<code class="sig-name descname">is_expandable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_expandable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_expandable</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.is_expandable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.is_expandable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the node is expandanble, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.add_listener">
-<code class="sig-name descname">add_listener</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.add_listener" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_listener</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.add_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.add_listener" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a listener for changes to a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.remove_listener">
-<code class="sig-name descname">remove_listener</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.remove_listener" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_listener</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.remove_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.remove_listener" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a listener for changes to a node.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tree.node_tree_model.NodeTreeModel.get_context_menu">
-<code class="sig-name descname">get_context_menu</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_context_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_context_menu</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_tree_model.html#NodeTreeModel.get_context_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_tree_model.NodeTreeModel.get_context_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the context menu for a node.</p>
 </dd></dl>
 
@@ -267,10 +267,10 @@ actually get the children themselves.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

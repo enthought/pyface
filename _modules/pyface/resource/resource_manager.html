@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.resource.resource_manager &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.resource.resource_manager</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; The default resource manager.</span>
+
+<span class="sd">A resource manager locates and loads application resources such as images and</span>
+<span class="sd">sounds etc.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">collections.abc</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">inspect</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">types</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="k">import</span> <span class="n">is_zipfile</span><span class="p">,</span> <span class="n">ZipFile</span>
+
+<span class="kn">from</span> <span class="nn">importlib_resources</span> <span class="k">import</span> <span class="n">files</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">traits.util.resource</span> <span class="k">import</span> <span class="n">get_path</span>
+
+<span class="kn">from</span> <span class="nn">pyface.resource.resource_factory</span> <span class="k">import</span> <span class="n">ResourceFactory</span>
+<span class="kn">from</span> <span class="nn">pyface.resource.resource_reference</span> <span class="k">import</span> <span class="n">ImageReference</span>
+
+
+<div class="viewcode-block" id="ResourceManager"><a class="viewcode-back" href="../../../api/pyface.resource.resource_manager.html#pyface.resource.resource_manager.ResourceManager">[docs]</a><span class="k">class</span> <span class="nc">ResourceManager</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The default resource manager.</span>
+
+<span class="sd">    A resource manager locates and loads application resources such as images</span>
+<span class="sd">    and sounds etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Allowed extensions for image resources.</span>
+    <span class="n">IMAGE_EXTENSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.bmp&quot;</span><span class="p">,</span> <span class="s2">&quot;.gif&quot;</span><span class="p">,</span> <span class="s2">&quot;.ico&quot;</span><span class="p">]</span>
+
+    <span class="c1"># A list of additional search paths. These paths are fallbacks, and hence</span>
+    <span class="c1"># have lower priority than the paths provided by resource objects.</span>
+    <span class="n">extra_paths</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span>
+
+    <span class="c1"># The resource factory is responsible for actually creating resources.</span>
+    <span class="c1"># This is used so that (for example) different GUI toolkits can create</span>
+    <span class="c1"># a images in the format that they require.</span>
+    <span class="n">resource_factory</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ResourceFactory</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ResourceManager&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ResourceManager.locate_image"><a class="viewcode-back" href="../../../api/pyface.resource.resource_manager.html#pyface.resource.resource_manager.ResourceManager.locate_image">[docs]</a>    <span class="k">def</span> <span class="nf">locate_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Locates an image.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image_name : str</span>
+<span class="sd">            Name of the image file.</span>
+<span class="sd">        path : list of (str or ModuleType)</span>
+<span class="sd">            Paths from which image files will be searched. Note that for each</span>
+<span class="sd">            path, a subdirectory named &#39;images&#39; will be search first.</span>
+<span class="sd">            The first match will be returned.</span>
+<span class="sd">        size : tuple of (m: int, n: int), optional</span>
+<span class="sd">            Specific size of the image requested. If provided, then</span>
+<span class="sd">            the subdirectory ``images/{m}x{n}`` will be searched first,</span>
+<span class="sd">            followed by the ``images`` subdirectory and its containing folder.</span>
+<span class="sd">            Default is None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image_ref : ImageReference or None</span>
+<span class="sd">            ImageReference to the image found, or None if no matching images</span>
+<span class="sd">            are found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+
+        <span class="n">resource_path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_paths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">resource_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">):</span>
+                <span class="n">resource_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resource_path</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_resource_path</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_locate_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceManager.load_image"><a class="viewcode-back" href="../../../api/pyface.resource.resource_manager.html#pyface.resource.resource_manager.ResourceManager.load_image">[docs]</a>    <span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Loads an image. &quot;&quot;&quot;</span>
+
+        <span class="n">reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">locate_image</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">image</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_locate_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Attempts to locate an image resource.</span>
+
+<span class="sd">        If the image is found, an image resource reference is returned.</span>
+<span class="sd">        If the image is NOT found None is returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># If the image name contains a file extension (eg. &#39;.jpg&#39;) then we will</span>
+        <span class="c1"># only accept an an EXACT filename match.</span>
+        <span class="n">basename</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">extension</span><span class="p">]</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">image_name</span>
+
+        <span class="c1"># Otherwise, we will search for common image suffixes.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">extensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IMAGE_EXTENSIONS</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">image_name</span> <span class="o">+</span> <span class="s2">&quot;.*&quot;</span>
+
+        <span class="c1"># Try the &#39;images&#39; sub-directory first (since that is commonly</span>
+        <span class="c1"># where we put them!).  If the image is not found there then look</span>
+        <span class="c1"># in the directory itself.</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">subdirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subdirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;images/</span><span class="si">%d</span><span class="s2">x</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Concrete image filenames to be searched</span>
+        <span class="n">image_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">basename</span> <span class="o">+</span> <span class="n">extension</span> <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">resource_path</span><span class="p">:</span>
+
+            <span class="c1"># If we come across a reference to a module, try and find the</span>
+            <span class="c1"># image inside of an .egg, .zip, etc.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">_find_resource_data</span><span class="p">(</span>
+                        <span class="n">dirname</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">image_filenames</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">ImageReference</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Is there anything resembling the image name in the directory?</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">subdirs</span><span class="p">:</span>
+                <span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                    <span class="n">not_used</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+                        <span class="n">reference</span> <span class="o">=</span> <span class="n">ImageReference</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span>
+                        <span class="p">)</span>
+
+                        <span class="k">return</span> <span class="n">reference</span>
+
+            <span class="c1"># Is there an &#39;images&#39; zip file in the directory?</span>
+            <span class="n">zip_filename</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s2">&quot;images.zip&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">):</span>
+                <span class="n">zip_file</span> <span class="o">=</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                <span class="c1"># Try the image name itself, and then the image name with</span>
+                <span class="c1"># common images suffixes.</span>
+                <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">image_data</span> <span class="o">=</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">basename</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
+                        <span class="n">reference</span> <span class="o">=</span> <span class="n">ImageReference</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">image_data</span>
+                        <span class="p">)</span>
+
+                        <span class="k">return</span> <span class="n">reference</span>
+
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+            <span class="c1"># is this a path within a zip file?</span>
+            <span class="c1"># first, find the zip file in the path</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">dirname</span>
+            <span class="n">zippath</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">while</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="n">is_zipfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">filepath</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">filepath</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">filepath</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">zippath</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">zippath</span> <span class="o">=</span> <span class="n">tail</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">zippath</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">zippath</span> <span class="o">=</span> <span class="n">tail</span>
+
+            <span class="c1"># if we found a zipfile, then look inside it for the image!</span>
+            <span class="k">if</span> <span class="n">is_zipfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+
+                <span class="n">zip_file</span> <span class="o">=</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">subpath</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]:</span>
+                    <span class="k">for</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">extensions</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="c1"># this is a little messy. since zip files don&#39;t</span>
+                            <span class="c1"># recognize a leading slash, we have to be very</span>
+                            <span class="c1"># particular about how we build this path when</span>
+                            <span class="c1"># there are empty strings</span>
+                            <span class="k">if</span> <span class="n">zippath</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                                <span class="n">path</span> <span class="o">=</span> <span class="n">zippath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                            <span class="k">if</span> <span class="n">subpath</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="n">subpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+
+                            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="n">basename</span> <span class="o">+</span> <span class="n">extension</span>
+                            <span class="c1"># now that we have the path we can attempt to load</span>
+                            <span class="c1"># the image</span>
+                            <span class="n">image_data</span> <span class="o">=</span> <span class="n">zip_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                            <span class="n">reference</span> <span class="o">=</span> <span class="n">ImageReference</span><span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">image_data</span>
+                            <span class="p">)</span>
+
+                            <span class="c1"># if there was no exception then return the result</span>
+                            <span class="k">return</span> <span class="n">reference</span>
+
+                        <span class="k">except</span><span class="p">:</span>
+                            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_resource_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the resource path for an object. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s2">&quot;resource_path&quot;</span><span class="p">):</span>
+            <span class="n">resource_path</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">resource_path</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">resource_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_resource_path</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resource_path</span>
+
+    <span class="k">def</span> <span class="nf">_get_default_resource_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the default resource path for an object. &quot;&quot;&quot;</span>
+
+        <span class="n">resource_path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmro</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resource_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_path</span><span class="p">(</span><span class="n">klass</span><span class="p">))</span>
+
+            <span class="c1"># We get an attribute error when we get to a C extension type (in</span>
+            <span class="c1"># our case it will most likley be &#39;CHasTraits&#39;.  We simply ignore</span>
+            <span class="c1"># everything after this point!</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="n">resource_path</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_package_data</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">rel_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Return package data in bytes for the given module and resource path.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module : ModuleType</span>
+<span class="sd">        A module from which package data will be discovered.</span>
+<span class="sd">        If the module name does not conform to the package requirement, then</span>
+<span class="sd">        its &quot;__file__&quot; attribute is used for locating the directory to search</span>
+<span class="sd">        for resource files.</span>
+<span class="sd">    rel_path : str</span>
+<span class="sd">        &quot;/&quot;-separated path for loading data file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : bytes</span>
+<span class="sd">        Loaded data in bytes.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    OSError</span>
+<span class="sd">        If the path referenced does not resolve to an existing file or the</span>
+<span class="sd">        file cannot be read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">__spec__</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="n">module</span><span class="o">.</span><span class="n">__spec__</span><span class="o">.</span><span class="n">submodule_search_locations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">module_dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">module_dir_path</span><span class="p">,</span> <span class="o">*</span><span class="n">rel_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">files</span><span class="p">(</span><span class="n">module</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">rel_path</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_find_resource_data</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; For the given module, search directories and names, find a matching</span>
+<span class="sd">    resource file and return its content as bytes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module : ModuleType</span>
+<span class="sd">        A module from which package data will be discovered.</span>
+<span class="sd">        If the module name does not conform to the package requirement, then</span>
+<span class="sd">        its &quot;__file__&quot; attribute is used for locating the directory to search</span>
+<span class="sd">        for resource files.</span>
+<span class="sd">    subdirs : list of str</span>
+<span class="sd">        Name of subdirectories to try. Each value can be a &quot;/&quot;-separated</span>
+<span class="sd">        string to represent more nested subdirectories.</span>
+<span class="sd">    filenames : list of str</span>
+<span class="sd">        File names to try.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : bytes</span>
+<span class="sd">        Loaded data in bytes.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    OSError</span>
+<span class="sd">        If the path referenced does not resolve to an existing file or the</span>
+<span class="sd">        file cannot be read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">subdirs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">searchpath</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">_get_package_data</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">searchpath</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                <span class="k">pass</span>
+    <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span>
+        <span class="s2">&quot;Unable to load data for the given module and search paths.&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

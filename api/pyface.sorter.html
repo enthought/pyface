@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.sorter module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.sorter module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.splash_screen module" href="pyface.splash_screen.html" >
     <link rel="prev" title="pyface.single_choice_dialog module" href="pyface.single_choice_dialog.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -91,12 +91,12 @@
 <p>Base class for all sorters.</p>
 <dl class="class">
 <dt id="pyface.sorter.Sorter">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.sorter.</code><code class="sig-name descname">Sorter</code><a class="headerlink" href="#pyface.sorter.Sorter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.sorter.</code><code class="sig-name descname">Sorter</code><a class="reference internal" href="../_modules/pyface/sorter.html#Sorter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.sorter.Sorter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all sorters.</p>
 <dl class="method">
 <dt id="pyface.sorter.Sorter.sort">
-<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">nodes</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sorter.Sorter.sort" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">nodes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/sorter.html#Sorter.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.sorter.Sorter.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts a list of nodes IN PLACE.</p>
 <p>‘widget’ is the widget that we are sorting nodes for.
 ‘parent’ is the parent node.
@@ -106,12 +106,12 @@
 
 <dl class="method">
 <dt id="pyface.sorter.Sorter.key">
-<code class="sig-name descname">key</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sorter.Sorter.key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">key</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/sorter.html#Sorter.key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.sorter.Sorter.key" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.sorter.Sorter.category">
-<code class="sig-name descname">category</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sorter.Sorter.category" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">category</code><span class="sig-paren">(</span><em class="sig-param">widget</em>, <em class="sig-param">parent</em>, <em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/sorter.html#Sorter.category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.sorter.Sorter.category" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the category (an integer) for an node.</p>
 <p>‘parent’ is the parent node.
 ‘nodes’  is the node to return the category for.</p>
@@ -123,7 +123,7 @@ dictated by the sorter’s ‘compare’ method.</p>
 
 <dl class="method">
 <dt id="pyface.sorter.Sorter.is_sorter_trait">
-<code class="sig-name descname">is_sorter_trait</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">trait_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sorter.Sorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_sorter_trait</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">trait_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/sorter.html#Sorter.is_sorter_trait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.sorter.Sorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the sorter affected by changes to a node’s trait?</p>
 <p>‘node’       is the node.
 ‘trait_name’ is the name of the trait.</p>
@@ -182,10 +182,10 @@ named ‘trait_name’ on the specified node.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

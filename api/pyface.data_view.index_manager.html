@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.index_manager module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.index_manager module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
     <link rel="next" title="pyface.fields package" href="pyface.fields.html" >
     <link rel="prev" title="pyface.data_view.i_data_wrapper module" href="pyface.data_view.i_data_wrapper.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
@@ -132,12 +132,12 @@ constraints required by the various toolkit APIs.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">AbstractIndexManager</code><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">AbstractIndexManager</code><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasStrictTraits</span></code></p>
 <p>Abstract base class for index managers.</p>
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.create_index">
-<em class="property">abstract </em><code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.create_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a parent index and a row number, create an index.</p>
 <p>The internal structure of the index should not matter to
 consuming code.  However obejcts returned from this method
@@ -167,7 +167,7 @@ should persist until the reset method is called.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.get_parent_and_row">
-<em class="property">abstract </em><code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.get_parent_and_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index object, return the parent index and row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -189,7 +189,7 @@ should persist until the reset method is called.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.from_sequence">
-<code class="sig-name descname">from_sequence</code><span class="sig-paren">(</span><em class="sig-param">indices</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.from_sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">from_sequence</code><span class="sig-paren">(</span><em class="sig-param">indices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.from_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.from_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a sequence of indices, return the index object.</p>
 <p>The default implementation starts at the root and repeatedly calls
 create_index() to find the index at each level, returning the final
@@ -213,7 +213,7 @@ value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.to_sequence">
-<code class="sig-name descname">to_sequence</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.to_sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">to_sequence</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.to_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.to_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index, return the corresponding sequence of row values.</p>
 <p>The default implementation repeatedly calls get_parent_and_row()
 to walk up the hierarchy and push the row values into the start
@@ -233,7 +233,7 @@ of the sequence.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.from_id">
-<em class="property">abstract </em><code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.from_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an integer id, return the corresponding index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -250,7 +250,7 @@ of the sequence.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.id">
-<em class="property">abstract </em><code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.id" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index, return the corresponding id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -267,7 +267,7 @@ of the sequence.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.AbstractIndexManager.reset">
-<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.reset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#AbstractIndexManager.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.AbstractIndexManager.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset any caches and other state.</p>
 <p>Resettable traits in subclasses are indicated by having
 <code class="docutils literal notranslate"><span class="pre">can_reset=True</span></code> metadata.  This is provided to allow
@@ -284,7 +284,7 @@ or static, reset() may do nothing.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.index_manager.IntIndexManager">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">IntIndexManager</code><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">IntIndexManager</code><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#IntIndexManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.index_manager.AbstractIndexManager" title="pyface.data_view.index_manager.AbstractIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.index_manager.AbstractIndexManager</span></code></a></p>
 <p>Efficient IndexManager for non-hierarchical indexes.</p>
 <p>This is a simple index manager for flat data structures.  The
@@ -295,7 +295,7 @@ operate without having to perform any caching, and so is very
 efficient.</p>
 <dl class="method">
 <dt id="pyface.data_view.index_manager.IntIndexManager.create_index">
-<code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#IntIndexManager.create_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a parent index and a row number, create an index.</p>
 <p>This should only ever be called with Root as the parent.</p>
 <dl class="field-list simple">
@@ -322,7 +322,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.IntIndexManager.get_parent_and_row">
-<code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#IntIndexManager.get_parent_and_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index object, return the parent index and row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -344,7 +344,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.IntIndexManager.from_id">
-<code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#IntIndexManager.from_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an integer id, return the corresponding index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -361,7 +361,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.IntIndexManager.id">
-<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#IntIndexManager.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.IntIndexManager.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index, return the corresponding id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -380,11 +380,11 @@ efficient.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.index_manager.TupleIndexManager">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">TupleIndexManager</code><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.index_manager.</code><code class="sig-name descname">TupleIndexManager</code><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#TupleIndexManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.index_manager.AbstractIndexManager" title="pyface.data_view.index_manager.AbstractIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.index_manager.AbstractIndexManager</span></code></a></p>
 <dl class="method">
 <dt id="pyface.data_view.index_manager.TupleIndexManager.create_index">
-<code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_index</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#TupleIndexManager.create_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.create_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a parent index and a row number, create an index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -407,7 +407,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.TupleIndexManager.get_parent_and_row">
-<code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_parent_and_row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#TupleIndexManager.get_parent_and_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.get_parent_and_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index object, return the parent index and row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -429,7 +429,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.TupleIndexManager.from_id">
-<code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">from_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#TupleIndexManager.from_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.from_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an integer id, return the corresponding index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -446,7 +446,7 @@ efficient.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.index_manager.TupleIndexManager.id">
-<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/index_manager.html#TupleIndexManager.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.index_manager.TupleIndexManager.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an index, return the corresponding id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -520,10 +520,10 @@ efficient.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

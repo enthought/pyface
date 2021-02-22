@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.viewer.viewer_sorter module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.viewer.viewer_sorter module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.viewer package" href="pyface.viewer.html" >
     <link rel="next" title="pyface.wizard package" href="pyface.wizard.html" >
     <link rel="prev" title="pyface.viewer.viewer_filter module" href="pyface.viewer.viewer_filter.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.viewer.html" accesskey="U">pyface.viewer package</a></li> 
@@ -92,12 +92,12 @@
 <p>Abstract base class for all viewer sorters.</p>
 <dl class="class">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.viewer_sorter.</code><code class="sig-name descname">ViewerSorter</code><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.viewer_sorter.</code><code class="sig-name descname">ViewerSorter</code><a class="reference internal" href="../_modules/pyface/viewer/viewer_sorter.html#ViewerSorter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all viewer sorters.</p>
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.sort">
-<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">elements</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.sort" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/viewer_sorter.html#ViewerSorter.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts a list of elements IN PLACE.</p>
 <p>‘viewer’   is the viewer that we are sorting elements for.
 ‘parent’   is the parent element.
@@ -107,7 +107,7 @@
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.key">
-<code class="sig-name descname">key</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">key</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/viewer_sorter.html#ViewerSorter.key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the result of comparing two elements.</p>
 <p>‘viewer’    is the viewer that we are sorting elements for.
 ‘parent’    is the parent element.
@@ -116,7 +116,7 @@
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.category">
-<code class="sig-name descname">category</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.category" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">category</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">parent</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/viewer_sorter.html#ViewerSorter.category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.category" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the category (an integer) for an element.</p>
 <p>‘parent’   is the parent element.
 ‘elements’ is the element to return the category for.</p>
@@ -128,7 +128,7 @@ are arranged as dictated by the sorter’s ‘compare’ method.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait">
-<code class="sig-name descname">is_sorter_trait</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">trait_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_sorter_trait</code><span class="sig-paren">(</span><em class="sig-param">element</em>, <em class="sig-param">trait_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/viewer_sorter.html#ViewerSorter.is_sorter_trait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the sorter affected by changes to an element’s trait?</p>
 <p>‘element’    is the element.
 ‘trait_name’ is the name of the trait.</p>
@@ -187,10 +187,10 @@ named ‘trait_name’ on the specified element.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

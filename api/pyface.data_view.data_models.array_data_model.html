@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.data_models.array_data_model module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.data_models.array_data_model module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.data_models package" href="pyface.data_view.data_models.html" >
     <link rel="next" title="pyface.data_view.data_models.data_accessors module" href="pyface.data_view.data_models.data_accessors.html" >
     <link rel="prev" title="pyface.data_view.data_models.api module" href="pyface.data_view.data_models.api.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -95,7 +95,7 @@
 n-dim numpy array.</p>
 <dl class="class">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.array_data_model.</code><code class="sig-name descname">ArrayDataModel</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.array_data_model.</code><code class="sig-name descname">ArrayDataModel</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.abstract_data_model.AbstractDataModel</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasRequiredTraits</span></code></p>
 <p>A data model for an n-dim array.</p>
 <p>This data model presents the data from a multidimensional array
@@ -148,7 +148,7 @@ indices.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.get_column_count">
-<code class="sig-name descname">get_column_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_column_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.get_column_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_column_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many columns in the data view model.</p>
 <p>The number of columns is the size of the last dimension of the array.</p>
 <dl class="field-list simple">
@@ -164,7 +164,7 @@ the last dimension of the array.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.can_have_children">
-<code class="sig-name descname">can_have_children</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_have_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_have_children</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.can_have_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_have_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a row can have child rows.</p>
 <p>A row is a leaf row if the length of the index is one less than
 the dimension of the array: the final coordinate for the value will
@@ -184,7 +184,7 @@ be supplied by the column index.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.get_row_count">
-<code class="sig-name descname">get_row_count</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_row_count</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.get_row_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_row_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the row currently has any child rows.</p>
 <p>The number of rows in a non-leaf row is equal to the size of the
 next dimension.</p>
@@ -203,7 +203,7 @@ next dimension.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Python value for the row and column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -220,7 +220,7 @@ next dimension.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the value in the indicated row and column can be set.</p>
 <p>This returns False for row and column headers, but True for all
 array values.</p>
@@ -242,7 +242,7 @@ array values.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Python value for the row and column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -262,7 +262,7 @@ array values.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value_type">
-<code class="sig-name descname">get_value_type</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value_type</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.get_value_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the value type of the given row and column.</p>
 <p>This method returns the value of <code class="docutils literal notranslate"><span class="pre">column_header_type</span></code> for column
 headers, the value of <code class="docutils literal notranslate"><span class="pre">row_header_type</span></code> for row headers, the value
@@ -287,31 +287,31 @@ else.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.data_updated">
-<code class="sig-name descname">data_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.data_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">data_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.data_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.data_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle the array being replaced with a new array.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.value_type_updated">
-<code class="sig-name descname">value_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_type_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">value_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.value_type_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_type_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle the value type being updated.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.column_header_type_updated">
-<code class="sig-name descname">column_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.column_header_type_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">column_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.column_header_type_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.column_header_type_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle the column header type being updated.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.value_header_type_updated">
-<code class="sig-name descname">value_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_header_type_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">value_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.value_header_type_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_header_type_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle the value header type being updated.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.array_data_model.ArrayDataModel.label_header_type_updated">
-<code class="sig-name descname">label_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.label_header_type_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">label_header_type_updated</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/array_data_model.html#ArrayDataModel.label_header_type_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.array_data_model.ArrayDataModel.label_header_type_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle the label header type being updated.</p>
 </dd></dl>
 
@@ -365,10 +365,10 @@ else.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

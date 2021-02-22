@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.data_models.data_accessors module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.data_models.data_accessors module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.data_models package" href="pyface.data_view.data_models.html" >
     <link rel="next" title="pyface.data_view.data_models.row_table_data_model module" href="pyface.data_view.data_models.row_table_data_model.html" >
     <link rel="prev" title="pyface.data_view.data_models.array_data_model module" href="pyface.data_view.data_models.array_data_model.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -95,7 +95,7 @@
 related classes for extracting data from an object in a consistent way.</p>
 <dl class="class">
 <dt id="pyface.data_view.data_models.data_accessors.AbstractDataAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">AbstractDataAccessor</code><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">AbstractDataAccessor</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AbstractDataAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasStrictTraits</span></code></p>
 <p>Accessor that gets and sets data on an object.</p>
 <dl class="attribute">
@@ -127,7 +127,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AbstractDataAccessor.get_value">
-<em class="property">abstract </em><code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AbstractDataAccessor.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a value for the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -144,7 +144,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AbstractDataAccessor.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AbstractDataAccessor.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return whether the value can be set on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -161,7 +161,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AbstractDataAccessor.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AbstractDataAccessor.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -180,7 +180,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="class">
 <dt id="pyface.data_view.data_models.data_accessors.ConstantDataAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">ConstantDataAccessor</code><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.ConstantDataAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">ConstantDataAccessor</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#ConstantDataAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.ConstantDataAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="pyface.data_view.data_models.data_accessors.AbstractDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_models.data_accessors.AbstractDataAccessor</span></code></a></p>
 <p>DataAccessor that returns a constant value.</p>
 <dl class="attribute">
@@ -191,7 +191,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.ConstantDataAccessor.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.ConstantDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#ConstantDataAccessor.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.ConstantDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the value ignoring the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,7 +210,7 @@ a tuple of the accessor info and whether the title or value changed
 
 <dl class="class">
 <dt id="pyface.data_view.data_models.data_accessors.AttributeDataAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">AttributeDataAccessor</code><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">AttributeDataAccessor</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AttributeDataAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="pyface.data_view.data_models.data_accessors.AbstractDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_models.data_accessors.AbstractDataAccessor</span></code></a></p>
 <p>DataAccessor that presents an extended attribute on an object.</p>
 <p>This is suitable for use with Python objects, including HasTraits
@@ -223,7 +223,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AttributeDataAccessor.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AttributeDataAccessor.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the attribute value for the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -240,7 +240,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AttributeDataAccessor.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AttributeDataAccessor.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return whether the value can be set on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -257,7 +257,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.AttributeDataAccessor.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#AttributeDataAccessor.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.AttributeDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -276,7 +276,7 @@ classes.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.data_models.data_accessors.IndexDataAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">IndexDataAccessor</code><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">IndexDataAccessor</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#IndexDataAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="pyface.data_view.data_models.data_accessors.AbstractDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_models.data_accessors.AbstractDataAccessor</span></code></a></p>
 <p>DataAccessor that presents an index on a sequence object.</p>
 <p>This is suitable for use with a sequence.</p>
@@ -288,7 +288,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.IndexDataAccessor.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#IndexDataAccessor.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the indexed value for the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -305,7 +305,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.IndexDataAccessor.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#IndexDataAccessor.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return whether the value can be set on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -322,7 +322,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.IndexDataAccessor.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#IndexDataAccessor.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.IndexDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -341,7 +341,7 @@ classes.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.data_models.data_accessors.KeyDataAccessor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">KeyDataAccessor</code><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.data_accessors.</code><code class="sig-name descname">KeyDataAccessor</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#KeyDataAccessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="pyface.data_view.data_models.data_accessors.AbstractDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_models.data_accessors.AbstractDataAccessor</span></code></a></p>
 <p>DataAccessor that presents an item on a mapping object.</p>
 <p>This is suitable for use with a mapping, such as a dictionary.</p>
@@ -353,7 +353,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.KeyDataAccessor.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#KeyDataAccessor.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the key’s value for the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -370,7 +370,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.KeyDataAccessor.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#KeyDataAccessor.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -387,7 +387,7 @@ classes.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.data_accessors.KeyDataAccessor.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/data_accessors.html#KeyDataAccessor.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.data_accessors.KeyDataAccessor.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the value on the provided object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -452,10 +452,10 @@ classes.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

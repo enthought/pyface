@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.value_types.color_value module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.value_types.color_value module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.value_types package" href="pyface.data_view.value_types.html" >
     <link rel="next" title="pyface.data_view.value_types.constant_value module" href="pyface.data_view.value_types.constant_value.html" >
     <link rel="prev" title="pyface.data_view.value_types.bool_value module" href="pyface.data_view.value_types.bool_value.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -92,14 +92,14 @@
 <span id="pyface-data-view-value-types-color-value-module"></span><h1>pyface.data_view.value_types.color_value module<a class="headerlink" href="#module-pyface.data_view.value_types.color_value" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.data_view.value_types.color_value.ColorValue">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.value_types.color_value.</code><code class="sig-name descname">ColorValue</code><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.value_types.color_value.</code><code class="sig-name descname">ColorValue</code><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.data_view.value_types.editable_value.html#pyface.data_view.value_types.editable_value.EditableValue" title="pyface.data_view.value_types.editable_value.EditableValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.value_types.editable_value.EditableValue</span></code></a></p>
 <p>Editable value that presents a color value.</p>
 <p>This is suitable for use where the value returned by an item in
 the model is a Color object.</p>
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.is_valid">
-<code class="sig-name descname">is_valid</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.is_valid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_valid</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.is_valid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the given value valid for this item.</p>
 <p>The default implementation says the value must be a Color.</p>
 <dl class="field-list simple">
@@ -122,7 +122,7 @@ the model is a Color object.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.get_editor_value">
-<code class="sig-name descname">get_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.get_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the editable representation of the underlying value.</p>
 <p>The default uses a text hex representation of the color.</p>
 <dl class="field-list simple">
@@ -144,7 +144,7 @@ the model is a Color object.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.set_editor_value">
-<code class="sig-name descname">set_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.set_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.set_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.set_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the editable representation of the underlying value.</p>
 <p>The default expects a string that can be parsed to a color value.</p>
 <dl class="field-list simple">
@@ -167,7 +167,7 @@ the model is a Color object.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.get_text">
-<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the textual representation of the underlying value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -188,7 +188,7 @@ the model is a Color object.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.set_text">
-<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the textual representation of the underlying value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,7 +210,7 @@ the model is a Color object.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.has_color">
-<code class="sig-name descname">has_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.has_color" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.has_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.has_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has color data.</p>
 <p>The default implementation returns False.</p>
 <dl class="field-list simple">
@@ -233,7 +233,7 @@ values.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.color_value.ColorValue.get_color">
-<code class="sig-name descname">get_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_color" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/color_value.html#ColorValue.get_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.color_value.ColorValue.get_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data-associated colour values for the given item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,10 +302,10 @@ values.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

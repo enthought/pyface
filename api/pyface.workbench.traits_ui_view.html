@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.workbench.traits_ui_view module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.workbench.traits_ui_view module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.workbench package" href="pyface.workbench.html" >
     <link rel="next" title="pyface.workbench.user_perspective_manager module" href="pyface.workbench.user_perspective_manager.html" >
     <link rel="prev" title="pyface.workbench.traits_ui_editor module" href="pyface.workbench.traits_ui_editor.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.workbench.html" accesskey="U">pyface.workbench package</a></li> 
@@ -92,12 +92,12 @@
 <p>A view whose content is provided by a traits UI.</p>
 <dl class="class">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.traits_ui_view.</code><code class="sig-name descname">TraitsUIView</code><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.traits_ui_view.</code><code class="sig-name descname">TraitsUIView</code><a class="reference internal" href="../_modules/pyface/workbench/traits_ui_view.html#TraitsUIView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.workbench.view.View</span></code></p>
 <p>A view whose content is provided by a traits UI.</p>
 <dl class="method">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView.create_control">
-<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/traits_ui_view.html#TraitsUIView.create_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the toolkit-specific control that represents the editor.</p>
 <p>‘parent’ is the toolkit-specific control that is the editor’s parent.</p>
 <p>Overridden to call ‘create_ui’ to get the traits UI.</p>
@@ -105,14 +105,14 @@
 
 <dl class="method">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView.destroy_control">
-<code class="sig-name descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.destroy_control" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/traits_ui_view.html#TraitsUIView.destroy_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.destroy_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroys the toolkit-specific control that represents the editor.</p>
 <p>Overridden to call ‘dispose’ on the traits UI.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView.create_ui">
-<code class="sig-name descname">create_ui</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.create_ui" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_ui</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/traits_ui_view.html#TraitsUIView.create_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.create_ui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the traits UI that represents the editor.</p>
 <p>By default it calls ‘edit_traits’ on the view’s ‘model’. If you
 want more control over the creation of the traits UI then override!</p>
@@ -168,10 +168,10 @@ want more control over the creation of the traits UI then override!</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

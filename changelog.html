@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Pyface Changelog &mdash; pyface 7.2 documentation</title>
+    <title>Pyface Changelog &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
     <link rel="prev" title="pyface.window module" href="api/pyface.window.html" > 
   </head>
   <body>
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
 	 
     </ul>
               
@@ -81,6 +81,62 @@
             
   <div class="section" id="pyface-changelog">
 <h1>Pyface Changelog<a class="headerlink" href="#pyface-changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="release-7-3-0">
+<h2>Release 7.3.0<a class="headerlink" href="#release-7-3-0" title="Permalink to this headline">¶</a></h2>
+<p>The most significant change introduced in this minor release is the
+replacement of Traits <code class="docutils literal notranslate"><span class="pre">on_trait_change</span></code>-based listeners with the new Traits
+observation framework.</p>
+<p>This release is only compatible with Traits &gt;= 6.2.0 i.e. the most recent
+version of Traits.</p>
+<div class="section" id="highlights-of-this-release">
+<h3>Highlights of this release<a class="headerlink" href="#highlights-of-this-release" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Replace use of Traits <code class="docutils literal notranslate"><span class="pre">on_trait_change</span></code> with <code class="docutils literal notranslate"><span class="pre">observe</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="detailed-changes">
+<h3>Detailed changes<a class="headerlink" href="#detailed-changes" title="Permalink to this headline">¶</a></h3>
+<p>Thanks to:</p>
+<ul class="simple">
+<li><p>Aaron Ayres</p></li>
+<li><p>Kit Yan Choi</p></li>
+<li><p>Rahul Poruri</p></li>
+<li><p>Corran Webster</p></li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li><p>Fix undo/redo merge bugs. (#885)</p></li>
+<li><p>Fix importing QtWebEngine after toolkit selection. (#853)</p></li>
+</ul>
+<p>Documentation</p>
+<ul class="simple">
+<li><p>Improve api documentation for <code class="docutils literal notranslate"><span class="pre">pyface.tasks</span></code> submodules. (#844)</p></li>
+<li><p>Improve api documentation for <code class="docutils literal notranslate"><span class="pre">pyface.undo</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pyface.undo.action</span></code> submodules. (#847)</p></li>
+<li><p>Improve api documentation for <code class="docutils literal notranslate"><span class="pre">pyface.action</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pyface.tasks.action</span></code> submodules. (#843)</p></li>
+<li><p>Use viewcode sphinx extension. (#851)</p></li>
+<li><p>Address a few sphinx warnings. (#846)</p></li>
+</ul>
+<p>Build, Tests and Continuous Integration</p>
+<ul class="simple">
+<li><p>Stop running CI on traits 6.0. (#865)</p></li>
+<li><p>Skip test if wx is not installed. (#867)</p></li>
+<li><p>Declare <code class="docutils literal notranslate"><span class="pre">python_requires</span></code> to support Python &gt;= 3.6. (#850)</p></li>
+</ul>
+<p>Maintenance and code reorganization</p>
+<ul class="simple">
+<li><p>Replace use of <code class="docutils literal notranslate"><span class="pre">traits</span></code> <code class="docutils literal notranslate"><span class="pre">on_trait_change</span></code> with <code class="docutils literal notranslate"><span class="pre">observe</span></code>. (#892, #882,
+#881, #880, #870, #864)</p></li>
+<li><p>Import from <code class="docutils literal notranslate"><span class="pre">traits.api</span></code> where possible. (#866)</p></li>
+<li><p>Expose keyboard focus on Widgets. (#862)</p></li>
+<li><p>Remove support for PySide. (#861)</p></li>
+<li><p>Remove Python 2 sip configuration for Qt toolkit backends. (#860)</p></li>
+<li><p>Remove coverage reporting on PRs. (#855)</p></li>
+<li><p>Update year range in copyright headers. (#854)</p></li>
+</ul>
+</div>
+</div>
 <div class="section" id="release-7-2-0">
 <h2>Release 7.2.0<a class="headerlink" href="#release-7-2-0" title="Permalink to this headline">¶</a></h2>
 <p>Pyface 7.2.0 is a minor release which introduces a variety of bug fixes,
@@ -90,15 +146,15 @@ undo subpackage copied from apptools.</p>
 <p>This release should still be compatible with Traits 6.0+. Users are encouraged
 to upgrade to Traits 6.1+ to stay current as future releases of Pyface will
 stop supporting Traits 6.0.</p>
-<div class="section" id="highlights-of-this-release">
-<h3>Highlights of this release<a class="headerlink" href="#highlights-of-this-release" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Highlights of this release<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>New <a class="reference internal" href="api/pyface.undo.html#module-pyface.undo" title="pyface.undo"><code class="xref py py-mod docutils literal notranslate"><span class="pre">undo</span></code></a> subpackage that has been copied over from
 apptools (soon to be deprecated in apptools)</p></li>
 </ul>
 </div>
-<div class="section" id="detailed-changes">
-<h3>Detailed changes<a class="headerlink" href="#detailed-changes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Detailed changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Thanks to:</p>
 <ul class="simple">
 <li><p>Aaron Ayres</p></li>
@@ -149,8 +205,8 @@ should be invisible to users.</p>
 <p>This release should be compatible with Traits 6.0+. Users are encouraged to
 upgrade to Traits 6.1+ to stay current as future releases of Pyface will stop
 supporting Traits 6.0.</p>
-<div class="section" id="id1">
-<h3>Highlights of this release<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Highlights of this release<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>A new <a class="reference internal" href="api/pyface.data_view.html#module-pyface.data_view" title="pyface.data_view"><code class="xref py py-mod docutils literal notranslate"><span class="pre">data_view</span></code></a> subpackage has been introduced to
 support visualization of hierarchical and non-hierarchical tabular data. See
@@ -163,8 +219,8 @@ introduced to support representing colors via a toolkit independent API. See
 <a class="reference internal" href="traits.html#ui-trait-types"><span class="std std-ref">Trait Types</span></a> section of the user manual for further details.</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h3>Detailed changes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Detailed changes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>More than 70 PRs went into this release. Thanks to:</p>
 <ul class="simple">
 <li><p>Aaron Ayres</p></li>
@@ -253,8 +309,8 @@ largely work unmodified under Pyface 7.</p>
 Madhusoodanan, Rob McMullen, Shoeb Mohammed, Rahul Poruri, Roberto Preste,
 reckoner, Jan von Rickenbach, Chiranth Siddappa, Joris Vankerschaver,
 Corran Webster.</p>
-<div class="section" id="id3">
-<h3>Change summary<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Change summary<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>Enhancements</p>
 <ul class="simple">
 <li><p>Use Traits 6 features (#480, #494)</p></li>
@@ -289,8 +345,8 @@ Corran Webster.</p>
 <p>This is a bugfix release which fixes a number of minor issues with the 6.1.1 release.</p>
 <p>Thanks to:</p>
 <p>Mark Dickinson, Prabhu Ramachandran, Corran Webster.</p>
-<div class="section" id="id4">
-<h3>Change summary<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Change summary<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Fixes</p>
 <ul class="simple">
 <li><p>Don’t try to open directories in PythonEditorTask (#428)</p></li>
@@ -311,8 +367,8 @@ Corran Webster.</p>
 <p>This is a bugfix release which fixes a number of minor issues with the 6.1.0 release.</p>
 <p>Thanks to:</p>
 <p>David Baddeley, Christian Brodbeck, Mark Dickinson, Rahul Poruri, Corran Webster.</p>
-<div class="section" id="id5">
-<h3>Change summary<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>Change summary<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>Fixes</p>
 <ul class="simple">
 <li><p>Remove use of deprecated Traits get() method (#403)</p></li>
@@ -358,8 +414,8 @@ which should improve the reliability and utility of the codebase.</p>
 Eric McDonald, Rahul Poruri, Jonathan Rocher, Hamdi Sahloul, Roger Serwy,
 Brian Teague, Corran Webster, John Wiggins.</p>
 <p>Apologies to any contributors that have been omitted.</p>
-<div class="section" id="id6">
-<h3>Change summary<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>Change summary<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>Enhancements</p>
 <ul class="simple">
 <li><p>Application classes (#334, #355, #345)</p></li>
@@ -426,8 +482,8 @@ been updated to make use of these facilities as well.</p>
 Rob McMullen, &#64;nprksh, Prabhu Ramachandran, Gregor Thalhammer, Senganal
 Thirunavukkarasu, Ioannis Tziakos, Joris Vankerscharver, and Corran Webster.
 Apologies to any contributors that have been omitted.</p>
-<div class="section" id="id7">
-<h3>Change summary<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Change summary<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>Enhancements</p>
 <ul class="simple">
 <li><p>Tasks support for wxPython (#223, #247)</p></li>
@@ -660,14 +716,19 @@ new adaptation mechanism in Traits 4.4.0.</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Pyface Changelog</a><ul>
-<li><a class="reference internal" href="#release-7-2-0">Release 7.2.0</a><ul>
+<li><a class="reference internal" href="#release-7-3-0">Release 7.3.0</a><ul>
 <li><a class="reference internal" href="#highlights-of-this-release">Highlights of this release</a></li>
 <li><a class="reference internal" href="#detailed-changes">Detailed changes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-7-1-0">Release 7.1.0</a><ul>
+<li><a class="reference internal" href="#release-7-2-0">Release 7.2.0</a><ul>
 <li><a class="reference internal" href="#id1">Highlights of this release</a></li>
 <li><a class="reference internal" href="#id2">Detailed changes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-7-1-0">Release 7.1.0</a><ul>
+<li><a class="reference internal" href="#id3">Highlights of this release</a></li>
+<li><a class="reference internal" href="#id4">Detailed changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-0-1">Release 7.0.1</a><ul>
@@ -675,23 +736,23 @@ new adaptation mechanism in Traits 4.4.0.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-7-0-0">Release 7.0.0</a><ul>
-<li><a class="reference internal" href="#id3">Change summary</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-6-1-2">Release 6.1.2</a><ul>
-<li><a class="reference internal" href="#id4">Change summary</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#release-6-1-1">Release 6.1.1</a><ul>
 <li><a class="reference internal" href="#id5">Change summary</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-6-1-0">Release 6.1.0</a><ul>
+<li><a class="reference internal" href="#release-6-1-2">Release 6.1.2</a><ul>
 <li><a class="reference internal" href="#id6">Change summary</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#release-6-0-0">Release 6.0.0</a><ul>
+<li><a class="reference internal" href="#release-6-1-1">Release 6.1.1</a><ul>
 <li><a class="reference internal" href="#id7">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-6-1-0">Release 6.1.0</a><ul>
+<li><a class="reference internal" href="#id8">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-6-0-0">Release 6.0.0</a><ul>
+<li><a class="reference internal" href="#id9">Change summary</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-5-1-0">Release 5.1.0</a><ul>
@@ -761,10 +822,10 @@ new adaptation mechanism in Traits 4.4.0.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

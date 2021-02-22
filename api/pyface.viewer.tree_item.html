@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.viewer.tree_item module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.viewer.tree_item module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.viewer package" href="pyface.viewer.html" >
     <link rel="next" title="pyface.viewer.tree_label_provider module" href="pyface.viewer.tree_label_provider.html" >
     <link rel="prev" title="pyface.viewer.tree_content_provider module" href="pyface.viewer.tree_content_provider.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.viewer.html" accesskey="U">pyface.viewer package</a></li> 
@@ -104,39 +104,39 @@ veg.append(TreeItem(data=’Sprout’, allows_children=False))
 root.append(veg)</p>
 <dl class="class">
 <dt id="pyface.viewer.tree_item.TreeItem">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.tree_item.</code><code class="sig-name descname">TreeItem</code><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.tree_item.</code><code class="sig-name descname">TreeItem</code><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>A generic base-class for items in a tree data structure.</p>
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.append">
-<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.append" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends a child to this item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert">
-<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item at the specified index.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.remove">
-<code class="sig-name descname">remove</code><span class="sig-paren">(</span><em class="sig-param">child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.remove" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a child from this item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert_before">
-<code class="sig-name descname">insert_before</code><span class="sig-paren">(</span><em class="sig-param">before</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_before" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insert_before</code><span class="sig-paren">(</span><em class="sig-param">before</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem.insert_before"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_before" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item before the specified item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert_after">
-<code class="sig-name descname">insert_after</code><span class="sig-paren">(</span><em class="sig-param">after</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_after" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">insert_after</code><span class="sig-paren">(</span><em class="sig-param">after</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_item.html#TreeItem.insert_after"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item after the specified item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
@@ -191,10 +191,10 @@ root.append(veg)</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

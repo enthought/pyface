@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_drop_handler module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.i_drop_handler module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_file_dialog module" href="pyface.i_file_dialog.html" >
     <link rel="prev" title="pyface.i_directory_dialog module" href="pyface.i_directory_dialog.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -90,13 +90,13 @@
 <span id="pyface-i-drop-handler-module"></span><h1>pyface.i_drop_handler module<a class="headerlink" href="#module-pyface.i_drop_handler" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.i_drop_handler.IDropHandler">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_drop_handler.</code><code class="sig-name descname">IDropHandler</code><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_drop_handler.</code><code class="sig-name descname">IDropHandler</code><a class="reference internal" href="../_modules/pyface/i_drop_handler.html#IDropHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>Interface for a drop event handler, which provides API to check if the
 drop can be handled or not, and then handle it if possible.</p>
 <dl class="method">
 <dt id="pyface.i_drop_handler.IDropHandler.can_handle_drop">
-<code class="sig-name descname">can_handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_drop_handler.html#IDropHandler.can_handle_drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a drag event can be handled</p>
 <p>This is used to give feedback to the user about whether a drop is
 possible via the shape of the cursor or similar indicators.</p>
@@ -119,7 +119,7 @@ event occurring on the given target widget.</p>
 
 <dl class="method">
 <dt id="pyface.i_drop_handler.IDropHandler.handle_drop">
-<code class="sig-name descname">handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_drop_handler.html#IDropHandler.handle_drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs drop action when drop event occurs on target widget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -181,10 +181,10 @@ event occurring on the given target widget.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

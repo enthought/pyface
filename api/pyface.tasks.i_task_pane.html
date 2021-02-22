@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.i_task_pane module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.i_task_pane module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.i_task_window_backend module" href="pyface.tasks.i_task_window_backend.html" >
     <link rel="prev" title="pyface.tasks.i_editor_area_pane module" href="pyface.tasks.i_editor_area_pane.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -91,7 +91,7 @@
 <span id="pyface-tasks-i-task-pane-module"></span><h1>pyface.tasks.i_task_pane module<a class="headerlink" href="#module-pyface.tasks.i_task_pane" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.i_task_pane.ITaskPane">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_pane.</code><code class="sig-name descname">ITaskPane</code><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_pane.</code><code class="sig-name descname">ITaskPane</code><a class="reference internal" href="../_modules/pyface/tasks/i_task_pane.html#ITaskPane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>The base interface for all panes (central and dock) in a Task.</p>
 <dl class="attribute">
@@ -126,20 +126,20 @@
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_pane.ITaskPane.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_pane.html#ITaskPane.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create and set the toolkit-specific control that represents the
 pane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_pane.ITaskPane.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_pane.html#ITaskPane.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the toolkit-specific control that represents the pane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_pane.ITaskPane.set_focus">
-<code class="sig-name descname">set_focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.set_focus" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_pane.html#ITaskPane.set_focus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_pane.ITaskPane.set_focus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives focus to the control that represents the pane.</p>
 </dd></dl>
 
@@ -147,7 +147,7 @@ pane.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.i_task_pane.MTaskPane">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_pane.</code><code class="sig-name descname">MTaskPane</code><a class="headerlink" href="#pyface.tasks.i_task_pane.MTaskPane" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_pane.</code><code class="sig-name descname">MTaskPane</code><a class="reference internal" href="../_modules/pyface/tasks/i_task_pane.html#MTaskPane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_pane.MTaskPane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Mixin containing common code for toolkit-specific implementations.</p>
 </dd></dl>
@@ -200,10 +200,10 @@ pane.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

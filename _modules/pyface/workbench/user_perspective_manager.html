@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.user_perspective_manager &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.user_perspective_manager</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; Manages a set of user perspectives. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.workbench.api</span> <span class="k">import</span> <span class="n">Perspective</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Str</span>
+
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="UserPerspectiveManager"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager">[docs]</a><span class="k">class</span> <span class="nc">UserPerspectiveManager</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Manages a set of user perspectives. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;UserPerspective&#39; interface -----------------------------------------#</span>
+
+    <span class="c1"># A directory on the local file system that we can read and write to at</span>
+    <span class="c1"># will. This is used to persist window layout information, etc.</span>
+    <span class="n">state_location</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># Next available user perspective id.</span>
+    <span class="n">next_id</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Int</span><span class="p">)</span>
+
+    <span class="c1"># Dictionary mapping perspective id to user defined perspective definition.</span>
+    <span class="n">id_to_perspective</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Dict</span><span class="p">)</span>
+
+    <span class="c1"># The list of user defined perspective definitions.</span>
+    <span class="n">perspectives</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">List</span><span class="p">)</span>
+
+    <span class="c1"># The name of the user defined perspectives definition file.</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1"># Private interface ----------------------------------------------------</span>
+
+    <span class="c1"># Shadow trait for the &#39;id_to_perspective&#39; property.</span>
+    <span class="n">_id_to_perspective</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;UserPerspective&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Properties -----------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_next_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Property getter. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get all of the current perspective ids:</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="c1"># If there are none:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Return the starting id:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="c1"># Else return the current highest id + 1 as the next id:</span>
+        <span class="n">ids</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">ids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">19</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_get_id_to_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Property getter. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id_to_perspective</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_id_to_perspective</span> <span class="o">=</span> <span class="n">dic</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fh</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="nb">id</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                        <span class="n">dic</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Perspective</span><span class="p">(</span>
+                            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">show_editor_area</span><span class="o">=</span><span class="kc">False</span>
+                        <span class="p">)</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id_to_perspective</span>
+
+    <span class="k">def</span> <span class="nf">_get_perspectives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Property getter. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_file_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Property getter. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_location</span><span class="p">,</span> <span class="s2">&quot;__user_perspective__&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Methods -------------------------------------------------------------#</span>
+
+<div class="viewcode-block" id="UserPerspectiveManager.create_perspective"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.create_perspective">[docs]</a>    <span class="k">def</span> <span class="nf">create_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">show_editor_area</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new (and empty) user-defined perspective. &quot;&quot;&quot;</span>
+
+        <span class="n">perspective</span> <span class="o">=</span> <span class="n">Perspective</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;__user_perspective_</span><span class="si">%09d</span><span class="s2">__&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">show_editor_area</span><span class="o">=</span><span class="n">show_editor_area</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add the perspective to the map.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">[</span><span class="n">perspective</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">perspective</span>
+
+        <span class="c1"># Update the persistent file information.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">perspective</span></div>
+
+<div class="viewcode-block" id="UserPerspectiveManager.clone_perspective"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.clone_perspective">[docs]</a>    <span class="k">def</span> <span class="nf">clone_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Clone a perspective as a user perspective. &quot;&quot;&quot;</span>
+
+        <span class="n">clone</span> <span class="o">=</span> <span class="n">perspective</span><span class="o">.</span><span class="n">clone_traits</span><span class="p">()</span>
+
+        <span class="c1"># Give the clone a special user perspective Id!</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;__user_perspective_</span><span class="si">%09d</span><span class="s2">__&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_id</span>
+
+        <span class="c1"># Set any traits specified as keyword arguments.</span>
+        <span class="n">clone</span><span class="o">.</span><span class="n">trait_set</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
+
+        <span class="c1"># Add the perspective to the map.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">[</span><span class="n">clone</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">clone</span>
+
+        <span class="c1"># fixme: This needs to be pushed into the window API!!!!!!!</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">[</span><span class="n">clone</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_view_memento</span><span class="p">(),</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">active_view</span> <span class="ow">and</span> <span class="n">window</span><span class="o">.</span><span class="n">active_view</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">is_editor_area_visible</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Update the persistent file information.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">clone</span></div>
+
+<div class="viewcode-block" id="UserPerspectiveManager.save"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Persist the current state of the user perspectives. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="UserPerspectiveManager.add"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a perspective with an optional name. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Define the id for the new perspective:</span>
+        <span class="n">perspective</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;__user_perspective_</span><span class="si">%09d</span><span class="s2">__&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_id</span>
+
+        <span class="c1"># Save the new name (if specified):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">perspective</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="c1"># Create the perspective:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">perspective</span>
+
+        <span class="c1"># Update the persistent file information:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span>
+
+        <span class="c1"># Return the new perspective created:</span>
+        <span class="k">return</span> <span class="n">perspective</span></div>
+
+<div class="viewcode-block" id="UserPerspectiveManager.rename"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Rename the user perspective with the specified id. &quot;&quot;&quot;</span>
+
+        <span class="n">perspective</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">[</span><span class="n">perspective</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="c1"># Update the persistent file information:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="UserPerspectiveManager.remove"><a class="viewcode-back" href="../../../api/pyface.workbench.user_perspective_manager.html#pyface.workbench.user_perspective_manager.UserPerspectiveManager.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Remove the user perspective with the specified id.</span>
+
+<span class="sd">        This method also updates the persistent data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_to_perspective</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+
+            <span class="c1"># Update the persistent file information:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_persistent_data</span><span class="p">()</span>
+
+            <span class="c1"># Try to delete the associated perspective layout file:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_location</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_update_persistent_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update the persistent file information. &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+            <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Could not write the user defined perspective &quot;</span>
+                <span class="s2">&quot;definition file: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

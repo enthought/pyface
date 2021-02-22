@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.timer.timer module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.timer.timer module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.timer package" href="pyface.timer.html" >
     <link rel="next" title="pyface.tree package" href="pyface.tree.html" >
     <link rel="prev" title="pyface.timer.i_timer module" href="pyface.timer.i_timer.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.timer.html" accesskey="U">pyface.timer package</a></li> 
@@ -96,42 +96,42 @@ garbage collected, meaning that the timer will stop firing (or indeed, may
 never fire).</p>
 <dl class="class">
 <dt id="pyface.timer.timer.EventTimer">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">EventTimer</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.EventTimer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">EventTimer</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#EventTimer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.EventTimer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.timer.i_timer.html#pyface.timer.i_timer.MEventTimer" title="pyface.timer.i_timer.MEventTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.i_timer.MEventTimer</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.timer.timer.PyfaceTimer</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.timer.timer.CallbackTimer">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">CallbackTimer</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.CallbackTimer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">CallbackTimer</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#CallbackTimer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.CallbackTimer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.timer.i_timer.html#pyface.timer.i_timer.MCallbackTimer" title="pyface.timer.i_timer.MCallbackTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.i_timer.MCallbackTimer</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.timer.timer.PyfaceTimer</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.timer.timer.Timer">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">Timer</code><span class="sig-paren">(</span><em class="sig-param">millisecs</em>, <em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.Timer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.timer.</code><code class="sig-name descname">Timer</code><span class="sig-paren">(</span><em class="sig-param">millisecs</em>, <em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.Timer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.timer.timer.CallbackTimer" title="pyface.timer.timer.CallbackTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.timer.CallbackTimer</span></code></a></p>
 <p>Subclass of CallbackTimer that matches the old API</p>
 <dl class="method">
 <dt id="pyface.timer.timer.Timer.Notify">
-<code class="sig-name descname">Notify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.Timer.Notify" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Notify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#Timer.Notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.Timer.Notify" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <cite>perform</cite> to match old API.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.timer.timer.Timer.Start">
-<code class="sig-name descname">Start</code><span class="sig-paren">(</span><em class="sig-param">millisecs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.Timer.Start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Start</code><span class="sig-paren">(</span><em class="sig-param">millisecs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#Timer.Start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.Timer.Start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <cite>start</cite> to match old API.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.timer.timer.Timer.Stop">
-<code class="sig-name descname">Stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.Timer.Stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#Timer.Stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.Timer.Stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <cite>stop</cite> to match old API.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.timer.timer.Timer.IsRunning">
-<code class="sig-name descname">IsRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.timer.Timer.IsRunning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IsRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/timer.html#Timer.IsRunning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.timer.Timer.IsRunning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for is_running property to match old API.</p>
 </dd></dl>
 
@@ -185,10 +185,10 @@ never fire).</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

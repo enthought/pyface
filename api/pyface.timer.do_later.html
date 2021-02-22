@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.timer.do_later module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.timer.do_later module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.timer package" href="pyface.timer.html" >
     <link rel="next" title="pyface.timer.i_timer module" href="pyface.timer.i_timer.html" >
     <link rel="prev" title="pyface.timer.api module" href="pyface.timer.api.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.timer.html" accesskey="U">pyface.timer package</a></li> 
@@ -91,7 +91,7 @@
 <span id="pyface-timer-do-later-module"></span><h1>pyface.timer.do_later module<a class="headerlink" href="#module-pyface.timer.do_later" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.timer.do_later.DoLaterTimer">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">DoLaterTimer</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">callable</em>, <em class="sig-param">args</em>, <em class="sig-param">kw_args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">DoLaterTimer</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">callable</em>, <em class="sig-param">args</em>, <em class="sig-param">kw_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#DoLaterTimer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.timer.timer.html#pyface.timer.timer.Timer" title="pyface.timer.timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.timer.Timer</span></code></a></p>
 <p>Performs a callback once at a later time.</p>
 <p>This is not used by the <cite>do_later</cite> functions and is only provided for
@@ -106,14 +106,13 @@ backwards compatibility of the API.</p>
 
 <dl class="function">
 <dt id="pyface.timer.do_later.do_later">
-<code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">do_later</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.do_later.do_later" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">do_later</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#do_later"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.do_later.do_later" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does something 50 milliseconds from now.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>callable</strong> (<em>callable</em>) – The callable to call in 50ms time.</p></li>
-<li><p><strong>**kwargs</strong> (<em>*args</em><em>,</em>) – <p>Arguments to be passed through to the callable.</p>
-</p></li>
+<li><p><strong>**kwargs</strong> (<em>*args</em><em>,</em>) – Arguments to be passed through to the callable.</p></li>
 </ul>
 </dd>
 </dl>
@@ -121,15 +120,16 @@ backwards compatibility of the API.</p>
 
 <dl class="function">
 <dt id="pyface.timer.do_later.do_after">
-<code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">do_after</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.do_later.do_after" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.timer.do_later.</code><code class="sig-name descname">do_after</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#do_after"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.timer.do_later.do_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does something after some specified time interval.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>interval</strong> (<em>float</em>) – The time interval in milliseconds to wait before calling.</p></li>
 <li><p><strong>callable</strong> (<em>callable</em>) – The callable to call.</p></li>
-<li><p><strong>**kwargs</strong> (<em>*args</em><em>,</em>) – <p>Arguments to be passed through to the callable.</p>
-</p></li>
+<li><p><strong>*args</strong> – Positional arguments to be passed through to the callable.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to be passed through to the callable.
+Arguments to be passed through to the callable.</p></li>
 </ul>
 </dd>
 </dl>
@@ -183,10 +183,10 @@ backwards compatibility of the API.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

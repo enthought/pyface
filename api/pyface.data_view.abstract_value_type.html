@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.abstract_value_type module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.abstract_value_type module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
     <link rel="next" title="pyface.data_view.api module" href="pyface.data_view.api.html" >
     <link rel="prev" title="pyface.data_view.abstract_data_model module" href="pyface.data_view.abstract_data_model.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
@@ -98,7 +98,7 @@ as text, color, icons, etc.</p>
 and how to actually display it.</p>
 <dl class="class">
 <dt id="pyface.data_view.abstract_value_type.CheckState">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.abstract_value_type.</code><code class="sig-name descname">CheckState</code><a class="headerlink" href="#pyface.data_view.abstract_value_type.CheckState" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.abstract_value_type.</code><code class="sig-name descname">CheckState</code><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#CheckState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.CheckState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
 <p>Possible checkbox states</p>
 <dl class="attribute">
@@ -115,7 +115,7 @@ and how to actually display it.</p>
 
 <dl class="class">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.abstract_value_type.</code><code class="sig-name descname">AbstractValueType</code><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.abstract_value_type.</code><code class="sig-name descname">AbstractValueType</code><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasStrictTraits</span></code></p>
 <p>A value type converts raw data into data channels.</p>
 <p>The data channels are editor value, text, color, image, and description.
@@ -137,7 +137,7 @@ calling a “get” method after a “has” method has returned False).</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value">
-<code class="sig-name descname">has_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return whether or not the value can be edited.</p>
 <p>The default implementation is that cells that can be set are
 editable.</p>
@@ -160,7 +160,7 @@ editable.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_editor_value">
-<code class="sig-name descname">get_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a value suitable for editing.</p>
 <p>The default implementation is to return the underlying data value
 directly from the data model.</p>
@@ -183,7 +183,7 @@ directly from the data model.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.set_editor_value">
-<code class="sig-name descname">set_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.set_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a value that is returned from editing.</p>
 <p>The default implementation is to set the value directly from the
 data model.  Returns True if successful, False if it fails.</p>
@@ -204,7 +204,7 @@ data model.  Returns True if successful, False if it fails.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_text">
-<code class="sig-name descname">has_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has a textual representation.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_text</span></code>
 returns a non-empty value.</p>
@@ -227,7 +227,7 @@ returns a non-empty value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_text">
-<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>The textual representation of the underlying value.</p>
 <p>The default implementation calls str() on the underlying value.</p>
 <dl class="field-list simple">
@@ -249,7 +249,7 @@ returns a non-empty value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.set_text">
-<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.set_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the text of the underlying value.</p>
 <p>This is provided primarily for backends which may not permit
 non-text editing of values, in which case this provides an
@@ -272,7 +272,7 @@ does not allow setting the text.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_color">
-<code class="sig-name descname">has_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_color" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has color data.</p>
 <dl class="simple">
 <dt>has_color<span class="classifier">bool</span></dt><dd><p>Whether or not the value has data-associated color
@@ -283,7 +283,7 @@ values.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_color">
-<code class="sig-name descname">get_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_color" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_color</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data-associated colour values for the given item.</p>
 <p>The default implementation returns white.</p>
 <dl class="simple">
@@ -294,7 +294,7 @@ values.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_image">
-<code class="sig-name descname">has_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has an image associated with it.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_image</span></code>
 returns a non-None value.</p>
@@ -317,7 +317,7 @@ returns a non-None value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_image">
-<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>An image associated with the underlying value.</p>
 <p>The default implementation returns None.</p>
 <dl class="field-list simple">
@@ -339,7 +339,7 @@ returns a non-None value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_check_state">
-<code class="sig-name descname">has_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_check_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_check_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_check_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has checked state.</p>
 <p>The default implementation returns False.</p>
 <dl class="field-list simple">
@@ -361,7 +361,7 @@ returns a non-None value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_check_state">
-<code class="sig-name descname">get_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_check_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_check_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_check_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>The state of the item check box.</p>
 <p>The default implementation returns “checked” if the value is
 truthy, or “unchecked” if the value is falsey.</p>
@@ -384,7 +384,7 @@ truthy, or “unchecked” if the value is falsey.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.set_check_state">
-<code class="sig-name descname">set_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">check_state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_check_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_check_state</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">check_state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.set_check_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.set_check_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the checked state of the underlying value.</p>
 <p>The default implementation does not allow setting the checked state.</p>
 <dl class="field-list simple">
@@ -404,7 +404,7 @@ truthy, or “unchecked” if the value is falsey.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.has_tooltip">
-<code class="sig-name descname">has_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.has_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.has_tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has a tooltip.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_tooltip</span></code>
 returns a non-empty value.</p>
@@ -427,7 +427,7 @@ returns a non-empty value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.get_tooltip">
-<code class="sig-name descname">get_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.get_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.get_tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>The tooltip for the underlying value.</p>
 <p>The default implementation returns an empty string.</p>
 <dl class="simple">
@@ -438,7 +438,7 @@ returns a non-empty value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.abstract_value_type.AbstractValueType.update_value_type">
-<code class="sig-name descname">update_value_type</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.update_value_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_value_type</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/abstract_value_type.html#AbstractValueType.update_value_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.abstract_value_type.AbstractValueType.update_value_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fire update event when marked traits change.</p>
 </dd></dl>
 
@@ -492,10 +492,10 @@ returns a non-empty value.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

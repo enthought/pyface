@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.i_data_view_widget &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.i_data_view_widget</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span>
+    <span class="n">TraitError</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_model</span> <span class="k">import</span> <span class="n">AbstractDataModel</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_exporter</span> <span class="k">import</span> <span class="n">AbstractDataExporter</span>
+<span class="kn">from</span> <span class="nn">pyface.i_drop_handler</span> <span class="k">import</span> <span class="n">IDropHandler</span>
+<span class="kn">from</span> <span class="nn">pyface.i_widget</span> <span class="k">import</span> <span class="n">IWidget</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">IDataViewWidget</span><span class="p">(</span><span class="n">IWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Interface for data view widgets. &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The data model for the data view.</span>
+    <span class="n">data_model</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataModel</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: Whether or not the column headers are visible.</span>
+    <span class="n">header_visible</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#: The global drop handlers for the data view.  These are intended to</span>
+    <span class="c1">#: handle drop actions which either affect the whole data view, or where</span>
+    <span class="c1">#: the data handler can work out how to change the underlying data without</span>
+    <span class="c1">#: additional input.</span>
+    <span class="n">drop_handlers</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">IDropHandler</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1">#: What can be selected.  Implementations may optionally allow &quot;column&quot;</span>
+    <span class="c1">#: and &quot;item&quot; selection types.</span>
+    <span class="n">selection_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;row&quot;</span><span class="p">,)</span>
+
+    <span class="c1">#: How selections are modified.  Implementations may optionally allow</span>
+    <span class="c1">#: &quot;none&quot; for no selection, or possibly other multiple selection modes</span>
+    <span class="c1">#: as supported by the toolkit.</span>
+    <span class="n">selection_mode</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;extended&quot;</span><span class="p">,</span> <span class="s2">&quot;single&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The selected indices in the view.</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Tuple</span><span class="p">)</span>
+
+    <span class="c1">#: Exporters available for the DataViewWidget.</span>
+    <span class="n">exporters</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataExporter</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="MDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.MDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">MDataViewWidget</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mixin class for data view widgets. &quot;&quot;&quot;</span>
+
+    <span class="c1"># IDataViewWidget Interface traits --------------------------------------</span>
+
+    <span class="c1">#: The data model for the data view.</span>
+    <span class="n">data_model</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataModel</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: Whether or not the column headers are visible.</span>
+    <span class="n">header_visible</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#: The global drop handlers for the data view.  These are intended to</span>
+    <span class="c1">#: handle drop actions which either affect the whole data view, or where</span>
+    <span class="c1">#: the data handler can work out how to change the underlying data without</span>
+    <span class="c1">#: additional input.</span>
+    <span class="n">drop_handlers</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">IDropHandler</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1">#: The selected indices in the view.  This should never be mutated, any</span>
+    <span class="c1">#: changes should be by replacement of the entire list.</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">observe</span><span class="o">=</span><span class="s1">&#39;_selection.items&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: Exporters available for the DataViewWidget.</span>
+    <span class="n">exporters</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataExporter</span><span class="p">))</span>
+
+    <span class="c1"># Private traits --------------------------------------------------------</span>
+
+    <span class="c1">#: Whether the selection is currently being updated.</span>
+    <span class="n">_selection_updating_flag</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">()</span>
+
+    <span class="c1">#: The selected indices in the view.  This should never be mutated, any</span>
+    <span class="c1">#: changes should be by replacement of the entire list.</span>
+    <span class="n">_selection</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Tuple</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># MDataViewWidget Interface</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_header_visible_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Observer for header_visible trait. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_header_visible</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_control_header_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to get the visibility of the header.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        control_header_visible : bool</span>
+<span class="sd">            Whether or not the control&#39;s header is visible.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_control_header_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">control_header_visible</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to set the visibility of the header.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        control_header_visible : bool</span>
+<span class="sd">            Whether or not the control&#39;s header is visible.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_selection_type_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Observer for selection_type trait. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_type</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_get_control_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to get the selection type.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        selection_type : str</span>
+<span class="sd">            The type of selection the control is using.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_control_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to change the selection type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection_type : str</span>
+<span class="sd">            The type of selection the control is using.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_selection_mode_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Observer for selection_mode trait. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_mode</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_get_control_selection_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to get the selection mode.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        selection_mode : str</span>
+<span class="sd">            The selection mode the control is using (eg. single vs. extended</span>
+<span class="sd">            selection).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_control_selection_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to change the selection mode.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection_mode : str</span>
+<span class="sd">            The selection mode the control is using (eg. single vs. extended</span>
+<span class="sd">            selection).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_selection_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Observer for selection trait. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating_flag</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_control_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to get the selection.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        selection : list of pairs of row and column indices</span>
+<span class="sd">            The selected elements of the control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_control_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to change the selection.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection : list of pairs of row and column indices</span>
+<span class="sd">            The selected elements of the control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_observe_control_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Toolkit specific method to watch for changes in the selection.</span>
+
+<span class="sd">        The _update_selection method is available as a toolkit-independent</span>
+<span class="sd">        callback when the selection changes, but particular toolkits may</span>
+<span class="sd">        choose to implement their own callbacks with similar functionality</span>
+<span class="sd">        if appropriate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle a toolkit even that  changes the selection.</span>
+
+<span class="sd">        This is designed to be usable as a callback for a toolkit event</span>
+<span class="sd">        or signal handler, so it accepts any arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating_flag</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_control_selection</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Widget Interface</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the toolkit specific control.</span>
+
+<span class="sd">        This method should create the control and assign it to the</span>
+<span class="sd">        :py:attr:``control`` trait.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_control</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_event_listeners</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visible</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_initialize_control</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initializes the toolkit specific control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initializing DataViewWidget&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_header_visible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_visible</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_event_listeners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Adding DataViewWidget listeners&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_add_event_listeners</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_header_visible_updated</span><span class="p">,</span>
+            <span class="s1">&#39;header_visible&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_type_updated</span><span class="p">,</span>
+            <span class="s1">&#39;selection_type&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_mode_updated</span><span class="p">,</span>
+            <span class="s1">&#39;selection_mode&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updated</span><span class="p">,</span>
+            <span class="s1">&#39;_selection.items&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_observe_control_selection</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_remove_event_listeners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Removing DataViewWidget listeners&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_observe_control_selection</span><span class="p">(</span><span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_header_visible_updated</span><span class="p">,</span>
+            <span class="s1">&#39;header_visible&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+            <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_type_updated</span><span class="p">,</span>
+            <span class="s1">&#39;selection_type&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+            <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_mode_updated</span><span class="p">,</span>
+            <span class="s1">&#39;selection_mode&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+            <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updated</span><span class="p">,</span>
+            <span class="s1">&#39;_selection.items&#39;</span><span class="p">,</span>
+            <span class="n">dispatch</span><span class="o">=</span><span class="s1">&#39;ui&#39;</span><span class="p">,</span>
+            <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_remove_event_listeners</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private methods</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span> <span class="nf">_selection_updating</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Context manager to prevent loopback when updating selections. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating_flag</span><span class="p">:</span>
+            <span class="k">yield</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating_flag</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">yield</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_selection_updating_flag</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Trait property handlers</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span>
+
+    <span class="k">def</span> <span class="nf">_set_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_mode</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                <span class="s2">&quot;Selection must be empty when selection_mode is &#39;none&#39;, &quot;</span>
+                <span class="s2">&quot;got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_mode</span> <span class="o">==</span> <span class="s1">&#39;single&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                <span class="s2">&quot;Selection must have at most one element when selection_mode &quot;</span>
+                <span class="s2">&quot;is &#39;single&#39;, got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span> <span class="o">==</span> <span class="s1">&#39;row&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="p">():</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Column values must be () when selection_type is &quot;</span>
+                        <span class="s2">&quot;&#39;row&#39;, got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">is_row_valid</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid row index </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                    <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span> <span class="o">==</span> <span class="s1">&#39;column&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">is_row_valid</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">can_have_children</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">get_row_count</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Row values must have children when selection_type &quot;</span>
+                        <span class="s2">&quot;is &#39;column&#39;, got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">is_column_valid</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid column index </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">is_row_valid</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid row index </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span><span class="o">.</span><span class="n">is_column_valid</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid column index </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+                    <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span> <span class="o">=</span> <span class="n">selection</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

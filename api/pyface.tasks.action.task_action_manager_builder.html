@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.task_action_manager_builder module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.action.task_action_manager_builder module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="next" title="pyface.tasks.action.task_toggle_group module" href="pyface.tasks.action.task_toggle_group.html" >
     <link rel="prev" title="pyface.tasks.action.task_action_controller module" href="pyface.tasks.action.task_action_controller.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -92,33 +92,45 @@
 <span id="pyface-tasks-action-task-action-manager-builder-module"></span><h1>pyface.tasks.action.task_action_manager_builder module<a class="headerlink" href="#module-pyface.tasks.action.task_action_manager_builder" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_action_manager_builder.</code><code class="sig-name descname">TaskActionManagerBuilder</code><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_action_manager_builder.</code><code class="sig-name descname">TaskActionManagerBuilder</code><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_manager_builder.html#TaskActionManagerBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Builds menu bars and tool bars from menu bar and tool bar schema, along
 with any additions provided by the task.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.controller">
+<code class="sig-name descname">controller</code><em class="property"> = Instance(ActionController)</em><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>The controller to assign to the menubar and toolbars.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.task">
+<code class="sig-name descname">task</code><em class="property"> = Instance(Task)</em><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Task to build menubars and toolbars for.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager">
-<code class="sig-name descname">create_action_manager</code><span class="sig-paren">(</span><em class="sig-param">schema</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_action_manager</code><span class="sig-paren">(</span><em class="sig-param">schema</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_manager_builder.html#TaskActionManagerBuilder.create_action_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a manager for the given schema using the task’s additions.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager">
-<code class="sig-name descname">create_menu_bar_manager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_menu_bar_manager</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_manager_builder.html#TaskActionManagerBuilder.create_menu_bar_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a menu bar manager from the task’s menu bar schema and
 additions.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_tool_bar_managers">
-<code class="sig-name descname">create_tool_bar_managers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_tool_bar_managers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_tool_bar_managers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_manager_builder.html#TaskActionManagerBuilder.create_tool_bar_managers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_tool_bar_managers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create tool bar managers from the tasks’s tool bar schemas and
 additions.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item">
-<code class="sig-name descname">prepare_item</code><span class="sig-paren">(</span><em class="sig-param">item</em>, <em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">prepare_item</code><span class="sig-paren">(</span><em class="sig-param">item</em>, <em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_action_manager_builder.html#TaskActionManagerBuilder.prepare_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called immediately after a concrete Pyface item has been created
 (or, in the case of items that are not produced from schemas,
 immediately before they are processed).</p>
@@ -176,10 +188,10 @@ configuration. Returns a concrete Pyface item.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

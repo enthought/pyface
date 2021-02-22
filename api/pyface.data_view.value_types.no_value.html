@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.value_types.no_value module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.value_types.no_value module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.value_types package" href="pyface.data_view.value_types.html" >
     <link rel="next" title="pyface.data_view.value_types.numeric_value module" href="pyface.data_view.value_types.numeric_value.html" >
     <link rel="prev" title="pyface.data_view.value_types.editable_value module" href="pyface.data_view.value_types.editable_value.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -92,12 +92,12 @@
 <span id="pyface-data-view-value-types-no-value-module"></span><h1>pyface.data_view.value_types.no_value module<a class="headerlink" href="#module-pyface.data_view.value_types.no_value" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.data_view.value_types.no_value.NoValue">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.value_types.no_value.</code><code class="sig-name descname">NoValue</code><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.value_types.no_value.</code><code class="sig-name descname">NoValue</code><a class="reference internal" href="../_modules/pyface/data_view/value_types/no_value.html#NoValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType" title="pyface.data_view.abstract_value_type.AbstractValueType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.abstract_value_type.AbstractValueType</span></code></a></p>
 <p>A ValueType that has no data in any channel.</p>
 <dl class="method">
 <dt id="pyface.data_view.value_types.no_value.NoValue.has_editor_value">
-<code class="sig-name descname">has_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_editor_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_editor_value</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/no_value.html#NoValue.has_editor_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_editor_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return whether or not the value can be edited.</p>
 <p>The default implementation is that cells that can be set are
 editable.</p>
@@ -120,7 +120,7 @@ editable.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.no_value.NoValue.has_text">
-<code class="sig-name descname">has_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_text</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/no_value.html#NoValue.has_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has a textual representation.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_text</span></code>
 returns a non-empty value.</p>
@@ -143,7 +143,7 @@ returns a non-empty value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.no_value.NoValue.has_image">
-<code class="sig-name descname">has_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_image</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/no_value.html#NoValue.has_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has an image associated with it.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_image</span></code>
 returns a non-None value.</p>
@@ -166,7 +166,7 @@ returns a non-None value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.value_types.no_value.NoValue.has_tooltip">
-<code class="sig-name descname">has_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_tooltip</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/value_types/no_value.html#NoValue.has_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.value_types.no_value.NoValue.has_tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the value has a tooltip.</p>
 <p>The default implementation returns True if <code class="docutils literal notranslate"><span class="pre">get_tooltip</span></code>
 returns a non-empty value.</p>
@@ -243,10 +243,10 @@ returns a non-empty value.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

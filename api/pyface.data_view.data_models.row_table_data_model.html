@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.data_models.row_table_data_model module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.data_view.data_models.row_table_data_model module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.data_models package" href="pyface.data_view.data_models.html" >
     <link rel="next" title="pyface.data_view.exporters package" href="pyface.data_view.exporters.html" >
     <link rel="prev" title="pyface.data_view.data_models.data_accessors module" href="pyface.data_view.data_models.data_accessors.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -95,7 +95,7 @@
 case of non-hierarchical, row-oriented data.</p>
 <dl class="class">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.row_table_data_model.</code><code class="sig-name descname">RowTableDataModel</code><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.data_models.row_table_data_model.</code><code class="sig-name descname">RowTableDataModel</code><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.abstract_data_model.AbstractDataModel</span></code></a></p>
 <p>A data model that presents a sequence of objects as rows.</p>
 <p>The data is expected to be a sequence of row objects, each object
@@ -105,7 +105,7 @@ get data from attributes, indices of sequences, and keys of mappings,
 but for more complex situations, custom accessors can be defined.</p>
 <dl class="attribute">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.data">
-<code class="sig-name descname">data</code><em class="property"> = Instance( …</em><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">data</code><em class="property"> = Instance(Sequence, allow_none=False)</em><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of objects to display as rows.</p>
 </dd></dl>
 
@@ -117,7 +117,7 @@ but for more complex situations, custom accessors can be defined.</p>
 
 <dl class="attribute">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.column_data">
-<code class="sig-name descname">column_data</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.column_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">column_data</code><em class="property"> = List(Instance(AbstractDataAccessor, allow_none=False))</em><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.column_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>An object which describes how to map data for each column.</p>
 </dd></dl>
 
@@ -130,7 +130,7 @@ indices.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_column_count">
-<code class="sig-name descname">get_column_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_column_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.get_column_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_column_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many columns in the data view model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -144,7 +144,7 @@ indices.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_have_children">
-<code class="sig-name descname">can_have_children</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_have_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_have_children</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.can_have_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_have_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a row can have child rows.</p>
 <p>Only the root has children.</p>
 <dl class="field-list simple">
@@ -162,7 +162,7 @@ indices.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_row_count">
-<code class="sig-name descname">get_row_count</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_row_count</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.get_row_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_row_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>How many child rows the row currently has.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -179,7 +179,7 @@ indices.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value">
-<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Python value for the row and column.</p>
 <p>This uses the row_header_data and column_data accessors to extract
 values for the row and column.</p>
@@ -201,7 +201,7 @@ values for the row and column.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_set_value">
-<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.can_set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the value in the indicated row and column can be set.</p>
 <p>This uses the row_header_data and column_data accessors to determine
 if the value may be changed.</p>
@@ -223,7 +223,7 @@ if the value may be changed.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.set_value">
-<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.set_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_value</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.set_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.set_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Python value for the row and column.</p>
 <p>This uses the row_header_data and column_data accessors to set
 the value.</p>
@@ -243,7 +243,7 @@ the value.</p>
 
 <dl class="method">
 <dt id="pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value_type">
-<code class="sig-name descname">get_value_type</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_value_type</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_models/row_table_data_model.html#RowTableDataModel.get_value_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the value type of the given row and column.</p>
 <p>This uses the row_header_data and column_data accessors to get
 the value type.</p>
@@ -314,10 +314,10 @@ should be displayed.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

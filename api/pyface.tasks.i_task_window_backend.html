@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.i_task_window_backend module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.i_task_window_backend module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.split_editor_area_pane module" href="pyface.tasks.split_editor_area_pane.html" >
     <link rel="prev" title="pyface.tasks.i_task_pane module" href="pyface.tasks.i_task_pane.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -91,7 +91,7 @@
 <span id="pyface-tasks-i-task-window-backend-module"></span><h1>pyface.tasks.i_task_window_backend module<a class="headerlink" href="#module-pyface.tasks.i_task_window_backend" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_window_backend.</code><code class="sig-name descname">ITaskWindowBackend</code><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_window_backend.</code><code class="sig-name descname">ITaskWindowBackend</code><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>The TaskWindow layout interface.</p>
 <p>TaskWindow delegates to an ITaskWindowBackend object for toolkit-specific
@@ -110,13 +110,13 @@ layout functionality.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.create_contents">
-<code class="sig-name descname">create_contents</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.create_contents" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_contents</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.create_contents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.create_contents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create and return the TaskWindow’s contents. (See IWindow.)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the backend.</p>
 <p>Note that TaskWindow will destroy the widget created in create_contents,
 but this method may be used to perform additional cleanup.</p>
@@ -124,26 +124,26 @@ but this method may be used to perform additional cleanup.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.hide_task">
-<code class="sig-name descname">hide_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.hide_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hide_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.hide_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.hide_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assuming the specified TaskState is active, hide its controls.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task">
-<code class="sig-name descname">show_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.show_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assuming no task is currently active, show the controls of the
 specified TaskState.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.get_layout">
-<code class="sig-name descname">get_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.get_layout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.get_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.get_layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a TaskLayout for the current state of the window.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.set_layout">
-<code class="sig-name descname">set_layout</code><span class="sig-paren">(</span><em class="sig-param">layout</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.set_layout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_layout</code><span class="sig-paren">(</span><em class="sig-param">layout</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#ITaskWindowBackend.set_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.set_layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies a TaskLayout (which should be suitable for the active task)
 to the window.</p>
 </dd></dl>
@@ -152,37 +152,37 @@ to the window.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_window_backend.</code><code class="sig-name descname">MTaskWindowBackend</code><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_task_window_backend.</code><code class="sig-name descname">MTaskWindowBackend</code><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Mixin containing common coe for toolkit-specific implementations.</p>
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.create_contents">
-<code class="sig-name descname">create_contents</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.create_contents" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_contents</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.create_contents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.create_contents" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.destroy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.hide_task">
-<code class="sig-name descname">hide_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.hide_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">hide_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.hide_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.hide_task" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.show_task">
-<code class="sig-name descname">show_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_task</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.show_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.get_layout">
-<code class="sig-name descname">get_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.get_layout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.get_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.get_layout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.MTaskWindowBackend.set_layout">
-<code class="sig-name descname">set_layout</code><span class="sig-paren">(</span><em class="sig-param">layout</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.set_layout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_layout</code><span class="sig-paren">(</span><em class="sig-param">layout</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/i_task_window_backend.html#MTaskWindowBackend.set_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.i_task_window_backend.MTaskWindowBackend.set_layout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -235,10 +235,10 @@ to the window.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

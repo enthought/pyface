@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.api module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.api module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.dock_pane module" href="pyface.tasks.dock_pane.html" >
     <link rel="prev" title="pyface.tasks.advanced_editor_area_pane module" href="pyface.tasks.advanced_editor_area_pane.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -89,6 +89,59 @@
             
   <div class="section" id="module-pyface.tasks.api">
 <span id="pyface-tasks-api-module"></span><h1>pyface.tasks.api module<a class="headerlink" href="#module-pyface.tasks.api" title="Permalink to this headline">¶</a></h1>
+<p>API for the <code class="docutils literal notranslate"><span class="pre">pyface.tasks</span></code> submodule.</p>
+<div class="section" id="tasks-specific-interfaces">
+<h2>Tasks-specific Interfaces<a class="headerlink" href="#tasks-specific-interfaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.tasks.i_dock_pane.html#pyface.tasks.i_dock_pane.IDockPane" title="pyface.tasks.i_dock_pane.IDockPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDockPane</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.i_editor.html#pyface.tasks.i_editor.IEditor" title="pyface.tasks.i_editor.IEditor"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane" title="pyface.tasks.i_editor_area_pane.IEditorAreaPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditorAreaPane</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane" title="pyface.tasks.i_task_pane.ITaskPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">ITaskPane</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="tasks-tasks-application-and-related-classes">
+<h2>Tasks, Tasks Application and related classes<a class="headerlink" href="#tasks-tasks-application-and-related-classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AdvancedEditorAreaPane</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DockPane</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Editor</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EditorAreaPane</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitEditorAreaPane</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task.html#pyface.tasks.task.Task" title="pyface.tasks.task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TasksApplication" title="pyface.tasks.tasks_application.TasksApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TasksApplication</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TaskFactory" title="pyface.tasks.tasks_application.TaskFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskFactory</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskPane</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow" title="pyface.tasks.task_window.TaskWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskWindow</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="tasks-layout">
+<h2>Tasks layout<a class="headerlink" href="#tasks-layout" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.TaskLayout" title="pyface.tasks.task_layout.TaskLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskLayout</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_window_layout.html#pyface.tasks.task_window_layout.TaskWindowLayout" title="pyface.tasks.task_window_layout.TaskWindowLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskWindowLayout</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.PaneItem" title="pyface.tasks.task_layout.PaneItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">PaneItem</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.Tabbed" title="pyface.tasks.task_layout.Tabbed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tabbed</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.Splitter" title="pyface.tasks.task_layout.Splitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Splitter</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.HSplitter" title="pyface.tasks.task_layout.HSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSplitter</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.VSplitter" title="pyface.tasks.task_layout.VSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">VSplitter</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="traits-specific-tasks-classes">
+<h2>Traits-specific Tasks classes<a class="headerlink" href="#traits-specific-tasks-classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.tasks.traits_dock_pane.html#pyface.tasks.traits_dock_pane.TraitsDockPane" title="pyface.tasks.traits_dock_pane.TraitsDockPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsDockPane</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.traits_editor.html#pyface.tasks.traits_editor.TraitsEditor" title="pyface.tasks.traits_editor.TraitsEditor"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsEditor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.traits_task_pane.html#pyface.tasks.traits_task_pane.TraitsTaskPane" title="pyface.tasks.traits_task_pane.TraitsTaskPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsTaskPane</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="enaml-specific-tasks-functionality">
+<h2>Enaml-specific Tasks functionality<a class="headerlink" href="#enaml-specific-tasks-functionality" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.tasks.enaml_dock_pane.html#pyface.tasks.enaml_dock_pane.EnamlDockPane" title="pyface.tasks.enaml_dock_pane.EnamlDockPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnamlDockPane</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.enaml_editor.html#pyface.tasks.enaml_editor.EnamlEditor" title="pyface.tasks.enaml_editor.EnamlEditor"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnamlEditor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tasks.enaml_task_pane.html#pyface.tasks.enaml_task_pane.EnamlTaskPane" title="pyface.tasks.enaml_task_pane.EnamlTaskPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnamlTaskPane</span></code></a></p></li>
+</ul>
+</div>
 </div>
 
 
@@ -100,6 +153,18 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.tasks.api module</a><ul>
+<li><a class="reference internal" href="#tasks-specific-interfaces">Tasks-specific Interfaces</a></li>
+<li><a class="reference internal" href="#tasks-tasks-application-and-related-classes">Tasks, Tasks Application and related classes</a></li>
+<li><a class="reference internal" href="#tasks-layout">Tasks layout</a></li>
+<li><a class="reference internal" href="#traits-specific-tasks-classes">Traits-specific Tasks classes</a></li>
+<li><a class="reference internal" href="#enaml-specific-tasks-functionality">Enaml-specific Tasks functionality</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pyface.tasks.advanced_editor_area_pane.html"
                         title="previous chapter">pyface.tasks.advanced_editor_area_pane module</a></p>
@@ -137,10 +202,10 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

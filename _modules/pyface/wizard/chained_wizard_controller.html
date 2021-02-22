@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.wizard.chained_wizard_controller &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.wizard.chained_wizard_controller</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; A wizard controller that can be chained with others. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Instance</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_wizard_controller</span> <span class="k">import</span> <span class="n">IWizardController</span>
+<span class="kn">from</span> <span class="nn">.wizard_controller</span> <span class="k">import</span> <span class="n">WizardController</span>
+
+
+<div class="viewcode-block" id="ChainedWizardController"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController">[docs]</a><span class="k">class</span> <span class="nc">ChainedWizardController</span><span class="p">(</span><span class="n">WizardController</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A wizard controller that can be chained with others. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;ChainedWizardController&#39; interface ---------------------------------#</span>
+
+    <span class="c1"># The next chained wizard controller.</span>
+    <span class="n">next_controller</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IWizardController</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWizardController&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ChainedWizardController.get_next_page"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController.get_next_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the next page. &quot;&quot;&quot;</span>
+
+        <span class="n">next_page</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+                <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">get_first_page</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">next_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">get_next_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">next_page</span></div>
+
+<div class="viewcode-block" id="ChainedWizardController.get_previous_page"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController.get_previous_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_previous_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the previous page. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+            <span class="n">previous_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">is_first_page</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+                    <span class="n">previous_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">previous_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">get_previous_page</span><span class="p">(</span>
+                        <span class="n">page</span>
+                    <span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">previous_page</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">previous_page</span></div>
+
+<div class="viewcode-block" id="ChainedWizardController.is_first_page"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController.is_first_page">[docs]</a>    <span class="k">def</span> <span class="nf">is_first_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Is the page the first page? &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">page</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ChainedWizardController.is_last_page"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController.is_last_page">[docs]</a>    <span class="k">def</span> <span class="nf">is_last_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Is the page the last page? &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span>
+            <span class="c1"># If page is not this controller&#39;s last page, then it cannot be</span>
+            <span class="c1"># *the* last page.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">page</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">is_last</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Otherwise, it is *the* last page if this controller has no next</span>
+            <span class="c1"># controller or the next controller has no pages.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">is_last</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">is_last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">is_last_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">is_last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">is_last_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">is_last</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_last</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">is_last</span></div>
+
+<div class="viewcode-block" id="ChainedWizardController.dispose_pages"><a class="viewcode-back" href="../../../api/pyface.wizard.chained_wizard_controller.html#pyface.wizard.chained_wizard_controller.ChainedWizardController.dispose_pages">[docs]</a>    <span class="k">def</span> <span class="nf">dispose_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dispose the wizard&#39;s pages. &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span>
+            <span class="n">page</span><span class="o">.</span><span class="n">dispose_page</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">dispose_pages</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ChainedWizardController&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the pages in the wizard. &quot;&quot;&quot;</span>
+
+        <span class="n">pages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">[:]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pages</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">pages</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pages</span>
+
+    <span class="k">def</span> <span class="nf">_set_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pages</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the pages in the wizard. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span> <span class="o">=</span> <span class="n">pages</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks the completion status of the controller. &quot;&quot;&quot;</span>
+
+        <span class="c1"># The entire wizard is complete when ALL pages are complete.</span>
+        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">page</span><span class="o">.</span><span class="n">complete</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># fixme: This is a abstraction leak point, since _update is not</span>
+                <span class="c1"># part of the wizard_controller interface!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">complete</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">complete</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># Trait event handlers -------------------------------------------------</span>
+
+    <span class="c1"># Static ----</span>
+
+    <span class="k">def</span> <span class="nf">_current_page_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the current page is changed. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">old</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_page_complete</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">new</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_page_complete</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">next_controller</span><span class="o">.</span><span class="n">current_page</span> <span class="o">=</span> <span class="n">new</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_next_controller_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the next controller is changed. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">old</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_controller_complete</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">new</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_controller_complete</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># Dynamic ----</span>
+
+    <span class="k">def</span> <span class="nf">_on_controller_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the next controller&#39;s complete state changes. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_page_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the current page is complete. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

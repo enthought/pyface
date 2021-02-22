@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Timers &mdash; pyface 7.2 documentation</title>
+    <title>Timers &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
     <link rel="up" title="Submodules" href="submodules.html" >
     <link rel="next" title="Undo Framework" href="undo.html" >
     <link rel="prev" title="Fields" href="fields.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
     </ul>
@@ -226,13 +226,18 @@ trait, along with an optional tuple of
 <p>Another common use case is that you want a Traits Event to be fired
 periodically or at some future time.  This permits many possible listeners
 to be called from the same timer, and have them be turned on and turned off
-dynamically, if desired.  The <a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.EventTimer" title="pyface.timer.timer.EventTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventTimer</span></code></a>
-provides this functionality via its
-<code class="xref py py-class docutils literal notranslate"><span class="pre">timeout</span></code> event trait.</p>
+dynamically, if desired, via
+<a class="reference external" href="https://docs.enthought.com/traits/traits_user_manual/notification.html">Traits’ observe</a>
+(note that observe listeners are required to take a single event argument).
+The <a class="reference internal" href="api/pyface.timer.timer.html#pyface.timer.timer.EventTimer" title="pyface.timer.timer.EventTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventTimer</span></code></a> provides this functionality via
+its <code class="xref py py-class docutils literal notranslate"><span class="pre">timeout</span></code> event trait.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">EventTimer</span>
 
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+
 <span class="n">timer</span> <span class="o">=</span> <span class="n">EventTimer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
-<span class="n">timer</span><span class="o">.</span><span class="n">on_trait_change</span><span class="p">(</span><span class="n">print_time</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span>
+<span class="n">timer</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">print_time</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span>
 
 <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
@@ -310,10 +315,10 @@ class for backwards compatability.  This class shouldn’t be used in new code.<
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

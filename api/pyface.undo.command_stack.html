@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.undo.command_stack module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.undo.command_stack module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.undo package" href="pyface.undo.html" >
     <link rel="next" title="pyface.undo.i_command module" href="pyface.undo.i_command.html" >
     <link rel="prev" title="pyface.undo.api module" href="pyface.undo.api.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.undo.html" accesskey="U">pyface.undo package</a></li> 
@@ -91,7 +91,7 @@
 <span id="pyface-undo-command-stack-module"></span><h1>pyface.undo.command_stack module<a class="headerlink" href="#module-pyface.undo.command_stack" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.undo.command_stack.CommandStack">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.undo.command_stack.</code><code class="sig-name descname">CommandStack</code><a class="headerlink" href="#pyface.undo.command_stack.CommandStack" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.undo.command_stack.</code><code class="sig-name descname">CommandStack</code><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The CommandStack class is the default implementation of the
 ICommandStack interface.</p>
@@ -128,7 +128,7 @@ stack.</p>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.begin_macro">
-<code class="sig-name descname">begin_macro</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.begin_macro" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">begin_macro</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.begin_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.begin_macro" title="Permalink to this definition">¶</a></dt>
 <dd><p>This begins a macro by creating an empty command with the given
 ‘name’.  All subsequent calls to ‘push()’ create commands that will be
 children of the empty command until the next call to ‘end_macro()’.
@@ -139,7 +139,7 @@ outstanding ‘end_macro()’ call).</p>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.clear">
-<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.clear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>This clears the stack, without undoing or redoing any commands, and
 leaves the stack in a clean state.  It is typically used when all
 changes to the data have been abandoned.</p>
@@ -147,13 +147,13 @@ changes to the data have been abandoned.</p>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.end_macro">
-<code class="sig-name descname">end_macro</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.end_macro" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">end_macro</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.end_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.end_macro" title="Permalink to this definition">¶</a></dt>
 <dd><p>This ends a macro.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.push">
-<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">command</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.push" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.push" title="Permalink to this definition">¶</a></dt>
 <dd><p>This executes a command and saves it on the command stack so that
 it can be subsequently undone and redone.  ‘command’ is an instance
 that implements the ICommand interface.  Its ‘do()’ method is called
@@ -163,7 +163,7 @@ returned by ‘push()’.</p>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.redo">
-<code class="sig-name descname">redo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.redo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">redo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.redo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.redo" title="Permalink to this definition">¶</a></dt>
 <dd><p>If ‘sequence_nr’ is 0 then the last command that was undone is
 redone and any result returned.  Otherwise commands are redone up to
 and including the given ‘sequence_nr’ and any result of the last of
@@ -172,7 +172,7 @@ these is returned.</p>
 
 <dl class="method">
 <dt id="pyface.undo.command_stack.CommandStack.undo">
-<code class="sig-name descname">undo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.undo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">undo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/command_stack.html#CommandStack.undo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.command_stack.CommandStack.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>If ‘sequence_nr’ is 0 then the last command is undone.  Otherwise
 commands are undone up to and including the given ‘sequence_nr’.</p>
 </dd></dl>
@@ -227,10 +227,10 @@ commands are undone up to and including the given ‘sequence_nr’.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

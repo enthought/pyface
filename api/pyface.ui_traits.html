@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.ui_traits module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.ui_traits module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.widget module" href="pyface.widget.html" >
     <link rel="prev" title="pyface.toolkit module" href="pyface.toolkit.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -91,19 +91,19 @@
 <p>Defines common traits used within the pyface library.</p>
 <dl class="function">
 <dt id="pyface.ui_traits.convert_image">
-<code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">convert_image</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">level=3</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.convert_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">convert_image</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">level=3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#convert_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.convert_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a specified value to an ImageResource if possible.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.ui_traits.convert_bitmap">
-<code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">convert_bitmap</code><span class="sig-paren">(</span><em class="sig-param">image_resource</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.convert_bitmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">convert_bitmap</code><span class="sig-paren">(</span><em class="sig-param">image_resource</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#convert_bitmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.convert_bitmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an ImageResource to a bitmap using a cache.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.ui_traits.Image">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Image</code><span class="sig-paren">(</span><em class="sig-param">value=None</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.Image" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Image</code><span class="sig-paren">(</span><em class="sig-param">value=None</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#Image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.Image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_type.TraitType</span></code></p>
 <p>Defines a trait whose value must be a ImageResource or a string
 that can be converted to one.</p>
@@ -119,13 +119,13 @@ that can be converted to one.</p>
 
 <dl class="method">
 <dt id="pyface.ui_traits.Image.validate">
-<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.Image.validate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#Image.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.Image.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates that a specified value is valid for this trait.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui_traits.Image.create_editor">
-<code class="sig-name descname">create_editor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.Image.create_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_editor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#Image.create_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.Image.create_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the default UI editor for the trait.</p>
 </dd></dl>
 
@@ -133,7 +133,7 @@ that can be converted to one.</p>
 
 <dl class="class">
 <dt id="pyface.ui_traits.PyfaceColor">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">PyfaceColor</code><span class="sig-paren">(</span><em class="sig-param">value=None</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.PyfaceColor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">PyfaceColor</code><span class="sig-paren">(</span><em class="sig-param">value=None</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#PyfaceColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.PyfaceColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_type.TraitType</span></code></p>
 <p>A Trait which casts strings and tuples to a PyfaceColor value.</p>
 <dl class="attribute">
@@ -144,12 +144,12 @@ that can be converted to one.</p>
 
 <dl class="method">
 <dt id="pyface.ui_traits.PyfaceColor.validate">
-<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.PyfaceColor.validate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#PyfaceColor.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.PyfaceColor.validate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui_traits.PyfaceColor.info">
-<code class="sig-name descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.PyfaceColor.info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#PyfaceColor.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.PyfaceColor.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must return a string describing the type of value accepted by the
 trait handler.</p>
 <p>The string should be a phrase describing the type defined by the
@@ -169,25 +169,25 @@ default method returns the value of the ‘info_text’ attribute.</p>
 
 <dl class="class">
 <dt id="pyface.ui_traits.BaseMB">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">BaseMB</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.BaseMB" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">BaseMB</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#BaseMB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.BaseMB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasStrictTraits</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.ui_traits.Margin">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Margin</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.Margin" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Margin</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#Margin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.Margin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.ui_traits.BaseMB" title="pyface.ui_traits.BaseMB"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui_traits.BaseMB</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.ui_traits.Border">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Border</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.Border" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">Border</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#Border"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.Border" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.ui_traits.BaseMB" title="pyface.ui_traits.BaseMB"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui_traits.BaseMB</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.ui_traits.HasMargin">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">HasMargin</code><span class="sig-paren">(</span><em class="sig-param">default_value=&lt;traits.trait_type.NoDefaultSpecified object&gt;</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.HasMargin" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">HasMargin</code><span class="sig-paren">(</span><em class="sig-param">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType object&gt;</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#HasMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.HasMargin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_type.TraitType</span></code></p>
 <p>Defines a trait whose value must be a Margin object or an integer or
 tuple value that can be converted to one.</p>
@@ -209,13 +209,13 @@ tuple value that can be converted to one.</p>
 
 <dl class="method">
 <dt id="pyface.ui_traits.HasMargin.validate">
-<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.HasMargin.validate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">validate</code><span class="sig-paren">(</span><em class="sig-param">object</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#HasMargin.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.HasMargin.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates that a specified value is valid for this trait.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui_traits.HasMargin.get_default_value">
-<code class="sig-name descname">get_default_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.HasMargin.get_default_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_default_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#HasMargin.get_default_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.HasMargin.get_default_value" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Returns a tuple of the form:</dt><dd><p>(default_value_type, default_value)</p>
 </dd>
@@ -227,7 +227,7 @@ tuple value that can be converted to one.</p>
 
 <dl class="class">
 <dt id="pyface.ui_traits.HasBorder">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">HasBorder</code><span class="sig-paren">(</span><em class="sig-param">default_value=&lt;traits.trait_type.NoDefaultSpecified object&gt;</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui_traits.HasBorder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.ui_traits.</code><code class="sig-name descname">HasBorder</code><span class="sig-paren">(</span><em class="sig-param">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType object&gt;</em>, <em class="sig-param">**metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/ui_traits.html#HasBorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.ui_traits.HasBorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.ui_traits.HasMargin" title="pyface.ui_traits.HasMargin"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui_traits.HasMargin</span></code></a></p>
 <p>Defines a trait whose value must be a Border object or an integer
 or tuple value that can be converted to one.</p>
@@ -309,10 +309,10 @@ or tuple value that can be converted to one.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

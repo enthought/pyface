@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.workbench.workbench module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.workbench.workbench module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.workbench package" href="pyface.workbench.html" >
     <link rel="next" title="pyface.workbench.workbench_window module" href="pyface.workbench.workbench_window.html" >
     <link rel="prev" title="pyface.workbench.window_event module" href="pyface.workbench.window_event.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.workbench.html" accesskey="U">pyface.workbench package</a></li> 
@@ -92,20 +92,20 @@
 <p>A workbench.</p>
 <dl class="class">
 <dt id="pyface.workbench.workbench.Workbench">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.workbench.</code><code class="sig-name descname">Workbench</code><a class="headerlink" href="#pyface.workbench.workbench.Workbench" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.workbench.</code><code class="sig-name descname">Workbench</code><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>A workbench.</p>
 <p>There is exactly <em>one</em> workbench per application. The workbench can create
 any number of workbench windows.</p>
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.create_window">
-<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.create_window" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.create_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.create_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Factory method that creates a new workbench window.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.exit">
-<code class="sig-name descname">exit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.exit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">exit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exits the workbench.</p>
 <p>This closes all open workbench windows.</p>
 <p>This method is not called when the user clicks the close icon. Nor when
@@ -116,45 +116,45 @@ menu File-&gt;Exit item is selected.</p>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.edit">
-<code class="sig-name descname">edit</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">kind=None</em>, <em class="sig-param">use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.edit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edit</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">kind=None</em>, <em class="sig-param">use_existing=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.edit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edit an object in the active workbench window.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.get_editor">
-<code class="sig-name descname">get_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">kind=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.get_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">kind=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.get_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.get_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the editor that is editing an object.</p>
 <p>Returns None if no such editor exists.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.get_editor_by_id">
-<code class="sig-name descname">get_editor_by_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.get_editor_by_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor_by_id</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.get_editor_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.get_editor_by_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the editor with the specified Id.</p>
 <p>Returns None if no such editor exists.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.confirm">
-<code class="sig-name descname">confirm</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title=None</em>, <em class="sig-param">cancel=False</em>, <em class="sig-param">default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.confirm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">confirm</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title=None</em>, <em class="sig-param">cancel=False</em>, <em class="sig-param">default=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.confirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.confirm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show a confirmation dialog.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.information">
-<code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Information'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.information" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Information'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.warning">
-<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.warning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show a warning message dialog.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.error">
-<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Error'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">title='Error'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/workbench.html#Workbench.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.workbench.Workbench.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an error message dialog.</p>
 </dd></dl>
 
@@ -208,10 +208,10 @@ menu File-&gt;Exit item is selected.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

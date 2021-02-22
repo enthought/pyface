@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.i_view &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.i_view</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The interface for workbench views. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ImageResource</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">provides</span><span class="p">,</span> <span class="n">Str</span>
+<span class="kn">from</span> <span class="nn">traits.util.camel_case</span> <span class="k">import</span> <span class="n">camel_case_to_words</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_perspective_item</span> <span class="k">import</span> <span class="n">IPerspectiveItem</span>
+<span class="kn">from</span> <span class="nn">.i_workbench_part</span> <span class="k">import</span> <span class="n">IWorkbenchPart</span><span class="p">,</span> <span class="n">MWorkbenchPart</span>
+<span class="kn">from</span> <span class="nn">.perspective_item</span> <span class="k">import</span> <span class="n">PerspectiveItem</span>
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IView"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.IView">[docs]</a><span class="k">class</span> <span class="nc">IView</span><span class="p">(</span><span class="n">IWorkbenchPart</span><span class="p">,</span> <span class="n">IPerspectiveItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The interface for workbench views. &quot;&quot;&quot;</span>
+
+    <span class="c1"># Is the view busy? (i.e., should the busy cursor (often an hourglass) be</span>
+    <span class="c1"># displayed?).</span>
+    <span class="n">busy</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># The category that the view belongs to (this can used to group views when</span>
+    <span class="c1"># they are displayed to the user).</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">)</span>
+
+    <span class="c1"># An image used to represent the view to the user (shown in the view tab</span>
+    <span class="c1"># and in the view chooser etc).</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ImageResource</span><span class="p">)</span>
+
+    <span class="c1"># Whether the view is visible or not.</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IView&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IView.activate"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.IView.activate">[docs]</a>    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the view.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IView.hide"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.IView.hide">[docs]</a>    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide the view.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IView.show"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.IView.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show the view.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MView"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.MView">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MView</span><span class="p">(</span><span class="n">MWorkbenchPart</span><span class="p">,</span> <span class="n">PerspectiveItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mixin containing common code for toolkit-specific implementations. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IView&#39; interface ----------------------------------------------------</span>
+
+    <span class="c1"># Is the view busy? (i.e., should the busy cursor (often an hourglass) be</span>
+    <span class="c1"># displayed?).</span>
+    <span class="n">busy</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># The category that the view belongs to (this can be used to group views</span>
+    <span class="c1"># when they are displayed to the user).</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">)</span>
+
+    <span class="c1"># An image used to represent the view to the user (shown in the view tab</span>
+    <span class="c1"># and in the view chooser etc).</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ImageResource</span><span class="p">)</span>
+
+    <span class="c1"># Whether the view is visible or not.</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWorkbenchPart&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_id_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;view </span><span class="si">%s</span><span class="s2"> has no Id - using &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+
+        <span class="c1"># If no Id is specified then use the name.</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+    <span class="k">def</span> <span class="nf">_name_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">camel_case_to_words</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;view </span><span class="si">%s</span><span class="s2"> has no name - using &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">name</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IView&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MView.activate"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.MView.activate">[docs]</a>    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the view.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">activate_view</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MView.hide"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.MView.hide">[docs]</a>    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide the view. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">hide_view</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MView.show"><a class="viewcode-back" href="../../../api/pyface.workbench.i_view.html#pyface.workbench.i_view.MView.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show the view. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">show_view</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">return</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

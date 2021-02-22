@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.wizard.i_wizard module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.wizard.i_wizard module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.wizard package" href="pyface.wizard.html" >
     <link rel="next" title="pyface.wizard.i_wizard_controller module" href="pyface.wizard.i_wizard_controller.html" >
     <link rel="prev" title="pyface.wizard.chained_wizard_controller module" href="pyface.wizard.chained_wizard_controller.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.wizard.html" accesskey="U">pyface.wizard package</a></li> 
@@ -92,18 +92,18 @@
 <p>The interface for all pyface wizards.</p>
 <dl class="class">
 <dt id="pyface.wizard.i_wizard.IWizard">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard.</code><code class="sig-name descname">IWizard</code><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard.</code><code class="sig-name descname">IWizard</code><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#IWizard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
 <p>The interface for all pyface wizards.</p>
 <dl class="method">
 <dt id="pyface.wizard.i_wizard.IWizard.next">
-<code class="sig-name descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.next" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#IWizard.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.next" title="Permalink to this definition">¶</a></dt>
 <dd><p>Advance to the next page in the wizard.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.wizard.i_wizard.IWizard.previous">
-<code class="sig-name descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.previous" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#IWizard.previous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.previous" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return to the previous page in the wizard.</p>
 </dd></dl>
 
@@ -111,7 +111,7 @@
 
 <dl class="class">
 <dt id="pyface.wizard.i_wizard.MWizard">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard.</code><code class="sig-name descname">MWizard</code><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard.</code><code class="sig-name descname">MWizard</code><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#MWizard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IWizard interface.</p>
@@ -119,13 +119,13 @@ implementations of the IWizard interface.</p>
 Reimplements: _create_contents()</p>
 <dl class="method">
 <dt id="pyface.wizard.i_wizard.MWizard.next">
-<code class="sig-name descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.next" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#MWizard.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.next" title="Permalink to this definition">¶</a></dt>
 <dd><p>Advance to the next page in the wizard.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.wizard.i_wizard.MWizard.previous">
-<code class="sig-name descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.previous" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">previous</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard.html#MWizard.previous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.previous" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return to the previous page in the wizard.</p>
 </dd></dl>
 
@@ -179,10 +179,10 @@ Reimplements: _create_contents()</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

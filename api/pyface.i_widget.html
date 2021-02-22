@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_widget module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.i_widget module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_window module" href="pyface.i_window.html" >
     <link rel="prev" title="pyface.i_system_metrics module" href="pyface.i_system_metrics.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -91,7 +91,7 @@
 <p>The base interface for all pyface widgets.</p>
 <dl class="class">
 <dt id="pyface.i_widget.IWidget">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_widget.</code><code class="sig-name descname">IWidget</code><a class="headerlink" href="#pyface.i_widget.IWidget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_widget.</code><code class="sig-name descname">IWidget</code><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>The base interface for all pyface widgets.</p>
 <p>Pyface widgets delegate to a toolkit specific control.</p>
@@ -121,7 +121,7 @@
 
 <dl class="method">
 <dt id="pyface.i_widget.IWidget.show">
-<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.show" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">visible</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show or hide the widget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -132,7 +132,7 @@
 
 <dl class="method">
 <dt id="pyface.i_widget.IWidget.enable">
-<code class="sig-name descname">enable</code><span class="sig-paren">(</span><em class="sig-param">enabled</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.enable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">enable</code><span class="sig-paren">(</span><em class="sig-param">enabled</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.enable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable or disable the widget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -142,8 +142,28 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="pyface.i_widget.IWidget.focus">
+<code class="sig-name descname">focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.focus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the keyboard focus to this widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.has_focus">
+<code class="sig-name descname">has_focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.has_focus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.has_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the widget currently have keyboard focus?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>focus_state</strong> – Whether or not the widget has keyboard focus.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyface.i_widget.IWidget.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the toolkit specific control.</p>
 <p>This method should create the control and assign it to the
 :py:attr:<code class="docutils literal notranslate"><span class="pre">control</span></code> trait.</p>
@@ -151,7 +171,7 @@
 
 <dl class="method">
 <dt id="pyface.i_widget.IWidget.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#IWidget.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.IWidget.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the control if it exists.</p>
 </dd></dl>
 
@@ -159,13 +179,13 @@
 
 <dl class="class">
 <dt id="pyface.i_widget.MWidget">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_widget.</code><code class="sig-name descname">MWidget</code><a class="headerlink" href="#pyface.i_widget.MWidget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_widget.</code><code class="sig-name descname">MWidget</code><a class="reference internal" href="../_modules/pyface/i_widget.html#MWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.MWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IWidget interface.</p>
 <dl class="method">
 <dt id="pyface.i_widget.MWidget.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.MWidget.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_widget.html#MWidget.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_widget.MWidget.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the toolkit specific control.</p>
 <p>The default implementation simply calls _create()</p>
 </dd></dl>
@@ -220,10 +240,10 @@ implementations of the IWidget interface.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

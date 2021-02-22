@@ -165,16 +165,21 @@ EventTimer
 Another common use case is that you want a Traits Event to be fired
 periodically or at some future time.  This permits many possible listeners
 to be called from the same timer, and have them be turned on and turned off
-dynamically, if desired.  The :py:class:`~pyface.timer.timer.EventTimer`
-provides this functionality via its
-:py:class:`~pyface.timer.timer.EventTimer.timeout` event trait.
+dynamically, if desired, via
+`Traits' observe <https://docs.enthought.com/traits/traits_user_manual/notification.html>`_
+(note that observe listeners are required to take a single event argument).
+The :py:class:`~pyface.timer.timer.EventTimer` provides this functionality via
+its :py:class:`~pyface.timer.timer.EventTimer.timeout` event trait.
 
 .. code-block:: python
 
     from pyface.timer.api import EventTimer
 
+    def print_time(event):
+        print("The time is {}".format(datetime.datetime.now()))
+
     timer = EventTimer(interval=0.5, expire=60)
-    timer.on_trait_change(print_time, 'timeout')
+    timer.observe(print_time, 'timeout')
 
     timer.start()
 

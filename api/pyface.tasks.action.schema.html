@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.schema module &mdash; pyface 7.2 documentation</title>
+    <title>pyface.tasks.action.schema module &mdash; pyface 7.3 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.2',
+        VERSION:     '7.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="next" title="pyface.tasks.action.schema_addition module" href="pyface.tasks.action.schema_addition.html" >
     <link rel="prev" title="pyface.tasks.action.listening_action module" href="pyface.tasks.action.listening_action.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -92,12 +92,25 @@
 <span id="pyface-tasks-action-schema-module"></span><h1>pyface.tasks.action.schema module<a class="headerlink" href="#module-pyface.tasks.action.schema" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.action.schema.Schema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">Schema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.Schema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">Schema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.Schema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The abstract base class for all Tasks action schemas.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.Schema.id">
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema.Schema.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The schema’s identifier (unique within its parent schema).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.Schema.items">
+<code class="sig-name descname">items</code><em class="property"> = List(SubSchema)</em><a class="headerlink" href="#pyface.tasks.action.schema.Schema.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of sub-items in the schema. These items can be other
+(non-top-level) schema or concrete instances from the Pyface API.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.schema.Schema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.Schema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#Schema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.Schema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate pyface.action instance with the specified
 child items.</p>
 </dd></dl>
@@ -106,7 +119,7 @@ child items.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.action.schema.ActionSchema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">ActionSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.ActionSchema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">ActionSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#ActionSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.ActionSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.action.schema.Schema</span></code></a></p>
 <p>Action schema for Pyface Actions.</p>
 <p>An action schema cannot have children. It is used as an action factory
@@ -129,7 +142,7 @@ it by mistake.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.action.schema.ActionSchema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.ActionSchema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#ActionSchema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.ActionSchema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate Pyface Action instance.</p>
 </dd></dl>
 
@@ -137,12 +150,24 @@ it by mistake.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.action.schema.GroupSchema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">GroupSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">GroupSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#GroupSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.action.schema.Schema</span></code></a></p>
 <p>A schema for a Pyface Group.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.GroupSchema.group_factory">
+<code class="sig-name descname">group_factory</code><em class="property"> = Callable(Group)</em><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema.group_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A factory for instantiating a pyface Group.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.GroupSchema.separator">
+<code class="sig-name descname">separator</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema.separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the group require a separator when it is visualized?</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.schema.GroupSchema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#GroupSchema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate pyface.action instance with the specified
 child items.</p>
 </dd></dl>
@@ -151,12 +176,36 @@ child items.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.action.schema.MenuSchema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">MenuSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">MenuSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#MenuSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.action.schema.Schema</span></code></a></p>
 <p>A schema for a Pyface MenuManager.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuSchema.name">
+<code class="sig-name descname">name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The menu’s user visible name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuSchema.separator">
+<code class="sig-name descname">separator</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the menu require a separator before the menu item?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuSchema.action">
+<code class="sig-name descname">action</code><em class="property"> = Instance(Action)</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.action" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default action for tool button when shown in a toolbar (Qt only)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuSchema.menu_manager_factory">
+<code class="sig-name descname">menu_manager_factory</code><em class="property"> = Callable(MenuManager)</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.menu_manager_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A factory for instantiating a pyface MenuManager.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.schema.MenuSchema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#MenuSchema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate pyface.action instance with the specified
 child items.</p>
 </dd></dl>
@@ -165,12 +214,24 @@ child items.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.action.schema.MenuBarSchema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">MenuBarSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">MenuBarSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#MenuBarSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.action.schema.Schema</span></code></a></p>
 <p>A schema for a Pyface MenuBarManager.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuBarSchema.id">
+<code class="sig-name descname">id</code><em class="property"> = &quot;MenuBar&quot;</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign a default ID for menu bar schemas.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.MenuBarSchema.menu_bar_manager_factory">
+<code class="sig-name descname">menu_bar_manager_factory</code><em class="property"> = Callable(MenuBarManager)</em><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema.menu_bar_manager_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A factory for instantiating a pyface MenuBarManager.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.schema.MenuBarSchema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#MenuBarSchema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate pyface.action instance with the specified
 child items.</p>
 </dd></dl>
@@ -179,12 +240,55 @@ child items.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.action.schema.ToolBarSchema">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">ToolBarSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema.</code><code class="sig-name descname">ToolBarSchema</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#ToolBarSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.action.schema.Schema</span></code></a></p>
 <p>A schema for a Pyface ToolBarManager.</p>
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.id">
+<code class="sig-name descname">id</code><em class="property"> = &quot;ToolBar&quot;</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign a default ID for tool bar schemas.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.name">
+<code class="sig-name descname">name</code><em class="property"> = Str(&quot;Tool Bar&quot;)</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tool bar’s user visible name. Note that this name may not be used on
+all platforms.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.image_size">
+<code class="sig-name descname">image_size</code><em class="property"> = Tuple((16, 16))</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.image_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of tool images (width, height).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;horizontal&quot;, &quot;vertical&quot;)</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the toolbar.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.show_divider">
+<code class="sig-name descname">show_divider</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.show_divider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should we display the horizontal divider?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.show_tool_names">
+<code class="sig-name descname">show_tool_names</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.show_tool_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should we display the name of each tool bar tool under its image?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.tool_bar_manager_factory">
+<code class="sig-name descname">tool_bar_manager_factory</code><em class="property"> = Callable(ToolBarManager)</em><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.tool_bar_manager_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>A factory for instantiating a pyface ToolBarManager</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.tasks.action.schema.ToolBarSchema.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">children</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/schema.html#ToolBarSchema.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the appropriate pyface.action instance with the specified
 child items.</p>
 </dd></dl>
@@ -263,10 +367,10 @@ child items.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2020, Enthought
+        &copy; Copyright 2008-2021, Enthought
       </li>
       <li>
-      Last updated on Dec 09, 2020.
+      Last updated on Feb 22, 2021.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
