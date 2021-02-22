@@ -23,8 +23,8 @@ from setuptools import setup, find_packages
 MAJOR = 7
 MINOR = 3
 MICRO = 0
-PRERELEASE = "rc1"
-IS_RELEASED = False
+PRERELEASE = ""
+IS_RELEASED = True
 
 # If this file is part of a Git export (for example created with "git archive",
 # or downloaded from GitHub), ARCHIVE_COMMIT_HASH gives the full hash of the
