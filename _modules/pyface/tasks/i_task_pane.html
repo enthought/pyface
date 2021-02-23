@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.i_task_pane &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.i_task_pane</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">Str</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.tasks.task</span> <span class="k">import</span> <span class="n">Task</span>
+
+
+<div class="viewcode-block" id="ITaskPane"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane">[docs]</a><span class="k">class</span> <span class="nc">ITaskPane</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The base interface for all panes (central and dock) in a Task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The pane&#39;s identifier, unique within a Task.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The pane&#39;s user-visible name.</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The toolkit-specific control that represents the pane.</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1">#: Does the pane currently have focus?</span>
+    <span class="n">has_focus</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">()</span>
+
+    <span class="c1">#: The task with which the pane is associated. Set by the framework.</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ITaskPane&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ITaskPane.create"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create and set the toolkit-specific control that represents the</span>
+<span class="sd">            pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskPane.destroy"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy the toolkit-specific control that represents the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskPane.set_focus"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane.set_focus">[docs]</a>    <span class="k">def</span> <span class="nf">set_focus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Gives focus to the control that represents the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MTaskPane"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.MTaskPane">[docs]</a><span class="k">class</span> <span class="nc">MTaskPane</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mixin containing common code for toolkit-specific implementations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;ITaskPane&#39; interface ------------------------------------------------</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+    <span class="n">has_focus</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

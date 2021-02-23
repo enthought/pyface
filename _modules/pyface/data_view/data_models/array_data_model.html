@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.data_models.array_data_model &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.data_models.array_data_model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; Provides an N-dimensional array data model implementation.</span>
+
+<span class="sd">This module provides a concrete implementation of a data model for an</span>
+<span class="sd">n-dim numpy array.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Array</span><span class="p">,</span> <span class="n">HasRequiredTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">observe</span>
+
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_model</span> <span class="k">import</span> <span class="n">AbstractDataModel</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.data_view_errors</span> <span class="k">import</span> <span class="n">DataViewSetError</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_value_type</span> <span class="k">import</span> <span class="n">AbstractValueType</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.value_types.api</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">ConstantValue</span><span class="p">,</span> <span class="n">FloatValue</span><span class="p">,</span> <span class="n">IntValue</span><span class="p">,</span> <span class="n">TextValue</span><span class="p">,</span> <span class="n">no_value</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.index_manager</span> <span class="k">import</span> <span class="n">TupleIndexManager</span>
+
+
+<span class="k">class</span> <span class="nc">_AtLeastTwoDArray</span><span class="p">(</span><span class="n">Array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Trait type that holds an array that at least two dimensional.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<div class="viewcode-block" id="ArrayDataModel"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel">[docs]</a><span class="k">class</span> <span class="nc">ArrayDataModel</span><span class="p">(</span><span class="n">AbstractDataModel</span><span class="p">,</span> <span class="n">HasRequiredTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A data model for an n-dim array.</span>
+
+<span class="sd">    This data model presents the data from a multidimensional array</span>
+<span class="sd">    hierarchically by dimension.  The underlying array must be at least 2</span>
+<span class="sd">    dimensional.</span>
+
+<span class="sd">    Values are adapted by the ``value_type`` trait.  This provides sensible</span>
+<span class="sd">    default values for integer, float and text dtypes, but other dtypes may</span>
+<span class="sd">    need the user of the class to supply an appropriate value type class to</span>
+<span class="sd">    adapt values.</span>
+
+<span class="sd">    There are additional value types which provide data sources for row</span>
+<span class="sd">    headers, column headers, and the label of the row header column.  The</span>
+<span class="sd">    defaults are likely suitable for most cases, but can be overriden if</span>
+<span class="sd">    required.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The array being displayed.  This must have dimension at least 2.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_AtLeastTwoDArray</span><span class="p">()</span>
+
+    <span class="c1">#: The index manager that helps convert toolkit indices to data view</span>
+    <span class="c1">#: indices.</span>
+    <span class="n">index_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">TupleIndexManager</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+
+    <span class="c1">#: The value type of the row index column header.</span>
+    <span class="n">label_header_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
+        <span class="n">AbstractValueType</span><span class="p">,</span>
+        <span class="n">factory</span><span class="o">=</span><span class="n">ConstantValue</span><span class="p">,</span>
+        <span class="n">kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s2">&quot;Index&quot;</span><span class="p">},</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: The value type of the column titles.</span>
+    <span class="n">column_header_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
+        <span class="n">AbstractValueType</span><span class="p">,</span>
+        <span class="n">factory</span><span class="o">=</span><span class="n">IntValue</span><span class="p">,</span>
+        <span class="n">kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;is_editable&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: The value type of the row titles.</span>
+    <span class="n">row_header_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span>
+        <span class="n">AbstractValueType</span><span class="p">,</span>
+        <span class="n">factory</span><span class="o">=</span><span class="n">IntValue</span><span class="p">,</span>
+        <span class="n">kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;is_editable&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: The type of value being displayed in the data model.</span>
+    <span class="n">value_type</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractValueType</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Data structure methods</span>
+
+<div class="viewcode-block" id="ArrayDataModel.get_column_count"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_column_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_column_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; How many columns in the data view model.</span>
+
+<span class="sd">        The number of columns is the size of the last dimension of the array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        column_count : non-negative int</span>
+<span class="sd">            The number of columns in the data view model, which is the size of</span>
+<span class="sd">            the last dimension of the array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.can_have_children"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_have_children">[docs]</a>    <span class="k">def</span> <span class="nf">can_have_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not a row can have child rows.</span>
+
+<span class="sd">        A row is a leaf row if the length of the index is one less than</span>
+<span class="sd">        the dimension of the array: the final coordinate for the value will</span>
+<span class="sd">        be supplied by the column index.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        can_have_children : bool</span>
+<span class="sd">            Whether or not the row can ever have child rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.get_row_count"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_row_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the row currently has any child rows.</span>
+
+<span class="sd">        The number of rows in a non-leaf row is equal to the size of the</span>
+<span class="sd">        next dimension.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_children : bool</span>
+<span class="sd">            Whether or not the row currently has child rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+    <span class="c1"># Data value methods</span>
+
+<div class="viewcode-block" id="ArrayDataModel.get_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the Python value for the row and column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        row_count : non-negative int</span>
+<span class="sd">            The number of child rows that the row has.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">column</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.can_set_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.can_set_value">[docs]</a>    <span class="k">def</span> <span class="nf">can_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether the value in the indicated row and column can be set.</span>
+
+<span class="sd">        This returns False for row and column headers, but True for all</span>
+<span class="sd">        array values.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        can_set_value : bool</span>
+<span class="sd">            Whether or not the value can be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># can only set values when we have the full index</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.set_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the Python value for the row and column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The value represented by the given row and column.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_set_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">column</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataViewSetError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.get_value_type"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.get_value_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the value type of the given row and column.</span>
+
+<span class="sd">        This method returns the value of ``column_header_type`` for column</span>
+<span class="sd">        headers, the value of ``row_header_type`` for row headers, the value</span>
+<span class="sd">        of ``label_header_type`` for the top-left corner value, the value of</span>
+<span class="sd">        ``value_type`` for all array values, and ``no_value`` for everything</span>
+<span class="sd">        else.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value_type : AbstractValueType</span>
+<span class="sd">            The value type of the given row and column.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_header_type</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_header_type</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_header_type</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">no_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_type</span></div>
+
+    <span class="c1"># data update methods</span>
+
+<div class="viewcode-block" id="ArrayDataModel.data_updated"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.data_updated">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">data_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the array being replaced with a new array. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">event</span><span class="o">.</span><span class="n">old</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span>
+                        <span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">old</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">old</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.value_type_updated"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_type_updated">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;value_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">value_type_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the value type being updated. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.column_header_type_updated"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.column_header_type_updated">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;column_header_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">column_header_type_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the column header type being updated. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.value_header_type_updated"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.value_header_type_updated">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;row_header_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">value_header_type_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the value header type being updated. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">())</span></div>
+
+<div class="viewcode-block" id="ArrayDataModel.label_header_type_updated"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel.label_header_type_updated">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;label_header_type.updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">label_header_type_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the label header type being updated. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((),</span> <span class="p">(),</span> <span class="p">(),</span> <span class="p">())</span></div>
+
+    <span class="c1"># default array value</span>
+
+    <span class="k">def</span> <span class="nf">_data_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">zeros</span>
+        <span class="k">return</span> <span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

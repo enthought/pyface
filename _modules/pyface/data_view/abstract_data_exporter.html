@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.abstract_data_exporter &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.abstract_data_exporter</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">ABCHasStrictTraits</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">Instance</span>
+
+<span class="kn">from</span> <span class="nn">pyface.data_view.data_view_errors</span> <span class="k">import</span> <span class="n">DataViewGetError</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.i_data_wrapper</span> <span class="k">import</span> <span class="n">DataFormat</span>
+
+
+<div class="viewcode-block" id="AbstractDataExporter"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter">[docs]</a><span class="k">class</span> <span class="nc">AbstractDataExporter</span><span class="p">(</span><span class="n">ABCHasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; ABC for classes that export data from a data view.</span>
+
+<span class="sd">    Concrete classes should implement the ``get_data`` method so that</span>
+<span class="sd">    it produces a value that can be serialized using the provided</span>
+<span class="sd">    ``format``.  Some convenience methods are provided to get</span>
+<span class="sd">    text values, as that is a common use-case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The DataFormat used to serialize the exported data.</span>
+    <span class="nb">format</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">DataFormat</span><span class="p">)</span>
+
+    <span class="c1">#: Whether to get item data from the text channel, if available.</span>
+    <span class="n">is_text</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AbstractDataExporter.add_data"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter.add_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_wrapper</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add data to the data wrapper from the model and indices.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_wrapper : DataWrapper instance</span>
+<span class="sd">            The data wrapper that will be used to export data.</span>
+<span class="sd">        model : AbstractDataModel instance</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        indices : list of (row, column) index pairs</span>
+<span class="sd">            The indices where the data is to be stored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+            <span class="n">data_wrapper</span><span class="o">.</span><span class="n">set_format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">DataViewGetError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractDataExporter.get_data"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter.get_data">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the data to be exported from the model and indices.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel instance</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        indices : list of (row, column) index pairs</span>
+<span class="sd">            The indices where the data is to be stored.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data : any</span>
+<span class="sd">            The data, of a type that can be serialized by the format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractDataExporter.get_value"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Utility method to extract a value at a given index.</span>
+
+<span class="sd">        If ``is_text`` is True, it will use the ``get_text()`` method</span>
+<span class="sd">        to extract the value, otherwise it will try to use the</span>
+<span class="sd">        editor value if it exists, and failing that the raw value</span>
+<span class="sd">        returned from the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value_type</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value_type</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_text</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value_type</span><span class="o">.</span><span class="n">has_text</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value_type</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">elif</span> <span class="n">value_type</span><span class="o">.</span><span class="n">has_editor_value</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value_type</span><span class="o">.</span><span class="n">get_editor_value</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_text_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">mimetype</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;text/&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

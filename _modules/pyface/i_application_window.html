@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_application_window &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.i_application_window</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The interface of a top-level application window. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">MenuBarManager</span><span class="p">,</span> <span class="n">StatusBarManager</span><span class="p">,</span> <span class="n">ToolBarManager</span>
+<span class="kn">from</span> <span class="nn">pyface.i_image_resource</span> <span class="k">import</span> <span class="n">IImageResource</span>
+<span class="kn">from</span> <span class="nn">pyface.i_window</span> <span class="k">import</span> <span class="n">IWindow</span>
+
+
+<div class="viewcode-block" id="IApplicationWindow"><a class="viewcode-back" href="../../api/pyface.i_application_window.html#pyface.i_application_window.IApplicationWindow">[docs]</a><span class="k">class</span> <span class="nc">IApplicationWindow</span><span class="p">(</span><span class="n">IWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The interface for a top-level application window.</span>
+
+<span class="sd">    The application window has support for a menu bar, tool bar and a status</span>
+<span class="sd">    bar (all of which are optional).</span>
+
+<span class="sd">    Usage</span>
+<span class="sd">    -----</span>
+
+<span class="sd">    Create a sub-class of this class and override the</span>
+<span class="sd">    :py:meth:`._create_contents` method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IApplicationWindow&#39; interface ---------------------------------------</span>
+
+    <span class="c1">#: The window icon.  The default is toolkit specific.</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IImageResource</span><span class="p">)</span>
+
+    <span class="c1">#: The menu bar manager (None iff there is no menu bar).</span>
+    <span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">MenuBarManager</span><span class="p">)</span>
+
+    <span class="c1">#: The status bar manager (None iff there is no status bar).</span>
+    <span class="n">status_bar_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">StatusBarManager</span><span class="p">)</span>
+
+    <span class="c1">#: The tool bar manager (None iff there is no tool bar).</span>
+    <span class="n">tool_bar_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ToolBarManager</span><span class="p">)</span>
+
+    <span class="c1">#: If the underlying toolkit supports multiple toolbars, you can use this</span>
+    <span class="c1">#: list instead of the single ToolBarManager instance above.</span>
+    <span class="n">tool_bar_managers</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">ToolBarManager</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;IApplicationWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create and return the window&#39;s contents.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control to be used as the parent for</span>
+<span class="sd">            widgets in the contents.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        control : toolkit control</span>
+<span class="sd">            A control to be used for contents of the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_menu_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the menu bar (if required).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_status_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the status bar (if required).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_tool_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the tool bar (if required).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_trim_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the &#39;trim&#39; widgets (the widgets around the window).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_set_window_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the window icon (if required). &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MApplicationWindow"><a class="viewcode-back" href="../../api/pyface.i_application_window.html#pyface.i_application_window.MApplicationWindow">[docs]</a><span class="k">class</span> <span class="nc">MApplicationWindow</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The mixin class that contains common code for toolkit specific</span>
+<span class="sd">    implementations of the :py:class:`IApplicationWindow` interface.</span>
+
+<span class="sd">    Implements: destroy(), _create_trim_widgets()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWidget&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MApplicationWindow.destroy"><a class="viewcode-back" href="../../api/pyface.i_application_window.html#pyface.i_application_window.MApplicationWindow.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy the control if it exists. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_bar_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_bar_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tool_bar_manager</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool_bar_managers</span><span class="p">:</span>
+            <span class="n">tool_bar_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">MApplicationWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;IApplicationWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_trim_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates the &#39;trim&#39; widgets (the widgets around the window).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The window&#39;s toolkit control.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># All of these are optional.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_window_icon</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_menu_bar</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_tool_bar</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_status_bar</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

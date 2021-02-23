@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.action.schema_addition &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.action.schema_addition</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="SchemaAddition"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.schema_addition.html#pyface.tasks.action.schema_addition.SchemaAddition">[docs]</a><span class="k">class</span> <span class="nc">SchemaAddition</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An addition to an existing menu bar or tool bar schema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The schema addition&#39;s identifier. This optional, but if left</span>
+    <span class="c1">#: unspecified, other schema additions will be unable to refer to this one.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: A callable to create the item. Should have the following signature:</span>
+    <span class="c1">#:    callable() -&gt; Action | ActionItem | Group | MenuManager |</span>
+    <span class="c1">#:                  GroupSchema | MenuSchema</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: If the result is a schema, it will itself admit of extension by other</span>
+    <span class="c1">#: additions. If not, the result will be fixed.</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">Callable</span>
+
+    <span class="c1">#: A forward-slash-separated path through the action hierarchy to the menu</span>
+    <span class="c1">#: to add the action, group or menu to. For example:</span>
+    <span class="c1">#: - To add an item to the menu bar: ``path = &quot;MenuBar&quot;``</span>
+    <span class="c1">#: - To add an item to the tool bar: ``path = &quot;ToolBar&quot;``</span>
+    <span class="c1">#: - To add an item to a sub-menu: ``path = &quot;MenuBar/File/New&quot;``</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The item appears after the item with this ID.</span>
+    <span class="c1">#: - for groups, this is the ID of another group.</span>
+    <span class="c1">#: - for menus and actions, this is the ID of another menu or action.</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The action appears before the item with this ID.</span>
+    <span class="c1">#: - for groups, this is the ID of another group.</span>
+    <span class="c1">#: - for menus and actions, this is the ID of another menu or action.</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The action appears at the absolute specified position first or last.</span>
+    <span class="c1">#: This is useful for example to keep the File menu the first menu in a</span>
+    <span class="c1">#: menubar, the help menu the last etc.</span>
+    <span class="c1">#: If multiple actions in a schema have absolute_position &#39;first&#39;, they</span>
+    <span class="c1">#: will appear in the same order specified; unless &#39;before&#39; and &#39;after&#39;</span>
+    <span class="c1">#: traits are set to sort these multiple items.</span>
+    <span class="c1">#: This trait takes precedence over &#39;after&#39; and &#39;before&#39;, and values of</span>
+    <span class="c1">#: those traits that are not compatible with the  absolute_position are</span>
+    <span class="c1">#: ignored.</span>
+    <span class="n">absolute_position</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

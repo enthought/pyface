@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tree.node_type &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tree.node_type</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The base class for all node types. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">HasPrivateTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ImageResource</span>
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">Action</span><span class="p">,</span> <span class="n">ActionManagerItem</span><span class="p">,</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">MenuManager</span>
+
+
+<div class="viewcode-block" id="NodeType"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType">[docs]</a><span class="k">class</span> <span class="nc">NodeType</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The base class for all node types. &quot;&quot;&quot;</span>
+
+    <span class="c1"># The default image used to represent nodes that DO NOT allow children.</span>
+    <span class="n">DOCUMENT</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s2">&quot;document&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The default image used to represent nodes that allow children and are NOT</span>
+    <span class="c1"># expanded.</span>
+    <span class="n">CLOSED_FOLDER</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s2">&quot;closed_folder&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The default image used to represent nodes that allow children and ARE</span>
+    <span class="c1"># expanded.</span>
+    <span class="n">OPEN_FOLDER</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s2">&quot;open_folder&quot;</span><span class="p">)</span>
+
+    <span class="c1"># &#39;NodeType&#39; interface -------------------------------------------------</span>
+
+    <span class="c1"># The node manager that the type belongs to.</span>
+    <span class="n">node_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tree.node_manager.NodeManager&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The image used to represent nodes that DO NOT allow children.</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ImageResource</span><span class="p">)</span>
+
+    <span class="c1"># The image used to represent nodes that allow children and are NOT</span>
+    <span class="c1"># expanded.</span>
+    <span class="n">closed_image</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ImageResource</span><span class="p">)</span>
+
+    <span class="c1"># The image used to represent nodes that allow children and ARE expanded.</span>
+    <span class="n">open_image</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ImageResource</span><span class="p">)</span>
+
+    <span class="c1"># The default actions/groups/menus available on nodes of this type (shown</span>
+    <span class="c1"># on the context menu).</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># List</span>
+
+    <span class="c1"># The default action for nodes of this type.  The default action is</span>
+    <span class="c1"># performed when a node is activated (i.e., double-clicked).</span>
+    <span class="n">default_action</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Action</span><span class="p">)</span>
+
+    <span class="c1"># The default actions/groups/menus for creating new children within nodes</span>
+    <span class="c1"># of this type (shown in the &#39;New&#39; menu of the context menu).</span>
+    <span class="n">new_actions</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># List</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;NodeType&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># These methods are specific to the &#39;NodeType&#39; interface ---------------</span>
+
+<div class="viewcode-block" id="NodeType.is_type_for"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.is_type_for">[docs]</a>    <span class="k">def</span> <span class="nf">is_type_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if a node is deemed to be of this type. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NodeType.allows_children"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.allows_children">[docs]</a>    <span class="k">def</span> <span class="nf">allows_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Does the node allow children (ie. a folder vs a file). &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="NodeType.get_actions"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the node-specific actions for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span></div>
+
+<div class="viewcode-block" id="NodeType.get_context_menu"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_context_menu">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the context menu for a node. &quot;&quot;&quot;</span>
+
+        <span class="n">sat</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;SystemActionsTop&quot;</span><span class="p">)</span>
+        <span class="n">nsa</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;NodeSpecificActions&quot;</span><span class="p">)</span>
+        <span class="n">sab</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;SystemActionsBottom&quot;</span><span class="p">)</span>
+
+        <span class="c1"># The &#39;New&#39; menu.</span>
+        <span class="n">new_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_new_actions</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_actions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_actions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MenuManager</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;New&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">new_actions</span><span class="p">))</span>
+
+        <span class="c1"># Node-specific actions.</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_actions</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">actions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+                <span class="n">nsa</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="c1"># System actions (actions available on ALL nodes).</span>
+        <span class="n">system_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_manager</span><span class="o">.</span><span class="n">system_actions</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">system_actions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">system_actions</span><span class="p">:</span>
+                <span class="n">sab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="n">context_menu</span> <span class="o">=</span> <span class="n">MenuManager</span><span class="p">(</span><span class="n">sat</span><span class="p">,</span> <span class="n">nsa</span><span class="p">,</span> <span class="n">sab</span><span class="p">)</span>
+        <span class="n">context_menu</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">context_menu</span></div>
+
+<div class="viewcode-block" id="NodeType.get_copy_value"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_copy_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_copy_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is copied for a node.</span>
+
+<span class="sd">        By default, returns the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="NodeType.get_default_action"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_default_action">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the default action for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_action</span></div>
+
+<div class="viewcode-block" id="NodeType.get_new_actions"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_new_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the new actions for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_actions</span></div>
+
+<div class="viewcode-block" id="NodeType.get_paste_value"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_paste_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_paste_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is pasted for a node.</span>
+
+<span class="sd">        By default, returns the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="NodeType.get_monitor"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_monitor">[docs]</a>    <span class="k">def</span> <span class="nf">get_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a monitor that detects changes to a node.</span>
+
+<span class="sd">        Returns None by default,  which indicates that the node is not</span>
+<span class="sd">        monitored.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="c1"># These methods are exactly the same as the &#39;TreeModel&#39; interface -----#</span>
+
+<div class="viewcode-block" id="NodeType.has_children"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if a node has children, otherwise False.</span>
+
+<span class="sd">        You only need to implement this method if children are allowed for the</span>
+<span class="sd">        node (ie. &#39;allows_children&#39; returns True).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="NodeType.get_children"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the children of a node.</span>
+
+<span class="sd">        You only need to implement this method if children are allowed for the</span>
+<span class="sd">        node.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NodeType.get_drag_value"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_drag_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_drag_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is dragged for a node.</span>
+
+<span class="sd">        By default, returns the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="NodeType.can_drop"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.can_drop">[docs]</a>    <span class="k">def</span> <span class="nf">can_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if a node allows an object to be dropped onto it. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="NodeType.drop"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.drop">[docs]</a>    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Drops an object onto a node. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NodeType.get_image"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">expanded</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the label image for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">allows_children</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">expanded</span><span class="p">:</span>
+                <span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;open_image&quot;</span><span class="p">,</span> <span class="s2">&quot;closed_image&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">]</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OPEN_FOLDER</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;closed_image&quot;</span><span class="p">,</span> <span class="s2">&quot;open_image&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">]</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CLOSED_FOLDER</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;open_image&quot;</span><span class="p">,</span> <span class="s2">&quot;closed_image&quot;</span><span class="p">]</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DOCUMENT</span>
+
+        <span class="c1"># Use the search order to look for a trait that is NOT None.</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="c1"># If no such trait is found then use the default image.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="NodeType.get_selection_value"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_selection_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_selection_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the value that is used when a node is selected.</span>
+
+<span class="sd">        By default the selection value is the node itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="NodeType.get_text"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.get_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the label text for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeType.can_set_text"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.can_set_text">[docs]</a>    <span class="k">def</span> <span class="nf">can_set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node&#39;s label can be set. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="NodeType.set_text"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the label text for a node. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="NodeType.is_collapsible"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.is_collapsible">[docs]</a>    <span class="k">def</span> <span class="nf">is_collapsible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is collapsible, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="NodeType.is_draggable"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.is_draggable">[docs]</a>    <span class="k">def</span> <span class="nf">is_draggable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is draggablee, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="NodeType.can_rename"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.can_rename">[docs]</a>    <span class="k">def</span> <span class="nf">can_rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node can be renamed, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="NodeType.is_editable"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.is_editable">[docs]</a>    <span class="k">def</span> <span class="nf">is_editable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is editable, otherwise False.</span>
+
+<span class="sd">        If the node is editable, its text can be set via the UI.</span>
+
+<span class="sd">        DEPRECATED: Use &#39;can_rename&#39;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_rename</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeType.is_expandable"><a class="viewcode-back" href="../../../api/pyface.tree.node_type.html#pyface.tree.node_type.NodeType.is_expandable">[docs]</a>    <span class="k">def</span> <span class="nf">is_expandable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the node is expandanble, otherwise False. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

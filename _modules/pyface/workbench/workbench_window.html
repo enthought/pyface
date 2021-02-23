@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.workbench_window &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.workbench_window</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; A workbench window. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">GUI</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Constant</span><span class="p">,</span> <span class="n">Delegate</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span><span class="p">,</span> <span class="n">Undefined</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">observe</span><span class="p">,</span> <span class="n">provides</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_editor</span> <span class="k">import</span> <span class="n">IEditor</span>
+<span class="kn">from</span> <span class="nn">.i_editor_manager</span> <span class="k">import</span> <span class="n">IEditorManager</span>
+<span class="kn">from</span> <span class="nn">.i_perspective</span> <span class="k">import</span> <span class="n">IPerspective</span>
+<span class="kn">from</span> <span class="nn">.i_view</span> <span class="k">import</span> <span class="n">IView</span>
+<span class="kn">from</span> <span class="nn">.i_workbench_part</span> <span class="k">import</span> <span class="n">IWorkbenchPart</span>
+<span class="kn">from</span> <span class="nn">.perspective</span> <span class="k">import</span> <span class="n">Perspective</span>
+<span class="kn">from</span> <span class="nn">.workbench_window_layout</span> <span class="k">import</span> <span class="n">WorkbenchWindowLayout</span>
+<span class="kn">from</span> <span class="nn">.workbench_window_memento</span> <span class="k">import</span> <span class="n">WorkbenchWindowMemento</span>
+
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WorkbenchWindow"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow">[docs]</a><span class="k">class</span> <span class="nc">WorkbenchWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A workbench window. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IWorkbenchWindow&#39; interface -----------------------------------------</span>
+
+    <span class="c1"># The view or editor that currently has the focus.</span>
+    <span class="n">active_part</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IWorkbenchPart</span><span class="p">)</span>
+
+    <span class="c1"># The editor manager is used to create/restore editors.</span>
+    <span class="n">editor_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IEditorManager</span><span class="p">)</span>
+
+    <span class="c1"># The current selection within the window.</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span>
+
+    <span class="c1"># The workbench that the window belongs to.</span>
+    <span class="n">workbench</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.workbench.api.IWorkbench&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Editors -----------------------</span>
+
+    <span class="c1"># The active editor.</span>
+    <span class="n">active_editor</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># The visible (open) editors.</span>
+    <span class="n">editors</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># The Id of the editor area.</span>
+    <span class="n">editor_area_id</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s2">&quot;pyface.workbench.editors&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The (initial) size of the editor area (the user is free to resize it of</span>
+    <span class="c1"># course).</span>
+    <span class="n">editor_area_size</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+    <span class="c1"># Fired when an editor is about to be opened (or restored).</span>
+    <span class="n">editor_opening</span> <span class="o">=</span> <span class="n">Delegate</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">)</span>  <span class="c1"># Event(IEditor)</span>
+
+    <span class="c1"># Fired when an editor has been opened (or restored).</span>
+    <span class="n">editor_opened</span> <span class="o">=</span> <span class="n">Delegate</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">)</span>  <span class="c1"># Event(IEditor)</span>
+
+    <span class="c1"># Fired when an editor is about to be closed.</span>
+    <span class="n">editor_closing</span> <span class="o">=</span> <span class="n">Delegate</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">)</span>  <span class="c1"># Event(IEditor)</span>
+
+    <span class="c1"># Fired when an editor has been closed.</span>
+    <span class="n">editor_closed</span> <span class="o">=</span> <span class="n">Delegate</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">)</span>  <span class="c1"># Event(IEditor)</span>
+
+    <span class="c1"># Views -------------------------</span>
+
+    <span class="c1"># The active view.</span>
+    <span class="n">active_view</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># The available views (note that this is *all* of the views, not just those</span>
+    <span class="c1"># currently visible).</span>
+    <span class="c1">#</span>
+    <span class="c1"># Views *cannot* be shared between windows as each view has a reference to</span>
+    <span class="c1"># its toolkit-specific control etc.</span>
+    <span class="n">views</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Perspectives -----------------#</span>
+
+    <span class="c1"># The active perspective.</span>
+    <span class="n">active_perspective</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IPerspective</span><span class="p">)</span>
+
+    <span class="c1"># The available perspectives. If no perspectives are specified then the</span>
+    <span class="c1"># a single instance of the &#39;Perspective&#39; class is created.</span>
+    <span class="n">perspectives</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IPerspective</span><span class="p">)</span>
+
+    <span class="c1"># The Id of the default perspective.</span>
+    <span class="c1">#</span>
+    <span class="c1"># There are two situations in which this is used:</span>
+    <span class="c1">#</span>
+    <span class="c1"># 1. When the window is being created from scratch (i.e., not restored).</span>
+    <span class="c1">#</span>
+    <span class="c1">#    If this is the empty string, then the first perspective in the list of</span>
+    <span class="c1">#    perspectives is shown (if there are no perspectives then an instance</span>
+    <span class="c1">#    of the default &#39;Perspective&#39; class is used). If this is *not* the</span>
+    <span class="c1">#    empty string then the perspective with this Id is shown.</span>
+    <span class="c1">#</span>
+    <span class="c1"># 2. When the window is being restored.</span>
+    <span class="c1">#</span>
+    <span class="c1">#    If this is the empty string, then the last perspective that was</span>
+    <span class="c1">#    visible when the window last closed is shown. If this is not the empty</span>
+    <span class="c1">#    string then the perspective with this Id is shown.</span>
+    <span class="c1">#</span>
+    <span class="n">default_perspective_id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># &#39;WorkbenchWindow&#39; interface -----------------------------------------#</span>
+
+    <span class="c1"># The window layout is responsible for creating and managing the internal</span>
+    <span class="c1"># structure of the window (i.e., it knows how to add and remove views and</span>
+    <span class="c1"># editors etc).</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">WorkbenchWindowLayout</span><span class="p">)</span>
+
+    <span class="c1"># &#39;Private&#39; interface -------------------------------------------------#</span>
+
+    <span class="c1"># The state of the window suitable for pickling etc.</span>
+    <span class="n">_memento</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">WorkbenchWindowMemento</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Window&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="WorkbenchWindow.open"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Open the window.</span>
+
+<span class="sd">        Overridden to make the &#39;opening&#39; event vetoable.</span>
+
+<span class="sd">        Return True if the window opened successfully; False if the open event</span>
+<span class="sd">        was vetoed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> opening&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Trait notification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opening</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># Trait notification.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">self</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> opened&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> open was vetoed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># fixme: This is not actually part of the Pyface &#39;Window&#39; API (but</span>
+        <span class="c1"># maybe it should be). We return this to indicate whether the window</span>
+        <span class="c1"># actually opened.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.close"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes the window.</span>
+
+<span class="sd">        Overridden to make the &#39;closing&#39; event vetoable.</span>
+
+<span class="sd">        Return True if the window closed successfully (or was not even open!),</span>
+<span class="sd">        False if the close event was vetoed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> closing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Trait notification.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">closing</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+
+            <span class="c1"># fixme: Hack to mimic vetoable events!</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+                <span class="c1"># Give views and editors a chance to cleanup after themselves.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">destroy_views</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">destroy_editors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">)</span>
+
+                <span class="c1"># Cleanup the window layout (event handlers, etc.)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+                <span class="c1"># Cleanup the toolkit-specific control.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+                <span class="c1"># Cleanup our reference to the control so that we can (at least</span>
+                <span class="c1"># in theory!) be opened again.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="c1"># Trait notification.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">closed</span> <span class="o">=</span> <span class="bp">self</span>
+
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> closed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> close was vetoed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;window </span><span class="si">%s</span><span class="s2"> is not open&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># FIXME v3: This is not actually part of the Pyface &#39;Window&#39; API (but</span>
+        <span class="c1"># maybe it should be). We return this to indicate whether the window</span>
+        <span class="c1"># actually closed.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;Window&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create and return the window contents. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create the initial window layout.</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">create_initial_layout</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="c1"># Save the initial window layout so that we can reset it when changing</span>
+        <span class="c1"># to a perspective that has not been seen yet.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_view_memento</span><span class="p">()</span>
+
+        <span class="c1"># Are we creating the window from scratch or restoring it from a</span>
+        <span class="c1"># memento?</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span> <span class="o">=</span> <span class="n">WorkbenchWindowMemento</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_restore_contents</span><span class="p">()</span>
+
+        <span class="c1"># Set the initial perspective.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_initial_perspective</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">contents</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;WorkbenchWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Initializers ---------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_editor_manager_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="kn">from</span> <span class="nn">editor_manager</span> <span class="k">import</span> <span class="n">EditorManager</span>
+
+        <span class="k">return</span> <span class="n">EditorManager</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_layout_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">WorkbenchWindowLayout</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># Methods -------------------------------------------------------------#</span>
+
+<div class="viewcode-block" id="WorkbenchWindow.activate_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.activate_editor">[docs]</a>    <span class="k">def</span> <span class="nf">activate_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activates an editor. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.activate_view"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.activate_view">[docs]</a>    <span class="k">def</span> <span class="nf">activate_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activates a view. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">activate_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.add_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.add_editor">[docs]</a>    <span class="k">def</span> <span class="nf">add_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds an editor.</span>
+
+<span class="sd">        If no title is specified, the editor&#39;s name is used.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">add_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.add_view"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.add_view">[docs]</a>    <span class="k">def</span> <span class="nf">add_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a view. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">add_view</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">relative_to</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+        <span class="c1"># This case allows for views that are created and added dynamically</span>
+        <span class="c1"># (i.e. they were not even known about when the window was created).</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.close_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.close_editor">[docs]</a>    <span class="k">def</span> <span class="nf">close_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes an editor. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">close_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.close_view"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.close_view">[docs]</a>    <span class="k">def</span> <span class="nf">close_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes a view.</span>
+
+<span class="sd">        fixme: Currently views are never &#39;closed&#39; in the same sense as an</span>
+<span class="sd">        editor is closed. Views are merely hidden.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.create_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.create_editor">[docs]</a>    <span class="k">def</span> <span class="nf">create_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create an editor for an object.</span>
+
+<span class="sd">        Return None if no editor can be created for the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">editor_manager</span><span class="o">.</span><span class="n">create_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.destroy_editors"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.destroy_editors">[docs]</a>    <span class="k">def</span> <span class="nf">destroy_editors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editors</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy a list of editors. &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="n">editors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">editor</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">editor</span><span class="o">.</span><span class="n">destroy_control</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.destroy_views"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.destroy_views">[docs]</a>    <span class="k">def</span> <span class="nf">destroy_views</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">views</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy a list of views. &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">views</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">view</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">view</span><span class="o">.</span><span class="n">destroy_control</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.edit"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.edit">[docs]</a>    <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Edit an object.</span>
+
+<span class="sd">        &#39;kind&#39; is simply passed through to the window&#39;s editor manager to</span>
+<span class="sd">        allow it to create a particular kind of editor depending on context</span>
+<span class="sd">        etc.</span>
+
+<span class="sd">        If &#39;use_existing&#39; is True and the object is already being edited in</span>
+<span class="sd">        the window then the existing editor will be activated (i.e., given</span>
+<span class="sd">        focus, brought to the front, etc.).</span>
+
+<span class="sd">        If &#39;use_existing&#39; is False, then a new editor will be created even if</span>
+<span class="sd">        one already exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">use_existing</span><span class="p">:</span>
+            <span class="c1"># Is the object already being edited in the window?</span>
+            <span class="n">editor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_editor</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># If so, activate the existing editor (i.e., bring it to the</span>
+                <span class="c1"># front, give it the focus etc).</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">editor</span>
+
+        <span class="c1"># Otherwise, create an editor for it.</span>
+        <span class="n">editor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_editor</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;no editor for object </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">editor</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_editor">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the editor that is editing an object.</span>
+
+<span class="sd">        Return None if no such editor exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">editor_manager</span><span class="o">.</span><span class="n">get_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_editor_by_id"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_editor_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the editor with the specified Id.</span>
+
+<span class="sd">        Return None if no such editor exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">editor</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">editor</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">editor</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_part_by_id"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_part_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_part_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the workbench part with the specified Id.</span>
+
+<span class="sd">        Return None if no such part exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_view_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_editor_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_perspective_by_id"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_perspective_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_perspective_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the perspective with the specified Id.</span>
+
+<span class="sd">        Return None if no such perspective exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">perspective</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">perspective</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="o">==</span> <span class="n">Perspective</span><span class="o">.</span><span class="n">DEFAULT_ID</span><span class="p">:</span>
+                <span class="n">perspective</span> <span class="o">=</span> <span class="n">Perspective</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">perspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">perspective</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_perspective_by_name"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_perspective_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_perspective_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the perspective with the specified name.</span>
+
+<span class="sd">        Return None if no such perspective exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">perspective</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">perspective</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">perspective</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_view_by_id"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_view_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_view_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the view with the specified Id.</span>
+
+<span class="sd">        Return None if no such view exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">view</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">view</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">view</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.hide_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.hide_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">hide_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide the editor area. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">hide_editor_area</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.hide_view"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.hide_view">[docs]</a>    <span class="k">def</span> <span class="nf">hide_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide a view. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">hide_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.refresh"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Refresh the window to reflect any changes. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.reset_active_perspective"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.reset_active_perspective">[docs]</a>    <span class="k">def</span> <span class="nf">reset_active_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reset the active perspective back to its original contents. &quot;&quot;&quot;</span>
+
+        <span class="n">perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span>
+
+        <span class="c1"># If the perspective has been seen before then delete its memento.</span>
+        <span class="k">if</span> <span class="n">perspective</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">:</span>
+            <span class="c1"># Remove the perspective&#39;s memento.</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">[</span><span class="n">perspective</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+        <span class="c1"># Re-display the perspective (because a memento no longer exists for</span>
+        <span class="c1"># the perspective, its &#39;create_contents&#39; method will be called again).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_perspective</span><span class="p">(</span><span class="n">perspective</span><span class="p">,</span> <span class="n">perspective</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.reset_all_perspectives"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.reset_all_perspectives">[docs]</a>    <span class="k">def</span> <span class="nf">reset_all_perspectives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reset all perspectives back to their original contents. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Remove all perspective mementos (except user perspectives).</span>
+        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__user_perspective&quot;</span><span class="p">):</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+
+        <span class="c1"># Re-display the active perspective.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_perspective</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.reset_editors"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.reset_editors">[docs]</a>    <span class="k">def</span> <span class="nf">reset_editors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first editor in every tab. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">reset_editors</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.reset_views"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.reset_views">[docs]</a>    <span class="k">def</span> <span class="nf">reset_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first view in every tab. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">reset_views</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.show_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.show_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">show_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show the editor area. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">show_editor_area</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.show_view"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.show_view">[docs]</a>    <span class="k">def</span> <span class="nf">show_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show a view. &quot;&quot;&quot;</span>
+
+        <span class="c1"># If the view is already in the window layout, but hidden, then just</span>
+        <span class="c1"># show it.</span>
+        <span class="c1">#</span>
+        <span class="c1"># fixme: This is a little gorpy, reaching into the window layout here,</span>
+        <span class="c1"># but currently this is the only thing that knows whether or not the</span>
+        <span class="c1"># view exists but is hidden.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">contains_view</span><span class="p">(</span><span class="n">view</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">show_view</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise, we have to add the view to the layout.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_view_in_default_position</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># Methods for saving and restoring the layout -------------------------#</span>
+
+<div class="viewcode-block" id="WorkbenchWindow.get_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.get_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the state of the window suitable for pickling etc. &quot;&quot;&quot;</span>
+
+        <span class="c1"># The size and position of the window.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span>
+
+        <span class="c1"># The Id of the active perspective.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">active_perspective_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="c1"># The layout of the active perspective.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_view_memento</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">is_editor_area_visible</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># The layout of the editor area.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">editor_area_memento</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_editor_memento</span><span class="p">()</span>
+
+        <span class="c1"># Any extra toolkit-specific data.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">toolkit_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_toolkit_memento</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span></div>
+
+<div class="viewcode-block" id="WorkbenchWindow.set_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.set_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restore the state of the window from a memento. &quot;&quot;&quot;</span>
+
+        <span class="c1"># All we do here is save a reference to the memento - we don&#39;t actually</span>
+        <span class="c1"># do anything with it until the window is opened.</span>
+        <span class="c1">#</span>
+        <span class="c1"># This obviously means that you can&#39;t set the memento of a window</span>
+        <span class="c1"># that is already open, but I can&#39;t see a use case for that anyway!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span> <span class="o">=</span> <span class="n">memento</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_add_view_in_default_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a view in its &#39;default&#39; position. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Is the view in the current perspectives contents list? If it is then</span>
+        <span class="c1"># we use the positioning information in the perspective item. Otherwise</span>
+        <span class="c1"># we will use the default positioning specified in the view itself.</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_perspective_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_perspective</span><span class="p">,</span> <span class="n">view</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">view</span>
+
+        <span class="c1"># fixme: This only works because &#39;PerspectiveItem&#39; and &#39;View&#39; have the</span>
+        <span class="c1"># identical &#39;position&#39;, &#39;relative_to&#39;, &#39;width&#39; and &#39;height&#39; traits! We</span>
+        <span class="c1"># need to unify these somehow!</span>
+        <span class="n">relative_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_view_by_id</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">relative_to</span><span class="p">)</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_view</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">relative_to</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_initial_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">methods</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the initial perspective. &quot;&quot;&quot;</span>
+
+        <span class="n">methods</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># If a default perspective was specified then we prefer that over</span>
+            <span class="c1"># any other perspective.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_perspective</span><span class="p">,</span>
+            <span class="c1"># If there was no default perspective then try the perspective that</span>
+            <span class="c1"># was active the last time the application was run.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_previous_perspective</span><span class="p">,</span>
+            <span class="c1"># If there was no previous perspective, then try the first one that</span>
+            <span class="c1"># we know about.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_first_perspective</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="n">method</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">perspective</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="c1"># If we have no known perspectives, make a new blank one up.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;no known perspectives - creating a new one&quot;</span><span class="p">)</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="n">Perspective</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">perspective</span>
+
+    <span class="k">def</span> <span class="nf">_get_default_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the default perspective.</span>
+
+<span class="sd">        Return None if no default perspective was specified or it no longer</span>
+<span class="sd">        exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_perspective_id</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_perspective_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">perspective</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;default perspective </span><span class="si">%s</span><span class="s2"> no longer available&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">perspective</span>
+
+    <span class="k">def</span> <span class="nf">_get_previous_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the previous perspective.</span>
+
+<span class="sd">        Return None if there has been no previous perspective or it no longer</span>
+<span class="sd">        exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">active_perspective_id</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_perspective_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">perspective</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;previous perspective </span><span class="si">%s</span><span class="s2"> no longer available&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">perspective</span>
+
+    <span class="k">def</span> <span class="nf">_get_first_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the first perspective in our list of perspectives.</span>
+
+<span class="sd">        Return None if no perspectives have been defined.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perspectives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">perspective</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">perspective</span>
+
+    <span class="k">def</span> <span class="nf">_get_perspective_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the perspective item for a view.</span>
+
+<span class="sd">        Return None if the view is not mentioned in the perspectives contents.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># fixme: Errrr, shouldn&#39;t this be a method on the window?!?</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">perspective</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">view</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">_hide_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide a perspective. &quot;&quot;&quot;</span>
+
+        <span class="c1"># fixme: This is a bit ugly but... when we restore the layout we ignore</span>
+        <span class="c1"># the default view visibility.</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Save the current layout of the perspective.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="p">[</span><span class="n">perspective</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_view_memento</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">is_editor_area_visible</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_show_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show a perspective. &quot;&quot;&quot;</span>
+
+        <span class="c1"># If the perspective has been seen before then restore it.</span>
+        <span class="n">memento</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">perspective_mementos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">memento</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Show the editor area?</span>
+            <span class="c1"># We need to set the editor area before setting the views</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">memento</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Restoring perspective from an older version.&quot;</span><span class="p">)</span>
+                <span class="n">editor_area_visible</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">editor_area_visible</span> <span class="o">=</span> <span class="n">memento</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># Show the editor area if it is set to be visible</span>
+            <span class="k">if</span> <span class="n">editor_area_visible</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_editor_area</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hide_editor_area</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_editor</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Now set the views</span>
+            <span class="n">view_memento</span><span class="p">,</span> <span class="n">active_view_id</span> <span class="o">=</span> <span class="n">memento</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">set_view_memento</span><span class="p">(</span><span class="n">view_memento</span><span class="p">)</span>
+
+            <span class="c1"># Make sure the active part, view and editor reflect the new</span>
+            <span class="c1"># perspective.</span>
+            <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_view_by_id</span><span class="p">(</span><span class="n">active_view_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">view</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="o">=</span> <span class="n">view</span>
+
+        <span class="c1"># Otherwise, this is the first time the perspective has been seen</span>
+        <span class="c1"># so create it.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Reset the window layout to its initial state.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">set_view_memento</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_layout</span><span class="p">)</span>
+
+            <span class="c1"># Create the perspective in the window.</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="c1"># Make sure the active part, view and editor reflect the new</span>
+            <span class="c1"># perspective.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Show the editor area?</span>
+            <span class="k">if</span> <span class="n">new</span><span class="o">.</span><span class="n">show_editor_area</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_editor_area</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hide_editor_area</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_editor</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Inform the perspective that it has been shown.</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># This forces the dock window to update its layout.</span>
+        <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_restore_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restore the contents of the window. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">set_editor_memento</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">editor_area_memento</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="o">.</span><span class="n">position</span>
+
+        <span class="c1"># Set the toolkit-specific data last because it may override the generic</span>
+        <span class="c1"># implementation.</span>
+        <span class="c1"># FIXME: The primary use case is to let Qt restore the window&#39;s geometry</span>
+        <span class="c1"># wholesale, including maximization state. If we ever go Qt-only, this</span>
+        <span class="c1"># is a good area to refactor.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">set_toolkit_memento</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_memento</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># Trait change handlers ------------------------------------------------</span>
+
+    <span class="c1"># Static ----</span>
+
+    <span class="k">def</span> <span class="nf">_active_perspective_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;active perspective changed from &lt;</span><span class="si">%s</span><span class="s2">&gt; to &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+        <span class="c1"># Hide the old perspective...</span>
+        <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_hide_perspective</span><span class="p">(</span><span class="n">old</span><span class="p">)</span>
+
+        <span class="c1"># ... and show the new one.</span>
+        <span class="k">if</span> <span class="n">new</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_perspective</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_active_editor_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;active editor changed from &lt;</span><span class="si">%s</span><span class="s2">&gt; to &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_part</span> <span class="o">=</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="nf">_active_part_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">selection</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;active part changed from &lt;</span><span class="si">%s</span><span class="s2">&gt; to &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_active_view_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;active view changed from &lt;</span><span class="si">%s</span><span class="s2">&gt; to &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_part</span> <span class="o">=</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="nf">_views_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Cleanup any old views.</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">old</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Initialize any new views.</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">new</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_views_items_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Cleanup any old views.</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">removed</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Initialize any new views.</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">added</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># Dynamic ----</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;layout:editor_closed&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_editor_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_editor</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1"># If the user closed the editor manually then this method is</span>
+                <span class="c1"># being called from a toolkit-specific event handler. Because</span>
+                <span class="c1"># of that we have to make sure that we don&#39;t change the focus</span>
+                <span class="c1"># from within this method directly hence we activate the editor</span>
+                <span class="c1"># later in the GUI thread.</span>
+                <span class="n">GUI</span><span class="o">.</span><span class="n">invoke_later</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_editor</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;editors:items:has_focus&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_editor_has_focus_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_editor</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+
+        <span class="k">return</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;views:items:has_focus&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_has_focus_changed_for_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+
+        <span class="k">return</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;views:items:visible&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_visible_changed_for_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dynamic trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_view</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

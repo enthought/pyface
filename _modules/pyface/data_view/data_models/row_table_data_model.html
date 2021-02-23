@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.data_models.row_table_data_model &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.data_models.row_table_data_model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; A row-oriented data model implementation.</span>
+
+<span class="sd">This module provides a concrete implementation of a data model for the</span>
+<span class="sd">case of non-hierarchical, row-oriented data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">observe</span>
+<span class="kn">from</span> <span class="nn">traits.observation.api</span> <span class="k">import</span> <span class="n">trait</span>
+
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_model</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">AbstractDataModel</span><span class="p">,</span> <span class="n">DataViewSetError</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.index_manager</span> <span class="k">import</span> <span class="n">IntIndexManager</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.data_models.data_accessors</span> <span class="k">import</span> <span class="n">AbstractDataAccessor</span>
+
+
+<div class="viewcode-block" id="RowTableDataModel"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel">[docs]</a><span class="k">class</span> <span class="nc">RowTableDataModel</span><span class="p">(</span><span class="n">AbstractDataModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A data model that presents a sequence of objects as rows.</span>
+
+<span class="sd">    The data is expected to be a sequence of row objects, each object</span>
+<span class="sd">    providing values for the columns via an AbstractDataAccessor subclass.</span>
+<span class="sd">    Concrete implementations can be found in the data_accessors module that</span>
+<span class="sd">    get data from attributes, indices of sequences, and keys of mappings,</span>
+<span class="sd">    but for more complex situations, custom accessors can be defined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: A sequence of objects to display as rows.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: An object which describes how to map data for the row headers.</span>
+    <span class="n">row_header_data</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataAccessor</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: An object which describes how to map data for each column.</span>
+    <span class="n">column_data</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataAccessor</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1">#: The index manager that helps convert toolkit indices to data view</span>
+    <span class="c1">#: indices.</span>
+    <span class="n">index_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IntIndexManager</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Data structure methods</span>
+
+<div class="viewcode-block" id="RowTableDataModel.get_column_count"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_column_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_column_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; How many columns in the data view model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        column_count : non-negative int</span>
+<span class="sd">            The number of columns that the data view provides.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowTableDataModel.can_have_children"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_have_children">[docs]</a>    <span class="k">def</span> <span class="nf">can_have_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not a row can have child rows.</span>
+
+<span class="sd">        Only the root has children.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        can_have_children : bool</span>
+<span class="sd">            Whether or not the row can ever have child rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="RowTableDataModel.get_row_count"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_row_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; How many child rows the row currently has.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        row_count : non-negative int</span>
+<span class="sd">            The number of child rows that the row has.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+    <span class="c1"># Data value methods</span>
+
+<div class="viewcode-block" id="RowTableDataModel.get_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the Python value for the row and column.</span>
+
+<span class="sd">        This uses the row_header_data and column_data accessors to extract</span>
+<span class="sd">        values for the row and column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The value represented by the given row and column.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_header_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="p">[</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">column_data</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">column_data</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowTableDataModel.can_set_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.can_set_value">[docs]</a>    <span class="k">def</span> <span class="nf">can_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether the value in the indicated row and column can be set.</span>
+
+<span class="sd">        This uses the row_header_data and column_data accessors to determine</span>
+<span class="sd">        if the value may be changed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        can_set_value : bool</span>
+<span class="sd">            Whether or not the value can be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_header_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="p">[</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">column_data</span><span class="o">.</span><span class="n">can_set_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowTableDataModel.set_value"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the Python value for the row and column.</span>
+
+<span class="sd">        This uses the row_header_data and column_data accessors to set</span>
+<span class="sd">        the value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The new value for the given row and column.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataViewSetError</span>
+<span class="sd">            If the value cannot be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataViewSetError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t set column titles.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_header_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="p">[</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">column_data</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RowTableDataModel.get_value_type"><a class="viewcode-back" href="../../../../api/pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel.get_value_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the value type of the given row and column.</span>
+
+<span class="sd">        This uses the row_header_data and column_data accessors to get</span>
+<span class="sd">        the value type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The indices of the row as a sequence from root to leaf.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The indices of the column as a sequence of length 0 or 1.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value_type : AbstractValueType or None</span>
+<span class="sd">            The value type of the given row and column, or None if no value</span>
+<span class="sd">            should be displayed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_header_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="p">[</span><span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">column_data</span><span class="o">.</span><span class="n">title_type</span>
+        <span class="k">return</span> <span class="n">column_data</span><span class="o">.</span><span class="n">value_type</span></div>
+
+    <span class="c1"># data update methods</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="n">trait</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">notify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">list_items</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">_update_data_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">added</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">removed</span><span class="p">):</span>
+            <span class="c1"># number of rows has changed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">index</span>
+                <span class="n">stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">added</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">start</span>
+                <span class="n">stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((</span><span class="n">start</span><span class="p">,),</span> <span class="p">(),</span> <span class="p">(</span><span class="n">stop</span><span class="p">,),</span> <span class="p">())</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;row_header_data&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_row_header_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((),</span> <span class="p">(),</span> <span class="p">(),</span> <span class="p">())</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;row_header_data:updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_row_header_data_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(),</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((),</span> <span class="p">(),</span> <span class="p">(),</span> <span class="p">())</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;column_data.items&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_all_column_data_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;column_data:items:updated&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_column_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="p">(</span><span class="n">index</span><span class="p">,),</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="n">index</span><span class="p">,)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values_changed</span> <span class="o">=</span> <span class="p">((),</span> <span class="p">(</span><span class="n">index</span><span class="p">,),</span> <span class="p">(),</span> <span class="p">(</span><span class="n">index</span><span class="p">,))</span>
+
+    <span class="c1"># default data value</span>
+
+    <span class="k">def</span> <span class="nf">_data_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.abstract_value_type &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.abstract_value_type</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; Provides an AbstractValueType ABC for Pyface data models.</span>
+
+<span class="sd">This module provides an ABC for data view value types, which are responsible</span>
+<span class="sd">for adapting raw data values as used by the data model&#39;s ``get_value`` and</span>
+<span class="sd">``set_value`` methods to the data channels that the data view expects, such</span>
+<span class="sd">as text, color, icons, etc.</span>
+
+<span class="sd">It is up to the data view to take this standardized data and determine what</span>
+<span class="sd">and how to actually display it.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">IntEnum</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">ABCHasStrictTraits</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">observe</span>
+
+<span class="kn">from</span> <span class="nn">pyface.color</span> <span class="k">import</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">.data_view_errors</span> <span class="k">import</span> <span class="n">DataViewSetError</span>
+
+
+<div class="viewcode-block" id="CheckState"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.CheckState">[docs]</a><span class="k">class</span> <span class="nc">CheckState</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="s2">&quot;Possible checkbox states&quot;</span>
+    <span class="c1"># XXX in the future this may need a &quot;partial&quot; state, see Pyface #695</span>
+    <span class="n">UNCHECKED</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">CHECKED</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="AbstractValueType"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType">[docs]</a><span class="k">class</span> <span class="nc">AbstractValueType</span><span class="p">(</span><span class="n">ABCHasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A value type converts raw data into data channels.</span>
+
+<span class="sd">    The data channels are editor value, text, color, image, and description.</span>
+<span class="sd">    The data channels are used by other parts of the code to produce the actual</span>
+<span class="sd">    display.</span>
+
+<span class="sd">    Subclasses should mark traits that potentially affect the display of values</span>
+<span class="sd">    with ``update_value_type=True`` metdadata, or alternatively fire the</span>
+<span class="sd">    ``updated`` event when the state of the value type changes.</span>
+
+<span class="sd">    Each data channel is set up to have a method which returns whether there</span>
+<span class="sd">    is a value for the channel, a second method which returns the value,</span>
+<span class="sd">    and an optional third method which sets the channel value.  These methods</span>
+<span class="sd">    should not raise an Exception, eveen when called inappropriately (eg.</span>
+<span class="sd">    calling a &quot;get&quot; method after a &quot;has&quot; method has returned False).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Fired when a change occurs that requires updating values.</span>
+    <span class="n">updated</span> <span class="o">=</span> <span class="n">Event</span>
+
+<div class="viewcode-block" id="AbstractValueType.has_editor_value"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value">[docs]</a>    <span class="k">def</span> <span class="nf">has_editor_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return whether or not the value can be edited.</span>
+
+<span class="sd">        The default implementation is that cells that can be set are</span>
+<span class="sd">        editable.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_editor_value : bool</span>
+<span class="sd">            Whether or not the value is editable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">can_set_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_editor_value"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_editor_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a value suitable for editing.</span>
+
+<span class="sd">        The default implementation is to return the underlying data value</span>
+<span class="sd">        directly from the data model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The value to edit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.set_editor_value"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.set_editor_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_editor_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set a value that is returned from editing.</span>
+
+<span class="sd">        The default implementation is to set the value directly from the</span>
+<span class="sd">        data model.  Returns True if successful, False if it fails.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The value to set.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataViewSetError</span>
+<span class="sd">            If the value cannot be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.has_text"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_text">[docs]</a>    <span class="k">def</span> <span class="nf">has_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the value has a textual representation.</span>
+
+<span class="sd">        The default implementation returns True if ``get_text``</span>
+<span class="sd">        returns a non-empty value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_text : bool</span>
+<span class="sd">            Whether or not the value has a textual representation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_text"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; The textual representation of the underlying value.</span>
+
+<span class="sd">        The default implementation calls str() on the underlying value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            The textual representation of the underlying value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.set_text"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.set_text">[docs]</a>    <span class="k">def</span> <span class="nf">set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the text of the underlying value.</span>
+
+<span class="sd">        This is provided primarily for backends which may not permit</span>
+<span class="sd">        non-text editing of values, in which case this provides an</span>
+<span class="sd">        alternative route to setting the value.  The default implementation</span>
+<span class="sd">        does not allow setting the text.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+<span class="sd">        text : str</span>
+<span class="sd">            The text to set.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataViewSetError</span>
+<span class="sd">            If the value cannot be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">DataViewSetError</span><span class="p">(</span><span class="s2">&quot;Cannot set value.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.has_color"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_color">[docs]</a>    <span class="k">def</span> <span class="nf">has_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the value has color data.</span>
+
+<span class="sd">        has_color : bool</span>
+<span class="sd">            Whether or not the value has data-associated color</span>
+<span class="sd">            values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_color"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_color">[docs]</a>    <span class="k">def</span> <span class="nf">get_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get data-associated colour values for the given item.</span>
+
+<span class="sd">        The default implementation returns white.</span>
+
+<span class="sd">        color : Color instance</span>
+<span class="sd">            The color associated with the cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Color</span><span class="p">(</span><span class="n">rgba</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.has_image"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_image">[docs]</a>    <span class="k">def</span> <span class="nf">has_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the value has an image associated with it.</span>
+
+<span class="sd">        The default implementation returns True if ``get_image``</span>
+<span class="sd">        returns a non-None value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_image : bool</span>
+<span class="sd">            Whether or not the value has an image associated with it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_image"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; An image associated with the underlying value.</span>
+
+<span class="sd">        The default implementation returns None.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image : IImageResource</span>
+<span class="sd">            The image associated with the underlying value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.image_resource</span> <span class="k">import</span> <span class="n">ImageResource</span>
+        <span class="k">return</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s2">&quot;image_not_found&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.has_check_state"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_check_state">[docs]</a>    <span class="k">def</span> <span class="nf">has_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the value has checked state.</span>
+
+<span class="sd">        The default implementation returns False.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_check_state : bool</span>
+<span class="sd">            Whether or not the value has a checked state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_check_state"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_check_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; The state of the item check box.</span>
+
+<span class="sd">        The default implementation returns &quot;checked&quot; if the value is</span>
+<span class="sd">        truthy, or &quot;unchecked&quot; if the value is falsey.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        check_state : CheckState</span>
+<span class="sd">            The current checked state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">CheckState</span><span class="o">.</span><span class="n">CHECKED</span>
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">CheckState</span><span class="o">.</span><span class="n">UNCHECKED</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.set_check_state"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.set_check_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">check_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the checked state of the underlying value.</span>
+
+<span class="sd">        The default implementation does not allow setting the checked state.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+<span class="sd">        check_state : CheckState</span>
+<span class="sd">            The check state value to set.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataViewSetError</span>
+<span class="sd">            If the value cannot be set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">DataViewSetError</span><span class="p">(</span><span class="s2">&quot;Cannot set check state.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.has_tooltip"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.has_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">has_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Whether or not the value has a tooltip.</span>
+
+<span class="sd">        The default implementation returns True if ``get_tooltip``</span>
+<span class="sd">        returns a non-empty value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : AbstractDataModel</span>
+<span class="sd">            The data model holding the data.</span>
+<span class="sd">        row : sequence of int</span>
+<span class="sd">            The row in the data model being queried.</span>
+<span class="sd">        column : sequence of int</span>
+<span class="sd">            The column in the data model being queried.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        has_tooltip : bool</span>
+<span class="sd">            Whether or not the value has a textual representation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tooltip</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.get_tooltip"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.get_tooltip">[docs]</a>    <span class="k">def</span> <span class="nf">get_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; The tooltip for the underlying value.</span>
+
+<span class="sd">        The default implementation returns an empty string.</span>
+
+<span class="sd">        tooltip : str</span>
+<span class="sd">            The textual representation of the underlying value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="AbstractValueType.update_value_type"><a class="viewcode-back" href="../../../api/pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType.update_value_type">[docs]</a>    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;+update_value_type&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">update_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fire update event when marked traits change. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

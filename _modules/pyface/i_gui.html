@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_gui &mdash; pyface 7.3 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.3 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.3 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.i_gui</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The interface of a pyface GUI. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Str</span>
+
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IGUI"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI">[docs]</a><span class="k">class</span> <span class="nc">IGUI</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The interface of a pyface GUI. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;GUI&#39; interface -----------------------------------------------------#</span>
+
+    <span class="c1">#: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be</span>
+    <span class="c1">#: displayed)?</span>
+    <span class="n">busy</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: Has the GUI&#39;s event loop been started?</span>
+    <span class="n">started</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: A directory on the local file system that we can read and write to at</span>
+    <span class="c1">#: will.  This is used to persist layout information etc.  Note that</span>
+    <span class="c1">#: individual toolkits will have their own directory.</span>
+    <span class="n">state_location</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;object&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splash_screen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialise a new GUI.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        splash_screen : ISplashScreen instance or None</span>
+<span class="sd">            An optional splash screen that will be displayed until the event</span>
+<span class="sd">            loop is started.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;GUI&#39; class interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IGUI.allow_interrupt"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.allow_interrupt">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">allow_interrupt</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot; Override SIGINT to prevent swallowing KeyboardInterrupt</span>
+
+<span class="sd">        Override the SIGINT handler to ensure the process can be</span>
+<span class="sd">        interrupted. This prevents GUI toolkits from swallowing</span>
+<span class="sd">        KeyboardInterrupt exceptions.</span>
+
+<span class="sd">        Warning: do not call this method if you intend your application to be</span>
+<span class="sd">        run interactively.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.invoke_after"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.invoke_after">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">invoke_after</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">millisecs</span><span class="p">,</span> <span class="n">callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Call a callable after a specific delay in the main GUI thread.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        millisecs : float</span>
+<span class="sd">            Delay in milliseconds</span>
+<span class="sd">        callable : callable</span>
+<span class="sd">            Callable to be called after the delay</span>
+<span class="sd">        args, kwargs :</span>
+<span class="sd">            Arguments and keyword arguments to be used when calling.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.invoke_later"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.invoke_later">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">invoke_later</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Call a callable in the main GUI thread.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        callable : callable</span>
+<span class="sd">            Callable to be called after the delay</span>
+<span class="sd">        args, kwargs :</span>
+<span class="sd">            Arguments and keyword arguments to be used when calling.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.set_trait_after"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.set_trait_after">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">set_trait_after</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">millisecs</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">trait_name</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets a trait after a specific delay in the main GUI thread.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        millisecs : float</span>
+<span class="sd">            Delay in milliseconds</span>
+<span class="sd">        obj : HasTraits instance</span>
+<span class="sd">            Object on which the trait is to be set</span>
+<span class="sd">        trait_name : str</span>
+<span class="sd">            The name of the trait to set</span>
+<span class="sd">        new : any</span>
+<span class="sd">            The value to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.set_trait_later"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.set_trait_later">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">set_trait_later</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">trait_name</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets a trait in the main GUI thread.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obj : HasTraits instance</span>
+<span class="sd">            Object on which the trait is to be set</span>
+<span class="sd">        trait_name : str</span>
+<span class="sd">            The name of the trait to set</span>
+<span class="sd">        new : any</span>
+<span class="sd">            The value to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.process_events"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.process_events">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">process_events</span><span class="p">(</span><span class="n">allow_user_events</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Process any pending GUI events.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        allow_user_events : bool</span>
+<span class="sd">            If allow_user_events is ``False`` then user generated events are not</span>
+<span class="sd">            processed.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.set_busy"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.set_busy">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_busy</span><span class="p">(</span><span class="n">busy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Specify if the GUI is busy.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        busy : bool</span>
+<span class="sd">            If ``True`` is passed, the cursor is set to a &#39;busy&#39; cursor.</span>
+<span class="sd">            Passing ``False`` will reset the cursor to the default.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;GUI&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IGUI.start_event_loop"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.start_event_loop">[docs]</a>    <span class="k">def</span> <span class="nf">start_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start the GUI event loop. &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IGUI.stop_event_loop"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.IGUI.stop_event_loop">[docs]</a>    <span class="k">def</span> <span class="nf">stop_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop the GUI event loop. &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MGUI"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.MGUI">[docs]</a><span class="k">class</span> <span class="nc">MGUI</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The mixin class that contains common code for toolkit specific</span>
+<span class="sd">    implementations of the IGUI interface.</span>
+
+<span class="sd">    Implements: _default_state_location()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MGUI.allow_interrupt"><a class="viewcode-back" href="../../api/pyface.i_gui.html#pyface.i_gui.MGUI.allow_interrupt">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">allow_interrupt</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot; Override SIGINT to prevent swallowing KeyboardInterrupt</span>
+
+<span class="sd">        Override the SIGINT handler to ensure the process can be</span>
+<span class="sd">        interrupted. This prevents GUI toolkits from swallowing</span>
+<span class="sd">        KeyboardInterrupt exceptions.</span>
+
+<span class="sd">        Warning: do not call this method if you intend your application to be</span>
+<span class="sd">        run interactively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">signal</span>
+
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_default_state_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the default state location. &quot;&quot;&quot;</span>
+
+        <span class="n">state_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">ETSConfig</span><span class="o">.</span><span class="n">application_home</span><span class="p">,</span> <span class="s2">&quot;pyface&quot;</span><span class="p">,</span> <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">state_location</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">state_location</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;GUI state location is &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span><span class="p">,</span> <span class="n">state_location</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state_location</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2021, Enthought
+      </li>
+      <li>
+      Last updated on Feb 22, 2021.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
