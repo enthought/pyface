@@ -259,7 +259,7 @@ class Grid(Widget):
         self.observe(
             self._on_default_cell_bg_color_changed, "default_cell_bg_color"
         )
-        self.observe(self._on_read_only_changed, "read_only_changed")
+        self.observe(self._on_read_only_changed, "read_only")
         self.observe(self._on_selection_mode_changed, "selection_mode")
         self.observe(
             self._on_column_label_height_changed, "column_label_height"
@@ -414,7 +414,7 @@ class Grid(Widget):
             remove=True,
         )
         self.observe(
-            self._on_read_only_changed, "read_only_changed", remove=True
+            self._on_read_only_changed, "read_only", remove=True
         )
         self.observe(
             self._on_selection_mode_changed, "selection_mode", remove=True
