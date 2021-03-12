@@ -366,11 +366,17 @@ class DockItem(HasPrivateTraits):
     # The parent of this item:
     parent = Any()
 
+    # The control of this item:
+    control = Any()
+
     # The DockWindow that owns this item:
     owner = Property(observe="parent")
 
     # Bounds of the item:
     bounds = Bounds
+
+    # The user-visible name of the item:
+    name = Str()
 
     # Current width of the item:
     width = Int(-1)
