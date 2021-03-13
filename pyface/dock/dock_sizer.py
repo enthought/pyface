@@ -366,11 +366,17 @@ class DockItem(HasPrivateTraits):
     # The parent of this item:
     parent = Any()
 
+    # The control associated with this item (used in subclasses):
+    control = Instance(wx.Control)
+
     # The DockWindow that owns this item:
     owner = Property(observe="parent")
 
     # Bounds of the item:
     bounds = Bounds
+
+    # The name of this item (used in subclasses):
+    name = Str()
 
     # Current width of the item:
     width = Int(-1)
@@ -419,12 +425,6 @@ class DockItem(HasPrivateTraits):
 
     # Current active set of features:
     active_features = Property
-
-    # The name of this item (implemented in subclasses):
-    # name = Str()
-
-    # The control associated with this item (implemented in subclasses):
-    # control = Instance( wx.Control )
 
     # ---------------------------------------------------------------------------
     #  Implementation of the 'owner' property:
