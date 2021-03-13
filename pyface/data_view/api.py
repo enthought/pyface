@@ -8,9 +8,62 @@
 #
 # Thanks for using Enthought open source!
 
+"""
 
-# NOTE: this public-facing API is provisional and may change in future
-# minor releases through until Pyface 8
+API for the ``pyface.data_view`` subpackage.
+Note that this public-facing API is provisional and may change in future
+minor releases until Pyface 8.
+
+- :class:`~.AbstractDataExporter`
+- :class:`~.AbstractDataModel`
+- :class:`~.AbstractValueType`
+- :class:`~.DataViewWidget`
+- :class:`~.DataWrapper`
+
+Data Formats
+------------
+
+- :class:`~.DataFormat`
+- :func:`~.text_format`
+- :func:`~.csv_format`
+- :func:`~.csv_column_format`
+- :func:`~.csv_row_format`
+- :func:`~.html_format`
+- :func:`~.npy_format`
+- :func:`~.standard_text_format`
+- :func:`~.table_format`
+- :func:`~.text_column_format`
+- :func:`~.text_row_format`
+- :func:`~.from_csv`
+- :func:`~.from_csv_column`
+- :func:`~.from_csv_row`
+- :func:`~.from_json`
+- :func:`~.from_npy`
+- :func:`~.to_csv`
+- :func:`~.to_csv_column`
+- :func:`~.to_csv_row`
+- :func:`~.to_json`
+- :func:`~.to_npy`
+
+Index Managers
+--------------
+
+- :class:`~.AbstractIndexManager`
+- :class:`~.IntIndexManager`
+- :class:`~.TupleIndexManager`
+
+Exceptions
+----------
+- :class:`~.DataViewError`
+- :class:`~.DataViewGetError`
+- :class:`~.DataViewSetError`
+
+Interfaces
+----------
+- :class:`~.IDataViewWidget`
+- :class:`~.IDataWrapper`
+
+"""
 
 from pyface.data_view.abstract_data_exporter import AbstractDataExporter  # noqa: 401
 from pyface.data_view.abstract_data_model import AbstractDataModel  # noqa: 401

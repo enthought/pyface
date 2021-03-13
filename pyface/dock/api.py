@@ -8,13 +8,46 @@
 #
 # Thanks for using Enthought open source!
 
-""" Pyface 'DockWindow' support.
+"""
 
-    This package provides a Pyface 'dockable' window component that allows
-    child windows to be reorganized within the DockWindow using drag and drop.
-    The component also allows multiple sub-windows to occupy the same
-    sub-region of the DockWindow, in which case each sub-window appears as a
-    separate notebook-like tab within the region.
+Pyface 'DockWindow' support.
+
+This package provides a Pyface 'dockable' window component that allows child
+windows to be reorganized within the DockWindow using drag and drop. The
+component also allows multiple sub-windows to occupy the same sub-region of
+the DockWindow, in which case each sub-window appears as a separate
+notebook-like tab within the region.
+
+API for the ``pyface.dock`` subpackage.
+
+- :class:`~.DockWindow`
+- :class:`~.DockWindowHandler`
+- :class:`~.DockWindowShell`
+- :class:`~.DockWindowFeature`
+
+Dock Sizers
+-----------
+
+- :class:`~.DockSizer`
+- :class:`~.DockSection`
+- :class:`~.DockRegion`
+- :class:`~.DockControl`
+- :class:`~.DockStyle`
+- :attr:`~.DOCK_LEFT`
+- :attr:`~.DOCK_RIGHT`
+- :attr:`~.DOCK_TOP`
+- :attr:`~.DOCK_BOTTOM`
+- :class:`~.SetStructureHandler`
+- :func:`~.add_feature`
+- :class:`~.DockGroup`
+
+Interfaces
+----------
+
+- :class:`~.IDockable`
+- :class:`~.IDockUIProvider`
+- :class:`~.IFeatureTool`
+
 """
 
 from .dock_window import DockWindow, DockWindowHandler

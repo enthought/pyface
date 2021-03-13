@@ -11,6 +11,23 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 
+"""
+
+API for the ``pyface.fields`` subpackage.
+
+- :class:`~.ComboField`
+- :class:`~.SpinField`
+- :class:`~.TextField`
+
+Interfaces
+----------
+- :class:`~.IComboField`
+- :class:`~.IField`
+- :class:`~.ISpinField`
+- :class:`~.ITextField`
+
+"""
+
 from .i_combo_field import IComboField
 from .i_field import IField
 from .i_spin_field import ISpinField

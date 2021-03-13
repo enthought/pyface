@@ -8,6 +8,87 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface`` package.
+
+- :class:`~.Application`
+- :class:`~.ApplicationWindow`
+- :class:`~.clipboard`
+- :class:`~.Clipboard`
+- :class:`~.GUI`
+- :class:`~.GUIApplication`
+- :class:`~.ImageResource`
+- :class:`~.KeyPressedEvent`
+- :class:`~.SplashScreen`
+- :class:`~.SplitApplicationWindow`
+- :class:`~.SplitPanel`
+- :class:`~.SystemMetrics`
+- :class:`~.Window`
+- :class:`~.Widget`
+
+Dialogs
+-------
+
+- :class:`~.AboutDialog`
+- :class:`~.confirm`
+- :class:`~.ConfirmationDialog`
+- :class:`~.Dialog`
+- :class:`~.DirectoryDialog`
+- :class:`~.FileDialog`
+- :class:`~.error`
+- :class:`~.information`
+- :class:`~.warning`
+- :class:`~.MessageDialog`
+- :class:`~.ProgressDialog`
+- :class:`~.choose_one`
+- :class:`~.SingleChoiceDialog`
+- :class:`~.SplitDialog`
+
+Constants
+---------
+
+- :class:`~.OK`
+- :class:`~.CANCEL`
+- :class:`~.YES`
+- :class:`~.NO`
+
+UI Traits
+---------
+
+- :class:`~.Alignment`
+- :class:`~.Border`
+- :class:`~.HasBorder`
+- :class:`~.HasMargin`
+- :class:`~.Image`
+- :class:`~.Margin`
+
+Miscellaneous
+-------------
+
+- :class:`~.beep`
+- :class:`~.Filter`
+- :class:`~.HeadingText`
+- :class:`~.ImageCache`
+- :class:`~.Sorter`
+- :class:`~.PythonEditor`
+- :class:`~.PythonShell`
+
+Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
+only available if the Pygments package is available in the Python environment.
+
+Wx-specific classes
+-------------------
+
+- :class:`~.ExpandablePanel`
+- :class:`~.ImageWidget`
+- :class:`~.LayeredPanel`
+- :class:`~.MDIApplicationWindow`
+- :class:`~.MDIWindowMenu`
+- :class:`~.MultiToolbarWindow`
+
+"""
+
 import logging as _logging
 
 from .about_dialog import AboutDialog

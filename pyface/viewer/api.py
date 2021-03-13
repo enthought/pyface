@@ -9,6 +9,31 @@
 # Thanks for using Enthought open source!
 
 
+"""
+
+API for the ``pyface.viewer`` subpacakge.
+
+- :class:`~.ColumnProvider`
+- :class:`~.ContentProvider`
+- :class:`~.ContentViewer`
+- :class:`~.DefaultTreeContentProvider`
+- :class:`~.LabelProvider`
+- :class:`~.TableColumnProvider`
+- :class:`~.TableContentProvider`
+- :class:`~.TableLabelProvider`
+- :class:`~.TreeContentProvider`
+- :class:`~.TreeLabelProvider`
+- :class:`~.TreeItem`
+- :class:`~.Viewer`
+- :class:`~.ViewerFilter`
+- :class:`~.ViewerSorter`
+- :class:`~.TableViewer`. Note that this class is only available in the Wx
+  toolkit at the moment.
+- :class:`~.TreeViewer`. Note that this class is only available in the Wx
+  toolkit at the moment.
+
+"""
+
 from .column_provider import ColumnProvider
 from .content_provider import ContentProvider
 from .content_viewer import ContentViewer

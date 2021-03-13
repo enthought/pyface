@@ -8,5 +8,17 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.data_view.exporters`` subpackage.
+
+Exporters
+---------
+
+- :class:`~.ItemExporter`
+- :class:`~.RowExporter`
+
+"""
+
 from .item_exporter import ItemExporter
 from .row_exporter import RowExporter

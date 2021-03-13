@@ -8,6 +8,26 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.data_view.value_types`` subpackage.
+
+Value Types
+-----------
+
+- :class:`~.BoolValue`
+- :class:`~.ColorValue`
+- :class:`~.ConstantValue`
+- :class:`~.EditableValue`
+- :class:`~.NoValue`
+- :attr:`~.no_value`
+- :class:`~.FloatValue`
+- :class:`~.IntValue`
+- :class:`~.NumericValue`
+- :class:`~.TextValue`
+
+"""
+
 from .bool_value import BoolValue  # noqa: F401
 from .color_value import ColorValue  # noqa: F401
 from .constant_value import ConstantValue  # noqa: F401
