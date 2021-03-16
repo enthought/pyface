@@ -27,10 +27,12 @@ API for the ``pyface.viewer`` subpacakge.
 - :class:`~.Viewer`
 - :class:`~.ViewerFilter`
 - :class:`~.ViewerSorter`
-- :class:`~.TableViewer`. Note that this class is only available in the Wx
-  toolkit at the moment.
-- :class:`~.TreeViewer`. Note that this class is only available in the Wx
-  toolkit at the moment.
+
+Note that the following classes are only available in the Wx toolkit at the
+moment.
+
+- :class:`~.TableViewer`.
+- :class:`~.TreeViewer`.
 
 """
 

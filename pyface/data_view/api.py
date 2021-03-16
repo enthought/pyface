@@ -25,15 +25,15 @@ Data Formats
 
 - :class:`~.DataFormat`
 - :func:`~.text_format`
-- :func:`~.csv_format`
-- :func:`~.csv_column_format`
-- :func:`~.csv_row_format`
-- :func:`~.html_format`
-- :func:`~.npy_format`
-- :func:`~.standard_text_format`
-- :func:`~.table_format`
-- :func:`~.text_column_format`
-- :func:`~.text_row_format`
+- :attr:`~.csv_format`
+- :attr:`~.csv_column_format`
+- :attr:`~.csv_row_format`
+- :attr:`~.html_format`
+- :attr:`~.npy_format`
+- :attr:`~.standard_text_format`
+- :attr:`~.table_format`
+- :attr:`~.text_column_format`
+- :attr:`~.text_row_format`
 - :func:`~.from_csv`
 - :func:`~.from_csv_column`
 - :func:`~.from_csv_row`

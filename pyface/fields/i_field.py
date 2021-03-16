@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The text field interface. """
+""" The field interface. """
 
 
 from traits.api import Any, HasTraits, Instance, Str

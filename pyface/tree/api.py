@@ -11,7 +11,7 @@
 
 """
 
-AIP for the ``pyface.tree`` subpackage.
+API for the ``pyface.tree`` subpackage.
 
 - :class:`~.NodeEvent`
 - :class:`~.NodeMonitor`
@@ -22,8 +22,11 @@ AIP for the ``pyface.tree`` subpackage.
 - :class:`~.TraitDictNodeType`
 - :class:`~.TraitListNodeType`
 - :class:`~.TreeModel`
-- :class:`~.Tree`. Note that this class is only available in the Wx toolkit
-  at the moment and has not yet been ported to Qt.
+
+Note that the following classes are only available in the Wx toolkit at the
+moment.
+
+- :class:`~.Tree`.
 
 """
 

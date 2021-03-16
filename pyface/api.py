@@ -14,7 +14,7 @@ API for the ``pyface`` package.
 
 - :class:`~.Application`
 - :class:`~.ApplicationWindow`
-- :class:`~.clipboard`
+- :attr:`~.clipboard`
 - :class:`~.Clipboard`
 - :class:`~.GUI`
 - :class:`~.GUIApplication`
@@ -56,7 +56,7 @@ Constants
 UI Traits
 ---------
 
-- :class:`~.Alignment`
+- :attr:`~.Alignment`
 - :class:`~.Border`
 - :class:`~.HasBorder`
 - :class:`~.HasMargin`
@@ -75,7 +75,8 @@ Miscellaneous
 - :class:`~.PythonShell`
 
 Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
-only available if the Pygments package is available in the Python environment.
+only available if the ``pygments`` package is available in the Python
+environment.
 
 Wx-specific classes
 -------------------
