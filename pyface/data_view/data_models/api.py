@@ -8,6 +8,27 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.data_view.data_models`` subpackage.
+
+Data Accessors
+--------------
+
+- :class:`~.AbstractDataAccessor`
+- :class:`~.AttributeDataAccessor`
+- :class:`~.ConstantDataAccessor`
+- :class:`~.IndexDataAccessor`
+- :class:`~.KeyDataAccessor`
+
+Data Models
+-----------
+
+- :class:`~.RowTableDataModel`
+- :class:`~.ArrayDataModel`. Note that this data model is only available if
+  ``numpy`` is available in the environment.
+
+"""
 try:
     import numpy  # noqa: F401
 except ImportError:

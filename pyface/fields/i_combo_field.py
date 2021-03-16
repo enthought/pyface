@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The text field interface. """
+""" The combo field interface. """
 
 
 from traits.api import Callable, HasTraits, Enum, List

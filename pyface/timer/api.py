@@ -8,6 +8,24 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.timer`` subpackage.
+
+- :func:`~.do_later`
+- :func:`~.do_after`
+- :class:`~.DoLaterTimer`
+- :class:`~.CallbackTimer`
+- :class:`~.EventTimer`
+- :class:`~.Timer`
+
+Interfaces
+----------
+- :class:`~.ICallbackTimer`
+- :class:`~.IEventTimer`
+- :class:`~.ITimer`
+
+"""
 
 from .do_later import do_later, do_after, DoLaterTimer
 from .i_timer import ICallbackTimer, IEventTimer, ITimer

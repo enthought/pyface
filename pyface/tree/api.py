@@ -9,6 +9,27 @@
 # Thanks for using Enthought open source!
 
 
+"""
+
+API for the ``pyface.tree`` subpackage.
+
+- :class:`~.NodeEvent`
+- :class:`~.NodeMonitor`
+- :class:`~.NodeManager`
+- :class:`~.NodeTree`
+- :class:`~.NodeTreeModel`
+- :class:`~.NodeType`
+- :class:`~.TraitDictNodeType`
+- :class:`~.TraitListNodeType`
+- :class:`~.TreeModel`
+
+Note that the following classes are only available in the Wx toolkit at the
+moment.
+
+- :class:`~.Tree`.
+
+"""
+
 from .node_event import NodeEvent
 from .node_monitor import NodeMonitor
 from .node_manager import NodeManager

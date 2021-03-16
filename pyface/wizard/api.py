@@ -8,6 +8,25 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.wizard`` subpackage.
+
+- :class:`~.WizardPage`
+- :class:`~.Wizard`
+- :class:`~.WizardController`
+- :class:`~.ChainedWizard`
+- :class:`~.ChainedWizardController`
+
+Interfaces
+----------
+
+- :class:`~.IWizardPage`
+- :class:`~.IWizard`
+- :class:`~.IWizardController`
+
+"""
+
 from .i_wizard_page import IWizardPage
 from .wizard_page import WizardPage
 

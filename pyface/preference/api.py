@@ -9,6 +9,16 @@
 # Thanks for using Enthought open source!
 
 
+"""
+
+API for the ``pyface.preference`` subpackage.
+
+- :class:`~.PreferencePage`
+- :class:`~.PreferenceDialog`
+- :class:`~.PreferenceNode`
+
+"""
+
 from .preference_page import PreferencePage
 from .preference_dialog import PreferenceDialog
 from .preference_node import PreferenceNode
