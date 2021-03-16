@@ -13,7 +13,6 @@
 
 from traits.api import Any, Instance, List, Property, Str, observe
 
-
 from pyface.action.action import Action
 from pyface.action.action_manager_item import ActionManagerItem
 
@@ -66,10 +65,14 @@ class ActionItem(ActionManagerItem):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _update_enabled_on_action(self, event):
+        new = event.new
         self.action.enabled = new
 
-    def _visible_changed(self, trait_name, old, new):
+    @observe("visible")
+    def _update_visible_on_action(self, event):
+        new = event.new
         self.action.visible = new
 
     @observe("_wrappers:items:control")

@@ -15,7 +15,7 @@ import time
 from pyface.qt import QtGui, QtCore
 
 from traits.api import (
-    Any, Bool, Callable, Instance, Int, List, Str, provides, Tuple
+    Any, Bool, Callable, Instance, Int, List, Str, observe, provides, Tuple
 )
 
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
@@ -297,14 +297,20 @@ class ProgressDialog(MProgressDialog, Window):
     # Trait change handlers
     # -------------------------------------------------------------------------
 
-    def _max_changed(self, new):
+    @observe("max")
+    def _update_max_on_progress_bar(self, event):
+        new = event.new
         if self.progress_bar is not None:
             self.progress_bar.setMaximum(new)
 
-    def _min_changed(self, new):
+    @observe("min")
+    def _update_min_on_progress_bar(self, event):
+        new = event.new
         if self.progress_bar is not None:
             self.progress_bar.setMinimum(new)
 
-    def _message_changed(self, new):
+    @observe("message")
+    def _update_message(self, event):
+        new = event.new
         if self._message_control is not None:
             self._message_control.setText(new)

@@ -11,7 +11,7 @@
 """ A status bar manager realizes itself in a status bar control. """
 
 
-from traits.api import Any, HasTraits, List, Property, Str
+from traits.api import Any, HasTraits, List, Property, Str, observe
 
 
 class StatusBarManager(HasTraits):
@@ -68,9 +68,6 @@ class StatusBarManager(HasTraits):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _messages_changed(self):
+    @observe("messages.items")
+    def _handle_messages_updated(self, event):
         """ Sets the text displayed on the status bar. """
-
-    def _messages_items_changed(self):
-        """ Sets the text displayed on the status bar. """
-        return

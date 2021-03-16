@@ -11,17 +11,12 @@
 
 """ The PyQt specific implementations the action manager internal classes. """
 
-
 from inspect import getfullargspec
 
-
-from pyface.qt import QtGui, QtCore
-
-
-from traits.api import Any, Bool, HasTraits
-
+from traits.api import Any, Bool, HasTraits, observe
 
 from pyface.action.action_event import ActionEvent
+from pyface.qt import QtGui, QtCore
 
 
 class PyfaceWidgetAction(QtGui.QWidgetAction):
@@ -201,17 +196,20 @@ class _MenuItem(HasTraits):
 
     # Trait event handlers -------------------------------------------------
 
-    def _enabled_changed(self):
+    @observe("enabled")
+    def _update_enabled_on_control(self, event):
         """ Called when our 'enabled' trait is changed. """
         if self.control is not None:
             self.control.setEnabled(self.enabled)
 
-    def _visible_changed(self):
+    @observe("visible")
+    def _update_visible_on_control(self, event):
         """ Called when our 'visible' trait is changed. """
         if self.control is not None:
             self.control.setVisible(self.visible)
 
-    def _checked_changed(self):
+    @observe("checked")
+    def _update_checked_on_control(self, event):
         """ Called when our 'checked' trait is changed. """
         if self.control is not None:
             self.control.setChecked(self.checked)
@@ -417,17 +415,20 @@ class _Tool(HasTraits):
 
     # Trait event handlers -------------------------------------------------
 
-    def _enabled_changed(self):
+    @observe("enabled")
+    def _update_enabled_on_control(self, event):
         """ Called when our 'enabled' trait is changed. """
         if self.control is not None:
             self.control.setEnabled(self.enabled)
 
-    def _visible_changed(self):
+    @observe("visible")
+    def _update_visible_on_control(self, event):
         """ Called when our 'visible' trait is changed. """
         if self.control is not None:
             self.control.setVisible(self.visible)
 
-    def _checked_changed(self):
+    @observe("checked")
+    def _update_checked_on_control(self, event):
         """ Called when our 'checked' trait is changed. """
         if self.control is not None:
             self.control.setChecked(self.checked)

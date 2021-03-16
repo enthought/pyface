@@ -427,9 +427,11 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                         self.active_tabwidget = active_tabwidget
                         break
 
-    def _active_tabwidget_changed(self, new):
+    @observe("active_tabwidget")
+    def _update_active_editor(self, event):
         """Set the active editor whenever the active tabwidget updates.
         """
+        new = event.new
 
         if new is None or new.parent().is_empty():
             active_editor = None

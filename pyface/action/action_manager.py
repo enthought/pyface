@@ -11,9 +11,8 @@
 """ Abstract base class for all action managers. """
 
 
-from traits.api import Bool, Constant, Event, HasTraits, Instance
+from traits.api import Bool, Constant, Event, HasTraits, Instance, observe
 from traits.api import List, Property, Str
-
 
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
@@ -125,11 +124,15 @@ class ActionManager(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _update_enabled_on_groups(self, event):
+        new = event.new
         for group in self._groups:
             group.enabled = new
 
-    def _visible_changed(self, trait_name, old, new):
+    @observe("visible")
+    def _update_visible_on_groups(self, event):
+        new = event.new
         for group in self._groups:
             group.visible = new
 

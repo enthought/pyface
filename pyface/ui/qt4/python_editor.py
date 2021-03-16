@@ -16,7 +16,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, provides, Str
+from traits.api import Bool, Event, observe, provides, Str
 
 
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
@@ -128,10 +128,12 @@ class PythonEditor(MPythonEditor, Widget):
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe("path")
+    def _handle_path_change(self, event):
         self._changed_path()
 
-    def _show_line_numbers_changed(self):
+    @observe("show_line_numbers")
+    def _update_visible_line_numbers(self, event=None):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
                 self.show_line_numbers
@@ -146,7 +148,7 @@ class PythonEditor(MPythonEditor, Widget):
         """ Creates the toolkit-specific control for the widget.
         """
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._update_visible_line_numbers()
 
         # Load the editor's contents.
         self.load()

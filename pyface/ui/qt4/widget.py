@@ -9,14 +9,10 @@
 #
 # Thanks for using Enthought open source!
 
-
-from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Any, Bool, HasTraits, Instance, provides
-
+from traits.api import Any, Bool, HasTraits, Instance, observe, provides
 
 from pyface.i_widget import IWidget, MWidget
+from pyface.qt import QtCore, QtGui
 
 
 @provides(IWidget)
@@ -109,11 +105,15 @@ class Widget(MWidget, HasTraits):
 
     # Trait change handlers --------------------------------------------------
 
-    def _visible_changed(self, new):
+    @observe("visible")
+    def _toggle_visible(self, event):
+        new = event.new
         if self.control is not None:
             self.show(new)
 
-    def _enabled_changed(self, new):
+    @observe("enabled")
+    def _toggle_enabled(self, event):
+        new = event.new
         if self.control is not None:
             self.enable(new)
 

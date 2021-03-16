@@ -20,6 +20,7 @@ from traits.api import (
     Tuple,
     Str,
     VetoableEvent,
+    observe,
     provides,
 )
 
@@ -90,6 +91,9 @@ class Window(MWindow, Widget):
 
     def _create_control(self, parent):
         """ Create a default QMainWindow. """
+        class FakeEvent:
+            pass
+
         control = QtGui.QMainWindow(parent)
 
         if self.size != (-1, -1):
@@ -97,7 +101,7 @@ class Window(MWindow, Widget):
         if self.position != (-1, -1):
             control.move(*self.position)
         if self.size_state != "normal":
-            self._size_state_changed(self.size_state)
+            self._update_window_state(FakeEvent(new=self.size_state))
         control.setWindowTitle(self.title)
         control.setEnabled(self.enabled)
 
@@ -164,7 +168,9 @@ class Window(MWindow, Widget):
 
         self.trait_property_changed("size", old, size)
 
-    def _size_state_changed(self, state):
+    @observe("size_state")
+    def _update_window_state(self, event):
+        state = event.new
         control = self.control
         if control is None:
             return  # Nothing to do here

@@ -12,11 +12,8 @@
 
 from functools import partial
 
-
-from traits.api import Any, Bool, HasTraits, Instance, List, Property
-from traits.api import Str
+from traits.api import Any, Bool, HasTraits, List, Property, Str, observe
 from traits.trait_base import user_name_for
-
 
 from pyface.action.action import Action
 from pyface.action.action_item import ActionItem
@@ -88,7 +85,9 @@ class Group(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _update_enabled_on_items(self, event):
+        new = event.new
         for item in self.items:
             item.enabled = new
 

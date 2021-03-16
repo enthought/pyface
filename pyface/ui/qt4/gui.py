@@ -14,16 +14,11 @@
 
 import logging
 
-
-from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Bool, HasTraits, provides, Str
-from pyface.util.guisupport import start_event_loop_qt4
-
+from traits.api import Bool, HasTraits, observe, provides, Str
 
 from pyface.i_gui import IGUI, MGUI
-
+from pyface.qt import QtCore, QtGui
+from pyface.util.guisupport import start_event_loop_qt4
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -120,8 +115,10 @@ class GUI(MGUI, HasTraits):
 
         return self._default_state_location()
 
-    def _busy_changed(self, new):
+    @observe("busy")
+    def _toggle_cursor(self, event):
         """ The busy trait change handler. """
+        new = event.new
 
         if new:
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)

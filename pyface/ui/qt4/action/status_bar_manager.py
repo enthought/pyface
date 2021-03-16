@@ -13,11 +13,9 @@
 
 # ------------------------------------------------------------------------------
 
+from traits.api import Any, Bool, HasTraits, List, Property, Str, observe
 
 from pyface.qt import QtGui
-
-
-from traits.api import Any, Bool, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
@@ -91,25 +89,22 @@ class StatusBarManager(HasTraits):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _messages_changed(self):
+    @observe("messages.items")
+    def _update_messages_in_status_bar(self, event):
         """ Sets the text displayed on the status bar. """
 
         if self.status_bar is not None:
             self._show_messages()
 
-    def _messages_items_changed(self):
-        """ Sets the text displayed on the status bar. """
-
-        if self.status_bar is not None:
-            self._show_messages()
-
-    def _size_grip_changed(self):
+    @observe("size_grip")
+    def _toggle_size_grip_on_status_bar(self, event):
         """ Turns the size grip on the status bar on and off. """
 
         if self.status_bar is not None:
             self.status_bar.setSizeGripEnabled(self.size_grip)
 
-    def _visible_changed(self):
+    @observe("visible")
+    def _toggle_visibility_on_status_bar(self, event):
         """ Turns the status bar visibility on and off. """
 
         if self.status_bar is not None:

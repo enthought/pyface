@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Int, provides, Str
+from traits.api import Int, observe, provides, Str
 
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
@@ -71,8 +71,10 @@ class HeadingText(MHeadingText, Widget):
 
     # Trait event handlers -------------------------------------------------
 
-    def _text_changed(self, new):
+    @observe("text")
+    def _update_text(self, event):
         """ Called when the text is changed. """
+        new = event.new
 
         if self.control is not None:
             self._set_text(new)

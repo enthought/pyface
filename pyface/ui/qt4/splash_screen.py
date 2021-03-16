@@ -63,7 +63,8 @@ class SplashScreen(MSplashScreen, Window):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _text_changed(self):
+    @observe("text")
+    def _update_message(self, event):
         """ Called when the splash screen text has been changed. """
 
         if self.control is not None:
