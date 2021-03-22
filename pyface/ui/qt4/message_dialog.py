@@ -29,6 +29,13 @@ _SEVERITY_TO_ICON_MAP = {
     "error": QtGui.QMessageBox.Critical,
 }
 
+_TEXT_FORMAT_MAP = {
+    "auto": QtCore.Qt.AutoText,
+    "log": QtCore.Qt.LogText,
+    "plain": QtCore.Qt.PlainText,
+    "rich": QtCore.Qt.RichText,
+}
+
 
 @provides(IMessageDialog)
 class MessageDialog(MMessageDialog, Dialog):
@@ -45,6 +52,8 @@ class MessageDialog(MMessageDialog, Dialog):
     detail = Str()
 
     severity = Enum("information", "warning", "error")
+
+    text_format = Enum("auto", "log", "plain", "rich")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -70,6 +79,7 @@ class MessageDialog(MMessageDialog, Dialog):
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
         message_box.setEscapeButton(QtGui.QMessageBox.Ok)
+        message_box.setTextFormat(_TEXT_FORMAT_MAP[self.text_format])
 
         if self.size != (-1, -1):
             message_box.resize(*self.size)
