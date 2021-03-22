@@ -12,7 +12,7 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-from pyface.qt import QtGui
+from pyface.qt import QtCore, QtGui
 
 
 from traits.api import Enum, provides, Str
@@ -31,7 +31,6 @@ _SEVERITY_TO_ICON_MAP = {
 
 _TEXT_FORMAT_MAP = {
     "auto": QtCore.Qt.AutoText,
-    "log": QtCore.Qt.LogText,
     "plain": QtCore.Qt.PlainText,
     "rich": QtCore.Qt.RichText,
 }
