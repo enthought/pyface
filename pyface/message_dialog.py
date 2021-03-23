@@ -35,6 +35,9 @@ def information(
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich".
 
     """
     dialog = MessageDialog(
@@ -72,6 +75,9 @@ def warning(
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich".
 
     """
     dialog = MessageDialog(
@@ -92,7 +98,8 @@ def error(
     title="Error",
     detail="",
     informative="",
-    text_format="auto"):
+    text_format="auto"
+):
     """ Convenience function to show an error message dialog.
 
     Parameters
@@ -108,6 +115,9 @@ def error(
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich".
 
     """
     dialog = MessageDialog(

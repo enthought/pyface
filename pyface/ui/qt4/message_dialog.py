@@ -52,7 +52,7 @@ class MessageDialog(MMessageDialog, Dialog):
 
     severity = Enum("information", "warning", "error")
 
-    text_format = Enum("auto", "log", "plain", "rich")
+    text_format = Enum("auto", "plain", "rich")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
