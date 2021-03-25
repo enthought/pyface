@@ -37,7 +37,7 @@ def information(
         Explanatory text to display along with the message.
     text_format : str
         Specifies what text format to use in the resulting message dialog.
-        One of "auto", "plain", or "rich".
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(
@@ -77,7 +77,7 @@ def warning(
         Explanatory text to display along with the message.
     text_format : str
         Specifies what text format to use in the resulting message dialog.
-        One of "auto", "plain", or "rich".
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(
@@ -117,7 +117,7 @@ def error(
         Explanatory text to display along with the message.
     text_format : str
         Specifies what text format to use in the resulting message dialog.
-        One of "auto", "plain", or "rich".
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(

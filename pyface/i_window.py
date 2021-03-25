@@ -303,7 +303,8 @@ class MWindow(HasTraits):
             Explanatory text to display along with the message.
         text_format : str
             Specifies what text format to use in the resulting message dialog.
-            One of "auto", "plain", or "rich".
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import information
@@ -334,7 +335,8 @@ class MWindow(HasTraits):
             Explanatory text to display along with the message.
         text_format : str
             Specifies what text format to use in the resulting message dialog.
-            One of "auto", "plain", or "rich".
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import warning
@@ -365,7 +367,8 @@ class MWindow(HasTraits):
             Explanatory text to display along with the message.
         text_format : str
             Specifies what text format to use in the resulting message dialog.
-            One of "auto", "plain", or "rich".
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import error
