@@ -54,7 +54,7 @@ def load_tests(loader, standard_tests, pattern):
     """
     from os import environ
     from os.path import dirname
-    from pyface.util.testing import filter_tests, is_traits_version_ge
+    from pyface.util.testing import filter_tests
     from unittest import TestSuite
 
     # Make sure the right toolkit is up and running before importing tests

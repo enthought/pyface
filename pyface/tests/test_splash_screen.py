@@ -11,7 +11,6 @@
 
 import unittest
 
-from ..gui import GUI
 from ..image_resource import ImageResource
 from ..splash_screen import SplashScreen
 from ..toolkit import toolkit_object

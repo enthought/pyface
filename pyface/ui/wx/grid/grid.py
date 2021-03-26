@@ -16,7 +16,7 @@ import wx
 import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
-from wx.grid import GridCellAttr, GridCellBoolRenderer, GridTableBase
+from wx.grid import GridCellAttr, GridTableBase
 from wx.grid import (
     GridTableMessage,
     GRIDTABLE_NOTIFY_ROWS_APPENDED,
@@ -28,7 +28,6 @@ from wx.grid import (
     GRIDTABLE_REQUEST_VIEW_GET_VALUES,
     GRID_VALUE_STRING,
 )
-from wx import TheClipboard
 
 
 from pyface.api import Widget
@@ -47,7 +46,6 @@ from traits.api import (
 from pyface.wx.drag_and_drop import (
     PythonDropSource,
     PythonDropTarget,
-    PythonObject,
 )
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 

@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from unittest import TestCase, expectedFailure
+from unittest import TestCase
 from unittest.mock import Mock
 
 from pyface.color import Color

@@ -11,9 +11,6 @@
 """ Base class for all table column providers. """
 
 
-from traits.api import Int
-
-
 from .column_provider import ColumnProvider
 
 

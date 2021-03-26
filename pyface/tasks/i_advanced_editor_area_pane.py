@@ -8,9 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Interface
-
-
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane
 
 

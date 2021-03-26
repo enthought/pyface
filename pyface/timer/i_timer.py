@@ -15,7 +15,6 @@ provides a base implementation that can be easily specialized for a particular
 back-end, and mixins that provide additional capabilities.
 """
 from abc import abstractmethod
-import sys
 import time
 
 from traits.api import (

@@ -20,7 +20,7 @@ from wx.dataview import (
     wxEVT_DATAVIEW_SELECTION_CHANGED
 )
 
-from traits.api import Constant, Enum, Instance, observe, provides
+from traits.api import Enum, Instance, observe, provides
 
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget

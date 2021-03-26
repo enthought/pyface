@@ -13,4 +13,4 @@ DoLaterTimer class
 Provided for backward compatibility.
 """
 
-from pyface.timer.do_later import DoLaterTimer
+from pyface.timer.do_later import DoLaterTimer  # noqa: F401

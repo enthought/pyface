@@ -10,9 +10,6 @@
 # Thanks for using Enthought open source!
 
 
-import sys
-
-
 from pyface.qt import QtCore, QtGui
 
 

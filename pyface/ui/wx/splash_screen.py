@@ -20,7 +20,7 @@ import wx
 import wx.adv
 
 
-from traits.api import Any, Bool, Font, Instance, Int, provides
+from traits.api import Any, Bool, Instance, Int, provides
 from traits.api import Tuple, Str
 
 

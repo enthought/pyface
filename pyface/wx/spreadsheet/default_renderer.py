@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import types
 from string import atof
 import wx
 from wx.grid import PyGridCellRenderer

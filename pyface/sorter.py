@@ -10,8 +10,6 @@
 
 """ Base class for all sorters. """
 
-from functools import cmp_to_key
-
 from traits.api import HasTraits
 
 

@@ -8,10 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-import csv
-import json
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
 
 from traits.api import HasTraits, Int, Str
 from traits.testing.optional_dependencies import numpy as np, requires_numpy

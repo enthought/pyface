@@ -11,7 +11,6 @@
 """ A model that provides data for a grid. """
 
 
-import wx
 from wx.grid import (
     GridTableBase,
     GridTableMessage,
@@ -19,7 +18,7 @@ from wx.grid import (
 )
 
 
-from traits.api import Any, Bool, HasTraits, Trait, Event, List
+from traits.api import Any, Bool, HasTraits, Event, List
 
 
 from .grid_column import GridColumn

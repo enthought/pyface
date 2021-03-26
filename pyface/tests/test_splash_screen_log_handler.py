@@ -11,7 +11,7 @@
 
 import unittest
 
-from traits.api import Any, HasTraits, Str
+from traits.api import HasTraits, Str
 
 from ..splash_screen_log_handler import SplashScreenLogHandler
 

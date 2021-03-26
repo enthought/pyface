@@ -10,7 +10,6 @@
 from pickle import dumps, load, loads, PickleError
 import warnings
 import io
-import sys
 
 from pyface.qt import QtCore
 

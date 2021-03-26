@@ -11,12 +11,11 @@
 
 """
 import contextlib
-import platform
 import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtGui
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper

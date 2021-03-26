@@ -10,7 +10,7 @@
 # dummy script for testing python shell and python editor widgets
 
 # simple import
-import sys
+import sys  # noqa: F401
 
 # set a variable
 x = 1

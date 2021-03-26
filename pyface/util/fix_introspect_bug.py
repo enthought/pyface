@@ -25,8 +25,6 @@ introspect module.
 # Import introspect.
 from wx.py import introspect
 
-import types
-
 # The fixed function.
 def getAttributeNames(
     object, includeMagic=1, includeSingle=1, includeDouble=1

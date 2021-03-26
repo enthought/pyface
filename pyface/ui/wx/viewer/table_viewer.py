@@ -12,10 +12,8 @@
 
 
 import wx
-from wx.lib.agw import ultimatelistctrl as ULC
 
-
-from traits.api import Color, Event, Instance, Trait
+from traits.api import Color, Event, Instance
 
 
 from pyface.ui.wx.image_list import ImageList

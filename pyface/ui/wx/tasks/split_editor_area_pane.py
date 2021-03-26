@@ -8,9 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-import sys
-
-
 from traits.api import provides
 
 

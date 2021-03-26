@@ -16,7 +16,6 @@ from pyface.api import ApplicationWindow
 from traits.api import (
     Bool,
     Callable,
-    HasTraits,
     HasStrictTraits,
     Instance,
     List,

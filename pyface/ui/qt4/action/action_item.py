@@ -15,7 +15,7 @@
 from inspect import getfullargspec
 
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtGui
 
 
 from traits.api import Any, Bool, HasTraits

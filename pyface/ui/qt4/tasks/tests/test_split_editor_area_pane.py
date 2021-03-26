@@ -13,7 +13,7 @@ import os
 import tempfile
 import unittest
 
-from traits.api import HasTraits, Instance
+from traits.api import Instance
 
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.split_editor_area_pane import (

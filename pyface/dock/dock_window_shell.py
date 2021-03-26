@@ -17,9 +17,8 @@
 import wx
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
-import traitsui.wx
+import traitsui.wx  # noqa: F401
 from traits.api import HasPrivateTraits, Instance
-from traitsui.api import View, Group
 
 from pyface.api import SystemMetrics
 from pyface.image_resource import ImageResource

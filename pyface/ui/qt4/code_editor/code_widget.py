@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import math
 import sys
 
 

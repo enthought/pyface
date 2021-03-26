@@ -13,7 +13,6 @@ import unittest
 
 from ..about_dialog import AboutDialog
 from ..constant import OK, CANCEL
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
