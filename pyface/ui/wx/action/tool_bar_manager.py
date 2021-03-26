@@ -223,12 +223,12 @@ class _ToolBar(wx.ToolBar):
     def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_enable_tool_bar(self, event.new)
+        event.object.window._wx_enable_tool_bar(self, event.new)
 
     def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_show_tool_bar(self, event.new)
+        event.object.window._wx_show_tool_bar(self, event.new)
 
 
 class _AuiToolBar(AUI.AuiToolBar):
@@ -409,7 +409,9 @@ class _AuiToolBar(AUI.AuiToolBar):
         """ Dynamic trait change handler. """
 
         try:
-            obj.controller.task.window._wx_enable_tool_bar(self, event.new)
+            event.object.controller.task.window._wx_enable_tool_bar(
+                self, event.new
+            )
         except:
 
             pass
@@ -418,7 +420,9 @@ class _AuiToolBar(AUI.AuiToolBar):
         """ Dynamic trait change handler. """
 
         try:
-            obj.controller.task.window._wx_show_tool_bar(self, event.new)
+            event.object.controller.task.window._wx_show_tool_bar(
+                self, event.new
+            )
         except:
 
             pass
