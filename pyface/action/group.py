@@ -20,7 +20,6 @@ from traits.trait_base import user_name_for
 
 from pyface.action.action import Action
 from pyface.action.action_item import ActionItem
-from pyface.action.action_manager_item import ActionManagerItem  # noqa: F401
 
 
 class Group(HasTraits):
