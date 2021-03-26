@@ -16,7 +16,7 @@ import contextlib
 import unittest
 
 from pyface.api import MessageDialog
-from pyface.qt import QtGui
+from pyface.qt import QtCore, QtGui
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 
 
@@ -55,6 +55,22 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
+
+    def test_text_format(self):
+        dialog = MessageDialog(
+            parent=None,
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            details="Temperature exceeds 1000 degrees",
+            severity="error",
+            text_format="plain",
+            size=(600, 400),
+        )
+
+        with self.create_dialog(dialog):
+            text_format = dialog.control.textFormat()
+            self.assertEqual(text_format, QtCore.Qt.PlainText)
 
     @contextlib.contextmanager
     def create_dialog(self, dialog):

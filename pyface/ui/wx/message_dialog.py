@@ -47,6 +47,9 @@ class MessageDialog(MMessageDialog, Dialog):
 
     severity = Enum("information", "warning", "error")
 
+    # unused trait, this functionality is only supported on Qt
+    text_format = Enum("auto", "plain", "rich")
+
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
     # ------------------------------------------------------------------------

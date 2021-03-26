@@ -13,7 +13,12 @@
 
 # Convenience functions.
 def information(
-    parent, message, title="Information", detail="", informative=""
+    parent,
+    message,
+    title="Information",
+    detail="",
+    informative="",
+    text_format="auto"
 ):
     """ Convenience method to show an information message dialog.
 
@@ -30,6 +35,9 @@ def information(
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(
@@ -39,11 +47,19 @@ def information(
         severity="information",
         detail=detail,
         informative=informative,
+        text_format=text_format,
     )
     dialog.open()
 
 
-def warning(parent, message, title="Warning", detail="", informative=""):
+def warning(
+    parent,
+    message,
+    title="Warning",
+    detail="",
+    informative="",
+    text_format="auto"
+):
     """ Convenience function to show a warning message dialog.
 
     Parameters
@@ -59,6 +75,9 @@ def warning(parent, message, title="Warning", detail="", informative=""):
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(
@@ -68,11 +87,19 @@ def warning(parent, message, title="Warning", detail="", informative=""):
         severity="warning",
         detail=detail,
         informative=informative,
+        text_format=text_format,
     )
     dialog.open()
 
 
-def error(parent, message, title="Error", detail="", informative=""):
+def error(
+    parent,
+    message,
+    title="Error",
+    detail="",
+    informative="",
+    text_format="auto"
+):
     """ Convenience function to show an error message dialog.
 
     Parameters
@@ -88,6 +115,9 @@ def error(parent, message, title="Error", detail="", informative=""):
         "Show details").
     informative : str
         Explanatory text to display along with the message.
+    text_format : str
+        Specifies what text format to use in the resulting message dialog.
+        One of "auto", "plain", or "rich". Only supported on the qt backend.
 
     """
     dialog = MessageDialog(
@@ -97,6 +127,7 @@ def error(parent, message, title="Error", detail="", informative=""):
         severity="error",
         detail=detail,
         informative=informative,
+        text_format=text_format,
     )
     dialog.open()
 
