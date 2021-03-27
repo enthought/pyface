@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-import os, wx
+import os
+
+import wx
+
 from traits.util.resource import get_path
 
 

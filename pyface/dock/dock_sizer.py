@@ -15,8 +15,9 @@
     and the notebook tabs and dragbars associated with the DockWindow.
 """
 
+import sys
 
-import wx, sys
+import wx
 
 from traits.api import (
     HasPrivateTraits,

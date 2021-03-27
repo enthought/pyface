@@ -13,8 +13,12 @@ A resource manager locates and loads application resources such as images and
 sounds etc.
 """
 
-import collections.abc, glob, inspect, os, sys, types
+import collections.abc
+import glob
+import inspect
+import os
 from os.path import join
+import types
 from zipfile import is_zipfile, ZipFile
 
 from importlib_resources import files
