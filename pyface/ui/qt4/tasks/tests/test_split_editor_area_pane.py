@@ -172,11 +172,8 @@ class TestEditorAreaWidget(unittest.TestCase):
         the tabs of the  collapsing tabwidgets.
         """
         # setup root
-        root, left, right = self._setUp_collapse()
-        btn0 = left.tabwidget().widget(0)
-        btn1 = left.tabwidget().widget(1)
+        root, _, right = self._setUp_collapse()
         btn2 = right.tabwidget().widget(0)
-        btn3 = right.tabwidget().widget(1)
 
         # perform collapse on rightchild
         root.rightchild.collapse()

@@ -119,24 +119,10 @@ class Grid(wxGrid):
     def _on_cell_change(self, evt):
         """ Called when the contents of a cell have been changed. """
 
-        row = evt.GetRow()
-        col = evt.GetCol()
-
-        ##print 'Cell changed at', row, col
-        value = self.GetTable().GetValue(row, col)
-
-        ##print 'New value', value
-        ##print 'Type', type(value)
-
         evt.Skip()
 
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
-
-        ##row = evt.GetRow()
-        ##col = evt.GetCol()
-
-        ##print 'Cell selected at', row, col
 
         evt.Skip()
 

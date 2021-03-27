@@ -56,9 +56,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
 
     def test_is_cell_empty(self):
 
-        rows = self.model.get_row_count()
-        columns = self.model.get_column_count()
-
         self.assertEqual(
             self.model.is_cell_empty(0, 0),
             True,

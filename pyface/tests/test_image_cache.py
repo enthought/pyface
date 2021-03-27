@@ -22,18 +22,18 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         self.image_cache = ImageCache(32, 32)
 
     def test_get_image(self):
-        image = self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
 
     def test_get_bitmap(self):
-        bitmap = self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
 
     def test_get_image_twice(self):
-        image1 = self.image_cache.get_image(IMAGE_PATH)
-        image2 = self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
 
     def test_get_bitmap_twice(self):
-        bitmap1 = self.image_cache.get_bitmap(IMAGE_PATH)
-        bitmap2 = self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
 
     def test_get_image_different_sizes(self):
         other_image_cache = ImageCache(48, 48)

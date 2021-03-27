@@ -94,9 +94,6 @@ class TreeViewer(ContentViewer):
         # Create the toolkit-specific control.
         self.control = tree = wx.TreeCtrl(parent, -1, style=self._get_style())
 
-        # Get our actual Id.
-        wxid = tree.GetId()
-
         # Wire up the wx tree events.
         tree.Bind(wx.EVT_CHAR, self._on_char)
         tree.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)

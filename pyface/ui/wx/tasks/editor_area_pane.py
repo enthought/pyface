@@ -176,7 +176,4 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     @observe("hide_tab_bar")
     def _update_tab_bar(self, event):
         if self.control is not None:
-            visible = (
-                self.control.GetPageCount() > 1 if self.hide_tab_bar else True
-            )
             pass  # Can't actually hide the tab bar on wx.aui

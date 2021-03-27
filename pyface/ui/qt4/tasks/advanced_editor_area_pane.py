@@ -55,7 +55,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Create and set the toolkit-specific control that represents the
             pane.
         """
-        self.control = control = EditorAreaWidget(self, parent)
+        self.control = EditorAreaWidget(self, parent)
         self._filter = EditorAreaDropFilter(self)
         self.control.installEventFilter(self._filter)
 
@@ -582,7 +582,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
             for editor in self.editor_area.editors:
                 control = editor.control
                 if control is not None and control.isAncestorOf(new):
-                    self.editor_area.active_editor = focused = editor
+                    self.editor_area.active_editor = editor
                     break
             else:
                 if not self.editor_area.editors:

@@ -28,12 +28,12 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         self.resource_factory = PyfaceResourceFactory()
 
     def test_image_from_file(self):
-        image = self.resource_factory.image_from_file(IMAGE_PATH)
+        self.resource_factory.image_from_file(IMAGE_PATH)
 
     def test_image_from_data(self):
         with open(IMAGE_PATH, "rb") as fp:
             data = fp.read()
-        image = self.resource_factory.image_from_data(data)
+        self.resource_factory.image_from_data(data)
 
     def test_locate_image(self):
         class ASequence(Sequence):

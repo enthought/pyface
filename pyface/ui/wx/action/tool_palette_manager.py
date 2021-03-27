@@ -77,15 +77,15 @@ class ToolPaletteManager(ActionManager):
     def _add_tools(self, tool_palette, groups):
         """ Adds tools for all items in a list of groups. """
 
-        previous_non_empty_group = None
+        # previous_non_empty_group = None
         for group in self.groups:
             if len(group.items) > 0:
                 # Is a separator required?
                 ## FIXME : Does the palette need the notion of a separator?
-                ##                 if previous_non_empty_group is not None and group.separator:
-                ##                     tool_bar.AddSeparator()
+                ## if previous_non_empty_group is not None and group.separator:
+                ##     tool_bar.AddSeparator()
                 ##
-                ##                 previous_non_empty_group = group
+                ## previous_non_empty_group = group
 
                 # Create a tool bar tool for each item in the group.
                 for item in group.items:

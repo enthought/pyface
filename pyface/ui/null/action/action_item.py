@@ -92,15 +92,7 @@ class _Tool(HasTraits):
         # If the action has an image then convert it to a bitmap (as required
         # by the toolbar).
         if action.image is not None:
-            image = action.image.create_image()
-            path = action.image.absolute_path
-            bmp = image_cache.get_bitmap(path)
-
-        else:
-            from pyface.api import ImageResource
-
-            image = ImageResource("foo")
-            bmp = image.create_bitmap()
+            action.image.create_image()
 
         self.control_id = 1
         self.control = None

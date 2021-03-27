@@ -162,7 +162,6 @@ class CallTipWidget(QtGui.QLabel):
         """
         # Attempt to find the cursor position at which to show the call tip.
         text_edit = self._text_edit
-        document = text_edit.document()
         cursor = text_edit.textCursor()
         search_pos = cursor.position() - 1
         self._start_position, _ = self._find_parenthesis(

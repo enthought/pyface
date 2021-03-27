@@ -81,7 +81,7 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         from pyface.image_resource import ImageResource
 
         image_class = ImageClass(image="about")
-        im = image_class.image.create_image()
+        image_class.image.create_image()
 
         self.assertIsInstance(image_class.image, ImageResource)
         self.assertEqual(image_class.image.name, "about")

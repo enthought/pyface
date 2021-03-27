@@ -185,7 +185,7 @@ class IPython09Controller(IPythonController):
                     clean_string, "<string>", "exec"
                 )
                 self.release_output()
-            except Exception as e:
+            except Exception:
                 # XXX: Hack: return True so that the
                 # code gets executed and the error captured.
                 is_complete = True

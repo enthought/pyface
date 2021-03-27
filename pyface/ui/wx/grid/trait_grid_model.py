@@ -640,7 +640,7 @@ class TraitGridModel(GridModel):
 
     def __get_column_typename(self, col):
 
-        name = column = self.__get_column(col)
+        column = self.__get_column(col)
         typename = None
         if isinstance(column, TraitGridColumn):
             typename = column.typename

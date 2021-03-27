@@ -512,7 +512,6 @@ class _PaletteTool(HasTraits):
         # And they never contain shortcuts.
         label = label.replace("&", "")
 
-        image = action.image.create_image()
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
@@ -573,8 +572,6 @@ class _PaletteTool(HasTraits):
 
         action = self.item.action
         action_event = ActionEvent()
-
-        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         action.checked = self.tool_palette.get_tool_state(self.tool_id) == 1
