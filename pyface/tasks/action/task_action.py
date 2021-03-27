@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Bool, Instance, Property, Str, cached_property
+from traits.api import Instance, Property, Str, cached_property
 
 
 from pyface.tasks.api import Editor, Task, TaskPane

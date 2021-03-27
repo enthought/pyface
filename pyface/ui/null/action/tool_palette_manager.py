@@ -11,12 +11,11 @@
 """ A tool bar manager realizes itself in a tool palette control. """
 
 
-from traits.api import Any, Bool, Enum, Instance, Tuple
+from traits.api import Bool, Instance, Tuple
 
 
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
-from .tool_palette import ToolPalette
 
 
 class ToolPaletteManager(ActionManager):

@@ -10,7 +10,6 @@
 
 
 import os
-import sys
 import unittest
 
 from ..python_editor import PythonEditor

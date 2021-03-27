@@ -22,7 +22,7 @@ from traits.testing.unittest_tools import (
     _TraitsChangeCollector as TraitsChangeCollector,
 )
 
-from .testing import find_qt_widget, print_qt_widget_tree
+from .testing import find_qt_widget
 from .event_loop_helper import EventLoopHelper, ConditionTimeoutError
 
 
@@ -40,7 +40,7 @@ class GuiTestAssistant(UnittestTools):
             qt_app=self.qt_app, gui=self.gui
         )
         try:
-            import traitsui.api
+            import traitsui.api  # noqa: F401
         except ImportError:
             self.traitsui_raise_patch = None
         else:

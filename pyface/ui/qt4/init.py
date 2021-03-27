@@ -40,7 +40,7 @@ if _app is None:
         # creating a QCoreApplication instance, otherwise importing
         # QtWebEngineWidgets later would fail (see enthought/pyface#581).
         # Import it here first before creating the instance.
-        from pyface.qt import QtWebKit
+        from pyface.qt import QtWebKit  # noqa: F401
     except ImportError:
         # This error will be raised in the context where
         # QtWebKit/QtWebEngine widgets are required.

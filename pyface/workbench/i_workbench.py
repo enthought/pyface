@@ -11,7 +11,7 @@
 
 
 from traits.api import Event, Instance, Interface, List, Str
-from traits.api import provides, VetoableEvent
+from traits.api import VetoableEvent
 
 
 from .user_perspective_manager import UserPerspectiveManager

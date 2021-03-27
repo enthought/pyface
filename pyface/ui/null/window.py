@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Any, Event, Property, provides, Str
+from traits.api import Event, Property, provides, Str
 from traits.api import Tuple
 
 

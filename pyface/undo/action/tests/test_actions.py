@@ -10,10 +10,8 @@
 
 import unittest
 
-from traits.testing.api import UnittestTools
-
 from pyface.undo.api import CommandStack, UndoManager
-from pyface.undo.tests.testing_commands import SimpleCommand, UnnamedCommand
+from pyface.undo.tests.testing_commands import SimpleCommand
 
 from pyface.undo.action.api import RedoAction, UndoAction
 

@@ -10,7 +10,7 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore
 
 
 from traits.api import Any, Bool, HasTraits, Instance, provides

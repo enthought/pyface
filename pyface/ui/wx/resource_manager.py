@@ -23,8 +23,6 @@ import wx
 
 from pyface.resource.api import ResourceFactory
 
-from traits.api import Undefined
-
 
 class PyfaceResourceFactory(ResourceFactory):
     """ The implementation of a shared resource manager. """

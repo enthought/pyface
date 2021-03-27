@@ -18,7 +18,7 @@ from logging import DEBUG
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Any, Bool, Font, Instance, Int, provides
+from traits.api import Any, Bool, Instance, Int, provides
 from traits.api import Tuple, Str
 
 

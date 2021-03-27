@@ -8,21 +8,17 @@
 #
 # Thanks for using Enthought open source!
 
-from itertools import combinations
 import logging
 
 
-from traits.api import Any, HasTraits
+from traits.api import HasTraits
 
 
 from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import (
-    LayoutContainer,
     PaneItem,
     Tabbed,
     Splitter,
-    HSplitter,
-    VSplitter,
 )
 
 # row/col orientation for AUI

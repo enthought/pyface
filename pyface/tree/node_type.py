@@ -11,9 +11,9 @@
 """ The base class for all node types. """
 
 
-from traits.api import Any, HasPrivateTraits, Instance, List
+from traits.api import Any, HasPrivateTraits, Instance
 from pyface.api import ImageResource
-from pyface.action.api import Action, ActionManagerItem, Group
+from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
 
 

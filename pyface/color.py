@@ -25,7 +25,8 @@ from traits.api import (
     Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
-from pyface.util.color_helpers import channels_to_ints, ints_to_channels, is_dark
+from pyface.util.color_helpers import channels_to_ints, is_dark
+from pyface.util.color_helpers import ints_to_channels  # noqa: F401
 from pyface.util.color_parser import parse_text
 
 

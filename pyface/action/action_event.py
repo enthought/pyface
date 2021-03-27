@@ -13,7 +13,7 @@
 import time
 
 
-from traits.api import Float, HasTraits, Int
+from traits.api import Float, HasTraits
 
 
 class ActionEvent(HasTraits):

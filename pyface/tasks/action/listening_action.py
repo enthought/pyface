@@ -12,4 +12,4 @@
 Please use :class:`pyface.action.listening_action.ListeningAction` instead.
 """
 
-from pyface.action.listening_action import ListeningAction
+from pyface.action.listening_action import ListeningAction  # noqa: F401

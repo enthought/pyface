@@ -12,15 +12,13 @@
 This module provides a concrete implementation of a data model for an
 n-dim numpy array.
 """
-from collections.abc import Sequence
-
 from traits.api import Array, HasRequiredTraits, Instance, observe
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
-    ConstantValue, FloatValue, IntValue, TextValue, no_value
+    ConstantValue, IntValue, no_value
 )
 from pyface.data_view.index_manager import TupleIndexManager
 

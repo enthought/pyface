@@ -17,7 +17,6 @@ import logging
 
 from pyface.action.action import Action
 from traits.api import Any, Str, Undefined
-from traits.observation.api import trait
 
 # Logging.
 logger = logging.getLogger(__name__)

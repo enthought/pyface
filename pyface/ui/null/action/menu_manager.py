@@ -17,7 +17,6 @@ from traits.api import Str
 
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
-from pyface.action.group import Group
 
 
 class MenuManager(ActionManager, ActionManagerItem):

@@ -15,7 +15,6 @@ from traits.etsconfig.api import ETSConfig
 
 from ..single_choice_dialog import SingleChoiceDialog
 from ..constant import OK, CANCEL
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 

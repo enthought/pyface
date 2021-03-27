@@ -22,7 +22,7 @@ from .image_resource import ImageResource
 
 try:
     # import wx.aui
-    from wx.lib.agw import aui
+    from wx.lib.agw import aui  # noqa: F401
 
     AUI = True
 except:

@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Any, Bool, Enum, Event, Instance, List
+from traits.api import Bool, Enum, Event, Instance, List
 
 
 from pyface.ui.wx.image_list import ImageList

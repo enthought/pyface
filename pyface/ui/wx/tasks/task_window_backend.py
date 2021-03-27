@@ -11,7 +11,6 @@
 import logging
 
 
-import wx
 from pyface.wx.aui import aui
 
 

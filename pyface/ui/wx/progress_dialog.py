@@ -16,10 +16,10 @@ import wx
 import time
 
 
-from traits.api import Bool, Enum, Instance, Int, Property, provides, Str
+from traits.api import Bool, Enum, Instance, Int, Property, Str
 
 
-from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
+from pyface.i_progress_dialog import MProgressDialog
 from .widget import Widget
 from .window import Window
 

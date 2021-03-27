@@ -12,7 +12,7 @@
 
 from pyface.action.api import ActionController
 from pyface.workbench.api import WorkbenchWindow
-from traits.api import HasTraits, Instance
+from traits.api import Instance
 
 
 class ActionController(ActionController):
