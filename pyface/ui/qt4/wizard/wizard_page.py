@@ -20,7 +20,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
+from traits.api import Bool, HasTraits, provides, Str, Tuple
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 

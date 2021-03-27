@@ -20,15 +20,14 @@ from pyface.util.id_helper import get_unique_id
 from traits.api import (
     Bool,
     Callable,
+    Either,
     Enum,
     HasTraits,
     Instance,
     List,
     Property,
     Str,
-    Either,
     Tuple,
-    Str,
 )
 
 # Trait definitions.
