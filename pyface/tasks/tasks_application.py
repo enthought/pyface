@@ -12,7 +12,6 @@ the creation of tasks and corresponding windows.
 """
 
 
-from functools import partial
 import logging
 
 from traits.api import (

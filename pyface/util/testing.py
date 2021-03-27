@@ -7,14 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-import contextlib
 from functools import wraps
-import operator
 import re
-from unittest import (
-    mock,
-    TestSuite,
-)
+from unittest import TestSuite
 
 from packaging.version import Version
 
@@ -41,7 +36,7 @@ def filter_tests(test_suite, exclusion_pattern):
 def has_traitsui():
     """ Is traitsui installed? """
     try:
-        import traitsui
+        import traitsui  # noqa: F401
     except ImportError:
         return False
     return True

@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import HasRequiredTraits, Instance, provides
+from traits.api import Instance, provides
 
 from pyface.data_view.i_data_wrapper import IDataWrapper, MDataWrapper
 from pyface.qt.QtCore import QMimeData

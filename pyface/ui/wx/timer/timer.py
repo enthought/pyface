@@ -12,7 +12,7 @@
 
 import wx
 
-from traits.api import Bool, Instance, Property
+from traits.api import Instance
 
 from pyface.timer.i_timer import BaseTimer
 

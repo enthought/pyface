@@ -12,7 +12,7 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 
 
 from traits.api import Int, provides, Str

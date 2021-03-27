@@ -17,7 +17,6 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.api import UnittestTools
 
 from ..color import Color
-from ..i_image_resource import IImageResource
 from ..image_resource import ImageResource
 from ..ui_traits import (
     Border,

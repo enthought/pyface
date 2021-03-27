@@ -13,7 +13,7 @@ import unittest
 from traits.testing.api import UnittestTools
 
 from pyface.undo.api import CommandStack, UndoManager
-from pyface.undo.tests.testing_commands import SimpleCommand, UnnamedCommand
+from pyface.undo.tests.testing_commands import SimpleCommand
 
 
 class TestUndoManager(unittest.TestCase, UnittestTools):

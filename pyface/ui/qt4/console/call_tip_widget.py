@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 import re
-from textwrap import dedent
 from unicodedata import category
 
 

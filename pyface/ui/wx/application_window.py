@@ -13,9 +13,6 @@
 """
 
 
-import sys
-
-
 import wx
 from pyface.wx.aui import aui, PyfaceAuiManager
 

@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Bool, Enum, HasTraits, Str, Tuple
+from traits.api import Bool, Enum, HasTraits, Tuple
 
 
 from pyface.tasks.i_task_pane import ITaskPane

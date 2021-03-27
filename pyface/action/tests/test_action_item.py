@@ -15,7 +15,6 @@ from traits.testing.api import UnittestTools
 
 from pyface.image_cache import ImageCache
 from pyface.toolkit import toolkit_object
-from pyface.widget import Widget
 from pyface.window import Window
 from ..action import Action
 from ..action_controller import ActionController

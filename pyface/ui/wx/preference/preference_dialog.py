@@ -25,7 +25,6 @@ from pyface.ui.wx.viewer.tree_viewer import TreeViewer
 from pyface.viewer.default_tree_content_provider import (
     DefaultTreeContentProvider,
 )
-from pyface.wx.util.font_helper import new_font_like
 
 
 class PreferenceDialog(SplitDialog):

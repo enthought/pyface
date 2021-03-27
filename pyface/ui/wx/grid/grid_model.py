@@ -12,7 +12,6 @@
 
 
 from traits.api import (
-    Any,
     Bool,
     Event,
     HasPrivateTraits,

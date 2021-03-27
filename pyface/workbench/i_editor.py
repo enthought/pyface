@@ -19,9 +19,7 @@ from traits.api import (
     Event,
     VetoableEvent,
     Vetoable,
-    HasTraits,
     Instance,
-    Interface,
 )
 from traits.api import provides
 

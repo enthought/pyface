@@ -8,15 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-from numpy import arange
-
 import wx
 from wx.grid import Grid
-from wx.grid import PyGridCellRenderer
-from wx.grid import GridCellTextEditor, GridCellStringRenderer
 from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
-
-from wx.lib.mixins.grid import GridAutoEditMixin
 
 
 class AbstractGridView(Grid):

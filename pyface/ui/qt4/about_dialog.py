@@ -11,7 +11,6 @@
 
 
 import platform
-import sys
 
 
 from pyface.qt import QtCore, QtGui

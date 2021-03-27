@@ -12,7 +12,7 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-from pyface.qt import QtGui
+from pyface.qt import QtCore, QtGui
 
 
 from traits.api import Enum, provides, Str
@@ -27,6 +27,12 @@ _SEVERITY_TO_ICON_MAP = {
     "information": QtGui.QMessageBox.Information,
     "warning": QtGui.QMessageBox.Warning,
     "error": QtGui.QMessageBox.Critical,
+}
+
+_TEXT_FORMAT_MAP = {
+    "auto": QtCore.Qt.AutoText,
+    "plain": QtCore.Qt.PlainText,
+    "rich": QtCore.Qt.RichText,
 }
 
 
@@ -45,6 +51,8 @@ class MessageDialog(MMessageDialog, Dialog):
     detail = Str()
 
     severity = Enum("information", "warning", "error")
+
+    text_format = Enum("auto", "plain", "rich")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -70,6 +78,7 @@ class MessageDialog(MMessageDialog, Dialog):
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
         message_box.setEscapeButton(QtGui.QMessageBox.Ok)
+        message_box.setTextFormat(_TEXT_FORMAT_MAP[self.text_format])
 
         if self.size != (-1, -1):
             message_box.resize(*self.size)

@@ -15,7 +15,7 @@ from traits.api import TraitError
 from traits.testing.api import UnittestTools
 
 from pyface.data_view.abstract_data_model import DataViewSetError
-from pyface.data_view.value_types.api import IntValue, TextValue
+from pyface.data_view.value_types.api import TextValue
 from pyface.data_view.data_models.data_accessors import (
     AttributeDataAccessor,
     ConstantDataAccessor,

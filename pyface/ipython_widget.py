@@ -13,7 +13,7 @@
 
 # Import the toolkit specific version.
 try:
-    import IPython.frontend
+    import IPython.frontend  # noqa: F401
 except ImportError:
     raise ImportError(
         """

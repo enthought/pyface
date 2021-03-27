@@ -14,7 +14,7 @@ for rows and columns. By default these are built off the data itself,
 with row/column labels as the index + 1."""
 
 
-from pyface.action.api import Action, Group, MenuManager, Separator
+from pyface.action.api import Action, Group, MenuManager
 from traits.api import Either, Any, Instance, List
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 

@@ -10,9 +10,6 @@
 
 import logging
 
-import os
-
-
 import wx
 
 # Logger.

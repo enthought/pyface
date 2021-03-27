@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import time
 from unittest import TestCase, skipIf
 
 from pyface.toolkit import toolkit_object

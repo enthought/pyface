@@ -15,9 +15,6 @@ import wx
 from wx.grid import Grid as wxGrid
 
 
-from .grid_model import GridModel
-
-
 class Grid(wxGrid):
     """ A grid (spreadsheet) widget. """
 

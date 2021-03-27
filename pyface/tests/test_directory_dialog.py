@@ -13,7 +13,6 @@ import os
 import unittest
 
 from ..directory_dialog import DirectoryDialog
-from ..gui import GUI
 from ..toolkit import toolkit_object
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")

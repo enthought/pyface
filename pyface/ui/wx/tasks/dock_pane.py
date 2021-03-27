@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from contextlib import contextmanager
 import logging
 
 

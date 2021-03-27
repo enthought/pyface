@@ -17,7 +17,7 @@
 """ A page in a wizard. """
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 
 
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
