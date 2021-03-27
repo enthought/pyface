@@ -12,6 +12,7 @@
 
 
 from .tree_content_provider import TreeContentProvider
+from .tree_item import TreeItem
 
 
 class DefaultTreeContentProvider(TreeContentProvider):

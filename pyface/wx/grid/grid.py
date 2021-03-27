@@ -12,8 +12,14 @@
 
 
 import wx
-from wx.grid import Grid as wxGrid
-
+from wx.grid import (
+    Grid as wxGrid,
+    GridTableMessage,
+    GRIDTABLE_NOTIFY_ROWS_APPENDED,
+    GRIDTABLE_NOTIFY_ROWS_DELETED,
+    GRIDTABLE_NOTIFY_COLS_APPENDED,
+    GRIDTABLE_NOTIFY_COLS_DELETED,
+)
 
 class Grid(wxGrid):
     """ A grid (spreadsheet) widget. """
