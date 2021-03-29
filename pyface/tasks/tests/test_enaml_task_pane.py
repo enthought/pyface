@@ -26,7 +26,7 @@ if SKIP_REASON is not None:
     # Dummy class so that the TestEnamlTaskPane class definition below
     # doesn't fail.
 
-    class GuiTestAssistant(object):
+    class GuiTestAssistant(object):  # noqa: F811
         pass
 
 

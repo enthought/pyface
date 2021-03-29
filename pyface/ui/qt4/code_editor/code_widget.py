@@ -831,8 +831,6 @@ if __name__ == "__main__":
 
         pdb.Pdb().set_trace(sys._getframe().f_back)
 
-    import sys
-
     app = QtGui.QApplication(sys.argv)
     window = AdvancedCodeWidget(None)
 

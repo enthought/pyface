@@ -249,7 +249,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((), (0,), (), (2,))
         )
 
-    def test_row_header_type_updated_empty(self):
+    def test_column_header_type_updated_empty(self):
         self.model.data = np.empty((2, 4, 0), dtype='int')
         with self.assertTraitDoesNotChange(self.model, "values_changed"):
             self.model.column_header_type = no_value

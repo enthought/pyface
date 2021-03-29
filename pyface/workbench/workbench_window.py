@@ -14,10 +14,17 @@ import logging
 
 
 from pyface.api import ApplicationWindow, GUI
-from traits.api import Constant, Delegate, Instance
-from traits.api import List, Str, Tuple, Str, Vetoable, Undefined
-from traits.api import observe
-
+from traits.api import (
+    Constant,
+    Delegate,
+    Instance,
+    List,
+    Str,
+    Tuple,
+    Undefined,
+    Vetoable,
+    observe,
+)
 
 from .i_editor import IEditor
 from .i_editor_manager import IEditorManager

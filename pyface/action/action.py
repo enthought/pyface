@@ -14,7 +14,6 @@ from functools import partial
 
 
 from traits.api import Bool, Callable, Enum, HasTraits, Str
-from traits.api import Str
 
 from pyface.ui_traits import Image
 

@@ -11,7 +11,7 @@
 """ The interface for a page in a wizard. """
 
 
-from traits.api import Bool, HasTraits, Interface, Str, Tuple, Str
+from traits.api import Bool, HasTraits, Interface, Str, Tuple
 
 
 class IWizardPage(Interface):
