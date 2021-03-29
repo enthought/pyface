@@ -291,7 +291,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # This case allows for views that are created and added dynamically
         # (i.e. they were not even known about when the window was created).
-        if not view in self.views:
+        if view not in self.views:
             self.views.append(view)
 
     def close_editor(self, editor):

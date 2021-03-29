@@ -169,7 +169,7 @@ class Toolkit(HasTraits):
 
                     frames = traceback.extract_tb(sys.exc_traceback)
                     filename, lineno, function, text = frames[-1]
-                    if not package in filename:
+                    if package not in filename:
                         raise
             else:
                 obj = getattr(module, oname, None)
