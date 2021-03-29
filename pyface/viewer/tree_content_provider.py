@@ -35,7 +35,7 @@ class TreeContentProvider(ContentProvider):
 
         """
 
-        return get_children(element)
+        return self.get_children(element)
 
     # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.

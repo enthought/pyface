@@ -173,7 +173,7 @@ class TreeModel(HasTraits):
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
-    def fire_nodes_removed(self, parent, children):
+    def fire_nodes_removed(self, node, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)
