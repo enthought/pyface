@@ -66,9 +66,6 @@ class TableViewer(ContentViewer):
         # Create the toolkit-specific control.
         self.control = table = _Table(parent, image_size, self)
 
-        # Get our actual id.
-        wxid = table.GetId()
-
         # Table events.
         table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_item_selected)
         table.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._on_item_activated)

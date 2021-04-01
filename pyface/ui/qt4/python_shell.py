@@ -284,7 +284,7 @@ class PythonWidget(HistoryConsoleWidget):
         # Run the source code in the interpeter
         self._hidden = hidden
         try:
-            more = self.interpreter.runsource(source)
+            self.interpreter.runsource(source)
         finally:
             self._hidden = False
 
@@ -499,7 +499,6 @@ class PythonWidget(HistoryConsoleWidget):
         # Calculate where the cursor should be *after* the change:
         position += added
 
-        document = self._control.document()
         if position == self._get_cursor().position():
             self._call_tip()
 

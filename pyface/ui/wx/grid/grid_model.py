@@ -293,7 +293,7 @@ class GridModel(HasPrivateTraits):
                     value = float(value)
                 except ValueError:
                     value = value
-        rows_appended = self._set_value(row, col, value)
+        self._set_value(row, col, value)
 
         self.fire_content_changed()
 

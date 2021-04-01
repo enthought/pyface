@@ -46,7 +46,6 @@ class PyfaceAuiManager(aui.AuiManager):
         docks, panes = aui.CopyDocksAndPanes2(self._docks, self._panes)
 
         sash_size = self._art.GetMetric(aui.AUI_DOCKART_SASH_SIZE)
-        caption_size = self._art.GetMetric(aui.AUI_DOCKART_CAPTION_SIZE)
         opposite_size = self.GetOppositeDockTotalSize(
             docks, dock.dock_direction
         )

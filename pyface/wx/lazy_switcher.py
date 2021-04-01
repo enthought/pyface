@@ -199,7 +199,6 @@ class SwitcherPanel(wxScrolledPanel):
 
         # If a page is already displayed then hide it.
         if self.current is not None:
-            current_size = self.current.GetSize()
             self.current.Show(False)
             self.sizer.Remove(self.current)
 

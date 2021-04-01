@@ -74,7 +74,6 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_append_callable(self):
         group = Group(self.action_item)
-        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.append(self.perform)
         self.assertEqual(len(group.items), 2)
@@ -118,7 +117,6 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_callable(self):
         group = Group(self.action_item)
-        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.insert(1, self.perform)
         self.assertEqual(len(group.items), 2)

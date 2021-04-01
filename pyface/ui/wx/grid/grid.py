@@ -1055,7 +1055,6 @@ class Grid(Widget):
         #
         # Don't change the behavior if the <Control> key is pressed as this
         # has meaning to the edit control.
-        key_code = evt.GetKeyCode()
 
         evt.Skip()
 

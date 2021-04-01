@@ -24,12 +24,12 @@ class TestToolkit(unittest.TestCase):
         # test that we get an undefined object if no toolkit implementation
         cls = pyface.toolkit.toolkit_object("tests:Missing")
         with self.assertRaises(NotImplementedError):
-            obj = cls()
+            cls()
 
     def test_bad_import(self):
         # test that we don't filter unrelated import errors
         with self.assertRaises(ImportError):
-            cls = pyface.toolkit.toolkit_object("tests.bad_import:Missing")
+            pyface.toolkit.toolkit_object("tests.bad_import:Missing")
 
     def test_core_plugins(self):
         # test that we can see appropriate core entrypoints

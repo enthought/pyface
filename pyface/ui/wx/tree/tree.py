@@ -882,7 +882,6 @@ class Tree(Widget):
         """ Called when nodes have been removed. """
         node_event = event.new
         parent = node_event.node
-        children = node_event.children
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)

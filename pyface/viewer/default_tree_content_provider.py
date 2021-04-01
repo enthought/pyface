@@ -51,9 +51,6 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         index, child = parent.insert_before(before, child)
 
-        # Trait notification.
-        # self.items_inserted(parent, [index], [child])
-
         return (index, child)
 
     def insert(self, parent, index, child):
@@ -61,19 +58,12 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         parent.insert(index, child)
 
-        # Trait notification.
-        # self.items_inserted(parent, [index], [child])
-
         return child
 
     def remove(self, parent, child):
         """ Removes 'child' from the 'parent' item. """
 
-        index = parent.children.index(child)
         parent.remove(child)
-
-        # Trait notification.
-        # self.items_removed(parent, [index], [child])
 
         return child
 

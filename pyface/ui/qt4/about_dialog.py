@@ -126,7 +126,6 @@ class AboutDialog(MAboutDialog, Dialog):
 
     def _create_html(self):
         # Load the image to be displayed in the about box.
-        image = self.image.create_image()
         path = self.image.absolute_path
 
         # The additional strings.

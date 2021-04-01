@@ -312,8 +312,6 @@ class _AuiToolBar(AUI.AuiToolBar):
         orig_pos, tool = self.tool_map[tool_id]
         pos = -1
         for pos in range(self.GetToolsCount()):
-            existing_tool = self.GetToolByPos(pos)
-            existing_id = existing_tool.GetId()
             existing_orig_pos, _ = self.tool_map[tool_id]
             if existing_orig_pos > orig_pos:
                 break

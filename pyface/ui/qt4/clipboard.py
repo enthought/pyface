@@ -49,7 +49,9 @@ class Clipboard(BaseClipboard):
         mime_data = cb.mimeData()
         if mime_data.hasFormat(PYTHON_TYPE):
             serialized_data = BytesIO(mime_data.data(PYTHON_TYPE).data())
-            klass = load(serialized_data)
+            # Loading the serialized data the first time returns the klass
+            _ = load(serialized_data)
+            # Loading it a second time returns the actual object
             obj = load(serialized_data)
         return obj
 

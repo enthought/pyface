@@ -517,11 +517,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def _get_selected_blocks(self):
         cursor = self.textCursor()
         if cursor.position() > cursor.anchor():
-            move_op = QtGui.QTextCursor.PreviousBlock
             start_pos = cursor.anchor()
             end_pos = cursor.position()
         else:
-            move_op = QtGui.QTextCursor.NextBlock
             start_pos = cursor.position()
             end_pos = cursor.anchor()
 

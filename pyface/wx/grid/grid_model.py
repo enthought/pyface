@@ -106,8 +106,6 @@ class GridModel(HasTraits):
     def SetValue(self, row, col, value):
         """ Set the value at the specified row and column. """
 
-        label = self.GetColLabelValue(col)
-
         try:
             self.data[row][col] = value
 

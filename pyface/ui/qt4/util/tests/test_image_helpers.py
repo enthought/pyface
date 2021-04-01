@@ -58,7 +58,7 @@ class TestImageHelpers(unittest.TestCase):
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         with self.assertRaises(ValueError):
-            array = QImage_to_array(qimage)
+            QImage_to_array(qimage)
 
     @unittest.skipIf(
         qt_api == 'pyside2' and sys.platform == 'linux',
