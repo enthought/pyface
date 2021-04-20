@@ -88,6 +88,20 @@ class ImageButton(Widget):
 
         super(ImageButton, self).__init__(**traits)
 
+        self._recalc_size()
+
+        self.control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
+        self.control._owner = self
+        self._mouse_over = self._button_down = False
+
+        # Set up mouse event handlers:
+        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
+        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
+        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
+        self.control.Bind(wx.EVT_PAINT, self._on_paint)
+
+    def _recalc_size(self):
         # Calculate the size of the button:
         idx = idy = tdx = tdy = 0
         if self._image is not None:
@@ -121,16 +135,6 @@ class ImageButton(Widget):
         # Create the toolkit-specific control:
         self._dx = dx + wp2 + wp2
         self._dy = dy + hp2 + hp2
-        self.control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
-        self.control._owner = self
-        self._mouse_over = self._button_down = False
-
-        # Set up mouse event handlers:
-        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
-        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
-        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
-        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
-        self.control.Bind(wx.EVT_PAINT, self._on_paint)
 
     # ---------------------------------------------------------------------------
     #  Handles the 'image' trait being changed:
@@ -141,6 +145,9 @@ class ImageButton(Widget):
         if image is not None:
             self._img = image.create_image()
             self._image = self._img.ConvertToBitmap()
+
+        self._recalc_size()
+        self.control.SetSize(wx.Size(self._dx, self._dy))
 
         if self.control is not None:
             self.control.Refresh()
@@ -234,7 +241,6 @@ class ImageButton(Widget):
                 wdc.SetTextForeground(DisabledTextColor)
             wdc.SetFont(wx.NORMAL_FONT)
             wdc.DrawText(self.label, ox + self._tx, oy + self._ty)
-
         pens = [self._selectedPenLight, self._selectedPenDark]
         bd = self._button_down
         style = self.style
