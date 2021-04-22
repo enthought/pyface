@@ -77,5 +77,6 @@ Contents
    Pyface Applications <applications>
    Pyface Trait Types <traits>
    Submodules <submodules>
+   Testing <testing>
    API Documentation <api/pyface>
    Change Log <changelog>
