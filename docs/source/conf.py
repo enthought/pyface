@@ -239,7 +239,7 @@ def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
 
 intersphinx_mapping = {
-    'traits': ('http://docs.enthought.com/traits', None),
-    'traitsui': ('http://docs.enthought.com/traitsui', None),
+    "traits": ("http://docs.enthought.com/traits", None),
+    "traitsui": ("http://docs.enthought.com/traitsui", None),
     "python": ("https://docs.python.org/3", None),
 }
