@@ -5,17 +5,18 @@ GUI Testing
 ===========
 
 GUI testing involves a slew of difficulties on top of what is normally
-encountered when writing typical unit tests. The cause of this is having to
-deal with the underlying event loop that drives the GUI. Consider a scenario
-in which you have a simple :class:`~traits.has_traits.HasTraits` class and you call
-:meth:`~traits.has_traits.HasTraits.configure_traits` on it to start the application. Typically python
-execution stops at this point and control is passed to the underlying toolkit
-event loop. In a test context though, we need access to that event loop inside
-the test. To simulate and test GUI interactions, we need to be able to post
-events to the event loop, process them manually, and then make assertions about
-the desired behavior. Even further, the event loop is global state, and so
-great care needs to be taken in each test to pick up after itself to avoid
-interactions with other tests. This is still necessary even if the test fails. 
+encountered when writing typical unit tests. This is a result of having to deal
+with the underlying event loop that drives the GUI. Consider a scenario in
+which you have a simple :class:`~traits.has_traits.HasTraits` class and you call
+:meth:`~traits.has_traits.HasTraits.configure_traits` on it to start the
+application. Typically python execution stops at this point and control is
+passed to the underlying event loop. In a test context though, we need
+direct access to that event loop. To simulate and test GUI interactions we need
+to be able to post events to the event loop, process them manually, and then
+make assertions about the desired behavior. Even further, the event loop is
+global state. Therefor, great care needs to be taken in each test to pick up
+after itself to avoid interactions with other tests. This is still necessary
+even if the test fails. 
 
 Pyface provides a few utilities that are useful in this process.  Namely,
 :class:`~pyface.util.GuiTestAssistant` and
@@ -39,7 +40,7 @@ for more.
 
 :class:`GuiTestAssistant` holds a reference to a :class:`pyface.gui.GUI` object
 (for api details see the interface :class:`~pyface.i_gui.IGUI`) which is what
-gives the low level access to the event loop. `pyface.GUI` provides methods such as
+gives the low level access to the event loop. :class:`pyface.gui.GUI` provides methods such as
 :meth:`~pyface.i_gui.IGUI.start_event_loop`,
 :meth:`~pyface.i_gui.IGUI.stop_event_loop`,
 :meth:`~pyface.i_gui.IGUI.process_events`,
@@ -63,7 +64,7 @@ This class provides the following methods (some of them being context managers):
 - :meth:`event_loop`
   
     Takes an integer ``repeat`` parameter and artificially replicates the event
-    loop by Calling :meth:`sendPostedEvents` and :meth:`processEvents` ``repeat``
+    loop by calling :meth:`sendPostedEvents` and :meth:`processEvents` ``repeat``
     number of times.
 
 - :meth:`event_loop_until_condition`
@@ -109,7 +110,39 @@ This class provides the following methods (some of them being context managers):
     Runs the real Qt event loop, collecting trait change events until
     the provided condition evaluates to True.
 
-.. TODO: Add example test code
+For a very simple example consider this (slightly modified) test from pyface's
+own test suite.
+
+::
+
+    import unittest
+
+    from pyface.api import Window
+    from pyface.util.gui_test_assistant import GuiTestAssistant
+
+    class TestWindow(unittest.TestCase, GuiTestAssistant):
+        def setUp(self):
+            GuiTestAssistant.setUp(self)
+            self.window = Window()
+
+        def tearDown(self):
+            if self.window.control is not None:
+                with self.delete_widget(self.window.control):
+                    self.window.destroy()
+            self.window = None
+            GuiTestAssistant.tearDown(self)
+
+        def test_open_close(self):
+            # test that opening works as expected
+            with self.assertTraitChanges(self.window, "opening", count=1):
+                with self.assertTraitChanges(self.window, "opened", count=1):
+                    with self.event_loop():
+                        self.window.open()
+
+            # test that closing works as expected with a different approach
+            with self.event_loop_until_traits_change(
+                    self.window, "closing", "closed"):
+                self.window.close()
 
 ModalDialogTester
 =================
@@ -138,18 +171,27 @@ object as its sole argument. This method first calls the function to open the
 dialog and then subsequently the ``when_opened`` callable.  In the body of the
 ``when_opened`` callable is where you define the interactions with the modal
 dialog you want to be performed during the test. You can use the
-:meth:`get_dialog_widget` method on the tester object (accesible since this is
-passed as an argument to ``when_opened``) to get access to the UI for the
-dialog. Then interactions can be performed using methods such as
+:meth:`get_dialog_widget` method on the tester object (accesible since the
+tester is passed as an argument to ``when_opened``) to get access to the UI for
+the dialog. Then interactions can be performed using methods such as
 :meth:`find_qt_widget`, :meth:`click_widget`, etc. Alternatively, if working
-with a TraitsUI applicatino, you could use the TraitsUI
+with a TraitsUI application, you could use the TraitsUI
 :class:`~traitsui.testing.tester.ui_tester.UITester` to perform these interactions (see the
 `TraitsUI Testing documentation <https://docs.enthought.com/traitsui/traitsui_user_manual/testing.html>`_).
+If doing so, it is important to remember to set the :attr:`auto_process_events`
+attribute on the :class:`~traitsui.testing.tester.ui_tester.UITester` to False.
+This prevents :class:`~traitsui.testing.tester.ui_tester.UITester` and
+:class:`ModalDialogTester` from both trying to drive the event loop
+simultaneously, which can lead to very strange, difficult to diagnose, bugs.
+Finally, you should ensure that your ``when_opened`` callable will close the
+dialog.  You don't want to leave the dialog open and blocking (there are
+timeouts in place as a safety net, but neverthelesss).
+:class:`ModalDialogTester` provides a method :meth:`close` for this purpose.
 To verify the dailog was indeed opened once, you can run
 ``self.assertTrue(tester.dialog_was_opened)``.
 
 Additionally, :class:`ModalDialogTester` provides a context manager
-:meth:`capture_error` to be used inside te event loop. When errors or failures
+:meth:`capture_error` to be used inside the event loop. When errors or failures
 occur they could be missed by :mod:`python:unittest`, but this catches them.
 These can then be checked with the :meth:`assert_no_errors_collected` method.
 
