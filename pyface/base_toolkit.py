@@ -77,32 +77,6 @@ except ImportError:
 from traits.api import HasTraits, List, ReadOnly, Str, TraitError
 from traits.etsconfig.api import ETSConfig
 
-
-try:
-    provisional_toolkit = ETSConfig.provisional_toolkit
-except AttributeError:
-    from contextlib import contextmanager
-
-    # for backward compatibility
-    @contextmanager
-    def provisional_toolkit(toolkit_name):
-        """ Perform an operation with toolkit provisionally set
-
-        This sets the toolkit attribute of the ETSConfig object set to the
-        provided value. If the operation fails with an exception, the toolkit
-        is reset to nothing.
-        """
-        if ETSConfig.toolkit:
-            raise AttributeError("ETSConfig toolkit is already set")
-        ETSConfig.toolkit = toolkit_name
-        try:
-            yield
-        except:
-            # reset the toolkit state
-            ETSConfig._toolkit = ""
-            raise
-
-
 logger = logging.getLogger(__name__)
 
 
