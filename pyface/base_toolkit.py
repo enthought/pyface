@@ -141,7 +141,7 @@ class Toolkit(HasTraits):
                     # the traceback's stack frame mentions the toolkit in question.
                     import traceback
 
-                    frames = traceback.extract_tb(sys.exc_traceback)
+                    frames = traceback.extract_tb(sys.exc_info()[2])
                     filename, lineno, function, text = frames[-1]
                     if package not in filename:
                         raise
