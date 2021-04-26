@@ -30,10 +30,10 @@ GuiTestAssistant
 
    GuiTestAssistant is currently only available on Qt.
 
-:class:`GuiTestAssistant` is a mixin class intended to to augment
-:class:`python:unittest.TestCase`. In fact, it has
-:class:`~traits.testing.unittest_tools.UnittestTools` from traits as a base
-class and thus gives access to methods like
+:class:`GuiTestAssistant` is a mixin class intended to augment
+:class:`python:unittest.TestCase`. In fact, it inherits from
+:class:`~traits.testing.unittest_tools.UnittestTools` from Traits and thus
+gives access to methods like
 :meth:`~traits.testing.unittest_tools.UnittestTools.assertTraitChanges`. See the
 `Traits Testing documentation <https://docs.enthought.com/traits/traits_user_manual/testing.html#testing>`_
 for more. 
@@ -48,11 +48,11 @@ gives the low level access to the event loop. :class:`pyface.gui.GUI` provides m
 :meth:`~pyface.i_gui.IGUI.set_trait_later`. This is accessible via the
 :attr:`gui` attribute on :class:`GuiTestAssistant`.
 
-What :class:`GuiTestAssistant` provides that is novel, is effectively more
-security to make sure your tests clean up after themselves.  For example,
+What :class:`GuiTestAssistant` provides that is novel, is effectively better
+control to ensure that your tests clean up after themselves.  For example,
 :class:`GuiTestAssistant` provides standard :meth:`setUp` and :meth:`tearDown`
 methods which try to clean up existing UI state and empty the event loop even
-if a test fails.  In addition, the methods typically have timouts so that the
+if a test fails.  In addition, the methods typically have timeouts so that the
 test will fail rather than blocking forever in the case something has gone
 wrong. Effectively, the class aims to remember to do the overhead to ensure
 your tests don't cause trouble, and at the same time give you the low level
@@ -63,20 +63,28 @@ This class provides the following methods (some of them being context managers):
 
 - :meth:`event_loop`
   
+    Context Manager
+
     Takes an integer ``repeat`` parameter and artificially replicates the event
     loop by calling :meth:`sendPostedEvents` and :meth:`processEvents` ``repeat``
     number of times.
 
 - :meth:`event_loop_until_condition`
 
+    Context Manager
+
     Runs the real Qt event loop until the provided condition evaluates to True.
 
 - :meth:`event_loop_until_traits_change`
+
+    Context Manager
 
     Run the real application event loop until a change notification for all of
     the specified traits is received.
 
 - :meth:`event_loop_with_timeout`
+
+    Context Manager
 
     Helper context manager to send all posted events to the event queue
     and wait for them to be processed.
@@ -85,16 +93,30 @@ This class provides the following methods (some of them being context managers):
     starts the real event loop rather than emulating it with
     ``QApplication.processEvents()``
 
+- :meth:`assertTraitChangesInEventLoop`
+
+    Context Manager
+
+    Runs the real Qt event loop, collecting trait change events until
+    the provided condition evaluates to True.
+
+- :meth:`delete_widget`
+
+    Context Manager
+
+    Runs the real Qt event loop until the widget provided has been
+    deleted.
+
 - :meth:`find_qt_widget`
 
     Takes parameters ``start``, ``type_`` and ``test``. Recursively walks the Qt
     widget tree from Qt widget ``start`` until it finds a widget of type ``type_``
     (a QWidget subclass) that satisfies the provided ``test`` method.
 
-- :meth:`delete_widget`
-
-    Runs the real Qt event loop until the widget provided has been
-    deleted.
+    Note: This method is known to be finicky / linked to sporadic seg faults.
+    The TraitsUI :class:`~traitsui.testing.tester.ui_tester.UITester` is often
+    an easier to use, safer alternative if working with a TraitsUI based
+    application.
 
 - :meth:`assertEventuallyTrueInGui` 
 
@@ -104,11 +126,6 @@ This class provides the following methods (some of them being context managers):
     This assertion runs the real Qt event loop, polling the condition
     and returning as soon as the condition becomes true. If the condition
     does not become true within the given timeout, the assertion fails.
-
-- :meth:`assertTraitChangesInEventLoop`
-
-    Runs the real Qt event loop, collecting trait change events until
-    the provided condition evaluates to True.
 
 For a very simple example consider this (slightly modified) test from pyface's
 own test suite.
@@ -164,7 +181,7 @@ result. If you absolutely do need to test the real modal dialog in a modal
 fashion, :class:`ModalDialogTester` aims to help make this as easy as possible.
 
 To use it, instantiate a :class:`ModalDialogTester` instance, passing it a
-function taking 0 arguments which when called opens the modal dialog. From
+function taking no arguments which when called opens the modal dialog. From
 there you can call the :meth:`open_and_run` method on the tester object just
 instantiated, and pass in a ``when_opened`` callable which will take the tester
 object as its sole argument. This method first calls the function to open the
