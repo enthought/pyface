@@ -23,6 +23,7 @@ import sys
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
     # Link to code in sphinx generated API docs
     "sphinx.ext.viewcode",
     'traits.util.trait_documenter'
@@ -236,3 +237,9 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
 
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
+
+intersphinx_mapping = {
+    "traits": ("http://docs.enthought.com/traits", None),
+    "traitsui": ("http://docs.enthought.com/traitsui", None),
+    "python": ("https://docs.python.org/3", None),
+}
