@@ -14,7 +14,7 @@ passed to the underlying event loop. In a test context though, we need
 direct access to that event loop. To simulate and test GUI interactions we need
 to be able to post events to the event loop, process them manually, and then
 make assertions about the desired behavior. Even further, the event loop is
-global state. Therefor, great care needs to be taken in each test to pick up
+global state. Therefore, great care needs to be taken in each test to pick up
 after itself to avoid interactions with other tests. This is still necessary
 even if the test fails. 
 
