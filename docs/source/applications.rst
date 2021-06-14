@@ -74,7 +74,7 @@ A simple command-line application might look something like this::
         location = Str("world")
 
         def _run(self):
-            super(HelloApplication, self)._run()
+            super()._run()
             print("Hello "+self.location)
 
     def main():

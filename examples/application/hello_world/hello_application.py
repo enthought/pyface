@@ -40,7 +40,7 @@ class HelloApplication(Application):
     id = "example_hello_application"
 
     def _run(self):
-        super(HelloApplication, self)._run()
+        super()._run()
         print("Hello " + self.location)
 
 

@@ -184,7 +184,7 @@ class PythonEditor(TraitsEditor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        super(PythonEditor, self).create(parent)
+        super().create(parent)
         self.ui.history = UndoHistory()
         self._last_save = 0
 

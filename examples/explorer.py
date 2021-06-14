@@ -59,7 +59,7 @@ class MainWindow(SplitApplicationWindow):
         """ Creates a new window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the window's menu, tool and status bars.
         self._create_action_bars()
