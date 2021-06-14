@@ -431,9 +431,6 @@ class DockItem(HasPrivateTraits):
     #  Implementation of the 'owner' property:
     # ---------------------------------------------------------------------------
 
-    def __init__(self, **kw):
-        super().__init__(**kw)
-
     @cached_property
     def _get_owner(self):
         if self.parent is None:
