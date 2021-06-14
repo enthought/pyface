@@ -17,7 +17,7 @@ class EditRenderer(GridCellRenderer):
     def __init__(self, **traits):
 
         # base-class constructor
-        super(EditRenderer, self).__init__(**traits)
+        super().__init__(**traits)
 
         # initialize the renderer, if it hasn't already been initialized
         if self.renderer is None:

@@ -60,7 +60,7 @@ class IPython010Controller(IPythonController):
     def execute_command(self, command, hidden=False):
         # XXX: Overriden to fix bug where executing a hidden command still
         # causes the prompt number to increase.
-        super(IPython010Controller, self).execute_command(command, hidden)
+        super().execute_command(command, hidden)
         if hidden:
             self.shell.current_cell_number -= 1
 
@@ -140,9 +140,7 @@ class IPython09Controller(IPythonController):
         """
 
         completion_text = self._get_completion_text(line)
-        suggestion, completions = super(IPython09Controller, self).complete(
-            completion_text
-        )
+        suggestion, completions = super().complete(completion_text)
         new_line = line[: -len(completion_text)] + suggestion
         return new_line, completions
 
@@ -348,7 +346,7 @@ class IPythonWidget(Widget):
         """ Creates a new pager. """
 
         # Base class constructor.
-        super(IPythonWidget, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

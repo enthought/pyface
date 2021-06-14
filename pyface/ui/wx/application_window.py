@@ -110,7 +110,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create(self):
 
-        super(ApplicationWindow, self)._create()
+        super()._create()
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)
@@ -152,7 +152,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def destroy(self):
         if self.control:
             self._aui_manager.UnInit()
-        super(ApplicationWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.

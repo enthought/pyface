@@ -140,7 +140,7 @@ class ProgressDialog(MProgressDialog, Window):
         # before open() is called
         self._start_time = 0
 
-        super(ProgressDialog, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
     # -------------------------------------------------------------------------
     # IWindow Interface
@@ -148,7 +148,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def open(self):
         """ Opens the window. """
-        super(ProgressDialog, self).open()
+        super().open()
         self._start_time = time.time()
         wx.GetApp().Yield(True)
 
@@ -161,7 +161,7 @@ class ProgressDialog(MProgressDialog, Window):
         if self._message_control is not None:
             self._message_control = None
 
-        super(ProgressDialog, self).close()
+        super().close()
 
     # -------------------------------------------------------------------------
     # IProgressDialog Interface

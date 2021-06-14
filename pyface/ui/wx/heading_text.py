@@ -47,7 +47,7 @@ class HeadingText(MHeadingText, Widget):
         """ Creates the panel. """
 
         # Base class constructor.
-        super(HeadingText, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

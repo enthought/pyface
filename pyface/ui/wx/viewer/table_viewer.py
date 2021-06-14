@@ -61,7 +61,7 @@ class TableViewer(ContentViewer):
         """
 
         # Base-class constructor.
-        super(TableViewer, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control.
         self.control = table = _Table(parent, image_size, self)

@@ -63,7 +63,7 @@ class ToolBarManager(ActionManager):
         """ Creates a new tool bar manager. """
 
         # Base class contructor.
-        super(ToolBarManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.

@@ -41,7 +41,7 @@ class ListBox(Widget):
         """ Creates a new list box. """
 
         # Base-class constructors.
-        super(ListBox, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the widget!
         self._create_control(parent)

@@ -38,17 +38,6 @@ class SimpleGridModel(GridModel):
     columns = Either(None, List(Instance(GridColumn)))
 
     # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-    def __init__(self, **traits):
-        """ Create a SimpleGridModel object. """
-
-        # Base class constructor
-        super(SimpleGridModel, self).__init__(**traits)
-
-        return
-
-    # ------------------------------------------------------------------------
     # 'GridModel' interface.
     # ------------------------------------------------------------------------
 
@@ -282,7 +271,7 @@ class SimpleGridModel(GridModel):
 class _CopyAction(Action):
     def __init__(self, model, row, col, **kw):
 
-        super(_CopyAction, self).__init__(**kw)
+        super().__init__(**kw)
         self._model = model
         self._row = row
         self._col = col

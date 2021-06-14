@@ -35,7 +35,7 @@ class CompositeGridModel(GridModel):
         """ Create a CompositeGridModel object. """
 
         # Base class constructor
-        super(CompositeGridModel, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._row_count = None
 

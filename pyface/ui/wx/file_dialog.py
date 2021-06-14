@@ -81,7 +81,7 @@ class FileDialog(MFileDialog, Dialog):
         # Get the index of the selected filter.
         self.wildcard_index = self.control.GetFilterIndex()
         # Let the window close as normal.
-        super(FileDialog, self).close()
+        super().close()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.

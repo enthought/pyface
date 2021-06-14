@@ -40,7 +40,7 @@ class ToolPalette(Widget):
         """ Creates a new tool palette. """
 
         # Base class constructor.
-        super(ToolPalette, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

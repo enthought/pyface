@@ -66,7 +66,7 @@ class ImageWidget(Widget):
         """ Creates a new widget. """
 
         # Base class constructors.
-        super(ImageWidget, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add some padding around the image.
         size = (self.bitmap.GetWidth() + 10, self.bitmap.GetHeight() + 10)

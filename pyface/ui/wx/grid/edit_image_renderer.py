@@ -19,7 +19,7 @@ class EditImageRenderer(GridCellImageRenderer):
     image = ImageResource("table_edit")
 
     def __init__(self, **kw):
-        super(EditImageRenderer, self).__init__(self, **kw)
+        super().__init__(self, **kw)
 
     def get_image_for_cell(self, grid, row, col):
         """ returns the image resource for the table_edit bitmap """

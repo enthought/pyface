@@ -21,7 +21,7 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
     def __init__(self, image_map=None, text_map=None):
 
         # Base-class constructor. We pass ourself as the provider
-        super(MappedGridCellImageRenderer, self).__init__(self)
+        super().__init__(self)
 
         self.image_map = image_map
         self.text_map = text_map

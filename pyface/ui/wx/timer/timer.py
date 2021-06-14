@@ -19,7 +19,7 @@ from pyface.timer.i_timer import BaseTimer
 
 class CallbackTimer(wx.Timer):
     def __init__(self, timer):
-        super(CallbackTimer, self).__init__()
+        super().__init__()
         self.timer = timer
 
     def Notify(self):

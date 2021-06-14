@@ -102,7 +102,7 @@ class TraitGridModel(GridModel):
         """ Create a TraitGridModel object. """
 
         # Base class constructor
-        super(TraitGridModel, self).__init__(**traits)
+        super().__init__(**traits)
 
         # if no columns are pass in then create the list of names
         # from the first trait in the list. if the list is empty,
