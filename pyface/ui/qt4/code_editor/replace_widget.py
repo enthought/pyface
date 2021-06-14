@@ -18,7 +18,9 @@ from .find_widget import FindWidget
 
 class ReplaceWidget(FindWidget):
     def __init__(self, parent):
-        super().__init__(parent)
+        # We explicitly call __init__ on the classes which FindWidget inherits from
+        # instead of calling FindWidget.__init__.
+        super(FindWidget, self).__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
 
         # QFontMetrics.width() is deprecated and Qt docs suggest using
