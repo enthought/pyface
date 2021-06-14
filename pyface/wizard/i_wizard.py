@@ -85,7 +85,7 @@ class MWizard(HasTraits):
         """ Creates the window contents. """
 
         # This creates the dialog and button areas.
-        super(MWizard, self)._create_contents(parent)
+        super()._create_contents(parent)
 
         # Wire up the controller.
         self._initialize_controller(self.controller)

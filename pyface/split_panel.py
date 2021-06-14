@@ -26,7 +26,7 @@ class SplitPanel(Widget, SplitWidget):
         """ Creates a new panel. """
 
         # Base class constructor.
-        super(SplitPanel, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the widget's toolkit-specific control.
         self.control = self._create_splitter(parent)

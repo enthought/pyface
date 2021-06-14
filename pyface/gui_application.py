@@ -162,7 +162,7 @@ class GUIApplication(Application):
         """
         from pyface.gui import GUI
 
-        ok = super(GUIApplication, self).start()
+        ok = super().start()
         if ok:
             # create the GUI so that the splash screen comes up first thing
             if self.gui is Undefined:
@@ -214,7 +214,7 @@ class GUIApplication(Application):
         The fires closing events for each window, and returns False if any
         listener vetos.
         """
-        if not super(GUIApplication, self)._can_exit():
+        if not super()._can_exit():
             return False
 
         for window in reversed(self.windows):

@@ -47,7 +47,7 @@ class AbstractCommandStackAction(Action):
     def __init__(self, **traits):
         """ Initialise the instance. """
 
-        super(AbstractCommandStackAction, self).__init__(**traits)
+        super().__init__(**traits)
 
         self.undo_manager.observe(
             self._on_stack_updated, "stack_updated"

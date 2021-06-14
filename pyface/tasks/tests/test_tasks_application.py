@@ -65,14 +65,14 @@ class TestingApp(TasksApplication):
     def start(self):
         if not self.start_cleanly:
             return False
-        super(TestingApp, self).start()
+        super().start()
 
         window = self.windows[0]
         window.observe(self._on_window_closing, "closing")
         return True
 
     def stop(self):
-        super(TestingApp, self).stop()
+        super().stop()
         return self.stop_cleanly
 
     def _on_window_closing(self, event):
@@ -90,7 +90,7 @@ class TestingApp(TasksApplication):
             self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
-        super(TestingApp, self)._prepare_exit()
+        super()._prepare_exit()
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")

@@ -70,7 +70,7 @@ class Group(HasTraits):
             Items to add to the group.
         """
         # Base class constructor.
-        super(Group, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add any specified items.
         for item in items:

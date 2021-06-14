@@ -45,7 +45,7 @@ class GUIApplicationAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to application and dependent properties.
         self.application = None
-        super(GUIApplicationAction, self).destroy()
+        super().destroy()
 
 
 class ActiveWindowAction(GUIApplicationAction):

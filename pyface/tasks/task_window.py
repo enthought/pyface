@@ -98,7 +98,7 @@ class TaskWindow(ApplicationWindow):
         # undesirable animations when the window is being closed.
         for state in self._states:
             self._destroy_state(state)
-        super(TaskWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'Window' interface.

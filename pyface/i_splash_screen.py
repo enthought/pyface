@@ -72,7 +72,7 @@ class MSplashScreen(HasTraits):
     def open(self):
         """ Creates the toolkit-specific control for the widget. """
 
-        super(MSplashScreen, self).open()
+        super().open()
 
         if self.show_log_messages:
             self._log_handler = SplashScreenLogHandler(self)
@@ -90,4 +90,4 @@ class MSplashScreen(HasTraits):
             logger = logging.getLogger()
             logger.removeHandler(self._log_handler)
 
-        super(MSplashScreen, self).close()
+        super().close()

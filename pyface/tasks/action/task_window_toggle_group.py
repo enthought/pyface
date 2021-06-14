@@ -83,7 +83,7 @@ class TaskWindowToggleGroup(Group):
     def destroy(self):
         """ Called when the group is no longer required.
         """
-        super(TaskWindowToggleGroup, self).destroy()
+        super().destroy()
         if self.application:
             self.application.observe(
                 self._rebuild, "windows.items", remove=True

@@ -63,11 +63,11 @@ class MTextField(HasTraits):
         self._set_control_placeholder(self.placeholder)
         self._set_control_read_only(self.read_only)
 
-        super(MTextField, self)._initialize_control()
+        super()._initialize_control()
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        super(MTextField, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.observe(self._update_text_updated, "update_text", dispatch="ui")
         self.observe(self._placeholder_updated, "placeholder", dispatch="ui")
         self.observe(self._echo_updated, "echo", dispatch="ui")
@@ -103,7 +103,7 @@ class MTextField(HasTraits):
         self.observe(
             self._read_only_updated, "read_only", dispatch="ui", remove=True
         )
-        super(MTextField, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     def _editing_finished(self):
         if self.control is not None:

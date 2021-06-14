@@ -165,7 +165,7 @@ class MDIWindowMenu(MenuManager):
         """ Creates a new MDI window menu. """
 
         # Base class constructor.
-        super(MDIWindowMenu, self).__init__(
+        super().__init__(
             Cascade(window=window),
             Tile(window=window),
             Separator(),

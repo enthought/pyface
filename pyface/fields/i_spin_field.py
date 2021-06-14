@@ -57,7 +57,7 @@ class MSpinField(HasTraits):
         value = traits.pop("value", None)
         if "bounds" in traits:
             traits["value"] = traits["bounds"][0]
-        super(MSpinField, self).__init__(**traits)
+        super().__init__(**traits)
         if value is not None:
             self.value = value
 
@@ -66,13 +66,13 @@ class MSpinField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_control(self):
-        super(MSpinField, self)._initialize_control()
+        super()._initialize_control()
         self._set_control_bounds(self.bounds)
         self._set_control_value(self.value)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        super(MSpinField, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
         if self.control is not None:
             self._observe_control_value()
@@ -84,7 +84,7 @@ class MSpinField(HasTraits):
         self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
         )
-        super(MSpinField, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     # Toolkit control interface ---------------------------------------------
 

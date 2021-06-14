@@ -36,7 +36,7 @@ class EditorManager(HasTraits):
     def __init__(self, **traits):
         """ Constructor. """
 
-        super(EditorManager, self).__init__(**traits)
+        super().__init__(**traits)
 
         # A mapping from editor to editor kind (the factory that created them).
         self._editor_to_kind_map = weakref.WeakKeyDictionary()

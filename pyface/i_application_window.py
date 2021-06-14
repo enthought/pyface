@@ -131,7 +131,7 @@ class MApplicationWindow(HasTraits):
         for tool_bar_manager in self.tool_bar_managers:
             tool_bar_manager.destroy()
 
-        super(MApplicationWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.

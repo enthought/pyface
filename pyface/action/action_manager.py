@@ -86,7 +86,7 @@ class ActionManager(HasTraits):
         If a string is passed, a Group is created with id set to the string.
         """
         # Base class constructor.
-        super(ActionManager, self).__init__(**traits)
+        super().__init__(**traits)
 
         # The last group in every manager is the group with Id 'additions'.
         #

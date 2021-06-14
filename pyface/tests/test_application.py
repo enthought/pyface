@@ -58,15 +58,15 @@ class TestingApp(Application):
     exit_prepared_error = Bool(False)
 
     def start(self):
-        super(TestingApp, self).start()
+        super().start()
         return self.start_cleanly
 
     def stop(self):
-        super(TestingApp, self).stop()
+        super().stop()
         return self.stop_cleanly
 
     def _run(self):
-        super(TestingApp, self)._run()
+        super()._run()
         if self.do_exit:
             if self.error_exit:
                 raise ApplicationExit("error message")

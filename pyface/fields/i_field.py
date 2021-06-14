@@ -57,7 +57,7 @@ class MField(HasTraits):
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        super(MField, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.observe(self._value_updated, "value", dispatch="ui")
         self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
         self.observe(
@@ -82,7 +82,7 @@ class MField(HasTraits):
             dispatch="ui",
             remove=True,
         )
-        super(MField, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface

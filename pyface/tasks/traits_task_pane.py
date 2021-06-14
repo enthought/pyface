@@ -36,7 +36,7 @@ class TraitsTaskPane(TaskPane):
         """
         if self.model:
             return {"object": self.model, "pane": self}
-        return super(TraitsTaskPane, self).trait_context()
+        return super().trait_context()
 
     # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
