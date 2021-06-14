@@ -44,7 +44,7 @@ class MainWindow(MultiToolbarWindow):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(

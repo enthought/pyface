@@ -30,7 +30,7 @@ class MainWindow(ApplicationWindow):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create an action that exits the application.
         exit_action = Action(name="E&xit", on_perform=self.close)
