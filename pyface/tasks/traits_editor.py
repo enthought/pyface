@@ -36,7 +36,7 @@ class TraitsEditor(Editor):
         """
         if self.model:
             return {"object": self.model, "editor": self}
-        return super(TraitsEditor, self).trait_context()
+        return super().trait_context()
 
     # ------------------------------------------------------------------------
     # 'IEditor' interface.

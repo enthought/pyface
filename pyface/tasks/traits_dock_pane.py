@@ -36,7 +36,7 @@ class TraitsDockPane(DockPane):
         """
         if self.model:
             return {"object": self.model, "pane": self}
-        return super(TraitsDockPane, self).trait_context()
+        return super().trait_context()
 
     # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
@@ -50,7 +50,7 @@ class TraitsDockPane(DockPane):
         self.ui = None
 
         # Destroy the dock control.
-        super(TraitsDockPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IDockPane' interface.

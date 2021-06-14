@@ -34,7 +34,7 @@ class ActionEvent(HasTraits):
         Note: Every keyword argument becomes a public attribute of the event.
         """
         # Base-class constructor.
-        super(ActionEvent, self).__init__(**traits)
+        super().__init__(**traits)
 
         # When the action was performed.
         self.when = time.time()

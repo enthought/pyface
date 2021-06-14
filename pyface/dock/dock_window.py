@@ -304,7 +304,7 @@ class DockWindow(HasPrivateTraits):
         style=wx.FULL_REPAINT_ON_RESIZE,
         **traits
     ):
-        super(DockWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the actual window:
         self.control = control = wx.Window(parent, wid, pos, size, style)

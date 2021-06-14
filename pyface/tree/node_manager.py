@@ -44,7 +44,7 @@ class NodeManager(HasPrivateTraits):
         """ Creates a new tree model. """
 
         # Base class constructor.
-        super(NodeManager, self).__init__(**traits)
+        super().__init__(**traits)
 
         # This saves looking up a node's type every time.  If we ever have
         # nodes that change type dynamically then we will obviously have to

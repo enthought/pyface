@@ -131,7 +131,7 @@ class TasksApplication(GUIApplication):
         """
         from pyface.tasks.task_window_layout import TaskWindowLayout
 
-        window = super(TasksApplication, self).create_window(**kwargs)
+        window = super().create_window(**kwargs)
 
         if layout is not None:
             for task_id in layout.get_tasks():
@@ -178,7 +178,7 @@ class TasksApplication(GUIApplication):
         window = event.object
         if getattr(window, "active_task", None) in self.tasks:
             self.tasks.remove(window.active_task)
-        super(TasksApplication, self)._on_window_closed(event)
+        super()._on_window_closed(event)
 
     # Trait initializers and property getters ---------------------------------
 

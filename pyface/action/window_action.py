@@ -42,7 +42,7 @@ class WindowAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to window and dependent properties.
         self.window = None
-        super(WindowAction, self).destroy()
+        super().destroy()
 
 
 class CloseWindowAction(WindowAction):

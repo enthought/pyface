@@ -180,7 +180,7 @@ class MDialog(HasTraits):
     def _create(self):
         """ Creates the window's widget hierarchy. """
 
-        super(MDialog, self)._create()
+        super()._create()
 
         self._create_contents(self.control)
 

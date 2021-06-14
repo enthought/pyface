@@ -35,8 +35,6 @@ class MenuBarManager(BaseMenuBarManager):
         # The controller handles the invocation of every action.
         controller = ActionController(window=self.window)
 
-        menu_bar = super(MenuBarManager, self).create_menu_bar(
-            parent, controller=controller
-        )
+        menu_bar = super().create_menu_bar(parent, controller=controller)
 
         return menu_bar

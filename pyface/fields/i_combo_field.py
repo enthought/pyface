@@ -54,7 +54,7 @@ class MComboField(HasTraits):
     def __init__(self, values, **traits):
         value = traits.pop("value", values[0])
         traits["values"] = values
-        super(MComboField, self).__init__(**traits)
+        super().__init__(**traits)
         self.value = value
 
     # ------------------------------------------------------------------------
@@ -62,13 +62,13 @@ class MComboField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_control(self):
-        super(MComboField, self)._initialize_control()
+        super()._initialize_control()
         self._set_control_values(self.values)
         self._set_control_value(self.value)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        super(MComboField, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.observe(
             self._values_updated, "values.items,formatter", dispatch="ui"
         )
@@ -85,7 +85,7 @@ class MComboField(HasTraits):
             dispatch="ui",
             remove=True,
         )
-        super(MComboField, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     # Toolkit control interface ---------------------------------------------
 

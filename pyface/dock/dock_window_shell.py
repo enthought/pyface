@@ -57,7 +57,7 @@ class DockWindowShell(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def __init__(self, dock_control, use_mouse=False, **traits):
-        super(DockWindowShell, self).__init__(**traits)
+        super().__init__(**traits)
 
         old_control = dock_control.control
         parent = wx.GetTopLevelParent(old_control)

@@ -91,7 +91,7 @@ class LayoutContainer(LayoutItem):
                 )
             else:
                 traits["items"] = list(items)
-        super(LayoutContainer, self).__init__(**traits)
+        super().__init__(**traits)
 
     def iterleaves(self):
         for item in self.items:
@@ -119,7 +119,7 @@ class PaneItem(LayoutItem):
     height = Int(-1)
 
     def __init__(self, id="", **traits):
-        super(PaneItem, self).__init__(**traits)
+        super().__init__(**traits)
         self.id = id
 
     def pargs(self):

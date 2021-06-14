@@ -42,7 +42,7 @@ class TaskToggleAction(Action):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        super(TaskToggleAction, self).destroy()
+        super().destroy()
 
         # Make sure that we are not listening to changes in the task anymore
         # In traits style, we will set the basic object to None and have the

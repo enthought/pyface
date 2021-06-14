@@ -26,7 +26,7 @@ class SplashScreenLogHandler(Handler):
             The splash screen being used to display the log messages
         """
         # Base class constructor.
-        super(SplashScreenLogHandler, self).__init__()
+        super().__init__()
 
         # The splash screen that we will display log messages on.
         self._splash_screen = splash_screen

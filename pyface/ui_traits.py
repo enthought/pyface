@@ -107,7 +107,7 @@ class Image(TraitType):
             The default value for the Image, either an ImageResource object,
             or a string from which an ImageResource object can be derived.
         """
-        super(Image, self).__init__(convert_image(value), **metadata)
+        super().__init__(convert_image(value), **metadata)
 
     def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
@@ -211,7 +211,7 @@ class BaseMB(ABCHasStrictTraits):
                 {"left": left, "right": right, "top": top, "bottom": bottom}
             )
 
-        super(BaseMB, self).__init__(**traits)
+        super().__init__(**traits)
 
 
 class Margin(BaseMB):
@@ -296,7 +296,7 @@ class HasMargin(TraitType):
                 dv = self.klass(*dv)
 
             if not isinstance(dv, self.klass):
-                return super(HasMargin, self).get_default_value()
+                return super().get_default_value()
 
             self.default_value_type = dvt = DefaultValue.callable_and_args
             dv = (self.klass, (), dv.trait_get())

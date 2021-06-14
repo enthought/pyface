@@ -60,7 +60,7 @@ class Schema(HasTraits):
     def __init__(self, *items, **traits):
         """ Creates a new schema.
         """
-        super(Schema, self).__init__(**traits)
+        super().__init__(**traits)
         self.items.extend(items)
 
     def create(self, children):

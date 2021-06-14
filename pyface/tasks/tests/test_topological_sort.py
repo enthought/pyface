@@ -22,7 +22,7 @@ class TestItem(HasTraits):
     after = Int()
 
     def __init__(self, id, **traits):
-        super(TestItem, self).__init__(id=id, **traits)
+        super().__init__(id=id, **traits)
 
     def __hash__(self):
         return hash(self.id)

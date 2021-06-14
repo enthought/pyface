@@ -95,7 +95,7 @@ class MProgressDialog(HasTraits):
             msg = "Dialog min ({}) is greater than dialog max ({})."
             raise AttributeError(msg.format(self.min, self.max))
 
-        super(MProgressDialog, self).open()
+        super().open()
 
     # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.

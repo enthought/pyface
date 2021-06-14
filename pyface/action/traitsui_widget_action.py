@@ -69,4 +69,4 @@ class TraitsUIWidgetAction(Action):
         if self.model is not None:
             context = {"object": self.model, "action": self}
             return context
-        return super(TraitsUIWidgetAction, self).trait_context()
+        return super().trait_context()

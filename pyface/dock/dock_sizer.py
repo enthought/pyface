@@ -272,7 +272,7 @@ class DockImages(HasPrivateTraits):
     def __init__(self, **traits):
         """ Initializes the object.
         """
-        super(DockImages, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._lazy_init_done = False
 
@@ -430,9 +430,6 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
     #  Implementation of the 'owner' property:
     # ---------------------------------------------------------------------------
-
-    def __init__(self, **kw):
-        super(DockItem, self).__init__(**kw)
 
     @cached_property
     def _get_owner(self):
@@ -2604,7 +2601,7 @@ class DockRegion(DockGroup):
     def toggle_lock(self):
         """ Toggles the 'lock' status of every control in the group.
         """
-        super(DockRegion, self).toggle_lock()
+        super().toggle_lock()
         self._is_notebook = None
 
     # ---------------------------------------------------------------------------
@@ -2727,7 +2724,7 @@ class DockRegion(DockGroup):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super(DockRegion, self).dock_info_at(x, y, tdx, is_control)
+        info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
             return info
 
@@ -2869,7 +2866,7 @@ class DockRegion(DockGroup):
         ):
             self.scroll(self._scroll)
         else:
-            super(DockRegion, self).mouse_up(event)
+            super().mouse_up(event)
 
     # ---------------------------------------------------------------------------
     #  Handles the mouse moving while the left mouse button is pressed:
@@ -3530,7 +3527,7 @@ class DockSection(DockGroup):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super(DockSection, self).dock_info_at(x, y, tdx, is_control)
+        info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
             return info
 
@@ -3830,9 +3827,6 @@ class DockInfo(HasPrivateTraits):
     # Dock Control:
     control = Instance(DockItem)
 
-    def __init__(self, **kw):
-        super(DockInfo, self).__init__(**kw)
-
     # ---------------------------------------------------------------------------
     #  Draws the DockInfo on the display:
     # ---------------------------------------------------------------------------
@@ -3987,7 +3981,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def __init__(self, contents=None):
-        super(DockSizer, self).__init__()
+        super().__init__()
 
         # Make sure the DockImages singleton has been initialized:
         DockImages.init()

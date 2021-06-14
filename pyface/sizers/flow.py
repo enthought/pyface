@@ -24,7 +24,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def __init__(self, orient=wx.HORIZONTAL):
-        super(FlowSizer, self).__init__()
+        super().__init__()
         self._orient = orient
         self._frozen = False
         self._needed_size = None

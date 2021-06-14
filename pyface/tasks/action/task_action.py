@@ -42,7 +42,7 @@ class TaskAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to task and dependent properties.
         self.task = None
-        super(TaskAction, self).destroy()
+        super().destroy()
 
 
 class TaskWindowAction(TaskAction):

@@ -102,7 +102,7 @@ class Toolkit(HasTraits):
     packages = List(Str)
 
     def __init__(self, package, toolkit, *packages, **traits):
-        super(Toolkit, self).__init__(
+        super().__init__(
             package=package, toolkit=toolkit, packages=list(packages), **traits
         )
 

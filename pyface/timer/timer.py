@@ -40,7 +40,7 @@ class Timer(CallbackTimer):
         arguments and keyword args after every `millisecs` (milliseconds).
         """
         interval = millisecs / 1000.0
-        super(Timer, self).__init__(
+        super().__init__(
             interval=interval, callback=callable, args=args, kwargs=kwargs
         )
         self.start()
