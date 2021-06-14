@@ -13,7 +13,13 @@ import os
 import platform
 import unittest
 
-from importlib_resources import files
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
 import pyface
 import pyface.tests
