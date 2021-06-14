@@ -33,7 +33,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def __init__(
         self, parent, should_highlight_current_line=True, font=None, lexer=None
     ):
-        super(CodeWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self.highlighter = PygmentsHighlighter(self.document(), lexer)
         self.line_number_widget = LineNumberWidget(self)
@@ -387,7 +387,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
     def keyPressEvent(self, event):
         if self.isReadOnly():
-            return super(CodeWidget, self).keyPressEvent(event)
+            return super().keyPressEvent(event)
 
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
 
@@ -432,7 +432,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             event.accept()
             return self.block_unindent()
 
-        return super(CodeWidget, self).keyPressEvent(event)
+        return super().keyPressEvent(event)
 
     def resizeEvent(self, event):
         QtGui.QPlainTextEdit.resizeEvent(self, event)
@@ -558,7 +558,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, font=None, lexer=None):
-        super(AdvancedCodeWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self.code = CodeWidget(self, font=font, lexer=lexer)
         self.find = FindWidget(self)
@@ -804,7 +804,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
                 self.previous_find_widget = self.active_find_widget
                 self.active_find_widget = None
 
-        return super(AdvancedCodeWidget, self).keyPressEvent(event)
+        return super().keyPressEvent(event)
 
     # ------------------------------------------------------------------------
     # Private methods

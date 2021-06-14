@@ -35,7 +35,7 @@ class SimpleApplication(HasStrictTraits):
     application_running = Event()
 
     def __init__(self):
-        super(HasStrictTraits, self).__init__()
+        super().__init__()
         self.gui = GUI()
 
     def start(self):

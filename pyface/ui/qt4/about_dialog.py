@@ -86,7 +86,7 @@ class AboutDialog(MAboutDialog, Dialog):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(AboutDialog, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

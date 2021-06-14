@@ -47,7 +47,7 @@ class PythonEditor(MPythonEditor, Widget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
-        super(PythonEditor, self).__init__(parent=parent, **traits)
+        super().__init__(parent=parent, **traits)
         self._create()
 
     # ------------------------------------------------------------------------
@@ -96,7 +96,7 @@ class PythonEditor(MPythonEditor, Widget):
     # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
-        super(PythonEditor, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.control.code.installEventFilter(self._event_filter)
 
         # Connect signals for text changes.
@@ -116,7 +116,7 @@ class PythonEditor(MPythonEditor, Widget):
             if self._event_filter is not None:
                 self.control.code.removeEventFilter(self._event_filter)
 
-        super(PythonEditor, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     def __event_filter_default(self):
         return PythonEditorEventFilter(self, self.control)
@@ -168,7 +168,7 @@ class PythonEditorEventFilter(QtCore.QObject):
     """
 
     def __init__(self, editor, parent):
-        super(PythonEditorEventFilter, self).__init__(parent)
+        super().__init__(parent)
         self.__editor = editor
 
     def eventFilter(self, obj, event):
@@ -211,4 +211,4 @@ class PythonEditorEventFilter(QtCore.QObject):
                 event=event,
             )
 
-        return super(PythonEditorEventFilter, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)

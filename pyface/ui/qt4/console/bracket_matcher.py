@@ -32,7 +32,7 @@ class BracketMatcher(QtCore.QObject):
             text edit widget.
         """
         assert isinstance(text_edit, (QtGui.QTextEdit, QtGui.QPlainTextEdit))
-        super(BracketMatcher, self).__init__()
+        super().__init__()
 
         # The format to apply to matching brackets.
         self.format = QtGui.QTextCharFormat()

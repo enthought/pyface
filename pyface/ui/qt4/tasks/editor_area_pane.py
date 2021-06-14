@@ -110,7 +110,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(EditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
@@ -223,7 +223,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
     """
 
     def __init__(self, editor_area, parent=None):
-        super(EditorAreaWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
 
         # Configure the QTabWidget.
@@ -248,7 +248,7 @@ class EditorAreaDropFilter(QtCore.QObject):
     """
 
     def __init__(self, editor_area):
-        super(EditorAreaDropFilter, self).__init__()
+        super().__init__()
         self.editor_area = editor_area
 
     def eventFilter(self, object, event):
@@ -275,4 +275,4 @@ class EditorAreaDropFilter(QtCore.QObject):
 
             return True
 
-        return super(EditorAreaDropFilter, self).eventFilter(object, event)
+        return super().eventFilter(object, event)

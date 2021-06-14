@@ -166,7 +166,7 @@ class TaskWindowLayout(MainWindowLayout):
         """ Applies a DockLayout to the window.
         """
         self.consumed = []
-        super(TaskWindowLayout, self).set_layout(layout)
+        super().set_layout(layout)
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
