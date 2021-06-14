@@ -19,8 +19,8 @@ except ImportError:
 
 
 __requires__ = [
-    "importlib-metadata",
-    "importlib-resources>=1.1.0",
+    'importlib-metadata; python_version<"3.8"',
+    'importlib-resources>=1.1.0; python_version<"3.9"',
     "traits>=6.2"
 ]
 __extras_require__ = {
