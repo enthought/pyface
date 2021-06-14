@@ -50,12 +50,12 @@ class Field(MField, Widget):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        super(Field, self)._create()
+        super()._create()
         self._add_event_listeners()
 
     def destroy(self):
         self._remove_event_listeners()
-        super(Field, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface

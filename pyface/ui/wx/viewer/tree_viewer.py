@@ -89,7 +89,7 @@ class TreeViewer(ContentViewer):
         """
 
         # Base class constructor.
-        super(TreeViewer, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control.
         self.control = tree = wx.TreeCtrl(parent, -1, style=self._get_style())

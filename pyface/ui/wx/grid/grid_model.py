@@ -90,17 +90,6 @@ class GridModel(HasPrivateTraits):
     dclick = Event  # = (row, column) that was double-clicked on
 
     # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-    def __init__(self, **traits):
-        """ Creates a new grid model. """
-
-        # Base class constructors.
-        super(GridModel, self).__init__(**traits)
-
-        return
-
-    # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MUST override the following
     # ------------------------------------------------------------------------
 

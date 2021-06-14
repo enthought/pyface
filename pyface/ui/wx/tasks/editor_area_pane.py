@@ -68,7 +68,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         for editor in self.editors:
             self.remove_editor(editor)
 
-        super(EditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.

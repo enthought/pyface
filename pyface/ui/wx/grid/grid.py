@@ -167,7 +167,7 @@ class Grid(Widget):
         """
 
         # Base class constructors.
-        super(Grid, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Flag set when columns are resizing:
         self._user_col_size = False

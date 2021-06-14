@@ -31,8 +31,6 @@ class CheckboxImageRenderer(MappedGridCellImageRenderer):
             text_map = {True: "True", False: "False"}
 
         # Base-class constructor
-        super(CheckboxImageRenderer, self).__init__(
-            checked_image_map, text_map
-        )
+        super().__init__(checked_image_map, text_map)
 
         return

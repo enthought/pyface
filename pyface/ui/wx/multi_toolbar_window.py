@@ -41,7 +41,7 @@ class MultiToolbarWindow(ApplicationWindow):
     # Protected 'Window' interface.
     # ------------------------------------------------------------------------
     def _create_contents(self, parent):
-        panel = super(MultiToolbarWindow, self)._create_contents(parent)
+        panel = super()._create_contents(parent)
         self._create_trim_widgets(parent)
 
         return panel

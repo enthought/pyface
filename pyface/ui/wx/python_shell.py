@@ -56,7 +56,7 @@ class PythonShell(MPythonShell, Widget):
         """ Creates a new pager. """
 
         # Base class constructor.
-        super(PythonShell, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)
@@ -263,7 +263,7 @@ class PyShell(PyShellBase):
         # wx.py.shell dosent reassign it back to the original on destruction
         self.raw_input = input
 
-        super(PyShell, self).__init__(
+        super().__init__(
             parent,
             id,
             pos,
@@ -309,7 +309,7 @@ class PyShell(PyShellBase):
         self.redirectStdin(False)
         builtins.raw_input = self.raw_input
         self.destroy()
-        super(PyShellBase, self).Destroy()
+        super().Destroy()
 
 
 class _NullIO(object):

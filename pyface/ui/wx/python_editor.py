@@ -53,7 +53,7 @@ class PythonEditor(MPythonEditor, Widget):
         """ Creates a new pager. """
 
         # Base class constructor.
-        super(PythonEditor, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

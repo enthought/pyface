@@ -86,7 +86,7 @@ class ImageButton(Widget):
         """
         self._image = None
 
-        super(ImageButton, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._recalc_size()
 

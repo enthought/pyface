@@ -56,7 +56,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         self.path = str(self.control.GetPath())
 
         # Let the window close as normal.
-        super(DirectoryDialog, self).close()
+        super().close()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.

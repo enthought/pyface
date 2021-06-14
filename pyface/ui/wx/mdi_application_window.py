@@ -103,7 +103,7 @@ class MDIApplicationWindow(ApplicationWindow):
             # Let the AUI manager look after the frame.
             self._aui_manager.SetManagedWindow(self.control)
 
-        contents = super(MDIApplicationWindow, self)._create_contents(parent)
+        contents = super()._create_contents(parent)
 
         return contents
 
