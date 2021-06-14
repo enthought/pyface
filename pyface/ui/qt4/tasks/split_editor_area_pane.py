@@ -142,7 +142,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # together with the main control
         self.active_tabwidget = None
 
-        super(SplitEditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
@@ -460,7 +460,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         tabwidget : tabwidget object contained by this splitter
 
         """
-        super(EditorAreaWidget, self).__init__(parent=parent)
+        super().__init__(parent=parent)
         self.editor_area = editor_area
 
         if not tabwidget:
@@ -745,7 +745,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor_area : global SplitEditorAreaPane instance
         parent : parent of the tabwidget
         """
-        super(DraggableTabWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
 
         # configure QTabWidget
@@ -948,7 +948,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 event.acceptProposedAction()
                 return
 
-        super(DraggableTabWidget, self).dragEnterEvent(event)
+        super().dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
@@ -964,7 +964,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """ Clear widget highlight on leaving
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
-        return super(DraggableTabWidget, self).dragLeaveEvent(event)
+        return super().dragLeaveEvent(event)
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -972,7 +972,7 @@ class DraggableTabBar(QtGui.QTabBar):
     """
 
     def __init__(self, editor_area, parent):
-        super(DraggableTabBar, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
         self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.drag_obj = None
@@ -987,7 +987,7 @@ class DraggableTabBar(QtGui.QTabBar):
                 self.drag_obj = TabDragObject(
                     start_pos=event.pos(), tabBar=self
                 )
-        return super(DraggableTabBar, self).mousePressEvent(event)
+        return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
         """ Re-implemented to create a drag event when the mouse is moved for a
@@ -1013,14 +1013,14 @@ class DraggableTabBar(QtGui.QTabBar):
                 drag.exec_()
                 self.drag_obj = None  # deactivate the drag_obj again
                 return
-        return super(DraggableTabBar, self).mouseMoveEvent(event)
+        return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event):
         """ Re-implemented to deactivate the drag when mouse button is
         released
         """
         self.drag_obj = None
-        return super(DraggableTabBar, self).mouseReleaseEvent(event)
+        return super().mouseReleaseEvent(event)
 
 
 class TabDragObject(object):

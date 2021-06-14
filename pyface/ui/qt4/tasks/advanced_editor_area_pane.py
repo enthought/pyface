@@ -110,7 +110,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(AdvancedEditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
@@ -267,7 +267,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # ------------------------------------------------------------------------
 
     def __init__(self, editor_area, parent=None):
-        super(EditorAreaWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
         self.reset_drag()
 
@@ -451,7 +451,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def childEvent(self, event):
         """ Reimplemented to gain access to the tab bars as they are created.
         """
-        super(EditorAreaWidget, self).childEvent(event)
+        super().childEvent(event)
         if event.polished():
             child = event.child()
             if isinstance(child, QtGui.QTabBar):
@@ -608,7 +608,7 @@ class EditorWidget(QtGui.QDockWidget):
     """
 
     def __init__(self, editor, parent=None):
-        super(EditorWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor = editor
         self.editor.create(self)
         self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
@@ -672,7 +672,7 @@ class EditorTitleBarWidget(QtGui.QTabBar):
     """
 
     def __init__(self, editor_widget):
-        super(EditorTitleBarWidget, self).__init__(editor_widget)
+        super().__init__(editor_widget)
         self.addTab(editor_widget.windowTitle())
         self.setTabToolTip(0, editor_widget.editor.tooltip)
         self.setDocumentMode(True)

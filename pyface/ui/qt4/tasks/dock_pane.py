@@ -98,7 +98,7 @@ class DockPane(TaskPane, MDockPane):
             control.topLevelChanged.disconnect(self._receive_floating)
             control.visibilityChanged.disconnect(self._receive_visible)
 
-        super(DockPane, self).destroy()
+        super().destroy()
 
     def set_focus(self):
         """ Gives focus to the control that represents the pane.

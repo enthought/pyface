@@ -75,7 +75,7 @@ class MenuManager(ActionManager, ActionManagerItem):
             menu = self._menus.pop()
             menu.dispose()
 
-        super(MenuManager, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
@@ -171,7 +171,7 @@ class _Menu(QtGui.QMenu):
 
         self.menu_items = []
 
-        super(_Menu, self).clear()
+        super().clear()
 
     def is_empty(self):
         """ Is the menu empty? """

@@ -134,7 +134,7 @@ class ConsoleWidget(QtGui.QWidget):
         parent : QWidget, optional [default None]
             The parent for this widget.
         """
-        super(ConsoleWidget, self).__init__(parent)
+        super().__init__(parent)
 
         # A list of connected Qt signals to be removed before destruction.
         # First item in the tuple is the Qt signal. The second item is the
@@ -310,7 +310,7 @@ class ConsoleWidget(QtGui.QWidget):
             QtGui.QApplication.sendEvent(obj, QtGui.QDragLeaveEvent())
             return True
 
-        return super(ConsoleWidget, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)
 
     def _remove_event_listeners(self):
         while self._connections_to_remove:

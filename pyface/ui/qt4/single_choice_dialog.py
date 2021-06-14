@@ -86,7 +86,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
                 self.choice = None
 
         # Let the window close as normal.
-        super(SingleChoiceDialog, self).close()
+        super().close()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.

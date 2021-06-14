@@ -157,7 +157,7 @@ class Dialog(MDialog, Window):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(Dialog, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.

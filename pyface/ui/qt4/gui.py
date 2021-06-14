@@ -142,7 +142,7 @@ class _FutureCall(QtCore.QObject):
     _pyface_event = QtCore.QEvent.Type(QtCore.QEvent.registerEventType())
 
     def __init__(self, ms, callable, *args, **kw):
-        super(_FutureCall, self).__init__()
+        super().__init__()
 
         # Save the arguments.
         self._ms = ms
@@ -184,7 +184,7 @@ class _FutureCall(QtCore.QObject):
                 QtCore.QTimer.singleShot(self._ms, self._dispatch)
             return True
 
-        return super(_FutureCall, self).event(event)
+        return super().event(event)
 
     def _dispatch(self):
         """ Invoke the callable.

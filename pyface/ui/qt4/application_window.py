@@ -129,7 +129,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        super(ApplicationWindow, self)._create()
+        super()._create()
 
         contents = self._create_contents(self.control)
         self.control.setCentralWidget(contents)
@@ -137,7 +137,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._create_trim_widgets(self.control)
 
     def _create_control(self, parent):
-        control = super(ApplicationWindow, self)._create_control(parent)
+        control = super()._create_control(parent)
         control.setObjectName("ApplicationWindow")
 
         control.setAnimated(False)

@@ -23,7 +23,7 @@ class PyfaceTimer(BaseTimer):
 
     def __init__(self, **traits):
         traits.setdefault("_timer", QTimer())
-        super(PyfaceTimer, self).__init__(**traits)
+        super().__init__(**traits)
         self._timer.timeout.connect(self.perform)
 
     def _start(self):

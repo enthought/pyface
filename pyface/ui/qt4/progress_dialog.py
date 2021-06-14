@@ -96,7 +96,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def open(self):
         """ Opens the window. """
-        super(ProgressDialog, self).open()
+        super().open()
         self._start_time = time.time()
 
     def close(self):
@@ -104,7 +104,7 @@ class ProgressDialog(MProgressDialog, Window):
         self.progress_bar.destroy()
         self.progress_bar = None
 
-        super(ProgressDialog, self).close()
+        super().close()
 
     # -------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -115,7 +115,7 @@ class ProgressDialog(MProgressDialog, Window):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(ProgressDialog, self).destroy()
+        super().destroy()
 
     # -------------------------------------------------------------------------
     # IProgressDialog Interface
@@ -273,7 +273,7 @@ class ProgressDialog(MProgressDialog, Window):
         return QtGui.QDialog(parent)
 
     def _create(self):
-        super(ProgressDialog, self)._create()
+        super()._create()
         self._create_contents(self.control)
 
     def _create_contents(self, parent):

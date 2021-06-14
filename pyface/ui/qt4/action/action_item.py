@@ -26,7 +26,7 @@ from pyface.action.action_event import ActionEvent
 
 class PyfaceWidgetAction(QtGui.QWidgetAction):
     def __init__(self, parent, action):
-        super(PyfaceWidgetAction, self).__init__(parent)
+        super().__init__(parent)
         self.action = action
 
     def createWidget(self, parent):

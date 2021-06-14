@@ -39,7 +39,7 @@ class StatusGutterWidget(GutterWidget):
     """
 
     def __init__(self, *args, **kw):
-        super(StatusGutterWidget, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         self.error_lines = []
         self.warn_lines = []

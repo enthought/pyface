@@ -104,7 +104,7 @@ class FileDialog(MFileDialog, Dialog):
         )
 
         # Let the window close as normal.
-        super(FileDialog, self).close()
+        super().close()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
