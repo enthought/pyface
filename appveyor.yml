@@ -9,7 +9,7 @@ environment:
 
   matrix:
     - RUNTIME: '3.6'
-      TOOLKITS: "pyqt wx"
+      TOOLKITS: "wx"
     - RUNTIME: '3.6'
       TOOLKITS: "pyside2 pyqt5"
 
