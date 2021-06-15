@@ -181,7 +181,7 @@ class Shell(wx.StyledTextCtrl):
         **kwds
     ):
         """Create a PyCrust Shell instance."""
-        wxStyledTextCtrl.__init__(self, parent, id, pos, size, style)
+        wx.StyledTextCtrl.__init__(self, parent, id, pos, size, style)
         # Grab these so they can be restored by self.redirect* methods.
         self.stdin = sys.stdin
         self.stdout = sys.stdout
