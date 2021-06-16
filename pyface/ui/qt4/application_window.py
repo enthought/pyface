@@ -167,11 +167,14 @@ class ApplicationWindow(MApplicationWindow, Window):
     # assignment. For this reason, it is unnecessary to delete the old controls
     # in the following two handlers.
 
-    def _menu_bar_manager_changed(self):
+    @observe("menu_bar_manager")
+    def _menu_bar_manager_updated(self, event):
         if self.control is not None:
             self._create_menu_bar(self.control)
 
-    def _status_bar_manager_changed(self, old, new):
+    @observe("status_bar_manager")
+    def _status_bar_manager_updated(self, event):
+        old, new = event.old, event.new
         if self.control is not None:
             if old is not None:
                 old.destroy_status_bar()
@@ -189,5 +192,6 @@ class ApplicationWindow(MApplicationWindow, Window):
             # Add the new toolbars.
             self._create_tool_bar(self.control)
 
-    def _icon_changed(self):
+    @observe("icon")
+    def _icon_updated(self, event):
         self._set_window_icon()
