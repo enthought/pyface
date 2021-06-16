@@ -2008,7 +2008,8 @@ class DockControl(DockItem):
     #  Handles the 'feature_changed' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _feature_changed(self):
+    @observe("feature_changed")
+    def _feature_changed_updated(self, event):
         """ Handles the 'feature_changed' trait being changed
         """
         self.set_feature_mode()
