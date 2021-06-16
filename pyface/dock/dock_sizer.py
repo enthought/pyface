@@ -2018,9 +2018,11 @@ class DockControl(DockItem):
     #  Handles the 'control' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _control_changed(self, old, new):
+    @observe("control")
+    def _control_updated(self, event):
         """ Handles the 'control' trait being changed.
         """
+        old, new = event.old, event.new
         self._tab_width = None
 
         if old is not None:
@@ -2034,7 +2036,8 @@ class DockControl(DockItem):
     #  Handles the 'name' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _name_changed(self):
+    @observe("name")
+    def _name_updated(self, event):
         """ Handles the 'name' trait being changed.
         """
         self._tab_width = self._tab_name = None
@@ -2043,7 +2046,8 @@ class DockControl(DockItem):
     #  Handles the 'style' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _style_changed(self):
+    @observe("style")
+    def _style_updated(self, event):
         """ Handles the 'style' trait being changed.
         """
         if self.parent is not None:
@@ -2053,7 +2057,8 @@ class DockControl(DockItem):
     #  Handles the 'image' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _image_changed(self):
+    @observe("image")
+    def _image_updated(self, event):
         """ Handles the 'image' trait being changed.
         """
         self._image = None
@@ -2062,7 +2067,8 @@ class DockControl(DockItem):
     #  Handles the 'visible' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _visible_changed(self):
+    @observe("visible")
+    def _visible_updated(self, event):
         """ Handles the 'visible' trait being changed.
         """
         if self.parent is not None:
@@ -2072,9 +2078,11 @@ class DockControl(DockItem):
     #  Handles the 'dockable' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _dockable_changed(self, dockable):
+    @observe("dockable")
+    def _dockable_updated(self, event):
         """ Handles the 'dockable' trait being changed.
         """
+        dockable = event.new
         if dockable is not None:
             dockable.dockable_bind(self)
 
@@ -2243,7 +2251,8 @@ class DockGroup(DockItem):
     #  Handles 'initialized' being changed:
     # ---------------------------------------------------------------------------
 
-    def _initialized_changed(self):
+    @observe("initialized")
+    def _initialized_updated(self, event):
         """ Handles 'initialized' being changed.
         """
         for item in self.contents:
@@ -3003,7 +3012,9 @@ class DockRegion(DockGroup):
     #  Handles the 'active' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _active_changed(self, old, new):
+    @observe("active")
+    def _active_updated(self, event):
+        old, new = event.old, event.new
         self._set_visibility()
 
         # Set the correct tab state for each tab:
@@ -3031,7 +3042,8 @@ class DockRegion(DockGroup):
     #  Handles the 'contents' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _contents_changed(self):
+    @observe("contents")
+    def _contents_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         self._is_notebook = None
@@ -3040,7 +3052,8 @@ class DockRegion(DockGroup):
         self.calc_min(True)
         self.modified = True
 
-    def _contents_items_changed(self, event):
+    @observe("contents:items")
+    def _contents_items_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         self._is_notebook = None
@@ -3760,7 +3773,8 @@ class DockSection(DockGroup):
     #  Handles the 'contents' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _contents_changed(self):
+    @observe("contents")
+    def _contents_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         for item in self.contents:
@@ -3768,7 +3782,8 @@ class DockSection(DockGroup):
         self.calc_min(True)
         self.modified = True
 
-    def _contents_items_changed(self, event):
+    @observe("contents:items")
+    def _contents_items_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         for item in event.added:
@@ -3780,13 +3795,15 @@ class DockSection(DockGroup):
     #  Handles the 'splitters' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _splitters_changed(self):
+    @observe("splitters")
+    def _splitters_updated(self, event):
         """ Handles the 'splitters' trait being changed.
         """
         for item in self.splitters:
             item.parent = self
 
-    def _splitters_items_changed(self, event):
+    @observe("splitters:items")
+    def _splitters_items_updated(self, event):
         """ Handles the 'splitters' trait being changed.
         """
         for item in event.added:
