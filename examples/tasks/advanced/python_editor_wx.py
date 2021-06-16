@@ -17,7 +17,9 @@ import wx
 import wx.stc
 
 
-from traits.api import Bool, Event, Instance, File, Str, Property, provides
+from traits.api import (
+    Bool, Event, File, Instance, observe, Property, provides, Str
+)
 from pyface.tasks.api import Editor
 from pyface.wx.python_stc import PythonSTC, faces
 
@@ -114,11 +116,13 @@ class PythonEditor(Editor):
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe('path')
+    def _path_updated(self, event):
         if self.control is not None:
             self.load()
 
-    def _show_line_numbers_changed(self):
+    @observe('show_line_numbers')
+    def _show_line_numbers_updated(self, event=None):
         if self.control is not None:
             c = self.control
             if self.show_line_numbers:
@@ -137,7 +141,7 @@ class PythonEditor(Editor):
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._show_line_numbers_updated()
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """
