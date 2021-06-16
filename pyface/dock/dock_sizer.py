@@ -36,6 +36,7 @@ from traits.api import (
     Undefined,
     Bool,
     cached_property,
+    observe,
 )
 from traitsui.dock_window_theme import dock_window_theme
 from traitsui.wx.helper import BufferDC
