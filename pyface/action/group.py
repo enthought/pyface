@@ -13,8 +13,7 @@
 from functools import partial
 
 
-from traits.api import Any, Bool, HasTraits, List, Property
-from traits.api import Str
+from traits.api import Any, Bool, HasTraits, List, observe, Property, Str
 from traits.trait_base import user_name_for
 
 
@@ -87,9 +86,10 @@ class Group(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _enabled_updated(self, event):
         for item in self.items:
-            item.enabled = new
+            item.enabled = event.new
 
     # Methods -------------------------------------------------------------#
 
