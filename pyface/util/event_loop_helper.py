@@ -14,4 +14,4 @@
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object("util.event_loop_helper:EventLoopHelper")
+EventLoopHelper = toolkit_object("util.event_loop_helper:EventLoopHelper")
