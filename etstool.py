@@ -51,7 +51,7 @@ using::
     python etstool.py test-all
 
 Currently supported runtime values include ``3.6``, and currently
-supported toolkits are ``null``, ``pyqt``, and ``wx``.  Not all
+supported toolkits are ``null``, ``pyqt5``, ``pyside2`` and ``wx``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case.
 
@@ -83,7 +83,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
+    "3.6": {"pyqt5", "pyside2", "wx"},
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -108,7 +108,6 @@ source_dependencies = {
 extra_dependencies = {
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -129,7 +128,6 @@ doc_ignore = {
 
 environment_vars = {
     "pyside2": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside2"},
-    "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt"},
     "pyqt5": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
     "wx": {"ETS_TOOLKIT": "wx"},
     "null": {"ETS_TOOLKIT": "null"},
@@ -155,7 +153,7 @@ def cli():
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option(
     "--editable/--not-editable",
@@ -246,7 +244,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def shell(edm, runtime, toolkit, environment):
     """ Create a shell into the EDM development environment
@@ -263,7 +261,7 @@ def shell(edm, runtime, toolkit, environment):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option(
     "--no-environment-vars",
@@ -277,7 +275,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     parameters = get_parameters(edm, runtime, toolkit, environment)
     if toolkit == "wx":
         parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside2"}:
+    elif toolkit in {"pyqt5", "pyside2"}:
         parameters["exclude"] = "wx"
     else:
         parameters["exclude"] = "(wx|qt)"
@@ -290,7 +288,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
     if toolkit == "wx":
         environ["EXCLUDE_TESTS"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside2"}:
+    elif toolkit in {"pyqt5", "pyside2"}:
         environ["EXCLUDE_TESTS"] = "wx"
     else:
         environ["EXCLUDE_TESTS"] = "(wx|qt)"
@@ -316,7 +314,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def cleanup(edm, runtime, toolkit, environment):
     """ Remove a development environment.
@@ -335,7 +333,7 @@ def cleanup(edm, runtime, toolkit, environment):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option(
     "--no-environment-vars",
     is_flag=True,
@@ -363,7 +361,7 @@ def test_clean(edm, runtime, toolkit, no_environment_vars=False):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def update(edm, runtime, toolkit, environment):
     """ Update/Reinstall package into environment.
@@ -379,7 +377,7 @@ def update(edm, runtime, toolkit, environment):
 @cli.command()
 @edm_option
 @click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def docs(edm, runtime, toolkit, environment):
     """ Autogenerate documentation
