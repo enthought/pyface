@@ -46,7 +46,7 @@ class ImageResource(MImageResource, HasTraits):
     search_path = List()
 
     # ------------------------------------------------------------------------
-    # 'ImageResource' interface.
+    # 'IImage' interface.
     # ------------------------------------------------------------------------
 
     def create_bitmap(self, size=None):
