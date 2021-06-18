@@ -19,7 +19,11 @@ class IImage(Interface):
     """
 
     def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource.
+        """ Creates a toolkit-specific image for this image.
+
+        An image is a toolkit datastructure that is optimized for I/O,
+        pixel-level access and modification, such as a wx.Image or a
+        QImage.
 
         Parameters
         ----------
@@ -32,12 +36,15 @@ class IImage(Interface):
         Returns
         -------
         image : toolkit image
-            The toolkit image corresponding to the resource and the specified
+            The toolkit image corresponding to the image and the specified
             size.
         """
 
     def create_bitmap(self, size=None):
-        """ Creates a toolkit specific bitmap image for this resource.
+        """ Creates a toolkit-specific bitmap image for this image.
+
+        A bitmap is a toolkit datastructure that is optimized for rendering
+        to the screen, such as a wx.Bitmap or a QPixmap.
 
         Parameters
         ----------
@@ -50,12 +57,17 @@ class IImage(Interface):
         Returns
         -------
         image : toolkit bitmap
-            The toolkit bitmap corresponding to the resource and the specified
+            The toolkit bitmap corresponding to the image and the specified
             size.
         """
 
     def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this resource.
+        """ Creates a toolkit-specific icon for this image.
+
+        An icon is a toolkit datastructure that holds several different
+        variants of an image (eg. selected, disabled, etc.), such as a wx.Icon
+        or a QIcon.  Most toolkits can automatically create these from other
+        image classes.
 
         Parameters
         ----------
@@ -68,6 +80,6 @@ class IImage(Interface):
         Returns
         -------
         image : toolkit icon
-            The toolkit image corresponding to the resource and the specified
+            The toolkit image corresponding to the image and the specified
             size as an icon.
         """

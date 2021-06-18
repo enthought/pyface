@@ -87,7 +87,7 @@ class MImageResource(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource.
+        """ Creates a toolkit-specific image for this resource.
 
         Parameters
         ----------
