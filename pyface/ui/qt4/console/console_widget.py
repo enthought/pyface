@@ -347,7 +347,7 @@ class ConsoleWidget(QtGui.QWidget):
         if self.paging == "vsplit":
             height = height * 2 + splitwidth
 
-        return QtCore.QSize(width, height)
+        return QtCore.QSize(int(width), int(height))
 
     # ---------------------------------------------------------------------------
     # 'ConsoleWidget' public interface
@@ -1966,7 +1966,7 @@ class ConsoleWidget(QtGui.QWidget):
             step = viewport_height
         diff = maximum - scrollbar.maximum()
         scrollbar.setRange(0, maximum)
-        scrollbar.setPageStep(step)
+        scrollbar.setPageStep(int(step))
         # Compensate for undesirable scrolling that occurs automatically due to
         # maximumBlockCount() text truncation.
         if diff < 0 and document.blockCount() == document.maximumBlockCount():
