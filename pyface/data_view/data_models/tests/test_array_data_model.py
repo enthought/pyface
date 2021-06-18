@@ -55,7 +55,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         model = ArrayDataModel(value_type=FloatValue())
         self.assertEqual(model.data.ndim, 2)
         self.assertEqual(model.data.shape, (0, 0))
-        self.assertEqual(model.data.dtype, np.float)
+        self.assertEqual(model.data.dtype, float)
         self.assertEqual(model.get_column_count(), 0)
         self.assertTrue(model.can_have_children(()))
         self.assertEqual(model.get_row_count(()), 0)
