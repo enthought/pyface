@@ -11,12 +11,14 @@
 
 from collections.abc import Sequence
 
+from traits.api import HasTraits, List, Str
+
+from pyface.i_image import IImage
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
-from traits.api import HasTraits, Interface, List, Str
 
 
-class IImageResource(Interface):
+class IImageResource(IImage):
     """ The interface for an image resource.
 
     An image resource describes the location of an image and provides a way
