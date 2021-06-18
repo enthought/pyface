@@ -11,15 +11,16 @@
 import unittest
 from unittest.mock import MagicMock
 
-from pyface.dock.dock_sizer import DockControl
 from pyface.toolkit import toolkit
 
 not_wx = toolkit.toolkit != "wx"
+
 
 class TestDockControl(unittest.TestCase):
 
     @unittest.skipIf(not_wx, "This test is specific to the wx backend")
     def test_feature_changed(self):
+        from pyface.dock.dock_sizer import DockControl
         dock_control = DockControl()
         DockControl.set_feature_mode = MagicMock()
         dock_control.feature_changed = True
