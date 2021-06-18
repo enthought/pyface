@@ -37,68 +37,6 @@ class IImageResource(IImage):
     #: for the image (see the resource manager for more details).
     search_path = List()
 
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-
-    def __init__(self, name, search_path=None):
-        """ Creates a new image resource. """
-
-    # ------------------------------------------------------------------------
-    # 'ImageResource' interface.
-    # ------------------------------------------------------------------------
-
-    def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size.
-        """
-
-    # FIXME v3: The need to distinguish between bitmaps and images is toolkit
-    # specific so, strictly speaking, the conversion to a bitmap should be done
-    # wherever the toolkit actually needs it.
-    def create_bitmap(self, size=None):
-        """ Creates a toolkit specific bitmap for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size as a bitmap.
-        """
-
-    def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size as an icon.
-        """
-
     @classmethod
     def image_size(cls, image):
         """ Get the size of a toolkit image
