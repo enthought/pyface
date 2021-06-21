@@ -416,7 +416,9 @@ class TaskWindow(ApplicationWindow):
 
     # Trait change handlers ------------------------------------------------
 
-    def __active_state_changed(self, state):
+    @observe("_active_state")
+    def __active_state_updated(self, event):
+        state = event.new
         if state is None:
             self.active_task = self.central_pane = None
             self.dock_panes = []
