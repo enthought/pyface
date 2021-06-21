@@ -12,6 +12,19 @@
 import os
 import unittest
 
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
+
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+
 from traits.api import DefaultValue, HasTraits, TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.api import UnittestTools
@@ -30,7 +43,7 @@ from ..ui_traits import (
 )
 
 
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class ImageClass(HasTraits):
@@ -111,6 +124,16 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
 
         self.assertIsInstance(image_class.image, ArrayImage)
         self.assertTrue((image_class.image.data == data).all())
+
+    @unittest.skipIf(Image is None, "PIL/Pillow is not available")
+    def test_init_pil_image(self):
+        from pyface.pil_image import PILImage
+
+        pil_image = PILImage(IMAGE_PATH)
+        image = PILImage(pil_image)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, PILImage)
 
 
 class TestMargin(unittest.TestCase):

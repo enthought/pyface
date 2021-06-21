@@ -46,6 +46,7 @@ class PILImage(MPILImage):
         if image.mode == "RGBA":
             wx_image.InitAlpha()
             wx_image.SetAlpha(image.getchannel("A").tobytes())
-        if size is None:
+        if size is not None:
             return resize_image(wx_image, size)
-        return wx_image
+        else:
+            return wx_image
