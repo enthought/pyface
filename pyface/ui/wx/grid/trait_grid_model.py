@@ -22,6 +22,7 @@ from traits.api import (
     Bool,
     Callable,
     Dict,
+    Either,
     HasTraits,
     Instance,
     Int,
@@ -50,7 +51,7 @@ class TraitGridColumn(GridColumn):
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(Type, Union(Str, Callable))
+    formats = Dict(Type, Either(Str, Callable))
 
     # A name to designate the type of this column
     typename = Union(None, Str)

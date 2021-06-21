@@ -12,7 +12,9 @@ from io import StringIO
 import sys
 
 
-from traits.api import Enum, HasStrictTraits, Int, Instance, List, Str, Union
+from traits.api import (
+    Either, Enum, HasStrictTraits, Int, Instance, List, Str, Union,
+)
 
 
 class LayoutItem(HasStrictTraits):
@@ -149,7 +151,7 @@ class Splitter(LayoutContainer):
     #: The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     #: other Splitters.
     items = List(
-        Union(
+        Either(
             Instance(PaneItem),
             Instance(Tabbed),
             Instance("pyface.tasks.task_layout.Splitter"),
@@ -177,10 +179,10 @@ class DockLayout(LayoutItem):
     """
 
     #: The layouts for the task's dock panes.
-    left = Union(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
-    right = Union(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
-    top = Union(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
-    bottom = Union(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
+    left = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
+    right = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
+    top = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
+    bottom = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
 
     #: Assignments of dock areas to the window's corners. By default, the top
     #: and bottom dock areas extend into both of the top and both of the
