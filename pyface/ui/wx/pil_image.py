@@ -13,6 +13,7 @@ import wx
 from traits.api import provides
 
 from pyface.i_pil_image import IPILImage, MPILImage
+from pyface.ui.qt4.util.image_helpers import resize_image
 
 
 @provides(IPILImage)
@@ -31,7 +32,7 @@ class PILImage(MPILImage):
         ----------
         size : (int, int) or None
             The desired size as a width, height tuple, or None if wanting
-            default image size.  This is currently ignored.
+            default image size.
 
         Returns
         -------
@@ -39,47 +40,12 @@ class PILImage(MPILImage):
             The toolkit image corresponding to the image and the specified
             size.
         """
-        # XXX ignore size requests - rescaling might require better caching
         image = self.image
         wx_image = wx.EmptyImage(self.image.size[0], self.image.size[1])
         wx_image.SetData(image.convert("RGB").tobytes())
         if image.mode == "RGBA":
             wx_image.InitAlpha()
             wx_image.SetAlpha(image.getchannel("A").tobytes())
+        if size is None:
+            return resize_image(wx_image, size)
         return wx_image
-
-    def create_bitmap(self, size=None):
-        """ Creates a Wx bitmap image for this image.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.  This is currently ignored.
-
-        Returns
-        -------
-        image : wx.Bitmap
-            The toolkit bitmap corresponding to the image and the specified
-            size.
-        """
-        return self.create_image(size).ConvertToBitmap()
-
-    def create_icon(self, size=None):
-        """ Creates a Wx icon for this image.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default icon size.  This is currently ignored.
-
-        Returns
-        -------
-        image : wx.Icon
-            The toolkit image corresponding to the image and the specified
-            size as an icon.
-        """
-        icon = wx.Icon()
-        icon.CopyFromBitmap(self.create_bitmap(size))
-        return icon

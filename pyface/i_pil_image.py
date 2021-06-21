@@ -35,3 +35,39 @@ class MPILImage(HasStrictTraits):
 
     def __init__(self, image, **traits):
         super().__init__(image=image, **traits)
+
+    def create_bitmap(self, size=None):
+        """ Creates a bitmap image for this image.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.  This is currently ignored.
+
+        Returns
+        -------
+        image : bitmap
+            The toolkit bitmap corresponding to the image and the specified
+            size.
+        """
+        from pyface.util.image_helpers import image_to_bitmap
+        return image_to_bitmap(self.create_image(size))
+
+    def create_icon(self, size=None):
+        """ Creates an icon for this image.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default icon size.  This is currently ignored.
+
+        Returns
+        -------
+        image : icon
+            The toolkit image corresponding to the image and the specified
+            size as an icon.
+        """
+        from pyface.util.image_helpers import bitmap_to_icon
+        return bitmap_to_icon(self.create_bitmap(size))

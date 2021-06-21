@@ -13,6 +13,7 @@ from pyface.qt.QtGui import QIcon, QPixmap
 from traits.api import provides
 
 from pyface.i_pil_image import IPILImage, MPILImage
+from pyface.ui.qt4.util.image_helpers import resize_image
 
 
 @provides(IPILImage)
@@ -31,7 +32,7 @@ class PILImage(MPILImage):
         ----------
         size : (int, int) or None
             The desired size as a width, height tuple, or None if wanting
-            default image size.  This is currently ignored.
+            default image size.
 
         Returns
         -------
@@ -41,38 +42,8 @@ class PILImage(MPILImage):
         """
         # XXX ignore size requests - rescaling might require better caching
         from PIL.ImageQt import ImageQt
-        return ImageQt(self.image)
-
-    def create_bitmap(self, size=None):
-        """ Creates a Qt bitmap image for this image.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.  This is currently ignored.
-
-        Returns
-        -------
-        image : QPixmap
-            The toolkit bitmap corresponding to the image and the specified
-            size.
-        """
-        return QPixmap.fromImage(self.create_image(size))
-
-    def create_icon(self, size=None):
-        """ Creates a Qt icon for this image.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default icon size.  This is currently ignored.
-
-        Returns
-        -------
-        image : QIcon
-            The toolkit image corresponding to the image and the specified
-            size as an icon.
-        """
-        return QIcon(self.create_bitmap(size))
+        image = ImageQt(self.image)
+        if size is not None:
+            return resize_image(image)
+        else:
+            return image

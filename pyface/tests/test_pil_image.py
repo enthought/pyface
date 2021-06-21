@@ -46,4 +46,3 @@ class TestPILImage(unittest.TestCase):
         image = PILImage(self.pil_image)
         icon = image.create_icon()
         self.assertIsNotNone(icon)
-
