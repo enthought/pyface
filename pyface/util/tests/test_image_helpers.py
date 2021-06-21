@@ -15,6 +15,7 @@ class TestImageHelpers(unittest.TestCase):
     def test_imports(self):
         # actual functions are tested in toolkits
         from ..image_helpers import (
-            bitmap_to_icon, bitmap_to_image, image_to_array, image_to_bitmap,
-            array_to_image, AspectRatio, ScaleMode, resize_image, resize_bitmap,
+            AspectRatio, ScaleMode, array_to_image, bitmap_to_icon,
+            bitmap_to_image, image_to_array, image_to_bitmap,
+            resize_bitmap, resize_image,
         )
