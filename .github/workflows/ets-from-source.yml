@@ -1,0 +1,64 @@
+name: Test with EDM using ETS packages from source
+
+on:
+  schedule:
+    - cron:  '0 0 * * 5'
+
+env:
+  INSTALL_EDM_VERSION: 3.2.3
+
+jobs:
+
+  # Test against EDM packages
+  test-with-edm:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        toolkit: ['wx', 'pyqt5', 'pyside2']
+    runs-on: ${{ matrix.os }}
+    env:
+      # Set root directory, mainly for Windows, so that the EDM Python
+      # environment lives in the same drive as the cloned source. Otherwise
+      # 'pip install' raises an error while trying to compute
+      # relative path between the site-packages and the source directory.
+      EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Qt dependencies for Linux
+        run: |
+          sudo apt-get update
+          sudo apt-get install qt5-default
+          sudo apt-get install libxkbcommon-x11-0
+          sudo apt-get install libxcb-icccm4
+          sudo apt-get install libxcb-image0
+          sudo apt-get install libxcb-keysyms1
+          sudo apt-get install libxcb-randr0
+          sudo apt-get install libxcb-render-util0
+          sudo apt-get install libxcb-xinerama0
+          sudo apt-get install pulseaudio
+          sudo apt-get install libpulse-mainloop-glib0
+        shell: bash
+        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit != 'wx'
+      - name: Install Wx dependencies for Linux
+        run: |
+          sudo apt-get update
+          sudo apt-get install libsdl2-2.0-0
+        shell: bash
+        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit == 'wx'
+      - name: Cache EDM packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
+      - name: Setup EDM
+        uses: enthought/setup-edm-action@v1
+        with:
+          edm-version: ${{ env.INSTALL_EDM_VERSION }}
+      - name: Install click to the default EDM environment
+        run: edm install -y wheel click coverage
+      - name: Install test environment
+        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }} --source
+      - name: Run tests
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: edm run -- python etstool.py test --toolkit=${{ matrix.toolkit }}
