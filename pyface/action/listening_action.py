@@ -16,7 +16,7 @@ import logging
 
 
 from pyface.action.action import Action
-from traits.api import Any, Str, Undefined
+from traits.api import Any, Str, observe, Undefined
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -100,7 +100,9 @@ class ListeningAction(Action):
 
     # Trait change handlers --------------------------------------------------
 
-    def _enabled_name_changed(self, old, new):
+    @observe('enabled_name')
+    def _enabled_name_updated(self, event):
+        old, new = event.old, event.new
         obj = self.object
         if obj is not None:
             if old:
@@ -109,7 +111,9 @@ class ListeningAction(Action):
                 obj.observe(self._enabled_update, new)
         self._enabled_update()
 
-    def _visible_name_changed(self, old, new):
+    @observe('visible_name')
+    def _visible_name_updated(self, event):
+        old, new = event.old, event.new
         obj = self.object
         if obj is not None:
             if old:
@@ -118,7 +122,9 @@ class ListeningAction(Action):
                 obj.observe(self._visible_update, new)
         self._visible_update()
 
-    def _object_changed(self, old, new):
+    @observe('object')
+    def _object_updated(self, event):
+        old, new = event.old, event.new
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
