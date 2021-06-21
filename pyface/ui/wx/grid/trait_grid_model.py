@@ -29,6 +29,7 @@ from traits.api import (
     List,
     Str,
     Type,
+    Union,
 )
 
 
@@ -40,10 +41,10 @@ class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
 
     # The trait name for this column. This takes precedence over method
-    name = Either(None, Str)
+    name = Union(None, Str)
 
     # A method name to call to get the value for this column
-    method = Either(None, Str)
+    method = Union(None, Str)
 
     # A method to be used to sort on this column
     sorter = Callable
@@ -53,7 +54,7 @@ class TraitGridColumn(GridColumn):
     formats = Dict(Type, Either(Str, Callable))
 
     # A name to designate the type of this column
-    typename = Either(None, Str)
+    typename = Union(None, Str)
     # note: context menus should go in here as well? but we need
     #       more info than we have available at this point
 
@@ -67,7 +68,7 @@ class TraitGridSelection(HasTraits):
     obj = Instance(HasTraits)
 
     # The specific trait selected on the object
-    trait_name = Either(None, Str)
+    trait_name = Union(None, Str)
 
 
 # The meat.
@@ -83,10 +84,10 @@ class TraitGridModel(GridModel):
     data = List(Any)
 
     # The column definitions
-    columns = Either(None, List(Either(None, Str, Instance(TraitGridColumn))))
+    columns = Union(None, List(Union(None, Str, Instance(TraitGridColumn))))
 
     # The trait to look at to get the row name
-    row_name_trait = Either(None, Str)
+    row_name_trait = Union(None, Str)
 
     # Allow column sorting?
     allow_column_sort = Bool(True)
