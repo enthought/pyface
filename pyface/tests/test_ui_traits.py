@@ -12,11 +12,6 @@
 import os
 import unittest
 
-try:
-    import numpy as np
-except Exception:
-    np = None
-
 from traits.api import DefaultValue, HasTraits, TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.api import UnittestTools
@@ -106,7 +101,7 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         )
         self.assertEqual(image_class.image._ref.volume_name, "icons")
 
-    @unittest.skipIf(np is None, "NumPy is not available")
+    @requires_numpy
     def test_init_array_image(self):
         from pyface.array_image import ArrayImage
 
