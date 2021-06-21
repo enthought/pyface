@@ -10,10 +10,7 @@
 import unittest
 import sys
 
-try:
-    import numpy as np
-except Exception:
-    np = None
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.qt import qt_api
 from pyface.qt.QtGui import QColor, QIcon, QImage, QPixmap
@@ -131,7 +128,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(qpixmap.height(), 256)
 
 
-@unittest.skipIf(np is None, "NumPy is not available")
+@requires_numpy
 class TestArrayImageHelpers(unittest.TestCase):
 
     def test_image_to_array_rgb(self):

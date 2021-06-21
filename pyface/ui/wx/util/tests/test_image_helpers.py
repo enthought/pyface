@@ -9,13 +9,9 @@
 
 import unittest
 
-try:
-    import numpy as np
-except Exception:
-    np = None
-
 import wx
 
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from ..image_helpers import (
     bitmap_to_icon, bitmap_to_image, image_to_array, image_to_bitmap,
     array_to_image, AspectRatio, ScaleMode, resize_image, resize_bitmap,
@@ -135,7 +131,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(wxbitmap.GetHeight(), 256)
 
 
-@unittest.skipIf(np is None, "NumPy is not available")
+@requires_numpy
 class TestArrayImageHelpers(unittest.TestCase):
 
     def test_image_to_array_rgb(self):

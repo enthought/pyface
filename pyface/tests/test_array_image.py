@@ -11,15 +11,12 @@
 
 import unittest
 
-try:
-    import numpy as np
-except Exception:
-    np = None
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from ..array_image import ArrayImage
 
 
-@unittest.skipIf(np is None, "NumPy is not available")
+@requires_numpy
 class TestArrayImage(unittest.TestCase):
     def setUp(self):
         self.data = np.full((32, 64, 4), 0xee, dtype='uint8')
