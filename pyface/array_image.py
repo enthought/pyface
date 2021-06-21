@@ -86,3 +86,10 @@ class ArrayImage(HasStrictTraits):
             size as an icon.
         """
         return bitmap_to_icon(self.create_bitmap(size))
+
+    # ------------------------------------------------------------------------
+    # 'object' interface.
+    # ------------------------------------------------------------------------
+
+    def __init__(self, data, **traits):
+        super().__init__(data=data, **traits)
