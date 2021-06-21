@@ -21,9 +21,9 @@ except ImportError:
     from importlib_resources import files
 
 try:
-    from PIL import Image
+    import PIL.Image
 except ImportError:
-    Image = None
+    PIL = None
 
 from traits.api import DefaultValue, HasTraits, TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
@@ -125,11 +125,11 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         self.assertIsInstance(image_class.image, ArrayImage)
         self.assertTrue((image_class.image.data == data).all())
 
-    @unittest.skipIf(Image is None, "PIL/Pillow is not available")
+    @unittest.skipIf(PIL is None, "PIL/Pillow is not available")
     def test_init_pil_image(self):
         from pyface.pil_image import PILImage
 
-        pil_image = PILImage(IMAGE_PATH)
+        pil_image = PIL.Image.open(IMAGE_PATH)
         image = PILImage(pil_image)
         image_class = ImageClass(image=image)
 
