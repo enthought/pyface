@@ -18,14 +18,14 @@ way.
 from pyface.toolkit import toolkit_object
 
 # Enum types for function arguments
-ScaleMode = toolkit_object("util.image_helpers.ScaleMode")
-AspectRatio = toolkit_object("util.image_helpers.AspectRatio")
+ScaleMode = toolkit_object("util.image_helpers:ScaleMode")
+AspectRatio = toolkit_object("util.image_helpers:AspectRatio")
 
 # Helper functions
-image_to_bitmap = toolkit_object("util.image_helpers.image_to_bitmap")
-bitmap_to_image = toolkit_object("util.image_helpers.bitmap_to_image")
-bitmap_to_icon = toolkit_object("util.image_helpers.bitmap_to_icon")
-image_to_array = toolkit_object("util.image_helpers.image_to_array")
-array_to_image = toolkit_object("util.image_helpers.array_to_image")
-scale_image = toolkit_object("util.image_helpers.scale_image")
-scale_bitmap = toolkit_object("util.image_helpers.scale_bitmap")
+array_to_image = toolkit_object("util.image_helpers:array_to_image")
+bitmap_to_icon = toolkit_object("util.image_helpers:bitmap_to_icon")
+bitmap_to_image = toolkit_object("util.image_helpers:bitmap_to_image")
+image_to_array = toolkit_object("util.image_helpers:image_to_array")
+image_to_bitmap = toolkit_object("util.image_helpers:image_to_bitmap")
+resize_image = toolkit_object("util.image_helpers:resize_image")
+resize_bitmap = toolkit_object("util.image_helpers:resize_bitmap")

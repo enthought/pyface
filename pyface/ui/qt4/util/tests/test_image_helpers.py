@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Enthought Inc.
+# Copyright (c) 2005-2021, Enthought Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -6,8 +6,6 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-
-from __future__ import absolute_import, unicode_literals
 
 import unittest
 import sys
@@ -17,7 +15,7 @@ try:
 except Exception:
     np = None
 
-from pyface.qt import is_qt4, qt_api
+from pyface.qt import qt_api
 from pyface.qt.QtGui import QColor, QIcon, QImage, QPixmap
 
 from ..image_helpers import (
