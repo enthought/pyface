@@ -11,7 +11,9 @@
 """ A wizard controller that has a static list of pages. """
 
 
-from traits.api import Bool, HasTraits, Instance, List, Property, provides
+from traits.api import (
+    Bool, HasTraits, Instance, List, Property, provides, observe
+)
 
 
 from .i_wizard_controller import IWizardController
@@ -153,9 +155,10 @@ class WizardController(HasTraits):
 
     # Static ----
 
-    def _current_page_changed(self, old, new):
+    @observe("current_page")
+    def _current_page_updated(self, event):
         """ Called when the current page is changed. """
-
+        old, new = event.old, event.new
         if old is not None:
             old.observe(
                 self._on_page_complete, "complete", remove=True
