@@ -62,4 +62,25 @@ values, a :py:attr:`~pyface.fields.i_spin_field.IComboField.formatter` function
 should be provided - this defaults to either :py:func:`str` (Python 3+) or
 :py:func:`unicode` (Python 2).
 
+ToggleField and Subclasses
+==========================
 
+The :py:class:`~pyface.fields.i_toggle_field.IToggleField` interface holds a
+boolean :py:attr:`~pyface.fields.i_spin_field.IToggleField.value` that is
+toggled between ``True`` and ``False`` by the widget.  The interface is
+implemented by several different concrete classes with different appearances
+but similar behaviour:
+
+- :py:class:`~pyface.fields.toggle_field.CheckBoxField`
+- :py:class:`~pyface.fields.toggle_field.RadioButtonField`
+- :py:class:`~pyface.fields.toggle_field.ToggleButtonField`
+
+There is an abstract class :py:class:`~pyface.fields.toggle_field.ToggleField`
+which implements much of the behaviour and is suitable for use by custom
+implementations to toggling behaviour.
+
+All :py:class:`~pyface.fields.i_toggle_field.IToggleField` implementations
+have can have label text set via the
+:py:attr:`~pyface.fields.i_spin_field.IToggleField.text` trait, and in the
+Qt backend they can have an image for an
+:py:attr:`~pyface.fields.i_spin_field.IToggleField.icon`.

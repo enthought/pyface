@@ -15,9 +15,12 @@
 
 API for the ``pyface.fields`` subpackage.
 
+- :class:`~.CheckBoxField`
 - :class:`~.ComboField`
+- :class:`~.RadioButtonField`
 - :class:`~.SpinField`
 - :class:`~.TextField`
+- :class:`~.ToggleButtonField`
 
 Interfaces
 ----------
@@ -25,6 +28,7 @@ Interfaces
 - :class:`~.IField`
 - :class:`~.ISpinField`
 - :class:`~.ITextField`
+- :class:`~.IToggleField`
 
 """
 
@@ -32,7 +36,11 @@ from .i_combo_field import IComboField
 from .i_field import IField
 from .i_spin_field import ISpinField
 from .i_text_field import ITextField
+from .i_toggle_field import IToggleField
 
 from .combo_field import ComboField
 from .spin_field import SpinField
 from .text_field import TextField
+from .toggle_field import (
+    CheckBoxField, RadioButtonField, ToggleButtonField,
+)
