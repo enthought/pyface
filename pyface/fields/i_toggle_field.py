@@ -20,7 +20,7 @@ from pyface.ui_traits import Image
 class IToggleField(IField):
     """ The toggle field interface.
 
-    This is for a toggle between two states.
+    This is for a toggle between two states, represented by a boolean value.
     """
 
     #: The current value of the toggle.
@@ -36,7 +36,7 @@ class IToggleField(IField):
 class MToggleField(HasTraits):
     """ The toggle field mixin class.
 
-    This is for a toggle between two states.
+    This is for a toggle between two states, represented by a boolean value.
     """
 
     #: The current value of the toggle.
