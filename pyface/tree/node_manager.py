@@ -14,7 +14,7 @@
 import logging
 
 
-from traits.api import HasPrivateTraits, List
+from traits.api import HasPrivateTraits, List, observe
 
 
 from .node_type import NodeType
@@ -122,9 +122,10 @@ class NodeManager(HasPrivateTraits):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _node_types_changed(self, new):
+    @observe("node_types")
+    def _node_types_updated(self, event):
         """ Called when the entire list of node types has been changed. """
-
+        new = event.new
         for node_type in new:
             node_type.node_manager = self
 
