@@ -66,7 +66,7 @@ ToggleField and Subclasses
 ==========================
 
 The :py:class:`~pyface.fields.i_toggle_field.IToggleField` interface holds a
-boolean :py:attr:`~pyface.fields.i_spin_field.IToggleField.value` that is
+boolean :py:attr:`~pyface.fields.i_toggle_field.IToggleField.value` that is
 toggled between ``True`` and ``False`` by the widget.  The interface is
 implemented by several different concrete classes with different appearances
 but similar behaviour:
@@ -81,6 +81,6 @@ implementations to toggling behaviour.
 
 All :py:class:`~pyface.fields.i_toggle_field.IToggleField` implementations
 have can have label text set via the
-:py:attr:`~pyface.fields.i_spin_field.IToggleField.text` trait, and in the
+:py:attr:`~pyface.fields.i_toggle_field.IToggleField.text` trait, and in the
 Qt backend they can have an image for an
-:py:attr:`~pyface.fields.i_spin_field.IToggleField.icon`.
+:py:attr:`~pyface.fields.i_toggle_field.IToggleField.icon`.
