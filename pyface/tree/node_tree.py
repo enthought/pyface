@@ -80,7 +80,7 @@ class NodeTree(Tree):
     # Trait event handlers -------------------------------------------------
 
     @observe("node_activated")
-    def _node_activated_updated(self, obj):
+    def _node_activated_updated(self, event):
         """ Called when a node has been activated (i.e., double-clicked). """
         obj = event.new
         default_action = self.model.get_default_action(obj)
@@ -88,7 +88,7 @@ class NodeTree(Tree):
             self._perform_default_action(default_action, obj)
 
     @observe("node_right_clicked")
-    def _node_right_clicked_updated(self, obj_point):
+    def _node_right_clicked_updated(self, event):
         """ Called when the right mouse button is clicked on the tree. """
         obj_point = event.new
         obj, point = obj_point
