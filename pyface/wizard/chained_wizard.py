@@ -60,7 +60,7 @@ class ChainedWizard(Wizard):
             self._update()
 
     @observe("controller")
-    def _controller_updaated(self, event):
+    def _controller_updated(self, event):
         """ handle the controller being changed. """
         old, new = event.old, event.new
         if new is not None and self.next_wizard is not None:
