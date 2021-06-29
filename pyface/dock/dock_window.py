@@ -345,7 +345,7 @@ class DockWindow(HasPrivateTraits):
     # -- Trait Event Handlers ---------------------------------------------------
 
     @observe("theme")
-    def _theme_updated(self, event):
+    def _update_background_color_and_layout(self, event):
         theme = event.new
         if self.control is not None:
             if theme.use_theme_color:

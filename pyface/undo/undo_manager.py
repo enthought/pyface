@@ -97,7 +97,7 @@ class UndoManager(HasTraits):
     ###########################################################################
 
     @observe("active_stack")
-    def _active_stack_updated(self, event):
+    def _update_stack_updated(self, event):
         """ Handle a different stack becoming active. """
         new = event.new
         # Pretend that the stack contents have changed.

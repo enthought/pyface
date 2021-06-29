@@ -44,7 +44,7 @@ class ChainedWizard(Wizard):
     # Static ----
 
     @observe("next_wizard")
-    def _next_wizard_updated(self, event):
+    def _reset_next_controller_and_update(self, event):
         """ Handle the next wizard being changed. """
         old, new = event.old, event.new
         if new is not None:
@@ -60,7 +60,7 @@ class ChainedWizard(Wizard):
             self._update()
 
     @observe("controller")
-    def _controller_updated(self, event):
+    def _reset_traits_on_controller_and_update(self, event):
         """ handle the controller being changed. """
         old, new = event.old, event.new
         if new is not None and self.next_wizard is not None:

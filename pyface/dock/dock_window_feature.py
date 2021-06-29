@@ -788,7 +788,7 @@ class DockWindowFeature(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     @observe('image')
-    def _image_updated(self, event):
+    def _reset_bitmap(self, event):
         self._bitmap = None
 
     # -- Property Implementations ---------------------------------------------------

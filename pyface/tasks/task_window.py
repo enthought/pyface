@@ -417,7 +417,7 @@ class TaskWindow(ApplicationWindow):
     # Trait change handlers ------------------------------------------------
 
     @observe("_active_state")
-    def __active_state_updated(self, event):
+    def _update_traits_given_new_active_state(self, event):
         state = event.new
         if state is None:
             self.active_task = self.central_pane = None

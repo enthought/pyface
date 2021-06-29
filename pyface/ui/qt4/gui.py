@@ -121,7 +121,7 @@ class GUI(MGUI, HasTraits):
         return self._default_state_location()
 
     @observe("busy")
-    def _busy_updated(self, event):
+    def _update_busy_state(self, event):
         """ The busy trait change handler. """
         new = event.new
         if new:

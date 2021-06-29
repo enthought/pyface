@@ -156,7 +156,7 @@ class WizardController(HasTraits):
     # Static ----
 
     @observe("current_page")
-    def _current_page_updated(self, event):
+    def _reset_observers_on_current_page_and_update(self, event):
         """ Called when the current page is changed. """
         old, new = event.old, event.new
         if old is not None:

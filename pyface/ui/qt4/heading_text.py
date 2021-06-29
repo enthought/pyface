@@ -72,7 +72,7 @@ class HeadingText(MHeadingText, Widget):
     # Trait event handlers -------------------------------------------------
 
     @observe("text")
-    def _text_updated(self, event):
+    def _update_text(self, event):
         """ Called when the text is changed. """
         new = event.new
         if self.control is not None:

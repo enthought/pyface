@@ -123,7 +123,7 @@ class NodeManager(HasPrivateTraits):
     # ------------------------------------------------------------------------
 
     @observe("node_types")
-    def _node_types_updated(self, event):
+    def _update_node_manager_on_new_node_types(self, event):
         """ Called when the entire list of node types has been changed. """
         new = event.new
         for node_type in new:
