@@ -42,6 +42,7 @@ jobs:
       - name: Install Wx dependencies for Linux
         run: |
           sudo apt-get update
+          sudo apt-get install libsdl-image1.2
           sudo apt-get install libsdl2-2.0-0
         shell: bash
         if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit == 'wx'
