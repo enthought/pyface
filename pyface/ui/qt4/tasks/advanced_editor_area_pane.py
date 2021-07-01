@@ -280,7 +280,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 break
 
         # Monitor focus changes so we can set the active editor.
-        QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
+        QtGui.QApplication.instance().focusChanged.connect(self._update_active_editor)
 
         # Configure the QMainWindow.
         # FIXME: Currently animation is not supported.
@@ -296,7 +296,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def _remove_event_listeners(self):
         """ Disconnects focusChanged signal of the application """
         app = QtGui.QApplication.instance()
-        app.focusChanged.disconnect(self._focus_changed)
+        app.focusChanged.disconnect(self._update_active_editor)
 
     def add_editor_widget(self, editor_widget):
         """ Adds a dock widget to the editor area.
@@ -458,7 +458,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 # Use UniqueConnections since Qt recycles the tab bars.
                 child.installEventFilter(self)
                 child.currentChanged.connect(
-                    self._tab_index_changed, QtCore.Qt.UniqueConnection
+                    self._update_editor_in_focus, QtCore.Qt.UniqueConnection
                 )
                 child.setTabsClosable(True)
                 child.setUsesScrollButtons(True)
@@ -575,7 +575,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # Signal handlers.
     # ------------------------------------------------------------------------
 
-    def _focus_changed(self, old, new):
+    def _update_active_editor(self, old, new):
         """ Handle an application-level focus change.
         """
         if new is not None:
@@ -588,7 +588,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 if not self.editor_area.editors:
                     self.editor_area.active_editor = None
 
-    def _tab_index_changed(self, index):
+    def _update_editor_in_focus(self, index):
         """ Handle a tab selection.
         """
         widgets = self.get_dock_widgets_for_bar(self.sender())

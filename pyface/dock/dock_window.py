@@ -35,6 +35,7 @@ from traits.api import (
     Str,
     List,
     Bool,
+    observe,
 )
 from traits.trait_base import traits_home
 from traitsui.api import View, HGroup, VGroup, Item, Handler, error
@@ -343,7 +344,9 @@ class DockWindow(HasPrivateTraits):
 
     # -- Trait Event Handlers ---------------------------------------------------
 
-    def _theme_changed(self, theme):
+    @observe("theme")
+    def _update_background_color_and_layout(self, event):
+        theme = event.new
         if self.control is not None:
             if theme.use_theme_color:
                 color = theme.tab.image_slice.bg_color

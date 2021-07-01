@@ -11,7 +11,7 @@
 """ A wizard controller that can be chained with others. """
 
 
-from traits.api import Instance
+from traits.api import Instance, observe
 
 
 from .i_wizard_controller import IWizardController
@@ -168,9 +168,10 @@ class ChainedWizardController(WizardController):
 
     # Static ----
 
-    def _current_page_changed(self, old, new):
+    @observe("current_paage")
+    def _reset_observers_on_current_page_and_update(self, event):
         """ Called when the current page is changed. """
-
+        old, new = event.old, event.new
         if old is not None:
             old.observe(
                 self._on_page_complete, "complete", remove=True
@@ -184,9 +185,10 @@ class ChainedWizardController(WizardController):
 
         self._update()
 
-    def _next_controller_changed(self, old, new):
+    @observe("next_controller")
+    def _reset_observers_on_next_controller_and_update(self, event):
         """ Called when the next controller is changed. """
-
+        old, new = event.old, event.new
         if old is not None:
             old.observe(
                 self._on_controller_complete, "complete", remove=True
