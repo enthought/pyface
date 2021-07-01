@@ -24,6 +24,7 @@ no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
 is_linux = (sys.platform == "linux")
+is_mac = (sys.platform == "darwin")
 
 
 class ConcreteWidget(Widget):
@@ -320,9 +321,9 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
         self.assertFalse(self.widget.control.isEnabled())
 
-    @unittest.skipIf(
-        is_linux,
-        "Linux keyboard focus is False unless window is active",
+    @unittest.skipUnless(
+        is_mac,
+        "Broken on Linux and Windows",
     )
     def test_focus(self):
         with self.event_loop():

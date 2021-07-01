@@ -16,7 +16,7 @@ from inspect import getfullargspec
 
 
 from pyface.action.api import ActionEvent
-from traits.api import Instance, List, Property
+from traits.api import Instance, List, observe, Property
 
 
 from .node_manager import NodeManager
@@ -79,16 +79,18 @@ class NodeTree(Tree):
 
     # Trait event handlers -------------------------------------------------
 
-    def _node_activated_changed(self, obj):
+    @observe("node_activated")
+    def _perform_default_action_on_activated_node(self, event):
         """ Called when a node has been activated (i.e., double-clicked). """
-
+        obj = event.new
         default_action = self.model.get_default_action(obj)
         if default_action is not None:
             self._perform_default_action(default_action, obj)
 
-    def _node_right_clicked_changed(self, obj_point):
+    @observe("node_right_clicked")
+    def _show_menu_on_right_clicked_object(self, event):
         """ Called when the right mouse button is clicked on the tree. """
-
+        obj_point = event.new
         obj, point = obj_point
         # Add the node that the right-click occurred on to the selection.
         self.select(obj)

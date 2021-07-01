@@ -24,7 +24,9 @@
 
 from weakref import ref
 
-from traits.api import HasPrivateTraits, Instance, Int, Str, Bool, Property
+from traits.api import (
+    HasPrivateTraits, Instance, Int, Str, Bool, Property, observe
+)
 from traitsui.menu import Menu, Action
 
 from pyface.timer.api import do_later
@@ -785,7 +787,8 @@ class DockWindowFeature(HasPrivateTraits):
     #  Handles the 'image' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _image_changed(self):
+    @observe('image')
+    def _reset_bitmap(self, event):
         self._bitmap = None
 
     # -- Property Implementations ---------------------------------------------------

@@ -2,9 +2,6 @@
 Pyface: Traits-capable Windowing Framework
 ==========================================
 
-.. image:: https://travis-ci.org/enthought/pyface.svg?branch=master
-    :target: https://travis-ci.org/enthought/pyface
-
 .. image:: https://ci.appveyor.com/api/projects/status/68nfb049cdq9wqd1/branch/master?svg=true
     :target: https://ci.appveyor.com/project/EnthoughtOSS/pyface/branch/master
 
