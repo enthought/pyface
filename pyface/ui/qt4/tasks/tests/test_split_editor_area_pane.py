@@ -333,6 +333,11 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEqual(right_bottom.items[0].id, 1)
         self.assertEqual(right_bottom.items[1].id, 2)
 
+        # Close all of the opened temporary files
+        file0.close()
+        file1.close()
+        file2.close()
+
     def test_context_menu_merge_text_left_right_split(self):
         # Regression test for enthought/pyface#422
         window = TaskWindow()
