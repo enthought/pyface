@@ -114,7 +114,10 @@ extra_dependencies = {
     "null": set(),
 }
 
-doc_dependencies = {"sphinx"}
+doc_dependencies = {
+    "sphinx",
+    "enthought_sphinx_theme",
+}
 
 doc_ignore = {
     "pyface/wx/*",
