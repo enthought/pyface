@@ -15,19 +15,19 @@ and Qt QImages, as well as between the various image types in a standardized
 way.
 """
 
-from enum import Enum
+from enum import IntEnum
 
 from pyface.qt import qt_api
 from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QImage, QPixmap, QIcon
 
 
-class ScaleMode(Enum):
+class ScaleMode(IntEnum):
     fast = Qt.FastTransformation
     smooth = Qt.SmoothTransformation
 
 
-class AspectRatio(Enum):
+class AspectRatio(IntEnum):
     ignore = Qt.IgnoreAspectRatio
     keep_constrain = Qt.KeepAspectRatio
     keep_expand = Qt.KeepAspectRatioByExpanding

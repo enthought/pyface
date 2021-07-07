@@ -15,17 +15,17 @@ and Qt wx.Images, as well as between the various image types in a standardized
 way.
 """
 
-from enum import Enum
+from enum import IntEnum
 
 import wx
 
 
-class ScaleMode(Enum):
+class ScaleMode(IntEnum):
     fast = wx.IMAGE_QUALITY_NORMAL
     smooth = wx.IMAGE_QUALITY_HIGH
 
 
-class AspectRatio(Enum):
+class AspectRatio(IntEnum):
     ignore = 0
     keep_constrain = 1
     keep_expand = 2
@@ -33,7 +33,7 @@ class AspectRatio(Enum):
 
 def image_to_bitmap(image):
     """ Convert a wx.Image to a wx.Bitmap.
-    
+
     Parameters
     ----------
     image : wx.Image
@@ -49,7 +49,7 @@ def image_to_bitmap(image):
 
 def bitmap_to_image(bitmap):
     """ Convert a wx.Bitmap to a wx.Image.
-    
+
     Parameters
     ----------
     bitmap : wx.Bitmap
@@ -65,7 +65,7 @@ def bitmap_to_image(bitmap):
 
 def bitmap_to_icon(bitmap):
     """ Convert a wx.Bitmap to a wx.Icon.
-        
+
     Parameters
     ----------
     bitmap : wx.Bitmap
