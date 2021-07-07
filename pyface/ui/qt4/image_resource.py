@@ -45,7 +45,7 @@ class ImageResource(MImageResource, HasTraits):
     search_path = List()
 
     # ------------------------------------------------------------------------
-    # 'ImageResource' interface.
+    # 'IImage' interface.
     # ------------------------------------------------------------------------
 
     # Qt doesn't specifically require bitmaps anywhere so just use images.

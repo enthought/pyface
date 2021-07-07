@@ -29,6 +29,7 @@ from traits.api import (
 from traits.trait_base import get_resource_path
 
 from pyface.color import Color
+from pyface.i_image import IImage
 from pyface.util.color_parser import ColorParseError
 
 
@@ -38,7 +39,10 @@ logger = logging.getLogger(__name__)
 #  Images
 # -------------------------------------------------------------------------------
 
+# cache of lookups from string to ImageResource instance
 image_resource_cache = {}
+
+# cache of conversions of ImageResource instances to toolkit bitmaps
 image_bitmap_cache = {}
 
 
@@ -75,28 +79,32 @@ def convert_image(value, level=3):
     return result
 
 
-def convert_bitmap(image_resource):
+def convert_bitmap(image):
     """ Converts an ImageResource to a bitmap using a cache.
     """
-    bitmap = image_bitmap_cache.get(image_resource)
-    if (bitmap is None) and (image_resource is not None):
-        image_bitmap_cache[
-            image_resource
-        ] = bitmap = image_resource.create_bitmap()
+    from pyface.i_image_resource import IImageResource
+    if not isinstance(image, IImageResource):
+        # don't try to cache non-ImageResource IImages as they may be
+        # dynamically changing
+        return image.create_bitmap()
+
+    bitmap = image_bitmap_cache.get(image)
+    if (bitmap is None) and (image is not None):
+        image_bitmap_cache[image] = bitmap = image.create_bitmap()
 
     return bitmap
 
 
 class Image(TraitType):
-    """ Defines a trait whose value must be a ImageResource or a string
-        that can be converted to one.
+    """ Defines a trait whose value must be a IImage or a string
+        that can be converted to an IImageResource.
     """
 
-    # Define the default value for the trait:
+    #: Define the default value for the trait.
     default_value = None
 
-    # A description of the type of value this trait accepts:
-    info_text = "an ImageResource or string that can be used to define one"
+    #: A description of the type of value this trait accepts.
+    info_text = "an IImage or string that can be used to define an ImageResource"  # noqa: E501
 
     def __init__(self, value=None, **metadata):
         """ Creates an Image trait.
@@ -104,7 +112,7 @@ class Image(TraitType):
         Parameters
         ----------
         value : string or ImageResource
-            The default value for the Image, either an ImageResource object,
+            The default value for the Image, either an IImage object,
             or a string from which an ImageResource object can be derived.
         """
         super().__init__(convert_image(value), **metadata)
@@ -112,13 +120,11 @@ class Image(TraitType):
     def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
         """
-        from pyface.i_image_resource import IImageResource
-
         if value is None:
             return None
 
         new_value = convert_image(value, 4)
-        if isinstance(new_value, IImageResource):
+        if isinstance(new_value, IImage):
             return new_value
 
         self.error(object, name, value)

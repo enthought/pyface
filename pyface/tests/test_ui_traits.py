@@ -101,6 +101,17 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         )
         self.assertEqual(image_class.image._ref.volume_name, "icons")
 
+    @requires_numpy
+    def test_init_array_image(self):
+        from pyface.array_image import ArrayImage
+
+        data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        image = ArrayImage(data)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, ArrayImage)
+        self.assertTrue((image_class.image.data == data).all())
+
 
 class TestMargin(unittest.TestCase):
     def test_defaults(self):
