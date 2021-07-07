@@ -66,11 +66,13 @@ class ActionItem(ActionManagerItem):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
-        self.action.enabled = new
+    @observe('enabled')
+    def _enabled_updated(self, event):
+        self.action.enabled = event.new
 
-    def _visible_changed(self, trait_name, old, new):
-        self.action.visible = new
+    @observe('visible')
+    def _visible_updated(self, event):
+        self.action.visible = event.new
 
     @observe("_wrappers:items:control")
     def _on_destroy(self, event):

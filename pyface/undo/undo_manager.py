@@ -32,6 +32,7 @@ from traits.api import (
     Property,
     Str,
     provides,
+    observe,
 )
 
 # Local imports.
@@ -95,9 +96,10 @@ class UndoManager(HasTraits):
     # Private interface.
     ###########################################################################
 
-    def _active_stack_changed(self, new):
+    @observe("active_stack")
+    def _update_stack_updated(self, event):
         """ Handle a different stack becoming active. """
-
+        new = event.new
         # Pretend that the stack contents have changed.
         self.stack_updated = new
 

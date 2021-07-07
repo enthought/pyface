@@ -115,7 +115,10 @@ extra_dependencies = {
     "null": set(),
 }
 
-doc_dependencies = {"sphinx"}
+doc_dependencies = {
+    "sphinx",
+    "enthought_sphinx_theme",
+}
 
 doc_ignore = {
     "pyface/wx/*",
@@ -211,7 +214,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
         elif sys.platform == "linux":
             # XXX this is mainly for TravisCI workers; need a generic solution
             commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/ wxPython<4.1"  # noqa: E501
+                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"  # noqa: E501
             )
         else:
             commands.append(

@@ -20,7 +20,6 @@ from pyface.util.id_helper import get_unique_id
 from traits.api import (
     Bool,
     Callable,
-    Either,
     Enum,
     HasTraits,
     Instance,
@@ -28,10 +27,11 @@ from traits.api import (
     Property,
     Str,
     Tuple,
+    Union,
 )
 
 # Trait definitions.
-SubSchema = Either(
+SubSchema = Union(
     None,
     Instance(Action),
     Instance(ActionItem),

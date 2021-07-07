@@ -22,12 +22,12 @@ from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QImage, QPixmap, QIcon
 
 
-class ScaleMode:
+class ScaleMode(Enum):
     fast = Qt.FastTransformation
     smooth = Qt.SmoothTransformation
 
 
-class AspectRatio:
+class AspectRatio(Enum):
     ignore = Qt.IgnoreAspectRatio
     keep_constrain = Qt.KeepAspectRatio
     keep_expand = Qt.KeepAspectRatioByExpanding
@@ -35,7 +35,6 @@ class AspectRatio:
 
 def image_to_bitmap(image):
     """ Convert a QImage to a QPixmap.
-    
     Parameters
     ----------
     image : QImage
@@ -51,7 +50,6 @@ def image_to_bitmap(image):
 
 def bitmap_to_image(bitmap):
     """ Convert a QPixmap to a QImage.
-    
     Parameters
     ----------
     bitmap : QPixmap
@@ -67,7 +65,6 @@ def bitmap_to_image(bitmap):
 
 def bitmap_to_icon(bitmap):
     """ Convert a QPixmap to a QIcon.
-        
     Parameters
     ----------
     bitmap : QPixmap
@@ -84,13 +81,13 @@ def bitmap_to_icon(bitmap):
 def resize_image(image, size, aspect_ratio=AspectRatio.ignore,
                  mode=ScaleMode.fast):
     """ Resize a toolkit image to the given size. """
-    return image.scaled(*size, aspect_ratio, mode)
+    return image.scaled(*size, aspect_ratio.value, mode.value)
 
 
 def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
                   mode=ScaleMode.fast):
     """ Resize a toolkit bitmap to the given size. """
-    return bitmap.scaled(*size, aspect_ratio, mode)
+    return bitmap.scaled(*size, aspect_ratio.value, mode.value)
 
 
 def image_to_array(image):
@@ -173,6 +170,6 @@ def array_to_image(array):
     return image
 
 
-# backwards compatible names
+# backwards compatible names - will be removed in Pyface 8
 array_to_QImage = array_to_image
 QImage_to_array = image_to_array

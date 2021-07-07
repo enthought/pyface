@@ -15,17 +15,17 @@ and Qt wx.Images, as well as between the various image types in a standardized
 way.
 """
 
-from enum import Enum
+from enum import IntEnum
 
 import wx
 
 
-class ScaleMode:
+class ScaleMode(IntEnum):
     fast = wx.IMAGE_QUALITY_NORMAL
     smooth = wx.IMAGE_QUALITY_HIGH
 
 
-class AspectRatio:
+class AspectRatio(IntEnum):
     ignore = 0
     keep_constrain = 1
     keep_expand = 2
@@ -33,7 +33,6 @@ class AspectRatio:
 
 def image_to_bitmap(image):
     """ Convert a wx.Image to a wx.Bitmap.
-    
     Parameters
     ----------
     image : wx.Image
@@ -49,7 +48,6 @@ def image_to_bitmap(image):
 
 def bitmap_to_image(bitmap):
     """ Convert a wx.Bitmap to a wx.Image.
-    
     Parameters
     ----------
     bitmap : wx.Bitmap
@@ -65,7 +63,6 @@ def bitmap_to_image(bitmap):
 
 def bitmap_to_icon(bitmap):
     """ Convert a wx.Bitmap to a wx.Icon.
-        
     Parameters
     ----------
     bitmap : wx.Bitmap
@@ -98,7 +95,7 @@ def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
 def image_to_array(image):
     """ Convert a wx.Image to a numpy array.
 
-    This copies the data returned from Qt.
+    This copies the data returned from wx.
 
     Parameters
     ----------
@@ -128,7 +125,7 @@ def image_to_array(image):
 def array_to_image(array):
     """ Convert a numpy array to a wx.Image.
 
-    This copies the data before passing it to Qt.
+    This copies the data before passing it to wx.
 
     Parameters
     ----------
@@ -139,8 +136,7 @@ def array_to_image(array):
     Return
     ------
     image : wx.Image
-        The wx.Image created from the data.  The pixel format is
-        wx.Image.Format_RGB32.
+        The wx.Image created from the data.
     """
     import numpy as np
 

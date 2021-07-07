@@ -42,7 +42,11 @@ logger = logging.getLogger(__name__)
 # cache of lookups from string to ImageResource instance
 image_resource_cache = {}
 
+<<<<<<< HEAD
 # cache of converssions of ImageResource instances to toolkit bitmaps
+=======
+# cache of conversions of ImageResource instances to toolkit bitmaps
+>>>>>>> master
 image_bitmap_cache = {}
 
 

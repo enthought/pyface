@@ -13,6 +13,23 @@
 This module provides helper functions for converting between numpy arrays
 and toolkit images, as well as between the various image types in a standardized
 way.
+
+Helper functions
+----------------
+
+- :data:`~.array_to_image`
+- :data:`~.bitmap_to_icon`
+- :data:`~.bitmap_to_image`
+- :data:`~.image_to_array`
+- :data:`~.image_to_bitmap`
+- :data:`~.resize_image`
+- :data:`~.resize_bitmap`
+
+Options for resizing images
+---------------------------
+- :data:`~.ScaleMode`
+- :data:`~.AspectRatio`
+
 """
 
 from pyface.toolkit import toolkit_object

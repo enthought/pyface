@@ -338,7 +338,13 @@ class ConsoleWidget(QtGui.QWidget):
         # a fudge factor of one character here.
         # Note 2: QFontMetrics.maxWidth is not used here or anywhere else due
         # to a Qt bug on certain Mac OS systems where it returns 0.
-        width = font_metrics.width(" ") * 81 + margin
+
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            width = font_metrics.horizontalAdvance(" ") * 81 + margin
+        else:
+            width = font_metrics.width(" ") * 81 + margin
         width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
         if self.paging == "hsplit":
             width = width * 2 + splitwidth
@@ -347,7 +353,7 @@ class ConsoleWidget(QtGui.QWidget):
         if self.paging == "vsplit":
             height = height * 2 + splitwidth
 
-        return QtCore.QSize(width, height)
+        return QtCore.QSize(int(width), int(height))
 
     # ---------------------------------------------------------------------------
     # 'ConsoleWidget' public interface
@@ -547,7 +553,15 @@ class ConsoleWidget(QtGui.QWidget):
         """ Sets the base font for the ConsoleWidget to the specified QFont.
         """
         font_metrics = QtGui.QFontMetrics(font)
-        self._control.setTabStopWidth(self.tab_width * font_metrics.width(" "))
+
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            width = font_metrics.horizontalAdvance(" ")
+        else:
+            width = font_metrics.width(" ")
+
+        self._control.setTabStopWidth(self.tab_width * width)
 
         self._control.document().setDefaultFont(font)
         if self._page_control:
@@ -849,7 +863,15 @@ class ConsoleWidget(QtGui.QWidget):
         """ Sets the width (in terms of space characters) for tab characters.
         """
         font_metrics = QtGui.QFontMetrics(self.font)
-        self._control.setTabStopWidth(tab_width * font_metrics.width(" "))
+
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            width = font_metrics.horizontalAdvance(" ")
+        else:
+            width = font_metrics.width(" ")
+
+        self._control.setTabStopWidth(tab_width * width)
 
         self._tab_width = tab_width
 
@@ -1966,7 +1988,7 @@ class ConsoleWidget(QtGui.QWidget):
             step = viewport_height
         diff = maximum - scrollbar.maximum()
         scrollbar.setRange(0, maximum)
-        scrollbar.setPageStep(step)
+        scrollbar.setPageStep(int(step))
         # Compensate for undesirable scrolling that occurs automatically due to
         # maximumBlockCount() text truncation.
         if diff < 0 and document.blockCount() == document.maximumBlockCount():

@@ -16,7 +16,9 @@ from os.path import basename
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, Instance, File, Str, Property, provides
+from traits.api import (
+    Bool, Event, File, Instance, observe, Property, provides, Str
+)
 from pyface.tasks.api import Editor
 
 
@@ -104,11 +106,13 @@ class PythonEditor(Editor):
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe('path')
+    def _path_updated(self, event):
         if self.control is not None:
             self.load()
 
-    def _show_line_numbers_changed(self):
+    @observe('show_line_numbers')
+    def _show_line_numbers_updated(self, event=None):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
                 self.show_line_numbers
@@ -125,7 +129,7 @@ class PythonEditor(Editor):
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._show_line_numbers_updated()
 
         # Install event filter to trap key presses.
         event_filter = PythonEditorEventFilter(self, self.control)
