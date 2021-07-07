@@ -15,19 +15,19 @@ and Qt QImages, as well as between the various image types in a standardized
 way.
 """
 
-from enum import IntEnum
+from enum import Enum
 
 from pyface.qt import qt_api
 from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QImage, QPixmap, QIcon
 
 
-class ScaleMode(IntEnum):
+class ScaleMode(Enum):
     fast = Qt.FastTransformation
     smooth = Qt.SmoothTransformation
 
 
-class AspectRatio(IntEnum):
+class AspectRatio(Enum):
     ignore = Qt.IgnoreAspectRatio
     keep_constrain = Qt.KeepAspectRatio
     keep_expand = Qt.KeepAspectRatioByExpanding
@@ -81,13 +81,13 @@ def bitmap_to_icon(bitmap):
 def resize_image(image, size, aspect_ratio=AspectRatio.ignore,
                  mode=ScaleMode.fast):
     """ Resize a toolkit image to the given size. """
-    return image.scaled(*size, aspect_ratio, mode)
+    return image.scaled(*size, aspect_ratio.value, mode.value)
 
 
 def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
                   mode=ScaleMode.fast):
     """ Resize a toolkit bitmap to the given size. """
-    return bitmap.scaled(*size, aspect_ratio, mode)
+    return bitmap.scaled(*size, aspect_ratio.value, mode.value)
 
 
 def image_to_array(image):
