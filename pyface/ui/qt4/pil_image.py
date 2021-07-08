@@ -40,10 +40,9 @@ class PILImage(MPILImage):
             The toolkit image corresponding to the image and the specified
             size.
         """
-        # XXX ignore size requests - rescaling might require better caching
         from PIL.ImageQt import ImageQt
         image = ImageQt(self.image)
         if size is not None:
-            return resize_image(image)
+            return resize_image(image, size)
         else:
             return image
