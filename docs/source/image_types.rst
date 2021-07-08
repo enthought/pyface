@@ -5,13 +5,13 @@ Pyface's image model presumes that there are three different types of
 image objects provided by a toolkit:
 
 Images
-    The "image" image type is the image type that is optimized for pixel
+    The "image" image type is optimized for pixel
     access and manipulation.  For the Qt toolkit this is the
     :class:`~pyface.qt.QtGui.QImage` class, while for the Wx toolkit it is
     :class:`wx.Image`.
 
 Bitmap
-    The "bitmap" image type is the image type that is optimized for rendering
+    The "bitmap" image type is optimized for rendering
     to the screen.  For the Qt toolkit this is the
     :class:`~pyface.qt.QtGui.QPixmap` class, while for the Wx toolkit it is
     :class:`wx.Bitmap`.
@@ -78,7 +78,7 @@ next to the module using the image, for example::
         images/
             my_image.png
 
-The image can code like the following in my_module.py will work:
+The image code like the following in my_module.py will work:
 
 .. code-block:: python
 
@@ -96,7 +96,7 @@ the code.
 ----------------------------------------
 
 Since there is a lot of shared functionality between the various
-implementations of the :class:`~pyface.i_image.IImage` interface.  The
+implementations of the :class:`~pyface.i_image.IImage` interface, the
 :mod:`pyface.util.image_helpers` module provides a number of functions and
 other objects to perform lower-level tasks, such as converting between toolkit
 types.
