@@ -76,6 +76,7 @@ Contents
    Widgets <widgets>
    Pyface Applications <applications>
    Pyface Trait Types <traits>
+   Images in Pyface <image_types>
    Submodules <submodules>
    Testing <testing>
    API Documentation <api/pyface>
