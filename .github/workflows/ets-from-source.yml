@@ -3,6 +3,8 @@ name: Test with EDM using ETS packages from source
 on:
   schedule:
     - cron:  '0 0 * * 5'
+  # Make it possible to manually trigger the workflow
+  workflow_dispatch:
 
 env:
   INSTALL_EDM_VERSION: 3.2.3
