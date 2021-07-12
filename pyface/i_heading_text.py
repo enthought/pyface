@@ -10,11 +10,9 @@
 
 """ Heading text. """
 
+import warnings
 
-from traits.api import HasTraits, Instance, Int, Interface, Str
-
-
-from pyface.i_image_resource import IImageResource
+from traits.api import HasTraits, Int, Interface, Str
 
 
 class IHeadingText(Interface):
@@ -31,11 +29,30 @@ class IHeadingText(Interface):
     #: The heading text.
     text = Str("Default")
 
-    #: The background image.
-    image = Instance(IImageResource)
-
 
 class MHeadingText(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """
+
+    level = Int(1)
+
+    text = Str("Default")
+
+    def __init__(self, parent=None, **traits):
+        """ Creates the heading text. """
+
+        create = traits.pop("create", True)
+
+        # Base class constructor.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )

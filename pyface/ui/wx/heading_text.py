@@ -12,12 +12,9 @@
 """ Enthought pyface package component
 """
 
-
 import wx
 
-
-from traits.api import Instance, Int, provides, Str
-
+from traits.api import Instance, provides
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from pyface.image_resource import ImageResource
@@ -31,28 +28,9 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-    # 'IHeadingText' interface ---------------------------------------------
-
-    level = Int(1)
-
-    text = Str("Default")
+    # 'HeadingText' interface ---------------------------------------------
 
     image = Instance(ImageResource, ImageResource("heading_level_1"))
-
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-
-    def __init__(self, parent, **traits):
-        """ Creates the panel. """
-
-        # Base class constructor.
-        super().__init__(**traits)
-
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        return
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -106,8 +84,6 @@ class HeadingText(MHeadingText, Widget):
 
             x = x + w
 
-        return
-
     # Trait event handlers -------------------------------------------------
 
     def _text_changed(self, new):
@@ -115,8 +91,6 @@ class HeadingText(MHeadingText, Widget):
 
         if self.control is not None:
             self.control.Refresh()
-
-        return
 
     # wx event handlers ----------------------------------------------------
 
@@ -145,5 +119,3 @@ class HeadingText(MHeadingText, Widget):
         # Render the text.
         dc.SetFont(self._font)
         dc.DrawText(self.text, 5, 4)
-
-        return
