@@ -12,6 +12,7 @@
 """ Enthought pyface package component
 """
 
+import warnings
 
 import wx.stc
 
@@ -49,14 +50,23 @@ class PythonEditor(MPythonEditor, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
-        # Base class constructor.
-        super().__init__(**traits)
+        create = traits.pop("create", True)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
+        # Base class constructor.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
         return
 

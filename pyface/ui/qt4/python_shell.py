@@ -16,6 +16,7 @@ from code import compile_command, InteractiveInterpreter
 from io import StringIO
 import sys
 from time import time
+import warnings
 
 
 from pyface.qt import QtCore, QtGui
@@ -56,11 +57,21 @@ class PythonShell(MPythonShell, Widget):
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
+
+        create = traits.pop("create", True)
+
         super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self._create()
+        if create:
+            # Create the toolkit-specific control that represents the widget.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # --------------------------------------------------------------------------
     # 'IPythonShell' interface
