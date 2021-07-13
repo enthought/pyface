@@ -71,8 +71,9 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def test_bind(self):
         # test that binding a variable works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
         with self.event_loop():
             self.widget.bind("x", 1)
 
@@ -83,8 +84,9 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def test_execute_command(self):
         # test that executing a command works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "command_executed", count=1):
             with self.event_loop():
@@ -97,8 +99,9 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def test_execute_command_not_hidden(self):
         # test that executing a non-hidden command works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "command_executed", count=1):
             with self.event_loop():
@@ -111,8 +114,9 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def test_execute_file(self):
         # test that executing a file works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         # XXX inconsistent behaviour between backends
         # with self.assertTraitChanges(self.widget, 'command_executed', count=1):
@@ -127,8 +131,9 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def test_execute_file_not_hidden(self):
         # test that executing a file works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         # XXX inconsistent behaviour between backends
         # with self.assertTraitChanges(self.widget, 'command_executed', count=1):
@@ -142,9 +147,10 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
             self.widget.destroy()
 
     def test_get_history(self):
-        # test that executing a command works
+        # test that command history can be extracted
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.event_loop():
             self.widget.execute_command("x = 1", hidden=False)
@@ -158,9 +164,10 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
             self.widget.destroy()
 
     def test_set_history(self):
-        # test that executing a command works
+        # test that command history can be updated
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.event_loop():
             self.widget.set_history(["x = 1", "y = x + 1"], 1)
