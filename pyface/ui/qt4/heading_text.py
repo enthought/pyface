@@ -44,7 +44,6 @@ class HeadingText(MHeadingText, Widget):
         """ Set the text on the toolkit specific widget. """
         # Bold the text. Qt supports a limited subset of HTML for rich text.
         text = f"<b>{text}</b>"
-        print(text)
         self.control.setText(text)
 
     def _get_control_text(self):
