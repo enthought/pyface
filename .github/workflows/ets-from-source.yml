@@ -65,3 +65,31 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           run: edm run -- python etstool.py test --toolkit=${{ matrix.toolkit }}
+
+  notify-on-failure:
+    needs: test-with-edm
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack channel on failure
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: ${{ secrets.ETS_BOTS_SLACK_CHANNEL_ID }}
+          status: FAILED
+          color: danger
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_ACTION_SECRET }}
+
+  notify-on-success:
+    needs: test-with-edm
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack channel on success
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: ${{ secrets.ETS_BOTS_SLACK_CHANNEL_ID }}
+          status: SUCCESS
+          color: good
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_ACTION_SECRET }}
