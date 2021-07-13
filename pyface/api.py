@@ -70,9 +70,10 @@ Miscellaneous
 - :class:`~.Filter`
 - :class:`~.HeadingText`
 - :class:`~.ImageCache`
-- :class:`~.Sorter`
+- :class:`~.LayeredPanel`
 - :class:`~.PythonEditor`
 - :class:`~.PythonShell`
+- :class:`~.Sorter`
 
 Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
 only available if the ``pygments`` package is available in the Python
@@ -83,7 +84,6 @@ Wx-specific classes
 
 - :class:`~.ExpandablePanel`
 - :class:`~.ImageWidget`
-- :class:`~.LayeredPanel`
 - :class:`~.MDIApplicationWindow`
 - :class:`~.MDIWindowMenu`
 - :class:`~.MultiToolbarWindow`
