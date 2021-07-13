@@ -20,6 +20,7 @@ from numpy import array, frombuffer, reshape, ravel, dtype
 
 from traits.api import Bool, Str, Range, Enum, Instance, Event
 
+from pyface.ui_traits import Orientation
 from .widget import Widget
 from .image_resource import ImageResource
 
@@ -69,7 +70,7 @@ class ImageButton(Widget):
     style = Enum("button", "radio", "toolbar", "checkbox")
 
     # Orientation of the text relative to the image:
-    orientation = Enum("vertical", "horizontal")
+    orientation = Orientation()
 
     # Is the control selected ('radio' or 'checkbox' style)?
     selected = Bool(False)
