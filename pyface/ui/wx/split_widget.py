@@ -12,31 +12,18 @@
 """ Mix-in class for split widgets.
 """
 
-
 import wx
 
-
-from traits.api import Callable, Enum, Float, HasTraits, provides
-
+from traits.api import provides
 
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
 @provides(ISplitWidget)
-class SplitWidget(MSplitWidget, HasTraits):
+class SplitWidget(MSplitWidget):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
-
-    # 'ISplitWidget' interface ---------------------------------------------
-
-    direction = Enum("vertical", "vertical", "horizontal")
-
-    ratio = Float(0.5)
-
-    lhs = Callable
-
-    rhs = Callable
 
     # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.

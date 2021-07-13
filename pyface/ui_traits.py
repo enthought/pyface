@@ -334,3 +334,6 @@ Position = Enum("left", "right", "above", "below")
 
 #: The alignment of text within a control.
 Alignment = Enum("default", "left", "center", "right")
+
+#: Whether the orientation of a widget's contents is horizontal or vertical.
+Orientation = Enum("vertical", "horizontal")
