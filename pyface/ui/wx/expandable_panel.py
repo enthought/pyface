@@ -13,7 +13,7 @@
 
 import wx
 
-from traits.api import Instance
+from traits.api import Dict, Instance, Str
 
 
 from .expandable_header import ExpandableHeader
@@ -30,26 +30,27 @@ class ExpandablePanel(Widget):
     collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
     expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
 
+    #: A mapping from panel names to toolkit controls.
+    _layers = Dict(Str)
+
+    #: A mapping from panel names to header text.
+    _headers = Dict(Str)
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new LayeredPanel. """
 
+        create = traits.pop('create', True)
+
         # Base class constructor.
-        super().__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # The layers in the panel.
-        #
-        # { str name : wx.Window layer }
-        self._layers = {}
-        self._headers = {}
-
-        return
+        if create:
+            # Create the toolkit-specific control that represents the widget.
+            self.create()
 
     # ------------------------------------------------------------------------
     # 'Expandale' interface.
