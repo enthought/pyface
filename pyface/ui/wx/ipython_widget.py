@@ -17,6 +17,7 @@ import builtins
 import codeop
 import re
 import sys
+import warnings
 
 
 import IPython
@@ -344,6 +345,12 @@ class IPythonWidget(Widget):
     # or make it a sub-class of HasTraits.
     def __init__(self, parent, **traits):
         """ Creates a new pager. """
+
+        warnings.warn(
+            "the Wx IPython widget us deprecated and will be removed in a "
+            "future Pyface version",
+            PendingDeprecationWarning,
+        )
 
         # Base class constructor.
         super().__init__(**traits)

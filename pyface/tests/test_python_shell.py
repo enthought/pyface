@@ -46,7 +46,26 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = PythonShell(self.window.control)
+
+        self.assertIsNotNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_two_stage_create(self):
+        # test that create=False works
+        self.widget = PythonShell(create=False)
+
+        self.assertIsNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
+
         with self.event_loop():
             self.widget.destroy()
 

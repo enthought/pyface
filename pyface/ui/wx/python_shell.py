@@ -16,6 +16,7 @@ import builtins
 import os
 import sys
 import types
+import warnings
 
 
 from wx.py.shell import Shell as PyShellBase
@@ -52,17 +53,23 @@ class PythonShell(MPythonShell, Widget):
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
+        create = traits.pop("create", True)
+
         # Base class constructor.
-        super().__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # Set up to be notified whenever a Python statement is executed:
-        self.control.handlers.append(self._on_command_executed)
+        if create:
+            # Create the toolkit-specific control that represents the widget.
+            self.control = self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
@@ -171,6 +178,9 @@ class PythonShell(MPythonShell, Widget):
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
+
+        # Set up to be notified whenever a Python statement is executed:
+        shell.handlers.append(self._on_command_executed)
 
         return shell
 

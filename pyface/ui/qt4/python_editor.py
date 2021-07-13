@@ -9,6 +9,7 @@
 #
 # Thanks for using Enthought open source!
 
+import warnings
 
 from pyface.qt import QtCore, QtGui
 
@@ -46,9 +47,20 @@ class PythonEditor(MPythonEditor, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
+
+        create = traits.pop("create", True)
+
         super().__init__(parent=parent, **traits)
-        self._create()
+
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
