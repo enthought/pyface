@@ -124,6 +124,7 @@ class MSplitWidget(HasTraits):
         lhs : toolkit control
             The toolkit control for the lhs.
         """
+        raise NotImplementedError()
 
     def _create_rhs(self, parent):
         """ Creates the right hand/bottom panel depending on the direction.
@@ -138,3 +139,4 @@ class MSplitWidget(HasTraits):
         rhs : toolkit control
             The toolkit control for the rhs.
         """
+        raise NotImplementedError()
