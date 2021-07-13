@@ -68,8 +68,8 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.widget.destroy()
 
-    def test_message(self):
-        # test that create works with message
+    def test_text(self):
+        # test that create works with text
         with self.event_loop():
             self.widget = HeadingText(
                 self.window.control,
@@ -78,24 +78,19 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
             )
             self.widget.create()
 
+        self.assertEqual(self.widget.text, "Hello")
+        self.assertEqual(self.widget._get_control_text(), "Hello")
+
         with self.event_loop():
             self.widget.destroy()
 
     @unittest.skipUnless(is_wx, "Only Wx supports background images")
     def test_image(self):
-        # test that image works
-        # XXX this image doesn't make sense here, but that's fine
-        # XXX this isn't implemented in qt4 backend, but shouldn't fail
+        # test that image raises a deprecation warning
         with self.event_loop():
-            self.widget = HeadingText(
-                self.window.control, image=ImageResource("core.png")
-            )
-        with self.event_loop():
-            self.widget.destroy()
-
-    def test_level(self):
-        # test that create works with level
-        with self.event_loop():
-            self.widget = HeadingText(self.window.control, level=2)
-        with self.event_loop():
-            self.widget.destroy()
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = HeadingText(
+                    self.window.control,
+                    create=False,
+                    image=ImageResource("core.png"),
+                )

@@ -13,7 +13,7 @@
 
 from pyface.qt import QtGui
 
-from traits.api import observe, provides
+from traits.api import provides
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from .widget import Widget
@@ -21,37 +21,35 @@ from .widget import Widget
 
 @provides(IHeadingText)
 class HeadingText(MHeadingText, Widget):
-    """ The toolkit specific implementation of a HeadingText.  See the
-    IHeadingText interface for the API documentation.
+    """ The Qt-specific implementation of a HeadingText.
     """
 
     # ------------------------------------------------------------------------
-    # Private interface.
+    # 'IWidget' interface.
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
-
         control = QtGui.QLabel(parent)
-        control.setText(self.text)
         control.setSizePolicy(
             QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed
         )
         return control
 
-    def _set_text(self, text):
+    # ------------------------------------------------------------------------
+    # Private interface.
+    # ------------------------------------------------------------------------
+
+    def _set_control_text(self, text):
         """ Set the text on the toolkit specific widget. """
-
         # Bold the text. Qt supports a limited subset of HTML for rich text.
-        text = "<b>" + text + "</b>"
-
+        text = f"<b>{text}</b>"
+        print(text)
         self.control.setText(text)
 
-    # Trait event handlers -------------------------------------------------
-
-    @observe("text")
-    def _update_text(self, event):
-        """ Called when the text is changed. """
-        new = event.new
-        if self.control is not None:
-            self._set_text(new)
+    def _get_control_text(self):
+        """ Get the text on the toolkit specific widget. """
+        text = self.control.text()
+        # remove the bolding from the text
+        text = text[3:-4]
+        return text
