@@ -109,6 +109,7 @@ from .heading_text import HeadingText
 from .image_cache import ImageCache
 from .image_resource import ImageResource
 from .key_pressed_event import KeyPressedEvent
+from .layered_panel import LayeredPanel
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
 
@@ -147,7 +148,6 @@ from .widget import Widget
 
 from .expandable_panel import ExpandablePanel
 from .image_widget import ImageWidget
-from .layered_panel import LayeredPanel
 from .mdi_application_window import MDIApplicationWindow
 from .mdi_window_menu import MDIWindowMenu
 from .multi_toolbar_window import MultiToolbarWindow
