@@ -60,6 +60,10 @@ class DockPane(TaskPane, MDockPane):
         # pane is present in multiple tasks attached to the same window.
         control.setObjectName(self.task.id + ":" + self.id)
 
+        # Ensure that undocked ("floating") windows are visible on macOS
+        # when focus is switched, for consistency with Linux and Windows.
+        control.setAttribute(QtCore.Qt.WA_MacAlwaysShowToolWindow)
+
         # Configure the dock widget according to the DockPane settings.
         self._set_dock_features(event=None)
         self._set_dock_title(event=None)
