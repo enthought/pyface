@@ -63,7 +63,7 @@ class PythonShell(MPythonShell, Widget):
 
         if create:
             # Create the toolkit-specific control that represents the widget.
-            self.control = self.create()
+            self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
                 "in a future Pyface version, use create=False and explicitly "
