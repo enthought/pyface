@@ -14,6 +14,8 @@ A layered panel contains one or more named layers, with only one layer
 visible at any one time (think of a 'tab' control minus the tabs!).
 """
 
+import warnings
+
 from traits.api import Any, Dict, HasTraits, Interface, Str
 
 
@@ -97,3 +99,9 @@ class MLayeredPanel(HasTraits):
         if create:
             # Create the toolkit-specific control that represents the widget.
             self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
