@@ -31,6 +31,7 @@ from traits.api import (
     Type,
     Union,
 )
+from traits.observation.api import match
 
 
 from .grid_model import GridColumn, GridModel, GridSortEvent
@@ -686,7 +687,9 @@ class TraitGridModel(GridModel):
         if list is not None:
             for item in list:
                 item.observe(
-                    self._on_contained_trait_changed, remove=remove
+                    self._on_contained_trait_changed,
+                    match(lambda name, trait: True),
+                    remove=remove
                 )
 
     def __manage_column_listeners(self, collist, remove=False):
@@ -695,5 +698,7 @@ class TraitGridModel(GridModel):
             for col in collist:
                 if isinstance(col, TraitGridColumn):
                     col.observe(
-                        self._on_columns_changed, remove=remove
+                        self._on_columns_changed,
+                        match(lambda name, trait: True),
+                        remove=remove,
                     )
