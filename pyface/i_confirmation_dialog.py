@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for a dialog that prompts the user for confirmation. """
 
 
-# Enthought library imports.
-from traits.api import Bool, Enum, Instance, Unicode
+from traits.api import Bool, Enum, HasTraits, Instance, Str
 
-# Local imports.
+
 from pyface.constant import CANCEL, NO, YES
 from pyface.i_dialog import IDialog
 from pyface.i_image_resource import IImageResource
@@ -26,7 +22,7 @@ from pyface.i_image_resource import IImageResource
 class IConfirmationDialog(IDialog):
     """ The interface for a dialog that prompts the user for confirmation. """
 
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     #: Should the cancel button be displayed?
     cancel = Bool(False)
@@ -39,22 +35,22 @@ class IConfirmationDialog(IDialog):
 
     #: The message displayed in the body of the dialog (use the inherited
     #: 'title' trait to set the title of the dialog itself).
-    message = Unicode
+    message = Str()
 
     #: Some informative text to display below the main message
-    informative = Unicode
+    informative = Str()
 
     #: Some additional details that can be exposed by the user
-    detail = Unicode
+    detail = Str()
 
     #: The label for the 'no' button.  The default is toolkit specific.
-    no_label = Unicode
+    no_label = Str()
 
     #: The label for the 'yes' button.  The default is toolkit specific.
-    yes_label = Unicode
+    yes_label = Str()
 
 
-class MConfirmationDialog(object):
+class MConfirmationDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """

@@ -1,19 +1,28 @@
-# Enthought library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from traits.api import Instance
 
-# Local imports.
+
 from pyface.tasks.dock_pane import DockPane
 
 
 class EnamlDockPane(DockPane):
     """ Create a Dock pane for Enaml Components. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'EnamlDockPane' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     #: The Enaml component defining the contents of the DockPane.
-    component = Instance('enaml.widgets.toolkit_object.ToolkitObject')
+    component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
 
     def create_component(self):
         """ Return an Enaml component defining the contents of the DockPane.
@@ -22,11 +31,11 @@ class EnamlDockPane(DockPane):
         -------
         component : ToolkitObject
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Return the toolkit-specific control that represents the pane. """
@@ -45,9 +54,9 @@ class EnamlDockPane(DockPane):
 
         return contents
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane. """

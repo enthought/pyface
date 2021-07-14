@@ -1,26 +1,34 @@
-# Standard library imports.
-import sys
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import logging
 
-# Enthought library imports.
-from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
-    MEditorAreaPane
-from traits.api import on_trait_change, provides
 
-# System library imports.
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
+from traits.api import observe, provides
+
+
 import wx
 from pyface.wx.aui import aui, PyfaceAuiNotebook
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # Logging
 logger = logging.getLogger(__name__)
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'EditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
@@ -29,11 +37,16 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     See the IEditorAreaPane interface for API documentation.
     """
 
-    style = aui.AUI_NB_WINDOWLIST_BUTTON|aui.AUI_NB_TAB_MOVE|aui.AUI_NB_SCROLL_BUTTONS|aui.AUI_NB_CLOSE_ON_ACTIVE_TAB
+    style = (
+        aui.AUI_NB_WINDOWLIST_BUTTON
+        | aui.AUI_NB_TAB_MOVE
+        | aui.AUI_NB_SCROLL_BUTTONS
+        | aui.AUI_NB_CLOSE_ON_ACTIVE_TAB
+    )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -44,7 +57,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control = control = PyfaceAuiNotebook(parent, agwStyle=self.style)
 
         # Connect to the widget's signals.
-        control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._update_active_editor)
+        control.Bind(
+            aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._update_active_editor
+        )
         control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CLOSE, self._close_requested)
 
     def destroy(self):
@@ -53,18 +68,18 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         for editor in self.editors:
             self.remove_editor(editor)
 
-        super(EditorAreaPane, self).destroy()
+        super().destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
         index = self.control.GetPageIndex(editor.control)
         self.control.SetSelection(index)
-        
+
     def add_editor(self, editor):
         """ Adds an editor to the pane.
         """
@@ -77,7 +92,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         except AttributeError:
             pass
         self.editors.append(editor)
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
 
         # The EVT_AUINOTEBOOK_PAGE_CHANGED event is not sent when the first
         # editor is added.
@@ -93,22 +108,22 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.RemovePage(index)
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
         if not self.editors:
             self.active_editor = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
         """ Return a tab label for an editor.
         """
         label = editor.name
         if editor.dirty:
-            label = '*' + label
+            label = "*" + label
         if not label:
-            label = " " # bug in agw that fails on empty label
+            label = " "  # bug in agw that fails on empty label
         return label
 
     def _get_editor_with_control(self, control):
@@ -119,25 +134,27 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
                 return editor
         return None
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    @on_trait_change('editors:[dirty, name]')
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         index = self.control.GetPageIndex(editor.control)
         self.control.SetPageText(index, self._get_label(editor))
 
-    @on_trait_change('editors:tooltip')
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         self.control.SetPageToolTip(editor.control, editor.tooltip)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _close_requested(self, evt):
         index = evt.GetSelection()
         logger.debug("_close_requested: index=%d" % index)
         control = self.control.GetPage(index)
         editor = self._get_editor_with_control(control)
-        
+
         # Veto the event even though we are going to delete the tab, otherwise
         # the notebook will delete the editor wx control and the call to
         # editor.close() will fail.  IEditorAreaPane.remove_editor() needs
@@ -145,7 +162,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         # editors.
         evt.Veto()
         editor.close()
-        
+
     def _update_active_editor(self, evt):
         index = evt.GetSelection()
         logger.debug("index=%d" % index)
@@ -156,8 +173,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             control = self.control.GetPage(index)
             self.active_editor = self._get_editor_with_control(control)
 
-    @on_trait_change('hide_tab_bar')
-    def _update_tab_bar(self):
+    @observe("hide_tab_bar")
+    def _update_tab_bar(self, event):
         if self.control is not None:
-            visible = self.control.GetPageCount() > 1 if self.hide_tab_bar else True
-            pass # Can't actually hide the tab bar on wx.aui
+            pass  # Can't actually hide the tab bar on wx.aui

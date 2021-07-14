@@ -1,13 +1,15 @@
-#
-# (C) Copyright 2013 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This file is open source software distributed according to the terms in
-# LICENSE.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
+# Thanks for using Enthought open source!
 
 import unittest
-from six.moves.cPickle import dumps
+from pickle import dumps
 
 from pyface.qt import QtCore
 from ..mimedata import PyMimeData, str2bytes
@@ -26,8 +28,9 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertEqual(md._local_instance, 0)
         self.assertTrue(md.hasFormat(PyMimeData.MIME_TYPE))
         self.assertFalse(md.hasFormat(PyMimeData.NOPICKLE_MIME_TYPE))
-        self.assertEqual(md.data(PyMimeData.MIME_TYPE).data(),
-                         dumps(int)+dumps(0))
+        self.assertEqual(
+            md.data(PyMimeData.MIME_TYPE).data(), dumps(int) + dumps(0)
+        )
 
     def test_nopickle(self):
         md = PyMimeData(data=0, pickle=False)
@@ -36,7 +39,7 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertFalse(md.hasFormat(PyMimeData.MIME_TYPE))
         self.assertEqual(
             md.data(PyMimeData.NOPICKLE_MIME_TYPE).data(),
-            str2bytes(str(id(0)))
+            str2bytes(str(id(0))),
         )
 
     def test_cant_pickle(self):
@@ -47,7 +50,7 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertFalse(md.hasFormat(PyMimeData.MIME_TYPE))
         self.assertEqual(
             md.data(PyMimeData.NOPICKLE_MIME_TYPE).data(),
-            str2bytes(str(id(unpicklable)))
+            str2bytes(str(id(unpicklable))),
         )
 
     def test_coerce_pymimedata(self):
@@ -72,7 +75,9 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertEqual(md._local_instance, 0)
         self.assertTrue(md.hasFormat(PyMimeData.MIME_TYPE))
         self.assertFalse(md.hasFormat(PyMimeData.NOPICKLE_MIME_TYPE))
-        self.assertEqual(md.data(PyMimeData.MIME_TYPE).data(), dumps(int)+dumps(0))
+        self.assertEqual(
+            md.data(PyMimeData.MIME_TYPE).data(), dumps(int) + dumps(0)
+        )
 
     def test_coerce_unpicklable(self):
         unpicklable = lambda: None
@@ -86,7 +91,9 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertEqual(md._local_instance, [0])
         self.assertTrue(md.hasFormat(PyMimeData.MIME_TYPE))
         self.assertFalse(md.hasFormat(PyMimeData.NOPICKLE_MIME_TYPE))
-        self.assertEqual(md.data(PyMimeData.MIME_TYPE).data(), dumps(list)+dumps([0]))
+        self.assertEqual(
+            md.data(PyMimeData.MIME_TYPE).data(), dumps(list) + dumps([0])
+        )
 
     def test_coerce_list_pymimedata(self):
         md = PyMimeData(data=0)
@@ -94,8 +101,9 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertEqual(md2._local_instance, [0])
         self.assertTrue(md2.hasFormat(PyMimeData.MIME_TYPE))
         self.assertFalse(md2.hasFormat(PyMimeData.NOPICKLE_MIME_TYPE))
-        self.assertEqual(md2.data(PyMimeData.MIME_TYPE).data(),
-                         dumps(list)+dumps([0]))
+        self.assertEqual(
+            md2.data(PyMimeData.MIME_TYPE).data(), dumps(list) + dumps([0])
+        )
 
     def test_coerce_list_pymimedata_nopickle(self):
         md = PyMimeData(data=0, pickle=False)
@@ -118,7 +126,9 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertTrue(isinstance(md2, PMDSubclass))
         self.assertTrue(md2.hasFormat(PyMimeData.MIME_TYPE))
         self.assertFalse(md2.hasFormat(PyMimeData.NOPICKLE_MIME_TYPE))
-        self.assertEqual(md2.data(PyMimeData.MIME_TYPE).data(), dumps(int)+dumps(0))
+        self.assertEqual(
+            md2.data(PyMimeData.MIME_TYPE).data(), dumps(int) + dumps(0)
+        )
 
     def test_instance(self):
         md = PyMimeData(data=0)
@@ -153,5 +163,5 @@ class PyMimeDataTestCase(unittest.TestCase):
         self.assertEqual(md.instanceType(), None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

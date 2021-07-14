@@ -1,4 +1,13 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
@@ -6,11 +15,11 @@ from ..heading_text import HeadingText
 from ..split_application_window import SplitApplicationWindow
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -30,26 +39,26 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_open_close(self):
         # test that opening and closing works as expected
-        with self.assertTraitChanges(self.window, 'opening', count=1):
-            with self.assertTraitChanges(self.window, 'opened', count=1):
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():
                     self.window.open()
 
-        with self.assertTraitChanges(self.window, 'closing', count=1):
-            with self.assertTraitChanges(self.window, 'closed', count=1):
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
                 with self.event_loop():
                     self.window.close()
 
     def test_horizontal_split(self):
         # test that horizontal split works
-        self.window.direction = 'horizontal'
-        with self.assertTraitChanges(self.window, 'opening', count=1):
-            with self.assertTraitChanges(self.window, 'opened', count=1):
+        self.window.direction = "horizontal"
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():
                     self.window.open()
 
-        with self.assertTraitChanges(self.window, 'closing', count=1):
-            with self.assertTraitChanges(self.window, 'closed', count=1):
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
                 with self.event_loop():
                     self.window.close()
 
@@ -57,25 +66,25 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that contents works
         self.window.lhs = HeadingText
         self.window.rhs = HeadingText
-        with self.assertTraitChanges(self.window, 'opening', count=1):
-            with self.assertTraitChanges(self.window, 'opened', count=1):
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():
                     self.window.open()
 
-        with self.assertTraitChanges(self.window, 'closing', count=1):
-            with self.assertTraitChanges(self.window, 'closed', count=1):
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
                 with self.event_loop():
                     self.window.close()
 
     def test_ratio(self):
         # test that ratio split works
         self.window.ratio = 0.25
-        with self.assertTraitChanges(self.window, 'opening', count=1):
-            with self.assertTraitChanges(self.window, 'opened', count=1):
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():
                     self.window.open()
 
-        with self.assertTraitChanges(self.window, 'closing', count=1):
-            with self.assertTraitChanges(self.window, 'closed', count=1):
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
                 with self.event_loop():
                     self.window.close()

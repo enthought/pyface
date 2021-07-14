@@ -1,15 +1,13 @@
-# Copyright (c) 2019, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
 import unittest
 
@@ -18,13 +16,12 @@ from .field_mixin import FieldMixin
 
 
 class TestSpinField(FieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return SpinField(
             parent=self.parent.control,
             value=1,
             bounds=(0, 100),
-            tooltip='Dummy',
+            tooltip="Dummy",
         )
 
     # Tests ------------------------------------------------------------------
@@ -40,7 +37,7 @@ class TestSpinField(FieldMixin, unittest.TestCase):
     def test_spin_field_set(self):
         self._create_widget_control()
 
-        with self.assertTraitChanges(self.widget, 'value', count=1):
+        with self.assertTraitChanges(self.widget, "value", count=1):
             self.widget._set_control_value(5)
             self.gui.process_events()
 

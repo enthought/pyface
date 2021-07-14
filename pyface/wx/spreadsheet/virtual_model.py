@@ -1,31 +1,36 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
-from __future__ import print_function
-from wx.grid import Grid, PyGridTableBase, GridCellAttr, GridTableMessage, GridCellFloatRenderer
-from wx.grid import GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED
-from wx.grid import GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED
-from wx.grid import GRIDTABLE_REQUEST_VIEW_GET_VALUES
-from wx.grid import GRID_VALUE_BOOL
-from wx import ALIGN_LEFT, ALIGN_CENTRE, Colour
+# Thanks for using Enthought open source!
 
-from .default_renderer import DefaultRenderer
+
+from wx.grid import (
+    PyGridTableBase,
+    GridCellAttr,
+    GridTableMessage,
+)
+from wx.grid import (
+    GRIDTABLE_NOTIFY_ROWS_DELETED,
+    GRIDTABLE_NOTIFY_ROWS_APPENDED,
+)
+from wx.grid import (
+    GRIDTABLE_NOTIFY_COLS_DELETED,
+    GRIDTABLE_NOTIFY_COLS_APPENDED,
+)
+from wx.grid import GRIDTABLE_REQUEST_VIEW_GET_VALUES
+
 
 class VirtualModel(PyGridTableBase):
     """
     A custom wxGrid Table that expects a user supplied data source.
     THIS CLASS IS NOT LIMITED TO ONLY DISPLAYING LOG DATA!
     """
+
     def __init__(self, data, column_names):
         """data is currently a list of the form
         [(rowname, dictionary),
@@ -35,16 +40,16 @@ class VirtualModel(PyGridTableBase):
         PyGridTableBase.__init__(self)
         self.set_data_source(data)
         self.colnames = column_names
-        #self.renderers = {"DEFAULT_RENDERER":DefaultRenderer()}
-        #self.editors = {}
+        # self.renderers = {"DEFAULT_RENDERER":DefaultRenderer()}
+        # self.editors = {}
 
         # we need to store the row length and col length to see if the table has changed size
         self._rows = self.GetNumberRows()
         self._cols = self.GetNumberCols()
 
-#-------------------------------------------------------------------------------
-# Implement/override the methods from PyGridTableBase
-#-------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
+    # Implement/override the methods from PyGridTableBase
+    # -------------------------------------------------------------------------------
 
     def GetNumberCols(self):
         return len(self.colnames)
@@ -65,12 +70,12 @@ class VirtualModel(PyGridTableBase):
         return self._data[row][1].get(self.GetColLabelValue(col), "")
 
     def SetValue(self, row, col, value):
-        print('Setting value %d %d %s' % (row, col, value))
-        print('Before ', self.GetValue(row, col))
+        print("Setting value %d %d %s" % (row, col, value))
+        print("Before ", self.GetValue(row, col))
         self._data[row][1][self.GetColLabelValue(col)] = value
-        print('After ', self.GetValue(row, col))
+        print("After ", self.GetValue(row, col))
 
-    ''' def GetTypeName(self, row, col):
+    """ def GetTypeName(self, row, col):
         if col == 2 or col == 6:
             res = "MeasurementUnits"
         elif col == 7:
@@ -78,11 +83,11 @@ class VirtualModel(PyGridTableBase):
         else:
             res = self.base_GetTypeName(row, col)
         # print 'asked for type of col ', col, ' ' ,res
-        return res'''
+        return res"""
 
-#-------------------------------------------------------------------------------
-# Accessors for the Enthought data model (a dict of dicts)
-#-------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
+    # Accessors for the Enthought data model (a dict of dicts)
+    # -------------------------------------------------------------------------------
     def get_data_source(self):
         """ The data structure we provide the data in.
         """
@@ -92,9 +97,9 @@ class VirtualModel(PyGridTableBase):
         self._data = source
         return
 
-#-------------------------------------------------------------------------------
-# Methods controlling updating and editing of cells in grid
-#-------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------
+    # Methods controlling updating and editing of cells in grid
+    # -------------------------------------------------------------------------------
 
     def ResetView(self, grid):
         """
@@ -104,14 +109,24 @@ class VirtualModel(PyGridTableBase):
         ##print 'VirtualModel.reset_view'
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
-            (self._rows, self.GetNumberRows(), GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED),
-            (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED),
+            (
+                self._rows,
+                self.GetNumberRows(),
+                GRIDTABLE_NOTIFY_ROWS_DELETED,
+                GRIDTABLE_NOTIFY_ROWS_APPENDED,
+            ),
+            (
+                self._cols,
+                self.GetNumberCols(),
+                GRIDTABLE_NOTIFY_COLS_DELETED,
+                GRIDTABLE_NOTIFY_COLS_APPENDED,
+            ),
         ]:
             if new < current:
-                msg = GridTableMessage(self,delmsg,new,current-new)
+                msg = GridTableMessage(self, delmsg, new, current - new)
                 grid.ProcessTableMessage(msg)
             elif new > current:
-                msg = GridTableMessage(self,addmsg,new-current)
+                msg = GridTableMessage(self, addmsg, new - current)
                 grid.ProcessTableMessage(msg)
                 self.UpdateValues(grid)
         grid.EndBatch()
@@ -127,24 +142,22 @@ class VirtualModel(PyGridTableBase):
         grid.AdjustScrollbars()
         grid.ForceRefresh()
 
-
     def UpdateValues(self, grid):
         """Update all displayed values"""
         # This sends an event to the grid table to update all of the values
         msg = GridTableMessage(self, GRIDTABLE_REQUEST_VIEW_GET_VALUES)
         grid.ProcessTableMessage(msg)
 
-    def GetAttr88(self, row, col, someExtraParameter ):
-        print('Overridden GetAttr ', row, col)
+    def GetAttr88(self, row, col, someExtraParameter):
+        print("Overridden GetAttr ", row, col)
         """Part of a workaround to avoid use of attributes, queried by _PropertyGrid's IsCurrentCellReadOnly"""
-        #property = self.GetPropertyForCoordinate( row, col )
-        #object = self.GetObjectForCoordinate( row, col )
-        #if property.ReadOnly( object ):
+        # property = self.GetPropertyForCoordinate( row, col )
+        # object = self.GetObjectForCoordinate( row, col )
+        # if property.ReadOnly( object ):
         attr = GridCellAttr()
-        attr.SetReadOnly( 1 )
+        attr.SetReadOnly(1)
         return attr
-        #return None
-
+        # return None
 
     def _updateColAttrs88(self, grid):
         """
@@ -153,18 +166,18 @@ class VirtualModel(PyGridTableBase):
         """
         for col, colname in enumerate(self.colnames):
             attr = GridCellAttr()
-            #attr.SetAlignment(ALIGN_LEFT, ALIGN_CENTRE)
+            # attr.SetAlignment(ALIGN_LEFT, ALIGN_CENTRE)
             if colname in self.renderers:
                 # renderer = self.plugins[colname](self)
                 renderer = self.renderers[colname]
-                #if renderer.colSize:
+                # if renderer.colSize:
                 #    grid.SetColSize(col, renderer.colSize)
-                #if renderer.rowSize:
+                # if renderer.rowSize:
                 #    grid.SetDefaultRowSize(renderer.rowSize)
                 # attr.SetReadOnly(False)
                 # attr.SetRenderer(renderer)
             else:
-                renderer = self.renderers["DEFAULT_RENDERER"] # .Clone()
+                renderer = self.renderers["DEFAULT_RENDERER"]  # .Clone()
 
             attr.SetRenderer(renderer)
 
@@ -180,20 +193,20 @@ class VirtualModel(PyGridTableBase):
             grid.SetColAttr(col, attr)
         return
 
-#------------------------------------------------------------------------------
-# code to manipulate the table (non wx related)
-#------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
+    # code to manipulate the table (non wx related)
+    # ------------------------------------------------------------------------------
 
     def AppendRow(self, row):
         """ Append a tupe containing (name, data)
         """
         name, data = row
-        print('Appending ', name)
+        print("Appending ", name)
         self._data.append(row)
-        '''entry = {}
+        """entry = {}
         for name in self.colnames:
             entry[name] = "Appended_%i"%row
-        return'''
+        return"""
 
     def DeleteCols88(self, cols):
         """
@@ -207,7 +220,7 @@ class VirtualModel(PyGridTableBase):
         cols = cols[:]
         cols.sort()
         for i in cols:
-            self.colnames.pop(i-deleteCount)
+            self.colnames.pop(i - deleteCount)
             # we need to advance the delete count
             # to make sure we delete the right columns
             deleteCount += 1
@@ -216,7 +229,7 @@ class VirtualModel(PyGridTableBase):
 
     def DeleteRow(self, row):
         name, data = row
-        print('Deleting ', name)
+        print("Deleting ", name)
         self._data.remove(row)
 
     def DeleteRows88(self, rows):
@@ -228,7 +241,7 @@ class VirtualModel(PyGridTableBase):
         rows = rows[:]
         rows.sort()
         for i in rows:
-            self._data.pop(i-deleteCount)
+            self._data.pop(i - deleteCount)
             # we need to advance the delete count
             # to make sure we delete the right rows
             deleteCount += 1

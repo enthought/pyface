@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all node types. """
 
 
-# Enthought library imports.
-from traits.api import Any, HasPrivateTraits, Instance, List
+from traits.api import Any, HasPrivateTraits, Instance
 from pyface.api import ImageResource
-from pyface.action.api import Action, ActionManagerItem, Group
+from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
 
 
@@ -25,20 +21,20 @@ class NodeType(HasPrivateTraits):
     """ The base class for all node types. """
 
     # The default image used to represent nodes that DO NOT allow children.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
     # The default image used to represent nodes that allow children and are NOT
     # expanded.
-    CLOSED_FOLDER = ImageResource('closed_folder')
+    CLOSED_FOLDER = ImageResource("closed_folder")
 
     # The default image used to represent nodes that allow children and ARE
     # expanded.
-    OPEN_FOLDER = ImageResource('open_folder')
+    OPEN_FOLDER = ImageResource("open_folder")
 
-    #### 'NodeType' interface #################################################
+    # 'NodeType' interface -------------------------------------------------
 
     # The node manager that the type belongs to.
-    node_manager = Instance('pyface.tree.node_manager.NodeManager')
+    node_manager = Instance("pyface.tree.node_manager.NodeManager")
 
     # The image used to represent nodes that DO NOT allow children.
     image = Instance(ImageResource)
@@ -52,7 +48,7 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).
-    actions = Any#List
+    actions = Any  # List
 
     # The default action for nodes of this type.  The default action is
     # performed when a node is activated (i.e., double-clicked).
@@ -60,18 +56,18 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus for creating new children within nodes
     # of this type (shown in the 'New' menu of the context menu).
-    new_actions = Any#List
+    new_actions = Any  # List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### These methods are specific to the 'NodeType' interface ###############
+    # These methods are specific to the 'NodeType' interface ---------------
 
     def is_type_for(self, node):
         """ Returns True if a node is deemed to be of this type. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def allows_children(self, node):
         """ Does the node allow children (ie. a folder vs a file). """
@@ -86,19 +82,14 @@ class NodeType(HasPrivateTraits):
     def get_context_menu(self, node):
         """ Returns the context menu for a node. """
 
-        sat = Group(id='SystemActionsTop')
-        nsa = Group(id='NodeSpecificActions')
-        sab = Group(id='SystemActionsBottom')
+        sat = Group(id="SystemActionsTop")
+        nsa = Group(id="NodeSpecificActions")
+        sab = Group(id="SystemActionsBottom")
 
         # The 'New' menu.
         new_actions = self.get_new_actions(node)
         if new_actions is not None and len(new_actions) > 0:
-            sat.append(
-                MenuManager(
-                    name = 'New',
-                    *new_actions
-                ),
-            )
+            sat.append(MenuManager(name="New", *new_actions))
 
         # Node-specific actions.
         actions = self.get_actions(node)
@@ -155,7 +146,7 @@ class NodeType(HasPrivateTraits):
 
         return None
 
-    #### These methods are exactly the same as the 'TreeModel' interface ######
+    # These methods are exactly the same as the 'TreeModel' interface -----#
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.
@@ -175,7 +166,7 @@ class NodeType(HasPrivateTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
@@ -194,22 +185,22 @@ class NodeType(HasPrivateTraits):
     def drop(self, obj, data):
         """ Drops an object onto a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node. """
 
         if self.allows_children(node):
             if expanded:
-                order = ['open_image', 'closed_image', 'image']
+                order = ["open_image", "closed_image", "image"]
                 default = self.OPEN_FOLDER
 
             else:
-                order = ['closed_image', 'open_image', 'image']
+                order = ["closed_image", "open_image", "image"]
                 default = self.CLOSED_FOLDER
 
         else:
-            order = ['image', 'open_image', 'closed_image']
+            order = ["image", "open_image", "closed_image"]
             default = self.DOCUMENT
 
         # Use the search order to look for a trait that is NOT None.
@@ -278,5 +269,3 @@ class NodeType(HasPrivateTraits):
         """ Returns True if the node is expandanble, otherwise False. """
 
         return True
-
-#### EOF ######################################################################

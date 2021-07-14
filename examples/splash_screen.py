@@ -1,6 +1,5 @@
 """Example of using a splash screen (and the use of pyface Timer)."""
 
-from __future__ import print_function
 
 import time
 
@@ -10,7 +9,7 @@ from pyface.action.api import Action, MenuManager, MenuBarManager
 from traits.api import Any, Int
 
 
-splash_screen = SplashScreen(image=ImageResource('images/splash'))
+splash_screen = SplashScreen(image=ImageResource("images/splash"))
 
 
 class MainWindow(ApplicationWindow):
@@ -20,21 +19,21 @@ class MainWindow(ApplicationWindow):
     my_timer = Any()
 
     # Count each time the timer task executes.
-    counter = Int
+    counter = Int()
 
     def __init__(self, **traits):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='Start Timer', on_perform=self._start_timer),
-                Action(name='Stop Timer', on_perform=self._stop_timer),
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                Action(name="Start Timer", on_perform=self._start_timer),
+                Action(name="Stop Timer", on_perform=self._stop_timer),
+                Action(name="E&xit", on_perform=self.close),
+                name="&File",
             )
         )
 
@@ -55,7 +54,6 @@ class MainWindow(ApplicationWindow):
         if self.my_timer is not None:
             self.my_timer.Stop()
 
-
     def _timer_task(self):
         """The method run periodically by the timer."""
 
@@ -71,7 +69,10 @@ if __name__ == "__main__":
     window = MainWindow()
 
     # Simulate a busy window initialization.
-    time.sleep(5)
+    for i in range(5):
+        gui.process_events()
+        time.sleep(1)
+
     window.open()
 
     # Start the GUI event loop!

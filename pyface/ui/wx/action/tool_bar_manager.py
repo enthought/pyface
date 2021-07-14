@@ -1,30 +1,25 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ The wx specific implementation of the tool bar manager.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
-# Local imports.
-from pyface.wx.aui import aui
+
+from pyface.wx.aui import aui as AUI
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -32,7 +27,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -44,10 +39,10 @@ class ToolBarManager(ActionManager):
     image_size = Tuple((16, 16))
 
     # The toolbar name (used to distinguish multiple toolbars).
-    name = Str('ToolBar')
+    name = Str("ToolBar")
 
     # The orientation of the toolbar.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
@@ -55,20 +50,20 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(False)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
 
         # Base class contructor.
-        super(ToolBarManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.
@@ -76,12 +71,9 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
-
-    #### Trait change handlers ################################################
-    #### Methods ##############################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None, aui=False):
         """ Creates a tool bar. """
@@ -95,24 +87,28 @@ class ToolBarManager(ActionManager):
 
         # Determine the wx style for the tool bar based on any optional
         # settings.
-        style = wx.NO_BORDER | wx.TB_FLAT | wx.CLIP_CHILDREN
-
-        if self.show_tool_names:
-            style |= wx.TB_TEXT
-
-        if self.orientation == 'horizontal':
-            style |= wx.TB_HORIZONTAL
-
-        else:
-            style |= wx.TB_VERTICAL
-
-        if not self.show_divider:
-            style |= wx.TB_NODIVIDER
-
-        # Create the control.
+        style = wx.NO_BORDER | wx.CLIP_CHILDREN
         if aui:
-            tool_bar = _AuiToolBar(self, parent, -1, style=style)
+            aui_style = AUI.AUI_TB_PLAIN_BACKGROUND
+            if self.show_tool_names:
+                aui_style |= AUI.AUI_TB_TEXT
+            if self.orientation != "horizontal":
+                aui_style |= AUI.AUI_TB_VERTICAL
+            if not self.show_divider:
+                style |= wx.TB_NODIVIDER
+            tool_bar = _AuiToolBar(
+                self, parent, -1, style=style, agwStyle=aui_style
+            )
         else:
+            style |= wx.TB_FLAT
+            if self.show_tool_names:
+                style |= wx.TB_TEXT
+            if self.orientation == "horizontal":
+                style |= wx.TB_HORIZONTAL
+            else:
+                style |= wx.TB_VERTICAL
+            if not self.show_divider:
+                style |= wx.TB_NODIVIDER
             tool_bar = _ToolBar(self, parent, -1, style=style)
 
         # fixme: Setting the tool bitmap size seems to be the only way to
@@ -132,9 +128,9 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -155,10 +151,8 @@ class ToolBarManager(ActionManager):
                         tool_bar,
                         self._image_cache,
                         controller,
-                        self.show_tool_names
+                        self.show_tool_names,
                     )
-
-        return
 
     def _wx_set_initial_tool_state(self, tool_bar):
         """ Workaround for the wxPython tool bar bug.
@@ -173,12 +167,14 @@ class ToolBarManager(ActionManager):
             for item in group.items:
                 # If the group is a radio group,  set the initial checked state
                 # of every tool in it.
-                if item.action.style == 'radio':
+                if item.action.style == "radio":
                     if item.control_id is not None:
                         # Only set checked state if control has been created.
                         # Using extra_actions of tasks, it appears that this
                         # may be called multiple times.
-                        tool_bar.ToggleTool(item.control_id, item.action.checked)
+                        tool_bar.ToggleTool(
+                            item.control_id, item.action.checked
+                        )
                         checked = checked or item.action.checked
 
                 # Every item in a radio group MUST be 'radio' style, so we
@@ -193,15 +189,13 @@ class ToolBarManager(ActionManager):
                 if not checked and len(group.items) > 0:
                     group.items[0].action.checked = True
 
-        return
-
 
 class _ToolBar(wx.ToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
@@ -212,57 +206,53 @@ class _ToolBar(wx.ToolBar):
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_enable_tool_bar(self, new)
+        event.object.window._wx_enable_tool_bar(self, event.new)
 
-        return
-
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_show_tool_bar(self, new)
-
-        return
+        event.object.window._wx_show_tool_bar(self, event.new)
 
 
-class _AuiToolBar(aui.AuiToolBar):
+class _AuiToolBar(AUI.AuiToolBar):
     """ The toolkit-specific tool bar implementation for AUI windows. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def __init__(self, tool_bar_manager, parent, id, style):
+    def __init__(self, tool_bar_manager, parent, id, style, agwStyle):
         """ Constructor. """
 
-        aui.AuiToolBar.__init__(self, parent, -1, style=style)
+        super().__init__(parent, -1, style=style, agwStyle=agwStyle)
 
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         # we need to defer hiding tools until first time Realize is called so
@@ -275,14 +265,12 @@ class _AuiToolBar(aui.AuiToolBar):
         # removed from the toolbar the item would be garbage collected.
         self.tool_map = {}
 
-        return
-
     def Realize(self):
         if len(self.tool_map) == 0:
             for pos in range(self.GetToolsCount()):
                 tool = self.GetToolByPos(pos)
                 self.tool_map[tool.GetId()] = (pos, tool)
-        aui.AuiToolBar.Realize(self)
+        AUI.AuiToolBar.Realize(self)
         if len(self.initially_hidden_tool_ids) > 0:
             for tool_id in self.initially_hidden_tool_ids:
                 self.RemoveTool(tool_id)
@@ -304,30 +292,56 @@ class _AuiToolBar(aui.AuiToolBar):
             self.EnableTool(tool_id, True)
             self.Realize()
             # Update the toolbar in the AUI manager to force toolbar resize
-            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+            try:
+                wx.CallAfter(
+                    self.tool_bar_manager.controller.task.window._aui_manager.Update
+                )
+            except:
+                pass
         elif not state and tool is not None:
             self.RemoveTool(tool_id)
             # Update the toolbar in the AUI manager to force toolbar resize
-            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+            try:
+                wx.CallAfter(
+                    self.tool_bar_manager.controller.task.window._aui_manager.Update
+                )
+            except:
+                pass
 
     def InsertToolInOrder(self, tool_id):
         orig_pos, tool = self.tool_map[tool_id]
+        pos = -1
         for pos in range(self.GetToolsCount()):
-            existing_tool = self.GetToolByPos(pos)
-            existing_id = existing_tool.GetId()
             existing_orig_pos, _ = self.tool_map[tool_id]
             if existing_orig_pos > orig_pos:
                 break
-        self.InsertToolItem(pos+1, tool)
+        self.InsertToolItem(pos + 1, tool)
 
+    ## Additional convenience functions for the normal AGW AUI toolbar
 
-    ##### Additional convenience functions for the normal AGW AUI toolbar
-
-    def AddLabelTool(self, id, label, bitmap, bmpDisabled, kind, shortHelp,
-                     longHelp, clientData):
+    def AddLabelTool(
+        self,
+        id,
+        label,
+        bitmap,
+        bmpDisabled,
+        kind,
+        shortHelp,
+        longHelp,
+        clientData,
+    ):
         "The full AddTool() function."
-        return self.AddTool(id, label, bitmap, bmpDisabled, kind, shortHelp,
-                            longHelp, clientData, None)
+        return self.AddTool(
+            id,
+            label,
+            bitmap,
+            bmpDisabled,
+            kind,
+            shortHelp,
+            longHelp,
+            clientData,
+            None,
+        )
 
     def InsertToolItem(self, pos, tool):
         self._items[pos:pos] = [tool]
@@ -350,7 +364,6 @@ class _AuiToolBar(aui.AuiToolBar):
 
         return False
 
-
     def RemoveTool(self, tool_id):
         """
         Removes the specified tool from the toolbar but doesn't delete it.
@@ -370,39 +383,45 @@ class _AuiToolBar(aui.AuiToolBar):
 
         return False
 
-    FindById = aui.AuiToolBar.FindTool
+    FindById = AUI.AuiToolBar.FindTool
 
-    GetToolState = aui.AuiToolBar.GetToolToggled
+    GetToolState = AUI.AuiToolBar.GetToolToggled
 
-    GetToolsCount = aui.AuiToolBar.GetToolCount
+    GetToolsCount = AUI.AuiToolBar.GetToolCount
 
     def GetToolByPos(self, pos):
         return self._items[pos]
 
     def OnSize(self, event):
         # Quickly short-circuit if the toolbar isn't realized
-        if not hasattr(self, '_absolute_min_size'):
+        if not hasattr(self, "_absolute_min_size"):
             return
 
-        aui.AuiToolBar.OnSize(self, event)
+        AUI.AuiToolBar.OnSize(self, event)
 
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.controller.task.window._wx_enable_tool_bar(self, new)
+        try:
+            event.object.controller.task.window._wx_enable_tool_bar(
+                self, event.new
+            )
+        except:
 
-        return
+            pass
 
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.controller.task.window._wx_show_tool_bar(self, new)
+        try:
+            event.object.controller.task.window._wx_show_tool_bar(
+                self, event.new
+            )
+        except:
 
+            pass
         return
-
-#### EOF ######################################################################

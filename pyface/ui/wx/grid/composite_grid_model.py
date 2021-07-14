@@ -1,52 +1,47 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Enthought library imports.
-from traits.api import Dict, List, Trait
 
-# local imports
+from traits.api import Dict, Instance, List, Union
+
+
 from .grid_model import GridModel, GridRow
+
 
 class CompositeGridModel(GridModel):
     """ A CompositeGridModel is a model whose underlying data is
     a collection of other grid models. """
 
     # The models this model is comprised of.
-    data = List(GridModel)
+    data = List(Instance(GridModel))
 
     # The rows in the model.
-    rows = Trait(None, None, List(GridRow))
+    rows = Union(None, List(Instance(GridRow)))
 
     # The cached data indexes.
-    _data_index = Dict
+    _data_index = Dict()
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a CompositeGridModel object. """
 
         # Base class constructor
-        super(CompositeGridModel, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._row_count = None
 
-        return
-
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def get_column_count(self):
         """ Return the number of columns for this table. """
 
@@ -179,7 +174,6 @@ class CompositeGridModel(GridModel):
 
         return model.get_type(row, new_col)
 
-
     def get_value(self, row, col):
         """ Return the value stored in the table at (row, col). """
         model, new_col = self._resolve_column_index(col)
@@ -213,7 +207,6 @@ class CompositeGridModel(GridModel):
                     break
 
         return coords
-
 
     # fixme: this context menu stuff is going in here for now, but it
     # seems like this is really more of a view piece than a model piece.
@@ -294,9 +287,9 @@ class CompositeGridModel(GridModel):
 
         return model.get_cell_valignment(row, new_col)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
         """ Implementation method for delete_rows. Should return the
         number of rows that were deleted. """
@@ -323,16 +316,16 @@ class CompositeGridModel(GridModel):
         model._set_value(row, new_col, value)
         return 0
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # private interface
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def _resolve_column_index(self, index):
         """ Resolves a column index into the correct model and adjusted
         index. Returns the target model and the corrected index. """
 
         real_index = index
-        cached = None #self._data_index.get(index)
+        cached = None  # self._data_index.get(index)
         if cached is not None:
             model, col_index = cached
         else:
@@ -357,8 +350,6 @@ class CompositeGridModel(GridModel):
 
         self._data_index.clear()
 
-        return
-
     def _data_items_changed(self):
         """ Called when the members of the data trait have changed.
 
@@ -366,7 +357,3 @@ class CompositeGridModel(GridModel):
         results of the column lookups is wrong and needs to be invalidated.
         """
         self._data_index.clear()
-
-        return
-
-#### EOF ####################################################################

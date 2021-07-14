@@ -1,25 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
-""" A cached image list. """
-from __future__ import absolute_import
+# Thanks for using Enthought open source!
 
-# Major package imports.
+""" A cached image list. """
+
+
 import wx
 
-# Local imports
+
 from .image_resource import ImageResource
-import six
 
 
 # fixme: rename to 'CachedImageList'?!?
@@ -36,13 +31,13 @@ class ImageList(wx.ImageList):
         self._height = height
 
         # Cache of the indexes of the images in the list!
-        self._cache = {} # {filename : index}
+        self._cache = {}  # {filename : index}
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageList' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def GetIndex(self, filename):
         """ Returns the index of the specified image.
@@ -62,7 +57,7 @@ class ImageList(wx.ImageList):
 
             # If the filename is a string then it is the filename of some kind
             # of image (e.g 'foo.gif', 'image/foo.png' etc).
-            elif isinstance(filename, six.string_types):
+            elif isinstance(filename, str):
                 # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
@@ -70,7 +65,7 @@ class ImageList(wx.ImageList):
             # probably related to a MIME type).
             else:
                 # Create a bitmap from the icon.
-                bmp = wx.EmptyBitmap(self._width, self._height)
+                bmp = wx.Bitmap(self._width, self._height)
                 bmp.CopyFromIcon(filename)
 
                 # Turn it into an image so that we can scale it.
@@ -90,16 +85,17 @@ class ImageList(wx.ImageList):
 
         return index
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
 
-        if image.GetWidth() != self._width or image.GetHeight()!= self._height:
+        if (
+            image.GetWidth() != self._width
+            or image.GetHeight() != self._height
+        ):
             image.Rescale(self._width, self._height)
 
         return image
-
-#### EOF ######################################################################

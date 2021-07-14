@@ -1,17 +1,15 @@
-# Copyright (c) 2019, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.action.api import Action, MenuManager
 from pyface.gui import GUI
@@ -64,5 +62,5 @@ class FieldMixin(UnittestTools):
 
     def test_field_menu(self):
         self._create_widget_control()
-        self.widget.menu = MenuManager(Action(name='Test'), name='Test')
+        self.widget.menu = MenuManager(Action(name="Test"), name="Test")
         self.gui.process_events()

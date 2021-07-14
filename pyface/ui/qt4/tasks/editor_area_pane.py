@@ -1,21 +1,30 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import sys
 
-# Enthought library imports.
-from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
-    MEditorAreaPane
-from traits.api import on_trait_change, provides
 
-# System library imports.
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
+from traits.api import Any, Callable, List, observe, provides, Tuple
+
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports.
+
 from .task_pane import TaskPane
 from .util import set_focus
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'EditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
@@ -23,11 +32,16 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     See the IEditorAreaPane interface for API documentation.
     """
+    # Private interface ---------------------------------------------------#
 
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -41,28 +55,46 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
         # Connect to the widget's signals.
         control.currentChanged.connect(self._update_active_editor)
+        self._connections_to_remove.append(
+            (control.currentChanged, self._update_active_editor)
+        )
         control.tabCloseRequested.connect(self._close_requested)
+        self._connections_to_remove.append(
+            (control.tabCloseRequested, self._close_requested)
+        )
 
         # Add shortcuts for scrolling through tabs.
-        if sys.platform == 'darwin':
-            next_seq = 'Ctrl+}'
-            prev_seq = 'Ctrl+{'
+        if sys.platform == "darwin":
+            next_seq = "Ctrl+}"
+            prev_seq = "Ctrl+{"
         else:
-            next_seq = 'Ctrl+PgDown'
-            prev_seq = 'Ctrl+PgUp'
+            next_seq = "Ctrl+PgDown"
+            prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._next_tab)
+        )
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._previous_tab)
+        )
 
         # Add shortcuts for switching to a specific tab.
-        mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
+        mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self.control.setCurrentIndex)
+        self._connections_to_remove.append(
+            (mapper.mapped, self.control.setCurrentIndex)
+        )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
+            self._connections_to_remove.append(
+                (shortcut.activated, mapper.map)
+            )
             mapper.setMapping(shortcut, i - 1)
 
     def destroy(self):
@@ -74,11 +106,15 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         for editor in self.editors:
             self.remove_editor(editor)
 
-        super(EditorAreaPane, self).destroy()
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
-    ###########################################################################
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -93,7 +129,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         index = self.control.addTab(editor.control, self._get_label(editor))
         self.control.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
 
         # The 'currentChanged' signal, used below, is not emitted when the first
         # editor is added.
@@ -107,20 +143,20 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.removeTab(self.control.indexOf(editor.control))
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
         if not self.editors:
             self.active_editor = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
         """ Return a tab label for an editor.
         """
         label = editor.name
         if editor.dirty:
-            label = '*' + label
+            label = "*" + label
         return label
 
     def _get_editor_with_control(self, control):
@@ -141,19 +177,21 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.control.setCurrentIndex(self.control.currentIndex() - 1)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    @on_trait_change('editors:[dirty, name]')
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         index = self.control.indexOf(editor.control)
         self.control.setTabText(index, self._get_label(editor))
 
-    @on_trait_change('editors:tooltip')
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         index = self.control.indexOf(editor.control)
         self.control.setTabToolTip(index, editor.tooltip)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _close_requested(self, index):
         control = self.control.widget(index)
@@ -168,22 +206,24 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             control = self.control.widget(index)
             self.active_editor = self._get_editor_with_control(control)
 
-    @on_trait_change('hide_tab_bar')
-    def _update_tab_bar(self):
+    @observe("hide_tab_bar")
+    def _update_tab_bar(self, event):
         if self.control is not None:
             visible = self.control.count() > 1 if self.hide_tab_bar else True
             self.control.tabBar().setVisible(visible)
 
-###############################################################################
+
+# ----------------------------------------------------------------------------
 # Auxillary classes.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 class EditorAreaWidget(QtGui.QTabWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 
     def __init__(self, editor_area, parent=None):
-        super(EditorAreaWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
 
         # Configure the QTabWidget.
@@ -202,12 +242,13 @@ class EditorAreaWidget(QtGui.QTabWidget):
         if active_editor:
             set_focus(active_editor.control)
 
+
 class EditorAreaDropFilter(QtCore.QObject):
     """ Implements drag and drop support.
     """
 
     def __init__(self, editor_area):
-        super(EditorAreaDropFilter, self).__init__()
+        super().__init__()
         self.editor_area = editor_area
 
     def eventFilter(self, object, event):
@@ -234,4 +275,4 @@ class EditorAreaDropFilter(QtCore.QObject):
 
             return True
 
-        return super(EditorAreaDropFilter, self).eventFilter(object, event)
+        return super().eventFilter(object, event)

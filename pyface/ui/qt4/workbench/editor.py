@@ -1,17 +1,17 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 
-
-# Local imports.
 from traits.api import Event, Bool
 from pyface.workbench.i_editor import MEditor
 
@@ -27,9 +27,9 @@ class Editor(MEditor):
     _loading = Event(Bool)
     _loading_on_open = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
@@ -66,8 +66,6 @@ class Editor(MEditor):
             _control.close()
             _control.deleteLater()
 
-        return
-
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """
 
@@ -75,5 +73,3 @@ class Editor(MEditor):
             self.control.setFocus()
 
         return
-
-#### EOF ######################################################################

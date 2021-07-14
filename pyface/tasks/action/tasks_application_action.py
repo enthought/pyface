@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 from traits.api import Instance
 
 from pyface.action.api import GUIApplicationAction
@@ -13,11 +22,12 @@ class TasksApplicationAction(GUIApplicationAction):
 
 class CreateTaskWindowAction(TasksApplicationAction):
     """ A standard 'New Window' menu action. """
-    name = u'New Window'
-    accelerator = 'Ctrl+N'
+
+    name = "New Window"
+    accelerator = "Ctrl+N"
 
     #: The task window wayout to use when creating the new window.
-    layout = Instance('pyface.tasks.task_window_layout.TaskWindowLayout')
+    layout = Instance("pyface.tasks.task_window_layout.TaskWindowLayout")
 
     def perform(self, event=None):
         window = self.application.create_window(layout=self.layout)

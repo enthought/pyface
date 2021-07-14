@@ -1,34 +1,29 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import logging
 import sys
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Unicode
+
+from traits.api import Bool, HasTraits, provides, Str
 from pyface.util.guisupport import start_event_loop_wx
 
-# Local imports.
+
 from pyface.i_gui import IGUI, MGUI
 
 
@@ -39,18 +34,17 @@ logger = logging.getLogger(__name__)
 @provides(IGUI)
 class GUI(MGUI, HasTraits):
 
-
-    #### 'GUI' interface ######################################################
+    # 'GUI' interface -----------------------------------------------------#
 
     busy = Bool(False)
 
     started = Bool(False)
 
-    state_location = Unicode
+    state_location = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, splash_screen=None):
         # Display the (optional) splash screen.
@@ -59,9 +53,9 @@ class GUI(MGUI, HasTraits):
         if self._splash_screen is not None:
             self._splash_screen.open()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'GUI' class interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
@@ -93,9 +87,9 @@ class GUI(MGUI, HasTraits):
         else:
             GUI._cursor = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'GUI' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def start_event_loop(self):
         """ Start the GUI event loop. """
@@ -108,11 +102,13 @@ class GUI(MGUI, HasTraits):
         self.set_trait_after(10, self, "started", True)
 
         # A hack to force menus to appear for applications run on Mac OS X.
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
+
             def _mac_os_x_hack():
                 f = wx.Frame(None, -1)
                 f.Show(True)
                 f.Close()
+
             self.invoke_later(_mac_os_x_hack)
 
         logger.debug("---------- starting GUI event loop ----------")
@@ -126,9 +122,9 @@ class GUI(MGUI, HasTraits):
         logger.debug("---------- stopping GUI event loop ----------")
         wx.GetApp().ExitMainLoop()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _state_location_default(self):
         """ The default state location handler. """
@@ -144,5 +140,3 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
-
-#### EOF ######################################################################

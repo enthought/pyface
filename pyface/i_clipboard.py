@@ -1,27 +1,23 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2009, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 #
 # Author: Evan Patterson
 # Date: 06/26/09
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The interface for manipulating the toolkit clipboard.
 """
-try:
-    from collections.abc import Sequence
-except ImportError:  # Python 3.8 deprecation
-    from collections import Sequence
 
-# ETS imports
+from collections.abc import Sequence
+
 from traits.api import HasStrictTraits, Interface, Property
-import six
 
 
 class IClipboard(Interface):
@@ -104,18 +100,18 @@ class BaseClipboard(HasStrictTraits):
         return None
 
     def _set_data(self, data):
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             self.text_data = data
         elif isinstance(data, Sequence):
             self.file_data = data
         else:
             self.object_data = data
 
-    def _get_data_type ( self ):
+    def _get_data_type(self):
         if self.has_text_data:
-            return 'str'
+            return "str"
         if self.has_file_data:
-            return 'file'
+            return "file"
         if self.has_object_data:
             return self.object_type
-        return ''
+        return ""

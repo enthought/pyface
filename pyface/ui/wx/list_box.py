@@ -1,13 +1,21 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ A simple list box widget with a model-view architecture. """
-from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, Instance, Int
 
-# Local imports.
+
 from pyface.list_box_model import ListBoxModel
 from .widget import Widget
 
@@ -24,35 +32,33 @@ class ListBox(Widget):
     # Events.
 
     # An item has been activated.
-    item_activated = Event
+    item_activated = Event()
 
     # Default style.
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB
-
 
     def __init__(self, parent, **traits):
         """ Creates a new list box. """
 
         # Base-class constructors.
-        super(ListBox, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the widget!
         self._create_control(parent)
 
         # Listen for changes to the model.
-        self.model.on_trait_change(self._on_model_changed, "list_changed")
-
-        return
+        self.model.observe(self._on_model_changed, "list_changed")
 
     def dispose(self):
-        self.model.on_trait_change(self._on_model_changed, "list_changed",
-                                   remove = True)
+        self.model.observe(
+            self._on_model_changed, "list_changed", remove=True
+        )
         self.model.dispose()
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ListBox' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def refresh(self):
         """ Refreshes the list box. """
@@ -65,9 +71,9 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_item_selected(self, event):
         """ Called when an item in the list is selected. """
@@ -75,8 +81,6 @@ class ListBox(Widget):
         listbox = event.GetEventObject()
 
         self.selection = listbox.GetSelection()
-
-        return
 
     def _on_item_activated(self, event):
         """ Called when an item in the list is activated. """
@@ -89,11 +93,11 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Static ###############################################################
+    # Static ---------------------------------------------------------------
 
     def _selection_changed(self, index):
         """ Called when the selected item is changed. """
@@ -103,7 +107,7 @@ class ListBox(Widget):
 
         return
 
-    #### Dynamic ##############################################################
+    # Dynamic -------------------------------------------------------------#
 
     def _on_model_changed(self, event):
         """ Called when the model has changed. """
@@ -113,25 +117,27 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the widget. """
 
-        self.control = wx.ListBox(parent, -1, style = self.STYLE)
+        self.control = wx.ListBox(parent, -1, style=self.STYLE)
 
         # Wire it up!
-        wx.EVT_LISTBOX(self.control, self.control.GetId(),
-                       self._on_item_selected)
-        wx.EVT_LISTBOX_DCLICK(self.control, self.control.GetId(),
-                              self._on_item_activated)
+        self.control.Bind(
+            wx.EVT_LISTBOX, self._on_item_selected, id=self.control.GetId()
+        )
+        self.control.Bind(
+            wx.EVT_LISTBOX_DCLICK,
+            self._on_item_activated,
+            id=self.control.GetId(),
+        )
 
         # Populate the list.
         self._populate()
-
-        return
 
     def _populate(self):
         """ Populates the list box. """
@@ -141,5 +147,3 @@ class ListBox(Widget):
             self.control.Append(label, item)
 
         return
-
-#### EOF ######################################################################

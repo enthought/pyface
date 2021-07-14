@@ -1,5 +1,13 @@
-# Copyright (c) 2005-2011, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 """ Support for managing resources such as images and sounds.
-    Part of the TraitsGUI project of the Enthought Tool Suite.
+    Part of the TraitsUI project of the Enthought Tool Suite.
 """

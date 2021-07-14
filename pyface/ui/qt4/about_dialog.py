@@ -1,32 +1,30 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Standard library imports.
+
 import platform
-import sys
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Instance, List, provides, Unicode
 
-# Local imports.
+from traits.api import Any, Callable, Instance, List, provides, Str, Tuple
+
+
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
 
 # The HTML displayed in the QLabel.
-_DIALOG_TEXT = '''
+_DIALOG_TEXT = """
 <html>
   <body>
     <center>
@@ -46,13 +44,16 @@ _DIALOG_TEXT = '''
       Qt %s<br>
       </p>
       <p>
-      Copyright &copy; 2003-2010 Enthought, Inc.<br>
+      %s
+      </p>
+      <p>
+      Copyright &copy; 2003-2021 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
   </center>
   </body>
 </html>
-'''
+"""
 
 
 @provides(IAboutDialog)
@@ -61,15 +62,35 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-    #### 'IAboutDialog' interface #############################################
+    # 'IAboutDialog' interface ---------------------------------------------
 
-    additions = List(Unicode)
+    additions = List(Str)
 
-    image = Instance(ImageResource, ImageResource('about'))
+    copyrights = List(Str)
 
-    ###########################################################################
+    image = Instance(ImageResource, ImageResource("about"))
+
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
+    # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
+
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         label = QtGui.QLabel()
@@ -83,19 +104,8 @@ class AboutDialog(MAboutDialog, Dialog):
             # Set the title.
             self.title = "About %s" % title
 
-        # Load the image to be displayed in the about box.
-        image = self.image.create_image()
-        path = self.image.absolute_path
-
-        # The additional strings.
-        additions = '<br />'.join(self.additions)
-
-        # Get the version numbers.
-        py_version = platform.python_version()
-        qt_version = QtCore.__version__
-
         # Set the page contents.
-        label.setText(_DIALOG_TEXT % (path, additions, py_version, qt_version))
+        label.setText(self._create_html())
 
         # Create the button.
         buttons = QtGui.QDialogButtonBox()
@@ -106,9 +116,34 @@ class AboutDialog(MAboutDialog, Dialog):
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
         buttons.accepted.connect(parent.accept)
+        self._connections_to_remove.append((buttons.accepted, parent.accept))
 
         lay = QtGui.QVBoxLayout()
         lay.addWidget(label)
         lay.addWidget(buttons)
 
         parent.setLayout(lay)
+
+    def _create_html(self):
+        # Load the image to be displayed in the about box.
+        path = self.image.absolute_path
+
+        # The additional strings.
+        additions = "<br />".join(self.additions)
+
+        # Get the version numbers.
+        py_version = platform.python_version()
+        qt_version = QtCore.__version__
+
+        # The additional copyright strings.
+        copyrights = "<br />".join(
+            ["Copyright &copy; %s" % line for line in self.copyrights]
+        )
+
+        return _DIALOG_TEXT % (
+            path,
+            additions,
+            py_version,
+            qt_version,
+            copyrights,
+        )

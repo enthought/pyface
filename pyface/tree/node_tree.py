@@ -1,32 +1,24 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A tree control with extensible node types. """
 
 
-# Standard library imports.
-import six
-if six.PY2:
-    from inspect import getargspec
-else:
-    # avoid deprecation warning
-    from inspect import getfullargspec as getargspec
+# avoid deprecation warning
+from inspect import getfullargspec
 
-# Enthought library imports.
+
 from pyface.action.api import ActionEvent
-from traits.api import Instance, List, Property
+from traits.api import Instance, List, observe, Property
 
-# Local imports.
+
 from .node_manager import NodeManager
 from .node_type import NodeType
 from .node_tree_model import NodeTreeModel
@@ -36,12 +28,12 @@ from .tree import Tree
 class NodeTree(Tree):
     """ A tree control with extensible node types. """
 
-    #### 'Tree' interface #####################################################
+    # 'Tree' interface -----------------------------------------------------
 
     # The model that provides the data for the tree.
     model = Instance(NodeTreeModel, ())
 
-    #### 'NodeTree' interface #################################################
+    # 'NodeTree' interface -------------------------------------------------
 
     # The node manager looks after all node types.
     node_manager = Property(Instance(NodeManager))
@@ -49,11 +41,11 @@ class NodeTree(Tree):
     # The node types in the tree.
     node_types = Property(List(NodeType))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeTree' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     # node_manager
     def _get_node_manager(self):
@@ -81,24 +73,25 @@ class NodeTree(Tree):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Tree' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    def _node_activated_changed(self, obj):
+    @observe("node_activated")
+    def _perform_default_action_on_activated_node(self, event):
         """ Called when a node has been activated (i.e., double-clicked). """
-
+        obj = event.new
         default_action = self.model.get_default_action(obj)
         if default_action is not None:
             self._perform_default_action(default_action, obj)
 
-        return
-
-    def _node_right_clicked_changed(self, obj, point):
+    @observe("node_right_clicked")
+    def _show_menu_on_right_clicked_object(self, event):
         """ Called when the right mouse button is clicked on the tree. """
-
+        obj_point = event.new
+        obj, point = obj_point
         # Add the node that the right-click occurred on to the selection.
         self.select(obj)
 
@@ -113,9 +106,9 @@ class NodeTree(Tree):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, menu_item):
         """ Adds a menu item to a menu bar. """
@@ -136,11 +129,11 @@ class NodeTree(Tree):
         """ Perform an action. """
 
         # fixme: We need a more formal event structure!
-        event.widget  = self
+        event.widget = self
         event.context = self._context
 
         # fixme: the 'perform' method without taking an event is deprecated!
-        args, varargs, varkw, defaults = getargspec(action.perform)
+        args, varargs, varkw, defaults = getfullargspec(action.perform)
 
         # If the only argument is 'self' then this is the DEPRECATED
         # interface.
@@ -152,9 +145,9 @@ class NodeTree(Tree):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_action_event(self, obj):
         """ Return a new action event for the specified object. """
@@ -165,8 +158,6 @@ class NodeTree(Tree):
         """ Perform the default action on the specified object. """
 
         action.perform(self._create_action_event(obj))
-
-        return
 
     def _popup_menu(self, menu_manager, obj, point):
         """ Popup the menu described by the menu manager. """
@@ -183,5 +174,3 @@ class NodeTree(Tree):
             menu_manager.destroy()
 
         return
-
-#### EOF ######################################################################

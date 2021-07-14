@@ -1,6 +1,13 @@
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
@@ -11,11 +18,15 @@ from pyface.toolkit import toolkit_object
 
 from ..tasks_application import TasksApplication
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 EVENTS = [
-    'starting', 'started', 'application_initialized', 'stopping', 'stopped'
+    "starting",
+    "started",
+    "application_initialized",
+    "stopping",
+    "stopped",
 ]
 
 
@@ -54,19 +65,20 @@ class TestingApp(TasksApplication):
     def start(self):
         if not self.start_cleanly:
             return False
-        super(TestingApp, self).start()
+        super().start()
 
         window = self.windows[0]
-        window.on_trait_change(self._on_window_closing, 'closing')
+        window.observe(self._on_window_closing, "closing")
         return True
 
     def stop(self):
-        super(TestingApp, self).stop()
+        super().stop()
         return self.stop_cleanly
 
-    def _on_window_closing(self, window, trait, old, new):
+    def _on_window_closing(self, event):
+        window = event.new
         if self.veto_close_window and not self.exit_vetoed:
-            new.veto = True
+            window.veto = True
             self.exit_vetoed = True
 
     def _exiting_fired(self, event):
@@ -78,17 +90,18 @@ class TestingApp(TasksApplication):
             self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
-        super(TestingApp, self)._prepare_exit()
+        super()._prepare_exit()
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestApplication(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.application_events = []
 
-        if toolkit_object.toolkit == 'wx':
+        if toolkit_object.toolkit == "wx":
             import wx
+
             self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
@@ -98,11 +111,12 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def event_listener(self, event):
-        self.application_events.append(event)
+        application_event = event.new
+        self.application_events.append(application_event)
 
     def connect_listeners(self, app):
         for event in EVENTS:
-            app.on_trait_change(self.event_listener, event)
+            app.observe(self.event_listener, event)
 
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
@@ -118,7 +132,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         app = TasksApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.on_trait_change(lambda: app.add_window(window), 'started')
+        app.observe(lambda _: app.add_window(window), "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)

@@ -1,22 +1,21 @@
-# Copyright (c) 2007, Riverbank Computing Limited
-# All rights reserved.
-# Copyright (c) 2017, Enthought, Inc
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
+# Thanks for using Enthought open source!
 
 
-# Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Instance, provides
 
-# Local imports.
+
 from pyface.i_widget import IWidget, MWidget
 
 
@@ -29,10 +28,10 @@ class Widget(MWidget, HasTraits):
     # 'IWidget' interface ----------------------------------------------------
 
     #: The toolkit specific control that represents the widget.
-    control = Any
+    control = Any()
 
     #: The control's optional parent control.
-    parent = Any
+    parent = Any()
 
     #: Whether or not the control is visible
     visible = Bool(True)
@@ -73,6 +72,25 @@ class Widget(MWidget, HasTraits):
         if self.control is not None:
             self.control.setEnabled(enabled)
 
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+        if self.control is not None:
+            self.control.setFocus()
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+        return (
+            self.control is not None
+            and self.control.hasFocus()
+        )
+
     def destroy(self):
         self._remove_event_listeners()
         if self.control is not None:
@@ -106,6 +124,10 @@ class Widget(MWidget, HasTraits):
 class WidgetEventFilter(QtCore.QObject):
     """ An internal class that watches for certain events on behalf of the
     Widget instance.
+
+    This filter watches for show and hide events to make sure that visible
+    state of the widget is the opposite of Qt's isHidden() state.  This is
+    needed in case other code hides the toolkit widget
     """
 
     def __init__(self, widget):
@@ -123,6 +145,6 @@ class WidgetEventFilter(QtCore.QObject):
         event_type = event.type()
 
         if event_type in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
-            widget.visible = widget.control.isVisible()
+            widget.visible = not widget.control.isHidden()
 
         return False

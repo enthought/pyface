@@ -1,19 +1,12 @@
-#-------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: David C. Morrill
-#  Date:   10/18/2005
-#
-#-------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 """ Pyface 'DockWindow' support.
 
@@ -24,15 +17,22 @@
     separate notebook-like tab within the region.
 """
 
-#-------------------------------------------------------------------------------
-#  Imports:
-#-------------------------------------------------------------------------------
-
 from .dock_window import DockWindow, DockWindowHandler
 
-from .dock_sizer import DockSizer, DockSection, DockRegion, DockControl, \
-    DockStyle, DOCK_LEFT, DOCK_RIGHT, DOCK_TOP, DOCK_BOTTOM, \
-    SetStructureHandler, add_feature, DockGroup
+from .dock_sizer import (
+    DockSizer,
+    DockSection,
+    DockRegion,
+    DockControl,
+    DockStyle,
+    DOCK_LEFT,
+    DOCK_RIGHT,
+    DOCK_TOP,
+    DOCK_BOTTOM,
+    SetStructureHandler,
+    add_feature,
+    DockGroup,
+)
 
 from .idockable import IDockable
 

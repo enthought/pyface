@@ -1,32 +1,32 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import sys
 from os.path import basename
 
-# Major package imports.
+
 import wx
 import wx.stc
 
-# Enthought library imports.
-from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
+
+from traits.api import (
+    Bool, Event, File, Instance, observe, Property, provides, Str
+)
 from pyface.tasks.api import Editor
 from pyface.wx.python_stc import PythonSTC, faces
 
-# Local imports.
+
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
@@ -34,23 +34,23 @@ class PythonEditor(Editor):
     IStyledTextEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     obj = Instance(File)
 
-    path = Unicode
+    path = Str()
 
     dirty = Bool(False)
 
-    name = Property(Unicode, depends_on='path')
+    name = Property(Str, observe="path")
 
-    tooltip = Property(Unicode, depends_on='path')
+    tooltip = Property(Str, observe="path")
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 
@@ -58,11 +58,11 @@ class PythonEditor(Editor):
         return self.path
 
     def _get_name(self):
-        return basename(self.path) or 'Untitled'
+        return basename(self.path) or "Untitled"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         self.control = self._create_control(parent)
@@ -75,11 +75,11 @@ class PythonEditor(Editor):
 
         # We will have no path for a new script.
         if len(path) > 0:
-            f = open(self.path, 'r')
+            f = open(self.path, "r")
             text = f.read()
             f.close()
         else:
-            text = ''
+            text = ""
 
         self.control.SetText(text)
         self.dirty = False
@@ -90,7 +90,7 @@ class PythonEditor(Editor):
         if path is None:
             path = self.path
 
-        f = file(path, 'w')
+        f = file(path, "w")
         f.write(self.control.GetText())
         f.close()
 
@@ -100,27 +100,29 @@ class PythonEditor(Editor):
         """ Selects the specified line.
         """
         start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
+        end = self.control.GetLineEndPosition(lineno)
 
         self.control.SetSelection(start, end)
 
     def set_style(self, n, fore, back):
         self.control.StyleSetForeground(n, fore)
-        #self.StyleSetBackground(n, '#c0c0c0')
-        #self.StyleSetBackground(n, '#ffffff')
+        # self.StyleSetBackground(n, '#c0c0c0')
+        # self.StyleSetBackground(n, '#ffffff')
         self.control.StyleSetBackground(n, back)
         self.control.StyleSetFaceName(n, "courier new")
-        self.control.StyleSetSize(n, faces['size'])
+        self.control.StyleSetSize(n, faces["size"])
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe('path')
+    def _path_updated(self, event):
         if self.control is not None:
             self.load()
 
-    def _show_line_numbers_changed(self):
+    @observe('show_line_numbers')
+    def _show_line_numbers_updated(self, event=None):
         if self.control is not None:
             c = self.control
             if self.show_line_numbers:
@@ -129,16 +131,17 @@ class PythonEditor(Editor):
             else:
                 c.SetMarginWidth(1, 4)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.
         """
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
+
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._show_line_numbers_updated()
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """
@@ -170,22 +173,22 @@ class PythonEditor(Editor):
         stc.SetIndent(4)
 
         # Line ending mode.
-        stc.SetEOLMode(wx.stc.STC_EOL_LF) # Unix
-        #self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
-        #self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
+        stc.SetEOLMode(wx.stc.STC_EOL_LF)  # Unix
+        # self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
+        # self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
-        ##########################################
+        # ----------------------------------------
         # Global styles for all languages.
-        ##########################################
+        # ----------------------------------------
 
         self.set_style(wx.stc.STC_STYLE_DEFAULT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_CONTROLCHAR, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACELIGHT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACEBAD, "#000000", "#ffffff")
 
-        ##########################################
+        # ----------------------------------------
         # Python styles.
-        ##########################################
+        # ----------------------------------------
 
         # White space
         self.set_style(wx.stc.STC_P_DEFAULT, "#000000", "#ffffff")
@@ -229,29 +232,31 @@ class PythonEditor(Editor):
         # End of line where string is not closed
         self.set_style(wx.stc.STC_P_STRINGEOL, "#000000", "#ffffff")
 
-        ##########################################
+        # ----------------------------------------
         # Events.
-        ##########################################
+        # ----------------------------------------
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.
-        stc.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT |
-                            wx.stc.STC_MOD_DELETETEXT |
-                            wx.stc.STC_PERFORMED_UNDO |
-                            wx.stc.STC_PERFORMED_REDO)
+        stc.SetModEventMask(
+            wx.stc.STC_MOD_INSERTTEXT
+            | wx.stc.STC_MOD_DELETETEXT
+            | wx.stc.STC_PERFORMED_UNDO
+            | wx.stc.STC_PERFORMED_REDO
+        )
 
         # Listen for changes to the file.
         wx.stc.EVT_STC_CHANGE(stc, stc.GetId(), self._on_stc_changed)
 
         # Listen for key press events.
-        wx.EVT_CHAR(stc, self._on_char)
+        stc.Bind(wx.EVT_CHAR, self._on_char)
 
         # Load the editor's contents.
         self.load()
 
         return stc
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
         """ Called whenever a change is made to the text of the document. """
@@ -268,11 +273,11 @@ class PythonEditor(Editor):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
+            alt_down=event.altDown,
+            control_down=event.controlDown,
+            shift_down=event.shiftDown,
+            key_code=event.KeyCode,
+            event=event,
         )
 
         # Give other event handlers a chance.

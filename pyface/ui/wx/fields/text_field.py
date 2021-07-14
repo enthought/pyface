@@ -1,19 +1,15 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2017-19, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The Wx-specific implementation of the text field class """
 
-from __future__ import print_function, absolute_import
 
 import wx
 
@@ -35,7 +31,7 @@ class TextField(MTextField, Field):
         """ Create the toolkit-specific control that represents the widget. """
 
         style = wx.TE_PROCESS_ENTER
-        if self.echo == 'password':
+        if self.echo == "password":
             style |= wx.TE_PASSWORD
 
         control = wx.TextCtrl(parent, -1, value=self.value, style=style)

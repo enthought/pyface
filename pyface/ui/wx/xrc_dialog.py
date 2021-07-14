@@ -1,47 +1,48 @@
-#-----------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: Scott Swarts <swarts@enthought.com>
-#
-#-----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 """A dialog that is loaded from an XRC resource file.
 """
-from __future__ import absolute_import
 
-# Standard library imports.
+
 import os.path
 
 # Major packages.
 import wx
 import wx.xrc
 
-# Enthought library imports
+
 from traits.api import Instance, Str
 import traits.util.resource
 
-# Local imports.
+
 from .dialog import Dialog
 
 
-##############################################################################
+# ----------------------------------------------------------------------------
 # class 'XrcDialog'
-##############################################################################
+# ----------------------------------------------------------------------------
+
 
 class XrcDialog(Dialog):
     """A dialog that is loaded from an XRC resource file.
     """
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # Traits
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
-    ### 'XrcDialog' interface ############################################
+    # 'XrcDialog' interface --------------------------------------------
 
     # Path to the xrc file relative to the class's module
-    xrc_file = Str
+    xrc_file = Str()
 
     # The ID of the dialog in the file
     id = Str("dialog")
@@ -49,18 +50,18 @@ class XrcDialog(Dialog):
     # The resource object
     resource = Instance(wx.xrc.XmlResource)
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'Dialog' interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """
         Creates the dialog and loads it in from the resource file.
         """
-        classpath = traits.util.resource.get_path( self )
-        path = os.path.join( classpath, self.xrc_file )
+        classpath = traits.util.resource.get_path(self)
+        path = os.path.join(classpath, self.xrc_file)
 
-        self.resource = wx.xrc.XmlResource( path )
+        self.resource = wx.xrc.XmlResource(path)
         return self.resource.LoadDialog(parent, self.id)
 
     def _create_contents(self, dialog):
@@ -75,21 +76,23 @@ class XrcDialog(Dialog):
         if okbutton is not None:
             # Change the ID and set the handler
             okbutton.SetId(wx.ID_OK)
-            wx.EVT_BUTTON(self.control, okbutton.GetId(), self._on_ok)
+            self.control.Bind(wx.EVT_BUTTON, okbutton.GetId(), self._on_ok)
         cancelbutton = self.XRCCTRL("CANCEL")
         if cancelbutton is not None:
             # Change the ID and set the handler
             cancelbutton.SetId(wx.ID_CANCEL)
-            wx.EVT_BUTTON(self.control, cancelbutton.GetId(), self._on_cancel)
+            self.control.Bind(
+                wx.EVT_BUTTON, self._on_cancel, cancelbutton.GetId()
+            )
         helpbutton = self.XRCCTRL("HELP")
         if helpbutton is not None:
-            wx.EVT_BUTTON(self.control, helpbutton.GetId(), self._on_help)
+            self.control.Bind(wx.EVT_BUTTON, self._on_help, helpbutton.GetId())
 
         self._add_handlers()
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'XrcDialog' interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def XRCID(self, name):
         """
@@ -101,7 +104,7 @@ class XrcDialog(Dialog):
         """
         Returns the control with the given name.
         """
-        return self.control.FindWindowById(self.XRCID(name))
+        return self.control.Window.FindWindowById(self.XRCID(name))
 
     def set_validator(self, name, validator):
         """
@@ -109,14 +112,12 @@ class XrcDialog(Dialog):
         """
         self.XRCCTRL(name).SetValidator(validator)
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'XrcDialog' protected interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_handlers(self):
         """
         Override to add event handlers.
         """
         return
-
-#### EOF ######################################################################

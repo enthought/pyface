@@ -1,23 +1,18 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Local imports.
+
 from pyface.workbench.i_editor import MEditor
 
 
@@ -28,9 +23,9 @@ class Editor(MEditor):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
@@ -51,8 +46,6 @@ class Editor(MEditor):
             self.control.Destroy()
             self.control = None
 
-        return
-
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """
 
@@ -60,5 +53,3 @@ class Editor(MEditor):
             self.control.SetFocus()
 
         return
-
-#### EOF ######################################################################

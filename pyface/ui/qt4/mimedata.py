@@ -1,30 +1,34 @@
-
-from six.moves.cPickle import dumps, load, loads, PickleError
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+from pickle import dumps, load, loads, PickleError
 import warnings
 import io
-import sys
 
 from pyface.qt import QtCore
 
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #  'PyMimeData' class:
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
-if sys.version_info[0] < 3:
-    def str2bytes(s):
-        return s
-else:
-    def str2bytes(s):
-        return bytes(s,'ascii')
+def str2bytes(s):
+    return bytes(s, "ascii")
 
 
 class PyMimeData(QtCore.QMimeData):
     """ The PyMimeData wraps a Python instance as MIME data.
     """
+
     # The MIME type for instances.
-    MIME_TYPE = u'application/x-ets-qt4-instance'
-    NOPICKLE_MIME_TYPE = u'application/x-ets-qt4-instance-no-pickle'
+    MIME_TYPE = "application/x-ets-qt4-instance"
+    NOPICKLE_MIME_TYPE = "application/x-ets-qt4-instance-no-pickle"
 
     def __init__(self, data=None, pickle=True):
         """ Initialise the instance.
@@ -44,10 +48,17 @@ class PyMimeData(QtCore.QMimeData):
                     self.setData(self.MIME_TYPE, dumps(data.__class__) + pdata)
                 except (PickleError, TypeError, AttributeError):
                     # if pickle fails, still try to create a draggable
-                    warnings.warn(("Could not pickle dragged object %s, " +
-                            "using %s mimetype instead") % (repr(data),
-                            self.NOPICKLE_MIME_TYPE), RuntimeWarning)
-                    self.setData(self.NOPICKLE_MIME_TYPE, str2bytes(str(id(data))))
+                    warnings.warn(
+                        (
+                            "Could not pickle dragged object %s, "
+                            + "using %s mimetype instead"
+                        )
+                        % (repr(data), self.NOPICKLE_MIME_TYPE),
+                        RuntimeWarning,
+                    )
+                    self.setData(
+                        self.NOPICKLE_MIME_TYPE, str2bytes(str(id(data)))
+                    )
 
         else:
             self.setData(self.NOPICKLE_MIME_TYPE, str2bytes(str(id(data))))
@@ -83,10 +94,15 @@ class PyMimeData(QtCore.QMimeData):
             # track whether we should pickle.
             # XXX lists should suffice for now, but may want other containers
             if isinstance(md, list):
-                pickle = not any(item.hasFormat(cls.NOPICKLE_MIME_TYPE)
-                        for item in md if isinstance(item, QtCore.QMimeData))
-                md = [item.instance() if isinstance(item, PyMimeData) else item
-                        for item in md]
+                pickle = not any(
+                    item.hasFormat(cls.NOPICKLE_MIME_TYPE)
+                    for item in md
+                    if isinstance(item, QtCore.QMimeData)
+                )
+                md = [
+                    item.instance() if isinstance(item, PyMimeData) else item
+                    for item in md
+                ]
 
             # Arbitrary python object, wrap it into PyMimeData
             nmd = cls(md, pickle)
@@ -135,6 +151,6 @@ class PyMimeData(QtCore.QMimeData):
         """
         ret = []
         for url in self.urls():
-            if url.scheme() == 'file':
+            if url.scheme() == "file":
                 ret.append(url.toLocalFile())
         return ret

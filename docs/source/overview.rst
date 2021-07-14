@@ -1,3 +1,5 @@
+.. _overview:
+
 ========
 Overview
 ========
@@ -188,7 +190,7 @@ define a very simple Python editor application with menus::
             """ Creates a new application window. """
 
             # Base class constructor.
-            super(MainWindow, self).__init__(**traits)
+            super().__init__(**traits)
 
             # Add a menu bar.
             self.menu_bar_manager = MenuBarManager(
@@ -229,7 +231,7 @@ define a very simple Python editor application with menus::
             if self.control:
                 try:
                     self._editor.save()
-                except IOError, e:
+                except IOError:
                     # If you are trying to save to a file that doesn't exist,
                     # open up a FileDialog with a 'save as' action.
                     dlg = FileDialog(

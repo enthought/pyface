@@ -47,7 +47,7 @@ toolkit object.  For all built-in toolkits, this is an instance of the
 backends may use their own objects.  The toolkit object for the toolkit that
 has been selected can be found as :py:obj:`pyface.toolkit.toolkit_object`.
 
-This is a callable object which expects to be given the an identifier for the
+This is a callable object which expects to be given an identifier for the
 widget in the form of a relative module name and the object name, separated by
 a ``':'``.  This is most often used when creating new widget types for Pyface.
 The API module for the new widget class typically looks something like this::
@@ -76,9 +76,9 @@ widgets, if needed.
 Toolkit Entrypoints
 ===================
 
-Pyface uses the standard ``pkg_resources`` "entry point" system to allow other
-libraries to contribute new toolkit implementations to Pyface.  The toolkit
-selection process discussed above looks for things contributed to the
+Pyface uses the standard ``importlib_metadata`` "entry point" system to allow
+other libraries to contribute new toolkit implementations to Pyface.  The
+toolkit selection process discussed above looks for things contributed to the
 ``pyface.toolkits`` entry point.  These are specified in the ``setup.py`` of
 the third party library, something like this::
 

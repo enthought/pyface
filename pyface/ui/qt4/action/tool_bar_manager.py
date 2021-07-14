@@ -1,19 +1,25 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Bool, Enum, Instance, Str, Tuple
 
-# Local imports.
+from traits.api import Bool, Enum, Instance, List, Str, Tuple
+
+
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -21,7 +27,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -33,10 +39,10 @@ class ToolBarManager(ActionManager):
     image_size = Tuple((16, 16))
 
     # The toolbar name (used to distinguish multiple toolbars).
-    name = Str('ToolBar')
+    name = Str("ToolBar")
 
     # The orientation of the toolbar.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
@@ -44,20 +50,23 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    #: Keep track of all created toolbars in order to properly dispose of them
+    _toolbars = List()
+
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
 
         # Base class constructor.
-        super(ToolBarManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.
@@ -65,9 +74,9 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar. """
@@ -81,13 +90,14 @@ class ToolBarManager(ActionManager):
 
         # Create the control.
         tool_bar = _ToolBar(self, parent)
+        self._toolbars.append(tool_bar)
         tool_bar.setObjectName(self.id)
         tool_bar.setWindowTitle(self.name)
 
         if self.show_tool_names:
             tool_bar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 
-        if self.orientation == 'horizontal':
+        if self.orientation == "horizontal":
             tool_bar.setOrientation(QtCore.Qt.Horizontal)
         else:
             tool_bar.setOrientation(QtCore.Qt.Vertical)
@@ -102,9 +112,20 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
+    # 'ActionManager' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._toolbars:
+            toolbar = self._toolbars.pop()
+            toolbar.dispose()
+
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -115,8 +136,9 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(self._separator_visibility_method(separator),
-                                          'visible')
+                    group.observe(
+                        self._separator_visibility_method(separator), "visible"
+                    )
 
                 previous_non_empty_group = group
 
@@ -127,58 +149,69 @@ class ToolBarManager(ActionManager):
                         tool_bar,
                         self._image_cache,
                         controller,
-                        self.show_tool_names
+                        self.show_tool_names,
                     )
-
-        return
 
     def _separator_visibility_method(self, separator):
         """ Method to return closure to set visibility of group separators. """
-        return lambda visible: separator.setVisible(visible)
+        return lambda event: separator.setVisible(event.new)
 
 
 class _ToolBar(QtGui.QToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent):
         """ Constructor. """
 
         QtGui.QToolBar.__init__(self, parent)
 
+        # List of tools
+        self.tools = []
+
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         return
 
-    ###########################################################################
+    def dispose(self):
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
+        )
+        self.tool_bar_manager.observe(
+            self._on_tool_bar_manager_visible_changed, "visible", remove=True
+        )
+        # Removes event listeners from downstream tools and clears their
+        # references
+        for item in self.tools:
+            item.dispose()
+
+        self.tools = []
+
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(new)
+        self.setEnabled(event.new)
 
-        return
-
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setVisible(new)
+        self.setVisible(event.new)
 
         return
-
-#### EOF ######################################################################

@@ -1,24 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all pyface wizards. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
-from traits.api import Bool, Instance, List, Property, provides, Unicode
+
+from traits.api import Bool, Instance, List, Property, provides, Str
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
@@ -33,8 +29,7 @@ class Wizard(MWizard, Dialog):
 
     """
 
-
-    #### 'IWizard' interface ##################################################
+    # 'IWizard' interface --------------------------------------------------
 
     pages = Property(List(IWizardPage))
 
@@ -42,18 +37,23 @@ class Wizard(MWizard, Dialog):
 
     show_cancel = Bool(True)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface --------------------------------------------------
 
-    title = Unicode('Wizard')
+    title = Str("Wizard")
 
-    ###########################################################################
+    # private traits -------------------------------------------------------
+
+    _layered_panel = Instance(LayeredPanel)
+
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog. """
 
-        self._layered_panel = panel = LayeredPanel(parent)
+        self._layered_panel = panel = LayeredPanel(parent=parent, create=False)
+        panel.create()
         # fixme: Specific size?
         panel.control.SetSize((100, 200))
 
@@ -66,38 +66,38 @@ class Wizard(MWizard, Dialog):
 
         # 'Back' button.
         self._back = back = wx.Button(parent, -1, "Back")
-        wx.EVT_BUTTON(parent, back.GetId(), self._on_back)
+        parent.Bind(wx.EVT_BUTTON, self._on_back, back)
         sizer.Add(back, 0)
 
         # 'Next' button.
         self._next = next = wx.Button(parent, -1, "Next")
-        wx.EVT_BUTTON(parent, next.GetId(), self._on_next)
+        parent.Bind(wx.EVT_BUTTON, self._on_next, next)
         sizer.Add(next, 0, wx.LEFT, 5)
         next.SetDefault()
 
         # 'Finish' button.
         self._finish = finish = wx.Button(parent, wx.ID_OK, "Finish")
         finish.Enable(self.controller.complete)
-        wx.EVT_BUTTON(parent, wx.ID_OK, self._wx_on_ok)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, finish)
         sizer.Add(finish, 0, wx.LEFT, 5)
 
         # 'Cancel' button.
         if self.show_cancel:
             self._cancel = cancel = wx.Button(parent, wx.ID_CANCEL, "Cancel")
-            wx.EVT_BUTTON(parent, wx.ID_CANCEL, self._wx_on_cancel)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, cancel)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
         # 'Help' button.
         if len(self.help_id) > 0:
             help = wx.Button(parent, wx.ID_HELP, "Help")
-            wx.EVT_BUTTON(parent, wx.ID_HELP, self._wx_on_help)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_help, help)
             sizer.Add(help, 0, wx.LEFT, 10)
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'MWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _show_page(self, page):
         """ Show the specified page. """
@@ -119,16 +119,14 @@ class Wizard(MWizard, Dialog):
         # page?
         self.controller.current_page = page
 
-        return
-
-    def _update(self):
+    def _update(self, event):
         """ Enables/disables buttons depending on the state of the wizard. """
 
         controller = self.controller
         current_page = controller.current_page
 
         is_first_page = controller.is_first_page(current_page)
-        is_last_page  = controller.is_last_page(current_page)
+        is_last_page = controller.is_last_page(current_page)
 
         # 'Next button'.
         if self._next is not None:
@@ -152,9 +150,7 @@ class Wizard(MWizard, Dialog):
             if self._next is not None:
                 self._next.SetDefault()
 
-        return
-
-    #### Trait handlers #######################################################
+    # Trait handlers -------------------------------------------------------
 
     def _controller_default(self):
         """ Provide a default controller. """
@@ -173,20 +169,14 @@ class Wizard(MWizard, Dialog):
 
         self.controller.pages = pages
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_next(self, event):
         """ Called when the 'Next' button is pressed. """
 
         self.next()
 
-        return
-
     def _on_back(self, event):
         """ Called when the 'Back' button is pressed. """
 
         self.previous()
-
-        return
-
-#### EOF ######################################################################

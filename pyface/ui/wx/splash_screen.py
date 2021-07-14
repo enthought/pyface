@@ -1,34 +1,29 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
-#------------------------------------------------------------------------------
-#
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
-#
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 from logging import DEBUG
 
-# Major package imports.
+
 import wx
+import wx.adv
 
-# Enthought library imports.
-from traits.api import Any, Bool, Font, Instance, Int, provides
-from traits.api import Tuple, Unicode
 
-# Local imports.
+from traits.api import Any, Bool, Instance, Int, provides
+from traits.api import Tuple, Str
+
+
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
 from pyface.wx.util.font_helper import new_font_like
@@ -41,36 +36,35 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
+    # 'ISplashScreen' interface --------------------------------------------
 
-    #### 'ISplashScreen' interface ############################################
-
-    image = Instance(ImageResource, ImageResource('splash'))
+    image = Instance(ImageResource, ImageResource("splash"))
 
     log_level = Int(DEBUG)
 
     show_log_messages = Bool(True)
 
-    text = Unicode
+    text = Str()
 
-    text_color = Any
+    text_color = Any()
 
-    text_font = Any
+    text_font = Any()
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # Get the splash screen image.
         image = self.image.create_image()
 
-        splash_screen = wx.SplashScreen(
+        splash_screen = wx.adv.SplashScreen(
             # The bitmap to display on the splash screen.
             image.ConvertToBitmap(),
             # Splash Style.
-            wx.SPLASH_NO_TIMEOUT | wx.SPLASH_CENTRE_ON_SCREEN,
+            wx.adv.SPLASH_NO_TIMEOUT | wx.adv.SPLASH_CENTRE_ON_SCREEN,
             # Timeout in milliseconds (we don't currently timeout!).
             0,
             # The parent of the splash screen.
@@ -78,7 +72,7 @@ class SplashScreen(MSplashScreen, Window):
             # wx Id.
             -1,
             # Window style.
-            style = wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR
+            style=wx.SIMPLE_BORDER | wx.FRAME_NO_TASKBAR,
         )
 
         # By default we create a font slightly bigger and slightly more italic
@@ -86,18 +80,18 @@ class SplashScreen(MSplashScreen, Window):
         # handler for 'EVT_PAINT'.
         self._wx_default_text_font = new_font_like(
             wx.NORMAL_FONT,
-            point_size = wx.NORMAL_FONT.GetPointSize() + 1,
-            style      = wx.ITALIC
+            point_size=wx.NORMAL_FONT.GetPointSize() + 1,
+            style=wx.ITALIC,
         )
 
         # This allows us to write status text on the splash screen.
-        wx.EVT_PAINT(splash_screen, self._on_paint)
+        splash_screen.Bind(wx.EVT_PAINT, self._on_paint)
 
         return splash_screen
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _text_changed(self):
         """ Called when the splash screen text has been changed. """
@@ -113,7 +107,7 @@ class SplashScreen(MSplashScreen, Window):
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.
-            window = self.control.GetSplashWindow()
+            window = self.control  # .GetSplashWindow()
 
             dc = wx.PaintDC(window)
 
@@ -125,7 +119,7 @@ class SplashScreen(MSplashScreen, Window):
             dc.SetFont(text_font)
 
             if self.text_color is None:
-                text_color = 'black'
+                text_color = "black"
             else:
                 text_color = self.text_color
 
@@ -136,5 +130,3 @@ class SplashScreen(MSplashScreen, Window):
 
         # Let the normal wx paint handling do its stuff.
         event.Skip()
-
-#### EOF ######################################################################

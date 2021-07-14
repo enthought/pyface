@@ -1,16 +1,16 @@
 """
-Simple example of a task application creating tasks and panes from traits 
-components. 
+Simple example of a task application creating tasks and panes from traits
+components.
 
-Note: Run it with 
+Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
-# Enthought library imports.
+
 from pyface.api import GUI
 from pyface.tasks.api import TaskWindow
 
-# Local imports.
+
 from example_task import ExampleTask
 
 
@@ -32,6 +32,7 @@ def main(argv):
     gui.start_event_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     main(sys.argv)

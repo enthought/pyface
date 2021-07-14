@@ -1,15 +1,16 @@
-# Copyright (c) 2010-18, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, Instance, List, Property, Unicode, on_trait_change
+from traits.api import Any, Instance, List, Property, Str, observe
 
 
 class TaskWindowToggleAction(Action):
@@ -19,15 +20,15 @@ class TaskWindowToggleAction(Action):
     # 'Action' interface -----------------------------------------------------
 
     #: The name of the action for the window.
-    name = Property(Unicode, depends_on='window.title')
+    name = Property(Str, observe="window.title")
 
     #: The action is a toggle action.
-    style = 'toggle'
+    style = "toggle"
 
     # 'TaskWindowToggleAction' interface -------------------------------------
 
-    # The window to use for this action.
-    window = Instance('pyface.tasks.task_window.TaskWindow')
+    #: The window to use for this action.
+    window = Instance("pyface.tasks.task_window.TaskWindow")
 
     # -------------------------------------------------------------------------
     # 'Action' interface.
@@ -44,14 +45,14 @@ class TaskWindowToggleAction(Action):
     def _get_name(self):
         if self.window.title:
             return self.window.title
-        return u''
+        return ""
 
-    @on_trait_change('window:activated')
-    def _window_activated(self):
+    @observe("window:activated")
+    def _window_activated(self, event):
         self.checked = True
 
-    @on_trait_change('window:deactivated')
-    def _window_deactivated(self):
+    @observe("window:deactivated")
+    def _window_deactivated(self, event):
         self.checked = False
 
 
@@ -62,18 +63,18 @@ class TaskWindowToggleGroup(Group):
     # 'Group' interface ------------------------------------------------------
 
     #: The id of the action group.
-    id = 'TaskWindowToggleGroup'
+    id = "TaskWindowToggleGroup"
 
     #: The actions in the action group
-    items = List
+    items = List()
 
     # 'TaskWindowToggleGroup' interface --------------------------------------
 
     #: The application that contains the group.
-    application = Instance('pyface.tasks.tasks_application.TasksApplication')
+    application = Instance("pyface.tasks.tasks_application.TasksApplication")
 
     #: The ActionManager to which the group belongs.
-    manager = Any
+    manager = Any()
 
     # -------------------------------------------------------------------------
     # 'Group' interface.
@@ -82,10 +83,10 @@ class TaskWindowToggleGroup(Group):
     def destroy(self):
         """ Called when the group is no longer required.
         """
-        super(TaskWindowToggleGroup, self).destroy()
+        super().destroy()
         if self.application:
-            self.application.on_trait_change(
-                self._rebuild, 'windows[]', remove=True
+            self.application.observe(
+                self._rebuild, "windows.items", remove=True
             )
 
     # -------------------------------------------------------------------------
@@ -100,7 +101,7 @@ class TaskWindowToggleGroup(Group):
             items.append(ActionItem(action=action))
         return items
 
-    def _rebuild(self):
+    def _rebuild(self, event):
         # Clear out the old group, then build the new one.
         for item in self.items:
             item.destroy()
@@ -112,7 +113,7 @@ class TaskWindowToggleGroup(Group):
     # Trait initializers -----------------------------------------------------
 
     def _items_default(self):
-        self.application.on_trait_change(self._rebuild, 'windows[]')
+        self.application.observe(self._rebuild, "windows.items")
         return self._get_items()
 
     def _manager_default(self):

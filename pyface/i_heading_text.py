@@ -1,45 +1,118 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Heading text. """
 
+import warnings
 
-# Enthought library imports.
-from traits.api import Instance, Int, Interface, Unicode
-
-# Local imports.
-from pyface.i_image_resource import IImageResource
+from traits.api import HasTraits, Int, Interface, Str, observe
 
 
 class IHeadingText(Interface):
-    """ Heading text. """
+    """ A widget which shows heading text in a panel. """
 
-    #### 'IHeadingText' interface #############################################
+    # 'IHeadingText' interface ---------------------------------------------
 
-    #: Heading level.
-    #
-    # fixme: Currently we ignore anything but one, but in future we could
-    # have different visualizations based on the level.
+    #: Heading level.  This is currently unused.
     level = Int(1)
 
     #: The heading text.
-    text = Unicode('Default')
-
-    #: The background image.
-    image = Instance(IImageResource)
+    text = Str("Default")
 
 
-class MHeadingText(object):
+class MHeadingText(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """
+
+    # 'IHeadingText' interface ---------------------------------------------
+
+    #: Heading level.  This is currently unused.
+    level = Int(1)
+
+    #: The heading text.
+    text = Str("Default")
+
+    def __init__(self, parent=None, **traits):
+        """ Creates the heading text. """
+
+        if "image" in traits:
+            warnings.warn(
+                "background images are no-longer supported for Wx and the "
+                "'image' trait will be removed in a future Pyface update",
+                PendingDeprecationWarning,
+            )
+
+        create = traits.pop("create", True)
+
+        # Base class constructor.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
+
+    # ------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # ------------------------------------------------------------------------
+
+    def _create(self):
+        """ Create and initialize the toolkit control. """
+        super()._create()
+        # TODO: this should be moved into the base toolkit Widget class
+        self._initialize_control()
+
+    def _initialize_control(self):
+        """ Perform any toolkit-specific initialization for the control. """
+        self._set_control_text(self.text)
+
+    def _add_event_listeners(self):
+        super()._add_event_listeners()
+        self.observe(self._text_updated, 'text', dispatch="ui")
+
+    def _remove_event_listeners(self):
+        self.observe(self._text_updated, 'text', dispatch="ui", remove=True)
+        super()._remove_event_listeners()
+
+    # ------------------------------------------------------------------------
+    # Private interface.
+    # ------------------------------------------------------------------------
+
+    def _set_control_text(self, text):
+        """ Set the text on the control.
+
+        Parameters
+        ----------
+        text : str
+            The text to display.  This can contain basic HTML-like markeup.
+        """
+        raise NotImplementedError()
+
+    def _get_control_text(self):
+        """ Get the text on the control.
+
+        Returns
+        ----------
+        text : str
+            The text to displayed in the widget.
+        """
+        raise NotImplementedError()
+
+    # Trait change handlers --------------------------------------------------
+
+    def _text_updated(self, event):
+        if self.control is not None:
+            self._set_control_text(self.text)

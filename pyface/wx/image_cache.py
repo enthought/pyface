@@ -1,24 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ An image cache. """
 
 
-# Major package imports.
 import wx
 
 
-class ImageCache:
+class ImageCache(object):
     """ An image cache. """
 
     def __init__(self, width, height):
@@ -28,13 +24,13 @@ class ImageCache:
         self._height = height
 
         # The images in the cache!
-        self._images = {} # {filename : bitmap}
+        self._images = {}  # {filename : bitmap}
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageCache' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, filename):
         """ Returns the specified image (currently as a bitmap). """
@@ -59,16 +55,17 @@ class ImageCache:
 
         return bmp
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
 
-        if image.GetWidth() != self._width or image.GetHeight()!= self._height:
+        if (
+            image.GetWidth() != self._width
+            or image.GetHeight() != self._height
+        ):
             image.Rescale(self._width, self._height)
 
         return image
-
-#### EOF ######################################################################

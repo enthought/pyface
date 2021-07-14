@@ -1,40 +1,38 @@
-#  Copyright (c) 2005-18, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
+# Thanks for using Enthought open source!
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
-import six.moves.builtins
+
+import builtins
 import os
 import sys
 import types
+import warnings
 
-# Major package imports.
+
 from wx.py.shell import Shell as PyShellBase
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, provides
 
-# Private Enthought library imports.
+
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
-# Local imports.
+
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
-import six
 
 
 @provides(IPythonShell)
@@ -43,33 +41,39 @@ class PythonShell(MPythonShell, Widget):
     IPythonShell interface for the API documentation.
     """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
-    command_executed = Event
+    command_executed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
+        create = traits.pop("create", True)
+
         # Base class constructor.
-        super(PythonShell, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
+        if create:
+            # Create the toolkit-specific control that represents the widget.
+            self.control = self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
-        # Set up to be notified whenever a Python statement is executed:
-        self.control.handlers.append(self._on_command_executed)
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         return self.control.interp
@@ -88,19 +92,19 @@ class PythonShell(MPythonShell, Widget):
         filename = os.path.basename(path)
 
         # Run in a fresh, empty namespace
-        main_mod = types.ModuleType('__main__')
+        main_mod = types.ModuleType("__main__")
         prog_ns = main_mod.__dict__
-        prog_ns['__file__'] = filename
-        prog_ns['__nonzero__'] = lambda: True
+        prog_ns["__file__"] = filename
+        prog_ns["__nonzero__"] = lambda: True
 
         # Make sure that the running script gets a proper sys.argv as if it
         # were run from a system shell.
         save_argv = sys.argv
-        sys.argv = [ filename ]
+        sys.argv = [filename]
 
         # Make sure that the running script thinks it is the main module
-        save_main = sys.modules['__main__']
-        sys.modules['__main__'] = main_mod
+        save_main = sys.modules["__main__"]
+        sys.modules["__main__"] = main_mod
 
         # Redirect sys.std* to control or null
         old_stdin = sys.stdin
@@ -117,22 +121,22 @@ class PythonShell(MPythonShell, Widget):
                 self.control.clearCommand()
                 self.control.write('# Executing "%s"\n' % path)
 
-            execfile(path, prog_ns, prog_ns)
+            exec(open(path).read(), prog_ns, prog_ns)
 
             if not hidden:
                 self.control.prompt()
         finally:
             # Ensure key global stuctures are restored
             sys.argv = save_argv
-            sys.modules['__main__'] = save_main
+            sys.modules["__main__"] = save_main
             sys.stdin = old_stdin
             sys.stdout = old_stdout
             sys.stderr = old_stderr
 
         # Update the interpreter with the new namespace
-        del prog_ns['__name__']
-        del prog_ns['__file__']
-        del prog_ns['__nonzero__']
+        del prog_ns["__name__"]
+        del prog_ns["__file__"]
+        del prog_ns["__nonzero__"]
         self.interpreter().locals.update(prog_ns)
 
     def get_history(self):
@@ -162,39 +166,45 @@ class PythonShell(MPythonShell, Widget):
         self.control.history = list(history)
         self.control.historyIndex = history_index
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         shell = PyShell(parent, -1)
 
         # Listen for key press events.
-        wx.EVT_CHAR(shell, self._wx_on_char)
+        shell.Bind(wx.EVT_CHAR, self._wx_on_char)
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
 
+        # Set up to be notified whenever a Python statement is executed:
+        shell.handlers.append(self._on_command_executed)
+
         return shell
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonDropTarget' handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
         """ Called when a drop occurs on the shell. """
 
         # If we can't create a valid Python identifier for the name of an
         # object we use this instead.
-        name = 'dragged'
+        name = "dragged"
 
-        if hasattr(obj, 'name') \
-           and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
+        if (
+            hasattr(obj, "name")
+            and isinstance(obj.name, str)
+            and len(obj.name) > 0
+        ):
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
             try:
-                if eval(py_name, {py_name : True}):
+                if eval(py_name, {py_name: True}):
                     name = py_name
 
             except:
@@ -212,9 +222,9 @@ class PythonShell(MPythonShell, Widget):
         """ Always returns wx.DragCopy to indicate we will be doing a copy."""
         return wx.DragCopy
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
         """ Called whenever a change is made to the text of the document. """
@@ -224,19 +234,19 @@ class PythonShell(MPythonShell, Widget):
         if event.AltDown() and event.GetKeyCode() == 317:
             zoom = self.shell.control.GetZoom()
             if zoom != 20:
-                self.control.SetZoom(zoom+1)
+                self.control.SetZoom(zoom + 1)
 
         elif event.AltDown() and event.GetKeyCode() == 319:
             zoom = self.shell.control.GetZoom()
             if zoom != -10:
-                self.control.SetZoom(zoom-1)
+                self.control.SetZoom(zoom - 1)
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.AltDown() == 1,
-            control_down = event.ControlDown() == 1,
-            shift_down   = event.ShiftDown() == 1,
-            key_code     = event.GetKeyCode(),
-            event        = event
+            alt_down=event.AltDown() == 1,
+            control_down=event.ControlDown() == 1,
+            shift_down=event.ShiftDown() == 1,
+            key_code=event.GetKeyCode(),
+            event=event,
         )
 
         # Give other event handlers a chance.
@@ -244,18 +254,37 @@ class PythonShell(MPythonShell, Widget):
 
 
 class PyShell(PyShellBase):
-
-    def __init__(self, parent, id=-1, pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, style=wx.CLIP_CHILDREN,
-                 introText='', locals=None, InterpClass=None, *args, **kwds):
-        self.handlers=[]
+    def __init__(
+        self,
+        parent,
+        id=-1,
+        pos=wx.DefaultPosition,
+        size=wx.DefaultSize,
+        style=wx.CLIP_CHILDREN,
+        introText="",
+        locals=None,
+        InterpClass=None,
+        *args,
+        **kwds
+    ):
+        self.handlers = []
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = six.moves.builtins.raw_input
+        self.raw_input = input
 
-        super(PyShell,self).__init__(parent, id, pos, size, style, introText,
-                                     locals, InterpClass, *args, **kwds)
+        super().__init__(
+            parent,
+            id,
+            pos,
+            size,
+            style,
+            introText,
+            locals,
+            InterpClass,
+            *args,
+            **kwds
+        )
 
     def hidden_push(self, command):
         """ Send a command to the interpreter for execution without adding
@@ -288,21 +317,41 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        six.moves.builtins.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
-        super(PyShellBase, self).Destroy()
+        super().Destroy()
 
 
-class _NullIO:
+class _NullIO(object):
     """ A portable /dev/null for use with PythonShell.execute_file.
     """
-    def tell(self): return 0
-    def read(self, n = -1): return ""
-    def readline(self, length = None): return ""
-    def readlines(self): return []
-    def write(self, s): pass
-    def writelines(self, list): pass
-    def isatty(self): return 0
-    def flush(self): pass
-    def close(self): pass
-    def seek(self, pos, mode = 0): pass
+
+    def tell(self):
+        return 0
+
+    def read(self, n=-1):
+        return ""
+
+    def readline(self, length=None):
+        return ""
+
+    def readlines(self):
+        return []
+
+    def write(self, s):
+        pass
+
+    def writelines(self, list):
+        pass
+
+    def isatty(self):
+        return 0
+
+    def flush(self):
+        pass
+
+    def close(self):
+        pass
+
+    def seek(self, pos, mode=0):
+        pass

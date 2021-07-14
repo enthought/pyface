@@ -1,22 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for an interactive Python shell. """
 
-# Enthought library imports.
-from traits.api import Event
 
-# Local imports.
+from traits.api import Event, HasTraits
+
+
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.i_widget import IWidget
 
@@ -24,17 +21,17 @@ from pyface.i_widget import IWidget
 class IPythonShell(IWidget):
     """ The interface for an interactive Python shell. """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     #: A command has been executed.
-    command_executed = Event
+    command_executed = Event()
 
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         """ Get the shell's interpreter
@@ -103,16 +100,16 @@ class IPythonShell(IWidget):
         """
 
 
-class MPythonShell(object):
+class MPythonShell(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonShell interface.
 
     Implements: bind(), _on_command_executed()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def bind(self, name, value):
         """ Binds a name to a value in the interpreter's namespace.
@@ -126,9 +123,9 @@ class MPythonShell(object):
         """
         self.interpreter().locals[name] = value
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_command_executed(self):
         """ Called when a command has been executed in the shell. """

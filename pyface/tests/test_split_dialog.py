@@ -1,4 +1,13 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
@@ -6,11 +15,11 @@ from ..heading_text import HeadingText
 from ..split_dialog import SplitDialog
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -37,7 +46,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_horizontal(self):
         # test that horizontal split works
-        self.dialog.direction = 'horizontal'
+        self.dialog.direction = "horizontal"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():

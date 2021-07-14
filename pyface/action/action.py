@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all actions. """
 
 from functools import partial
 
-# Enthought library imports.
+
 from traits.api import Bool, Callable, Enum, HasTraits, Str
-from traits.api import Unicode
 
 from pyface.ui_traits import Image
 
@@ -34,10 +30,10 @@ class Action(HasTraits):
 
     """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     #: Keyboard accelerator (by default the action has NO accelerator).
-    accelerator = Unicode
+    accelerator = Str()
 
     #: Is the action checked?  This is only relevant if the action style is
     #: 'radio' or 'toggle'.
@@ -46,7 +42,7 @@ class Action(HasTraits):
     #: A longer description of the action (used for context sensitive help etc).
     #: If no description is specified, the tooltip is used instead (and if there
     #: is no tooltip, then well, maybe you just hate your users ;^).
-    description = Unicode
+    description = Str()
 
     #: Is the action enabled?
     enabled = Bool(True)
@@ -55,31 +51,31 @@ class Action(HasTraits):
     visible = Bool(True)
 
     #: The action's unique identifier (may be None).
-    id = Str
+    id = Str()
 
     #: The action's image (displayed on tool bar tools etc).
     image = Image
 
     #: The action's name (displayed on menus/tool bar tools etc).
-    name = Unicode
+    name = Str()
 
     #: An (optional) callable that will be invoked when the action is performed.
     on_perform = Callable
 
     #: The action's style.
-    style = Enum('push', 'radio', 'toggle', 'widget')
+    style = Enum("push", "radio", "toggle", "widget")
 
     #: A short description of the action used for tooltip text etc.
-    tooltip = Unicode
+    tooltip = Str()
 
     #: An (optional) callable to create the toolkit control for widget style.
     control_factory = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _id_default(self):
         """ Initializes the 'id' trait.
@@ -88,7 +84,7 @@ class Action(HasTraits):
         """
         return self.name
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Called when creating a "widget" style action.
@@ -112,7 +108,7 @@ class Action(HasTraits):
         control : toolkit control
             A toolkit control or None.
         """
-        if self.style == 'widget' and self.control_factory is not None:
+        if self.style == "widget" and self.control_factory is not None:
             return self.control_factory(parent, self)
         return None
 

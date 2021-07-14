@@ -1,11 +1,31 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import sys
 
-# Enthought library imports.
-from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
-    MEditorAreaPane
-from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
-    on_trait_change, Property, provides, Str
+
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
+from traits.api import (
+    Any,
+    Bool,
+    cached_property,
+    Callable,
+    Dict,
+    Instance,
+    List,
+    observe,
+    Property,
+    provides,
+    Str,
+    Tuple,
+)
 from pyface.qt import is_qt4, QtCore, QtGui
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -14,12 +34,13 @@ from pyface.api import FileDialog
 from pyface.constant import OK
 from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
-# Local imports.
+
 from .task_pane import TaskPane
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'SplitEditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 @provides(IEditorAreaPane)
 class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
@@ -28,8 +49,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     See the IEditorAreaPane interface for API documentation.
     """
 
-
-    #### SplitEditorAreaPane interface #####################################
+    # SplitEditorAreaPane interface -------------------------------------
 
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
@@ -49,12 +69,17 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     # The constructor of the empty widget which comes up when one creates a split
     create_empty_widget = Callable
 
-    #### Private interface ###################################################
+    # Private interface ---------------------------------------------------
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
 
     _private_drop_handlers = List(IDropHandler)
     _all_drop_handlers = Property(
         List(IDropHandler),
-        depends_on=['drop_handlers', '_private_drop_handlers']
+        observe=["drop_handlers", "_private_drop_handlers"],
     )
 
     def __private_drop_handlers_default(self):
@@ -64,20 +89,24 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             2. For dropping of supported files from file-browser pane or outside
             the application
         """
-        return [TabDropHandler(),
-                FileDropHandler(extensions=self.file_drop_extensions,
-                                open_file=lambda path:self.trait_set(file_dropped=path))]
+        return [
+            TabDropHandler(),
+            FileDropHandler(
+                extensions=self.file_drop_extensions,
+                open_file=lambda path: self.trait_set(file_dropped=path),
+            ),
+        ]
 
     @cached_property
     def _get__all_drop_handlers(self):
         return self.drop_handlers + self._private_drop_handlers
 
     def _create_empty_widget_default(self):
-        return lambda : self.active_tabwidget.create_empty_widget()
+        return lambda: self.active_tabwidget.create_empty_widget()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -98,16 +127,26 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         # disconnect application level focus change signals first, else it gives
         # weird runtime errors trying to access non-existent objects
-        QtGui.QApplication.instance().focusChanged.disconnect(self._focus_changed)
+        QtGui.QApplication.instance().focusChanged.disconnect(
+            self._focus_changed
+        )
 
         for editor in self.editors[:]:
             self.remove_editor(editor)
 
-        super(SplitEditorAreaPane, self).destroy()
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
-    ###########################################################################
+        # Remove reference to active tabwidget so that it can be deleted
+        # together with the main control
+        self.active_tabwidget = None
+
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -132,8 +171,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         editor.editor_area = self
         editor.create(self.active_tabwidget)
-        index = self.active_tabwidget.addTab(editor.control,
-                                             self._get_label(editor))
+        index = self.active_tabwidget.addTab(
+            editor.control, self._get_label(editor)
+        )
         # There seem to be a bug in pyside or qt, where the index is set to 1
         # when you create the first tab. This is a hack to fix it.
         if self.active_tabwidget.count() == 1:
@@ -152,10 +192,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         if not self.editors:
             self.active_editor = None
 
-
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'IAdvancedEditorAreaPane' interface.
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self):
         """ Returns a LayoutItem that reflects the current state of the
@@ -168,68 +207,86 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.control.set_layout(layout)
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'SplitEditorAreaPane' interface.
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def get_context_menu(self, pos):
-        """ Returns a context menu containing split/collapse actions
+        """ Return a context menu containing split/collapse actions.
 
-        pos : position (in global coordinates) where the context menu was
-        requested
+        Parameters
+        ----------
+        pos : QtCore.QPoint
+            Mouse position in global coordinates for which the context menu was
+            requested.
+
+        Returns
+        -------
+        menu : pyface.action.menu_manager.MenuManager or None
+            Context menu, or None if the given position doesn't correspond
+            to any of the tab widgets.
         """
         menu = MenuManager()
-        splitter = None
 
-        splitter = None
         for tabwidget in self.tabwidgets():
-            # obtain tabwidget's bounding rectangle in global coordinates
-            global_rect = QtCore.QRect(tabwidget.mapToGlobal(QtCore.QPoint(0, 0)),
-                                        tabwidget.size())
-            if global_rect.contains(pos):
+            widget_pos = tabwidget.mapFromGlobal(pos)
+            if tabwidget.rect().contains(widget_pos):
                 splitter = tabwidget.parent()
-
-        # no split/collapse context menu for positions outside any tabwidget
-        # region
-        if not splitter:
-            return
+                break
+        else:
+            # no split/collapse context menu for positions outside any
+            # tabwidget region
+            return None
 
         # add split actions (only show for non-empty tabwidgets)
         if not splitter.is_empty():
-            actions = [Action(id='split_hor', name='Create new pane to the right',
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Horizontal)),
-                       Action(id='split_ver', name='Create new pane to the bottom',
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Vertical))]
-
-            splitgroup = Group(*actions, id='split')
-            menu.append(splitgroup)
+            split_group = Group(
+                Action(
+                    id="split_hor",
+                    name="Create new pane to the right",
+                    on_perform=lambda: splitter.split(
+                        orientation=QtCore.Qt.Horizontal
+                    ),
+                ),
+                Action(
+                    id="split_ver",
+                    name="Create new pane below",
+                    on_perform=lambda: splitter.split(
+                        orientation=QtCore.Qt.Vertical
+                    ),
+                ),
+                id="split",
+            )
+            menu.append(split_group)
 
         # add collapse action (only show for collapsible splitters)
         if splitter.is_collapsible():
             if splitter is splitter.parent().leftchild:
                 if splitter.parent().orientation() == QtCore.Qt.Horizontal:
-                    text = 'Merge with right pane'
+                    text = "Merge with right pane"
                 else:
-                    text = 'Merge with bottom pane'
+                    text = "Merge with bottom pane"
             else:
                 if splitter.parent().orientation() == QtCore.Qt.Horizontal:
-                    text = 'Merge with left pane'
+                    text = "Merge with left pane"
                 else:
-                    text = 'Merge with top pane'
-            actions = [Action(id='merge', name=text,
-                        on_perform=lambda : splitter.collapse())]
+                    text = "Merge with top pane"
 
-            collapsegroup = Group(*actions, id='collapse')
-            menu.append(collapsegroup)
+            collapse_group = Group(
+                Action(
+                    id="merge",
+                    name=text,
+                    on_perform=lambda: splitter.collapse(),
+                ),
+                id="collapse",
+            )
+            menu.append(collapse_group)
 
-        # return QMenu object
         return menu
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
         """ Return a tab label for an editor.
@@ -237,9 +294,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         try:
             label = editor.name
             if editor.dirty:
-                label = '*' + label
+                label = "*" + label
         except AttributeError:
-            label = ''
+            label = ""
         return label
 
     def _get_editor(self, editor_widget):
@@ -254,25 +311,37 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Set keyboard shortcuts for tabbed navigation
         """
         # Add shortcuts for scrolling through tabs.
-        if sys.platform == 'darwin':
-            next_seq = 'Ctrl+}'
-            prev_seq = 'Ctrl+{'
+        if sys.platform == "darwin":
+            next_seq = "Ctrl+}"
+            prev_seq = "Ctrl+{"
         else:
-            next_seq = 'Ctrl+PgDown'
-            prev_seq = 'Ctrl+PgUp'
+            next_seq = "Ctrl+PgDown"
+            prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._next_tab)
+        )
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._previous_tab)
+        )
 
         # Add shortcuts for switching to a specific tab.
-        mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
+        mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
+        self._connections_to_remove.append(
+            (mapper.mapped, self._activate_tab)
+        )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
+            self._connections_to_remove.append(
+                (shortcut.activated, mapper.map)
+            )
             mapper.setMapping(shortcut, i - 1)
 
     def _activate_tab(self, index):
@@ -288,14 +357,18 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Activate the tab after the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
-        new_index = index + 1 if index < self.active_tabwidget.count() - 1 else 0
+        new_index = (
+            index + 1 if index < self.active_tabwidget.count() - 1 else 0
+        )
         self._activate_tab(new_index)
 
     def _previous_tab(self):
         """ Activate the tab before the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
-        new_index = index - 1 if index > 0  else self.active_tabwidget.count() - 1
+        new_index = (
+            index - 1 if index > 0 else self.active_tabwidget.count() - 1
+        )
         self._activate_tab(new_index)
 
     def tabwidgets(self):
@@ -304,19 +377,21 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         return self.control.tabwidgets()
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    @on_trait_change('editors:[dirty, name]')
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         index = self.active_tabwidget.indexOf(editor.control)
         self.active_tabwidget.setTabText(index, self._get_label(editor))
 
-    @on_trait_change('editors:tooltip')
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         index = self.active_tabwidget.indexOf(editor.control)
         self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _find_ancestor_draggable_tab_widget(self, control):
         """ Find the draggable tab widget to which a widget belongs. """
@@ -336,16 +411,18 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                     self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
                 if self.control.isAncestorOf(new):
-                    self.active_tabwidget = \
-                        self._find_ancestor_draggable_tab_widget(new)
+                    self.active_tabwidget = self._find_ancestor_draggable_tab_widget(
+                        new
+                    )
             else:
                 # Check if any of the editor widgets have focus.
                 # If so, make it active.
                 for editor in self.editors:
                     control = editor.control
                     if control is not None and control.isAncestorOf(new):
-                        active_tabwidget = \
-                            self._find_ancestor_draggable_tab_widget(control)
+                        active_tabwidget = self._find_ancestor_draggable_tab_widget(
+                            control
+                        )
                         active_tabwidget.setCurrentWidget(control)
                         self.active_tabwidget = active_tabwidget
                         break
@@ -362,9 +439,10 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         self.active_editor = active_editor
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # Auxiliary classes.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 class EditorAreaWidget(QtGui.QSplitter):
     """ Container widget to hold a QTabWidget which are separated by other
@@ -382,12 +460,13 @@ class EditorAreaWidget(QtGui.QSplitter):
         tabwidget : tabwidget object contained by this splitter
 
         """
-        super(EditorAreaWidget, self).__init__(parent=parent)
+        super().__init__(parent=parent)
         self.editor_area = editor_area
 
         if not tabwidget:
-            tabwidget = DraggableTabWidget(editor_area=self.editor_area,
-                                        parent=self)
+            tabwidget = DraggableTabWidget(
+                editor_area=self.editor_area, parent=self
+            )
 
         # add the tabwidget to the splitter
         self.addWidget(tabwidget)
@@ -403,20 +482,24 @@ class EditorAreaWidget(QtGui.QSplitter):
         """ Returns a LayoutItem that reflects the layout of the current
         splitter.
         """
-        ORIENTATION_MAP = {QtCore.Qt.Horizontal: 'horizontal',
-                           QtCore.Qt.Vertical: 'vertical'}
+        ORIENTATION_MAP = {
+            QtCore.Qt.Horizontal: "horizontal",
+            QtCore.Qt.Vertical: "vertical",
+        }
         # obtain layout based on children layouts
         if not self.is_leaf():
-            layout = Splitter(self.leftchild.get_layout(),
-                            self.rightchild.get_layout(),
-                            orientation=ORIENTATION_MAP[self.orientation()])
+            layout = Splitter(
+                self.leftchild.get_layout(),
+                self.rightchild.get_layout(),
+                orientation=ORIENTATION_MAP[self.orientation()],
+            )
         # obtain the Tabbed layout
         else:
             if self.is_empty():
-                layout = Tabbed(PaneItem(id=-1,
-                                        width=self.width(),
-                                        height=self.height()),
-                                active_tab=0)
+                layout = Tabbed(
+                    PaneItem(id=-1, width=self.width(), height=self.height()),
+                    active_tab=0,
+                )
             else:
                 items = []
                 for i in range(self.tabwidget().count()):
@@ -426,17 +509,23 @@ class EditorAreaWidget(QtGui.QSplitter):
                     item_id = self.editor_area.editors.index(editor)
                     item_width = self.width()
                     item_height = self.height()
-                    items.append(PaneItem(id=item_id,
-                                        width=item_width,
-                                        height=item_height))
-                layout = Tabbed(*items, active_tab=self.tabwidget().currentIndex())
+                    items.append(
+                        PaneItem(
+                            id=item_id, width=item_width, height=item_height
+                        )
+                    )
+                layout = Tabbed(
+                    *items, active_tab=self.tabwidget().currentIndex()
+                )
         return layout
 
     def set_layout(self, layout):
         """ Applies the given LayoutItem to current splitter.
         """
-        ORIENTATION_MAP = {'horizontal': QtCore.Qt.Horizontal,
-                           'vertical': QtCore.Qt.Vertical}
+        ORIENTATION_MAP = {
+            "horizontal": QtCore.Qt.Horizontal,
+            "vertical": QtCore.Qt.Vertical,
+        }
         # if not a leaf splitter
         if isinstance(layout, Splitter):
             self.split(orientation=ORIENTATION_MAP[layout.orientation])
@@ -444,7 +533,7 @@ class EditorAreaWidget(QtGui.QSplitter):
             self.rightchild.set_layout(layout=layout.items[1])
 
             # setting sizes of children along splitter direction
-            if layout.orientation=='horizontal':
+            if layout.orientation == "horizontal":
                 sizes = [self.leftchild.width(), self.rightchild.width()]
                 self.resize(sum(sizes), self.leftchild.height())
             else:
@@ -460,10 +549,11 @@ class EditorAreaWidget(QtGui.QSplitter):
                 self.tabwidget().clear()
 
             for item in layout.items:
-                if not item.id==-1:
+                if not item.id == -1:
                     editor = self.editor_area.editors[item.id]
-                    self.tabwidget().addTab(editor.control,
-                                            self.editor_area._get_label(editor))
+                    self.tabwidget().addTab(
+                        editor.control, self.editor_area._get_label(editor)
+                    )
                 self.resize(item.width, item.height)
             self.tabwidget().setCurrentIndex(layout.active_tab)
 
@@ -557,17 +647,19 @@ class EditorAreaWidget(QtGui.QSplitter):
         orig_size = self.sizes()[0]
 
         # create new children
-        self.leftchild = EditorAreaWidget(self.editor_area, parent=self,
-                                        tabwidget=self.tabwidget())
-        self.rightchild = EditorAreaWidget(self.editor_area, parent=self,
-                                        tabwidget=None)
+        self.leftchild = EditorAreaWidget(
+            self.editor_area, parent=self, tabwidget=self.tabwidget()
+        )
+        self.rightchild = EditorAreaWidget(
+            self.editor_area, parent=self, tabwidget=None
+        )
 
         # add newly generated children
         self.addWidget(self.leftchild)
         self.addWidget(self.rightchild)
 
         # set equal sizes of splits
-        self.setSizes([orig_size/2,orig_size/2])
+        self.setSizes([orig_size // 2, orig_size // 2])
 
         # make the rightchild's tabwidget active & show its empty widget
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()
@@ -609,19 +701,25 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
-        target = DraggableTabWidget(editor_area=self.editor_area, parent=parent)
+        target = DraggableTabWidget(
+            editor_area=self.editor_area, parent=parent
+        )
 
         # add tabs of left and right tabwidgets to target
         for source in (left, right):
             # Note: addTab removes widgets from source tabwidget, so
             # grabbing all the source widgets beforehand
             # (not grabbing empty_widget)
-            widgets = [source.widget(i) for i in range(source.count()) if not
-                        source.widget(i) is source.empty_widget]
+            widgets = [
+                source.widget(i)
+                for i in range(source.count())
+                if not source.widget(i) is source.empty_widget
+            ]
             for editor_widget in widgets:
                 editor = self.editor_area._get_editor(editor_widget)
-                target.addTab(editor_widget,
-                            self.editor_area._get_label(editor))
+                target.addTab(
+                    editor_widget, self.editor_area._get_label(editor)
+                )
 
         # add target to parent
         parent.addWidget(target)
@@ -647,7 +745,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor_area : global SplitEditorAreaPane instance
         parent : parent of the tabwidget
         """
-        super(DraggableTabWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
 
         # configure QTabWidget
@@ -655,7 +753,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setFocusProxy(None)
-        self.setMovable(False) # handling move events myself
+        self.setMovable(False)  # handling move events myself
         self.setTabsClosable(True)
         self.setAutoFillBackground(True)
 
@@ -680,7 +778,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # callback to editor_area's public `create_empty_widget` Callable trait
         empty_widget = self.editor_area.create_empty_widget()
 
-        self.addTab(empty_widget, '')
+        self.addTab(empty_widget, "")
         self.empty_widget = empty_widget
         self.setFocus()
 
@@ -688,7 +786,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         if self.parent().is_root():
             self.setTabsClosable(False)
 
-        self.setTabText(0, '     ')
+        self.setTabText(0, "     ")
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and
@@ -710,11 +808,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # Add new file button and open file button only if the `callbacks` trait
         # of the editor_area has a callable for key `new` and key `open`
-        new_file_action = self.editor_area.callbacks.get('new', None)
-        open_file_action = self.editor_area.callbacks.get('open_dialog', None)
+        new_file_action = self.editor_area.callbacks.get("new", None)
+        open_file_action = self.editor_area.callbacks.get("open_dialog", None)
         open_show_dialog = False
         if open_file_action is None:
-            open_file_action = self.editor_area.callbacks.get('open', None)
+            open_file_action = self.editor_area.callbacks.get("open", None)
             open_show_dialog = True
         if not (new_file_action and open_file_action):
             return frame
@@ -722,36 +820,44 @@ class DraggableTabWidget(QtGui.QTabWidget):
         layout.addStretch()
 
         # generate new file button
-        newfile_btn = QtGui.QPushButton('Create a new file', parent=frame)
+        newfile_btn = QtGui.QPushButton("Create a new file", parent=frame)
         newfile_btn.clicked.connect(new_file_action)
         layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
         label = QtGui.QLabel(parent=frame)
-        label.setText("""<span style='font-size:14px; color:#999999'>
+        label.setText(
+            """<span style='font-size:14px; color:#999999'>
                         or
-                        </span>""")
+                        </span>"""
+        )
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
 
         # generate open button
-        open_btn = QtGui.QPushButton('Select files from your computer', parent=frame)
+        open_btn = QtGui.QPushButton(
+            "Select files from your computer", parent=frame
+        )
+
         def _open():
             if open_show_dialog:
-                open_dlg = FileDialog(action='open')
+                open_dlg = FileDialog(action="open")
                 open_dlg.open()
                 self.editor_area.active_tabwidget = self
                 if open_dlg.return_code == OK:
                     open_file_action(open_dlg.path)
             else:
                 open_file_action()
+
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
         label = QtGui.QLabel(parent=frame)
-        label.setText("""<span style='font-size:14px; color:#999999'>
+        label.setText(
+            """<span style='font-size:14px; color:#999999'>
                         Tip: You can also drag and drop files/tabs here.
-                        </span>""")
+                        </span>"""
+        )
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
 
         layout.addStretch()
@@ -771,7 +877,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 names.append(editor.name)
         return names
 
-    ###### Signal handlers ####################################################
+    # Signal handlers ----------------------------------------------------
 
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
@@ -790,7 +896,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         self.setCurrentIndex(index)
         editor_widget = self.widget(index)
-        self.editor_area.active_editor = self.editor_area._get_editor(editor_widget)
+        self.editor_area.active_editor = self.editor_area._get_editor(
+            editor_widget
+        )
 
     def tabInserted(self, index):
         """ Re-implemented to hide empty_widget when adding a new widget
@@ -809,20 +917,26 @@ class DraggableTabWidget(QtGui.QTabWidget):
         if not self.count() and not self.empty_widget:
             self.show_empty_widget()
 
-    ##### Event handlers ######################################################
+    ## Event handlers -----------------------------------------------------#
 
     def contextMenuEvent(self, event):
         """ To show collapse context menu even on empty tabwidgets
+
+        Parameters
+        ----------
+        event : QtGui.QContextMenuEvent
         """
         local_pos = event.pos()
-        if (self.empty_widget is not None or
-                self.tabBar().rect().contains(local_pos)):
+        if self.empty_widget is not None or self.tabBar().rect().contains(
+            local_pos
+        ):
             # Only display if we are in the tab bar region or the whole area if
             # we are displaying the default empty widget.
             global_pos = self.mapToGlobal(local_pos)
             menu = self.editor_area.get_context_menu(pos=global_pos)
-            qmenu = menu.create_menu(self)
-            qmenu.exec_(global_pos)
+            if menu is not None:
+                qmenu = menu.create_menu(self)
+                qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
@@ -834,7 +948,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 event.acceptProposedAction()
                 return
 
-        super(DraggableTabWidget, self).dragEnterEvent(event)
+        super().dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
@@ -850,25 +964,30 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """ Clear widget highlight on leaving
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
-        return super(DraggableTabWidget, self).dragLeaveEvent(event)
+        return super().dragLeaveEvent(event)
 
 
 class DraggableTabBar(QtGui.QTabBar):
     """ Implements a QTabBar with event filters for tab drag
     """
+
     def __init__(self, editor_area, parent):
-        super(DraggableTabBar, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
         self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.drag_obj = None
 
     def mousePressEvent(self, event):
-        if event.button()==QtCore.Qt.LeftButton:
+        if event.button() == QtCore.Qt.LeftButton:
             index = self.tabAt(event.pos())
             tabwidget = self.parent()
-            if tabwidget.widget(index) and (not tabwidget.widget(index) == tabwidget.empty_widget):
-                self.drag_obj = TabDragObject(start_pos=event.pos(), tabBar=self)
-        return super(DraggableTabBar, self).mousePressEvent(event)
+            if tabwidget.widget(index) and (
+                not tabwidget.widget(index) == tabwidget.empty_widget
+            ):
+                self.drag_obj = TabDragObject(
+                    start_pos=event.pos(), tabBar=self
+                )
+        return super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
         """ Re-implemented to create a drag event when the mouse is moved for a
@@ -877,11 +996,12 @@ class DraggableTabBar(QtGui.QTabBar):
         # go into the drag logic only if a drag_obj is active
         if self.drag_obj:
             # is the left mouse button still pressed?
-            if not event.buttons()==QtCore.Qt.LeftButton:
+            if not event.buttons() == QtCore.Qt.LeftButton:
                 pass
             # has the mouse been dragged for sufficient distance?
-            elif ((event.pos() - self.drag_obj.start_pos).manhattanLength()
-                < QtGui.QApplication.startDragDistance()):
+            elif (
+                event.pos() - self.drag_obj.start_pos
+            ).manhattanLength() < QtGui.QApplication.startDragDistance():
                 pass
             # initiate drag
             else:
@@ -891,16 +1011,16 @@ class DraggableTabBar(QtGui.QTabBar):
                 drag.setHotSpot(self.drag_obj.get_hotspot())
                 drag.setMimeData(mimedata)
                 drag.exec_()
-                self.drag_obj = None # deactivate the drag_obj again
+                self.drag_obj = None  # deactivate the drag_obj again
                 return
-        return super(DraggableTabBar, self).mouseMoveEvent(event)
+        return super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event):
         """ Re-implemented to deactivate the drag when mouse button is
         released
         """
         self.drag_obj = None
-        return super(DraggableTabBar, self).mouseReleaseEvent(event)
+        return super().mouseReleaseEvent(event)
 
 
 class TabDragObject(object):
@@ -951,7 +1071,9 @@ class TabDragObject(object):
             pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
         else:
             pixmap2 = self.widget.grab()
-        painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
+        painter.drawPixmap(
+            0, tab_rect.height(), size.width(), size.height(), pixmap2
+        )
 
         # finish painting
         painter.end()
@@ -959,11 +1081,16 @@ class TabDragObject(object):
         return result_pixmap
 
     def get_hotspot(self):
-        return self.start_pos - self.from_tabbar.tabRect(self.from_index).topLeft()
+        return (
+            self.start_pos
+            - self.from_tabbar.tabRect(self.from_index).topLeft()
+        )
 
-###############################################################################
+
+# ----------------------------------------------------------------------------
 # Default drop handlers.
-###############################################################################
+# ----------------------------------------------------------------------------
+
 
 class TabDropHandler(BaseDropHandler):
     """ Class to handle tab drop events
@@ -973,8 +1100,9 @@ class TabDropHandler(BaseDropHandler):
     allow_cross_window_drop = Bool(False)
 
     def can_handle_drop(self, event, target):
-        if isinstance(event.mimeData(), PyMimeData) and \
-            isinstance(event.mimeData().instance(), TabDragObject):
+        if isinstance(event.mimeData(), PyMimeData) and isinstance(
+            event.mimeData().instance(), TabDragObject
+        ):
             if not self.allow_cross_window_drop:
                 drag_obj = event.mimeData().instance()
                 return drag_obj.from_editor_area == target.editor_area
@@ -994,7 +1122,7 @@ class TabDropHandler(BaseDropHandler):
         label = target.editor_area._get_label(editor)
 
         # if drop occurs at a tab bar, insert the tab at that position
-        if not target.tabBar().tabAt(event.pos())==-1:
+        if not target.tabBar().tabAt(event.pos()) == -1:
             index = target.tabBar().tabAt(event.pos())
             target.insertTab(index, drag_obj.widget, label)
 

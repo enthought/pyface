@@ -1,16 +1,17 @@
-# Copyright (c) 2010-18, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
-from traits.api import Bool, Instance, Property, Str, cached_property
 
-# Local imports.
+from traits.api import Instance, Property, Str, cached_property
+
+
 from pyface.tasks.api import Editor, Task, TaskPane
 from pyface.action.listening_action import ListeningAction
 
@@ -22,18 +23,18 @@ class TaskAction(ListeningAction):
     not inherit TaskAction, although they must, of course, inherit Action.
     """
 
-    #### ListeningAction interface ############################################
+    # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on='task')
+    object = Property(observe="task")
 
-    #### TaskAction interface #################################################
+    # TaskAction interface -------------------------------------------------
 
-    # The Task with which the action is associated. Set by the framework.
+    #: The Task with which the action is associated. Set by the framework.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_object(self):
         return self.task
@@ -41,20 +42,20 @@ class TaskAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to task and dependent properties.
         self.task = None
-        super(TaskAction, self).destroy()
+        super().destroy()
 
 
 class TaskWindowAction(TaskAction):
     """ An Action that makes a callback to a Task's window.
     """
 
-    #### ListeningAction interface ############################################
+    # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on='task.window')
+    object = Property(observe="task.window")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_object(self):
         if self.task:
@@ -66,18 +67,18 @@ class CentralPaneAction(TaskAction):
     """ An Action that makes a callback to a Task's central pane.
     """
 
-    #### ListeningAction interface ############################################
+    # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on='central_pane')
+    object = Property(observe="central_pane")
 
-    #### CentralPaneAction interface ##########################################
+    # CentralPaneAction interface -----------------------------------------#
 
-    # The central pane with which the action is associated.
-    central_pane = Property(Instance(TaskPane), depends_on='task')
+    #: The central pane with which the action is associated.
+    central_pane = Property(Instance(TaskPane), observe="task")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_central_pane(self):
@@ -93,21 +94,21 @@ class DockPaneAction(TaskAction):
     """ An Action the makes a callback to one of a Task's dock panes.
     """
 
-    #### ListeningAction interface ############################################
+    # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on='dock_pane')
+    object = Property(observe="dock_pane")
 
-    #### DockPaneAction interface #############################################
+    # DockPaneAction interface ---------------------------------------------
 
-    # The dock pane with which the action is associated. Set by the framework.
-    dock_pane = Property(Instance(TaskPane), depends_on='task')
+    #: The dock pane with which the action is associated. Set by the framework.
+    dock_pane = Property(Instance(TaskPane), observe="task")
 
-    # The ID of the dock pane with which the action is associated.
-    dock_pane_id = Str
+    #: The ID of the dock pane with which the action is associated.
+    dock_pane_id = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_dock_pane(self):
@@ -123,20 +124,20 @@ class EditorAction(CentralPaneAction):
     """ An action that makes a callback to the active editor in an editor pane.
     """
 
-    #### ListeningAction interface ############################################
+    # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on='active_editor')
+    object = Property(observe="active_editor")
 
-    #### EditorAction interface ###############################################
+    # EditorAction interface -----------------------------------------------
 
-    # The active editor in the central pane with which the action is associated.
+    #: The active editor in the central pane with which the action is associated.
     active_editor = Property(
-        Instance(Editor), depends_on='central_pane.active_editor'
+        Instance(Editor), observe="central_pane.active_editor"
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_active_editor(self):

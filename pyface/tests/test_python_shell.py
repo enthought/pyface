@@ -1,4 +1,13 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import os
 import sys
@@ -8,15 +17,15 @@ from ..python_shell import PythonShell
 from ..toolkit import toolkit_object
 from ..window import Window
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 PYTHON_SCRIPT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 'python_shell_script.py')
+    os.path.join(os.path.dirname(__file__), "python_shell_script.py")
 )
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestPythonShell(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -37,108 +46,134 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = PythonShell(self.window.control)
+
+        self.assertIsNotNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_two_stage_create(self):
+        # test that create=False works
+        self.widget = PythonShell(create=False)
+
+        self.assertIsNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
+
         with self.event_loop():
             self.widget.destroy()
 
     def test_bind(self):
         # test that binding a variable works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
         with self.event_loop():
-            self.widget.bind('x', 1)
+            self.widget.bind("x", 1)
 
-        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
+        self.assertEqual(self.widget.interpreter().locals.get("x"), 1)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_execute_command(self):
         # test that executing a command works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
-        with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        with self.assertTraitChanges(self.widget, "command_executed", count=1):
             with self.event_loop():
-                self.widget.execute_command('x = 1')
+                self.widget.execute_command("x = 1")
 
-        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
+        self.assertEqual(self.widget.interpreter().locals.get("x"), 1)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_execute_command_not_hidden(self):
         # test that executing a non-hidden command works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
-        with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        with self.assertTraitChanges(self.widget, "command_executed", count=1):
             with self.event_loop():
-                self.widget.execute_command('x = 1', hidden=False)
+                self.widget.execute_command("x = 1", hidden=False)
 
-        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
+        self.assertEqual(self.widget.interpreter().locals.get("x"), 1)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_execute_file(self):
         # test that executing a file works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         # XXX inconsistent behaviour between backends
-        #with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        # with self.assertTraitChanges(self.widget, 'command_executed', count=1):
         with self.event_loop():
             self.widget.execute_file(PYTHON_SCRIPT)
 
-        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
-        self.assertEqual(self.widget.interpreter().locals.get('sys'), sys)
+        self.assertEqual(self.widget.interpreter().locals.get("x"), 1)
+        self.assertEqual(self.widget.interpreter().locals.get("sys"), sys)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_execute_file_not_hidden(self):
         # test that executing a file works
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         # XXX inconsistent behaviour between backends
-        #with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        # with self.assertTraitChanges(self.widget, 'command_executed', count=1):
         with self.event_loop():
             self.widget.execute_file(PYTHON_SCRIPT, hidden=False)
 
-        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
-        self.assertEqual(self.widget.interpreter().locals.get('sys'), sys)
+        self.assertEqual(self.widget.interpreter().locals.get("x"), 1)
+        self.assertEqual(self.widget.interpreter().locals.get("sys"), sys)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_get_history(self):
-        # test that executing a command works
+        # test that command history can be extracted
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.event_loop():
-            self.widget.execute_command('x = 1', hidden=False)
+            self.widget.execute_command("x = 1", hidden=False)
 
         history, history_index = self.widget.get_history()
 
-        self.assertEqual(history, ['x = 1'])
+        self.assertEqual(history, ["x = 1"])
         self.assertEqual(history_index, 1)
 
         with self.event_loop():
             self.widget.destroy()
 
     def test_set_history(self):
-        # test that executing a command works
+        # test that command history can be updated
+        self.widget = PythonShell(parent=self.window.control, create=False)
         with self.event_loop():
-            self.widget = PythonShell(self.window.control)
+            self.widget.create()
 
         with self.event_loop():
-            self.widget.set_history(['x = 1', 'y = x + 1'], 1)
+            self.widget.set_history(["x = 1", "y = x + 1"], 1)
 
         history, history_index = self.widget.get_history()
-        self.assertEqual(history, ['x = 1', 'y = x + 1'])
+        self.assertEqual(history, ["x = 1", "y = x + 1"])
         self.assertEqual(history_index, 1)
 
         with self.event_loop():

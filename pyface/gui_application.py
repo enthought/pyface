@@ -1,10 +1,11 @@
-# Copyright (c) 2014-2017 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 """
 This module defines a :py:class:`GUIApplication` subclass of
@@ -18,14 +19,19 @@ this is most likely to be a subclass of
 
 """
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
+
 import logging
 
 from traits.api import (
-    Bool, Callable, Instance, List, ReadOnly, Tuple, Undefined, Vetoable,
-    on_trait_change
+    Bool,
+    Callable,
+    Instance,
+    List,
+    ReadOnly,
+    Tuple,
+    Undefined,
+    Vetoable,
+    observe,
 )
 
 from .application import Application
@@ -44,6 +50,7 @@ def default_window_factory(application, **kwargs):
     ground with the base class.
     """
     from pyface.application_window import ApplicationWindow
+
     return ApplicationWindow(**kwargs)
 
 
@@ -155,7 +162,7 @@ class GUIApplication(Application):
         """
         from pyface.gui import GUI
 
-        ok = super(GUIApplication, self).start()
+        ok = super().start()
         if ok:
             # create the GUI so that the splash screen comes up first thing
             if self.gui is Undefined:
@@ -192,7 +199,7 @@ class GUIApplication(Application):
         # started.  A listener for this event is a good place to do things
         # where you want the event loop running.
         self.gui.invoke_later(
-            self._fire_application_event, 'application_initialized'
+            self._fire_application_event, "application_initialized"
         )
 
         # start the GUI - script blocks here
@@ -207,7 +214,7 @@ class GUIApplication(Application):
         The fires closing events for each window, and returns False if any
         listener vetos.
         """
-        if not super(GUIApplication, self)._can_exit():
+        if not super()._can_exit():
             return False
 
         for window in reversed(self.windows):
@@ -237,6 +244,7 @@ class GUIApplication(Application):
         ground with the base class.
         """
         from pyface.application_window import ApplicationWindow
+
         return lambda application, **kwargs: ApplicationWindow(**kwargs)
 
     def _splash_screen_default(self):
@@ -250,25 +258,21 @@ class GUIApplication(Application):
 
     def _about_dialog_default(self):
         """ Default AboutDialog """
-        from sys import version_info
-        if (version_info.major, version_info.minor) >= (3, 2):
-            from html import escape
-        else:
-            from cgi import escape
+        from html import escape
+        
         from pyface.about_dialog import AboutDialog
 
         additions = [
-            u"<h1>{}</h1>".format(escape(self.name)),
-            u"Copyright &copy; 2018 {}, all rights reserved".format(
-                escape(self.company),
+            "<h1>{}</h1>".format(escape(self.name)),
+            "Copyright &copy; 2018 {}, all rights reserved".format(
+                escape(self.company)
             ),
-            u"",
+            "",
         ]
-        additions += [escape(line) for line in self.description.split('\n\n')]
+        additions += [escape(line) for line in self.description.split("\n\n")]
 
         dialog = AboutDialog(
-            title=u"About {}".format(self.name),
-            additions=additions,
+            title="About {}".format(self.name), additions=additions
         )
         if self.logo:
             dialog.image = self.logo
@@ -276,22 +280,24 @@ class GUIApplication(Application):
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change('windows:activated')
-    def _on_activate_window(self, window, trait, old, new):
+    @observe("windows:items:activated")
+    def _on_activate_window(self, event):
         """ Listener that tracks currently active window.
         """
+        window = event.object
         if window in self.windows:
             self.active_window = window
 
-    @on_trait_change('windows:deactivated')
-    def _on_deactivate_window(self, window, trait, old, new):
+    @observe("windows:items:deactivated")
+    def _on_deactivate_window(self, event):
         """ Listener that tracks currently active window.
         """
         self.active_window = None
 
-    @on_trait_change('windows:closed')
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
+        window = event.object
         if window in self.windows:
             self.windows.remove(window)

@@ -1,20 +1,16 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Base class for all tree label providers. """
 
 
-# Local imports.
 from .label_provider import LabelProvider
 
 
@@ -26,9 +22,9 @@ class TreeLabelProvider(LabelProvider):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'LabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def set_text(self, viewer, element, text):
         """ Sets the text representation of a node.
@@ -39,9 +35,9 @@ class TreeLabelProvider(LabelProvider):
 
         return len(text.strip()) > 0
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeLabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_drag_value(self, viewer, element):
         """ Get the value that is dragged for an element.
@@ -61,5 +57,3 @@ class TreeLabelProvider(LabelProvider):
         """ Returns True is the node is expandanble, otherwise False. """
 
         return True
-
-#### EOF ######################################################################

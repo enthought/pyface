@@ -1,22 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface of a top-level application window. """
 
-# Enthought library imports.
-from traits.api import Instance, List
 
-# Local imports.
+from traits.api import HasTraits, Instance, List
+
+
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.i_image_resource import IImageResource
 from pyface.i_window import IWindow
@@ -35,7 +32,7 @@ class IApplicationWindow(IWindow):
     :py:meth:`._create_contents` method.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     #: The window icon.  The default is toolkit specific.
     icon = Instance(IImageResource)
@@ -53,9 +50,9 @@ class IApplicationWindow(IWindow):
     #: list instead of the single ToolBarManager instance above.
     tool_bar_managers = List(ToolBarManager)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create and return the window's contents.
@@ -112,16 +109,16 @@ class IApplicationWindow(IWindow):
         """ Sets the window icon (if required). """
 
 
-class MApplicationWindow(object):
+class MApplicationWindow(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the :py:class:`IApplicationWindow` interface.
 
     Implements: destroy(), _create_trim_widgets()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the control if it exists. """
@@ -134,11 +131,11 @@ class MApplicationWindow(object):
         for tool_bar_manager in self.tool_bar_managers:
             tool_bar_manager.destroy()
 
-        super(MApplicationWindow, self).destroy()
+        super().destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window).

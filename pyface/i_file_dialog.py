@@ -1,67 +1,62 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 
-# Standard library imports.
 import sys
 
-# Enthought library imports.
-from traits.api import Enum, Unicode, Int
 
-# Local imports.
+from traits.api import Enum, HasTraits, Int, Str
+
+
 from pyface.i_dialog import IDialog
-import six
 
 
 class IFileDialog(IDialog):
     """ The interface for a dialog that allows the user to open/save files etc.
     """
 
-    #### 'IFileDialog' interface ##############################################
+    # 'IFileDialog' interface ---------------------------------------------#
 
     #: The 'action' that the user is peforming on the directory.
-    action = Enum('open', 'save as')
+    action = Enum("open", "save as")
 
     #: The default directory.
-    default_directory = Unicode
+    default_directory = Str()
 
     #: The default filename.
-    default_filename = Unicode
+    default_filename = Str()
 
     #: The default path (directory and filename) of the chosen file.  This is
     #: only used when the *default_directory* and *default_filename* are not set
     #: and is equivalent to setting both.
-    default_path = Unicode
+    default_path = Str()
 
     #: The directory containing the chosen file.
-    directory = Unicode
+    directory = Str()
 
     #: The name of the chosen file.
-    filename = Unicode
+    filename = Str()
 
     #: The path (directory and filename) of the chosen file.
-    path = Unicode
+    path = Str()
 
     #: The wildcard used to restrict the set of files.
-    wildcard = Unicode
+    wildcard = Str()
 
     #: The index of the selected wildcard.
     wildcard_index = Int(0)
 
 
-class MFileDialog(object):
+class MFileDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IFileDialog interface.
 
@@ -83,7 +78,7 @@ class MFileDialog(object):
     WILDCARD_TXT = "Text files (*.txt)|*.txt|"
 
     #: A file dialog wildcard for all files.
-    if sys.platform == 'win32':
+    if sys.platform == "win32":
         WILDCARD_ALL = "All files (*.*)|*.*|"
     else:
         WILDCARD_ALL = "All files (*)|*"
@@ -91,9 +86,9 @@ class MFileDialog(object):
     #: A file dialog wildcard for Zip archives.
     WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MFileDialog' *CLASS* interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def create_wildcard(cls, description, extension):
@@ -107,10 +102,10 @@ class MFileDialog(object):
             The wildcard patterns for the extension.
         """
 
-        if isinstance(extension, six.string_types):
+        if isinstance(extension, str):
             pattern = extension
 
         else:
-            pattern = ';'.join(extension)
+            pattern = ";".join(extension)
 
         return "%s (%s)|%s|" % (description, pattern, pattern)

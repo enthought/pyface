@@ -1,19 +1,27 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ A workbench. """
 
 
-# Standard library imports.
-import six.moves.cPickle
+import pickle
 import logging
 import os
 
-# Enthought library imports.
+
 from traits.etsconfig.api import ETSConfig
 from pyface.api import NO
 from traits.api import Bool, Callable, Event, HasTraits, provides
-from traits.api import Instance, List, Unicode, Vetoable
+from traits.api import Instance, List, Str, Vetoable
 from traits.api import VetoableEvent
 
-# Local imports.
+
 from .i_editor_manager import IEditorManager
 from .i_workbench import IWorkbench
 from .user_perspective_manager import UserPerspectiveManager
@@ -33,7 +41,8 @@ class Workbench(HasTraits):
     any number of workbench windows.
 
     """
-    #### 'IWorkbench' interface ###############################################
+
+    # 'IWorkbench' interface -----------------------------------------------
 
     # The active workbench window (the last one to get focus).
     active_window = Instance(WorkbenchWindow)
@@ -42,14 +51,14 @@ class Workbench(HasTraits):
     editor_manager = Instance(IEditorManager)
 
     # The optional application scripting manager.
-    script_manager = Instance('apptools.appscripting.api.IScriptManager')
+    script_manager = Instance("apptools.appscripting.api.IScriptManager")
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Unicode
+    state_location = Str()
 
     # The optional undo manager.
-    undo_manager = Instance('apptools.undo.api.IUndoManager')
+    undo_manager = Instance("pyface.undo.api.IUndoManager")
 
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
@@ -57,7 +66,7 @@ class Workbench(HasTraits):
     # All of the workbench windows created by the workbench.
     windows = List(WorkbenchWindow)
 
-    #### Workbench lifecycle events ###########################################
+    # Workbench lifecycle events -------------------------------------------
 
     # Fired when the workbench is about to exit.
     #
@@ -66,12 +75,12 @@ class Workbench(HasTraits):
     # a) The 'exit' method being called.
     # b) The last open window being closed.
     #
-    exiting = VetoableEvent
+    exiting = VetoableEvent()
 
     # Fired when the workbench has exited.
-    exited = Event
+    exited = Event()
 
-    #### Window lifecycle events ##############################################
+    # Window lifecycle events ---------------------------------------------#
 
     # Fired when a workbench window has been created.
     window_created = Event(WindowEvent)
@@ -88,22 +97,22 @@ class Workbench(HasTraits):
     # Fired when a workbench window has been closed.
     window_closed = Event(WindowEvent)
 
-    #### 'Workbench' interface ################################################
+    # 'Workbench' interface ------------------------------------------------
 
     # The factory that is used to create workbench windows. This is used in
     # the default implementation of 'create_window'. If you override that
     # method then you obviously don't need to set this trait!
     window_factory = Callable
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # An 'explicit' exit is when the the 'exit' method is called.
     # An 'implicit' exit is when the user closes the last open window.
     _explicit_exit = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
@@ -122,11 +131,11 @@ class Workbench(HasTraits):
         # NOTE: 'activated' is not fired on a window when the window first
         # opens and gets focus. It is only fired when the window comes from
         # lower in the stack to be the active window.
-        window.on_trait_change(self._on_window_activated, 'activated')
-        window.on_trait_change(self._on_window_opening, 'opening')
-        window.on_trait_change(self._on_window_opened, 'opened')
-        window.on_trait_change(self._on_window_closing, 'closing')
-        window.on_trait_change(self._on_window_closed, 'closed')
+        window.observe(self._on_window_activated, "activated")
+        window.observe(self._on_window_opening, "opening")
+        window.observe(self._on_window_opened, "opened")
+        window.observe(self._on_window_closing, "closing")
+        window.observe(self._on_window_closed, "closed")
 
         # Event notification.
         self.window_created = WindowEvent(window=window)
@@ -146,7 +155,7 @@ class Workbench(HasTraits):
 
         """
 
-        logger.debug('**** exiting the workbench ****')
+        logger.debug("**** exiting the workbench ****")
 
         # Event notification.
         self.exiting = event = Vetoable()
@@ -174,11 +183,11 @@ class Workbench(HasTraits):
             exited = False
 
         if not exited:
-            logger.debug('**** exit of the workbench vetoed ****')
+            logger.debug("**** exit of the workbench vetoed ****")
 
         return exited
 
-    #### Convenience methods on the active window #############################
+    # Convenience methods on the active window -----------------------------
 
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
@@ -206,33 +215,33 @@ class Workbench(HasTraits):
 
         return self.active_window.get_editor_by_id(id)
 
-    #### Message dialogs ####
+    # Message dialogs ----
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog. """
 
         return self.active_window.confirm(message, title, cancel, default)
 
-    def information(self, message, title='Information'):
+    def information(self, message, title="Information"):
         """ Convenience method to show an information message dialog. """
 
         return self.active_window.information(message, title)
 
-    def warning(self, message, title='Warning'):
+    def warning(self, message, title="Warning"):
         """ Convenience method to show a warning message dialog. """
 
         return self.active_window.warning(message, title)
 
-    def error(self, message, title='Error'):
+    def error(self, message, title="Error"):
         """ Convenience method to show an error message dialog. """
 
         return self.active_window.error(message, title)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Workbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _state_location_default(self):
         """ Trait initializer. """
@@ -240,15 +249,15 @@ class Workbench(HasTraits):
         # It would be preferable to base this on GUI.state_location.
         state_location = os.path.join(
             ETSConfig.application_home,
-            'pyface',
-            'workbench',
-            ETSConfig.toolkit
+            "pyface",
+            "workbench",
+            ETSConfig.toolkit,
         )
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)
 
-        logger.debug('workbench state location is %s', state_location)
+        logger.debug("workbench state location is %s", state_location)
 
         return state_location
 
@@ -257,7 +266,7 @@ class Workbench(HasTraits):
 
         # We make sure the undo package is entirely optional.
         try:
-            from apptools.undo.api import UndoManager
+            from pyface.undo.api import UndoManager
         except ImportError:
             return None
 
@@ -268,18 +277,18 @@ class Workbench(HasTraits):
 
         return UserPerspectiveManager(state_location=self.state_location)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Workbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _close_all_windows(self):
         """ Closes all open windows.
@@ -309,14 +318,14 @@ class Workbench(HasTraits):
     def _restore_window_layout(self, window):
         """ Restore the window layout. """
 
-        filename = os.path.join(self.state_location, 'window_memento')
+        filename = os.path.join(self.state_location, "window_memento")
         if os.path.exists(filename):
             try:
                 # If the memento class itself has been modified then there
                 # is a chance that the unpickle will fail. If so then we just
                 # carry on as if there was no memento!
-                f = open(filename, 'rb')
-                memento = six.moves.cPickle.load(f)
+                f = open(filename, "rb")
+                memento = pickle.load(f)
                 f.close()
 
                 # The memento doesn't actually get used until the window is
@@ -326,44 +335,38 @@ class Workbench(HasTraits):
             # If *anything* goes wrong then simply log the error and carry on
             # with no memento!
             except:
-                logger.exception('restoring window layout from %s', filename)
-
-        return
+                logger.exception("restoring window layout from %s", filename)
 
     def _save_window_layout(self, window):
         """ Save the window layout. """
 
         # Save the window layout.
-        f = open(os.path.join(self.state_location, 'window_memento'), 'wb')
-        six.moves.cPickle.dump(window.get_memento(), f)
+        f = open(os.path.join(self.state_location, "window_memento"), "wb")
+        pickle.dump(window.get_memento(), f)
         f.close()
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    def _on_window_activated(self, window, trait_name, event):
+    def _on_window_activated(self, event):
         """ Dynamic trait change handler. """
-
-        logger.debug('window %s activated', window)
+        window = event.object
+        logger.debug("window %s activated", window)
 
         self.active_window = window
 
-        return
-
-    def _on_window_opening(self, window, trait_name, event):
+    def _on_window_opening(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # Event notification.
         self.window_opening = window_event = VetoableWindowEvent(window=window)
         if window_event.veto:
-            event.veto = True
+            event.new.veto = True
 
-        return
-
-    def _on_window_opened(self, window, trait_name, event):
+    def _on_window_opened(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # We maintain a list of all open windows so that (amongst other things)
         # we can detect when the user is attempting to close the last one.
         self.windows.append(window)
@@ -376,16 +379,14 @@ class Workbench(HasTraits):
         # Event notification.
         self.window_opened = WindowEvent(window=window)
 
-        return
-
-    def _on_window_closing(self, window, trait_name, event):
+    def _on_window_closing(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # Event notification.
         self.window_closing = window_event = VetoableWindowEvent(window=window)
 
         if window_event.veto:
-            event.veto = True
+            event.new.veto = True
 
         else:
             # Is this the last open window?
@@ -396,17 +397,15 @@ class Workbench(HasTraits):
                     # Event notification.
                     self.exiting = window_event = Vetoable()
                     if window_event.veto:
-                        event.veto = True
+                        event.new.veto = True
 
-                if not event.veto:
+                if not event.new.veto:
                     # Save the window size, position and layout.
                     self._save_window_layout(window)
 
-        return
-
-    def _on_window_closed(self, window, trait_name, event):
+    def _on_window_closed(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         self.windows.remove(window)
 
         # Event notification.
@@ -418,5 +417,3 @@ class Workbench(HasTraits):
             self.exited = self
 
         return
-
-#### EOF ######################################################################

@@ -1,10 +1,19 @@
-# System library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, List
 
-# Local imports.
+
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
 from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
@@ -12,10 +21,10 @@ from .main_window_layout import MainWindowLayout
 
 # Constants.
 CORNER_MAP = {
-    'top_left': QtCore.Qt.TopLeftCorner,
-    'top_right': QtCore.Qt.TopRightCorner,
-    'bottom_left': QtCore.Qt.BottomLeftCorner,
-    'bottom_right': QtCore.Qt.BottomRightCorner
+    "top_left": QtCore.Qt.TopLeftCorner,
+    "top_right": QtCore.Qt.TopRightCorner,
+    "bottom_left": QtCore.Qt.BottomLeftCorner,
+    "bottom_right": QtCore.Qt.BottomRightCorner,
 }
 
 
@@ -25,13 +34,13 @@ class TaskWindowBackend(MTaskWindowBackend):
     See the ITaskWindowBackend interface for API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _main_window_layout = Instance(MainWindowLayout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskWindowBackend' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
@@ -72,7 +81,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Show the dock panes.
         self._layout_state(state)
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
@@ -85,7 +94,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Extract the window's corner configuration.
         for name, corner in CORNER_MAP.items():
             area = INVERSE_AREA_MAP[int(self.control.corner(corner))]
-            setattr(layout, name + '_corner', area)
+            setattr(layout, name + "_corner", area)
 
         return layout
 
@@ -96,9 +105,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         self.window._active_state.layout = layout
         self._layout_state(self.window._active_state)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _layout_state(self, state):
         """ Layout the dock panes in the specified TaskState using its
@@ -106,7 +115,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         # Assign the window's corners to the appropriate dock areas.
         for name, corner in CORNER_MAP.items():
-            area = getattr(state.layout, name + '_corner')
+            area = getattr(state.layout, name + "_corner")
             self.control.setCorner(corner, AREA_MAP[area])
 
         # Add all panes in the TaskLayout.
@@ -123,12 +132,12 @@ class TaskWindowBackend(MTaskWindowBackend):
                 if dock_pane.visible:
                     dock_pane.control.show()
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def __main_window_layout_default(self):
         return TaskWindowLayout(control=self.control)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
@@ -144,24 +153,24 @@ class TaskWindowLayout(MainWindowLayout):
     """ A MainWindowLayout for a TaskWindow.
     """
 
-    #### 'TaskWindowLayout' interface #########################################
+    # 'TaskWindowLayout' interface -----------------------------------------
 
-    consumed = List
-    state = Instance('pyface.tasks.task_window.TaskState')
+    consumed = List()
+    state = Instance("pyface.tasks.task_window.TaskState")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def set_layout(self, layout):
         """ Applies a DockLayout to the window.
         """
         self.consumed = []
-        super(TaskWindowLayout, self).set_layout(layout)
+        super().set_layout(layout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.

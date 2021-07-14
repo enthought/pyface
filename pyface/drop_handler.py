@@ -1,11 +1,22 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 from pyface.i_drop_handler import IDropHandler
 from traits.api import Callable, HasTraits, List, provides, Str
+
 
 @provides(IDropHandler)
 class BaseDropHandler(HasTraits):
     """ Basic drop handler
     """
-    ### BaseDropHandler interface #############################################
+
+    # BaseDropHandler interface ---------------------------------------------
 
     #: Returns True if the current drop handler can handle the given drag event
     #: occurring on the given target widget.
@@ -14,7 +25,7 @@ class BaseDropHandler(HasTraits):
     #: Performs drop action when drop event occurs on target widget.
     on_handle = Callable
 
-    ### IDropHandler interface ################################################
+    # IDropHandler interface ------------------------------------------------
 
     def can_handle_drop(self, event, target):
         return self.on_can_handle(event, target)
@@ -27,7 +38,8 @@ class BaseDropHandler(HasTraits):
 class FileDropHandler(HasTraits):
     """ Class to handle backward compatible file drop events
     """
-    ### FileDropHandler interface #############################################
+
+    # FileDropHandler interface ---------------------------------------------
 
     #: supported extensions
     extensions = List(Str)
@@ -35,7 +47,7 @@ class FileDropHandler(HasTraits):
     #: Called when file is opened. Takes single argument: path of file
     open_file = Callable
 
-    ### IDropHandler interface ################################################
+    # IDropHandler interface ------------------------------------------------
 
     def can_handle_drop(self, event, target):
         """ Does the drop event contails file data with matching extensions """

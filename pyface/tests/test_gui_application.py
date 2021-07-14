@@ -1,32 +1,34 @@
-# Copyright (c) 2014-2018 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
 import os
 from shutil import rmtree
 from tempfile import mkdtemp
 import unittest
 
-from traits.api import Bool, on_trait_change
+from traits.api import Bool, observe
 
 from ..application_window import ApplicationWindow
 from ..gui_application import GUIApplication
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 EVENTS = [
-    'starting', 'started', 'application_initialized', 'stopping', 'stopped'
+    "starting",
+    "started",
+    "application_initialized",
+    "stopping",
+    "stopped",
 ]
 
 
@@ -58,7 +60,7 @@ class TestingApp(GUIApplication):
 
     #: Whether or not a call to the open a window was vetoed.
     window_open_vetoed = Bool(False)
-    
+
     #: Whether or not a call to the exit method was vetoed.
     exit_vetoed = Bool(False)
 
@@ -71,19 +73,20 @@ class TestingApp(GUIApplication):
     def start(self):
         if not self.start_cleanly:
             return False
-        super(TestingApp, self).start()
+        super().start()
 
         window = self.windows[0]
-        window.on_trait_change(self._on_window_closing, 'closing')
+        window.observe(self._on_window_closing, "closing")
         return True
 
     def stop(self):
-        super(TestingApp, self).stop()
+        super().stop()
         return self.stop_cleanly
 
-    def _on_window_closing(self, window, trait, old, new):
+    def _on_window_closing(self, event):
+        window = event.new
         if self.veto_close_window and not self.exit_vetoed:
-            new.veto = True
+            window.veto = True
             self.exit_vetoed = True
 
     def _application_initialized_fired(self):
@@ -96,26 +99,28 @@ class TestingApp(GUIApplication):
         self.exit_vetoed = self.veto_exit
 
     def _prepare_exit(self):
-        super(TestingApp, self)._prepare_exit()
+        super()._prepare_exit()
         if not self.exit_vetoed:
             self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
 
-    @on_trait_change('windows:opening')
+    @observe("windows:items:opening")
     def _on_activate_window(self, event):
         if self.veto_open_window:
-            event.veto = self.veto_open_window
+            window = event.new
+            window.veto = self.veto_open_window
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.application_events = []
 
-        if toolkit_object.toolkit == 'wx':
+        if toolkit_object.toolkit == "wx":
             import wx
+
             self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
@@ -125,11 +130,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def event_listener(self, event):
-        self.application_events.append(event)
+        application_event = event.new
+        self.application_events.append(application_event)
 
     def connect_listeners(self, app):
         for event in EVENTS:
-            app.on_trait_change(self.event_listener, event)
+            app.observe(self.event_listener, event)
 
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
@@ -156,7 +162,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = GUIApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.on_trait_change(lambda: app.add_window(window), 'started')
+        app.observe(lambda _: app.add_window(window), "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
@@ -185,7 +191,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def test_veto_exit(self):
         app = TestingApp(veto_exit=True)
         self.connect_listeners(app)
-        
+
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
             self.gui.invoke_after(2000, app.exit, force=True)

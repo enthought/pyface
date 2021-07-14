@@ -1,8 +1,17 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.gui_application import GUIApplication
 from ..gui_application_action import GUIApplicationAction
@@ -40,12 +49,12 @@ class TestAction(unittest.TestCase, UnittestTools):
 
         self.assertIsNone(action.object)
 
-        with self.assertTraitChanges(action, 'object', 1):
+        with self.assertTraitChanges(action, "object", 1):
             action.application = self.application
 
         self.assertEqual(action.object, self.application)
 
-        with self.assertTraitChanges(action, 'object', 1):
+        with self.assertTraitChanges(action, "object", 1):
             action.application = None
 
         self.assertIsNone(action.object)

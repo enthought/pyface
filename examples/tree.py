@@ -1,57 +1,54 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Tree example. """
 
-from __future__ import print_function
 
-# Standard library imports.
 import os, sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from traits.api import Float, Str
+from traits.observation.api import match
 
-# Local imports.
+
 from file_tree import FileTree
 
 
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
-    #### 'SplitApplicationWindow' interface ###################################
+    # 'SplitApplicationWindow' interface -----------------------------------
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
 
     # The direction in which the window is split.
-    direction = Str('vertical')
+    direction = Str("vertical")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
 
-        self._tree = FileTree(
-            parent, root=os.path.abspath(os.curdir),
-        )
+        self._tree = FileTree(parent, root=os.path.abspath(os.curdir))
 
-        self._tree.on_trait_change(self._on_tree_anytrait_changed)
+        self._tree.observe(
+            self._on_tree_anytrait_changed,
+            match(lambda name, ctrait: True)  # listen to all traits
+        )
 
         return self._tree.control
 
@@ -59,27 +56,27 @@ class MainWindow(SplitApplicationWindow):
         """ Creates the right hand side or bottom depending on the split. """
 
         self._python_shell = PythonShell(parent)
-        self._python_shell.bind('widget', self._tree)
-        self._python_shell.bind('w', self._tree)
+        self._python_shell.bind("widget", self._tree)
+        self._python_shell.bind("w", self._tree)
 
         return self._python_shell.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    def _on_tree_anytrait_changed(self, tree, trait_name, old, new):
+    def _on_tree_anytrait_changed(self, event):
         """ Called when any trait on the tree has changed. """
 
-        print('trait', trait_name, 'value', new)
+        print("trait", event.name, "value", event.new)
 
         return
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
@@ -89,5 +86,3 @@ if __name__ == '__main__':
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

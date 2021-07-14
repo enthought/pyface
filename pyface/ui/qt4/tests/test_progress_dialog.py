@@ -1,4 +1,13 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
@@ -7,7 +16,6 @@ from ..util.gui_test_assistant import GuiTestAssistant
 
 
 class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.dialog = ProgressDialog()
@@ -33,7 +41,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_show_time(self):
         # test that creation works with show_time
-        self.dialog.show_time =  True
+        self.dialog.show_time = True
         self.dialog._create()
         self.gui.process_events()
         self.assertIsNotNone(self.dialog._elapsed_control)
@@ -44,7 +52,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_show_percent(self):
         # test that creation works with show_percent
-        self.dialog.show_percent =  True
+        self.dialog.show_percent = True
         self.dialog._create()
         self.gui.process_events()
         self.assertEqual(self.dialog.progress_bar.format(), "%p%")
@@ -77,13 +85,14 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.max = 10
         self.dialog.open()
         for i in range(11):
-            self.dialog.change_message('Updating {}'.format(i))
+            self.dialog.change_message("Updating {}".format(i))
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
-            self.assertEqual(self.dialog.message, 'Updating {}'.format(i))
-            self.assertEqual(self.dialog._message_control.text(),
-                             'Updating {}'.format(i))
+            self.assertEqual(self.dialog.message, "Updating {}".format(i))
+            self.assertEqual(
+                self.dialog._message_control.text(), "Updating {}".format(i)
+            )
         self.assertIsNone(self.dialog.control)
         self.gui.process_events()
 
@@ -92,13 +101,14 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.max = 10
         self.dialog.open()
         for i in range(11):
-            self.dialog.message = 'Updating {}'.format(i)
+            self.dialog.message = "Updating {}".format(i)
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
-            self.assertEqual(self.dialog.message, 'Updating {}'.format(i))
-            self.assertEqual(self.dialog._message_control.text(),
-                             'Updating {}'.format(i))
+            self.assertEqual(self.dialog.message, "Updating {}".format(i))
+            self.assertEqual(
+                self.dialog._message_control.text(), "Updating {}".format(i)
+            )
         self.assertIsNone(self.dialog.control)
         self.gui.process_events()
 

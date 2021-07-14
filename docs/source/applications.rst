@@ -74,7 +74,7 @@ A simple command-line application might look something like this::
         location = Str("world")
 
         def _run(self):
-            super(HelloApplication, self)._run()
+            super()._run()
             print("Hello "+self.location)
 
     def main():
@@ -199,7 +199,7 @@ While the GUI application window subclass looks like this::
                 name='&Help',
             )
         )
-    return window
+        return window
 
     def main():
         app = GUIApplication(

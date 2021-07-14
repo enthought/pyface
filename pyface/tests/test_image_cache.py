@@ -1,31 +1,39 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import os
 import unittest
 
 from ..image_cache import ImageCache
 
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
+IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
 
 
 class TestPyfaceResourceFactory(unittest.TestCase):
-
     def setUp(self):
         self.image_cache = ImageCache(32, 32)
 
     def test_get_image(self):
-        image = self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
 
     def test_get_bitmap(self):
-        bitmap = self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
 
     def test_get_image_twice(self):
-        image1 = self.image_cache.get_image(IMAGE_PATH)
-        image2 = self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
+        self.image_cache.get_image(IMAGE_PATH)
 
     def test_get_bitmap_twice(self):
-        bitmap1 = self.image_cache.get_bitmap(IMAGE_PATH)
-        bitmap2 = self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
+        self.image_cache.get_bitmap(IMAGE_PATH)
 
     def test_get_image_different_sizes(self):
         other_image_cache = ImageCache(48, 48)

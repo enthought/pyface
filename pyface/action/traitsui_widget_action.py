@@ -1,10 +1,11 @@
-# Copyright (c) 2019, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
 from traits.api import Constant, HasTraits, Instance
@@ -53,7 +54,7 @@ class TraitsUIWidgetAction(Action):
         control : toolkit control
             A toolkit control or None.
         """
-        ui = self.edit_traits(kind='subpanel', parent=parent)
+        ui = self.edit_traits(kind="subpanel", parent=parent)
         control = ui.control
         control._ui = ui
         return control
@@ -66,6 +67,6 @@ class TraitsUIWidgetAction(Action):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model is not None:
-            context = {'object': self.model, 'action': self}
+            context = {"object": self.model, "action": self}
             return context
-        return super(TraitsUIWidgetAction, self).trait_context()
+        return super().trait_context()

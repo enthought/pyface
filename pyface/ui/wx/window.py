@@ -1,22 +1,22 @@
-#  Copyright (c) 2005-18, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
+# Thanks for using Enthought open source!
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
-from traits.api import Event, Property, Tuple, Unicode, VetoableEvent, provides
 
-# Local imports.
+from traits.api import Event, Property, Tuple, Str, VetoableEvent, provides
+
+
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .system_metrics import SystemMetrics
@@ -35,32 +35,34 @@ class Window(MWindow, Widget):
 
     size = Property(Tuple)
 
-    title = Unicode
+    title = Str()
 
     # Window Events ----------------------------------------------------------
 
     #: The window has been opened.
-    opened = Event
+    opened = Event()
 
     #: The window is about to open.
-    opening = VetoableEvent
+    opening = VetoableEvent()
 
     #: The window has been activated.
-    activated = Event
+    activated = Event()
 
     #: The window has been closed.
-    closed = Event
+    closed = Event()
 
     #: The window is about to be closed.
-    closing = VetoableEvent
+    closing = VetoableEvent()
 
     #: The window has been deactivated.
-    deactivated = Event
+    deactivated = Event()
 
     #: A key was pressed while the window had focus.
     # FIXME v3: This smells of a hack. What's so special about key presses?
-    # FIXME v3: Unicode
+    # FIXME v3: Str
     key_pressed = Event(KeyPressedEvent)
+
+    size = Property(Tuple)
 
     # Private interface ------------------------------------------------------
 
@@ -100,16 +102,16 @@ class Window(MWindow, Widget):
     def _create_control(self, parent):
         # create a basic window control
 
-        style = wx.DEFAULT_FRAME_STYLE \
-                | wx.FRAME_NO_WINDOW_MENU \
-                | wx.CLIP_CHILDREN
+        style = (
+            wx.DEFAULT_FRAME_STYLE | wx.FRAME_NO_WINDOW_MENU | wx.CLIP_CHILDREN
+        )
         control = wx.Frame(
             parent,
             -1,
             self.title,
             style=style,
             size=self.size,
-            pos=self.position
+            pos=self.position,
         )
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
         control.Enable(self.enabled)
@@ -137,7 +139,7 @@ class Window(MWindow, Widget):
         old = self._position
         self._position = position
 
-        self.trait_property_changed('position', old, position)
+        self.trait_property_changed("position", old, position)
 
     def _get_size(self):
         """ Property getter for size. """
@@ -153,7 +155,7 @@ class Window(MWindow, Widget):
         old = self._size
         self._size = size
 
-        self.trait_property_changed('size', old, size)
+        self.trait_property_changed("size", old, size)
 
     def _title_changed(self, title):
         """ Static trait change handler. """
@@ -195,8 +197,13 @@ class Window(MWindow, Widget):
         # call event.GetPosition directly, but that would be wrong.  The pixel
         # reported by that call is the pixel just below the window menu and
         # just right of the Windows-drawn border.
-        self._position = event.GetEventObject().GetPositionTuple()
 
+        try:
+            self._position = (
+                event.GetEventObject().GetPosition().Get()
+            )  # Sizer.GetPosition().Get()
+        except:
+            pass
         event.Skip()
 
     def _wx_on_control_size(self, event):
@@ -214,11 +221,11 @@ class Window(MWindow, Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down=event.m_altDown == 1,
-            control_down=event.m_controlDown == 1,
-            shift_down=event.m_shiftDown == 1,
-            key_code=event.m_keyCode,
-            event=event
+            alt_down=event.altDown,
+            control_down=event.controlDown,
+            shift_down=event.shiftDown,
+            key_code=event.KeyCode,
+            event=event,
         )
 
         event.Skip()

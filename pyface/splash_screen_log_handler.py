@@ -1,22 +1,17 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005-2015, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A log handler that emits records to a splash screen. """
 
 
-# Standard library imports.
 from logging import Handler
-import six
 
 
 class SplashScreenLogHandler(Handler):
@@ -31,7 +26,7 @@ class SplashScreenLogHandler(Handler):
             The splash screen being used to display the log messages
         """
         # Base class constructor.
-        super(SplashScreenLogHandler, self).__init__()
+        super().__init__()
 
         # The splash screen that we will display log messages on.
         self._splash_screen = splash_screen
@@ -44,4 +39,4 @@ class SplashScreenLogHandler(Handler):
         record : logging record instance
             The log record to be displayed.
         """
-        self._splash_screen.text = six.text_type(record.getMessage()) + u'...'
+        self._splash_screen.text = str(record.getMessage()) + "..."

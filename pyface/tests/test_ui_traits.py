@@ -1,45 +1,46 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2016, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought Developers
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 import os
 import unittest
 
-from traits.api import HasTraits, TraitError
-from traits.testing.unittest_tools import UnittestTools
-try:
-    from traits.trait_handlers import (
-        CALLABLE_AND_ARGS_DEFAULT_VALUE,
-        UNSPECIFIED_DEFAULT_VALUE
-    )
-except ImportError:
-    UNSPECIFIED_DEFAULT_VALUE = -1
-    CALLABLE_AND_ARGS_DEFAULT_VALUE = 7
+from traits.api import DefaultValue, HasTraits, TraitError
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
+from traits.testing.api import UnittestTools
 
-from ..i_image_resource import IImageResource
+from ..color import Color
 from ..image_resource import ImageResource
-from ..ui_traits import (Border, HasBorder, HasMargin, Image, Margin,
-                         image_resource_cache, image_bitmap_cache)
+from ..ui_traits import (
+    Border,
+    HasBorder,
+    HasMargin,
+    Image,
+    Margin,
+    PyfaceColor,
+    image_resource_cache,
+    image_bitmap_cache,
+)
 
 
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
+IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
 
 
 class ImageClass(HasTraits):
 
     image = Image
+
+
+class ColorClass(HasTraits):
+
+    color = PyfaceColor()
 
 
 class HasMarginClass(HasTraits):
@@ -53,7 +54,6 @@ class HasBorderClass(HasTraits):
 
 
 class TestImageTrait(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # clear all cached images
         image_resource_cache.clear()
@@ -69,38 +69,51 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
     def test_init_local_image(self):
         from pyface.image_resource import ImageResource
 
-        image_class = ImageClass(image=ImageResource('core.png'))
+        image_class = ImageClass(image=ImageResource("core.png"))
 
         self.assertIsInstance(image_class.image, ImageResource)
-        self.assertEqual(image_class.image.name, 'core.png')
-        self.assertEqual(image_class.image.absolute_path,
-                         os.path.abspath(IMAGE_PATH))
+        self.assertEqual(image_class.image.name, "core.png")
+        self.assertEqual(
+            image_class.image.absolute_path, os.path.abspath(IMAGE_PATH)
+        )
 
     def test_init_pyface_image(self):
         from pyface.image_resource import ImageResource
 
-        image_class = ImageClass(image='about')
-        im = image_class.image.create_image()
+        image_class = ImageClass(image="about")
+        image_class.image.create_image()
 
         self.assertIsInstance(image_class.image, ImageResource)
-        self.assertEqual(image_class.image.name, 'about')
+        self.assertEqual(image_class.image.name, "about")
         self.assertIsNone(image_class.image._image_not_found)
         self.assertIsNotNone(image_class.image._ref.data)
 
     def test_init_pyface_image_library(self):
         from pyface.image_resource import ImageResource
 
-        image_class = ImageClass(image='@icons:dialog-warning')
+        image_class = ImageClass(image="@icons:dialog-warning")
 
         self.assertIsInstance(image_class.image, ImageResource)
-        self.assertEqual(image_class.image.name, 'dialog-warning.png')
+        self.assertEqual(image_class.image.name, "dialog-warning.png")
         self.assertIsNone(image_class.image._image_not_found)
-        self.assertEqual(image_class.image._ref.file_name, 'dialog-warning.png')
-        self.assertEqual(image_class.image._ref.volume_name, 'icons')
+        self.assertEqual(
+            image_class.image._ref.file_name, "dialog-warning.png"
+        )
+        self.assertEqual(image_class.image._ref.volume_name, "icons")
+
+    @requires_numpy
+    def test_init_array_image(self):
+        from pyface.array_image import ArrayImage
+
+        data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        image = ArrayImage(data)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, ArrayImage)
+        self.assertTrue((image_class.image.data == data).all())
 
 
 class TestMargin(unittest.TestCase):
-
     def test_defaults(self):
         margin = Margin()
         self.assertEqual(margin.top, 0)
@@ -130,8 +143,195 @@ class TestMargin(unittest.TestCase):
         self.assertEqual(margin.right, 2)
 
 
-class TestHasMargin(unittest.TestCase, UnittestTools):
+class TestPyfaceColor(unittest.TestCase):
 
+    def test_init(self):
+        trait = PyfaceColor()
+        self.assertEqual(trait.default_value, (Color, (), {}))
+        self.assertEqual(
+            trait.default_value_type,
+            DefaultValue.callable_and_args,
+        )
+
+    def test_init_name(self):
+        trait = PyfaceColor("rebeccapurple")
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_hex(self):
+        trait = PyfaceColor("#663399ff")
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_color(self):
+        trait = PyfaceColor(Color(rgba=(0.4, 0.2, 0.6, 1.0)))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_tuple(self):
+        trait = PyfaceColor((0.4, 0.2, 0.6, 1.0))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_list(self):
+        trait = PyfaceColor([0.4, 0.2, 0.6, 1.0])
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    @requires_numpy
+    def test_init_array(self):
+        trait = PyfaceColor(np.array([0.4, 0.2, 0.6, 1.0]))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    @requires_numpy
+    def test_init_array_structured_dtype(self):
+        """ Test if "typical" RGBA structured array value works. """
+        arr = np.array(
+            [(0.4, 0.2, 0.6, 1.0)],
+            dtype=np.dtype([
+                ('red', float),
+                ('green', float),
+                ('blue', float),
+                ('alpha', float),
+            ]),
+        )
+        trait = PyfaceColor(arr[0])
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_invalid(self):
+        with self.assertRaises(TraitError):
+            PyfaceColor((0.4, 0.2))
+
+    def test_validate_color(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, color)
+        self.assertIs(
+            validated, color
+        )
+
+    def test_validate_name(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, "rebeccapurple")
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_hex(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, "#663399ff")
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_tuple(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, (0.4, 0.2, 0.6, 0.8))
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, [0.4, 0.2, 0.6, 0.8])
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_rgb_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, [0.4, 0.2, 0.6])
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_bad_string(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, "not a color")
+
+    def test_validate_bad_object(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, object())
+
+    def test_info(self):
+        trait = PyfaceColor()
+        self.assertIsInstance(trait.info(), str)
+
+    def test_default_trait(self):
+        color_class = ColorClass()
+        self.assertEqual(color_class.color, Color())
+
+    def test_set_color(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=color)
+        self.assertIs(color_class.color, color)
+
+    def test_set_name(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color="rebeccapurple")
+        self.assertEqual(color_class.color, color)
+
+    def test_set_hex(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color="#663399ff")
+        self.assertEqual(color_class.color, color)
+
+    def test_set_tuple(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=(0.4, 0.2, 0.6, 1.0))
+        self.assertEqual(color_class.color, color)
+
+    def test_set_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=[0.4, 0.2, 0.6, 1.0])
+        self.assertEqual(color_class.color, color)
+
+    @requires_numpy
+    def test_set_array(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=np.array([0.4, 0.2, 0.6, 1.0]))
+        self.assertEqual(color_class.color, color)
+
+    @requires_numpy
+    def test_set_structured_dtype(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        arr = np.array(
+            [(0.4, 0.2, 0.6, 1.0)],
+            dtype=np.dtype([
+                ('red', float),
+                ('green', float),
+                ('blue', float),
+                ('alpha', float),
+            ]),
+        )
+        color_class = ColorClass(color=arr[0])
+        self.assertEqual(color_class.color, color)
+
+
+class TestHasMargin(unittest.TestCase, UnittestTools):
     def test_defaults(self):
         has_margin = HasMarginClass()
         margin = has_margin.margin
@@ -143,22 +343,16 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
     def test_unspecified_default(self):
         trait = HasMargin()
-        trait.default_value_type = UNSPECIFIED_DEFAULT_VALUE
+        trait.default_value_type = DefaultValue.unspecified
 
         (dvt, dv) = trait.get_default_value()
 
-        self.assertEqual(dvt, CALLABLE_AND_ARGS_DEFAULT_VALUE)
+        self.assertEqual(dvt, DefaultValue.callable_and_args)
         self.assertEqual(
-            dv,
-            (
-                Margin,
-                (),
-                {'top': 0, 'bottom': 0, 'left': 0, 'right': 0},
-            )
+            dv, (Margin, (), {"top": 0, "bottom": 0, "left": 0, "right": 0})
         )
 
     def test_default_int(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin(4)
@@ -172,7 +366,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_one_tuple(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin((4,))
@@ -186,7 +379,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_two_tuple(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin((4, 2))
@@ -200,7 +392,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.right, 4)
 
     def test_default_four_tuple(self):
-
         class HasMarginClass(HasTraits):
 
             margin = HasMargin((4, 2, 3, 1))
@@ -272,7 +463,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
     def test_set_int(self):
         has_margin = HasMarginClass()
-        with self.assertTraitChanges(has_margin, 'margin', 1):
+        with self.assertTraitChanges(has_margin, "margin", 1):
             has_margin.margin = 4
 
         margin = has_margin.margin
@@ -283,7 +474,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
     def test_set_one_tuple(self):
         has_margin = HasMarginClass()
-        with self.assertTraitChanges(has_margin, 'margin', 1):
+        with self.assertTraitChanges(has_margin, "margin", 1):
             has_margin.margin = (4,)
 
         margin = has_margin.margin
@@ -295,7 +486,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
     def test_set_two_tuple(self):
         has_margin = HasMarginClass()
-        with self.assertTraitChanges(has_margin, 'margin', 1):
+        with self.assertTraitChanges(has_margin, "margin", 1):
             has_margin.margin = (4, 2)
 
         margin = has_margin.margin
@@ -307,7 +498,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
     def test_set_four_tuple(self):
         has_margin = HasMarginClass()
-        with self.assertTraitChanges(has_margin, 'margin', 1):
+        with self.assertTraitChanges(has_margin, "margin", 1):
             has_margin.margin = (4, 2, 3, 1)
 
         margin = has_margin.margin
@@ -319,7 +510,7 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
     def test_set_margin(self):
         margin = Margin()
         has_margin = HasMarginClass()
-        with self.assertTraitChanges(has_margin, 'margin', 1):
+        with self.assertTraitChanges(has_margin, "margin", 1):
             has_margin.margin = margin
 
         self.assertEqual(has_margin.margin, margin)
@@ -331,7 +522,6 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
 
 
 class TestBorder(unittest.TestCase):
-
     def test_defaults(self):
         border = Border()
         self.assertEqual(border.top, 0)
@@ -362,7 +552,6 @@ class TestBorder(unittest.TestCase):
 
 
 class TestHasBorder(unittest.TestCase, UnittestTools):
-
     def test_defaults(self):
         has_border = HasBorderClass()
         border = has_border.border
@@ -374,22 +563,16 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_unspecified_default(self):
         trait = HasBorder()
-        trait.default_value_type = UNSPECIFIED_DEFAULT_VALUE
+        trait.default_value_type = DefaultValue.unspecified
 
         (dvt, dv) = trait.get_default_value()
 
-        self.assertEqual(dvt, CALLABLE_AND_ARGS_DEFAULT_VALUE)
+        self.assertEqual(dvt, DefaultValue.callable_and_args)
         self.assertEqual(
-            dv,
-            (
-                Border,
-                (),
-                {'top': 0, 'bottom': 0, 'left': 0, 'right': 0},
-            )
+            dv, (Border, (), {"top": 0, "bottom": 0, "left": 0, "right": 0})
         )
 
     def test_default_int(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder(4)
@@ -403,7 +586,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_one_tuple(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder((4,))
@@ -417,7 +599,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_two_tuple(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder((4, 2))
@@ -431,7 +612,6 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.right, 4)
 
     def test_default_four_tuple(self):
-
         class HasBorderClass(HasTraits):
 
             border = HasBorder((4, 2, 3, 1))
@@ -503,7 +683,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_set_int(self):
         has_border = HasBorderClass()
-        with self.assertTraitChanges(has_border, 'border', 1):
+        with self.assertTraitChanges(has_border, "border", 1):
             has_border.border = 4
 
         border = has_border.border
@@ -514,7 +694,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_set_one_tuple(self):
         has_border = HasBorderClass()
-        with self.assertTraitChanges(has_border, 'border', 1):
+        with self.assertTraitChanges(has_border, "border", 1):
             has_border.border = (4,)
 
         border = has_border.border
@@ -526,7 +706,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_set_two_tuple(self):
         has_border = HasBorderClass()
-        with self.assertTraitChanges(has_border, 'border', 1):
+        with self.assertTraitChanges(has_border, "border", 1):
             has_border.border = (4, 2)
 
         border = has_border.border
@@ -538,7 +718,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_set_four_tuple(self):
         has_border = HasBorderClass()
-        with self.assertTraitChanges(has_border, 'border', 1):
+        with self.assertTraitChanges(has_border, "border", 1):
             has_border.border = (4, 2, 3, 1)
 
         border = has_border.border
@@ -550,7 +730,7 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
     def test_set_border(self):
         border = Border()
         has_border = HasBorderClass()
-        with self.assertTraitChanges(has_border, 'border', 1):
+        with self.assertTraitChanges(has_border, "border", 1):
             has_border.border = border
 
         self.assertEqual(has_border.border, border)

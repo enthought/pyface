@@ -1,25 +1,21 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
-""" A Layered panel. """
-from __future__ import absolute_import
+# Thanks for using Enthought open source!
 
-# Major package imports.
+""" A Layered panel. """
+
+
 import wx
 
 from traits.api import Instance
 
-# Local imports.
+
 from .expandable_header import ExpandableHeader
 from .image_resource import ImageResource
 from .widget import Widget
@@ -31,18 +27,18 @@ class ExpandablePanel(Widget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    collapsed_image = Instance(ImageResource, ImageResource('mycarat1'))
-    expanded_image = Instance(ImageResource, ImageResource('mycarat2'))
+    collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
+    expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
 
         # Base class constructor.
-        super(ExpandablePanel, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)
@@ -55,9 +51,9 @@ class ExpandablePanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Expandale' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_panel(self, name, layer):
         """ Adds a layer with the specified name.
@@ -68,7 +64,7 @@ class ExpandablePanel(Widget):
         """
 
         parent = self.control
-        sizer  = self.control.GetSizer()
+        sizer = self.control.GetSizer()
 
         # Add the heading text.
         header = self._create_header(parent, text=name)
@@ -95,18 +91,18 @@ class ExpandablePanel(Widget):
         sizer = self.control.GetSizer()
         panel = self._layers[name]
         header = self._headers[name]
-        sizer.Remove(panel)
+        # sizer.Remove(panel)
         panel.Destroy()
-        sizer.Remove(header)
+        # sizer.Remove(header)
         header.Destroy()
 
         sizer.Layout()
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -127,11 +123,10 @@ class ExpandablePanel(Widget):
         panel.SetAutoLayout(True)
 
         # Add the panel header.
-        heading = ExpandableHeader(panel, self,
-                                   title = text)
+        heading = ExpandableHeader(panel, self, title=text)
         sizer.Add(heading.control, 1, wx.EXPAND)
 
-        heading.on_trait_change(self._on_button, 'panel_expanded')
+        heading.observe(self._on_button, "panel_expanded")
 
         # Resize the panel to match the sizer's minimum size.
         sizer.Fit(panel)
@@ -141,12 +136,12 @@ class ExpandablePanel(Widget):
 
         return panel
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_button(self, event):
         """ called when one of the expand/contract buttons is pressed. """
 
-        header = event
+        header = event.new
         name = header.title
         visible = header.state
 
@@ -155,6 +150,6 @@ class ExpandablePanel(Widget):
         sizer.Layout()
 
         # fixme: Errrr, maybe we can NOT do this!
-        w, h = self.control.GetSize()
-        self.control.SetSize((w+1, h+1))
+        w, h = self.control.GetSize().Get()
+        self.control.SetSize((w + 1, h + 1))
         self.control.SetSize((w, h))

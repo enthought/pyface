@@ -1,20 +1,16 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base interface for all pyface widgets. """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Interface
 
 
@@ -25,10 +21,10 @@ class IWidget(Interface):
     """
 
     #: The toolkit specific control that represents the widget.
-    control = Any
+    control = Any()
 
     #: The control's optional parent control.
-    parent = Any
+    parent = Any()
 
     #: Whether or not the control is visible
     visible = Bool(True)
@@ -43,8 +39,8 @@ class IWidget(Interface):
     def show(self, visible):
         """ Show or hide the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         visible : bool
             Visible should be ``True`` if the widget should be shown.
         """
@@ -52,10 +48,30 @@ class IWidget(Interface):
     def enable(self, enabled):
         """ Enable or disable the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         enabled : bool
             The enabled state to set the widget to.
+        """
+
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
         """
 
     def destroy(self):
@@ -64,13 +80,6 @@ class IWidget(Interface):
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
-
-    def _create(self):
-        """ Creates the toolkit specific control.
-
-        This method should create the control and assign it to the
-        :py:attr:``control`` trait.
-        """
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
@@ -94,10 +103,17 @@ class IWidget(Interface):
         """ Remove toolkit-specific bindings for events """
 
 
-class MWidget(object):
+class MWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
     """
+
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        The default implementation simply calls _create()
+        """
+        self._create()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
@@ -126,7 +142,7 @@ class MWidget(object):
         control : toolkit control
             A control for the widget.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """

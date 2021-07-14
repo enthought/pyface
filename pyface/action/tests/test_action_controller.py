@@ -1,4 +1,13 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
@@ -8,16 +17,15 @@ from ..action_event import ActionEvent
 
 
 class TestActionController(unittest.TestCase):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock
         self.memo = []
 
         def perform():
-            self.memo.append('called')
+            self.memo.append("called")
 
-        self.action = Action(name='Test', on_perform=perform)
+        self.action = Action(name="Test", on_perform=perform)
         self.action_controller = ActionController()
 
     def test_perform(self):
@@ -25,10 +33,10 @@ class TestActionController(unittest.TestCase):
         # XXX should really use mock
         event = ActionEvent()
         self.action_controller.perform(self.action, event)
-        self.assertEqual(self.memo, ['called'])
+        self.assertEqual(self.memo, ["called"])
 
     def test_perform_none(self):
-        action = Action(name='Test')
+        action = Action(name="Test")
         event = ActionEvent()
         # does nothing, but shouldn't error
         self.action_controller.perform(action, event)

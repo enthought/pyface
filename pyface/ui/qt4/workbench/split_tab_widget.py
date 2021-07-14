@@ -1,17 +1,24 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2008, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2008 Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-# Standard library imports.
+
 import sys
-import six
 
-# Major library imports.
+
 from pyface.qt import QtCore, QtGui, qt_api
 
 from pyface.image_resource import ImageResource
@@ -33,7 +40,7 @@ class SplitTabWidget(QtGui.QSplitter):
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
 
-    tabTextChanged = QtCore.Signal(QtGui.QWidget, six.text_type)
+    tabTextChanged = QtCore.Signal(QtGui.QWidget, str)
     _HS_NONE = -1
     _HS_AFTER_LAST_TAB = -2
     _HS_NORTH = -3
@@ -93,8 +100,8 @@ class SplitTabWidget(QtGui.QSplitter):
                 for t in range(ch.count()):
                     # A tab state is a tuple of the widget's object name and
                     # the title.
-                    name = six.text_type(ch.widget(t).objectName())
-                    title = six.text_type(ch.tabText(t))
+                    name = str(ch.widget(t).objectName())
+                    title = str(ch.tabText(t))
 
                     tab_states.append((name, title))
 
@@ -178,7 +185,7 @@ class SplitTabWidget(QtGui.QSplitter):
             ch = _TabWidget(self)
             self.addWidget(ch)
 
-        idx = ch.insertTab(self._current_tab_idx+1, w, text)
+        idx = ch.insertTab(self._current_tab_idx + 1, w, text)
 
         # If the tab has been added to the current tab widget then make it the
         # current tab.
@@ -273,11 +280,13 @@ class SplitTabWidget(QtGui.QSplitter):
                 nfw = fw.nextInFocusChain()
 
                 while nfw is not fw:
-                    if nfw.focusPolicy() & QtCore.Qt.TabFocus and \
-                       nfw.focusProxy() is None and \
-                       nfw.isVisibleTo(w) and \
-                       nfw.isEnabled() and \
-                       w.isAncestorOf(nfw):
+                    if (
+                        nfw.focusPolicy() & QtCore.Qt.TabFocus
+                        and nfw.focusProxy() is None
+                        and nfw.isVisibleTo(w)
+                        and nfw.isEnabled()
+                        and w.isAncestorOf(nfw)
+                    ):
                         break
 
                     nfw = nfw.nextInFocusChain()
@@ -293,8 +302,9 @@ class SplitTabWidget(QtGui.QSplitter):
         # It is possible for the C++ layer of this object to be deleted between
         # the time when the focus change signal is emitted and time when the
         # slots are dispatched by the Qt event loop. This may be a bug in PyQt4.
-        if qt_api == 'pyqt':
+        if qt_api == "pyqt":
             import sip
+
             if sip.isdeleted(self):
                 return
 
@@ -394,8 +404,9 @@ class SplitTabWidget(QtGui.QSplitter):
                     self._rband.deleteLater()
                 position = QtCore.QPoint(*hs_geom[0:2])
                 window = tw.window()
-                self._rband = QtGui.QRubberBand(QtGui.QRubberBand.Rectangle,
-                                                window)
+                self._rband = QtGui.QRubberBand(
+                    QtGui.QRubberBand.Rectangle, window
+                )
                 self._rband.move(window.mapFromGlobal(position))
                 self._rband.resize(*hs_geom[2:4])
                 self._rband.show()
@@ -423,8 +434,8 @@ class SplitTabWidget(QtGui.QSplitter):
         if dhs == self._HS_OUTSIDE:
             # Disable tab tear-out for now. It works, but this is something that
             # should be turned on manually. We need an interface for this.
-            #ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
-            #self.new_window_request.emit(pos, twidg)
+            # ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
+            # self.new_window_request.emit(pos, twidg)
             return
 
         # See if the tab is being moved to an existing tab widget.
@@ -434,12 +445,17 @@ class SplitTabWidget(QtGui.QSplitter):
                 if stab == dhs:
                     return
 
-                if dhs == self._HS_AFTER_LAST_TAB and stab == stab_w.count()-1:
+                if (
+                    dhs == self._HS_AFTER_LAST_TAB
+                    and stab == stab_w.count() - 1
+                ):
                     return
 
             QtGui.QApplication.instance().blockSignals(True)
 
-            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
+            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(
+                stab_w, stab
+            )
 
             if dhs == self._HS_AFTER_LAST_TAB:
                 idx = dtab_w.addTab(twidg, ticon, ttext)
@@ -458,7 +474,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 idx = dtab_w.insertTab(dhs, twidg, ticon, ttext)
                 dtab_w.tabBar().setTabTextColor(idx, ttextcolor)
 
-            if (tbuttn):
+            if tbuttn:
                 dtab_w.show_button(idx)
             dsplit_w._set_current_tab(dtab_w, idx)
 
@@ -471,7 +487,9 @@ class SplitTabWidget(QtGui.QSplitter):
 
             # Remove the tab from its current tab widget and create a new one
             # for it.
-            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
+            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(
+                stab_w, stab
+            )
             new_tw = _TabWidget(dsplit_w)
             idx = new_tw.addTab(twidg, ticon, ttext)
             new_tw.tabBar().setTabTextColor(0, ttextcolor)
@@ -483,7 +501,9 @@ class SplitTabWidget(QtGui.QSplitter):
             dspl_idx = dspl.indexOf(dtab_w)
 
             if dhs in (self._HS_NORTH, self._HS_SOUTH):
-                dspl, dspl_idx = dsplit_w._horizontal_split(dspl, dspl_idx, dhs)
+                dspl, dspl_idx = dsplit_w._horizontal_split(
+                    dspl, dspl_idx, dhs
+                )
             else:
                 dspl, dspl_idx = dsplit_w._vertical_split(dspl, dspl_idx, dhs)
 
@@ -593,11 +613,14 @@ class SplitTabWidget(QtGui.QSplitter):
             for split_widget in top_widget.findChildren(SplitTabWidget, None):
                 visible_region = split_widget.visibleRegion()
                 widget_pos = split_widget.mapFromGlobal(global_pos)
-                if cloned_rect and split_widget.geometry().contains(widget_pos):
+                if cloned_rect and split_widget.geometry().contains(
+                    widget_pos
+                ):
                     visible_rect = visible_region.boundingRect()
                     widget_rect = QtCore.QRect(
                         split_widget.mapFromGlobal(cloned_rect.topLeft()),
-                        split_widget.mapFromGlobal(cloned_rect.bottomRight()))
+                        split_widget.mapFromGlobal(cloned_rect.bottomRight()),
+                    )
                     if not visible_rect.intersected(widget_rect).isEmpty():
                         break
                 elif visible_region.contains(widget_pos):
@@ -649,21 +672,31 @@ class SplitTabWidget(QtGui.QSplitter):
                     return (tw, self._HS_NORTH, (gx, gy, w, h / 4))
 
                 if y >= (3 * h) / 4:
-                    return (tw, self._HS_SOUTH, (gx, gy + (3*h) / 4, w, h / 4))
+                    return (
+                        tw,
+                        self._HS_SOUTH,
+                        (gx, gy + (3 * h) / 4, w, h / 4),
+                    )
 
                 if x < w / 4:
                     return (tw, self._HS_WEST, (gx, gy, w / 4, h))
 
                 if x >= (3 * w) / 4:
-                    return (tw, self._HS_EAST, (gx + (3*w) / 4, gy, w / 4, h))
+                    return (
+                        tw,
+                        self._HS_EAST,
+                        (gx + (3 * w) / 4, gy, w / 4, h),
+                    )
 
                 return miss
 
         # See if the hotspot is in the tab area.
         tpos = tw.mapFrom(split_widget, pos)
         tab_bar = tw.tabBar()
-        top_bottom = tw.tabPosition() in (QtGui.QTabWidget.North,
-                                          QtGui.QTabWidget.South)
+        top_bottom = tw.tabPosition() in (
+            QtGui.QTabWidget.North,
+            QtGui.QTabWidget.South,
+        )
         for i in range(tw.count()):
             rect = tab_bar.tabRect(i)
 
@@ -708,13 +741,17 @@ class SplitTabWidget(QtGui.QSplitter):
                 w = rect.width()
                 h = rect.height()
                 if top_bottom:
-                    tab_widths = sum(tab_bar.tabRect(i).width()
-                        for i in range(tab_bar.count()))
+                    tab_widths = sum(
+                        tab_bar.tabRect(i).width()
+                        for i in range(tab_bar.count())
+                    )
                     w -= tab_widths
                     gx += tab_widths
                 else:
-                    tab_heights = sum(tab_bar.tabRect(i).height()
-                        for i in range(tab_bar.count()))
+                    tab_heights = sum(
+                        tab_bar.tabRect(i).height()
+                        for i in range(tab_bar.count())
+                    )
                     h -= tab_heights
                     gy -= tab_heights
                 return (tw, self._HS_AFTER_LAST_TAB, (gx, gy, w, h))
@@ -732,6 +769,7 @@ inactive_style = """QTabWidget::pane { /* The tab widget frame */
  }
 """
 
+
 class _TabWidget(QtGui.QTabWidget):
     """ The _TabWidget class is a QTabWidget with a dragable tab bar. """
 
@@ -746,9 +784,9 @@ class _TabWidget(QtGui.QTabWidget):
         QtGui.QTabWidget.__init__(self, *args)
 
         # XXX this requires Qt > 4.5
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             self.setDocumentMode(True)
-        #self.setStyleSheet(inactive_style)
+        # self.setStyleSheet(inactive_style)
 
         self._root = root
 
@@ -760,11 +798,13 @@ class _TabWidget(QtGui.QTabWidget):
         self.tabCloseRequested.connect(self._close_tab)
 
         if not (_TabWidget._spinner_data):
-            _TabWidget._spinner_data = ImageResource('spinner.gif')
+            _TabWidget._spinner_data = ImageResource("spinner.gif")
 
     def show_button(self, index):
         lbl = QtGui.QLabel(self)
-        movie = QtGui.QMovie(_TabWidget._spinner_data.absolute_path, parent=lbl)
+        movie = QtGui.QMovie(
+            _TabWidget._spinner_data.absolute_path, parent=lbl
+        )
         movie.setCacheMode(QtGui.QMovie.CacheAll)
         movie.setScaledSize(QtCore.QSize(16, 16))
         lbl.setMovie(movie)
@@ -840,7 +880,10 @@ class _TabWidget(QtGui.QTabWidget):
 
         self._still_needed()
 
-        if self._root._current_tab_w is self and self._root._current_tab_idx == idx:
+        if (
+            self._root._current_tab_w is self
+            and self._root._current_tab_idx == idx
+        ):
             self._root._current_tab_w = None
 
     def _close_tab(self, index):
@@ -848,11 +891,13 @@ class _TabWidget(QtGui.QTabWidget):
 
         self._root._close_tab_request(self.widget(index))
 
+
 class _IndependentLineEdit(QtGui.QLineEdit):
     def keyPressEvent(self, e):
         QtGui.QLineEdit.keyPressEvent(self, e)
-        if (e.key() == QtCore.Qt.Key_Escape):
+        if e.key() == QtCore.Qt.Key_Escape:
             self.hide()
+
 
 class _DragableTabBar(QtGui.QTabBar):
     """ The _DragableTabBar class is a QTabBar that can be dragged around. """
@@ -863,7 +908,7 @@ class _DragableTabBar(QtGui.QTabBar):
         QtGui.QTabBar.__init__(self, parent)
 
         # XXX this requires Qt > 4.5
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             self.setDocumentMode(True)
 
         self._root = root
@@ -975,7 +1020,7 @@ class _DragableTabBar(QtGui.QTabBar):
     def _setCurrentTabText(self):
         idx = self.currentIndex()
         text = self._title_edit.text()
-        self.setTabText(idx, u'\u25b6'+text)
+        self.setTabText(idx, "\u25b6" + text)
         self._root.tabTextChanged.emit(self.parent().widget(idx), text)
 
     def _resize_title_edit_to_current_tab(self):
@@ -983,7 +1028,7 @@ class _DragableTabBar(QtGui.QTabBar):
         tab = QtGui.QStyleOptionTabV3()
         self.initStyleOption(tab, idx)
         rect = self.style().subElementRect(QtGui.QStyle.SE_TabBarTabText, tab)
-        self._title_edit.setGeometry(rect.adjusted(0,8,0,-8))
+        self._title_edit.setGeometry(rect.adjusted(0, 8, 0, -8))
 
 
 class _DragState(object):
@@ -1003,7 +1048,9 @@ class _DragState(object):
     def start_dragging(self, pos):
         """ Start dragging a tab. """
 
-        if (pos - self._start_pos).manhattanLength() <= QtGui.QApplication.startDragDistance():
+        if (
+            pos - self._start_pos
+        ).manhattanLength() <= QtGui.QApplication.startDragDistance():
             return
 
         self.dragging = True
@@ -1013,13 +1060,15 @@ class _DragState(object):
         tab = self._tab
 
         ctb = self._clone = QtGui.QTabBar()
-        if sys.platform == 'darwin' and QtCore.QT_VERSION >= 0x40500:
+        if sys.platform == "darwin" and QtCore.QT_VERSION >= 0x40500:
             ctb.setDocumentMode(True)
 
         ctb.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
-        ctb.setWindowFlags(QtCore.Qt.FramelessWindowHint |
-                           QtCore.Qt.Tool |
-                           QtCore.Qt.X11BypassWindowManagerHint)
+        ctb.setWindowFlags(
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.Tool
+            | QtCore.Qt.X11BypassWindowManagerHint
+        )
         ctb.setWindowOpacity(0.5)
         ctb.setElideMode(otb.elideMode())
         ctb.setShape(otb.shape())
@@ -1044,8 +1093,9 @@ class _DragState(object):
         """ Handle the movement of the cloned tab during dragging. """
 
         self._clone.move(self._tab_bar.mapToGlobal(pos) + self._clone_offset)
-        self._root._select(self._tab_bar.mapTo(self._root,
-                                               pos + self._centre_offset))
+        self._root._select(
+            self._tab_bar.mapTo(self._root, pos + self._centre_offset)
+        )
 
     def drop(self, pos):
         """ Handle the drop of the cloned tab. """

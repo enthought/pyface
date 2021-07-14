@@ -1,38 +1,33 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
-from traits.api import Enum, provides, Unicode
 
-# Local imports.
+from traits.api import Enum, provides, Str
+
+
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
 from .dialog import Dialog
 
 
 # Map the ETS severity to the corresponding wx standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    'information':  wx.ICON_INFORMATION,
-    'warning':      wx.ICON_WARNING,
-    'error':        wx.ICON_ERROR
+    "information": wx.ICON_INFORMATION,
+    "warning": wx.ICON_WARNING,
+    "error": wx.ICON_ERROR,
 }
 
 
@@ -42,33 +37,35 @@ class MessageDialog(MMessageDialog, Dialog):
     IMessageDialog interface for the API documentation.
     """
 
+    # 'IMessageDialog' interface -------------------------------------------
 
-    #### 'IMessageDialog' interface ###########################################
+    message = Str()
 
-    message = Unicode
+    informative = Str()
 
-    informative = Unicode
+    detail = Str()
 
-    detail = Unicode
+    severity = Enum("information", "warning", "error")
 
-    severity = Enum('information', 'warning', 'error')
+    # unused trait, this functionality is only supported on Qt
+    text_format = Enum("auto", "plain", "rich")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         # In wx this is a canned dialog.
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # The message.
         if self.informative:
-            message = self.message + '\n\n' + self.informative
+            message = self.message + "\n\n" + self.informative
         else:
             message = self.message
 
@@ -76,8 +73,9 @@ class MessageDialog(MMessageDialog, Dialog):
         if self.resizeable:
             style |= wx.RESIZE_BORDER
 
-        dlg = wx.MessageDialog(parent, message, self.title, style,
-                               self.position)
+        dlg = wx.MessageDialog(
+            parent, message, self.title, style, self.position
+        )
         if self.size != (-1, -1):
             dlg.SetSize(self.size)
 

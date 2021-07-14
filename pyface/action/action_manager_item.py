@@ -1,20 +1,16 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Abstract base class for all action manager items. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Instance, Str
 
 
@@ -33,10 +29,10 @@ class ActionManagerItem(HasTraits):
 
     #: The item's unique identifier ('unique' in this case means unique within
     #: its group)
-    id = Str
+    id = Str()
 
     #: The group the item belongs to.
-    parent = Instance('pyface.action.api.Group')
+    parent = Instance("pyface.action.api.Group")
 
     #: Is the item enabled?
     enabled = Bool(True)
@@ -44,9 +40,9 @@ class ActionManagerItem(HasTraits):
     #: Is the item visible?
     visible = Bool(True)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu.
@@ -60,7 +56,7 @@ class ActionManagerItem(HasTraits):
         controller : ActionController instance or None
             The controller to use.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
         """ Adds the item to a tool bar.
@@ -78,4 +74,4 @@ class ActionManagerItem(HasTraits):
         show_labels : bool
             Should the toolbar item show a label.
         """
-        raise NotImplementedError
+        raise NotImplementedError()

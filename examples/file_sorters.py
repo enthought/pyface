@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Sorters for local file system viewers. """
 
 
-# Standard library imports.
 from os.path import isdir
 
-# Enthought library imports.
+
 from pyface.viewer.api import ViewerSorter
 
 
@@ -43,5 +39,3 @@ class FileSorter(ViewerSorter):
             category = 1
 
         return category
-
-#### EOF ######################################################################

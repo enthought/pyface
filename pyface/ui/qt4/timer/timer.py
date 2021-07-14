@@ -1,10 +1,13 @@
-# Copyright (c) 2007, Riverbank Computing Limited
-# Copyright (c) 2018, Enthought Inc
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license.  However, when used with the GPL version of PyQt the additional
-# terms described in the PyQt GPL exception also apply
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
 from traits.api import Instance
 
@@ -19,8 +22,8 @@ class PyfaceTimer(BaseTimer):
     _timer = Instance(QTimer, (), allow_none=False)
 
     def __init__(self, **traits):
-        traits.setdefault('_timer', QTimer())
-        super(PyfaceTimer, self).__init__(**traits)
+        traits.setdefault("_timer", QTimer())
+        super().__init__(**traits)
         self._timer.timeout.connect(self.perform)
 
     def _start(self):

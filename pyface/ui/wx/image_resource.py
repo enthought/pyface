@@ -1,33 +1,28 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import os
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
-from traits.api import Any, HasTraits, List, Property, provides
-from traits.api import Unicode
 
-# Local imports.
+from traits.api import Any, HasTraits, List, Property, provides
+from traits.api import Str
+
+
 from pyface.i_image_resource import IImageResource, MImageResource
 
 
@@ -37,23 +32,22 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
-    _ref = Any
+    _ref = Any()
 
-    #### 'ImageResource' interface ############################################
+    # 'ImageResource' interface --------------------------------------------
 
-    absolute_path = Property(Unicode)
+    absolute_path = Property(Str)
 
-    name = Unicode
+    name = Str()
 
-    search_path = List
+    search_path = List()
 
-    ###########################################################################
-    # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
+    # 'IImage' interface.
+    # ------------------------------------------------------------------------
 
     def create_bitmap(self, size=None):
         return self.create_image(size).ConvertToBitmap()
@@ -62,14 +56,14 @@ class ImageResource(MImageResource, HasTraits):
         ref = self._get_ref(size)
 
         if ref is not None:
-            icon = wx.Icon(self.absolute_path, wx.BITMAP_TYPE_ICO)
+            icon = wx.Icon(self.absolute_path, wx.BITMAP_TYPE_ANY)
         else:
             image = self._get_image_not_found_image()
 
             # We have to convert the image to a bitmap first and then create an
             # icon from that.
             bmp = image.ConvertToBitmap()
-            icon = wx.EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(bmp)
 
         return icon
@@ -90,9 +84,9 @@ class ImageResource(MImageResource, HasTraits):
         size = image.GetSize()
         return size.Get()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_absolute_path(self):
         # FIXME: This doesn't quite wotk the new notion of image size. We
@@ -106,5 +100,3 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
-
-#### EOF ######################################################################

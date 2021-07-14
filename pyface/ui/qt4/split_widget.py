@@ -1,47 +1,34 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 """ Mix-in class for split widgets. """
 
-
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Callable, Enum, Float, HasTraits, provides
+from traits.api import provides
 
-# Local imports.
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
 @provides(ISplitWidget)
-class SplitWidget(MSplitWidget, HasTraits):
+class SplitWidget(MSplitWidget):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
 
-
-    #### 'ISplitWidget' interface #############################################
-
-    direction = Enum('vertical', 'vertical', 'horizontal')
-
-    ratio = Float(0.5)
-
-    lhs = Callable
-
-    rhs = Callable
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -49,7 +36,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         splitter = QtGui.QSplitter(parent)
 
         # Yes, this is correct.
-        if self.direction == 'horizontal':
+        if self.direction == "horizontal":
             splitter.setOrientation(QtCore.Qt.Vertical)
 
         # Only because the wx implementation does the same.
@@ -62,12 +49,14 @@ class SplitWidget(MSplitWidget, HasTraits):
         splitter.addWidget(self._create_rhs(splitter))
 
         # Set the initial splitter position.
-        if self.direction == 'horizontal':
+        if self.direction == "horizontal":
             pos = splitter.sizeHint().height()
         else:
             pos = splitter.sizeHint().width()
 
-        splitter.setSizes([int(pos * self.ratio), int(pos * (1.0 - self.ratio))])
+        splitter.setSizes(
+            [int(pos * self.ratio), int(pos * (1.0 - self.ratio))]
+        )
 
         return splitter
 
@@ -98,5 +87,3 @@ class SplitWidget(MSplitWidget, HasTraits):
             rhs = QtGui.QWidget(parent)
 
         return rhs
-
-#### EOF ######################################################################

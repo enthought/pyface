@@ -1,64 +1,61 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005-2015, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The preference dialog. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Dict, Float, Instance, Str
 
-# Local imports.
+
 from pyface.preference.preference_node import PreferenceNode
 from pyface.ui.wx.heading_text import HeadingText
 from pyface.ui.wx.layered_panel import LayeredPanel
 from pyface.ui.wx.split_dialog import SplitDialog
 from pyface.ui.wx.viewer.tree_viewer import TreeViewer
-from pyface.viewer.default_tree_content_provider import DefaultTreeContentProvider
-from pyface.wx.util.font_helper import new_font_like
+from pyface.viewer.default_tree_content_provider import (
+    DefaultTreeContentProvider,
+)
 
 
 class PreferenceDialog(SplitDialog):
     """ The preference dialog. """
 
-    #### 'Dialog' interface ###################################################
+    # 'Dialog' interface ---------------------------------------------------
 
     # The dialog title.
-    title = Str('Preferences')
+    title = Str("Preferences")
 
-    #### 'SplitDialog' interface ##############################################
+    # 'SplitDialog' interface ---------------------------------------------#
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.25)
 
-    #### 'PreferenceDialog' interface #########################################
+    # 'PreferenceDialog' interface -----------------------------------------
 
     # The root of the preference hierarchy.
     root = Instance(PreferenceNode)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The preference pages in the dialog (they are created lazily).
-    _pages = Dict
+    _pages = Dict()
 
     # The current visible preference page.
-    _current_page = Any
+    _current_page = Any()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Dialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         """ Creates the buttons. """
@@ -68,14 +65,14 @@ class PreferenceDialog(SplitDialog):
         # 'Done' button.
         done = wx.Button(parent, wx.ID_OK, "Done")
         done.SetDefault()
-        wx.EVT_BUTTON(parent, wx.ID_OK, self._wx_on_ok)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, wx.ID_OK)
         sizer.Add(done)
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the panel containing the preference page tree. """
@@ -91,17 +88,28 @@ class PreferenceDialog(SplitDialog):
         panel.SetAutoLayout(True)
 
         # The 'pretty' title bar ;^)
-        self.__title = HeadingText(panel)
+        self.__title = HeadingText(parent=panel, create=False)
+        self.__title.create()
         sizer.Add(
-            self.__title.control, 0,
-            wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT, 5
+            self.__title.control,
+            0,
+            wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT,
+            5,
         )
 
         # The preference page of the node currently selected in the tree.
-        self._layered_panel = LayeredPanel(panel, min_width=-1, min_height=-1)
+        self._layered_panel = LayeredPanel(
+            parent=panel,
+            create=False,
+            min_width=-1,
+            min_height=-1,
+        )
+        self._layered_panel.create()
         sizer.Add(
-            self._layered_panel.control, 1,
-            wx.EXPAND | wx.TOP | wx.LEFT | wx.RIGHT, 5
+            self._layered_panel.control,
+            1,
+            wx.EXPAND | wx.TOP | wx.LEFT | wx.RIGHT,
+            5,
         )
 
         # The 'Restore Defaults' button etc.
@@ -117,22 +125,22 @@ class PreferenceDialog(SplitDialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_tree(self, parent):
         """ Creates the preference page tree. """
 
         tree_viewer = TreeViewer(
             parent,
-            input            = self.root,
-            show_images      = False,
-            show_root        = False,
-            content_provider = DefaultTreeContentProvider()
+            input=self.root,
+            show_images=False,
+            show_root=False,
+            content_provider=DefaultTreeContentProvider(),
         )
 
-        tree_viewer.on_trait_change(self._on_selection_changed, 'selection')
+        tree_viewer.observe(self._on_selection_changed, "selection")
 
         return tree_viewer.control
 
@@ -147,27 +155,25 @@ class PreferenceDialog(SplitDialog):
 
         # 'Help' button. Comes first so 'Restore Defaults' doesn't jump around.
         self._help = help = wx.Button(parent, -1, "Help")
-        wx.EVT_BUTTON(parent, help.GetId(), self._on_help)
+        parent.Bind(wx.EVT_BUTTON, self._on_help, help.GetId())
         sizer.Add(help, 0, wx.RIGHT, 5)
 
         # 'Restore Defaults' button.
         restore = wx.Button(parent, -1, "Restore Defaults")
-        wx.EVT_BUTTON(parent, restore.GetId(), self._on_restore_defaults)
+        parent.Bind(wx.EVT_BUTTON, self._on_restore_defaults, restore.GetId())
         sizer.Add(restore)
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_restore_defaults(self, event):
         """ Called when the 'Restore Defaults' button is pressed. """
 
         page = self._pages[self._layered_panel.current_layer_name]
         page.restore_defaults()
-
-        return
 
     def _on_help(self, event):
         """ Called when the 'Help' button is pressed. """
@@ -177,13 +183,13 @@ class PreferenceDialog(SplitDialog):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _on_selection_changed(self, selection):
+    def _on_selection_changed(self, event):
         """ Called when a node in the tree is selected. """
-
+        selection = event.new
         if len(selection) > 0:
             # The tree is in single selection mode.
             node = selection[0]
@@ -197,7 +203,7 @@ class PreferenceDialog(SplitDialog):
                 self._button_sizer.Show(self._help, False)
 
             # Show the selected preference page.
-            layered_panel  = self._layered_panel
+            layered_panel = self._layered_panel
             parent = self._layered_panel.control
 
             # If we haven't yet displayed the node's preference page during the
@@ -211,5 +217,3 @@ class PreferenceDialog(SplitDialog):
             self.__title.text = node.name
 
         return
-
-#### EOF ######################################################################

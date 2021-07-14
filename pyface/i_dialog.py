@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The abstract interface for all pyface dialogs. """
 
 
-# Enthought library imports.
-from traits.api import Bool, Enum, Int, Str, Unicode
+from traits.api import Bool, Enum, HasTraits, Int, Str
 
-# Local imports.
+
 from pyface.constant import OK
 from pyface.i_window import IWindow
 
@@ -32,20 +28,20 @@ class IDialog(IWindow):
     2) '_create_buttons'     creates the dialog buttons.
     """
 
-    #### 'IDialog' interface ##################################################
+    # 'IDialog' interface -------------------------------------------------#
 
     #: The label for the 'cancel' button.  The default is toolkit specific.
-    cancel_label = Unicode
+    cancel_label = Str()
 
     #: The context sensitive help Id (the 'Help' button is only shown iff this
     #: is set).
-    help_id = Str
+    help_id = Str()
 
     #: The label for the 'help' button.  The default is toolkit specific.
-    help_label = Unicode
+    help_label = Str()
 
     #: The label for the 'ok' button.  The default is toolkit specific.
-    ok_label = Unicode
+    ok_label = Str()
 
     #: Is the dialog resizeable?
     resizeable = Bool(True)
@@ -57,11 +53,11 @@ class IDialog(IWindow):
     #: The dialog style (is it modal or not).
     # FIXME v3: It doesn't seem possible to use non-modal dialogs.  (How do you
     # get access to the buttons?)
-    style = Enum('modal', 'nonmodal')
+    style = Enum("modal", "nonmodal")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Opens the dialog.
@@ -78,9 +74,9 @@ class IDialog(IWindow):
             The value of the ``return_code`` trait.
         """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         """ Create and return the buttons.
@@ -138,7 +134,7 @@ class IDialog(IWindow):
         """
 
 
-class MDialog(object):
+class MDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 
@@ -146,9 +142,9 @@ class MDialog(object):
     Reimplements: _add_event_listeners(), _create()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Opens the dialog.
@@ -167,7 +163,7 @@ class MDialog(object):
         if self.control is None:
             self._create()
 
-        if self.style == 'modal':
+        if self.style == "modal":
             self.return_code = self._show_modal()
             self.close()
 
@@ -177,20 +173,20 @@ class MDialog(object):
 
         return self.return_code
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
         """ Creates the window's widget hierarchy. """
 
-        super(MDialog, self)._create()
+        super()._create()
 
         self._create_contents(self.control)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         """ Adds any event listeners required by the window. """

@@ -1,11 +1,29 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import logging
 
-# Enthought library imports.
-from traits.api import Bool, Callable, Dict, Event, File, HasTraits, Instance, \
-    List, Str
 
-# Local imports.
+from traits.api import (
+    Bool,
+    Callable,
+    Dict,
+    Event,
+    File,
+    HasTraits,
+    Instance,
+    List,
+    Str,
+)
+
+
 from pyface.tasks.i_editor import IEditor
 from pyface.tasks.i_task_pane import ITaskPane
 
@@ -22,29 +40,30 @@ class IEditorAreaPane(ITaskPane):
     can be displayed side-by-side.
     """
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
-    # The currently active editor.
+    #: The currently active editor.
     active_editor = Instance(IEditor)
 
-    # The list of all the visible editors in the pane.
+    #: The list of all the visible editors in the pane.
     editors = List(IEditor)
 
-    # A list of extensions for file types to accept via drag and drop.
-    # Note: This functionality is provided because it is very common, but drag
-    # and drop support is in general highly toolkit-specific. If more
-    # sophisticated support is required, subclass an editor area implementation.
+    #: A list of extensions for file types to accept via drag and drop.
+    #: Note: This functionality is provided because it is very common, but
+    #: drag and drop support is in general highly toolkit-specific. If more
+    #: sophisticated support is required, subclass an editor area
+    #: implementation.
     file_drop_extensions = List(Str)
 
-    # A file with a supported extension was dropped into the editor area.
+    #: A file with a supported extension was dropped into the editor area.
     file_dropped = Event(File)
 
-    # Whether to hide the tab bar when there is only a single editor.
+    #: Whether to hide the tab bar when there is only a single editor.
     hide_tab_bar = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -92,10 +111,12 @@ class IEditorAreaPane(ITaskPane):
 
         The 'factory' parameter is a callabe of form:
             callable(editor_area=editor_area, obj=obj) -> IEditor
+
         Often, factory will be a class that provides the 'IEditor' interface.
 
         The 'filter' parameter is a callable of form:
             callable(obj) -> bool
+
         that indicates whether the editor factory is suitable for an object.
 
         If multiple factories apply to a single object, it is undefined which
@@ -115,7 +136,7 @@ class IEditorAreaPane(ITaskPane):
 
 class MEditorAreaPane(HasTraits):
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
     active_editor = Instance(IEditor)
     editors = List(IEditor)
@@ -123,13 +144,13 @@ class MEditorAreaPane(HasTraits):
     file_dropped = Event(File)
     hide_tab_bar = Bool(False)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _factory_map = Dict(Callable, List(Callable))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_editor(self, obj, factory=None):
         """ Creates an editor for an object.
@@ -155,7 +176,7 @@ class MEditorAreaPane(HasTraits):
         # If not, create an editor for it.
         editor = self.create_editor(obj, factory)
         if editor is None:
-            logger.warn('Cannot create editor for obj %r', obj)
+            logger.warning("Cannot create editor for obj %r", obj)
 
         else:
             self.add_editor(editor)

@@ -1,52 +1,33 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Mix-in class for split widgets.
 """
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
-from traits.api import Callable, Enum, Float, HasTraits, provides
+from traits.api import provides
 
-# Local imports.
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
 @provides(ISplitWidget)
-class SplitWidget(MSplitWidget, HasTraits):
+class SplitWidget(MSplitWidget):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
 
-
-    #### 'ISplitWidget' interface #############################################
-
-    direction = Enum('vertical', 'vertical', 'horizontal')
-
-    ratio = Float(0.5)
-
-    lhs = Callable
-
-    rhs = Callable
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -75,7 +56,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         #
         # fixme: Notice that on the initial split, we DON'T specify the split
         # ratio.  If we do then sadly, wx won't let us move the sash 8^()
-        if self.direction == 'vertical':
+        if self.direction == "vertical":
             splitter.SplitVertically(lhs, rhs)
 
         else:
@@ -83,7 +64,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # We respond to the FIRST size event to make sure that the split ratio
         # is correct when the splitter is laid out in its parent.
-        wx.EVT_SIZE(splitter, self._on_size)
+        splitter.Bind(wx.EVT_SIZE, self._on_size)
 
         return splitter
 
@@ -92,13 +73,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
-            if hasattr(wx, 'WindowPtr'):
-                if not isinstance(lhs, (wx.Window, wx.WindowPtr)):
-                    lhs = lhs.control
-            else:
-                # wx 2.8 did away with WindowPtr
-                if not isinstance(lhs, wx.Window):
-                    lhs = lhs.control
+            if not isinstance(lhs, wx.Window):
+                lhs = lhs.control
 
         else:
             # Dummy implementation - override!
@@ -113,13 +89,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
-            if hasattr(wx, 'WindowPtr'):
-                if not isinstance(rhs, (wx.Window, wx.WindowPtr)):
-                    rhs = rhs.control
-            else:
-                # wx 2.8 did away with WindowPtr
-                if not isinstance(rhs, wx.Window):
-                    rhs = rhs.control
+            if not isinstance(rhs, wx.Window):
+                rhs = rhs.control
 
         else:
             # Dummy implementation - override!
@@ -129,20 +100,20 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         return rhs
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_size(self, event):
         """ Called when the frame is resized. """
 
         splitter = event.GetEventObject()
-        width, height = splitter.GetSize()
+        width, height = splitter.GetSize().Get()
 
         # Make sure that the split ratio is correct.
-        if self.direction == 'vertical':
+        if self.direction == "vertical":
             position = int(width * self.ratio)
 
         else:
@@ -152,8 +123,6 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # Since we only care about the FIRST size event, remove ourselves as
         # a listener.
-        #wx.EVT_SIZE(splitter, None)
+        # splitter.Unbind(wx.EVT_SIZE)
 
         return
-
-#### EOF ######################################################################

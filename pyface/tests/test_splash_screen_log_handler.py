@@ -1,14 +1,23 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
-from traits.api import Any, HasTraits, Unicode
+from traits.api import HasTraits, Str
 
 from ..splash_screen_log_handler import SplashScreenLogHandler
 
 
 class DummySplashScreen(HasTraits):
-    text = Unicode(u'original')
+    text = Str("original")
 
 
 class DummyRecord(object):
@@ -20,18 +29,17 @@ class DummyRecord(object):
 
 
 class TestSplashScreenLogHandler(unittest.TestCase):
-
     def setUp(self):
         self.ss = DummySplashScreen()
         self.sslh = SplashScreenLogHandler(self.ss)
 
     def test_unicode_message(self):
-        self.assertEqual(self.ss.text, u'original')
-        message = u'G\u00f6khan'
+        self.assertEqual(self.ss.text, "original")
+        message = "G\u00f6khan"
         self.sslh.emit(DummyRecord(message))
-        self.assertEqual(self.ss.text, message + u'...')
+        self.assertEqual(self.ss.text, message + "...")
 
     def test_ascii_message(self):
-        message = 'Goekhan'
+        message = "Goekhan"
         self.sslh.emit(DummyRecord(message))
-        self.assertEqual(self.ss.text, message + u'...')
+        self.assertEqual(self.ss.text, message + "...")

@@ -1,23 +1,26 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2008, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2008 Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+
 """ The base class for all pyface wizards. """
 
 
-# Major package imports.
-from __future__ import print_function
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Bool, Instance, List, Property, provides, Unicode
+
+from traits.api import Bool, Instance, List, Property, provides, Str
 from pyface.api import Dialog
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
@@ -32,8 +35,7 @@ class Wizard(MWizard, Dialog):
 
     """
 
-
-    #### 'IWizard' interface ##################################################
+    # 'IWizard' interface -------------------------------------------------#
 
     pages = Property(List(IWizardPage))
 
@@ -41,13 +43,13 @@ class Wizard(MWizard, Dialog):
 
     show_cancel = Bool(True)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
-    title = Unicode('Wizard')
+    title = Str("Wizard")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # Override MWizard implementation to do nothing. We still call these methods
     # because it expected by IWizard, and users may wish to hook in custom code
@@ -59,26 +61,28 @@ class Wizard(MWizard, Dialog):
     def previous(self):
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         control = _Wizard(parent, self)
-        control.setOptions(QtGui.QWizard.NoDefaultButton |
-                           QtGui.QWizard.NoBackButtonOnStartPage)
-        control.setModal(self.style == 'modal')
+        control.setOptions(
+            QtGui.QWizard.NoDefaultButton
+            | QtGui.QWizard.NoBackButtonOnStartPage
+        )
+        control.setModal(self.style == "modal")
         control.setWindowTitle(self.title)
 
         # Necessary for 'nonmodal'. See Dialog for more info.
-        if self.style == 'nonmodal':
+        if self.style == "nonmodal":
             control.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):
@@ -103,9 +107,9 @@ class Wizard(MWizard, Dialog):
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _help_requested(self):
         """ Called when the 'Help' button is pressed. """
@@ -113,7 +117,7 @@ class Wizard(MWizard, Dialog):
         # FIXME: Hook into a help system.
         print("Show help for", self.help_id)
 
-    #### Trait handlers #######################################################
+    # Trait handlers -------------------------------------------------------
 
     def _get_pages(self):
         """ The pages getter. """
@@ -216,5 +220,3 @@ class _Wizard(QtGui.QWizard):
                 id = -1
 
         return id
-
-#### EOF ######################################################################

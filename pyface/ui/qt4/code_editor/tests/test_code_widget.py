@@ -1,26 +1,26 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2016, Enthought Inc
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Enthought Inc
-# Description: <Enthought pyface code editor>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Standard library imports.
+
 import unittest
-import mock
+from unittest import mock
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 from pyface.qt.QtTest import QTest
 
-# Enthought library imports.
 
-
-# Local imports.
-from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
+from pyface.ui.qt4.code_editor.code_widget import (
+    CodeWidget,
+    AdvancedCodeWidget,
+)
 
 
 class TestCodeWidget(unittest.TestCase):
@@ -31,9 +31,16 @@ class TestCodeWidget(unittest.TestCase):
     def tearDown(self):
         self.qapp.processEvents()
 
+    def test_different_lexer(self):
+        # Setting a different lexer should not fail.
+        # See enthought/traitsui#982
+        cw = CodeWidget(None, lexer="yaml")
+        text = "number: 1"
+        cw.setPlainText(text)
+
     def test_readonly_editor(self):
         cw = CodeWidget(None)
-        text = 'Some\nText'
+        text = "Some\nText"
         cw.setPlainText(text)
 
         def check(typed, expected):
@@ -44,23 +51,24 @@ class TestCodeWidget(unittest.TestCase):
             self.assertEqual(cw.toPlainText(), expected)
 
         cw.setReadOnly(True)
-        check('More', text)
+        check("More", text)
 
         cw.setReadOnly(False)
-        check('Extra', 'Extra' + text)
+        check("Extra", "Extra" + text)
 
     def test_readonly_replace_widget(self):
         acw = AdvancedCodeWidget(None)
-        text = 'Some\nText'
+        text = "Some\nText"
         acw.code.setPlainText(text)
         acw.show()
 
         # On some platforms, Find/Replace do not have default keybindings
-        FindKey = QtGui.QKeySequence('Ctrl+F')
-        ReplaceKey = QtGui.QKeySequence('Ctrl+H')
-        patcher_find = mock.patch('pyface.qt.QtGui.QKeySequence.Find', FindKey)
-        patcher_replace = mock.patch('pyface.qt.QtGui.QKeySequence.Replace',
-                                     ReplaceKey)
+        FindKey = QtGui.QKeySequence("Ctrl+F")
+        ReplaceKey = QtGui.QKeySequence("Ctrl+H")
+        patcher_find = mock.patch("pyface.qt.QtGui.QKeySequence.Find", FindKey)
+        patcher_replace = mock.patch(
+            "pyface.qt.QtGui.QKeySequence.Replace", ReplaceKey
+        )
         patcher_find.start()
         patcher_replace.start()
         self.addCleanup(patcher_find.stop)
@@ -76,7 +84,8 @@ class TestCodeWidget(unittest.TestCase):
                 return False
             key = QtCore.Qt.Key(first_key & ~QtCore.Qt.KeyboardModifierMask)
             modifier = QtCore.Qt.KeyboardModifier(
-                first_key & QtCore.Qt.KeyboardModifierMask)
+                first_key & QtCore.Qt.KeyboardModifierMask
+            )
             QTest.keyClick(widget, key, modifier)
             return True
 
@@ -101,5 +110,5 @@ class TestCodeWidget(unittest.TestCase):
         self.assertFalse(acw.replace.isVisible())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

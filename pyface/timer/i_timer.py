@@ -1,14 +1,12 @@
-#  Copyright (c) 2018, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
-#
-#  Author: Corran Webster
+# Thanks for using Enthought open source!
 """
 Interfaces and base classes for cross-toolkit timers
 
@@ -17,19 +15,26 @@ provides a base implementation that can be easily specialized for a particular
 back-end, and mixins that provide additional capabilities.
 """
 from abc import abstractmethod
-import sys
 import time
 
 from traits.api import (
-    ABCHasTraits, Bool, Callable, Dict, Either, Event, Float, HasTraits, Int,
-    Interface, Property, Range, Tuple, provides
+    ABCHasTraits,
+    Bool,
+    Callable,
+    Dict,
+    Event,
+    Float,
+    HasTraits,
+    Int,
+    Interface,
+    Property,
+    Range,
+    Tuple,
+    provides,
+    Union,
 )
 
-if sys.version_info[:2] < (3, 3):
-    import timeit
-    perf_counter = timeit.default_timer
-else:
-    perf_counter = time.perf_counter
+perf_counter = time.perf_counter
 
 
 class ITimer(Interface):
@@ -45,13 +50,13 @@ class ITimer(Interface):
     interval = Range(low=0.0)
 
     #: The number of times to repeat the callback, or None if no limit.
-    repeat = Either(None, Int)
+    repeat = Union(None, Int)
 
     #: The maximum length of time to run in seconds, or None if no limit.
-    expire = Either(None, Float)
+    expire = Union(None, Float)
 
     #: Whether or not the timer is currently running.
-    active = Bool
+    active = Bool()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -88,7 +93,7 @@ class IEventTimer(ITimer):
     # IEventTimer interface --------------------------------------------------
 
     #: A traits Event to fire when the callback happens.
-    timeout = Event
+    timeout = Event()
 
 
 class ICallbackTimer(ITimer):
@@ -100,10 +105,10 @@ class ICallbackTimer(ITimer):
     callback = Callable
 
     #: Positional arguments to give the callback.
-    args = Tuple
+    args = Tuple()
 
     #: Keyword arguments to give the callback.
-    kwargs = Dict
+    kwargs = Dict()
 
 
 @provides(ITimer)
@@ -126,21 +131,21 @@ class BaseTimer(ABCHasTraits):
     interval = Range(low=0.0, value=0.05)
 
     #: The number of times to repeat the callback, or None if no limit.
-    repeat = Either(None, Int)
+    repeat = Union(None, Int)
 
     #: The maximum length of time to run in seconds, or None if no limit.
-    expire = Either(None, Float)
+    expire = Union(None, Float)
 
     #: Property that controls the state of the timer.
-    active = Property(Bool, depends_on='_active')
+    active = Property(Bool, observe="_active")
 
     # Private interface ------------------------------------------------------
 
     #: Whether or not the timer is currently running.
-    _active = Bool
+    _active = Bool()
 
     #: The most recent start time.
-    _start_time = Float
+    _start_time = Float()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -254,7 +259,7 @@ class MEventTimer(HasTraits):
     # IEventTimer interface --------------------------------------------------
 
     #: A traits Event to fire when the callback happens.
-    timeout = Event
+    timeout = Event()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -278,10 +283,10 @@ class MCallbackTimer(HasTraits):
     callback = Callable
 
     #: Positional arguments to give the callback.
-    args = Tuple
+    args = Tuple()
 
     #: Keyword arguments to give the callback.
-    kwargs = Dict
+    kwargs = Dict()
 
     # -------------------------------------------------------------------------
     # ITimer interface

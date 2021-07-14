@@ -1,24 +1,26 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+
 """ The PyQt specific implementation of a menu manager. """
 
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Instance, Unicode
 
-# Local imports.
+from traits.api import Instance, List, Str
+
+
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.action_item import _Tool, Action
@@ -31,18 +33,23 @@ class MenuManager(ActionManager, ActionManagerItem):
     This could be a sub-menu or a context (popup) menu.
     """
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode
+    name = Str()
 
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
-    ###########################################################################
+    # Private interface ---------------------------------------------------#
+
+    #: Keep track of all created menus in order to properly dispose of them
+    _menus = List()
+
+    # ------------------------------------------------------------------------
     # 'MenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
         """ Creates a menu representation of the manager. """
@@ -54,11 +61,25 @@ class MenuManager(ActionManager, ActionManagerItem):
         if controller is None:
             controller = self.controller
 
-        return _Menu(self, parent, controller)
+        menu = _Menu(self, parent, controller)
+        self._menus.append(menu)
 
-    ###########################################################################
+        return menu
+
+    # ------------------------------------------------------------------------
+    # 'ActionManager' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._menus:
+            menu = self._menus.pop()
+            menu.dispose()
+
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
@@ -67,13 +88,15 @@ class MenuManager(ActionManager, ActionManagerItem):
         submenu.menuAction().setText(self.name)
         menu.addMenu(submenu)
 
-    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
-                       show_labels=True):
+    def add_to_toolbar(
+        self, parent, tool_bar, image_cache, controller, show_labels=True
+    ):
         """ Adds the item to a tool bar. """
         menu = self.create_menu(parent, controller)
         if self.action:
             tool_action = _Tool(
-                parent, tool_bar, image_cache, self, controller, show_labels).control
+                parent, tool_bar, image_cache, self, controller, show_labels
+            ).control
             tool_action.setMenu(menu)
         else:
             tool_action = menu.menuAction()
@@ -81,16 +104,19 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         tool_action.setText(self.name)
         tool_button = tool_bar.widgetForAction(tool_action)
-        tool_button.setPopupMode(tool_button.MenuButtonPopup if self.action
-                                 else tool_button.InstantPopup)
+        tool_button.setPopupMode(
+            tool_button.MenuButtonPopup
+            if self.action
+            else tool_button.InstantPopup
+        )
 
 
 class _Menu(QtGui.QMenu):
     """ The toolkit-specific menu control. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
         """ Creates a new tree. """
@@ -114,46 +140,57 @@ class _Menu(QtGui.QMenu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.on_trait_change(self.refresh, 'changed')
-        self._manager.on_trait_change(self._on_enabled_changed, 'enabled')
-        self._manager.on_trait_change(self._on_visible_changed, 'visible')
-        self._manager.on_trait_change(self._on_name_changed, 'name')
+        self._manager.observe(self.refresh, "changed")
+        self._manager.observe(self._on_enabled_changed, "enabled")
+        self._manager.observe(self._on_visible_changed, "visible")
+        self._manager.observe(self._on_name_changed, "name")
+        self._manager.observe(self._on_image_changed, "action:image")
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
         return
 
-    ###########################################################################
+    def dispose(self):
+        self._manager.observe(self.refresh, "changed", remove=True)
+        self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
+        self._manager.observe(self._on_visible_changed, "visible", remove=True)
+        self._manager.observe(self._on_name_changed, "name", remove=True)
+        self._manager.observe(self._on_image_changed, "action:image", remove=True)
+        # Removes event listeners from downstream menu items
+        self.clear()
+
+    # ------------------------------------------------------------------------
     # '_Menu' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def clear(self):
         """ Clears the items from the menu. """
 
         for item in self.menu_items:
             item.dispose()
-            
+
         self.menu_items = []
 
-        super(_Menu, self).clear()
+        super().clear()
 
     def is_empty(self):
         """ Is the menu empty? """
 
         return self.isEmpty()
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()
 
         manager = self._manager
-        parent  = self._parent
+        parent = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
-            previous_non_empty_group = self._add_group(parent, group,
-                    previous_non_empty_group)
+            previous_non_empty_group = self._add_group(
+                parent, group, previous_non_empty_group
+            )
 
         self.setEnabled(manager.enabled)
 
@@ -166,28 +203,29 @@ class _Menu(QtGui.QMenu):
             point = QtCore.QPoint(x, y)
         self.popup(point)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    def _on_enabled_changed(self, obj, trait_name, old, new):
+    def _on_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(new)
+        self.setEnabled(event.new)
 
-    def _on_visible_changed(self, obj, trait_name, old, new):
+    def _on_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setVisible(new)
+        self.menuAction().setVisible(event.new)
 
-        return
-
-    def _on_name_changed(self, obj, trait_name, old, new):
+    def _on_name_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setText(new)
+        self.menuAction().setText(event.new)
 
-        return
+    def _on_image_changed(self, event):
+        """ Dynamic trait change handler. """
+
+        self.menuAction().setIcon(event.new.create_icon())
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
@@ -204,9 +242,11 @@ class _Menu(QtGui.QMenu):
                     if len(item.items) > 0:
                         self._add_group(parent, item, previous_non_empty_group)
 
-                        if previous_non_empty_group is not None \
-                           and previous_non_empty_group.separator \
-                           and item.separator:
+                        if (
+                            previous_non_empty_group is not None
+                            and previous_non_empty_group.separator
+                            and item.separator
+                        ):
                             self.addSeparator()
 
                         previous_non_empty_group = item
@@ -217,5 +257,3 @@ class _Menu(QtGui.QMenu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
-
-#### EOF ######################################################################

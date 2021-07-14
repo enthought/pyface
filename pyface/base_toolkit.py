@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ Common toolkit loading utilities and classes
 
 This module provides common code for ETS packages that need to do GUI toolkit
@@ -14,8 +23,8 @@ Which toolkit to use is specified via the :py:mod:`traits.etsconfig.etsconfig`
 package, but if this is not explicitly set by an application at startup or via
 environment variables, there needs to be a way of discovering and loading any
 available working toolkit implementations.  The default mechanism is via the
-now-standard :py:mod:`pkg_resources` and :py:mod:`setuptools` "entry point"
-system.
+now-standard :py:mod:`importlib_metadata` and :py:mod:`setuptools`
+"entry point" system.
 
 This module provides three things:
 
@@ -39,7 +48,7 @@ Note that there is no requirement for new toolkit implementations to use this
 Default toolkit loading logic
 -----------------------------
 
-The :py_func:`find_toolkit` function uses the following logic when attempting
+The :py:func:`find_toolkit` function uses the following logic when attempting
 to load toolkits:
 
 - if ETSConfig.toolkit is set, try to load a plugin with a matching name.
@@ -56,46 +65,22 @@ to load toolkits:
 
 import logging
 import os
-import pkg_resources
 import sys
+
+try:
+    # Starting Python 3.8, importlib.metadata is available in the Python
+    # standard library.
+    import importlib.metadata as importlib_metadata
+except ImportError:
+    import importlib_metadata
 
 from traits.api import HasTraits, List, ReadOnly, Str, TraitError
 from traits.etsconfig.api import ETSConfig
 
-
-try:
-    provisional_toolkit = ETSConfig.provisional_toolkit
-except AttributeError:
-    from contextlib import contextmanager
-
-    # for backward compatibility
-    @contextmanager
-    def provisional_toolkit(toolkit_name):
-        """ Perform an operation with toolkit provisionally set
-
-        This sets the toolkit attribute of the ETSConfig object set to the
-        provided value. If the operation fails with an exception, the toolkit
-        is reset to nothing.
-        """
-        if ETSConfig.toolkit:
-            raise AttributeError("ETSConfig toolkit is already set")
-        ETSConfig.toolkit = toolkit_name
-        try:
-            yield
-        except:
-            # reset the toolkit state
-            ETSConfig._toolkit = ''
-            raise
-
-
 logger = logging.getLogger(__name__)
 
 
-TOOLKIT_PRIORITIES = {
-    'qt4': -2,
-    'wx': -1,
-    'null': float('inf')
-}
+TOOLKIT_PRIORITIES = {"qt4": -2, "wx": -1, "null": float("inf")}
 default_priorities = lambda plugin: TOOLKIT_PRIORITIES.get(plugin.name, 0)
 
 
@@ -117,11 +102,8 @@ class Toolkit(HasTraits):
     packages = List(Str)
 
     def __init__(self, package, toolkit, *packages, **traits):
-        super(Toolkit, self).__init__(
-            package=package,
-            toolkit=toolkit,
-            packages=list(packages),
-            **traits
+        super().__init__(
+            package=package, toolkit=toolkit, packages=list(packages), **traits
         )
 
     def __call__(self, name):
@@ -135,29 +117,33 @@ class Toolkit(HasTraits):
         """
         from importlib import import_module
 
-        mname, oname = name.split(':')
-        if not mname.startswith('.'):
-            mname = '.' + mname
+        mname, oname = name.split(":")
+        if not mname.startswith("."):
+            mname = "." + mname
 
         for package in self.packages:
             try:
                 module = import_module(mname, package)
             except ImportError as exc:
                 # is the error while trying to import package mname or not?
-                if all(part not in exc.args[0] for part in mname.split('.')
-                       if part):
+                if all(
+                    part not in exc.args[0]
+                    for part in mname.split(".")
+                    if part
+                ):
                     # something else went wrong - let the exception be raised
                     raise
 
                 # Ignore *ANY* errors unless a debug ENV variable is set.
-                if 'ETS_DEBUG' in os.environ:
+                if "ETS_DEBUG" in os.environ:
                     # Attempt to only skip errors in importing the backend modules.
                     # The idea here is that this only happens when the last entry in
                     # the traceback's stack frame mentions the toolkit in question.
                     import traceback
-                    frames = traceback.extract_tb(sys.exc_traceback)
+
+                    frames = traceback.extract_tb(sys.exc_info()[2])
                     filename, lineno, function, text = frames[-1]
-                    if not package in filename:
+                    if package not in filename:
                         raise
             else:
                 obj = getattr(module, oname, None)
@@ -180,7 +166,7 @@ class Toolkit(HasTraits):
         return Unimplemented
 
 
-def import_toolkit(toolkit_name, entry_point='pyface.toolkits'):
+def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
     """ Attempt to import an toolkit specified by an entry point.
 
     Parameters
@@ -201,16 +187,22 @@ def import_toolkit(toolkit_name, entry_point='pyface.toolkits'):
         If no toolkit is found, or if the toolkit cannot be loaded for some
         reason.
     """
-    plugins = list(pkg_resources.iter_entry_points(entry_point, toolkit_name))
+    entry_point_group = importlib_metadata.entry_points()[entry_point]
+    plugins = [
+        plugin for plugin in entry_point_group if plugin.name == toolkit_name
+    ]
     if len(plugins) == 0:
-        msg = 'No {} plugin found for toolkit {}'
+        msg = "No {} plugin found for toolkit {}"
         msg = msg.format(entry_point, toolkit_name)
         logger.debug(msg)
         raise RuntimeError(msg)
     elif len(plugins) > 1:
-        msg = ("multiple %r plugins found for toolkit %r: %s")
-        modules = ', '.join(plugin.module_name for plugin in plugins)
-        logger.warning(msg, entry_point, toolkit_name, modules)
+        msg = "multiple %r plugins found for toolkit %r: %s"
+        module_names = []
+        for plugin in plugins:
+            module_names.append(plugin.value.split(":")[0])
+        module_names = ", ".join(module_names)
+        logger.warning(msg, entry_point, toolkit_name, module_names)
 
     for plugin in plugins:
         try:
@@ -218,10 +210,11 @@ def import_toolkit(toolkit_name, entry_point='pyface.toolkits'):
             return toolkit_object
         except (ImportError, AttributeError) as exc:
             msg = "Could not load plugin %r from %r"
-            logger.info(msg, plugin.name, plugin.module_name)
+            module_name = plugin.value.split(":")[0]
+            logger.info(msg, plugin.name, module_name)
             logger.debug(exc, exc_info=True)
 
-    msg = 'No {} plugin could be loaded for {}'
+    msg = "No {} plugin could be loaded for {}"
     msg = msg.format(entry_point, toolkit_name)
     logger.info(msg)
     raise RuntimeError(msg)
@@ -263,7 +256,7 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
         return import_toolkit(ETSConfig.toolkit, entry_point)
 
     entry_points = [
-        plugin for plugin in pkg_resources.iter_entry_points(entry_point)
+        plugin for plugin in importlib_metadata.entry_points()[entry_point]
         if toolkits is None or plugin.name in toolkits
     ]
     for plugin in sorted(entry_points, key=priorities):
@@ -273,11 +266,12 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
                 return toolkit
         except (ImportError, AttributeError, RuntimeError) as exc:
             msg = "Could not load %s plugin %r from %r"
-            logger.info(msg, entry_point, plugin.name, plugin.module_name)
+            module_name = plugin.value.split(":")[0]
+            logger.info(msg, entry_point, plugin.name, module_name)
             logger.debug(exc, exc_info=True)
 
     # if all else fails, try to import the null toolkit.
-    with ETSConfig.provisional_toolkit('null'):
-        return import_toolkit('null', entry_point)
+    with ETSConfig.provisional_toolkit("null"):
+        return import_toolkit("null", entry_point)
 
     raise TraitError("Could not import any {} toolkit.".format(entry_point))

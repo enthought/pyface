@@ -1,6 +1,12 @@
-# Author: Prabhu Ramachandran
-# Copyright (c) 2006-2018,  Enthought, Inc.
-# License: BSD Style.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """
 Event-loop based timers that perform actions periodically.
 
@@ -13,7 +19,7 @@ never fire).
 from pyface.toolkit import toolkit_object
 from pyface.timer.i_timer import MCallbackTimer, MEventTimer
 
-PyfaceTimer = toolkit_object('timer.timer:PyfaceTimer')
+PyfaceTimer = toolkit_object("timer.timer:PyfaceTimer")
 
 
 class EventTimer(MEventTimer, PyfaceTimer):
@@ -34,11 +40,8 @@ class Timer(CallbackTimer):
         arguments and keyword args after every `millisecs` (milliseconds).
         """
         interval = millisecs / 1000.0
-        super(Timer, self).__init__(
-            interval=interval,
-            callback=callable,
-            args=args,
-            kwargs=kwargs,
+        super().__init__(
+            interval=interval, callback=callable, args=args, kwargs=kwargs
         )
         self.start()
 

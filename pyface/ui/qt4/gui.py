@@ -1,27 +1,27 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 
-
-# Standard library imports.
 import logging
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Unicode
+
+from traits.api import Bool, HasTraits, observe, provides, Str
 from pyface.util.guisupport import start_event_loop_qt4
 
-# Local imports.
+
 from pyface.i_gui import IGUI, MGUI
 
 
@@ -35,18 +35,17 @@ class GUI(MGUI, HasTraits):
     for the API documentation.
     """
 
-
-    #### 'GUI' interface ######################################################
+    # 'GUI' interface -----------------------------------------------------#
 
     busy = Bool(False)
 
     started = Bool(False)
 
-    state_location = Unicode
+    state_location = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, splash_screen=None):
         # Display the (optional) splash screen.
@@ -55,9 +54,9 @@ class GUI(MGUI, HasTraits):
         if self._splash_screen is not None:
             self._splash_screen.open()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'GUI' class interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
@@ -91,9 +90,9 @@ class GUI(MGUI, HasTraits):
         else:
             QtGui.QApplication.restoreOverrideCursor()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'GUI' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def start_event_loop(self):
         if self._splash_screen is not None:
@@ -112,18 +111,19 @@ class GUI(MGUI, HasTraits):
         logger.debug("---------- stopping GUI event loop ----------")
         QtGui.QApplication.quit()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _state_location_default(self):
         """ The default state location handler. """
 
         return self._default_state_location()
 
-    def _busy_changed(self, new):
+    @observe("busy")
+    def _update_busy_state(self, event):
         """ The busy trait change handler. """
-
+        new = event.new
         if new:
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
@@ -143,7 +143,7 @@ class _FutureCall(QtCore.QObject):
     _pyface_event = QtCore.QEvent.Type(QtCore.QEvent.registerEventType())
 
     def __init__(self, ms, callable, *args, **kw):
-        super(_FutureCall, self).__init__()
+        super().__init__()
 
         # Save the arguments.
         self._ms = ms
@@ -185,7 +185,7 @@ class _FutureCall(QtCore.QObject):
                 QtCore.QTimer.singleShot(self._ms, self._dispatch)
             return True
 
-        return super(_FutureCall, self).event(event)
+        return super().event(event)
 
     def _dispatch(self):
         """ Invoke the callable.

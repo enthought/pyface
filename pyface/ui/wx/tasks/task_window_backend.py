@@ -1,15 +1,23 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import logging
 
-# System library imports.
-import wx
+
 from pyface.wx.aui import aui
 
-# Enthought library imports.
+
 from traits.api import Instance, List, Str
 
-# Local imports.
-from main_window_layout import MainWindowLayout
+
+from .main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
 
@@ -20,7 +28,9 @@ logger = logging.getLogger(__name__)
 class AUILayout(TaskLayout):
     """ The layout for a main window's dock area using AUI Perspectives
     """
-    perspective = Str
+
+    perspective = Str()
+
 
 class TaskWindowBackend(MTaskWindowBackend):
     """ The toolkit-specific implementation of a TaskWindowBackend.
@@ -28,20 +38,22 @@ class TaskWindowBackend(MTaskWindowBackend):
     See the ITaskWindowBackend interface for API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _main_window_layout = Instance(MainWindowLayout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskWindowBackend' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
         # No extra control needed for wx (it's all handled by the AUIManager in
         # the ApplicationWindow) but we do need to handle some events here
-        self.window._aui_manager.Bind(aui.EVT_AUI_PANE_CLOSE, self._pane_close_requested)
+        self.window._aui_manager.Bind(
+            aui.EVT_AUI_PANE_CLOSE, self._pane_close_requested
+        )
 
     def destroy(self):
         """ Destroy the backend.
@@ -57,16 +69,16 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Now hide its controls.
         self.window._aui_manager.DetachPane(state.central_pane.control)
         state.central_pane.control.Hide()
-        
+
         for dock_pane in state.dock_panes:
             logger.debug("hiding dock pane %s" % dock_pane.id)
             self.window._aui_manager.DetachPane(dock_pane.control)
             dock_pane.control.Hide()
-        
+
         # Remove any tabbed notebooks left over after all the panes have been
         # removed
         self.window._aui_manager.UpdateNotebook()
-        
+
         # Remove any still-left over stuff (i.e. toolbars)
         for info in self.window._aui_manager.GetAllPanes():
             logger.debug("hiding remaining pane: %s" % info.name)
@@ -79,14 +91,22 @@ class TaskWindowBackend(MTaskWindowBackend):
             specified TaskState.
         """
         # Show the central pane.
-        info = aui.AuiPaneInfo().Caption('Central').Dockable(False).Floatable(False).Name('Central').CentrePane().Maximize()
+        info = (
+            aui.AuiPaneInfo()
+            .Caption("Central")
+            .Dockable(False)
+            .Floatable(False)
+            .Name("Central")
+            .CentrePane()
+            .Maximize()
+        )
         logger.debug("adding central pane to %s" % self.window)
         self.window._aui_manager.AddPane(state.central_pane.control, info)
         self.window._aui_manager.Update()
 
         # Show the dock panes.
         self._layout_state(state)
-    
+
     def get_toolbars(self, task=None):
         if task is None:
             state = self.window._active_state
@@ -97,13 +117,13 @@ class TaskWindowBackend(MTaskWindowBackend):
             info = self.window._aui_manager.GetPane(tool_bar_manager.id)
             toolbars.append(info)
         return toolbars
-    
+
     def show_toolbars(self, toolbars):
         for info in toolbars:
             info.Show()
         self.window._aui_manager.Update()
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
@@ -123,35 +143,37 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._layout_state(self.window._active_state)
         self.window._aui_manager.Update()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _layout_state(self, state):
         """ Layout the dock panes in the specified TaskState using its
             TaskLayout.
         """
-#        # Assign the window's corners to the appropriate dock areas.
-#        for name, corner in CORNER_MAP.iteritems():
-#            area = getattr(state.layout, name + '_corner')
-#            self.control.setCorner(corner, AREA_MAP[area])
+        #        # Assign the window's corners to the appropriate dock areas.
+        #        for name, corner in CORNER_MAP.iteritems():
+        #            area = getattr(state.layout, name + '_corner')
+        #            self.control.setCorner(corner, AREA_MAP[area])
 
         # Add all panes in the TaskLayout.
         self._main_window_layout.state = state
         self._main_window_layout.set_layout(state.layout, self.window)
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def __main_window_layout_default(self):
         return TaskWindowLayout()
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _pane_close_requested(self, evt):
         pane = evt.GetPane()
         logger.debug("_pane_close_requested: pane=%s" % pane.name)
         for dock_pane in self.window.dock_panes:
-            logger.debug("_pane_close_requested: checking pane=%s" % dock_pane.pane_name)
+            logger.debug(
+                "_pane_close_requested: checking pane=%s" % dock_pane.pane_name
+            )
             if dock_pane.pane_name == pane.name:
                 logger.debug("_pane_close_requested: FOUND PANE!!!!!!")
                 dock_pane.visible = False
@@ -159,7 +181,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
-            panes = [ self.window.central_pane ] + self.window.dock_panes
+            panes = [self.window.central_pane] + self.window.dock_panes
             for pane in panes:
                 if new and pane.control.isAncestorOf(new):
                     pane.has_focus = True
@@ -171,14 +193,14 @@ class TaskWindowLayout(MainWindowLayout):
     """ A MainWindowLayout for a TaskWindow.
     """
 
-    #### 'TaskWindowLayout' interface #########################################
+    # 'TaskWindowLayout' interface -----------------------------------------
 
-    consumed = List
-    state = Instance('pyface.tasks.task_window.TaskState')
+    consumed = List()
+    state = Instance("pyface.tasks.task_window.TaskState")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the control associated with a PaneItem.

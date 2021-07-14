@@ -1,25 +1,22 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A monitor for appearance and structural changes to a node. """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import Any, Event, HasTraits
 
-# Local imports.
+
 from .node_event import NodeEvent
 
 
@@ -30,12 +27,12 @@ logger = logging.getLogger(__name__)
 class NodeMonitor(HasTraits):
     """ A monitor for appearance and structural changes to a node. """
 
-    #### 'NodeMonitor' interface ##############################################
+    # 'NodeMonitor' interface ---------------------------------------------#
 
     # The node that we are monitoring.
-    node = Any
+    node = Any()
 
-    #### Events ####
+    # Events ----
 
     # Fired when child nodes in the node that we are monitoring have changed in
     # some way that affects their appearance but NOT their structure.
@@ -58,12 +55,11 @@ class NodeMonitor(HasTraits):
     # changes/inserts/removals).
     structure_changed = Event(NodeEvent)
 
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeMonitor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### public methods #######################################################
+    # public methods -------------------------------------------------------
 
     def start(self):
         """ Start listening to changes to the node. """
@@ -71,23 +67,16 @@ class NodeMonitor(HasTraits):
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj)
 
-        return
-
-
     def stop(self):
         """ Stop listening to changes to the node. """
 
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj, remove=True)
 
-        return
-
     def fire_nodes_changed(self, children=[]):
         """ Fires the nodes changed event. """
 
         self.nodes_changed = NodeEvent(node=self.node, children=children)
-
-        return
 
     def fire_nodes_inserted(self, children, index=-1):
         """ Fires the nodes inserted event.
@@ -102,14 +91,10 @@ class NodeMonitor(HasTraits):
             node=self.node, children=children, index=index
         )
 
-        return
-
     def fire_nodes_removed(self, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=self.node, children=children)
-
-        return
 
     def fire_nodes_replaced(self, old_children, new_children):
         """ Fires the nodes replaced event. """
@@ -118,8 +103,6 @@ class NodeMonitor(HasTraits):
             node=self.node, old_children=old_children, children=new_children
         )
 
-        return
-
     def fire_structure_changed(self):
         """ Fires the structure changed event. """
 
@@ -127,18 +110,18 @@ class NodeMonitor(HasTraits):
 
         return
 
-
-    #### protected methods ####################################################
+    # protected methods ----------------------------------------------------
 
     def _setup_trait_change_handlers(self, obj, remove=False):
         """ Add or remove trait change handlers to/from a node. """
 
-        logger.debug('%s trait listeners on (%s) in NodeMonitor (%s)',
-            (remove and 'Removing' or 'Adding'), obj, self)
+        logger.debug(
+            "%s trait listeners on (%s) in NodeMonitor (%s)",
+            (remove and "Removing" or "Adding"),
+            obj,
+            self,
+        )
 
-        pass # derived classes should do something here!
+        pass  # derived classes should do something here!
 
         return
-
-
-#### EOF ######################################################################

@@ -1,26 +1,21 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, provides
 
-# Local imports.
+
 from pyface.i_widget import IWidget, MWidget
 
 
@@ -33,10 +28,10 @@ class Widget(MWidget, HasTraits):
     # 'IWidget' interface ----------------------------------------------------
 
     #: The toolkit specific control that represents the widget.
-    control = Any
+    control = Any()
 
     #: The control's optional parent control.
-    parent = Any
+    parent = Any()
 
     #: Whether or not the control is visible
     visible = Bool(True)
@@ -71,6 +66,25 @@ class Widget(MWidget, HasTraits):
         self.enabled = enabled
         if self.control is not None:
             self.control.Enable(enabled)
+
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+        if self.control is not None:
+            self.control.SetFocus()
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+        return (
+            self.control is not None
+            and self.control.HasFocus()
+        )
 
     def destroy(self):
         if self.control is not None:

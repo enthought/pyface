@@ -1,53 +1,16 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
-from numpy import arange
+# Thanks for using Enthought open source!
 
 import wx
-from wx.grid import Grid, PyGridTableBase
-from wx.grid import PyGridCellRenderer
-from wx.grid import GridCellTextEditor, GridCellStringRenderer
+from wx.grid import Grid
 from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
-
-from wx.lib.mixins.grid import GridAutoEditMixin
-
-
-class ComboboxFocusHandler(wx.EvtHandler):
-    """ Workaround for combobox focus problems in wx 2.6."""
-
-    # This is copied from enthought/pyface/grid.combobox_focus_handler.py.
-    # Since this was the only thing that pyface.wx needed from pyface,
-    # and it's a temporary workaround for an outdated version of wx, we're just
-    # copying it here instead of introducing a dependency on a large package.
-
-    def __init__(self):
-        wx.EvtHandler.__init__(self)
-        wx.EVT_KILL_FOCUS(self, self._on_kill_focus)
-        return
-
-    def _on_kill_focus(self, evt):
-
-        # this is pretty egregious. somehow the combobox gives up focus
-        # as soon as it starts up, causing the grid to remove the editor.
-        # so we just don't let it give up focus. i suspect this will cause
-        # some other problem down the road, but it seems to work for now.
-        # fixme: remove this h*ck once the bug is fixed in wx.
-        editor = evt.GetEventObject()
-        if isinstance(editor, wx._controls.ComboBox) and \
-               evt.GetWindow() is None:
-            return
-        evt.Skip()
-        return
 
 
 class AbstractGridView(Grid):
@@ -65,72 +28,61 @@ class AbstractGridView(Grid):
         # We have things set up to edit on a single click - so we have to select
         # an initial cursor location that is off of the screen otherwise a cell
         # will be in edit mode as soon as the grid fires up.
-        self.moveTo = [1000,1]
+        self.moveTo = [1000, 1]
         self.edit = False
 
         # this seems like a busy idle ...
-        wx.EVT_IDLE(self, self.OnIdle)
+        self.Bind(wx.EVT_IDLE, self.OnIdle)
 
         # Enthought specific display controls ...
         self.init_labels()
         self.init_data_types()
         self.init_handlers()
 
-        wx.grid.EVT_GRID_EDITOR_CREATED(self, self._on_editor_created)
-
-        return
-
-
-    # needed to handle problem in wx 2.6 with combobox cell editors
-    def _on_editor_created(self, evt):
-
-        editor = evt.GetControl()
-        editor.PushEventHandler(ComboboxFocusHandler())
-
-        evt.Skip()
-        return
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
 
     def init_labels(self):
-        self.SetLabelFont(wx.Font(self.GetFont().GetPointSize(),
-                                  wx.SWISS, wx.NORMAL, wx.BOLD))
+        self.SetLabelFont(
+            wx.Font(
+                self.GetFont().GetPointSize(), wx.SWISS, wx.NORMAL, wx.BOLD
+            )
+        )
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
-
-        return
 
     def init_data_types(self):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
         """
-        self.RegisterDataType("LogData", GridCellFloatRenderer(precision=3), GridCellFloatEditor())
-
-        return
+        self.RegisterDataType(
+            "LogData",
+            GridCellFloatRenderer(precision=3),
+            GridCellFloatEditor(),
+        )
 
     def init_handlers(self):
 
-        wx.grid.EVT_GRID_CELL_LEFT_CLICK(self, self.OnCellLeftClick)
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self, self.OnCellRightClick)
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(self, self.OnCellLeftDClick)
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(self, self.OnCellRightDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.OnCellLeftClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self.OnCellRightClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.OnCellLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self.OnCellRightDClick)
 
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(self, self.OnLabelLeftClick)
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(self, self.OnLabelRightClick)
-        wx.grid.EVT_GRID_LABEL_LEFT_DCLICK(self, self.OnLabelLeftDClick)
-        wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK(self, self.OnLabelRightDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self.OnLabelLeftClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self.OnLabelRightClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_DCLICK, self.OnLabelLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK, self.OnLabelRightDClick)
 
-        wx.grid.EVT_GRID_ROW_SIZE(self, self.OnRowSize)
-        wx.grid.EVT_GRID_COL_SIZE(self, self.OnColSize)
+        self.Bind(wx.grid.EVT_GRID_ROW_SIZE, self.OnRowSize)
+        self.Bind(wx.grid.EVT_GRID_COL_SIZE, self.OnColSize)
 
-        wx.grid.EVT_GRID_RANGE_SELECT(self, self.OnRangeSelect)
-        wx.grid.EVT_GRID_CELL_CHANGE(self, self.OnCellChange)
-        wx.grid.EVT_GRID_SELECT_CELL(self, self.OnSelectCell)
+        self.Bind(wx.grid.EVT_GRID_RANGE_SELECT, self.OnRangeSelect)
+        self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self.OnCellChange)
+        self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.OnSelectCell)
 
-        wx.grid.EVT_GRID_EDITOR_SHOWN(self, self.OnEditorShown)
-        wx.grid.EVT_GRID_EDITOR_HIDDEN(self, self.OnEditorHidden)
-        wx.grid.EVT_GRID_EDITOR_CREATED(self, self.OnEditorCreated)
-
-        return
+        self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.OnEditorShown)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnEditorHidden)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
 
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -140,7 +92,6 @@ class AbstractGridView(Grid):
             self.SetColLabelSize(0)
         else:
             self.SetColLabelSize(self._default_col_label_size)
-        return
 
     def SetRowLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -150,7 +101,6 @@ class AbstractGridView(Grid):
             self.SetRowLabelSize(0)
         else:
             self.SetRowLabelSize(self._default_row_label_size)
-        return
 
     def SetTable(self, table, *args):
         """ Some versions of wxPython do not return the correct
@@ -176,7 +126,7 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnCellRightClick(self, evt):
-        #print self.GetDefaultRendererForCell(evt.GetRow(), evt.GetCol())
+        # print self.GetDefaultRendererForCell(evt.GetRow(), evt.GetCol())
         evt.Skip()
 
     def OnCellLeftDClick(self, evt):
@@ -206,7 +156,7 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnRangeSelect(self, evt):
-        #if evt.Selecting():
+        # if evt.Selecting():
         #    print "OnRangeSelect: top-left %s, bottom-right %s\n" % (evt.GetTopLeftCoords(), evt.GetBottomRightCoords())
         evt.Skip()
 
@@ -223,7 +173,7 @@ class AbstractGridView(Grid):
                 self.EnableCellEditControl()
             self.edit = False
 
-        if self.moveTo != None:
+        if self.moveTo is not None:
             self.SetGridCursor(self.moveTo[0], self.moveTo[1])
             self.moveTo = None
 
@@ -245,4 +195,6 @@ class AbstractGridView(Grid):
 
     def OnEditorCreated(self, evt):
         evt.Skip()
-#-------------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------------

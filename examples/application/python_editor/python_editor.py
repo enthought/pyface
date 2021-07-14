@@ -1,10 +1,11 @@
-# Copyright (c) 2014-18 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 """
 Example Python Editor
@@ -22,10 +23,21 @@ from io import open
 
 from pyface.tasks.api import TraitsEditor
 from traits.api import (
-    Bool, File, HasStrictTraits, Int, Property, Unicode, cached_property
+    Bool,
+    File,
+    HasStrictTraits,
+    Int,
+    Property,
+    Str,
+    cached_property,
 )
 from traitsui.api import (
-    CodeEditor, Item, OKCancelButtons, RangeEditor, UndoHistory, View
+    CodeEditor,
+    Item,
+    OKCancelButtons,
+    RangeEditor,
+    UndoHistory,
+    View,
 )
 
 
@@ -33,16 +45,16 @@ class LineNumberDialog(HasStrictTraits):
     """ A simple line number dialog. """
 
     #: The total number of lines.
-    max_line = Int
+    max_line = Int()
 
     #: The entered line.
-    line = Int
+    line = Int()
 
     traits_view = View(
         Item(
             "line",
-            label=u'Line Number:',
-            editor=RangeEditor(low=1, high_name='max_line', mode='spinner'),
+            label="Line Number:",
+            editor=RangeEditor(low=1, high_name="max_line", mode="spinner"),
         ),
         buttons=OKCancelButtons,
     )
@@ -52,13 +64,13 @@ class PythonEditor(TraitsEditor):
     """ Tasks Editor that provides a code editor via TraitsUI """
 
     #: The Python code being edited.
-    code = Unicode
+    code = Str()
 
     #: Whether or not undo operation is possible.
-    can_undo = Property(Bool, depends_on='ui.history.undoable')
+    can_undo = Property(Bool, observe="ui.history.undoable")
 
     #: Whether or not redo operation is possible.
-    can_redo = Property(Bool, depends_on='ui.history.redoable')
+    can_redo = Property(Bool, observe="ui.history.redoable")
 
     #: The current cursor line.
     line = Int(1)
@@ -67,32 +79,32 @@ class PythonEditor(TraitsEditor):
     column = Int(1)
 
     #: The currently selected text, if any.
-    selection = Unicode
+    selection = Str()
 
     #: The length of the currently selected text.
-    selection_length = Property(Int, depends_on='selection')
+    selection_length = Property(Int, observe="selection")
 
     #: The start of the currently selected text, if any.
-    selection_start = Int
+    selection_start = Int()
 
     #: The end of the currently selected text, if any.
-    selection_end = Int
+    selection_end = Int()
 
     #: The position of the last save in the history.
-    _last_save = Int
+    _last_save = Int()
 
     # IEditor traits ---------------------------------------------------------
 
     #: The file being edited.
-    obj = File
+    obj = File()
 
     #: The editor's user-visible name.
-    name = Property(Unicode, depends_on='obj')
+    name = Property(Str, observe="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Unicode, depends_on='obj')
+    tooltip = Property(Str, observe="obj")
 
-    dirty = Property(Bool, depends_on=['obj', '_last_save', 'ui.history.now'])
+    dirty = Property(Bool, observe=["obj", "_last_save", "ui.history.now"])
 
     # -------------------------------------------------------------------------
     # PythonTextEditor interface
@@ -119,7 +131,7 @@ class PythonEditor(TraitsEditor):
                 self.code = fp.read()
             self.obj = path
         else:
-            self.code = u""
+            self.code = ""
 
         if self.ui is not None:
             # reset history
@@ -154,7 +166,7 @@ class PythonEditor(TraitsEditor):
         """ Ask the use for a line number and jump to that line. """
         max_line = len(self.code.splitlines()) + 1
         dialog = LineNumberDialog(max_line=max_line, line=self.line)
-        ui = dialog.edit_traits(kind='livemodal')
+        ui = dialog.edit_traits(kind="livemodal")
         if ui.result:
             self.column = 1
             self.line = dialog.line
@@ -172,7 +184,7 @@ class PythonEditor(TraitsEditor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        super(PythonEditor, self).create(parent)
+        super().create(parent)
         self.ui.history = UndoHistory()
         self._last_save = 0
 
@@ -186,7 +198,7 @@ class PythonEditor(TraitsEditor):
         This is True if there is no file path, or history is not at last
         save point.
         """
-        return self.obj == '' or self._last_save != self.ui.history.now
+        return self.obj == "" or self._last_save != self.ui.history.now
 
     def _get_can_undo(self):
         """ Whether or not undo operations can be performed.
@@ -230,14 +242,14 @@ class PythonEditor(TraitsEditor):
 
     traits_view = View(
         Item(
-            'code',
+            "code",
             show_label=False,
             editor=CodeEditor(
-                selected_text='selection',
-                selected_start_pos='selection_start',
-                selected_end_pos='selection_end',
-                line='line',
-                column='column',
-            )
-        ),
+                selected_text="selection",
+                selected_start_pos="selection_start",
+                selected_end_pos="selection_end",
+                line="line",
+                column="column",
+            ),
+        )
     )

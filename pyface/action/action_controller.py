@@ -1,16 +1,24 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The default action controller for menus, menu bars and tool bars. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 
 class ActionController(HasTraits):
     """ The default action controller for menus, menu bars and tool bars. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, action, event):
         """ Control an action invocation.
@@ -40,7 +48,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a menu/menubar.
+            ``True`` if the action can be added to a menu/menubar.
         """
         return True
 
@@ -65,7 +73,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a toolbar.
+            ``True`` if the action can be added to a toolbar.
         """
         return True
 

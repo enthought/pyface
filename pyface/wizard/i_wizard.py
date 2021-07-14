@@ -1,24 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for all pyface wizards. """
 
 
-# Enthought library imports.
-from traits.api import Bool, Instance, List, Unicode
+from traits.api import Bool, HasTraits, Instance, List, Str
 from pyface.i_dialog import IDialog
 
-# Local imports.
+
 from .i_wizard_controller import IWizardController
 from .i_wizard_page import IWizardPage
 
@@ -26,7 +22,7 @@ from .i_wizard_page import IWizardPage
 class IWizard(IDialog):
     """ The interface for all pyface wizards. """
 
-    #### 'IWizard' interface ##################################################
+    # 'IWizard' interface -------------------------------------------------#
 
     # The pages in the wizard.
     pages = List(IWizardPage)
@@ -38,14 +34,14 @@ class IWizard(IDialog):
     # Should the 'Cancel' button be displayed?
     show_cancel = Bool(True)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     # The dialog title.
-    title = Unicode('Wizard')
+    title = Str("Wizard")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def next(self):
         """ Advance to the next page in the wizard. """
@@ -54,7 +50,7 @@ class IWizard(IDialog):
         """ Return to the previous page in the wizard. """
 
 
-class MWizard(object):
+class MWizard(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWizard interface.
 
@@ -63,17 +59,15 @@ class MWizard(object):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def next(self):
         """ Advance to the next page in the wizard. """
 
         page = self.controller.get_next_page(self.controller.current_page)
         self._show_page(page)
-
-        return
 
     def previous(self):
         """ Return to the previous page in the wizard. """
@@ -83,15 +77,15 @@ class MWizard(object):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Creates the window contents. """
 
         # This creates the dialog and button areas.
-        super(MWizard, self)._create_contents(parent)
+        super()._create_contents(parent)
 
         # Wire up the controller.
         self._initialize_controller(self.controller)
@@ -101,9 +95,9 @@ class MWizard(object):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected MWizard interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _show_page(self, page):
         """ Show the specified page. """
@@ -115,40 +109,36 @@ class MWizard(object):
         # page?
         self.controller.current_page = page
 
-    def _update(self):
+    def _update(self, event):
         """ Enables/disables buttons depending on the state of the wizard. """
 
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _initialize_controller(self, controller):
         """ Initializes the wizard controller. """
 
-        controller.on_trait_change(self._update, 'complete')
+        controller.observe(self._update, "complete")
 
-        controller.on_trait_change(
-            self._on_current_page_changed, 'current_page'
-        )
+        controller.observe(self._on_current_page_changed, "current_page")
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    def _on_current_page_changed(self, obj, trait_name, old, new):
+    def _on_current_page_changed(self, event):
         """ Called when the current page is changed. """
 
-        if old is not None:
-            old.on_trait_change(self._update, 'complete', remove=True)
+        if event.old is not None:
+            event.old.observe(self._update, "complete", remove=True)
 
-        if new is not None:
-            new.on_trait_change(self._update, 'complete')
+        if event.new is not None:
+            event.new.observe(self._update, "complete")
 
-        self._update()
-
-        return
+        self._update(event=None)
 
     def _on_closed_changed(self):
         """ Called when the wizard is closed. """
@@ -156,5 +146,3 @@ class MWizard(object):
         self.controller.dispose_pages()
 
         return
-
-#### EOF ######################################################################

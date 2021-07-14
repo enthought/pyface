@@ -1,7 +1,15 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The interface for perspective items. """
 
 
-# Enthought library imports.
 from traits.api import Enum, Float, Interface, Str
 
 
@@ -9,7 +17,7 @@ class IPerspectiveItem(Interface):
     """ The interface for perspective items. """
 
     # The Id of the view to display in the perspective.
-    id = Str
+    id = Str()
 
     # The position of the view relative to the item specified in the
     # 'relative_to' trait.
@@ -23,12 +31,12 @@ class IPerspectiveItem(Interface):
     # If the position is specified as 'with' you must specify a 'relative_to'
     # item other than the editor area (i.e., you cannot position a view 'with'
     # the editor area).
-    position = Enum('left', 'top', 'bottom', 'right', 'with')
+    position = Enum("left", "top", "bottom", "right", "with")
 
     # The Id of the view to position relative to. If this is not specified
     # (or if no view exists with this Id) then the view will be placed relative
     # to the editor area.
-    relative_to = Str
+    relative_to = Str()
 
     # The width of the item (as a fraction of the window width).
     #
@@ -47,6 +55,4 @@ class IPerspectiveItem(Interface):
     height = Float(-1)
 
     # The style of the dock window.
-    style_hint = Enum('tab', 'horizontal', 'vertical', 'fixed')
-
-#### EOF ######################################################################
+    style_hint = Enum("tab", "horizontal", "vertical", "fixed")

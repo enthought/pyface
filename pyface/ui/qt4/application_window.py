@@ -1,29 +1,33 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described
-# in the PyQt GPL exception also apply.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtGui
 
-# Enthought library imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Unicode
+from traits.api import Instance, List, observe, provides, Str
 
-# Local imports.
-from pyface.i_application_window import (
-    IApplicationWindow, MApplicationWindow
-)
+
+from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.image_resource import ImageResource
 from .window import Window
 
@@ -34,7 +38,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     #: The icon to display in the application window title bar.
     icon = Instance(ImageResource)
@@ -51,20 +55,20 @@ class ApplicationWindow(MApplicationWindow, Window):
     #: The collection of tool bar managers for the window.
     tool_bar_managers = List(ToolBarManager)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     #: The window title.
-    title = Unicode("Pyface")
+    title = Str("Pyface")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         panel = QtGui.QWidget(parent)
 
         palette = QtGui.QPalette(panel.palette())
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('blue'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("blue"))
         panel.setPalette(palette)
         panel.setAutoFillBackground(True)
 
@@ -97,7 +101,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             if len(tool_bar.objectName()) == 0:
                 tool_bar.setObjectName(tool_bar_manager.name)
 
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             # Work around bug in Qt on OS X where creating a tool bar with a
             # QMainWindow parent hides the window. See
             # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
@@ -105,27 +109,27 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _set_window_icon(self):
         if self.icon is None:
-            icon = ImageResource('application.png')
+            icon = ImageResource("application.png")
         else:
             icon = self.icon
         if self.control is not None:
             self.control.setWindowIcon(icon.create_icon())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _size_default(self):
         """ Trait initialiser. """
 
         return (800, 600)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
-        super(ApplicationWindow, self)._create()
+        super()._create()
 
         contents = self._create_contents(self.control)
         self.control.setCentralWidget(contents)
@@ -133,17 +137,17 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._create_trim_widgets(self.control)
 
     def _create_control(self, parent):
-        control = super(ApplicationWindow, self)._create_control(parent)
-        control.setObjectName('ApplicationWindow')
+        control = super()._create_control(parent)
+        control.setObjectName("ApplicationWindow")
 
         control.setAnimated(False)
         control.setDockNestingEnabled(True)
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_tool_bar_managers(self):
         """ Return all tool bar managers specified for the window. """
@@ -157,24 +161,27 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return tool_bar_managers
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     # QMainWindow takes ownership of the menu bar and the status bar upon
     # assignment. For this reason, it is unnecessary to delete the old controls
     # in the following two handlers.
 
-    def _menu_bar_manager_changed(self):
+    @observe("menu_bar_manager")
+    def _menu_bar_manager_updated(self, event):
         if self.control is not None:
             self._create_menu_bar(self.control)
 
-    def _status_bar_manager_changed(self, old, new):
+    @observe("status_bar_manager")
+    def _status_bar_manager_updated(self, event):
+        old, new = event.old, event.new
         if self.control is not None:
             if old is not None:
                 old.destroy_status_bar()
             self._create_status_bar(self.control)
 
-    @on_trait_change('tool_bar_manager, tool_bar_managers')
-    def _update_tool_bar_managers(self):
+    @observe("tool_bar_manager, tool_bar_managers.items")
+    def _update_tool_bar_managers(self, event):
         if self.control is not None:
             # Remove the old toolbars.
             for child in self.control.children():
@@ -185,5 +192,6 @@ class ApplicationWindow(MApplicationWindow, Window):
             # Add the new toolbars.
             self._create_tool_bar(self.control)
 
-    def _icon_changed(self):
+    @observe("icon")
+    def _icon_updated(self, event):
         self._set_window_icon()

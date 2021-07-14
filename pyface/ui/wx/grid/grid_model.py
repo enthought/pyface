@@ -1,23 +1,26 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Model for grid views. """
 
-# Major package imports
 
-# Enthought library imports.
-from traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
-     Instance, Int, Str, Tuple
+from traits.api import (
+    Bool,
+    Event,
+    HasPrivateTraits,
+    HasTraits,
+    Instance,
+    Int,
+    Str,
+    Tuple,
+)
 
 # The classes below are part of the table specification.
 class GridRow(HasTraits):
@@ -27,11 +30,13 @@ class GridRow(HasTraits):
     read_only = Bool(False)
 
     # The label for this column
-    label = Str
+    label = Str()
+
 
 # We specify the same info for rows and for columns, but add a GridColumn
 # name for clarity.
 GridColumn = GridRow
+
 
 class GridSortData(HasTraits):
     """ An event that signals a sorting has taken place.
@@ -41,22 +46,25 @@ class GridSortData(HasTraits):
         no sort has been applied (or a previous sort has been unapplied).
         The reversed flag indicates that the sort has been done in reverse
         order. """
+
     index = Int(-1)
     reversed = Bool(False)
+
 
 # for backwards compatibility
 GridSortEvent = GridSortData
 
+
 class GridModel(HasPrivateTraits):
     """ Model for grid views. """
 
-    #### 'GridModel' interface ################################################
+    # 'GridModel' interface ------------------------------------------------
 
     # Fire when the structure of the underlying grid model has changed.
-    structure_changed = Event
+    structure_changed = Event()
 
     # Fire when the content of the underlying grid model has changed.
-    content_changed = Event
+    content_changed = Event()
 
     # Column model is currently sorted on.
     column_sorted = Instance(GridSortData)
@@ -64,68 +72,57 @@ class GridModel(HasPrivateTraits):
     # The cell (row, col) the mouse is currently in.
     mouse_cell = Tuple(Int, Int)
 
-    #### Events ####
+    # Events ----
 
     # A row was inserted or appended to this model
-    rows_added = Event
+    rows_added = Event()
 
     # A column was inserted or appended to this model
-    columns_added = Event
+    columns_added = Event()
 
     # A row sort took place
-    row_sorted = Event
+    row_sorted = Event()
 
     # Event fired when a cell is clicked on:
-    click = Event # = (row, column) that was clicked on
+    click = Event  # = (row, column) that was clicked on
 
     # Event fired when a cell is double-clicked on:
-    dclick = Event # = (row, column) that was double-clicked on
+    dclick = Event  # = (row, column) that was double-clicked on
 
-    #########################################################################
-    # 'object' interface.
-    #########################################################################
-    def __init__(self, **traits):
-        """ Creates a new grid model. """
-
-        # Base class constructors.
-        super(GridModel, self).__init__(**traits)
-
-        return
-
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MUST override the following
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_column_name(self, index):
         """ Return the name of the column specified by the
         (zero-based) index. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_row_count(self):
         """ Return the number of rows for this table. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_row_name(self, index):
         """ Return the name of the row specified by the
         (zero-based) index. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_value(self, row, col):
         """ Return the value stored in the table at (row, col). """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_cell_empty(self, row, col):
         """ Returns True if the cell at (row, col) has a None value,
         False otherwise."""
-        raise NotImplementedError
+        raise NotImplementedError()
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MAY override the following
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_cols_drag_value(self, cols):
         """ Return the value to use when the specified columns are dragged or
@@ -167,7 +164,7 @@ class GridModel(HasPrivateTraits):
 
     def no_column_sort(self):
         """ Turn off any column sorting of the model data. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -213,7 +210,7 @@ class GridModel(HasPrivateTraits):
 
     def no_row_sort(self):
         """ Turn off any row sorting of the model data. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_row_read_only(self, index):
         """ Return True if the row specified by the zero-based index
@@ -222,7 +219,7 @@ class GridModel(HasPrivateTraits):
 
     def get_type(self, row, col):
         """ Return the value stored in the table at (row, col). """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_cell_drag_value(self, row, col):
         """ Return the value to use when the specified cell is dragged or
@@ -253,7 +250,6 @@ class GridModel(HasPrivateTraits):
 
         return selection_list
 
-
     # fixme: this context menu stuff is going in here for now, but it
     # seems like this is really more of a view piece than a model piece.
     # this is how the tree control does it, however, so we're duplicating
@@ -277,11 +273,18 @@ class GridModel(HasPrivateTraits):
         Note that subclasses should not override this method, but should
         override the _set_value method instead.
         """
-        #print 'GridModel.set_value row: ', row, ' col: ', col, ' value: ', value
-        rows_appended = self._set_value(row, col, value)
+        # grids are passing only strings, this is temp workaraound
+        if isinstance(value, str):
+            try:
+                value = int(value)
+            except ValueError:
+                try:
+                    value = float(value)
+                except ValueError:
+                    value = value
+        self._set_value(row, col, value)
 
         self.fire_content_changed()
-        return
 
     def is_cell_read_only(self, row, col):
         """ Returns True if the cell at (row, col) is not editable,
@@ -319,23 +322,19 @@ class GridModel(HasPrivateTraits):
             or 'center' for center alignment. """
         return None
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MAY NOT override the following
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def fire_content_changed(self):
         """ Fires the appearance changed event. """
 
-        self.content_changed = 'changed'
-
-        return
+        self.content_changed = "changed"
 
     def fire_structure_changed(self):
         """ Fires the appearance changed event. """
 
-        self.structure_changed = 'changed'
-
-        return
+        self.structure_changed = "changed"
 
     def delete_rows(self, pos, num_rows):
         """ Removes rows pos through pos + num_rows from the model.
@@ -385,11 +384,11 @@ class GridModel(HasPrivateTraits):
 
         return True
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface -- Subclasses should override these
     #                                    if they wish to support the
     #                                    specific actions.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
         """ Implementation method for delete_rows. Should return the
         number of rows that were deleted. """
@@ -431,5 +430,3 @@ class GridModel(HasPrivateTraits):
         Returns **True** if successful; **False** otherwise.
         """
         return False
-
-#### EOF ####################################################################

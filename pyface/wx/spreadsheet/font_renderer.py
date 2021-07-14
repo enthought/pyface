@@ -1,19 +1,17 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 import wx
 
 from .default_renderer import DefaultRenderer
+
 
 class FontRenderer(DefaultRenderer):
     """Render data in the specified color and font and fontsize.
@@ -23,16 +21,14 @@ class FontRenderer(DefaultRenderer):
         text = grid.model.GetValue(row, col)
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
-
-        return
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
     def DrawOld(self, grid, attr, dc, rect, row, col, isSelected):
         # Here we draw text in a grid cell using various fonts
         # and colors.  We have to set the clipping region on
         # the grid's DC, otherwise the text will spill over
         # to the next cell
-        dc.SetClippingRect(rect)
+        dc.SetClippingRegion(rect)
 
         # clear the background
         dc.SetBackgroundMode(wx.SOLID)
@@ -58,7 +54,7 @@ class FontRenderer(DefaultRenderer):
 
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
         # Okay, now for the advanced class :)
         # Let's add three dots "..."
@@ -66,18 +62,19 @@ class FontRenderer(DefaultRenderer):
         # when the text is larger than the grid cell
 
         width, height = dc.GetTextExtent(text)
-        if width > rect.width-2:
+        if width > rect.width - 2:
             width, height = dc.GetTextExtent("...")
-            x = rect.x+1 + rect.width-2 - width
-            dc.DrawRectangle(x, rect.y+1, width+1, height)
-            dc.DrawText("...", x, rect.y+1)
+            x = rect.x + 1 + rect.width - 2 - width
+            dc.DrawRectangle(x, rect.y + 1, width + 1, height)
+            dc.DrawText("...", x, rect.y + 1)
 
         dc.DestroyClippingRegion()
-        return
 
-class FontRendererFactory88:
+
+class FontRendererFactory88(object):
     """ I don't grok why this Factory (which I copied from the wx demo)
         was ever necessary? """
+
     def __init__(self, color, font, fontsize):
         """
         (color, font, fontsize) -> set of a factory to generate

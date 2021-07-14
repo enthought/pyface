@@ -1,18 +1,18 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2009, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 #
 # Author: Evan Patterson
 # Date: 06/29/09
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-# ETS imports
+
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
@@ -22,17 +22,16 @@ class Clipboard(BaseClipboard):
     """ A dummy clipboard implementationf for the null backend.
     """
 
-
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_has_data(self):
         return False
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'object_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_object_data(self):
         pass
@@ -44,11 +43,11 @@ class Clipboard(BaseClipboard):
         return False
 
     def _get_object_type(self):
-        return ''
+        return ""
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'text_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_text_data(self):
         return False
@@ -59,9 +58,9 @@ class Clipboard(BaseClipboard):
     def _get_has_text_data(self):
         pass
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'file_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_file_data(self):
         pass
@@ -69,5 +68,5 @@ class Clipboard(BaseClipboard):
     def _set_file_data(self, data):
         pass
 
-    def _get_has_file_data (self):
+    def _get_has_file_data(self):
         return False

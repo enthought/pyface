@@ -1,22 +1,30 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import os
-import sys
 import unittest
 
 from ..python_editor import PythonEditor
 from ..toolkit import toolkit_object
 from ..window import Window
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 PYTHON_SCRIPT = os.path.join(
-    os.path.dirname(__file__), 'python_shell_script.py'
+    os.path.dirname(__file__), "python_shell_script.py"
 )
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -37,8 +45,26 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control)
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = PythonEditor(self.window.control)
 
+        self.assertIsNotNone(self.widget.control)
+        self.assertFalse(self.widget.dirty)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_two_stage_create(self):
+        # test that create and destroy work
+        self.widget = PythonEditor(create=False)
+
+        self.assertIsNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
         self.assertFalse(self.widget.dirty)
 
         with self.event_loop():
@@ -48,21 +74,31 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
         # test that destroy works
         with self.event_loop():
             self.widget = PythonEditor(
-                self.window.control, show_line_numbers=False
+                parent=self.window.control,
+                show_line_numbers=False,
+                create=False,
             )
+            self.widget.create()
+
         with self.event_loop():
             self.widget.show_line_numbers = True
+
         with self.event_loop():
             self.widget.show_line_numbers = False
+
         with self.event_loop():
             self.widget.destroy()
 
     def test_load(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control)
+            self.widget = PythonEditor(
+                parent=self.window.control,
+                create=False,
+            )
+            self.widget.create()
 
-        with self.assertTraitChanges(self.widget, 'changed', count=1):
+        with self.assertTraitChanges(self.widget, "changed", count=1):
             with self.event_loop():
                 self.widget.path = PYTHON_SCRIPT
         self.assertFalse(self.widget.dirty)
@@ -73,7 +109,12 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def test_select_line(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control, path=PYTHON_SCRIPT)
+            self.widget = PythonEditor(
+                parent=self.window.control,
+                path=PYTHON_SCRIPT,
+                create=False,
+            )
+            self.widget.create()
 
         with self.event_loop():
             self.widget.select_line(3)

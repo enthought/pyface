@@ -1,8 +1,17 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..action import Action
 from ..action_item import ActionItem
@@ -11,20 +20,19 @@ from ..group import Group
 
 
 class TestActionItem(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock
         self.memo = []
 
         def perform():
-            self.memo.append('called')
+            self.memo.append("called")
 
         self.perform = perform
 
-        self.action = Action(name='Test', on_perform=perform)
+        self.action = Action(name="Test", on_perform=perform)
         self.action_item = ActionItem(action=self.action)
-        self.group = Group(id='test')
+        self.group = Group(id="test")
 
     def test_init_group(self):
         action_manager = ActionManager(self.group)
@@ -79,7 +87,9 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         group2 = Group()
         action_manager.append(group2)
         default_group = action_manager._get_default_group()
-        self.assertEqual(action_manager.groups, [self.group, default_group, group2])
+        self.assertEqual(
+            action_manager.groups, [self.group, default_group, group2]
+        )
         self.assertEqual(group2.parent, action_manager)
 
     def test_append_string(self):
@@ -135,7 +145,9 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         group2 = Group()
         action_manager.insert(1, group2)
         default_group = action_manager._get_default_group()
-        self.assertEqual(action_manager.groups, [self.group, group2, default_group])
+        self.assertEqual(
+            action_manager.groups, [self.group, group2, default_group]
+        )
         self.assertEqual(group2.parent, action_manager)
 
     def test_insert_string(self):
@@ -183,24 +195,28 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_find_item_hierarchy(self):
         action_manager = ActionManager(self.group)
-        action_manager_2 = ActionManager(self.action_item, id='test2')
+        action_manager_2 = ActionManager(self.action_item, id="test2")
         self.group.append(action_manager_2)
         item = action_manager.find_item("test2/Test")
         self.assertEqual(item, self.action_item)
 
     def test_walk_hierarchy(self):
         action_manager = ActionManager(self.group)
-        action_manager_2 = ActionManager(self.action_item, id='test2')
+        action_manager_2 = ActionManager(self.action_item, id="test2")
         self.group.append(action_manager_2)
         result = []
         action_manager.walk(result.append)
-        self.assertEqual(result,
-                         [action_manager,
-                            self.group,
-                                action_manager_2,
-                                    action_manager_2._get_default_group(),
-                                        self.action_item,
-                            action_manager._get_default_group()])
+        self.assertEqual(
+            result,
+            [
+                action_manager,
+                self.group,
+                action_manager_2,
+                action_manager_2._get_default_group(),
+                self.action_item,
+                action_manager._get_default_group(),
+            ],
+        )
 
     def test_enabled_changed(self):
         self.group.append(self.action_item)
@@ -225,5 +241,5 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         action_manager.visible = True
         self.assertTrue(self.group.visible)
         # XXX group doesn't make items visible
-        #self.assertTrue(self.action_item.enabled)
-        #self.assertTrue(self.action.enabled)
+        # self.assertTrue(self.action_item.enabled)
+        # self.assertTrue(self.action.enabled)

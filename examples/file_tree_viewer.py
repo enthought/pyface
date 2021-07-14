@@ -1,24 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A tree viewer for local file systems. """
 
 
-# Standard library imports.
 from os import listdir
 from os.path import basename, dirname, isdir, join
 
-# Enthought library imports.
+
 from pyface.api import ImageResource
 from pyface.viewer.api import TreeContentProvider, TreeLabelProvider
 from pyface.viewer.api import TreeViewer
@@ -28,9 +24,9 @@ from traits.api import Instance
 class FileTreeContentProvider(TreeContentProvider):
     """ A tree content provider for local file systems. """
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_parent(self, element):
         """ Returns the parent of an element. """
@@ -63,17 +59,17 @@ class FileTreeLabelProvider(TreeLabelProvider):
     """ A tree label provider for local file systems. """
 
     # The image used to represent folders that are NOT expanded.
-    CLOSED_FOLDER = ImageResource('closed_folder')
+    CLOSED_FOLDER = ImageResource("closed_folder")
 
     # The image used to represent folders that ARE expanded.
-    OPEN_FOLDER = ImageResource('open_folder')
+    OPEN_FOLDER = ImageResource("open_folder")
 
     # The image used to represent documents (ie. NON-'folder') elements.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeLabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element):
         """ Returns the filename of the label image for an element. """
@@ -102,7 +98,7 @@ class FileTreeLabelProvider(TreeLabelProvider):
 class FileTreeViewer(TreeViewer):
     """ A tree viewer for local file systems. """
 
-    #### 'TreeViewer' interface ###############################################
+    # 'TreeViewer' interface -----------------------------------------------
 
     # The content provider provides the actual tree data.
     content_provider = Instance(FileTreeContentProvider, ())
@@ -110,5 +106,3 @@ class FileTreeViewer(TreeViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTreeLabelProvider, ())
-
-##### EOF #####################################################################

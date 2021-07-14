@@ -1,16 +1,27 @@
-# System library imports
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from pygments.token import Token, is_token_subtype
 
 
 class CompletionLexer(object):
-    """ Uses Pygments and some auxillary information to lex code snippets for 
+    """ Uses Pygments and some auxillary information to lex code snippets for
         symbol contexts.
     """
 
     # Maps Lexer names to a list of possible name separators
-    separator_map = { 'C' : [ '.', '->' ],
-                      'C++' : [ '.', '->', '::' ],
-                      'Python' : [ '.' ] }
+    separator_map = {
+        "C": [".", "->"],
+        "C++": [".", "->", "::"],
+        "Python": ["."],
+    }
 
     def __init__(self, lexer):
         """ Create a CompletionLexer using the specified Pygments lexer.
@@ -27,11 +38,14 @@ class CompletionLexer(object):
 
         # Pygments often tacks on a newline when none is specified in the input.
         # Remove this newline.
-        if reversed_tokens and reversed_tokens[0][1].endswith('\n') and \
-                not string.endswith('\n'):
+        if (
+            reversed_tokens
+            and reversed_tokens[0][1].endswith("\n")
+            and not string.endswith("\n")
+        ):
             reversed_tokens.pop(0)
-        
-        current_op = ''
+
+        current_op = ""
         for token, text in reversed_tokens:
 
             if is_token_subtype(token, Token.Name):
@@ -39,14 +53,14 @@ class CompletionLexer(object):
                 # Handle a trailing separator, e.g 'foo.bar.'
                 if current_op in self._name_separators:
                     if not context:
-                        context.insert(0, '')
+                        context.insert(0, "")
 
                 # Handle non-separator operators and punction.
                 elif current_op:
                     break
 
                 context.insert(0, text)
-                current_op = ''
+                current_op = ""
 
             # Pygments doesn't understand that, e.g., '->' is a single operator
             # in C++. This is why we have to build up an operator from
@@ -66,9 +80,8 @@ class CompletionLexer(object):
     def set_lexer(self, lexer, name_separators=None):
         self._lexer = lexer
         if name_separators is None:
-            self._name_separators = self.separator_map.get(lexer.name, ['.'])
+            self._name_separators = self.separator_map.get(lexer.name, ["."])
         else:
             self._name_separators = list(name_separators)
 
     lexer = property(get_lexer, set_lexer)
-    

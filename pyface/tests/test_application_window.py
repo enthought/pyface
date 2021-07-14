@@ -1,17 +1,32 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import unittest
 
-from ..action.api import Action, MenuManager, MenuBarManager, StatusBarManager, ToolBarManager
+from ..action.api import (
+    Action,
+    MenuManager,
+    MenuBarManager,
+    StatusBarManager,
+    ToolBarManager,
+)
 from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 from ..image_resource import ImageResource
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -29,12 +44,12 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_open_close(self):
         # test that opening and closing works as expected
-        with self.assertTraitChanges(self.window, 'opening', count=1):
-            with self.assertTraitChanges(self.window, 'opened', count=1):
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():
                     self.window.open()
-        with self.assertTraitChanges(self.window, 'closing', count=1):
-            with self.assertTraitChanges(self.window, 'closed', count=1):
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
                 with self.event_loop():
                     self.window.close()
 
@@ -116,7 +131,33 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
                 Action(name="Save"),
                 Action(name="Close"),
                 Action(name="Quit"),
-                name='File',
+                name="File",
+            )
+        )
+        with self.event_loop():
+            self.window._create()
+        with self.event_loop():
+            self.window.show(True)
+        with self.event_loop():
+            self.window.show(False)
+        with self.event_loop():
+            self.window.close()
+
+    def test_menubar_multiple_menus(self):
+        # test that menubar gets created as expected
+        self.window.menu_bar_manager = MenuBarManager(
+            MenuManager(
+                Action(name="New"),
+                Action(name="Open"),
+                Action(name="Save"),
+                Action(name="Close"),
+                Action(name="Quit"),
+                name="File",
+            ),
+            MenuManager(
+                Action(name="Zoom in"),
+                Action(name="Zoom out"),
+                name="View",
             )
         )
         with self.event_loop():
@@ -132,11 +173,11 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that toolbar gets created as expected
         self.window.tool_bar_managers = [
             ToolBarManager(
-                Action(name="New", image=ImageResource('core')),
-                Action(name="Open", image=ImageResource('core')),
-                Action(name="Save", image=ImageResource('core')),
-                Action(name="Close", image=ImageResource('core')),
-                Action(name="Quit", image=ImageResource('core')),
+                Action(name="New", image=ImageResource("core")),
+                Action(name="Open", image=ImageResource("core")),
+                Action(name="Save", image=ImageResource("core")),
+                Action(name="Close", image=ImageResource("core")),
+                Action(name="Quit", image=ImageResource("core")),
             )
         ]
         with self.event_loop():
@@ -152,11 +193,11 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that toolbar gets changed as expected
         self.window.tool_bar_managers = [
             ToolBarManager(
-                Action(name="New", image=ImageResource('core')),
-                Action(name="Open", image=ImageResource('core')),
-                Action(name="Save", image=ImageResource('core')),
-                Action(name="Close", image=ImageResource('core')),
-                Action(name="Quit", image=ImageResource('core')),
+                Action(name="New", image=ImageResource("core")),
+                Action(name="Open", image=ImageResource("core")),
+                Action(name="Save", image=ImageResource("core")),
+                Action(name="Close", image=ImageResource("core")),
+                Action(name="Quit", image=ImageResource("core")),
             )
         ]
         with self.event_loop():
@@ -166,11 +207,11 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.window.tool_bar_managers = [
                 ToolBarManager(
-                    Action(name="New", image=ImageResource('core')),
-                    Action(name="Open", image=ImageResource('core')),
-                    Action(name="Save", image=ImageResource('core')),
-                    Action(name="Close", image=ImageResource('core')),
-                    Action(name="Quit", image=ImageResource('core')),
+                    Action(name="New", image=ImageResource("core")),
+                    Action(name="Open", image=ImageResource("core")),
+                    Action(name="Save", image=ImageResource("core")),
+                    Action(name="Close", image=ImageResource("core")),
+                    Action(name="Quit", image=ImageResource("core")),
                 )
             ]
         with self.event_loop():
@@ -181,7 +222,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def test_statusbar(self):
         # test that status bar gets created as expected
         self.window.status_bar_manager = StatusBarManager(
-            message="hello world",
+            message="hello world"
         )
         with self.event_loop():
             self.window._create()
@@ -195,7 +236,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def test_statusbar_changed(self):
         # test that status bar gets changed as expected
         self.window.status_bar_manager = StatusBarManager(
-            message="hello world",
+            message="hello world"
         )
         with self.event_loop():
             self.window._create()
@@ -203,7 +244,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             self.window.show(True)
         with self.event_loop():
             self.window.status_bar_manager = StatusBarManager(
-                message="goodbye world",
+                message="goodbye world"
             )
         with self.event_loop():
             self.window.show(False)
@@ -212,7 +253,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_icon(self):
         # test that status bar gets created as expected
-        self.window.icon = ImageResource('core')
+        self.window.icon = ImageResource("core")
         with self.event_loop():
             self.window._create()
         with self.event_loop():

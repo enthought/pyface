@@ -1,4 +1,13 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from collections import OrderedDict, defaultdict
 import logging
 
@@ -8,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def before_after_sort(items):
     """ Sort a sequence of items with 'before', 'after', and 'id' attributes.
-        
+
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
 
@@ -27,11 +36,11 @@ def before_after_sort(items):
     for item in items:
         # Attempt to use 'before' and 'after' to make pairs.
         new_pairs = []
-        if hasattr(item, 'before') and item.before:
+        if hasattr(item, "before") and item.before:
             parent, child = item, item_map.get(item.before)
             if child:
                 new_pairs.append((parent, child))
-        if hasattr(item, 'after') and item.after:
+        if hasattr(item, "after") and item.after:
             parent, child = item_map.get(item.after), item
             if parent:
                 new_pairs.append((parent, child))
@@ -48,7 +57,7 @@ def before_after_sort(items):
     # Now perform the actual sort.
     result, has_cycle = topological_sort(pairs)
     if has_cycle:
-        logger.warning('Cycle in before/after sort for items %r', items)
+        logger.warning("Cycle in before/after sort for items %r", items)
     return result
 
 
@@ -75,8 +84,8 @@ def topological_sort(pairs):
         num_parents[child] += 1
 
     # Begin with the parent-less items.
-    result = [ item for item in graph if num_parents[item] == 0 ]
-    
+    result = [item for item in graph if num_parents[item] == 0]
+
     # Descend through graph, removing parents as we go.
     for parent in result:
         if parent in graph:

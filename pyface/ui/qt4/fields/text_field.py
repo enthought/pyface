@@ -1,21 +1,15 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2017-19, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The Qt-specific implementation of the text field class """
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
 from traits.api import Trait, provides
 
@@ -25,20 +19,17 @@ from .field import Field
 
 
 ECHO_TO_QT_ECHO_MODE = {
-    'normal': QLineEdit.Normal,
-    'password': QLineEdit.Password,
-    'none': QLineEdit.NoEcho,
-    'when_editing': QLineEdit.PasswordEchoOnEdit,
+    "normal": QLineEdit.Normal,
+    "password": QLineEdit.Password,
+    "none": QLineEdit.NoEcho,
+    "when_editing": QLineEdit.PasswordEchoOnEdit,
 }
 QT_ECHO_MODE_TO_ECHO = {
     value: key for key, value in ECHO_TO_QT_ECHO_MODE.items()
 }
 
 # mapped trait for Qt line edit echo modes
-Echo = Trait(
-    'normal',
-    ECHO_TO_QT_ECHO_MODE,
-)
+Echo = Trait("normal", ECHO_TO_QT_ECHO_MODE)
 
 
 @provides(ITextField)
@@ -69,7 +60,7 @@ class TextField(MTextField, Field):
         """ Toolkit specific method to set the control's value. """
         self.control.setText(value)
         # fire update
-        if self.update_text == 'editing_finished':
+        if self.update_text == "editing_finished":
             self.control.editingFinished.emit()
         else:
             self.control.textEdited.emit(value)

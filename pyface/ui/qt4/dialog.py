@@ -1,23 +1,24 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 
-
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Bool, Enum, Int, provides, Str, Unicode
 
-# Local imports.
+from traits.api import (
+    Any, Bool, Callable, Enum, Int, List, provides, Str, Tuple
+)
+
 from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
 from .window import Window
@@ -25,12 +26,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted):     OK,
-    int(QtGui.QDialog.Rejected):     CANCEL,
-    int(QtGui.QMessageBox.Ok):       OK,
-    int(QtGui.QMessageBox.Cancel):   CANCEL,
-    int(QtGui.QMessageBox.Yes):      YES,
-    int(QtGui.QMessageBox.No):       NO
+    int(QtGui.QDialog.Accepted): OK,
+    int(QtGui.QDialog.Rejected): CANCEL,
+    int(QtGui.QMessageBox.Ok): OK,
+    int(QtGui.QMessageBox.Cancel): CANCEL,
+    int(QtGui.QMessageBox.Yes): YES,
+    int(QtGui.QMessageBox.No): NO,
 }
 
 
@@ -40,52 +41,62 @@ class Dialog(MDialog, Window):
     interface for the API documentation.
     """
 
+    # 'IDialog' interface -------------------------------------------------#
 
-    #### 'IDialog' interface ##################################################
+    cancel_label = Str()
 
-    cancel_label = Unicode
+    help_id = Str()
 
-    help_id = Str
+    help_label = Str()
 
-    help_label = Unicode
-
-    ok_label = Unicode
+    ok_label = Str()
 
     resizeable = Bool(True)
 
     return_code = Int(OK)
 
-    style = Enum('modal', 'nonmodal')
+    style = Enum("modal", "nonmodal")
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
-    title = Unicode("Dialog")
+    title = Str("Dialog")
 
-    ###########################################################################
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         buttons = QtGui.QDialogButtonBox()
 
         # 'OK' button.
         if self.ok_label:
-            btn = buttons.addButton(self.ok_label,
-                                    QtGui.QDialogButtonBox.AcceptRole)
+            btn = buttons.addButton(
+                self.ok_label, QtGui.QDialogButtonBox.AcceptRole
+            )
         else:
             btn = buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
         btn.setDefault(True)
         btn.clicked.connect(self.control.accept)
+        self._connections_to_remove.append((btn.clicked, self.control.accept))
 
         # 'Cancel' button.
         if self.cancel_label:
-            btn = buttons.addButton(self.cancel_label,
-                                    QtGui.QDialogButtonBox.RejectRole)
+            btn = buttons.addButton(
+                self.cancel_label, QtGui.QDialogButtonBox.RejectRole
+            )
         else:
             btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
 
         btn.clicked.connect(self.control.reject)
+        self._connections_to_remove.append((btn.clicked, self.control.reject))
 
         # 'Help' button.
         # FIXME v3: In the original code the only possible hook into the help
@@ -94,7 +105,9 @@ class Dialog(MDialog, Window):
         # display it but can't actually use it.
         if len(self.help_id) > 0:
             if self.help_label:
-                buttons.addButton(self.help_label, QtGui.QDialogButtonBox.HelpRole)
+                buttons.addButton(
+                    self.help_label, QtGui.QDialogButtonBox.HelpRole
+                )
             else:
                 buttons.addButton(QtGui.QDialogButtonBox.Help)
 
@@ -116,28 +129,50 @@ class Dialog(MDialog, Window):
         panel.setMinimumSize(QtCore.QSize(100, 200))
 
         palette = panel.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('red'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("red"))
         panel.setPalette(palette)
         panel.setAutoFillBackground(True)
 
         return panel
 
     def _show_modal(self):
-        self.control.setWindowModality(QtCore.Qt.ApplicationModal)
-        retval = self.control.exec_()
+        dialog = self.control
+        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        # Suppress the context-help button hint, which
+        # results in a non-functional "?" button on Windows.
+        dialog.setWindowFlags(
+            dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint
+        )
+
+        retval = dialog.exec_()
         return _RESULT_MAP[retval]
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
+
+        super().destroy()
+
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         dlg = QtGui.QDialog(parent)
 
         # Setting return code and firing close events is handled for 'modal' in
         # MDialog's open method. For 'nonmodal', we do it here.
-        if self.style == 'nonmodal':
+        if self.style == "nonmodal":
             dlg.finished.connect(self._finished_fired)
+            self._connections_to_remove.append(
+                (dlg.finished, self._finished_fired)
+            )
 
         if self.size != (-1, -1):
             dlg.resize(*self.size)
@@ -149,9 +184,9 @@ class Dialog(MDialog, Window):
 
         return dlg
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _finished_fired(self, result):
         """ Called when the dialog is closed (and nonmodal). """

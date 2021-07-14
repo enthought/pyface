@@ -1,13 +1,21 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ An editor whose content is provided by a traits UI. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Instance, Str
 
-# Local imports.
+
 from .editor import Editor
 
 
@@ -18,7 +26,7 @@ logger = logging.getLogger(__name__)
 class TraitsUIEditor(Editor):
     """ An editor whose content is provided by a traits UI. """
 
-    #### 'TraitsUIEditor' interface ###########################################
+    # 'TraitsUIEditor' interface -------------------------------------------
 
     # The traits UI that represents the editor.
     #
@@ -27,20 +35,20 @@ class TraitsUIEditor(Editor):
 
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
-    view = Str
+    view = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _name_default(self):
         """ Trait initializer. """
 
         return str(self.obj)
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the editor.
@@ -64,15 +72,15 @@ class TraitsUIEditor(Editor):
 
         # Give the traits UI a chance to clean itself up.
         if self.ui is not None:
-            logger.debug('disposing traits UI for editor [%s]', self)
+            logger.debug("disposing traits UI for editor [%s]", self)
             self.ui.dispose()
             self.ui = None
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TraitsUIEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_ui(self, parent):
         """ Creates the traits UI that represents the editor.
@@ -83,9 +91,7 @@ class TraitsUIEditor(Editor):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel'
+            parent=parent, view=self.view, kind="subpanel"
         )
 
         return ui
-
-#### EOF ######################################################################

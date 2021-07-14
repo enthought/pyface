@@ -1,12 +1,21 @@
-# Standard library imports.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from collections import defaultdict
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import ActionController, ActionManager
 from traits.api import HasTraits, Instance
 
-# Local imports.
+
 from pyface.tasks.task import Task
 from pyface.tasks.topological_sort import before_after_sort
 from pyface.tasks.action.schema import Schema, ToolBarSchema
@@ -21,15 +30,15 @@ class TaskActionManagerBuilder(HasTraits):
     with any additions provided by the task.
     """
 
-    # The controller to assign to the menubar and toolbars.
+    #: The controller to assign to the menubar and toolbars.
     controller = Instance(ActionController)
 
-    # The Task to build menubars and toolbars for.
+    #: The Task to build menubars and toolbars for.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskActionManagerBuilder' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_action_manager(self, schema):
         """ Create a manager for the given schema using the task's additions.
@@ -62,10 +71,15 @@ class TaskActionManagerBuilder(HasTraits):
                 if isinstance(schema, ToolBarSchema):
                     schemas.append(schema)
                 else:
-                    logger.error('Invalid top-level schema addition: %r. Only '
-                                 'ToolBar schemas can be path-less.', schema)
-        return [ self.create_action_manager(schema)
-                 for schema in self._get_ordered_schemas(schemas) ]
+                    logger.error(
+                        "Invalid top-level schema addition: %r. Only "
+                        "ToolBar schemas can be path-less.",
+                        schema,
+                    )
+        return [
+            self.create_action_manager(schema)
+            for schema in self._get_ordered_schemas(schemas)
+        ]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
@@ -77,9 +91,9 @@ class TaskActionManagerBuilder(HasTraits):
         """
         return item
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_ordered_schemas(self, schemas):
         begin = []
@@ -87,17 +101,19 @@ class TaskActionManagerBuilder(HasTraits):
         end = []
 
         for schema in schemas:
-            absolute_position = getattr(schema, 'absolute_position', None)
+            absolute_position = getattr(schema, "absolute_position", None)
             if absolute_position is None:
                 middle.append(schema)
-            elif absolute_position == 'last':
+            elif absolute_position == "last":
                 end.append(schema)
             else:
                 begin.append(schema)
 
-        schemas = (before_after_sort(begin)
-                   + before_after_sort(middle)
-                   + before_after_sort(end))
+        schemas = (
+            before_after_sort(begin)
+            + before_after_sort(middle)
+            + before_after_sort(end)
+        )
         return schemas
 
     def _group_items_by_id(self, items):
@@ -170,8 +186,9 @@ class TaskActionManagerBuilder(HasTraits):
             items_with_same_id = id_to_items[item_id]
 
             # Group items by class.
-            class_to_items, ordered_items_class =\
-            self._group_items_by_class(items_with_same_id)
+            class_to_items, ordered_items_class = self._group_items_by_class(
+                items_with_same_id
+            )
 
             for items_class in ordered_items_class:
                 items_with_same_class = class_to_items[items_class]
@@ -201,20 +218,25 @@ class TaskActionManagerBuilder(HasTraits):
 
         # Determine the order of the items at this path.
         if additions[path]:
-            all_items = self._get_ordered_schemas(schema.items+additions[path])
+            all_items = self._get_ordered_schemas(
+                schema.items + additions[path]
+            )
         else:
             all_items = schema.items
 
         unpacked_items = self._unpack_schema_additions(all_items)
 
-        id_to_items, ordered_items_ids = self._group_items_by_id(unpacked_items)
+        id_to_items, ordered_items_ids = self._group_items_by_id(
+            unpacked_items
+        )
 
-        merged_items = self._merge_items_with_same_path(id_to_items,
-                                                        ordered_items_ids)
+        merged_items = self._merge_items_with_same_path(
+            id_to_items, ordered_items_ids
+        )
 
         return merged_items
 
-    def _create_action_manager_recurse(self, schema, additions, path=''):
+    def _create_action_manager_recurse(self, schema, additions, path=""):
         """ Recursively create a manager for the given schema and additions map.
 
         Items with the same path are merged together in a single entry if
@@ -228,7 +250,7 @@ class TaskActionManagerBuilder(HasTraits):
 
         # Compute the new action path.
         if path:
-            path = path + '/' + schema.id
+            path = path + "/" + schema.id
         else:
             path = schema.id
 
@@ -238,9 +260,11 @@ class TaskActionManagerBuilder(HasTraits):
         children = []
         for item in preprocessed_items:
             if isinstance(item, Schema):
-                item = self._create_action_manager_recurse(item,additions,path)
+                item = self._create_action_manager_recurse(
+                    item, additions, path
+                )
             else:
-                item = self.prepare_item(item, path+'/'+item.id)
+                item = self.prepare_item(item, path + "/" + item.id)
 
             if isinstance(item, ActionManager):
                 # Give even non-root action managers a reference to the
@@ -253,8 +277,9 @@ class TaskActionManagerBuilder(HasTraits):
         # Finally, create the pyface.action instance for this schema.
         return self.prepare_item(schema.create(children), path)
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _controller_default(self):
         from .task_action_controller import TaskActionController
+
         return TaskActionController(task=self.task)

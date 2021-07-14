@@ -1,13 +1,13 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2010, Enthought Inc
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Enthought Inc
-# Description: <Enthought pyface code editor>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 import math
 
@@ -33,12 +33,13 @@ class GutterWidget(QtGui.QWidget):
         """
         self.parent().wheelEvent(event)
 
+
 class StatusGutterWidget(GutterWidget):
     """ Draws status markers
     """
 
     def __init__(self, *args, **kw):
-        super(StatusGutterWidget, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         self.error_lines = []
         self.warn_lines = []
@@ -55,19 +56,26 @@ class StatusGutterWidget(GutterWidget):
 
         cw = self.parent()
 
-        pixels_per_block = self.height()/float(cw.blockCount())
+        pixels_per_block = self.height() / float(cw.blockCount())
 
         for line in self.info_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.green)
+            painter.fillRect(
+                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.Qt.green,
+            )
 
         for line in self.warn_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.yellow)
+            painter.fillRect(
+                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.Qt.yellow,
+            )
 
         for line in self.error_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.red)
+            painter.fillRect(
+                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.Qt.red,
+            )
+
 
 class LineNumberWidget(GutterWidget):
     """ Draw line numbers.
@@ -85,10 +93,20 @@ class LineNumberWidget(GutterWidget):
 
     def digits_width(self):
         nlines = max(1, self.parent().blockCount())
-        ndigits = max(self.min_char_width,
-                      int(math.floor(math.log10(nlines) + 1)))
-        width = max(self.fontMetrics().width(u'0' * ndigits) + 3,
-                    self.min_width)
+        ndigits = max(
+            self.min_char_width, int(math.floor(math.log10(nlines) + 1))
+        )
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            width = max(
+                self.fontMetrics().horizontalAdvance("0" * ndigits) + 3,
+                self.min_width
+            )
+        else:
+            width = max(
+                self.fontMetrics().width("0" * ndigits) + 3, self.min_width
+            )
         return width
 
     def sizeHint(self):
@@ -104,18 +122,25 @@ class LineNumberWidget(GutterWidget):
         cw = self.parent()
         block = cw.firstVisibleBlock()
         blocknum = block.blockNumber()
-        top = cw.blockBoundingGeometry(block).translated(
-            cw.contentOffset()).top()
+        top = (
+            cw.blockBoundingGeometry(block)
+            .translated(cw.contentOffset())
+            .top()
+        )
         bottom = top + int(cw.blockBoundingRect(block).height())
 
         while block.isValid() and top <= event.rect().bottom():
             if block.isVisible() and bottom >= event.rect().top():
                 painter.setPen(QtCore.Qt.black)
-                painter.drawText(0, top, self.width() - 2,
-                                 self.fontMetrics().height(),
-                                 QtCore.Qt.AlignRight, str(blocknum + 1))
+                painter.drawText(
+                    0,
+                    top,
+                    self.width() - 2,
+                    self.fontMetrics().height(),
+                    QtCore.Qt.AlignRight,
+                    str(blocknum + 1),
+                )
             block = block.next()
             top = bottom
             bottom = top + int(cw.blockBoundingRect(block).height())
             blocknum += 1
-

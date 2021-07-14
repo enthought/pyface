@@ -1,20 +1,18 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005-2013, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Helper functions to automatically generate unique IDs. """
 
 
 from weakref import WeakKeyDictionary
+
 
 class _ObjectCounter(object):
     """ Counts objects. """
@@ -47,6 +45,7 @@ class _ObjectCounter(object):
         self._objects_registry[obj] = count + 1
         return self._objects_registry[obj]
 
+
 # Global object counter.
 object_counter = _ObjectCounter()
 
@@ -63,4 +62,4 @@ def get_unique_id(object):
     name = class_.__name__
     number = object_counter.next_count(class_)
 
-    return name + '_' + str(number)
+    return name + "_" + str(number)

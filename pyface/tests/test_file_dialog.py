@@ -1,22 +1,30 @@
-from __future__ import absolute_import
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 
 import os
 import unittest
 
 from ..file_dialog import FileDialog
-from ..gui import GUI
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 ModalDialogTester = toolkit_object(
-    'util.modal_dialog_tester:ModalDialogTester'
+    "util.modal_dialog_tester:ModalDialogTester"
 )
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestFileDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -30,12 +38,12 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def test_create_wildcard(self):
-        wildcard = FileDialog.create_wildcard('Python', '*.py')
+        wildcard = FileDialog.create_wildcard("Python", "*.py")
         self.assertTrue(len(wildcard) != 0)
 
     def test_create_wildcard_multiple(self):
         wildcard = FileDialog.create_wildcard(
-            'Python', ['*.py', '*.pyo', '*.pyc', '*.pyd']
+            "Python", ["*.py", "*.pyo", "*.pyc", "*.pyd"]
         )
         self.assertTrue(len(wildcard) != 0)
 
@@ -60,7 +68,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_default_path(self):
         # test that default path works
-        self.dialog.default_path = os.path.join('images', 'core.png')
+        self.dialog.default_path = os.path.join("images", "core.png")
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -68,8 +76,8 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_default_dir_and_file(self):
         # test that default dir and path works
-        self.dialog.default_directory = 'images'
-        self.dialog.default_filename = 'core.png'
+        self.dialog.default_directory = "images"
+        self.dialog.default_filename = "core.png"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -77,7 +85,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_open_files(self):
         # test that open files action works
-        self.dialog.action = 'open files'
+        self.dialog.action = "open files"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -85,10 +93,10 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_save_as(self):
         # test that open files action works
-        self.dialog.action = 'save as'
+        self.dialog.action = "save as"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
             self.dialog.close()
 
-    #XXX would be nice to actually test with an open dialog, but not right now
+    # XXX would be nice to actually test with an open dialog, but not right now

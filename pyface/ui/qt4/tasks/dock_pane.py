@@ -1,22 +1,33 @@
-# Standard library imports
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from contextlib import contextmanager
 
-# Enthought library imports.
-from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, on_trait_change, Property, provides, Tuple
 
-# System library imports.
+from pyface.tasks.i_dock_pane import IDockPane, MDockPane
+from traits.api import Bool, observe, Property, provides, Tuple
+
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports.
+
 from .task_pane import TaskPane
 from .util import set_focus
 
 # Constants.
-AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
-             'right'  : QtCore.Qt.RightDockWidgetArea,
-             'top'    : QtCore.Qt.TopDockWidgetArea,
-             'bottom' : QtCore.Qt.BottomDockWidgetArea }
+AREA_MAP = {
+    "left": QtCore.Qt.LeftDockWidgetArea,
+    "right": QtCore.Qt.RightDockWidgetArea,
+    "top": QtCore.Qt.TopDockWidgetArea,
+    "bottom": QtCore.Qt.BottomDockWidgetArea,
+}
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
 
@@ -27,17 +38,17 @@ class DockPane(TaskPane, MDockPane):
     See the IDockPane interface for API documentation.
     """
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _receiving = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
@@ -47,17 +58,17 @@ class DockPane(TaskPane, MDockPane):
         # Set the widget's object name. This important for QMainWindow state
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
-        control.setObjectName(self.task.id + ':' + self.id)
+        control.setObjectName(self.task.id + ":" + self.id)
 
         # Ensure that undocked ("floating") windows are visible on macOS
         # when focus is switched, for consistency with Linux and Windows.
         control.setAttribute(QtCore.Qt.WA_MacAlwaysShowToolWindow)
 
         # Configure the dock widget according to the DockPane settings.
-        self._set_dock_features()
-        self._set_dock_title()
-        self._set_floating()
-        self._set_visible()
+        self._set_dock_features(event=None)
+        self._set_dock_title(event=None)
+        self._set_floating(event=None)
+        self._set_visible(event=None)
 
         # Connect signal handlers for updating DockPane traits.
         control.dockLocationChanged.connect(self._receive_dock_area)
@@ -72,13 +83,26 @@ class DockPane(TaskPane, MDockPane):
         # of its widgets
         contents_minsize = contents.minimumSize()
         style = control.style()
-        contents_minsize.setHeight(contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        contents_minsize.setHeight(
+            contents_minsize.height()
+            + style.pixelMetric(style.PM_DockWidgetHandleExtent)
+        )
         control.setMinimumSize(contents_minsize)
 
         # Hide the control by default. Otherwise, the widget will visible in its
         # parent immediately!
         control.hide()
+
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the pane.
+        """
+        if self.control is not None:
+            control = self.control
+            control.dockLocationChanged.disconnect(self._receive_dock_area)
+            control.topLevelChanged.disconnect(self._receive_floating)
+            control.visibilityChanged.disconnect(self._receive_visible)
+
+        super().destroy()
 
     def set_focus(self):
         """ Gives focus to the control that represents the pane.
@@ -86,18 +110,18 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             set_focus(self.control.widget())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         return QtGui.QWidget(parent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @contextmanager
     def _signal_context(self):
@@ -109,28 +133,29 @@ class DockPane(TaskPane, MDockPane):
         yield
         self._receiving = original
 
-    #### Trait property getters/setters #######################################
+    # Trait property getters/setters ---------------------------------------
 
     def _get_size(self):
         if self.control is not None:
             return (self.control.width(), self.control.height())
         return (-1, -1)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    @on_trait_change('dock_area')
-    def _set_dock_area(self):
+    @observe("dock_area")
+    def _set_dock_area(self, event):
         if self.control is not None and not self._receiving:
             # Only attempt to adjust the area if the task is active.
             main_window = self.task.window.control
             if main_window and self.task == self.task.window.active_task:
                 # Qt will automatically remove the dock widget from its previous
                 # area, if it had one.
-                main_window.addDockWidget(AREA_MAP[self.dock_area],
-                                          self.control)
+                main_window.addDockWidget(
+                    AREA_MAP[self.dock_area], self.control
+                )
 
-    @on_trait_change('closable,floatable,movable')
-    def _set_dock_features(self):
+    @observe("closable,floatable,movable")
+    def _set_dock_features(self, event):
         if self.control is not None:
             features = QtGui.QDockWidget.NoDockWidgetFeatures
             if self.closable:
@@ -141,22 +166,22 @@ class DockPane(TaskPane, MDockPane):
                 features |= QtGui.QDockWidget.DockWidgetMovable
             self.control.setFeatures(features)
 
-    @on_trait_change('name')
-    def _set_dock_title(self):
+    @observe("name")
+    def _set_dock_title(self, event):
         if self.control is not None:
             self.control.setWindowTitle(self.name)
 
-    @on_trait_change('floating')
-    def _set_floating(self):
+    @observe("floating")
+    def _set_floating(self, event):
         if self.control is not None and not self._receiving:
             self.control.setFloating(self.floating)
 
-    @on_trait_change('visible')
-    def _set_visible(self):
+    @observe("visible")
+    def _set_visible(self, event):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _receive_dock_area(self, area):
         with self._signal_context():

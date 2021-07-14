@@ -1,20 +1,21 @@
-# Copyright (c) 2005-18, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 """ The abstract interface for all pyface top-level windows. """
 
-# Enthought library imports.
-from traits.api import Event, Tuple, Unicode, Vetoable, VetoableEvent
 
-# Local imports.
+from traits.api import Event, HasTraits, Tuple, Str, Vetoable, VetoableEvent
+
+
 from pyface.constant import NO
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.i_widget import IWidget
@@ -30,37 +31,37 @@ class IWindow(IWidget):
     # 'IWindow' interface -----------------------------------------------------
 
     #: The position of the window.
-    position = Tuple
+    position = Tuple()
 
     #: The size of the window.
-    size = Tuple
+    size = Tuple()
 
     #: The window title.
-    title = Unicode
+    title = Str()
 
     # Window Events ----------------------------------------------------------
 
     #: The window has been opened.
-    opened = Event
+    opened = Event()
 
     #: The window is about to open.
-    opening = VetoableEvent
+    opening = VetoableEvent()
 
     #: The window has been activated.
-    activated = Event
+    activated = Event()
 
     #: The window has been closed.
-    closed = Event
+    closed = Event()
 
     #: The window is about to be closed.
-    closing = VetoableEvent
+    closing = VetoableEvent()
 
     #: The window has been deactivated.
-    deactivated = Event
+    deactivated = Event()
 
     #: A key was pressed while the window had focus.
     # FIXME v3: This smells of a hack. What's so special about key presses?
-    # FIXME v3: Unicode
+    # FIXME v3: Str
     key_pressed = Event(KeyPressedEvent)
 
     # -------------------------------------------------------------------------
@@ -119,7 +120,12 @@ class IWindow(IWidget):
         """
 
     def information(
-        self, message, title='Information', detail='', informative=''
+        self,
+        message,
+        title="Information",
+        detail="",
+        informative="",
+        text_format="auto"
     ):
         """ Convenience method to show an information message dialog.
 
@@ -133,10 +139,20 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
-    def warning(self, message, title='Warning', detail='', informative=''):
+    def warning(
+        self,
+        message,
+        title="Warning",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -149,10 +165,20 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
-    def error(self, message, title='Error', detail='', informative=''):
+    def error(
+        self,
+        message,
+        title="Error",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -165,11 +191,14 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
 
-class MWindow(object):
+class MWindow(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWindow interface.
 
@@ -253,7 +282,12 @@ class MWindow(object):
         return confirm(self.control, message, title, cancel, default)
 
     def information(
-        self, message, title='Information', detail='', informative=''
+        self,
+        message,
+        title="Information",
+        detail="",
+        informative="",
+        text_format="auto"
     ):
         """ Convenience method to show an information message dialog.
 
@@ -267,13 +301,26 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import information
 
-        information(self.control, message, title, detail, informative)
+        information(
+            self.control, message, title, detail, informative, text_format
+        )
 
-    def warning(self, message, title='Warning', detail='', informative=''):
+    def warning(
+        self,
+        message,
+        title="Warning",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -286,13 +333,26 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import warning
 
-        warning(self.control, message, title, detail, informative)
+        warning(
+            self.control, message, title, detail, informative, text_format
+        )
 
-    def error(self, message, title='Error', detail='', informative=''):
+    def error(
+        self,
+        message,
+        title="Error",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -305,8 +365,12 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import error
 
-        error(self.control, message, title, detail, informative)
+        error(self.control, message, title, detail, informative, text_format)

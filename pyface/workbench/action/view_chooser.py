@@ -1,22 +1,30 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ A UI that allows the user to choose a view. """
 
 
-# Enthought library imports.
 from pyface.workbench.api import IView, WorkbenchWindow
 from traits.api import Any, HasTraits, Instance, List, Str
 from traits.api import TraitError, Undefined
 from traitsui.api import Item, TreeEditor, TreeNode, View
-from traitsui.menu import Action # fixme: Non-api import!
+from traitsui.menu import Action  # fixme: Non-api import!
 
 
 class Category(HasTraits):
     """ A view category. """
 
     # The name of the category.
-    name = Str
+    name = Str()
 
     # The views in the category.
-    views = List
+    views = List()
 
 
 class WorkbenchWindowTreeNode(TreeNode):
@@ -26,14 +34,14 @@ class WorkbenchWindowTreeNode(TreeNode):
 
     """
 
-    #### 'TreeNode' interface #################################################
+    # 'TreeNode' interface -------------------------------------------------
 
     # List of object classes that the node applies to.
     node_for = [WorkbenchWindow]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeNode' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_children(self, object):
         """ Get the object's children. """
@@ -46,9 +54,9 @@ class WorkbenchWindowTreeNode(TreeNode):
 
         return categories
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_categories_by_name(self, window):
         """ Return a dictionary containing all categories keyed by name. """
@@ -97,7 +105,7 @@ class IViewTreeNode(TreeNode):
         else:
             # fixme: A bit of magic here! Is there a better way to say 'use
             # the default leaf icon'?
-            icon = '<item>'
+            icon = "<item>"
 
         return icon
 
@@ -110,78 +118,70 @@ class ViewChooser(HasTraits):
     """
 
     # The window that contains the views to choose from.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     # The currently selected tree item (at any point in time this might be
     # either None, a view category, or a view).
-    selected = Any
+    selected = Any()
 
     # The selected view (None if the selected item is not a view).
     view = Instance(IView)
 
-    #### Traits UI views ######################################################
+    # Traits UI views -----------------------------------------------------#
 
     traits_ui_view = View(
         Item(
-            name       = 'window',
-            editor     = TreeEditor(
-                nodes  = [
+            name="window",
+            editor=TreeEditor(
+                nodes=[
                     WorkbenchWindowTreeNode(
-                        auto_open = True,
-                        label     = '=Views',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
+                        auto_open=True,
+                        label="=Views",
+                        rename=False,
+                        copy=False,
+                        delete=False,
+                        insert=False,
+                        menu=None,
                     ),
-
                     TreeNode(
-                        node_for  = [Category],
-                        auto_open = True,
-                        children  = 'views',
-                        label     = 'name',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
+                        node_for=[Category],
+                        auto_open=True,
+                        children="views",
+                        label="name",
+                        rename=False,
+                        copy=False,
+                        delete=False,
+                        insert=False,
+                        menu=None,
                     ),
-
                     IViewTreeNode(
-                        auto_open = False,
-                        label     = 'name',
-                        rename    = False,
-                        copy      = False,
-                        delete    = False,
-                        insert    = False,
-                        menu      = None,
-                    )
+                        auto_open=False,
+                        label="name",
+                        rename=False,
+                        copy=False,
+                        delete=False,
+                        insert=False,
+                        menu=None,
+                    ),
                 ],
-
-                editable   = False,
-                hide_root  = True,
-                selected   = 'selected',
-                show_icons = True
+                editable=False,
+                hide_root=True,
+                selected="selected",
+                show_icons=True,
             ),
-            show_label = False
+            show_label=False,
         ),
-
-        buttons   = [
-            Action(name='OK', enabled_when='view is not None'), 'Cancel'
-        ],
-
-        resizable = True,
-        style     = 'custom',
-        title     = 'Show View',
-
-        width     = .2,
-        height    = .4
+        buttons=[Action(name="OK", enabled_when="view is not None"), "Cancel"],
+        resizable=True,
+        style="custom",
+        title="Show View",
+        width=0.2,
+        height=0.4,
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewChooser' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _selected_changed(self, old, new):
         """ Static trait change handler. """
@@ -195,5 +195,3 @@ class ViewChooser(HasTraits):
             self.view = None
 
         return
-
-#### EOF ######################################################################

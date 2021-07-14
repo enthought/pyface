@@ -1,51 +1,47 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A widget for editing Python code. """
 
 
-# Enthought library imports.
-from traits.api import Bool, Event, Interface, Unicode
+from traits.api import Bool, Event, HasTraits, Interface, Str
 
-# Local imports.
+
 from pyface.key_pressed_event import KeyPressedEvent
 
 
 class IPythonEditor(Interface):
     """ A widget for editing Python code. """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     #: Has the file in the editor been modified?
     dirty = Bool(False)
 
     #: The pathname of the file being edited.
-    path = Unicode
+    path = Str()
 
     #: Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     #: The contents of the editor has changed.
-    changed = Event
+    changed = Event()
 
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self, path=None):
         """ Loads the contents of the editor.
@@ -81,7 +77,7 @@ class IPythonEditor(Interface):
         """
 
 
-class MPythonEditor(object):
+class MPythonEditor(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonEditor interface.
 

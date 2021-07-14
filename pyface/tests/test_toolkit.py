@@ -1,28 +1,40 @@
-import pkg_resources
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 import unittest
+
+try:
+    # Starting Python 3.8, importlib.metadata is available in the Python
+    # standard library.
+    from importlib.metadata import entry_points
+except ImportError:
+    from importlib_metadata import entry_points
 
 import pyface.toolkit
 
 
 class TestToolkit(unittest.TestCase):
-
     def test_missing_import(self):
         # test that we get an undefined object if no toolkit implementation
-        cls = pyface.toolkit.toolkit_object('tests:Missing')
+        cls = pyface.toolkit.toolkit_object("tests:Missing")
         with self.assertRaises(NotImplementedError):
-            obj = cls()
+            cls()
 
     def test_bad_import(self):
         # test that we don't filter unrelated import errors
         with self.assertRaises(ImportError):
-            cls = pyface.toolkit.toolkit_object('tests.bad_import:Missing')
+            pyface.toolkit.toolkit_object("tests.bad_import:Missing")
 
     def test_core_plugins(self):
         # test that we can see appropriate core entrypoints
-        plugins = set(entry_point.name for entry_point in
-                      pkg_resources.iter_entry_points('pyface.toolkits'))
-
-        self.assertLessEqual({'qt4', 'wx', 'qt', 'null'}, plugins)
+        plugins = {ep.name for ep in entry_points()['pyface.toolkits']}
+        self.assertLessEqual({"qt4", "wx", "qt", "null"}, plugins)
 
     def test_toolkit_object(self):
         # test that the Toolkit class works as expected
@@ -30,7 +42,7 @@ class TestToolkit(unittest.TestCase):
         from pyface.tests.test_new_toolkit.init import toolkit_object
         from pyface.tests.test_new_toolkit.widget import Widget as TestWidget
 
-        Widget = toolkit_object('widget:Widget')
+        Widget = toolkit_object("widget:Widget")
 
         self.assertEqual(Widget, TestWidget)
 
@@ -41,9 +53,11 @@ class TestToolkit(unittest.TestCase):
         toolkit_object = pyface.toolkit.toolkit_object
 
         old_packages = toolkit_object.packages
-        toolkit_object.packages = ['pyface.tests.test_new_toolkit'] + old_packages
+        toolkit_object.packages = [
+            "pyface.tests.test_new_toolkit"
+        ] + old_packages
         try:
-            Widget = toolkit_object('widget:Widget')
+            Widget = toolkit_object("widget:Widget")
             self.assertEqual(Widget, TestWidget)
         finally:
             toolkit_object.packages = old_packages
@@ -51,12 +65,14 @@ class TestToolkit(unittest.TestCase):
     def test_toolkit_object_not_overriden(self):
         # test that the Toolkit class works when object not overridden
         toolkit_object = pyface.toolkit.toolkit_object
-        TestWindow = toolkit_object('window:Window')
+        TestWindow = toolkit_object("window:Window")
 
         old_packages = toolkit_object.packages
-        toolkit_object.packages = ['pyface.tests.test_new_toolkit'] + old_packages
+        toolkit_object.packages = [
+            "pyface.tests.test_new_toolkit"
+        ] + old_packages
         try:
-            Window = toolkit_object('window:Window')
+            Window = toolkit_object("window:Window")
             self.assertEqual(Window, TestWindow)
         finally:
             toolkit_object.packages = old_packages

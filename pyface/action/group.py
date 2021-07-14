@@ -1,29 +1,24 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A group of action manager items. """
 
 from functools import partial
 
-# Enthought library imports.
-from traits.api import Any, Bool, HasTraits, Instance, List, Property
-from traits.api import Str
+
+from traits.api import Any, Bool, HasTraits, List, observe, Property, Str
 from traits.trait_base import user_name_for
 
-# Local imports.
+
 from pyface.action.action import Action
 from pyface.action.action_item import ActionItem
-from pyface.action.action_manager_item import ActionManagerItem
 
 
 class Group(HasTraits):
@@ -35,7 +30,7 @@ class Group(HasTraits):
 
     """
 
-    #### 'Group' interface ####
+    # 'Group' interface ----
 
     #: Is the group enabled?
     enabled = Bool(True)
@@ -45,25 +40,25 @@ class Group(HasTraits):
 
     #: The group's unique identifier (only needs to be unique within the action
     #: manager that the group belongs to).
-    id = Str
+    id = Str()
 
     #: All of the items in the group.
     items = Property
 
     #: The action manager that the group belongs to.
-    parent = Any  #Instance('pyface.action.ActionManager')
+    parent = Any  # Instance('pyface.action.ActionManager')
 
     #: Does this group require a separator when it is visualized?
     separator = Bool(True)
 
-    #### Private interface ####
+    # Private interface ----
 
     #: All of the items in the group.
-    _items = List  #(ActionManagerItem)
+    _items = List  # (ActionManagerItem)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *items, **traits):
         """ Creates a new menu manager.
@@ -74,28 +69,29 @@ class Group(HasTraits):
             Items to add to the group.
         """
         # Base class constructor.
-        super(Group, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add any specified items.
         for item in items:
             self.append(item)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Group' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait Properties #####################################################
+    # Trait Properties -----------------------------------------------------
 
     def _get_items(self):
         return self._items[:]
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _enabled_updated(self, event):
         for item in self.items:
-            item.enabled = new
+            item.enabled = event.new
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, item):
         """ Appends an item to the group.
@@ -274,4 +270,5 @@ class Separator(Group):
 
     Hopefully, 'Separator' is more readable than 'Group'...
     """
+
     pass

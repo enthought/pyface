@@ -1,33 +1,23 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Drag and drop utilities. """
 
-# Standard library imports.
-import six
-if six.PY2:
-    from inspect import getargspec
-else:
-    # avoid deprecation warning
-    from inspect import getfullargspec as getargspec
+
+from inspect import getfullargspec
 
 
-# Major package imports.
 import wx
-import six
 
 
-class Clipboard:
+class Clipboard(object):
     """ The clipboard is used when dragging and dropping Python objects. """
 
     # fixme: This obviously only works within a single process!
@@ -36,8 +26,8 @@ class Clipboard:
 
 clipboard = Clipboard()
 clipboard.drop_source = None
-clipboard.source      = None
-clipboard.data        = None
+clipboard.source = None
+clipboard.data = None
 
 
 class FileDropSource(wx.DropSource):
@@ -56,20 +46,19 @@ class FileDropSource(wx.DropSource):
         clipboard.drop_source = self
 
         data_object = wx.FileDataObject()
-        if isinstance(files, six.text_type):
+        if isinstance(files, str):
             files = [files]
 
         for file in files:
             data_object.AddFile(file)
 
         # Create the drop source and begin the drag and drop operation:
-        super(FileDropSource, self).__init__(source)
+        super().__init__(source)
         self.SetData(data_object)
         self.result = self.DoDragDrop(True)
 
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
-        return
 
 
 class FileDropTarget(wx.FileDropTarget):
@@ -83,8 +72,6 @@ class FileDropTarget(wx.FileDropTarget):
 
         self.handler = handler
 
-        return
-
     def OnDropFiles(self, x, y, filenames):
         """ Called when the files have been dropped. """
 
@@ -96,7 +83,7 @@ class FileDropTarget(wx.FileDropTarget):
 
 
 # The data format for Python objects!
-PythonObject = wx.CustomDataFormat('PythonObject')
+PythonObject = wx.DataFormat("PythonObject")
 
 
 class PythonDropSource(wx.DropSource):
@@ -124,7 +111,7 @@ class PythonDropSource(wx.DropSource):
 
         # Create our own data format and use it in a custom data object.
         data_object = wx.CustomDataObject(PythonObject)
-        data_object.SetData('dummy')
+        data_object.SetData(b"dummy")
 
         # And finally, create the drop source and begin the drag
         # and drop opperation.
@@ -136,38 +123,34 @@ class PythonDropSource(wx.DropSource):
             flags = wx.Drag_CopyOnly
         self.result = self.DoDragDrop(flags)
 
-        return
-
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
 
         if self.handler is not None:
-            if hasattr(self.handler, 'on_dropped'):
+            if hasattr(self.handler, "on_dropped"):
                 # For backward compatibility we accept handler functions
                 # with either 1 or 3 args, including self.  If there are
                 # 3 args then we pass the data and the drag_result.
-                args = getargspec(self.handler.on_dropped)[0]
+                args = getfullargspec(self.handler.on_dropped)[0]
                 if len(args) == 3:
                     self.handler.on_dropped(clipboard.data, drag_result)
                 else:
                     self.handler.on_dropped()
             else:
-                #print self.handler
+                # print self.handler
 
                 # In this case we assume handler is a function.
                 # For backward compatibility we accept handler functions
                 # with either 0 or 2 args.  If there are 2 args then
                 # we pass the data and drag_result
-                args = getargspec(self.handler)[0]
-                if len(args)==2:
+                args = getfullargspec(self.handler)[0]
+                if len(args) == 2:
                     self.handler(clipboard.data, drag_result)
                 else:
                     self.handler()
 
-        return
 
-
-class PythonDropTarget(wx.PyDropTarget):
+class PythonDropTarget(wx.DropTarget):
     """ Drop target for Python objects. """
 
     def __init__(self, handler):
@@ -181,7 +164,7 @@ class PythonDropTarget(wx.PyDropTarget):
         """
 
         # Base-class constructor.
-        super(PythonDropTarget, self).__init__()
+        super().__init__()
 
         # The handler can either be a function that will be called when
         # any data is dropped onto the target, or an instance that supports
@@ -192,20 +175,20 @@ class PythonDropTarget(wx.PyDropTarget):
         # Specify the type of data we will accept.
         self.data_object = wx.DataObjectComposite()
         self.data = wx.CustomDataObject(PythonObject)
-        self.data_object.Add(self.data, preferred = True)
+        self.data_object.Add(self.data, preferred=True)
         self.file_data = wx.FileDataObject()
         self.data_object.Add(self.file_data)
         self.SetDataObject(self.data_object)
-
-        return
 
     def OnData(self, x, y, default_drag_result):
         """ Called when OnDrop returns True. """
 
         # First, if we have a source in the clipboard and the source
         # doesn't allow moves then change the default to copy
-        if clipboard.drop_source is not None and \
-           not clipboard.drop_source.allow_move:
+        if (
+            clipboard.drop_source is not None
+            and not clipboard.drop_source.allow_move
+        ):
             default_drag_result = wx.DragCopy
         elif clipboard.drop_source is None:
             # This means we might be receiving a file; try to import
@@ -222,7 +205,7 @@ class PythonDropTarget(wx.PyDropTarget):
                     for name in names:
                         f = File(name)
                         files.append(f)
-                        bindings.append(Binding(name = name, obj = f))
+                        bindings.append(Binding(name=name, obj=f))
                     clipboard.data = files
                     clipboard.node = bindings
                 except ImportError:
@@ -232,12 +215,12 @@ class PythonDropTarget(wx.PyDropTarget):
         #
         # fixme: We allow 'wx_dropped_on' and 'on_drop' because both Dave
         # and Martin want different things! Unify!
-        if hasattr(self.handler, 'wx_dropped_on'):
+        if hasattr(self.handler, "wx_dropped_on"):
             drag_result = self.handler.wx_dropped_on(
                 x, y, clipboard.data, default_drag_result
             )
 
-        elif hasattr(self.handler, 'on_drop'):
+        elif hasattr(self.handler, "on_drop"):
             drag_result = self.handler.on_drop(
                 x, y, clipboard.data, default_drag_result
             )
@@ -268,7 +251,7 @@ class PythonDropTarget(wx.PyDropTarget):
         data = clipboard.data
         if clipboard.drop_source is None:
 
-            if not hasattr(self.handler, 'wx_drag_any'):
+            if not hasattr(self.handler, "wx_drag_any"):
                 # this is probably a file being dragged in, so just return
                 return default_drag_result
 
@@ -286,17 +269,17 @@ class PythonDropTarget(wx.PyDropTarget):
         #
         # fixme: We allow 'wx_drag_over' and 'on_drag_over' because both Dave
         # and Martin want different things! Unify!
-        if hasattr(self.handler, 'wx_drag_any'):
+        if hasattr(self.handler, "wx_drag_any"):
             drag_result = self.handler.wx_drag_any(
                 x, y, data, default_drag_result
             )
 
-        elif hasattr(self.handler, 'wx_drag_over'):
+        elif hasattr(self.handler, "wx_drag_over"):
             drag_result = self.handler.wx_drag_over(
                 x, y, data, default_drag_result
             )
 
-        elif hasattr(self.handler, 'on_drag_over'):
+        elif hasattr(self.handler, "on_drag_over"):
             drag_result = self.handler.on_drag_over(
                 x, y, data, default_drag_result
             )
@@ -309,10 +292,8 @@ class PythonDropTarget(wx.PyDropTarget):
     def OnLeave(self):
         """ Called when the mouse leaves the drop target. """
 
-        if hasattr(self.handler, 'wx_drag_leave'):
+        if hasattr(self.handler, "wx_drag_leave"):
             self.handler.wx_drag_leave(clipboard.data)
-
-        return
 
     def OnDrop(self, x, y):
         """ Called when the user drops a data object on the target.
@@ -322,5 +303,3 @@ class PythonDropTarget(wx.PyDropTarget):
         """
 
         return True
-
-#### EOF #####################################################################

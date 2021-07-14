@@ -1,7 +1,16 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ Provides bracket matching for Q[Plain]TextEdit widgets.
 """
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
 
@@ -9,32 +18,37 @@ class BracketMatcher(QtCore.QObject):
     """ Matches square brackets, braces, and parentheses based on cursor
         position.
     """
-    
-    # Protected class variables.
-    _opening_map = { '(':')', '{':'}', '[':']' }
-    _closing_map = { ')':'(', '}':'{', ']':'[' }
 
-    #--------------------------------------------------------------------------
+    # Protected class variables.
+    _opening_map = {"(": ")", "{": "}", "[": "]"}
+    _closing_map = {")": "(", "}": "{", "]": "["}
+
+    # --------------------------------------------------------------------------
     # 'QObject' interface
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def __init__(self, text_edit):
         """ Create a call tip manager that is attached to the specified Qt
             text edit widget.
         """
         assert isinstance(text_edit, (QtGui.QTextEdit, QtGui.QPlainTextEdit))
-        super(BracketMatcher, self).__init__()
+        super().__init__()
 
         # The format to apply to matching brackets.
         self.format = QtGui.QTextCharFormat()
-        self.format.setBackground(QtGui.QColor('silver'))
+        self.format.setBackground(QtGui.QColor("silver"))
 
         self._text_edit = text_edit
         text_edit.cursorPositionChanged.connect(self._cursor_position_changed)
 
-    #--------------------------------------------------------------------------
+    def _remove_event_listeners(self):
+        self._text_edit.cursorPositionChanged.disconnect(
+            self._cursor_position_changed
+        )
+
+    # --------------------------------------------------------------------------
     # Protected interface
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def _find_match(self, position):
         """ Given a valid position in the text document, try to find the
@@ -75,13 +89,14 @@ class BracketMatcher(QtCore.QObject):
         selection = QtGui.QTextEdit.ExtraSelection()
         cursor = self._text_edit.textCursor()
         cursor.setPosition(position)
-        cursor.movePosition(QtGui.QTextCursor.NextCharacter, 
-                            QtGui.QTextCursor.KeepAnchor)
+        cursor.movePosition(
+            QtGui.QTextCursor.NextCharacter, QtGui.QTextCursor.KeepAnchor
+        )
         selection.cursor = cursor
         selection.format = self.format
         return selection
 
-    #------ Signal handlers ----------------------------------------------------
+    # Signal handlers ----------------------------------------------------
 
     def _cursor_position_changed(self):
         """ Updates the document formatting based on the new cursor position.
@@ -95,6 +110,8 @@ class BracketMatcher(QtCore.QObject):
             position = cursor.position() - 1
             match_position = self._find_match(position)
             if match_position != -1:
-                extra_selections = [ self._selection_for_character(pos)
-                                     for pos in (position, match_position) ]
+                extra_selections = [
+                    self._selection_for_character(pos)
+                    for pos in (position, match_position)
+                ]
                 self._text_edit.setExtraSelections(extra_selections)

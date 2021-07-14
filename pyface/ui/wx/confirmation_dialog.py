@@ -1,30 +1,28 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
-from traits.api import Bool, Enum, Instance, provides, Unicode
 
-# Local imports.
-from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from traits.api import Bool, Enum, Instance, provides, Str
+
+
+from pyface.i_confirmation_dialog import (
+    IConfirmationDialog,
+    MConfirmationDialog,
+)
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
@@ -36,8 +34,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     cancel = Bool(False)
 
@@ -45,19 +42,19 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     image = Instance(ImageResource)
 
-    message = Unicode
+    message = Str()
 
-    informative = Unicode
+    informative = Str()
 
-    detail = Unicode
+    detail = Str()
 
-    no_label = Unicode
+    no_label = Str()
 
-    yes_label = Unicode
+    yes_label = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         sizer = wx.StdDialogButtonSizer()
@@ -71,7 +68,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         self._yes = yes = wx.Button(parent, wx.ID_YES, label)
         if self.default == YES:
             yes.SetDefault()
-        wx.EVT_BUTTON(parent, wx.ID_YES, self._on_yes)
+        parent.Bind(wx.EVT_BUTTON, self._on_yes, yes)
         sizer.AddButton(yes)
 
         # 'NO' button.
@@ -83,7 +80,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         self._no = no = wx.Button(parent, wx.ID_NO, label)
         if self.default == NO:
             no.SetDefault()
-        wx.EVT_BUTTON(parent, wx.ID_NO, self._on_no)
+        parent.Bind(wx.EVT_BUTTON, self._on_no, no)
         sizer.AddButton(no)
 
         if self.cancel:
@@ -97,7 +94,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
             if self.default == CANCEL:
                 cancel.SetDefault()
 
-            wx.EVT_BUTTON(parent, wx.ID_CANCEL, self._wx_on_cancel)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, cancel)
             sizer.AddButton(cancel)
 
         sizer.Realize()
@@ -111,7 +108,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The image.
         if self.image is None:
-            image_rc = ImageResource('warning')
+            image_rc = ImageResource("warning")
         else:
             image_rc = self.image
 
@@ -120,7 +117,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The message.
         if self.informative:
-            message = self.message + '\n\n' + self.informative
+            message = self.message + "\n\n" + self.informative
         else:
             message = self.message
         message = wx.StaticText(panel, -1, message)
@@ -131,11 +128,11 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_yes(self, event):
         """ Called when the 'Yes' button is pressed. """
@@ -146,5 +143,3 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         """ Called when the 'No' button is pressed. """
 
         self.control.EndModal(wx.ID_NO)
-
-#### EOF ######################################################################

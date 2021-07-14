@@ -1,14 +1,22 @@
-from __future__ import print_function
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
-import time
+
 from unittest import TestCase, skipIf
 
 from pyface.toolkit import toolkit_object
 from ..i_timer import perf_counter
 from ..do_later import DoLaterTimer, do_after, do_later
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 class ConditionHandler(object):
@@ -21,7 +29,7 @@ class ConditionHandler(object):
         self.count += 1
 
 
-@skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoLaterTimer(TestCase, GuiTestAssistant):
     """ Test the DoLaterTimer. """
 
@@ -56,13 +64,12 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
             expected_time,
             handler.times[0],
             "Expected call after {} seconds, took {} seconds)".format(
-                expected_length,
-                handler.times[0] - start_time
-            )
+                expected_length, handler.times[0] - start_time
+            ),
         )
 
 
-@skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoLater(TestCase, GuiTestAssistant):
     """ Test do_later. """
 
@@ -88,7 +95,7 @@ class TestDoLater(TestCase, GuiTestAssistant):
         self.assertEqual(handler.count, 1)
 
 
-@skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoAfter(TestCase, GuiTestAssistant):
     """ Test do_after. """
 
@@ -123,7 +130,6 @@ class TestDoAfter(TestCase, GuiTestAssistant):
             expected_time,
             handler.times[0],
             "Expected call after {} seconds, took {} seconds)".format(
-                expected_length,
-                handler.times[0] - start_time
-            )
+                expected_length, handler.times[0] - start_time
+            ),
         )

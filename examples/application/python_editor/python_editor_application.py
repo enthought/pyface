@@ -1,10 +1,11 @@
-# Copyright (c) 2014-18 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 """
 Example Tasks Application
@@ -33,39 +34,35 @@ def main():
         description=(
             "An example Tasks application that provides a Python editor."
         ),
-        icon='python_icon',
-        logo='python_logo',
+        icon="python_icon",
+        logo="python_logo",
         task_factories=[
             TaskFactory(
-                id='example.python_editor_task',
+                id="example.python_editor_task",
                 name="Python Editor",
-                factory=PythonEditorTask
+                factory=PythonEditorTask,
             )
         ],
     )
 
     # get file names from arguments
     parser = argparse.ArgumentParser(description=app.description)
-    parser.add_argument(
-        'files',
-        nargs='*',
-        help="the files to open",
-    )
+    parser.add_argument("files", nargs="*", help="the files to open")
     namespace = parser.parse_args()
     if len(namespace.files) == 0:
-        namespace.files.append(u'')
+        namespace.files.append("")
 
     # set up callback to open files once app is up and running
-    def open_files():
+    def open_files(event):
         """ Open files once app is active. """
         for path in namespace.files:
             app.active_task.create_editor(path)
 
-    app.on_trait_change(open_files, 'application_initialized')
+    app.observe(open_files, "application_initialized")
 
     # invoke the mainloop
     app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

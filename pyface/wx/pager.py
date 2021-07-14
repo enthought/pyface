@@ -1,27 +1,22 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A pager contains a set of pages, but only shows one at a time. """
 
 
-# Major package imports.
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
 
 class Pager(wxScrolledPanel):
     """ A pager contains a set of pages, but only shows one at a time. """
-
 
     def __init__(self, parent, wxid, **kw):
         """ Creates a new pager. """
@@ -31,7 +26,7 @@ class Pager(wxScrolledPanel):
         self.SetupScrolling()
 
         # The pages in the pager!
-        self._pages = {} # { str name : wx.Window page }
+        self._pages = {}  # { str name : wx.Window page }
 
         # The page that is currently displayed.
         self._current_page = None
@@ -41,9 +36,9 @@ class Pager(wxScrolledPanel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Pager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_page(self, name, page):
         """ Adds a page with the specified name. """
@@ -78,9 +73,9 @@ class Pager(wxScrolledPanel):
 
         return page
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_widget(self):
         """ Creates the widget. """
@@ -89,15 +84,11 @@ class Pager(wxScrolledPanel):
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
 
-        return
-
     def _hide_page(self, page):
         """ Hides the specified page. """
 
         page.Show(False)
         self._sizer.Remove(page)
-
-        return
 
     def _show_page(self, page):
         """ Shows the specified page. """
@@ -108,5 +99,3 @@ class Pager(wxScrolledPanel):
         self._current_page = page
 
         return page
-
-#### EOF ######################################################################

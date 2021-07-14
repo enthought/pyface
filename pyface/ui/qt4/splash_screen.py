@@ -1,27 +1,27 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 
-
-# Standard library imports.
 from logging import DEBUG
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
-from traits.api import Any, Bool, Font, Instance, Int, provides
-from traits.api import Tuple, Unicode
 
-# Local imports.
+from traits.api import Any, Bool, Instance, Int, provides
+from traits.api import Tuple, Str
+
+
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
 from .window import Window
@@ -33,26 +33,25 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
+    # 'ISplashScreen' interface --------------------------------------------
 
-    #### 'ISplashScreen' interface ############################################
-
-    image = Instance(ImageResource, ImageResource('splash'))
+    image = Instance(ImageResource, ImageResource("splash"))
 
     log_level = Int(DEBUG)
 
     show_log_messages = Bool(True)
 
-    text = Unicode
+    text = Str()
 
-    text_color = Any
+    text_color = Any()
 
-    text_font = Any
+    text_font = Any()
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         splash_screen = QtGui.QSplashScreen(self.image.create_image())
@@ -60,9 +59,9 @@ class SplashScreen(MSplashScreen, Window):
 
         return splash_screen
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _text_changed(self):
         """ Called when the splash screen text has been changed. """
@@ -84,5 +83,3 @@ class SplashScreen(MSplashScreen, Window):
             text_color = QtGui.QColor(self.text_color)
 
         control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
-
-#### EOF ######################################################################

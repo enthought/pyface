@@ -1,7 +1,6 @@
-# Standard library imports.
 import os.path
 
-# Enthought library imports.
+
 from pyface.api import PythonEditor
 from pyface.tasks.api import TaskPane, TraitsDockPane
 from traits.api import Event, File, Instance, List, Str
@@ -12,61 +11,64 @@ class FileBrowserPane(TraitsDockPane):
     """ A simple file browser pane.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
-    id = 'example.file_browser_pane'
-    name = 'File Browser'
+    id = "example.file_browser_pane"
+    name = "File Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     # Fired when a file is double-clicked.
-    activated = Event
+    activated = Event()
 
     # The list of wildcard filters for filenames.
     filters = List(Str)
 
     # The currently selected file.
-    selected_file = File(os.path.expanduser('~'))
+    selected_file = File(os.path.expanduser("~"))
 
     # The view used to construct the dock pane's widget.
-    view = View(Item('selected_file',
-                     editor=FileEditor(dclick_name='activated',
-                                       filter_name='filters'),
-                     style='custom',
-                     show_label=False),
-                resizable=True)
+    view = View(
+        Item(
+            "selected_file",
+            editor=FileEditor(dclick_name="activated", filter_name="filters"),
+            style="custom",
+            show_label=False,
+        ),
+        resizable=True,
+    )
 
 
 class PythonScriptBrowserPane(FileBrowserPane):
     """ A file browser pane restricted to Python scripts.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
-    id = 'example.python_script_browser_pane'
-    name = 'Script Browser'
+    id = "example.python_script_browser_pane"
+    name = "Script Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
-    filters = [ '*.py' ]
+    filters = ["*.py"]
 
 
 class PythonEditorPane(TaskPane):
     """ A wrapper around the Pyface Python editor.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
-    id = 'example.python_editor_pane'
-    name = 'Python Editor'
+    id = "example.python_editor_pane"
+    name = "Python Editor"
 
-    #### PythonEditorPane interface ###########################################
+    # PythonEditorPane interface -------------------------------------------
 
     editor = Instance(PythonEditor)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         self.editor = PythonEditor(parent)

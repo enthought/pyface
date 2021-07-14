@@ -1,32 +1,27 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A tool bar manager realizes itself in a tool palette control. """
 
 
-# Enthought library imports.
-from traits.api import Any, Bool, Enum, Instance, Tuple
+from traits.api import Bool, Instance, Tuple
 
-# Local imports.
+
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
-from .tool_palette import ToolPalette
 
 
 class ToolPaletteManager(ActionManager):
     """ A tool bar manager realizes itself in a tool palette bar control. """
 
-    #### 'ToolPaletteManager' interface #######################################
+    # 'ToolPaletteManager' interface ---------------------------------------
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))
@@ -34,20 +29,20 @@ class ToolPaletteManager(ActionManager):
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
 
         # Base class contructor.
-        super(ToolPaletteManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.
@@ -55,13 +50,10 @@ class ToolPaletteManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolPaletteManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_palette(self, parent, controller=None):
         """ Creates a tool bar. """
         return None
-
-
-#### EOF ######################################################################

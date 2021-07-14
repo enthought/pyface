@@ -1,10 +1,11 @@
-# Copyright (c) 2014-2018 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 """
 This module defines the :py:class:`Application` class for Pyface, Tasks
@@ -13,31 +14,35 @@ applications, the :py:class:`Application` class does not have any explicit
 dependency on GUI code, and can be used for CLI or server applications.
 
 Usual usage is to subclass :py:class:`Application`, overriding at least the
-:py:method:`Application._run` method, but usually the
-:py:method:`Application.start` and :py:method:`Application.stop`
+:py:meth:`Application._run` method, but usually the
+:py:meth:`Application.start` and :py:meth:`Application.stop`
 methods as well.
 
 However the class can be used as-is by listening to the
 :py:attr:`Application.application_initialized` event and performing
 appropriate work there::
 
-    def do_work():
+    def do_work(event):
         print("Hello world")
 
     app = Application()
-    app.on_trait_change(do_work, 'application_initialized')
+    app.observe(do_work, 'application_initialized')
 
 """
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
+
 import logging
 import os
 
 from traits.api import (
-    Directory, Event, HasStrictTraits, Instance, ReadOnly, Unicode, Vetoable,
-    VetoableEvent
+    Directory,
+    Event,
+    HasStrictTraits,
+    Instance,
+    ReadOnly,
+    Str,
+    Vetoable,
+    VetoableEvent,
 )
 
 logger = logging.getLogger(__name__)
@@ -45,6 +50,7 @@ logger = logging.getLogger(__name__)
 
 class ApplicationException(Exception):
     """ Exception subclass for Application-centric exceptions """
+
     pass
 
 
@@ -54,6 +60,7 @@ class ApplicationExit(ApplicationException):
     If no arguments, then assumed to be a normal exit, otherwise the arguments
     give information about the problem.
     """
+
     pass
 
 
@@ -80,24 +87,24 @@ class Application(HasStrictTraits):
     # Branding ----------------------------------------------------------------
 
     #: Human-readable application name
-    name = Unicode('Pyface Application')
+    name = Str("Pyface Application")
 
     #: Human-readable company name
-    company = Unicode
+    company = Str()
 
     #: Human-readable description of the application
-    description = Unicode
+    description = Str()
 
     # Infrastructure ---------------------------------------------------------
 
     #: The application's globally unique identifier.
-    id = Unicode
+    id = Str()
 
     #: Application home directory (for preferences, logging, etc.)
-    home = Directory
+    home = Directory()
 
     #: User data directory (for user files, projects, etc)
-    user_data = Directory
+    user_data = Directory()
 
     # Application lifecycle --------------------------------------------------
 
@@ -113,7 +120,7 @@ class Application(HasStrictTraits):
 
     #: Fired when the application is starting. Called immediately before the
     #: stop method is run.
-    exiting = VetoableEvent
+    exiting = VetoableEvent()
 
     #: Fired when the application is starting. Called immediately before the
     #: stop method is run.
@@ -155,13 +162,13 @@ class Application(HasStrictTraits):
         run = stopped = False
 
         # Start up the application.
-        logger.info('---- Application starting ----')
-        self._fire_application_event('starting')
+        logger.info("---- Application starting ----")
+        self._fire_application_event("starting")
         started = self.start()
         if started:
 
-            logger.info('---- Application started ----')
-            self._fire_application_event('started')
+            logger.info("---- Application started ----")
+            self._fire_application_event("started")
 
             try:
                 run = self._run()
@@ -170,15 +177,15 @@ class Application(HasStrictTraits):
                     logger.info("---- ApplicationExit raised ----")
                 else:
                     logger.exception("---- ApplicationExit raised ----")
-                run = (exc.args == ())
+                run = exc.args == ()
             finally:
                 # Try to shut the application down.
-                logger.info('---- Application stopping ----')
-                self._fire_application_event('stopping')
+                logger.info("---- Application stopping ----")
+                self._fire_application_event("stopping")
                 stopped = self.stop()
                 if stopped:
-                    self._fire_application_event('stopped')
-                    logger.info('---- Application stopped ----')
+                    self._fire_application_event("stopped")
+                    logger.info("---- Application stopped ----")
 
         return started and run and stopped
 
@@ -202,17 +209,17 @@ class Application(HasStrictTraits):
         ApplicationExit
             Some subclasses may trigger the exit by raising ApplicationExit.
         """
-        logger.info('---- Application exit started ----')
+        logger.info("---- Application exit started ----")
         if force or self._can_exit():
             try:
                 self._prepare_exit()
             except Exception:
                 logger.exception("Error preparing for application exit")
             finally:
-                logger.info('---- Application exit ----')
+                logger.info("---- Application exit ----")
                 self._exit()
         else:
-            logger.info('---- Application exit vetoed ----')
+            logger.info("---- Application exit vetoed ----")
 
     # Initialization utilities -----------------------------------------------
 
@@ -223,7 +230,7 @@ class Application(HasStrictTraits):
         stored.
         """
         if not os.path.exists(self.home):
-            logger.info('Application home directory does not exist, creating')
+            logger.info("Application home directory does not exist, creating")
             os.makedirs(self.home)
 
     # -------------------------------------------------------------------------
@@ -244,7 +251,7 @@ class Application(HasStrictTraits):
         # event loop (eg. a GUI, Tornado web app, etc.) then this should be
         # fired _after_ the event loop starts using an appropriate callback
         # (eg. gui.set_trait_later).
-        self._fire_application_event('application_initialized')
+        self._fire_application_event("application_initialized")
         return True
 
     # Utilities ---------------------------------------------------------------
@@ -289,26 +296,31 @@ class Application(HasStrictTraits):
 
     def _id_default(self):
         """ Use the application's directory as the id """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
+
         return ETSConfig._get_application_dirname()
 
     def _home_default(self):
         """ Default home comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
+
         return os.path.join(ETSConfig.application_data, self.id)
 
     def _user_data_default(self):
         """ Default user_data comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
+
         return ETSConfig.user_data
 
     def _company_default(self):
         """ Default company comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
+
         return ETSConfig.company
 
     def _description_default(self):
         """ Default description is the docstring of the application class. """
         from inspect import getdoc
+
         text = getdoc(self)
         return text

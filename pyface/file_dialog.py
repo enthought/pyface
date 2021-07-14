@@ -1,24 +1,20 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The implementation of a dialog that allows the user to open/save files etc.
 """
 
 
 # Import the toolkit specific version.
-from __future__ import absolute_import
+
 
 from .toolkit import toolkit_object
-FileDialog = toolkit_object('file_dialog:FileDialog')
 
-#### EOF ######################################################################
+FileDialog = toolkit_object("file_dialog:FileDialog")

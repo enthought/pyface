@@ -1,38 +1,48 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The node type for a trait list. """
 
 
-# Enthought library imports.
 from traits.api import Any, Str
 
-# Local imports.
+
 from .node_type import NodeType
 
 
 class TraitListNodeType(NodeType):
     """ The node type for a trait list. """
 
-    #### 'TraitListNodeType' interface ########################################
+    # 'TraitListNodeType' interface ----------------------------------------
 
     # The type of object that provides the trait list.
-    klass = Any
+    klass = Any()
 
     # The label text.
-    text = Str
+    text = Str()
 
     # The name of the trait.
-    trait_name = Str
+    trait_name = Str()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def is_type_for(self, node):
         """ Returns True if this node type recognizes a node. """
 
-        is_type_for = isinstance(node, list) \
-                      and hasattr(node, 'object') \
-                      and isinstance(node.object, self.klass) \
-                      and node.name == self.trait_name
+        is_type_for = (
+            isinstance(node, list)
+            and hasattr(node, "object")
+            and isinstance(node.object, self.klass)
+            and node.name == self.trait_name
+        )
 
         return is_type_for
 
@@ -55,5 +65,3 @@ class TraitListNodeType(NodeType):
         """ Returns the label text for a node. """
 
         return self.text
-
-##### EOF #####################################################################

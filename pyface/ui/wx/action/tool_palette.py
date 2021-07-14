@@ -1,18 +1,13 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ View of an ActionManager drawn as a rectangle of buttons.
 """
@@ -21,6 +16,7 @@ import wx
 from pyface.widget import Widget
 
 from traits.api import Bool, Dict, Int, List, Tuple
+
 # HTML templates.
 # FIXME : Not quite the right color.
 HTML = """
@@ -38,39 +34,39 @@ PART = """<wxp module="wx" class="Panel"><param name="id" value="%s"><param name
 
 class ToolPalette(Widget):
 
-    tools = List
+    tools = List()
 
-    id_tool_map = Dict
+    id_tool_map = Dict()
 
-    tool_id_to_button_map = Dict
+    tool_id_to_button_map = Dict()
 
     button_size = Tuple((25, 25), Int, Int)
 
     is_realized = Bool(False)
 
-    tool_listeners = Dict
+    tool_listeners = Dict()
 
     # Maps a button id to its tool id.
-    button_tool_map = Dict
+    button_tool_map = Dict()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new tool palette. """
 
         # Base class constructor.
-        super(ToolPalette, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # ToolPalette interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_tool(self, label, bmp, kind, tooltip, longtip):
         """ Add a tool with the specified properties to the palette.
@@ -78,7 +74,7 @@ class ToolPalette(Widget):
         Return an id that can be used to reference this tool in the future.
         """
 
-        wxid = wx.NewId()
+        wxid = wx.NewIdRef()
         params = (wxid, label, bmp, kind, tooltip, longtip)
         self.tools.append(params)
         self.id_tool_map[wxid] = params
@@ -97,10 +93,8 @@ class ToolPalette(Widget):
         """
 
         button = self.tool_id_to_button_map.get(id, None)
-        if button is not None and hasattr(button, 'SetToggle'):
+        if button is not None and hasattr(button, "SetToggle"):
             button.SetToggle(checked)
-
-        return
 
     def enable_tool(self, id, enabled):
         """ Enable or disable the tool identified by 'id'. """
@@ -109,15 +103,11 @@ class ToolPalette(Widget):
         if button is not None:
             button.SetEnabled(enabled)
 
-        return
-
     def on_tool_event(self, id, callback):
         """ Register a callback for events on the tool identified by 'id'. """
 
         callbacks = self.tool_listeners.setdefault(id, [])
         callbacks.append(callback)
-
-        return
 
     def realize(self):
         """ Realize the control so that it can be displayed. """
@@ -125,13 +115,11 @@ class ToolPalette(Widget):
         self.is_realized = True
         self._reflow()
 
-        return
-
     def get_tool_state(self, id):
         """ Get the toggle state of the tool identified by 'id'. """
 
         button = self.tool_id_to_button_map.get(id, None)
-        if hasattr(button, 'GetToggle'):
+        if hasattr(button, "GetToggle"):
             if button.GetToggle():
                 state = 1
             else:
@@ -141,10 +129,9 @@ class ToolPalette(Widget):
 
         return state
 
-
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
 
@@ -152,10 +139,8 @@ class ToolPalette(Widget):
 
         return html_window
 
-
     def _reflow(self):
         """ Reflow the layout. """
-
 
         # Create a bit of html for each tool.
         parts = []
@@ -163,15 +148,13 @@ class ToolPalette(Widget):
             parts.append(PART % (str(param[0]), self.button_size))
 
         # Create the entire html page.
-        html = HTML % ''.join(parts)
+        html = HTML % "".join(parts)
 
         # Set the HTML on the widget.  This will create all of the buttons.
         self.control.SetPage(html)
 
         for param in self.tools:
             self._initialize_tool(param)
-
-        return
 
     def _initialize_tool(self, param):
         """ Initialize the tool palette button. """
@@ -187,21 +170,20 @@ class ToolPalette(Widget):
 
         from wx.lib.buttons import GenBitmapToggleButton, GenBitmapButton
 
-        if kind == 'radio':
-            button = GenBitmapToggleButton(panel, -1, None, size=self.button_size)
+        if kind == "radio":
+            button = GenBitmapToggleButton(
+                panel, -1, None, size=self.button_size
+            )
 
         else:
             button = GenBitmapButton(panel, -1, None, size=self.button_size)
 
         self.button_tool_map[button.GetId()] = wxid
         self.tool_id_to_button_map[wxid] = button
-        wx.EVT_BUTTON(panel, button.GetId(), self._on_button)
+        panel.Bind(wx.EVT_BUTTON, self._on_button, button)
         button.SetBitmapLabel(bmp)
-        button.SetToolTipString(label)
+        button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
-
-
-        return
 
     def _on_button(self, event):
 
@@ -212,5 +194,3 @@ class ToolPalette(Widget):
                 listener(event)
 
         return
-
-#### EOF ######################################################################

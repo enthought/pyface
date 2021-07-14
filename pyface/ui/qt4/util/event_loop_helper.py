@@ -1,17 +1,18 @@
-# (C) Copyright 2014-15 Enthought, Inc., Austin, TX
-# All right reserved.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
 
 import contextlib
 import threading
 
-from pyface.gui import GUI
+from pyface.i_gui import IGUI
 from pyface.qt import QtCore, QtGui
 from traits.api import HasStrictTraits, Instance
 
@@ -38,7 +39,7 @@ class EventLoopHelper(HasStrictTraits):
 
     qt_app = Instance(QtGui.QApplication)
 
-    gui = Instance(GUI)
+    gui = Instance(IGUI)
 
     def event_loop_with_timeout(self, repeat=2, timeout=10.0):
         """Helper function to send all posted events to the event queue and
@@ -52,7 +53,12 @@ class EventLoopHelper(HasStrictTraits):
         timeout: float, optional, keyword only
             Number of seconds to run the event loop in the case that the trait
             change does not occur. Default value is 10.0.
+
+        Notes
+        -----
+            `timeout` is rounded to the nearest millisecond.
         """
+
         def repeat_loop(condition, repeat):
             # We sendPostedEvents to ensure that enaml events are processed
             self.qt_app.sendPostedEvents()
@@ -67,7 +73,8 @@ class EventLoopHelper(HasStrictTraits):
         condition = threading.Event()
         self.gui.invoke_later(repeat_loop, repeat=repeat, condition=condition)
         self.event_loop_until_condition(
-            condition=condition.is_set, timeout=timeout)
+            condition=condition.is_set, timeout=timeout
+        )
 
     def event_loop(self, repeat=1):
         """Emulates an event loop `repeat` times with
@@ -98,7 +105,12 @@ class EventLoopHelper(HasStrictTraits):
         timeout : float
             Number of seconds to run the event loop in the case that the trait
             change does not occur.
+
+        Notes
+        -----
+            `timeout` is rounded to the nearest millisecond.
         """
+
         def handler():
             if condition():
                 self.qt_app.quit()
@@ -110,7 +122,7 @@ class EventLoopHelper(HasStrictTraits):
             condition_timer.timeout.connect(handler)
             timeout_timer = QtCore.QTimer()
             timeout_timer.setSingleShot(True)
-            timeout_timer.setInterval(timeout * 1000)
+            timeout_timer.setInterval(round(timeout * 1000))
             timeout_timer.timeout.connect(self.qt_app.quit)
             timeout_timer.start()
             condition_timer.start()
@@ -118,7 +130,8 @@ class EventLoopHelper(HasStrictTraits):
                 self.qt_app.exec_()
                 if not condition():
                     raise ConditionTimeoutError(
-                        'Timed out waiting for condition')
+                        "Timed out waiting for condition"
+                    )
             finally:
                 timeout_timer.stop()
                 condition_timer.stop()
@@ -136,10 +149,14 @@ class EventLoopHelper(HasStrictTraits):
         timeout : float
             Number of seconds to run the event loop in the case that the
             widget is not deleted.
+
+        Notes
+        -----
+            `timeout` is rounded to the nearest millisecond.
         """
         timer = QtCore.QTimer()
         timer.setSingleShot(True)
-        timer.setInterval(timeout * 1000)
+        timer.setInterval(round(timeout * 1000))
         timer.timeout.connect(self.qt_app.quit)
         widget.destroyed.connect(self.qt_app.quit)
         yield
@@ -148,4 +165,5 @@ class EventLoopHelper(HasStrictTraits):
         if not timer.isActive():
             # We exited the event loop on timeout
             raise ConditionTimeoutError(
-                'Could not destroy widget before timeout: {!r}'.format(widget))
+                "Could not destroy widget before timeout: {!r}".format(widget)
+            )

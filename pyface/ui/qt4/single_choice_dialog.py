@@ -1,25 +1,23 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2016, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 from pyface.qt import QtCore, QtGui
 
 from traits.api import Any, List, Str, provides
 
 from pyface.constant import CANCEL
-from pyface.i_single_choice_dialog import ISingleChoiceDialog, MSingleChoiceDialog
+from pyface.i_single_choice_dialog import (
+    ISingleChoiceDialog,
+    MSingleChoiceDialog,
+)
 from .dialog import Dialog, _RESULT_MAP
 
 
@@ -31,29 +29,29 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     is ignored, and the list of displayed strings must be unique.
     """
 
-    #### 'ISingleChoiceDialog' interface ######################################
+    # 'ISingleChoiceDialog' interface -------------------------------------#
 
     #: List of objects to choose from.
     choices = List(Any)
 
     #: The object chosen, if any.
-    choice = Any
+    choice = Any()
 
     #: An optional attribute to use for the name of each object in the dialog.
-    name_attribute = Str
+    name_attribute = Str()
 
     #: The message to display to the user.
-    message = Str
+    message = Str()
 
     def set_dialog_choice(self, choice):
         if self.control is not None:
-            if self.name_attribute != '':
+            if self.name_attribute != "":
                 choice = getattr(choice, self.name_attribute)
             self.control.setTextValue(str(choice))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Creates the window contents. """
@@ -70,9 +68,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
             retval = _RESULT_MAP[retval]
         return retval
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         """ Closes the window. """
@@ -88,11 +86,11 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
                 self.choice = None
 
         # Let the window close as normal.
-        super(SingleChoiceDialog, self).close()
+        super().close()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the window. """

@@ -1,23 +1,19 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A wizard model that can be chained with other wizards. """
 
 
-# Enthought library imports.
-from traits.api import Instance
+from traits.api import Instance, observe
 
-# Local imports.
+
 from .i_wizard import IWizard
 from .wizard import Wizard
 
@@ -25,31 +21,32 @@ from .wizard import Wizard
 class ChainedWizard(Wizard):
     """ A wizard model that can be chained with other wizards. """
 
-    #### 'ChainedWizard' interface ############################################
+    # 'ChainedWizard' interface --------------------------------------------
 
     # The wizard following this wizard in the chain.
     next_wizard = Instance(IWizard)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ChainedWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait handlers. ######################################################
+    # Trait handlers. -----------------------------------------------------#
 
     def _controller_default(self):
         """ Provide a default controller. """
 
-        from chained_wizard_controller import ChainedWizardController
+        from .chained_wizard_controller import ChainedWizardController
 
         return ChainedWizardController()
 
-    #### Trait event handlers. ################################################
+    # Trait event handlers. ------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
-    def _next_wizard_changed(self, old, new):
+    @observe("next_wizard")
+    def _reset_next_controller_and_update(self, event):
         """ Handle the next wizard being changed. """
-
+        old, new = event.old, event.new
         if new is not None:
             self.controller.next_controller = new.controller
 
@@ -62,11 +59,10 @@ class ChainedWizard(Wizard):
             # self._create_buttons(self.control)
             self._update()
 
-        return
-
-    def _controller_changed(self, old, new):
+    @observe("controller")
+    def _reset_traits_on_controller_and_update(self, event):
         """ handle the controller being changed. """
-
+        old, new = event.old, event.new
         if new is not None and self.next_wizard is not None:
             self.controller.next_controller = self.next_wizard.controller
 
@@ -74,5 +70,3 @@ class ChainedWizard(Wizard):
             self._update()
 
         return
-
-#### EOF ######################################################################

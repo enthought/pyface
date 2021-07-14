@@ -1,15 +1,13 @@
-# Copyright (c) 2019, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
 import unittest
 
@@ -20,7 +18,6 @@ from ..field_action import FieldAction
 
 
 class TestFieldAction(unittest.TestCase):
-
     def setUp(self):
         self.gui = GUI()
 
@@ -44,9 +41,9 @@ class TestFieldAction(unittest.TestCase):
             name="Dummy",
             field_type=ComboField,
             field_defaults={
-                'values': ['a', 'b', 'c'],
-                'value': 'a',
-                'tooltip': 'Dummy',
+                "values": ["a", "b", "c"],
+                "value": "a",
+                "tooltip": "Dummy",
             },
             on_perform=perform,
         )
@@ -54,10 +51,10 @@ class TestFieldAction(unittest.TestCase):
         try:
             self.gui.process_events()
 
-            control._field.value = 'b'
+            control._field.value = "b"
             self.gui.process_events()
 
-            self.assertEqual(memo, ['b'])
+            self.assertEqual(memo, ["b"])
         finally:
             control._field.destroy()
 
@@ -72,10 +69,7 @@ class TestFieldAction(unittest.TestCase):
         action = FieldAction(
             name="Dummy",
             field_type=TextField,
-            field_defaults={
-                'value': 'a',
-                'tooltip': 'Dummy',
-            },
+            field_defaults={"value": "a", "tooltip": "Dummy"},
             on_perform=perform,
         )
         control = action.create_control(self.parent.control)
@@ -83,10 +77,10 @@ class TestFieldAction(unittest.TestCase):
         try:
             self.gui.process_events()
 
-            control._field.value = 'b'
+            control._field.value = "b"
             self.gui.process_events()
 
-            self.assertEqual(memo, ['b'])
+            self.assertEqual(memo, ["b"])
         finally:
             control._field.destroy()
 
@@ -102,9 +96,9 @@ class TestFieldAction(unittest.TestCase):
             name="Dummy",
             field_type=SpinField,
             field_defaults={
-                'value': 1,
-                'bounds': (0, 100),
-                'tooltip': 'Dummy',
+                "value": 1,
+                "bounds": (0, 100),
+                "tooltip": "Dummy",
             },
             on_perform=perform,
         )

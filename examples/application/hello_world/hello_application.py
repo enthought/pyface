@@ -1,10 +1,11 @@
-# Copyright (c) 2018 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 """
 Example Command-Line Application
@@ -16,7 +17,6 @@ Application class by overriding the `_run` method to perform the desired
 computation.
 """
 
-from __future__ import print_function
 
 import argparse
 from pyface.application import Application
@@ -40,7 +40,7 @@ class HelloApplication(Application):
     id = "example_hello_application"
 
     def _run(self):
-        super(HelloApplication, self)._run()
+        super()._run()
         print("Hello " + self.location)
 
 
@@ -50,8 +50,8 @@ def main():
 
     parser = argparse.ArgumentParser(description=app.description)
     parser.add_argument(
-        'location',
-        nargs='?',
+        "location",
+        nargs="?",
         default=app.location,
         help="the location to greet",
     )
@@ -60,5 +60,5 @@ def main():
     app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

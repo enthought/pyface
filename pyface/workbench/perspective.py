@@ -1,13 +1,21 @@
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The default perspective. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, List, provides, Str, Tuple
 
-# Local imports.
+
 from .i_perspective import IPerspective
 from .perspective_item import PerspectiveItem
 
@@ -19,13 +27,14 @@ logger = logging.getLogger(__name__)
 @provides(IPerspective)
 class Perspective(HasTraits):
     """ The default perspective. """
+
     # The ID of the default perspective.
-    DEFAULT_ID = 'pyface.workbench.default'
+    DEFAULT_ID = "pyface.workbench.default"
 
     # The name of the default perspective.
-    DEFAULT_NAME = 'Default'
+    DEFAULT_NAME = "Default"
 
-    #### 'IPerspective' interface #############################################
+    # 'IPerspective' interface ---------------------------------------------
 
     # The perspective's unique identifier (unique within a workbench window).
     id = Str(DEFAULT_ID)
@@ -47,20 +56,20 @@ class Perspective(HasTraits):
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool(True)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Return an informal string representation of the object. """
 
-        return 'Perspective(%s)' % self.id
+        return "Perspective(%s)" % self.id
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Perspective' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -68,7 +77,7 @@ class Perspective(HasTraits):
         # If no Id is specified then use the name.
         return self.name
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create(self, window):
         """ Create the perspective in a workbench window.
@@ -95,8 +104,6 @@ class Perspective(HasTraits):
         # Activate the first view in every region.
         window.reset_views()
 
-        return
-
     def show(self, window):
         """ Called when the perspective is shown in a workbench window.
 
@@ -108,9 +115,9 @@ class Perspective(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_contents(self, window, contents):
         """ Adds the specified contents. """
@@ -125,8 +132,6 @@ class Perspective(HasTraits):
 
         for item in contents:
             self._add_perspective_item(window, item)
-
-        return
 
     def _add_perspective_item(self, window, item):
         """ Adds a perspective item to a window. """
@@ -159,9 +164,7 @@ class Perspective(HasTraits):
             # fixme: This is worth keeping an eye on though. If we end up with
             # a strict mode that throws exceptions early and often for
             # developers, then this might be a good place to throw one ;^)
-            logger.error('missing view for perspective item <%s>' % item.id)
-
-        return
+            logger.error("missing view for perspective item <%s>" % item.id)
 
     def _add_all(self, window):
         """ Adds *all* of the window's views defined in the window. """
@@ -169,8 +172,6 @@ class Perspective(HasTraits):
         for view in window.views:
             if view.visible:
                 self._add_view(window, view)
-
-        return
 
     def _add_view(self, window, view):
         """ Adds a view to a window. """
@@ -189,5 +190,3 @@ class Perspective(HasTraits):
         )
 
         return
-
-#### EOF ######################################################################

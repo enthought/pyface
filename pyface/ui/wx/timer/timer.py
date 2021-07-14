@@ -1,27 +1,25 @@
-#  Copyright (c) 2006-18, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
-#
-#  Author: Prabhu Ramachandran <prabhu@aero.iitb.ac.in>
+# Thanks for using Enthought open source!
 """A `wx.Timer` subclass that invokes a specified callback periodically.
 """
 
 import wx
 
-from traits.api import Bool, Instance, Property
+from traits.api import Instance
 
 from pyface.timer.i_timer import BaseTimer
 
 
 class CallbackTimer(wx.Timer):
     def __init__(self, timer):
-        super(CallbackTimer, self).__init__()
+        super().__init__()
         self.timer = timer
 
     def Notify(self):

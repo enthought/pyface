@@ -1,26 +1,21 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import os
 
-# Enthought library imports.
-from traits.api import Any, HasTraits, List, Property, provides
-from traits.api import Unicode
 
-# Local imports.
+from traits.api import Any, HasTraits, List, Property, provides
+from traits.api import Str
+
+
 from pyface.i_image_resource import IImageResource, MImageResource
 
 
@@ -30,23 +25,22 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
-    _ref = Any
+    _ref = Any()
 
-    #### 'ImageResource' interface ############################################
+    # 'ImageResource' interface --------------------------------------------
 
-    absolute_path = Property(Unicode)
+    absolute_path = Property(Str)
 
-    name = Unicode
+    name = Str()
 
-    search_path = List
+    search_path = List()
 
-    ###########################################################################
-    # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
+    # 'IImage' interface.
+    # ------------------------------------------------------------------------
 
     def create_bitmap(self, size=None):
         return self.create_image(size)
@@ -54,9 +48,9 @@ class ImageResource(MImageResource, HasTraits):
     def create_icon(self, size=None):
         return self.create_image(size)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_absolute_path(self):
         # FIXME: This doesn't quite work with the new notion of image size. We
@@ -70,5 +64,3 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
-
-#### EOF ######################################################################

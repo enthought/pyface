@@ -1,58 +1,69 @@
-#------------------------------------------------------------------------------
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2016, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought Developers
-#
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Defines common traits used within the pyface library. """
+from collections.abc import Sequence
 import logging
 
-from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType
-from traits.trait_base import get_resource_path
 try:
-    from traits.trait_handlers import CALLABLE_AND_ARGS_DEFAULT_VALUE
+    import numpy as np
 except ImportError:
-    CALLABLE_AND_ARGS_DEFAULT_VALUE = 7
-import six
+    np = None
+
+from traits.api import (
+    ABCHasStrictTraits,
+    DefaultValue,
+    Enum,
+    Range,
+    TraitError,
+    TraitType,
+)
+from traits.trait_base import get_resource_path
+
+from pyface.color import Color
+from pyface.i_image import IImage
+from pyface.util.color_parser import ColorParseError
 
 
 logger = logging.getLogger(__name__)
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #  Images
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
+# cache of lookups from string to ImageResource instance
 image_resource_cache = {}
+
+# cache of conversions of ImageResource instances to toolkit bitmaps
 image_bitmap_cache = {}
 
 
 def convert_image(value, level=3):
     """ Converts a specified value to an ImageResource if possible.
     """
-    if not isinstance( value, six.string_types ):
+    if not isinstance(value, str):
         return value
 
     key = value
-    is_pyface_image = value.startswith('@')
+    is_pyface_image = value.startswith("@")
     if not is_pyface_image:
         search_path = get_resource_path(level)
-        key = '%s[%s]' % (value, search_path)
+        key = "%s[%s]" % (value, search_path)
 
     result = image_resource_cache.get(key)
     if result is None:
         if is_pyface_image:
             try:
                 from .image.image import ImageLibrary
+
                 result = ImageLibrary.image_resource(value)
             except Exception as exc:
                 logger.error("Can't load image resource '%s'." % value)
@@ -60,6 +71,7 @@ def convert_image(value, level=3):
                 result = None
         else:
             from pyface.image_resource import ImageResource
+
             result = ImageResource(value, search_path=[search_path])
 
         image_resource_cache[key] = result
@@ -67,27 +79,32 @@ def convert_image(value, level=3):
     return result
 
 
-def convert_bitmap(image_resource):
+def convert_bitmap(image):
     """ Converts an ImageResource to a bitmap using a cache.
     """
-    bitmap = image_bitmap_cache.get(image_resource)
-    if (bitmap is None) and (image_resource is not None):
-        image_bitmap_cache[image_resource] = bitmap = \
-            image_resource.create_bitmap()
+    from pyface.i_image_resource import IImageResource
+    if not isinstance(image, IImageResource):
+        # don't try to cache non-ImageResource IImages as they may be
+        # dynamically changing
+        return image.create_bitmap()
+
+    bitmap = image_bitmap_cache.get(image)
+    if (bitmap is None) and (image is not None):
+        image_bitmap_cache[image] = bitmap = image.create_bitmap()
 
     return bitmap
 
 
 class Image(TraitType):
-    """ Defines a trait whose value must be a ImageResource or a string
-        that can be converted to one.
+    """ Defines a trait whose value must be a IImage or a string
+        that can be converted to an IImageResource.
     """
 
-    # Define the default value for the trait:
+    #: Define the default value for the trait.
     default_value = None
 
-    # A description of the type of value this trait accepts:
-    info_text = 'an ImageResource or string that can be used to define one'
+    #: A description of the type of value this trait accepts.
+    info_text = "an IImage or string that can be used to define an ImageResource"  # noqa: E501
 
     def __init__(self, value=None, **metadata):
         """ Creates an Image trait.
@@ -95,21 +112,19 @@ class Image(TraitType):
         Parameters
         ----------
         value : string or ImageResource
-            The default value for the Image, either an ImageResource object,
+            The default value for the Image, either an IImage object,
             or a string from which an ImageResource object can be derived.
         """
-        super(Image, self).__init__(convert_image(value), **metadata)
+        super().__init__(convert_image(value), **metadata)
 
     def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
         """
-        from pyface.i_image_resource import IImageResource
-
         if value is None:
             return None
 
         new_value = convert_image(value, 4)
-        if isinstance(new_value, IImageResource):
+        if isinstance(new_value, IImage):
             return new_value
 
         self.error(object, name, value)
@@ -118,15 +133,64 @@ class Image(TraitType):
         """ Returns the default UI editor for the trait.
         """
         from traitsui.editors.api import ImageEditor
+
         return ImageEditor()
 
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+#  Color
+# -------------------------------------------------------------------------------
+
+
+class PyfaceColor(TraitType):
+    """ A Trait which casts strings and tuples to a PyfaceColor value.
+    """
+
+    #: The default value should be a tuple (factory, args, kwargs)
+    default_value_type = DefaultValue.callable_and_args
+
+    def __init__(self, value=None, **metadata):
+        if value is not None:
+            color = self.validate(None, None, value)
+            default_value = (Color, (), {'rgba': color.rgba})
+        else:
+            default_value = (Color, (), {})
+        super().__init__(default_value, **metadata)
+
+    def validate(self, object, name, value):
+        if isinstance(value, Color):
+            return value
+        if isinstance(value, str):
+            try:
+                return Color.from_str(value)
+            except ColorParseError:
+                self.error(object, name, value)
+        is_array = (
+            np is not None
+            and isinstance(value, (np.ndarray, np.void))
+        )
+        if is_array or isinstance(value, Sequence):
+            channels = tuple(value)
+            if len(channels) == 4:
+                return Color(rgba=channels)
+            elif len(channels) == 3:
+                return Color(rgb=channels)
+
+        self.error(object, name, value)
+
+    def info(self):
+        return (
+            "a Pyface Color, a #-hexadecimal rgb or rgba string,  a standard "
+            "color name, or a sequence of RGBA or RGB values between 0 and 1"
+        )
+
+
+# -------------------------------------------------------------------------------
 #  Borders, Margins and Layout
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+
 
 class BaseMB(ABCHasStrictTraits):
-
     def __init__(self, *args, **traits):
         """ Map posiitonal arguments to traits.
 
@@ -146,12 +210,14 @@ class BaseMB(ABCHasStrictTraits):
             elif n == 4:
                 left, right, top, bottom = args
             else:
-                raise TraitError('0, 1, 2 or 4 arguments expected, but %d '
-                                 'specified' % n)
-            traits.update({'left': left, 'right': right,
-                           'top': top, 'bottom': bottom})
+                raise TraitError(
+                    "0, 1, 2 or 4 arguments expected, but %d " "specified" % n
+                )
+            traits.update(
+                {"left": left, "right": right, "top": top, "bottom": bottom}
+            )
 
-        super(BaseMB, self).__init__(**traits)
+        super().__init__(**traits)
 
 
 class Margin(BaseMB):
@@ -196,11 +262,13 @@ class HasMargin(TraitType):
     default_value = Margin(0)
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Margin instance, or an integer in the range from -32 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        "a Margin instance, or an integer in the range from -32 to 32 "
+        "or a tuple with 1, 2 or 4 integers in that range that can be "
+        "used to define one"
+    )
 
-    def validate (self, object, name, value):
+    def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
         """
         if isinstance(value, int):
@@ -222,9 +290,10 @@ class HasMargin(TraitType):
     def get_default_value(self):
         """ Returns a tuple of the form:
                 (default_value_type, default_value)
+
             which describes the default value for this trait.
         """
-        dv  = self.default_value
+        dv = self.default_value
         dvt = self.default_value_type
         if dvt < 0:
             if isinstance(dv, int):
@@ -233,9 +302,9 @@ class HasMargin(TraitType):
                 dv = self.klass(*dv)
 
             if not isinstance(dv, self.klass):
-                return super(HasMargin, self).get_default_value()
+                return super().get_default_value()
 
-            self.default_value_type = dvt = CALLABLE_AND_ARGS_DEFAULT_VALUE
+            self.default_value_type = dvt = DefaultValue.callable_and_args
             dv = (self.klass, (), dv.trait_get())
 
         return (dvt, dv)
@@ -253,13 +322,18 @@ class HasBorder(HasMargin):
     default_value = Border(0)
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Border instance, or an integer in the range from 0 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        "a Border instance, or an integer in the range from 0 to 32 "
+        "or a tuple with 1, 2 or 4 integers in that range that can be "
+        "used to define one"
+    )
 
 
 #: The position of an image relative to its associated text.
-Position = Enum('left', 'right', 'above', 'below')
+Position = Enum("left", "right", "above", "below")
 
 #: The alignment of text within a control.
-Alignment = Enum('default', 'left', 'center', 'right')
+Alignment = Enum("default", "left", "center", "right")
+
+#: Whether the orientation of a widget's contents is horizontal or vertical.
+Orientation = Enum("vertical", "horizontal")

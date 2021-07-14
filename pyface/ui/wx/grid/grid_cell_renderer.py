@@ -1,24 +1,21 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2006, Enthought, Inc.
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Enthought library imports
+
 from traits.api import Any, HasTraits
+
 
 class GridCellRenderer(HasTraits):
 
     # The toolkit-specific renderer for this cell.
-    renderer = Any
+    renderer = Any()
 
     # A handler to be invoked on right-button mouse clicks.
     def on_right_click(self, grid, row, col):
@@ -43,5 +40,3 @@ class GridCellRenderer(HasTraits):
     # Clean-up!
     def dispose(self):
         pass
-
-#### EOF ######################################################################
