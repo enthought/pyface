@@ -29,7 +29,7 @@ class Wizard(MWizard, Dialog):
 
     """
 
-    # 'IWizard' interface -------------------------------------------------#
+    # 'IWizard' interface --------------------------------------------------
 
     pages = Property(List(IWizardPage))
 
@@ -37,9 +37,13 @@ class Wizard(MWizard, Dialog):
 
     show_cancel = Bool(True)
 
-    # 'IWindow' interface -------------------------------------------------#
+    # 'IWindow' interface --------------------------------------------------
 
     title = Str("Wizard")
+
+    # private traits -------------------------------------------------------
+
+    _layered_panel = Instance(LayeredPanel)
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -48,7 +52,8 @@ class Wizard(MWizard, Dialog):
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog. """
 
-        self._layered_panel = panel = LayeredPanel(parent)
+        self._layered_panel = panel = LayeredPanel(parent=parent, create=False)
+        panel.create()
         # fixme: Specific size?
         panel.control.SetSize((100, 200))
 
@@ -145,8 +150,6 @@ class Wizard(MWizard, Dialog):
             if self._next is not None:
                 self._next.SetDefault()
 
-        return
-
     # Trait handlers -------------------------------------------------------
 
     def _controller_default(self):
@@ -177,5 +180,3 @@ class Wizard(MWizard, Dialog):
         """ Called when the 'Back' button is pressed. """
 
         self.previous()
-
-        return
