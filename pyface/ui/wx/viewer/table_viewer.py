@@ -23,6 +23,9 @@ from pyface.viewer.table_content_provider import TableContentProvider
 from pyface.viewer.table_label_provider import TableLabelProvider
 
 
+version_4_0 = (wx.VERSION < (4, 1))
+
+
 class TableViewer(ContentViewer):
     """ A viewer for tabular data. """
 
@@ -305,12 +308,18 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
 
         # Set up attributes to show alternate rows with a different background
         # colour.
-        self._even_row_attribute = wx.ItemAttr()
+        if version_4_0:
+            self._even_row_attribute = wx.ListItemAttr()
+        else:
+            self._even_row_attribute = wx.ItemAttr()
         self._even_row_attribute.SetBackgroundColour(
             self._viewer.even_row_background
         )
 
-        self._odd_row_attribute = wx.ItemAttr()
+        if version_4_0:
+            self._odd_row_attribute = wx.ListItemAttr()
+        else:
+            self._odd_row_attribute = wx.ItemAttr()
         self._odd_row_attribute.SetBackgroundColour(
             self._viewer.odd_row_background
         )
