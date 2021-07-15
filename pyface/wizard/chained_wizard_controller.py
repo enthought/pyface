@@ -168,7 +168,7 @@ class ChainedWizardController(WizardController):
 
     # Static ----
 
-    @observe("current_paage")
+    @observe("current_page")
     def _reset_observers_on_current_page_and_update(self, event):
         """ Called when the current page is changed. """
         old, new = event.old, event.new
