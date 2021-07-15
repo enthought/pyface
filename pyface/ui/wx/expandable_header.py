@@ -205,7 +205,6 @@ class ExpandableHeader(Widget):
     def _on_down(self, event):
         """ Called when button is pressed. """
 
-        #print('ImageButton._on_down')
         self.state = not self.state
         self.control.Refresh()
 
