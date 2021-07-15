@@ -89,18 +89,23 @@ class ImageButton(Widget):
 
         super().__init__(**traits)
 
+        self._create_control(parent)
+
+    def _create_control(self, parent):
         self._recalc_size()
 
-        self.control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
-        self.control._owner = self
+        control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
+        control._owner = self
         self._mouse_over = self._button_down = False
 
         # Set up mouse event handlers:
-        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
-        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
-        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
-        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
-        self.control.Bind(wx.EVT_PAINT, self._on_paint)
+        control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
+        control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
+        control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
+        control.Bind(wx.EVT_PAINT, self._on_paint)
+
+        return control
 
     def _recalc_size(self):
         # Calculate the size of the button:
