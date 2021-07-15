@@ -10,11 +10,11 @@
 
 """ A viewer for tabular data. """
 
+import warnings
 
 import wx
 
-from traits.api import Color, Event, Instance
-
+from traits.api import Color, Event, Instance, Int, Tuple
 
 from pyface.ui.wx.image_list import ImageList
 from pyface.viewer.content_viewer import ContentViewer
@@ -53,6 +53,9 @@ class TableViewer(ContentViewer):
     # A drag operation was started on a node.
     row_begin_drag = Event()
 
+    # The size of the icons in the table.
+    _image_size = Tuple(Int, Int)
+
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
 
@@ -62,12 +65,23 @@ class TableViewer(ContentViewer):
         specifies the size of the images (if any) displayed in the table.
 
         """
+        create = traits.pop('create', True)
 
-        # Base-class constructor.
-        super().__init__(**traits)
+        # Base class constructors.
+        super().__init__(parent=parent, _image_size=image_size, **traits)
 
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
+
+    def _create_control(self, parent):
         # Create the toolkit-specific control.
-        self.control = table = _Table(parent, image_size, self)
+        self.control = table = _Table(parent, self._image_size, self)
 
         # Table events.
         table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_item_selected)
@@ -93,7 +107,7 @@ class TableViewer(ContentViewer):
         # don't want to react if the input is set in the constructor.
         self.observe(self._on_input_changed, "input")
 
-        return
+        return table
 
     # ------------------------------------------------------------------------
     # 'TableViewer' interface.
