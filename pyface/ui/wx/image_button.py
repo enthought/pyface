@@ -14,11 +14,12 @@
     toolbar button.
 """
 
-
+import warnings
 import wx
+
 from numpy import array, frombuffer, reshape, ravel, dtype
 
-from traits.api import Bool, Str, Range, Enum, Instance, Event
+from traits.api import Any, Bool, Str, Range, Enum, Instance, Event
 
 from pyface.ui_traits import Orientation
 from .widget import Widget
@@ -78,6 +79,8 @@ class ImageButton(Widget):
     # Fired when a 'button' or 'toolbar' style control is clicked:
     clicked = Event()
 
+    _image = Any()
+
     # ---------------------------------------------------------------------------
     #  Initializes the object:
     # ---------------------------------------------------------------------------
@@ -85,11 +88,18 @@ class ImageButton(Widget):
     def __init__(self, parent, **traits):
         """ Creates a new image control.
         """
-        self._image = None
+        create = traits.pop("create", True)
 
-        super().__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        self._create_control(parent)
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     def _create_control(self, parent):
         self._recalc_size()
