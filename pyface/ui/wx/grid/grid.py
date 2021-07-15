@@ -10,8 +10,9 @@
 
 """ A grid control with a model/ui architecture. """
 
-
 import sys
+import warnings
+
 import wx
 import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
@@ -165,15 +166,26 @@ class Grid(Widget):
         'parent' is the toolkit-specific control that is the grid's parent.
 
         """
+        create = traits.pop('create', True)
 
         # Base class constructors.
-        super().__init__(**traits)
+        super().__init__(parent=parent, **traits)
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
+
+    def _create_control(self, parent):
 
         # Flag set when columns are resizing:
         self._user_col_size = False
 
         # Create the toolkit-specific control.
-        self.control = self._grid = grid = wxGrid(parent, -1)
+        self._grid = grid = wxGrid(parent, -1)
         grid.grid = self
 
         self._moveTo = None
@@ -328,6 +340,7 @@ class Grid(Widget):
 
         self._edit = False
         grid.Bind(wx.EVT_IDLE, self._on_idle)
+        return grid
 
     def dispose(self):
         # Remove all wx handlers:
