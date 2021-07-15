@@ -187,7 +187,7 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
         If no toolkit is found, or if the toolkit cannot be loaded for some
         reason.
     """
-    entry_point_group = importlib_metadata.entry_points()[entry_point]
+    entry_point_group = importlib_metadata.entry_points().select(entry_point)
     plugins = [
         plugin for plugin in entry_point_group if plugin.name == toolkit_name
     ]
@@ -256,7 +256,7 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
         return import_toolkit(ETSConfig.toolkit, entry_point)
 
     entry_points = [
-        plugin for plugin in importlib_metadata.entry_points()[entry_point]
+        plugin for plugin in importlib_metadata.entry_points().select(entry_point)
         if toolkits is None or plugin.name in toolkits
     ]
     for plugin in sorted(entry_points, key=priorities):
