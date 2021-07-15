@@ -13,21 +13,14 @@
 
 import logging
 import os
-
+import warnings
 
 import wx
 
 
 from traits.api import (
-    Any,
-    Bool,
-    Callable,
-    Enum,
-    Event,
-    Instance,
-    List,
-    Property,
-    Str,
+    Any, Bool, Callable, Enum, Event, Instance, Int, List, Property, Str,
+    Tuple,
 )
 
 
@@ -163,6 +156,9 @@ class Tree(Widget):
     # Flag for allowing selection events to be ignored
     _ignore_selection_events = Bool(False)
 
+    # The size of the icons in the tree.
+    _image_size = Tuple(Int, Int)
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
@@ -176,10 +172,21 @@ class Tree(Widget):
         specifies the size of the images (if required) displayed in the tree.
 
         """
+        create = traits.pop('create', True)
 
         # Base class constructors.
-        super().__init__(**traits)
+        super().__init__(parent=parent, _image_size=image_size, **traits)
 
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
+
+    def _create_control(self, parent):
         # Create the toolkit-specific control.
         self.control = tree = _Tree(
             self, parent, wxid=wx.ID_ANY, style=self._get_style()
@@ -211,11 +218,11 @@ class Tree(Widget):
         tree.Bind(wx.EVT_TREE_DELETE_ITEM, self._on_tree_delete_item)
 
         # Enable the tree as a drag and drop target.
-        self.control.SetDropTarget(PythonDropTarget(self))
+        tree.SetDropTarget(PythonDropTarget(self))
 
         # The image list is a wxPython-ism that caches all images used in the
         # control.
-        self._image_list = ImageList(image_size[0], image_size[1])
+        self._image_list = ImageList(*self._image_size)
         if self.show_images:
             tree.AssignImageList(self._image_list)
 
@@ -228,6 +235,7 @@ class Tree(Widget):
 
         # Listen for changes to the model.
         self._add_model_listeners(self.model)
+        return tree
 
     # ------------------------------------------------------------------------
     # 'Tree' interface.
