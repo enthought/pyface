@@ -33,7 +33,7 @@ class TestToolkit(unittest.TestCase):
 
     def test_core_plugins(self):
         # test that we can see appropriate core entrypoints
-        plugins = {ep.name for ep in entry_points()['pyface.toolkits']}
+        plugins = {ep.name for ep in entry_points().select(group='pyface.toolkits'}
         self.assertLessEqual({"qt4", "wx", "qt", "null"}, plugins)
 
     def test_toolkit_object(self):
