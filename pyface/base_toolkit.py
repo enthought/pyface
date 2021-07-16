@@ -187,7 +187,7 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
         If no toolkit is found, or if the toolkit cannot be loaded for some
         reason.
     """
-    entry_point_group = importlib_metadata.entry_points().select(entry_point)
+    entry_point_group = importlib_metadata.entry_points().select(group=entry_point)
     plugins = [
         plugin for plugin in entry_point_group if plugin.name == toolkit_name
     ]
