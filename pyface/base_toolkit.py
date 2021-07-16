@@ -256,7 +256,7 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
         return import_toolkit(ETSConfig.toolkit, entry_point)
 
     entry_points = [
-        plugin for plugin in importlib_metadata.entry_points().select(entry_point)
+        plugin for plugin in importlib_metadata.entry_points().select(group=entry_point)
         if toolkits is None or plugin.name in toolkits
     ]
     for plugin in sorted(entry_points, key=priorities):
