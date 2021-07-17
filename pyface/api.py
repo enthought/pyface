@@ -112,7 +112,7 @@ from .key_pressed_event import KeyPressedEvent
 from .layered_panel import LayeredPanel
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-
+from .array_image import ArrayImage
 from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
