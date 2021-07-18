@@ -66,6 +66,7 @@ UI Traits
 Miscellaneous
 -------------
 
+- :class:`~.ArrayImage`
 - :class:`~.beep`
 - :class:`~.Filter`
 - :class:`~.HeadingText`
@@ -95,6 +96,7 @@ import logging as _logging
 from .about_dialog import AboutDialog
 from .application import Application
 from .application_window import ApplicationWindow
+from .array_image import ArrayImage
 from .beep import beep
 from .clipboard import clipboard, Clipboard
 from .confirmation_dialog import confirm, ConfirmationDialog
@@ -112,7 +114,7 @@ from .key_pressed_event import KeyPressedEvent
 from .layered_panel import LayeredPanel
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-from .array_image import ArrayImage
+
 from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
