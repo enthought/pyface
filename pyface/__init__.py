@@ -19,7 +19,7 @@ except ImportError:
 
 
 __requires__ = [
-    'importlib-metadata>=3.6.0; python_version<"3.10"',
+    'importlib-metadata>=3.6.0; python_version<"3.8"',
     'importlib-resources>=1.1.0; python_version<"3.9"',
     "traits>=6.2"
 ]

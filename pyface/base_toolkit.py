@@ -68,14 +68,12 @@ import os
 import sys
 
 try:
-    import importlib_metadata
-except ImportError:
     # Starting Python 3.8, importlib.metadata is available in the Python
     # standard library and starting Python 3.10, the "select" interface is
     # available on EntryPoints.
-    # Note that we require importlib_metadata as a dependency for all Python
-    # version < 3.10.
     import importlib.metadata as importlib_metadata
+except ImportError:
+    import importlib_metadata
 
 from traits.api import HasTraits, List, ReadOnly, Str, TraitError
 from traits.etsconfig.api import ETSConfig
