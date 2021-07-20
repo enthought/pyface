@@ -31,7 +31,7 @@ class PILImage(MPILImage):
         Parameters
         ----------
         size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
+            The desired size as a (width, height) tuple, or None if wanting
             default image size.
 
         Returns

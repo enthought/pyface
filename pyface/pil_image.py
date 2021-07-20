@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The implementation of an image resource. """
+""" The implementation of a IPILImage. """
 
 
 # Import the toolkit specific version.

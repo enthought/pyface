@@ -7,7 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-""" The interface for an image resource. """
+""" The interface for a PIL Image. """
 
 from traits.api import HasStrictTraits, Instance
 
@@ -42,8 +42,8 @@ class MPILImage(HasStrictTraits):
         Parameters
         ----------
         size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.  This is currently ignored.
+            The desired size as a (width, height) tuple, or None if wanting
+            default image size.
 
         Returns
         -------
@@ -60,8 +60,8 @@ class MPILImage(HasStrictTraits):
         Parameters
         ----------
         size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default icon size.  This is currently ignored.
+            The desired size as a (width, height) tuple, or None if wanting
+            default icon size.
 
         Returns
         -------
