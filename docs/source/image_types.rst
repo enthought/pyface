@@ -123,7 +123,7 @@ directories or zipfiles containing images and metadata files.
 Accessing Images and Image Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you give either a :class:`~pyface.ui_traits.Image` an image name which
+If you give an :class:`~pyface.ui_traits.Image` an image name which
 starts with ``@``, then it will interpret the name to be the id of an
 image in the :class:`~pyface.image.image.ImageLibrary` of the form
 ``@<volume-name>:<image-name>``.  Alternatively, you can ask the image
@@ -167,9 +167,9 @@ with:
   a volume.
 
 Additional volumes can be added programatically by calling
-:meth:`~pyface.image.image.ImageLibrary.add_volume` with the path of zipfile
+:meth:`~pyface.image.image.ImageLibrary.add_volume` with the path of a zipfile
 or directory.  Alternatively :meth:`~pyface.image.image.ImageLibrary.add_path`
-can be used to add volume by givin a name for the volume and a directory path
+can be used to add volume by giving a name for the volume and a directory path
 to use.  If no path is provided in either case, the library will look for an
 ``images`` directory next to the current module.
 
@@ -194,4 +194,3 @@ any changes made by the user into the data file.
 
 Images stored in image volumes which are zipfiles are extracted to temporary
 files as needed for actual use.
-
