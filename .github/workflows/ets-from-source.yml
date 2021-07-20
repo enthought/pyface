@@ -8,6 +8,7 @@ on:
 
 env:
   INSTALL_EDM_VERSION: 3.2.3
+  PYTHONUNBUFFERED: 1
 
 jobs:
 
