@@ -49,7 +49,7 @@ def image_to_bitmap(image):
 
 def bitmap_to_image(bitmap):
     """ Convert a wx.Bitmap to a wx.Image.
-    
+
     Parameters
     ----------
     bitmap : wx.Bitmap
@@ -65,7 +65,7 @@ def bitmap_to_image(bitmap):
 
 def bitmap_to_icon(bitmap):
     """ Convert a wx.Bitmap to a wx.Icon.
-    
+
     Parameters
     ----------
     bitmap : wx.Bitmap
