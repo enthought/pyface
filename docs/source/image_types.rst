@@ -105,3 +105,92 @@ Implementers of new toolkits will likely want to write their own versions of
 these, and writers of new concrete :class:`~pyface.i_image.IImage`
 implementations may want to make use of them to simplify the implementation of
 the interface.
+
+:class:`~pyface.image.image.ImageLibrary`
+-----------------------------------------
+
+The :class:`~pyface.image_resource.ImageResource` system is built around
+supplying image files which are local to the place where they are being used.
+Sometimes, however, you want your images to be available throughout the
+application.  Pyface provides the :class:`~pyface.image.image.ImageLibrary`
+to allow for this use case.
+
+The :class:`~pyface.image.image.ImageLibrary` is a global object that
+holds a catalog of :class:`~pyface.image.image.ImageVolume` objects that in
+turn contain images and associated metadata.  Image volumes are either
+directories or zipfiles containing images and metadata files.
+
+Accessing Images and Image Metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you give an :class:`~pyface.ui_traits.Image` an image name which
+starts with ``@``, then it will interpret the name to be the id of an
+image in the :class:`~pyface.image.image.ImageLibrary` of the form
+``@<volume-name>:<image-name>``.  Alternatively, you can ask the image
+library directly for an image resource that corresponds to the id via the
+:meth:`~pyface.image.image.ImageLibrary.image_resource` method:
+
+.. code-block:: python
+
+    from pyface.image.image import ImageLibrary
+    from pyface.actions.api import Action
+
+    red_ball_image = ImageLibrary.image_resource("@icons:red_ball")
+    action = Action(image=red_ball_image)
+
+Each image has an :class:`~pyface.image.image.ImageInfo` metadata object
+associated with it which can be obtained via the
+:meth:`~pyface.image.image.ImageLibrary.image_info` method.  A list of all
+known image metadata can be obtained from the
+:attr:`~pyface.image.image.ImageLibrary.images` trait.
+
+:class:`~pyface.image.image.ImageVolume` Instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Image volumes are represented by the :class:`~pyface.image.image.ImageVolume`
+class.  Image volumes may have multiple aliases in addition to their primary
+name, and these aliases can be used as part of the id of an image.  The
+volume which stores an image can be found using the
+:meth:`~pyface.image.image.ImageLibrary.find_volume` method.  The
+:attr:`~pyface.image.image.ImageLibrary.catalog` and
+:attr:`~pyface.image.image.ImageLibrary.aliases` attributes are dictionaries
+that map names to volume objects.
+
+By default the :class:`~pyface.image.image.ImageLibrary` is initialized
+with:
+
+- an ``"application"`` volume which is assumed to be in a "library" directory
+  next to the application executable (ie. whatever is in ``sys.argv[0]``
+  which is usually the main module's path);
+- the ``std`` and ``icons`` volumes in ``pyface/image/library``
+- any path listed in the ``TRAITS_IMAGES`` environment variable which contains
+  a volume.
+
+Additional volumes can be added programatically by calling
+:meth:`~pyface.image.image.ImageLibrary.add_volume` with the path of a zipfile
+or directory.  Alternatively :meth:`~pyface.image.image.ImageLibrary.add_path`
+can be used to add volume by giving a name for the volume and a directory path
+to use.  If no path is provided in either case, the library will look for an
+``images`` directory next to the current module.
+
+Just as with image libraries, the
+:meth:`~pyface.image.image.ImageVolume.image_resource` method returns an
+:class:`~pyface.image_resource.ImageResource` instance for the specified image
+name.  Additionally, the bytes of the actual image file are available through
+:meth:`~pyface.image.image.ImageVolume.image_data`.
+
+Image volumes have a :attr:`~pyface.image.image.ImageVolume.info` trait that
+holds a list of :class:`~pyface.image.image.ImageVolumeInfo` instances.  These
+hold metadata about groups of images, including copyright and licensing
+information.  The :attr:`~pyface.image.image.ImageVolume.category` and
+:attr:`~pyface.image.image.ImageVolume.keywords` traits hold additional
+information about the volume itself.
+
+Image volumes are designed to reflect the actual contents of the directories
+or zipfile that they refer to.  The
+:meth:`~pyface.image.image.ImageVolume.update` method clears and reloads the
+data from disk.  The :meth:`~pyface.image.image.ImageVolume.save` method saves
+any changes made by the user into the data file.
+
+Images stored in image volumes which are zipfiles are extracted to temporary
+files as needed for actual use.
