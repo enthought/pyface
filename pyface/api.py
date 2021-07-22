@@ -72,12 +72,17 @@ Miscellaneous
 - :class:`~.HeadingText`
 - :class:`~.ImageCache`
 - :class:`~.LayeredPanel`
+- :class:`~.PILImage`
 - :class:`~.PythonEditor`
 - :class:`~.PythonShell`
 - :class:`~.Sorter`
 
 Note that the :class:`~.ArrayImage` is
 only available if the ``numpy`` package is available in the Python
+environment.
+
+Note that the :class:`~.PILImage` is
+only available if the ``pillow`` package is available in the Python
 environment.
 
 Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
@@ -126,6 +131,13 @@ with _optional_import(
          msg="ArrayImage not available due to missing numpy.", 
          logger=_logging.getLogger(__name__)): 
      from .array_image import ArrayImage
+
+# Excuse pillow dependency (for Qt), otherwise re-raise
+with _optional_import( 
+         "pillow", 
+         msg="PILImage not available due to missing pillow.", 
+         logger=_logging.getLogger(__name__)): 
+     from .pil_image import PILImage
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
 with _optional_import(
