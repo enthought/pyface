@@ -152,6 +152,8 @@ def read_file(file_name):
 def write_file(file_name, data):
     """ Writes the specified data to the specified file.
     """
+    if isinstance(data, str):
+        data = data.encode('utf8')
     with open(file_name, "wb") as fh:
         fh.write(data)
 
@@ -788,7 +790,7 @@ class ImageVolume(HasPrivateTraits):
                     zf.read("image_info.py"), "images"
                 )
 
-            # Check to see if our time stamp is up to data with the file:
+            # Check to see if our time stamp is up to date with the file:
             if self.time_stamp < time_stamp:
 
                 # If not, create an ImageInfo object for all image files
