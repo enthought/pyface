@@ -66,6 +66,7 @@ UI Traits
 Miscellaneous
 -------------
 
+- :class:`~.ArrayImage`
 - :class:`~.beep`
 - :class:`~.Filter`
 - :class:`~.HeadingText`
@@ -74,6 +75,10 @@ Miscellaneous
 - :class:`~.PythonEditor`
 - :class:`~.PythonShell`
 - :class:`~.Sorter`
+
+Note that the :class:`~.ArrayImage` is
+only available if the ``numpy`` package is available in the Python
+environment.
 
 Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
 only available if the ``pygments`` package is available in the Python
@@ -114,6 +119,13 @@ from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
 
 from .util._optional_dependencies import optional_import as _optional_import
+
+# Excuse numpy dependency (for Qt), otherwise re-raise
+with _optional_import( 
+         "numpy", 
+         msg="ArrayImage not available due to missing numpy.", 
+         logger=_logging.getLogger(__name__)): 
+     from .array_image import ArrayImage
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
 with _optional_import(
