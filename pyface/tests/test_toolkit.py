@@ -11,7 +11,8 @@ import unittest
 
 try:
     # Starting Python 3.8, importlib.metadata is available in the Python
-    # standard library.
+    # standard library and starting Python 3.10, the "select" interface is
+    # available on EntryPoints.
     from importlib.metadata import entry_points
 except ImportError:
     from importlib_metadata import entry_points
@@ -33,7 +34,19 @@ class TestToolkit(unittest.TestCase):
 
     def test_core_plugins(self):
         # test that we can see appropriate core entrypoints
-        plugins = {ep.name for ep in entry_points().select(group='pyface.toolkits')}
+
+        # This compatibility layer can be removed when we drop support for
+        # Python < 3.10. Ref https://github.com/enthought/pyface/issues/999.
+        all_entry_points = entry_points()
+        if hasattr(all_entry_points, "select"):
+            plugins = {
+                ep.name
+                for ep in entry_points().select(group='pyface.toolkits')
+            }
+        else:
+            plugins = {
+                ep.name for ep in entry_points()['pyface.toolkits']
+            }
         self.assertLessEqual({"qt4", "wx", "qt", "null"}, plugins)
 
     def test_toolkit_object(self):

@@ -98,6 +98,7 @@ dependencies = {
     "numpy",
     "pygments",
     "coverage",
+    "pillow",
 }
 
 source_dependencies = {
