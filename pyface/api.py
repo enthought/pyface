@@ -77,13 +77,11 @@ Miscellaneous
 - :class:`~.PythonShell`
 - :class:`~.Sorter`
 
-Note that the :class:`~.ArrayImage` is
-only available if the ``numpy`` package is available in the Python
-environment.
+Note that the :class:`~.ArrayImage` is only available if the ``numpy``
+package is available in the Python environment.
 
-Note that the :class:`~.PILImage` is
-only available if the ``pillow`` package is available in the Python
-environment.
+Note that the :class:`~.PILImage` is only available if the ``pillow``
+package is available in the Python environment.
 
 Note that the :class:`~.PythonEditor` and :class:`~.PythonShell` classes are
 only available if the ``pygments`` package is available in the Python
@@ -125,14 +123,22 @@ from .progress_dialog import ProgressDialog
 
 from .util._optional_dependencies import optional_import as _optional_import
 
-# Excuse numpy dependency (for Qt), otherwise re-raise
+# Excuse numpy dependency, otherwise re-raise
 with _optional_import( 
          "numpy", 
          msg="ArrayImage not available due to missing numpy.", 
-         logger=_logging.getLogger(__name__)): 
+         logger=_logging.getLogger(__name__)):
+
+     # We need to manually try importing numpy because the ``ArrayImage``
+     # import will end up raising a ``TraitError`` exception instead of an
+     # ``ImportError``, which isnt caught by ``_optional_import``.
+     import numpy
+
      from .array_image import ArrayImage
 
-# Excuse pillow dependency (for Qt), otherwise re-raise
+     del numpy
+
+# Excuse pillow dependency, otherwise re-raise
 with _optional_import( 
          "pillow", 
          msg="PILImage not available due to missing pillow.", 
