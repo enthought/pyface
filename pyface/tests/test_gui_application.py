@@ -89,13 +89,16 @@ class TestingApp(GUIApplication):
             window.veto = True
             self.exit_vetoed = True
 
-    def _application_initialized_fired(self):
+    @observe("application_initialized")
+    def _update_window_open_vetoed(self, event):
         self.window_open_vetoed = (
             len(self.windows) > 0 and self.windows[0].control is None
         )
 
-    def _exiting_fired(self, event):
-        event.veto = self.veto_exit
+    @observe('exiting')
+    def _set_veto_on_exiting_event(self, event):
+        vetoable_event = event.new
+        vetoable_event.veto = self.veto_exit
         self.exit_vetoed = self.veto_exit
 
     def _prepare_exit(self):

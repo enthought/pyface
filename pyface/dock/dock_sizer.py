@@ -1998,7 +1998,8 @@ class DockControl(DockItem):
     #  Handles the 'activated' event being fired:
     # ---------------------------------------------------------------------------
 
-    def _activated_fired(self):
+    @observe('activated')
+    def _activate_dockable_tab(self, event):
         """ Notifies the active dockable that the control's tab is being
             activated.
         """
