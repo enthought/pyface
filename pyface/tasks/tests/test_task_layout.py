@@ -54,7 +54,3 @@ class LayoutItemsTestCase(unittest.TestCase):
         items = self.items
         with self.assertRaises(ValueError):
             LayoutContainer(*items, items=items)
-
-
-if __name__ == "__main__":
-    unittest.main()

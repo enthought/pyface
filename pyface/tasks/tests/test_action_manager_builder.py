@@ -444,7 +444,3 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             id="MenuBar",
         )
         self.assertActionElementsEqual(actual, desired)
-
-
-if __name__ == "__main__":
-    unittest.main()
