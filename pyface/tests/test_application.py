@@ -14,7 +14,7 @@ from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase
 
-from traits.api import Bool
+from traits.api import Bool, observe
 from traits.testing.api import UnittestTools
 
 from ..application import ApplicationExit, Application
@@ -75,8 +75,10 @@ class TestingApp(Application):
             self.exit_vetoed = True
         return True
 
-    def _exiting_fired(self, event):
-        event.veto = self.veto_exit
+    @observe('exiting')
+    def _set_veto_on_exiting_event(self, event):
+        vetoable_event = event.new
+        vetoable_event.veto = self.veto_exit
 
     def _prepare_exit(self):
         self.exit_prepared = True
