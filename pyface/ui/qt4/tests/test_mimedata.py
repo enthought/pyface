@@ -161,7 +161,3 @@ class PyMimeDataTestCase(unittest.TestCase):
         # remove local instance to simulate cross-process
         md._local_instance = None
         self.assertEqual(md.instanceType(), None)
-
-
-if __name__ == "__main__":
-    unittest.main()

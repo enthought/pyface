@@ -98,7 +98,3 @@ class TopologicalSortTestCase(unittest.TestCase):
         pairs = [(1, 2), (2, 3), (3, 1)]
         result, has_cycles = topological_sort(pairs)
         self.assertTrue(has_cycles)
-
-
-if __name__ == "__main__":
-    unittest.main()

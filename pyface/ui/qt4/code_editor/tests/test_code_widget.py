@@ -108,7 +108,3 @@ class TestCodeWidget(unittest.TestCase):
             self.assertTrue(acw.replace.isVisible())
         acw.replace.hide()
         self.assertFalse(acw.replace.isVisible())
-
-
-if __name__ == "__main__":
-    unittest.main()

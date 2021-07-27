@@ -61,7 +61,3 @@ class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
             self.area_pane.create(None)
         with self.event_loop():
             self.area_pane.destroy()
-
-
-if __name__ == "__main__":
-    unittest.main()

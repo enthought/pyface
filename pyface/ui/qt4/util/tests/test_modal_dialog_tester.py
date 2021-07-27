@@ -171,7 +171,3 @@ class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
                 tester.close()
 
         tester.open_and_run(when_opened=check_and_close)
-
-
-if __name__ == "__main__":
-    unittest.main()

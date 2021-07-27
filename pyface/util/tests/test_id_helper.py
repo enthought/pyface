@@ -48,7 +48,3 @@ class IDHelperTestCase(unittest.TestCase):
 
         self.assertEqual(get_unique_id(bogus_1), "Bogus_1")
         self.assertEqual(get_unique_id(bogus_2), "Bogus_2")
-
-
-if __name__ == "__main__":
-    unittest.main()

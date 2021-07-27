@@ -517,7 +517,3 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         with event_loop():
             window.close()
-
-
-if __name__ == "__main__":
-    unittest.main()
