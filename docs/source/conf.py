@@ -165,7 +165,7 @@ except ImportError as exc:
 # Useful aliases to avoid repeating long URLs.
 extlinks = {
     'github-examples': (
-        'https://github.com/enthought/pyface/tree/master/examples/%s',
+        'https://github.com/enthought/pyface/tree/main/examples/%s',
         'github-examples'
     )
 }
