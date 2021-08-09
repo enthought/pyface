@@ -255,8 +255,6 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
 
     Raises
     ------
-    TraitError
-        If no working toolkit is found.
     RuntimeError
         If no ETSConfig.toolkit is set but the toolkit cannot be loaded for
         some reason.
@@ -292,5 +290,3 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
     # if all else fails, try to import the null toolkit.
     with ETSConfig.provisional_toolkit("null"):
         return import_toolkit("null", entry_point)
-
-    raise TraitError("Could not import any {} toolkit.".format(entry_point))
