@@ -237,6 +237,7 @@ class MDataViewWidget(HasStrictTraits):
         """ Initializes the toolkit specific control.
         """
         logger.debug('Initializing DataViewWidget')
+        super()._initialize_control()
         self._set_control_header_visible(self.header_visible)
         self._set_control_selection_mode(self.selection_mode)
         self._set_control_selection_type(self.selection_type)

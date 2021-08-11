@@ -101,6 +101,7 @@ class MField(HasTraits):
 
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
+        super()._initialize_control()
         self._set_control_tooltip(self.tooltip)
 
     def _update_value(self, value):
