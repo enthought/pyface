@@ -228,9 +228,7 @@ class MDataViewWidget(HasStrictTraits):
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        super()._create()
 
         self.show(self.visible)
         self.enable(self.enabled)

@@ -94,9 +94,7 @@ class MField(HasTraits):
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        super()._create()
 
         self.show(self.visible)
         self.enable(self.enabled)
@@ -171,7 +169,7 @@ class MField(HasTraits):
             self._set_control_tooltip(tooltip)
 
     def _context_menu_updated(self, event):
-        
+
         if self.control is not None:
             if event.new is None:
                 self._observe_control_context_menu(remove=True)
