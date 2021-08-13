@@ -19,7 +19,7 @@ from pyface.qt.QtGui import (
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 from .data_view_item_model import DataViewItemModel
 
 # XXX This file is scaffolding and may need to be rewritten
@@ -88,7 +88,7 @@ class DataViewTreeView(QTreeView):
 
 
 @provides(IDataViewWidget)
-class DataViewWidget(MDataViewWidget, Widget):
+class DataViewWidget(MDataViewWidget, LayoutWidget):
     """ The Qt implementation of the DataViewWidget. """
 
     #: Factory for the underlying Qt control, to facilitate replacement

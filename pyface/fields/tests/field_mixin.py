@@ -9,49 +9,15 @@
 # Thanks for using Enthought open source!
 
 
-from traits.testing.api import UnittestTools
+from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
 
 from pyface.action.api import Action, MenuManager
 from pyface.gui import GUI
 from pyface.window import Window
 
 
-class FieldMixin(UnittestTools):
+class FieldMixin(LayoutWidgetMixin):
     """ Mixin which provides standard methods for all fields. """
-
-    def setUp(self):
-        self.gui = GUI()
-
-        self.parent = Window()
-        self.parent._create()
-        self.addCleanup(self._destroy_parent)
-        self.gui.process_events()
-
-        self.widget = self._create_widget()
-
-        self.parent.open()
-        self.gui.process_events()
-
-    def _create_widget(self):
-        raise NotImplementedError()
-
-    def _create_widget_control(self):
-        self.widget._create()
-        self.addCleanup(self._destroy_widget)
-        self.widget.show(True)
-        self.gui.process_events()
-
-    def _destroy_parent(self):
-        self.parent.destroy()
-        self.gui.process_events()
-        self.parent = None
-
-    def _destroy_widget(self):
-        self.widget.destroy()
-        self.gui.process_events()
-        self.widget = None
-
-    # Tests ------------------------------------------------------------------
 
     def test_field_tooltip(self):
         self._create_widget_control()

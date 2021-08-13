@@ -13,10 +13,10 @@
 
 from traits.api import Any, HasTraits, Instance, Str
 
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
-class IField(IWidget):
+class IField(ILayoutWidget):
     """ The field interface.
 
     A field is a widget that displays a value and (potentially) allows a user
@@ -94,15 +94,14 @@ class MField(HasTraits):
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        super()._create()
 
         self.show(self.visible)
         self.enable(self.enabled)
 
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
+        super()._initialize_control()
         self._set_control_tooltip(self.tooltip)
 
     def _update_value(self, value):
@@ -171,7 +170,7 @@ class MField(HasTraits):
             self._set_control_tooltip(tooltip)
 
     def _context_menu_updated(self, event):
-        
+
         if self.control is not None:
             if event.new is None:
                 self._observe_control_context_menu(remove=True)
