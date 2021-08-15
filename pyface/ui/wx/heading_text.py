@@ -18,11 +18,11 @@ from traits.api import Instance, provides
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from pyface.image_resource import ImageResource
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IHeadingText)
-class HeadingText(MHeadingText, Widget):
+class HeadingText(MHeadingText, LayoutWidget):
     """ The Wx-specific implementation of a HeadingText.
     """
 

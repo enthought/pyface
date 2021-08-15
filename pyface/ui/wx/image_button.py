@@ -22,7 +22,7 @@ from numpy import array, frombuffer, reshape, ravel, dtype
 from traits.api import Any, Bool, Str, Range, Enum, Instance, Event
 
 from pyface.ui_traits import Orientation
-from .widget import Widget
+from .layout_widget import LayoutWidget
 from .image_resource import ImageResource
 
 # -------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ DisabledTextColor = wx.Colour(128, 128, 128)
 # -------------------------------------------------------------------------------
 
 
-class ImageButton(Widget):
+class ImageButton(LayoutWidget):
     """ An image and text-based control that can be used as a normal, radio or
         toolbar button.
     """

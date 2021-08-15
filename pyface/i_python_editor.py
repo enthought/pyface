@@ -11,13 +11,13 @@
 """ A widget for editing Python code. """
 
 
-from traits.api import Bool, Event, HasTraits, Interface, Str
+from traits.api import Bool, Event, HasTraits, Str
 
-
+from pyface.i_layout_widget import ILayoutWidget
 from pyface.key_pressed_event import KeyPressedEvent
 
 
-class IPythonEditor(Interface):
+class IPythonEditor(ILayoutWidget):
     """ A widget for editing Python code. """
 
     # 'IPythonEditor' interface --------------------------------------------

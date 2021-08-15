@@ -16,10 +16,10 @@ import wx
 from traits.api import Event, Instance, Int
 
 from pyface.list_box_model import ListBoxModel
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
-class ListBox(Widget):
+class ListBox(LayoutWidget):
     """ A simple list box widget with a model-view architecture. """
 
     # The model that provides the data for the list box.

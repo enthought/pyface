@@ -19,10 +19,10 @@ from traits.api import Dict, Instance, Str
 
 from .expandable_header import ExpandableHeader
 from .image_resource import ImageResource
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
-class ExpandablePanel(Widget):
+class ExpandablePanel(LayoutWidget):
     """ An expandable panel. """
 
     # The default style.

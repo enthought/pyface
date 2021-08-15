@@ -36,11 +36,11 @@ from .console.api import (
 )
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonShell)
-class PythonShell(MPythonShell, Widget):
+class PythonShell(MPythonShell, LayoutWidget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
