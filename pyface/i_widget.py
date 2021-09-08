@@ -126,6 +126,7 @@ class MWidget(HasTraits):
         :py:attr:``control`` trait.
         """
         self.control = self._create_control(self.parent)
+        self._initialize_control()
         self._add_event_listeners()
 
     def _create_control(self, parent):
@@ -143,6 +144,11 @@ class MWidget(HasTraits):
             A control for the widget.
         """
         raise NotImplementedError()
+
+    def _initialize_control(self):
+        """ Perform any post-creation initialization for the control.
+        """
+        pass
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
