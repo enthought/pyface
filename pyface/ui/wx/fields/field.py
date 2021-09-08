@@ -16,12 +16,12 @@ from traits.api import Any, Instance, Str, provides
 import wx
 
 from pyface.fields.i_field import IField, MField
-from pyface.ui.wx.widget import Widget
+from pyface.ui.wx.layout_widget import LayoutWidget
 
 
 @provides(IField)
-class Field(MField, Widget):
-    """ The Wxspecific implementation of the field class
+class Field(MField, LayoutWidget):
+    """ The Wx-specific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.
     """
@@ -34,28 +34,6 @@ class Field(MField, Widget):
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
-
-    # ------------------------------------------------------------------------
-    # IField interface
-    # ------------------------------------------------------------------------
-
-    def _initialize_control(self):
-        """ Perform any toolkit-specific initialization for the control. """
-        self.control.SetToolTip(self.tooltip)
-        self.control.Enable(self.enabled)
-        self.control.Show(self.visible)
-
-    # ------------------------------------------------------------------------
-    # IWidget interface
-    # ------------------------------------------------------------------------
-
-    def _create(self):
-        super()._create()
-        self._add_event_listeners()
-
-    def destroy(self):
-        self._remove_event_listeners()
-        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface

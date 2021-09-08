@@ -15,11 +15,11 @@ from traits.api import Any, Instance, Str, provides
 
 from pyface.qt.QtCore import Qt
 from pyface.fields.i_field import IField, MField
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 
 
 @provides(IField)
-class Field(MField, Widget):
+class Field(MField, LayoutWidget):
     """ The Qt-specific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.

@@ -13,10 +13,10 @@
 
 from traits.api import Any, HasTraits, Instance, Str
 
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
-class IField(IWidget):
+class IField(ILayoutWidget):
     """ The field interface.
 
     A field is a widget that displays a value and (potentially) allows a user

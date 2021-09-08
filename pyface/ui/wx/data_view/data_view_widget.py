@@ -26,7 +26,7 @@ from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
 from pyface.data_view.data_view_errors import DataViewGetError
-from pyface.ui.wx.widget import Widget
+from pyface.ui.wx.layout_widget import LayoutWidget
 from .data_view_model import DataViewModel
 
 
@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 # XXX This file is scaffolding and may need to be rewritten
 
 @provides(IDataViewWidget)
-class DataViewWidget(MDataViewWidget, Widget):
+class DataViewWidget(MDataViewWidget, LayoutWidget):
     """ The Wx implementation of the DataViewWidget. """
 
     #: What can be selected.
