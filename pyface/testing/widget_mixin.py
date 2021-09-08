@@ -52,3 +52,10 @@ class WidgetMixin(UnittestTools):
         self.widget.destroy()
         self.gui.process_events()
         self.widget = None
+
+    def test_field_tooltip(self):
+        self._create_widget_control()
+        self.widget.tooltip = "New tooltip."
+        self.gui.process_events()
+
+        self.assertEqual(self.widget._get_control_tooltip(), "New tooltip.")

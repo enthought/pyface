@@ -28,23 +28,12 @@ class Field(MField, LayoutWidget):
     #: The value held by the field.
     value = Any()
 
-    #: A tooltip for the field.
-    tooltip = Str()
-
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
-
-    def _get_control_tooltip(self):
-        """ Toolkit specific method to get the control's tooltip. """
-        return self.control.toolTip()
-
-    def _set_control_tooltip(self, tooltip):
-        """ Toolkit specific method to set the control's tooltip. """
-        self.control.setToolTip(tooltip)
 
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer. """

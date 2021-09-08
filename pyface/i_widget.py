@@ -11,7 +11,7 @@
 """ The base interface for all pyface widgets. """
 
 
-from traits.api import Any, Bool, HasTraits, Interface
+from traits.api import Any, Bool, HasTraits, Interface, Str
 
 
 class IWidget(Interface):
@@ -31,6 +31,9 @@ class IWidget(Interface):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    #: A tooltip for the widget.
+    tooltip = Str()
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -108,6 +111,9 @@ class MWidget(HasTraits):
     implementations of the IWidget interface.
     """
 
+    #: A tooltip for the widget.
+    tooltip = Str()
+
     def create(self):
         """ Creates the toolkit specific control.
 
@@ -148,12 +154,31 @@ class MWidget(HasTraits):
     def _initialize_control(self):
         """ Perform any post-creation initialization for the control.
         """
-        pass
+        self._set_control_tooltip(self.tooltip)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        pass
+        self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        pass
+        self.observe(
+            self._tooltip_updated, "tooltip", dispatch="ui", remove=True
+        )
+
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        raise NotImplementedError()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        raise NotImplementedError()
+
+    # Trait change handlers -------------------------------------------------
+
+    def _tooltip_updated(self, event):
+        tooltip = event.new
+        if self.control is not None:
+            self._set_control_tooltip(tooltip)
