@@ -158,7 +158,7 @@ class MLayoutWidget(HasTraits):
         """
         raise NotImplementedError()
 
-    def _set_control_stretch(self, size_policy):
+    def _set_control_stretch(self, stretch):
         """ Set the stretch factor of the control.
 
         Toolkit implementations will need to override this method.

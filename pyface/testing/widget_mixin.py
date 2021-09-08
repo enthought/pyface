@@ -11,7 +11,6 @@
 
 from traits.testing.api import UnittestTools
 
-from pyface.action.api import Action, MenuManager
 from pyface.gui import GUI
 from pyface.window import Window
 
