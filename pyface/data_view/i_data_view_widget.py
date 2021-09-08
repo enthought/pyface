@@ -228,9 +228,7 @@ class MDataViewWidget(HasStrictTraits):
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        super()._create()
 
         self.show(self.visible)
         self.enable(self.enabled)
@@ -239,6 +237,7 @@ class MDataViewWidget(HasStrictTraits):
         """ Initializes the toolkit specific control.
         """
         logger.debug('Initializing DataViewWidget')
+        super()._initialize_control()
         self._set_control_header_visible(self.header_visible)
         self._set_control_selection_mode(self.selection_mode)
         self._set_control_selection_type(self.selection_type)
