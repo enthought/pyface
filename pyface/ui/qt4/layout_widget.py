@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from enum import IntEnum
+from enum import Enum
 
 from traits.api import provides
 
@@ -22,7 +22,7 @@ from pyface.ui.qt4.widget import Widget
 QWIDGETSIZE_MAX = getattr(QtGui, "QWIDGETSIZE_MAX", 1 << 24 - 1)
 
 
-class SizePolicies(IntEnum):
+class SizePolicies(Enum):
     """ Qt values for size policies
 
     Note that Qt has additional values that are not mapped to Pyface size
@@ -81,9 +81,13 @@ class LayoutWidget(MLayoutWidget, Widget):
     def _set_control_size_policy(self, size_policy):
         new_size_policy = _clone_size_policy(self.control.sizePolicy())
         if size_policy[0] != "default":
-            new_size_policy.setHorizontalPolicy(SizePolicies[size_policy[0]])
+            new_size_policy.setHorizontalPolicy(
+                SizePolicies[size_policy[0]].value
+            )
         if size_policy[1] != "default":
-            new_size_policy.setVerticalPolicy(SizePolicies[size_policy[1]])
+            new_size_policy.setVerticalPolicy(
+                SizePolicies[size_policy[1]].value
+            )
         self.control.setSizePolicy(new_size_policy)
 
     def _get_control_size_policy(self):

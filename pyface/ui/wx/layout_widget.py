@@ -8,8 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-import typing as t
-
 import wx
 
 from traits.api import provides
@@ -86,7 +84,7 @@ class LayoutWidget(MLayoutWidget, Widget):
         return self.size_policy
 
 
-def _size_to_wx_size(size: t.Tuple[int, int]) -> wx.Size:
+def _size_to_wx_size(size):
     """ Convert a size tuple to a wx.Size instance.
 
     Parameters
@@ -105,7 +103,7 @@ def _size_to_wx_size(size: t.Tuple[int, int]) -> wx.Size:
     ))
 
 
-def _wx_size_to_size(wx_size: wx.Size) -> t.Tuple[int, int]:
+def _wx_size_to_size(wx_size):
     """ Convert a wx.Size instance to a size tuple.
 
     Parameters
