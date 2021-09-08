@@ -44,7 +44,7 @@ class MLayoutWidget(HasTraits):
 
     def _initialize_control(self):
         """ Initialize the toolkit control. """
-        super().initialize_control()
+        super()._initialize_control()
         self._set_control_minimum_size(self.minimum_size)
         self._set_control_maximum_size(self.maximum_size)
         self._set_control_stretch(self.stretch)
