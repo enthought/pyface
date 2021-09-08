@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import HasTraits, Int, Tuple, observe
+from traits.api import HasTraits, Int, Tuple
 
 from pyface.i_layout_item import ILayoutItem, Size, SizePolicy
 from pyface.i_widget import IWidget
@@ -42,15 +42,9 @@ class MLayoutWidget(HasTraits):
     #: How the widget should behave when more space is available.
     size_policy = Tuple(SizePolicy, SizePolicy)
 
-    def _create(self):
-        """ Create and initialize the toolkit control. """
-        # XXX remove once #1013 is merged.
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
-
     def _initialize_control(self):
         """ Initialize the toolkit control. """
+        super().initialize_control()
         self._set_control_minimum_size(self.minimum_size)
         self._set_control_maximum_size(self.maximum_size)
         self._set_control_stretch(self.stretch)
