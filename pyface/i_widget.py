@@ -121,6 +121,16 @@ class MWidget(HasTraits):
         """
         self._create()
 
+    def destroy(self):
+        """ Call clean-up code and destroy toolkit objects.
+
+        Subclasses should override to perform any additional clean-up, ensuring
+        that they call super() after that clean-up.
+        """
+        if self.control is not None:
+            self._remove_event_listeners()
+            self.control = None
+
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------

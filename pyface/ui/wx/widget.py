@@ -92,7 +92,7 @@ class Widget(MWidget, HasTraits):
     def destroy(self):
         if self.control is not None:
             self.control.Destroy()
-            self.control = None
+            super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface

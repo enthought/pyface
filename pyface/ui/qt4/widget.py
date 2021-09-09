@@ -95,11 +95,10 @@ class Widget(MWidget, HasTraits):
         )
 
     def destroy(self):
-        self._remove_event_listeners()
         if self.control is not None:
             self.control.hide()
             self.control.deleteLater()
-            self.control = None
+            super().destroy()
 
     def _add_event_listeners(self):
         super()._add_event_listeners()

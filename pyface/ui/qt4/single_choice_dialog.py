@@ -84,6 +84,8 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
                 self.choice = self.choices[idx]
             else:
                 self.choice = None
+        else:
+            self.choice = None
 
         # Let the window close as normal.
         super().close()
