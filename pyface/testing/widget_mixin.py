@@ -11,6 +11,7 @@
 
 from traits.testing.api import UnittestTools
 
+from pyface.action.api import Action, MenuManager
 from pyface.gui import GUI
 from pyface.window import Window
 
@@ -59,3 +60,8 @@ class WidgetMixin(UnittestTools):
         self.gui.process_events()
 
         self.assertEqual(self.widget._get_control_tooltip(), "New tooltip.")
+
+    def test_field_menu(self):
+        self._create_widget_control()
+        self.widget.menu = MenuManager(Action(name="Test"), name="Test")
+        self.gui.process_events()

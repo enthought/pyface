@@ -11,7 +11,7 @@
 """ The base interface for all pyface widgets. """
 
 
-from traits.api import Any, Bool, HasTraits, Interface, Str
+from traits.api import Any, Bool, HasTraits, Interface, Instance, Str
 
 
 class IWidget(Interface):
@@ -34,6 +34,9 @@ class IWidget(Interface):
 
     #: A tooltip for the widget.
     tooltip = Str()
+
+    #: An optional context menu for the widget.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -114,6 +117,9 @@ class MWidget(HasTraits):
     #: A tooltip for the widget.
     tooltip = Str()
 
+    #: An optional context menu for the window.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
+
     def create(self):
         """ Creates the toolkit specific control.
 
@@ -169,6 +175,11 @@ class MWidget(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
+        self.observe(
+            self._context_menu_updated, "context_menu", dispatch="ui"
+        )
+        if self.control is not None and self.context_menu is not None:
+            self._observe_control_context_menu()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
@@ -186,9 +197,38 @@ class MWidget(HasTraits):
         """ Toolkit specific method to set the control's tooltip. """
         raise NotImplementedError()
 
+    def _observe_control_context_menu(self, remove=False):
+        """ Toolkit specific method to change the context menu observer.
+
+        This should use _handle_control_context_menu as the event handler.
+
+        Parameters
+        ----------
+        remove : bool
+            Whether the context menu handler should be removed or added.
+        """
+        raise NotImplementedError()
+
+    def _handle_control_context_menu(self, event):
+        """ Handle a context menu event.
+
+        Implementations should override this with a method suitable to be used
+        as a toolkit event handler that invokes a context menu.
+
+        The function signature will likely vary from toolkit to toolkit.
+        """
+        raise NotImplementedError()
+
     # Trait change handlers -------------------------------------------------
 
     def _tooltip_updated(self, event):
         tooltip = event.new
         if self.control is not None:
             self._set_control_tooltip(tooltip)
+
+    def _context_menu_updated(self, event):
+        if self.control is not None:
+            if event.new is None:
+                self._observe_control_context_menu(remove=True)
+            if event.old is None:
+                self._observe_control_context_menu()
