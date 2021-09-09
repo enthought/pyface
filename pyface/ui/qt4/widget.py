@@ -38,7 +38,7 @@ class Widget(MWidget, HasTraits):
     #: Whether or not the control is enabled
     enabled = Bool(True)
 
-    #: A tooltip for the field.
+    #: A tooltip for the widget.
     tooltip = Str()
 
     #: An optional context menu for the widget.

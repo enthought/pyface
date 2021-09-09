@@ -117,7 +117,7 @@ class MWidget(HasTraits):
     #: A tooltip for the widget.
     tooltip = Str()
 
-    #: An optional context menu for the window.
+    #: An optional context menu for the widget.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     def create(self):
