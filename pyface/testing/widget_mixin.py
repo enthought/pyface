@@ -63,5 +63,5 @@ class WidgetMixin(UnittestTools):
 
     def test_field_menu(self):
         self._create_widget_control()
-        self.widget.menu = MenuManager(Action(name="Test"), name="Test")
+        self.widget.context_menu = MenuManager(Action(name="Test"), name="Test")
         self.gui.process_events()
