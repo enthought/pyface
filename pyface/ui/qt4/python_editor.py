@@ -19,12 +19,12 @@ from traits.api import Bool, Event, provides, Str
 
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """

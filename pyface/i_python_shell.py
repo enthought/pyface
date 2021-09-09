@@ -15,10 +15,10 @@ from traits.api import Event, HasTraits
 
 
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
-class IPythonShell(IWidget):
+class IPythonShell(ILayoutWidget):
     """ The interface for an interactive Python shell. """
 
     # 'IPythonShell' interface ---------------------------------------------

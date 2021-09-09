@@ -31,7 +31,7 @@ from wx.grid import (
 )
 
 
-from pyface.api import Widget
+from pyface.ui.wx.layout_widget import LayoutWidget
 from pyface.timer.api import do_later
 from traits.api import (
     Bool,
@@ -58,7 +58,7 @@ is_win32 = sys.platform == "win32"
 ASCII_C = 67
 
 
-class Grid(Widget):
+class Grid(LayoutWidget):
     """ A grid control with a model/ui architecture. """
 
     # 'Grid' interface -----------------------------------------------------

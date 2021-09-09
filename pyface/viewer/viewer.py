@@ -11,10 +11,10 @@
 """ Abstract base class for all viewers. """
 
 
-from pyface.widget import Widget
+from pyface.widget.layout_widget import LayoutWidget
 
 
-class Viewer(Widget):
+class Viewer(LayoutWidget):
     """ Abstract base class for all viewers.
 
     A viewer is a model-based adapter on some underlying toolkit-specific
