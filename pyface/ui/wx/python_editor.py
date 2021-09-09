@@ -23,11 +23,11 @@ from traits.api import Bool, Event, provides, Str
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.wx.python_stc import PythonSTC, faces
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """

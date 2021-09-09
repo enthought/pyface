@@ -16,10 +16,10 @@ import wx
 
 from traits.api import Any, Bool, Event
 
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
-class ImageWidget(Widget):
+class ImageWidget(LayoutWidget):
     """ A clickable/draggable widget containing an image. """
 
     # 'ImageWidget' interface ---------------------------------------------#

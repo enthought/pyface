@@ -14,11 +14,11 @@ from traits.api import Int, provides
 
 from pyface.qt.QtGui import QStackedWidget
 from pyface.i_layered_panel import ILayeredPanel, MLayeredPanel
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(ILayeredPanel)
-class LayeredPanel(MLayeredPanel, Widget):
+class LayeredPanel(MLayeredPanel, LayoutWidget):
     """ A Layered panel.
 
     A layered panel contains one or more named layers, with only one layer

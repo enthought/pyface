@@ -69,10 +69,6 @@ class MHeadingText(HasTraits):
     # 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
-        """ Create and initialize the toolkit control. """
-        super()._create()
-
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
         super()._initialize_control()

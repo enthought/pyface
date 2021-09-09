@@ -30,7 +30,7 @@ from pyface.sorter import Sorter
 from pyface.tree.tree_model import TreeModel
 from pyface.ui.wx.gui import GUI
 from pyface.ui.wx.image_list import ImageList
-from pyface.ui.wx.widget import Widget
+from pyface.ui.wx.layout_widget import LayoutWidget
 from pyface.wx.drag_and_drop import PythonDropSource, PythonDropTarget
 
 
@@ -68,7 +68,7 @@ class _Tree(wx.TreeCtrl):
         super().Destroy()
 
 
-class Tree(Widget):
+class Tree(LayoutWidget):
     """ A tree control with a model/ui architecture. """
 
     # The default tree style.
