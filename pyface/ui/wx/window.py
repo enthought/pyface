@@ -88,6 +88,7 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def _add_event_listeners(self):
+        super()._add_event_listeners()
         self.control.Bind(wx.EVT_ACTIVATE, self._wx_on_activate)
         self.control.Bind(wx.EVT_SHOW, self._wx_on_show)
         self.control.Bind(wx.EVT_CLOSE, self._wx_on_close)

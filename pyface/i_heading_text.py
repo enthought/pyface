@@ -72,11 +72,10 @@ class MHeadingText(HasTraits):
     def _create(self):
         """ Create and initialize the toolkit control. """
         super()._create()
-        # TODO: this should be moved into the base toolkit Widget class
-        self._initialize_control()
 
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
+        super()._initialize_control()
         self._set_control_text(self.text)
 
     def _add_event_listeners(self):
