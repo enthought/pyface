@@ -62,6 +62,10 @@ the enabled state is accessible via the
 :attr:`~pyface.i_widget.IWidget.enabled` trait, or by calling
 :meth:`~pyface.i_widget.IWidget.enable`.
 
+Widgets also provide a trait :attr:`~pyface.i_widget.IWidget.tooltip` that
+provides a string to display to the user when they hover the mouse over the
+widget.  If the string is empty then there will be no tooltip displayed.
+
 IWidget Subclasses
 ==================
 

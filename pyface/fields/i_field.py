@@ -26,17 +26,11 @@ class IField(ILayoutWidget):
     #: The value held by the field.
     value = Any()
 
-    #: A tooltip for the field.
-    tooltip = Str()
-
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     def show_context_menu(self, x, y):
         """ Create and show the context menu at a position. """
-
-    def _initialize_control(self, control):
-        """ Perform any toolkit-specific initialization for the control. """
 
 
 class MField(HasTraits):
@@ -44,9 +38,6 @@ class MField(HasTraits):
 
     #: The value held by the field.
     value = Any()
-
-    #: A tooltip for the field.
-    tooltip = Str()
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
@@ -59,7 +50,6 @@ class MField(HasTraits):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
         self.observe(self._value_updated, "value", dispatch="ui")
-        self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
         self.observe(
             self._context_menu_updated, "context_menu", dispatch="ui"
         )
@@ -72,9 +62,6 @@ class MField(HasTraits):
             self._observe_control_context_menu(remove=True)
         self.observe(
             self._value_updated, "value", dispatch="ui", remove=True
-        )
-        self.observe(
-            self._tooltip_updated, "tooltip", dispatch="ui", remove=True
         )
         self.observe(
             self._context_menu_updated,
@@ -98,11 +85,6 @@ class MField(HasTraits):
 
         self.show(self.visible)
         self.enable(self.enabled)
-
-    def _initialize_control(self):
-        """ Perform any toolkit-specific initialization for the control. """
-        super()._initialize_control()
-        self._set_control_tooltip(self.tooltip)
 
     def _update_value(self, value):
         """ Handle a change to the value from user interaction
@@ -132,14 +114,6 @@ class MField(HasTraits):
         """ Toolkit specific method to change the control value observer. """
         raise NotImplementedError()
 
-    def _get_control_tooltip(self):
-        """ Toolkit specific method to get the control's tooltip. """
-        raise NotImplementedError()
-
-    def _set_control_tooltip(self, tooltip):
-        """ Toolkit specific method to set the control's tooltip. """
-        raise NotImplementedError()
-
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer.
 
@@ -163,11 +137,6 @@ class MField(HasTraits):
         value = event.new
         if self.control is not None:
             self._set_control_value(value)
-
-    def _tooltip_updated(self, event):
-        tooltip = event.new
-        if self.control is not None:
-            self._set_control_tooltip(tooltip)
 
     def _context_menu_updated(self, event):
 

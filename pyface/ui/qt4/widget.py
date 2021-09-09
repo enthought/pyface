@@ -13,7 +13,7 @@
 from pyface.qt import QtCore
 
 
-from traits.api import Any, Bool, HasTraits, Instance, provides
+from traits.api import Any, Bool, HasTraits, Instance, Str, provides
 
 
 from pyface.i_widget import IWidget, MWidget
@@ -38,6 +38,9 @@ class Widget(MWidget, HasTraits):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    #: A tooltip for the field.
+    tooltip = Str()
 
     # Private interface ----------------------------------------------------
 
@@ -92,13 +95,13 @@ class Widget(MWidget, HasTraits):
         )
 
     def destroy(self):
-        self._remove_event_listeners()
         if self.control is not None:
             self.control.hide()
             self.control.deleteLater()
-            self.control = None
+            super().destroy()
 
     def _add_event_listeners(self):
+        super()._add_event_listeners()
         self.control.installEventFilter(self._event_filter)
 
     def _remove_event_listeners(self):
@@ -106,6 +109,19 @@ class Widget(MWidget, HasTraits):
             if self.control is not None:
                 self.control.removeEventFilter(self._event_filter)
             self._event_filter = None
+        super()._remove_event_listeners()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        return self.control.toolTip()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        self.control.setToolTip(tooltip)
 
     # Trait change handlers --------------------------------------------------
 

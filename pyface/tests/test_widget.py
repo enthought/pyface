@@ -15,6 +15,7 @@ import unittest
 from traits.api import Instance
 from traits.testing.api import UnittestTools
 
+from pyface.testing.widget_mixin import WidgetMixin
 from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 from ..widget import Widget
@@ -335,3 +336,9 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
             self.widget.focus()
 
         self.assertTrue(self.widget.has_focus())
+
+
+class TestWidgetCommon(WidgetMixin, unittest.TestCase):
+
+    def _create_widget(self):
+        return ConcreteWidget(parent=self.parent.control, tooltip='Dummy')

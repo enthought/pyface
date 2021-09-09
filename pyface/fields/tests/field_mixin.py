@@ -19,13 +19,6 @@ from pyface.window import Window
 class FieldMixin(LayoutWidgetMixin):
     """ Mixin which provides standard methods for all fields. """
 
-    def test_field_tooltip(self):
-        self._create_widget_control()
-        self.widget.tooltip = "New tooltip."
-        self.gui.process_events()
-
-        self.assertEqual(self.widget._get_control_tooltip(), "New tooltip.")
-
     def test_field_menu(self):
         self._create_widget_control()
         self.widget.menu = MenuManager(Action(name="Test"), name="Test")

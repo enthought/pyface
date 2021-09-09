@@ -15,11 +15,10 @@ to changes in this trait to react to the user entering a new value for the
 field without needing to know anything about the underlying toolkit event
 signalling mechanisms.
 
-All fields also provide traits for setting the
-:py:attr:`~pyface.fields.i_field.IField.tooltip` and
-:py:attr:`~pyface.fields.i_field.IField.context_menu` of the field.  Tooltips
-expect unicode text values, and context menus should be
-:py:class:`~pyface.action.menu_manager.MenuManager` instances.
+All fields also provide a trait for setting the
+:py:attr:`~pyface.fields.i_field.IField.context_menu` of the field. Context
+menus should be :py:class:`~pyface.action.menu_manager.MenuManager`
+instances.
 
 TextField
 =========

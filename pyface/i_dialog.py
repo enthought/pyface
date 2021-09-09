@@ -183,13 +183,3 @@ class MDialog(HasTraits):
         super()._create()
 
         self._create_contents(self.control)
-
-    # ------------------------------------------------------------------------
-    # Protected 'IWindow' interface.
-    # ------------------------------------------------------------------------
-
-    def _add_event_listeners(self):
-        """ Adds any event listeners required by the window. """
-
-        # We don't bother for dialogs.
-        pass

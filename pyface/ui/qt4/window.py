@@ -111,7 +111,6 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        self._remove_event_listeners()
 
         if self.control is not None:
             # Avoid problems with recursive calls.

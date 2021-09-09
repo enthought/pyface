@@ -13,7 +13,7 @@
 """
 
 
-from traits.api import Any, Bool, HasTraits, provides
+from traits.api import Any, Bool, HasTraits, Str, provides
 
 
 from pyface.i_widget import IWidget, MWidget
@@ -38,6 +38,9 @@ class Widget(MWidget, HasTraits):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    #: A tooltip for the widget.
+    tooltip = Str()
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -88,5 +91,18 @@ class Widget(MWidget, HasTraits):
 
     def destroy(self):
         if self.control is not None:
-            self.control.Destroy()
-            self.control = None
+            control = self.control
+            super().destroy()
+            control.Destroy()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        return self.control.GetToolTipText()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        self.control.SetToolTip(tooltip)
