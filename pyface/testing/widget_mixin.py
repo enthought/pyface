@@ -54,14 +54,14 @@ class WidgetMixin(UnittestTools):
         self.gui.process_events()
         self.widget = None
 
-    def test_field_tooltip(self):
+    def test_widget_tooltip(self):
         self._create_widget_control()
         self.widget.tooltip = "New tooltip."
         self.gui.process_events()
 
         self.assertEqual(self.widget._get_control_tooltip(), "New tooltip.")
 
-    def test_field_menu(self):
+    def test_widget_menu(self):
         self._create_widget_control()
         self.widget.context_menu = MenuManager(Action(name="Test"), name="Test")
         self.gui.process_events()

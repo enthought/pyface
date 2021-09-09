@@ -114,10 +114,12 @@ class Widget(MWidget, HasTraits):
         """ Toolkit specific method to change the control menu observer. """
         if remove:
             self.control.Unbind(
-                wx.EVT_CONTEXT_MENU, handler=self._handle_context_menu
+                wx.EVT_CONTEXT_MENU, handler=self._handle_control_context_menu
             )
         else:
-            self.control.Bind(wx.EVT_CONTEXT_MENU, self._handle_context_menu)
+            self.control.Bind(
+                wx.EVT_CONTEXT_MENU, self._handle_control_context_menu
+            )
 
     def _handle_control_context_menu(self, event):
         """ Signal handler for displaying context menu. """
