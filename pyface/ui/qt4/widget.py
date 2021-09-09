@@ -110,7 +110,7 @@ class Widget(MWidget, HasTraits):
             if self.control is not None:
                 self.control.removeEventFilter(self._event_filter)
             self._event_filter = None
-        super()._add_event_listeners()
+        super()._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface

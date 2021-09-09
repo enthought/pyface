@@ -16,9 +16,9 @@ field without needing to know anything about the underlying toolkit event
 signalling mechanisms.
 
 All fields also provide a trait for setting the
-:py:attr:`~pyface.fields.i_field.IField.context_menu` of the field.  Tooltips
-expect unicode text values, and context menus should be
-:py:class:`~pyface.action.menu_manager.MenuManager` instances.
+:py:attr:`~pyface.fields.i_field.IField.context_menu` of the field. Context
+menus should be :py:class:`~pyface.action.menu_manager.MenuManager`
+instances.
 
 TextField
 =========
