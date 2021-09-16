@@ -235,6 +235,44 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         raise NotImplementedError()
 
+    def is_enabled(self, row, column):
+        """ Whether the item located at row and column is enabled.
+
+        The default method returns True.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the item is enabled.
+        """
+        return True
+
+    def is_selectable(self, row, column):
+        """ Whether the item located at row and column is selectable.
+
+        The default method returns True.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the item is selectable.
+        """
+        return True
+
     # Convenience methods
 
     def is_row_valid(self, row):
