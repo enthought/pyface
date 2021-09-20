@@ -11,15 +11,7 @@
 
 from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
 
-from pyface.action.api import Action, MenuManager
-from pyface.gui import GUI
-from pyface.window import Window
-
 
 class FieldMixin(LayoutWidgetMixin):
     """ Mixin which provides standard methods for all fields. """
-
-    def test_field_menu(self):
-        self._create_widget_control()
-        self.widget.menu = MenuManager(Action(name="Test"), name="Test")
-        self.gui.process_events()
+    pass
