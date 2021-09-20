@@ -24,6 +24,7 @@ from traits.api import (
     cached_property,
     observe,
 )
+from traits.observation.api import trait
 
 from pyface.gui_application import GUIApplication
 
@@ -70,7 +71,9 @@ class TasksApplication(GUIApplication):
     tasks = List(Instance("pyface.tasks.task.Task"))
 
     #: Currently active Task if any.
-    active_task = Property(observe="active_window.active_task")
+    active_task = Property(
+        observe=trait("active_window").trait("active_task", optional=True)
+    )
 
     #: List of all application task factories.
     task_factories = List()
