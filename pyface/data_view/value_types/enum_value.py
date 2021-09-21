@@ -10,6 +10,7 @@
 
 from traits.api import Callable, List
 
+from pyface.data_view.data_view_errors import DataViewGetError
 from .editable_value import EditableValue
 
 
@@ -96,20 +97,39 @@ class EnumValue(EditableValue):
     def has_color(self, model, row, column):
         """ Whether or not the value has color data.
 
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
         has_color : bool
             Whether or not the value has data-associated color
             values.
         """
-        return (
-            self.colors is not None
-            and self.colors(model.get_value(row, column)) is not None
-        )
+        return self.colors is not None
 
     def get_color(self, model, row, column):
         """ Get data-associated colour values for the given item.
 
         The default implementation returns white.
 
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
         color : Color instance
             The color associated with the cell.
         """
@@ -135,10 +155,7 @@ class EnumValue(EditableValue):
         has_image : bool
             Whether or not the value has an image associated with it.
         """
-        return (
-            self.images is not None
-            and self.images(model.get_value(row, column)) is not None
-        )
+        return self.images is not None
 
     def get_image(self, model, row, column):
         """ An image associated with the underlying value.
