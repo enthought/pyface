@@ -70,11 +70,6 @@ class TestEnumValue(TestCase):
         has_color = value.has_color(self.model, [0], [0])
         self.assertFalse(has_color)
 
-    def test_has_color_false_function(self):
-        value = EnumValue(values=[1, 2], colors=lambda x: None)
-        has_color = value.has_color(self.model, [0], [0])
-        self.assertFalse(has_color)
-
     def test_has_color_true(self):
         value = EnumValue(values=[1, 2], colors=lambda x: "dummy")
         has_color = value.has_color(self.model, [0], [0])
@@ -85,13 +80,15 @@ class TestEnumValue(TestCase):
         color = value.get_color(self.model, [0], [0])
         self.assertEqual(color, "dummy")
 
+    def test_color_function_none(self):
+        value = EnumValue(values=[1, 2], colors=lambda x: None)
+        has_color = value.has_color(self.model, [0], [0])
+        self.assertTrue(has_color)
+        color = value.get_color(self.model, [0], [0])
+        self.assertIsNone(color)
+
     def test_has_image_false(self):
         value = EnumValue(values=[1, 2])
-        has_image = value.has_image(self.model, [0], [0])
-        self.assertFalse(has_image)
-
-    def test_has_image_false_function(self):
-        value = EnumValue(values=[1, 2], images=lambda x: None)
         has_image = value.has_image(self.model, [0], [0])
         self.assertFalse(has_image)
 
@@ -104,3 +101,10 @@ class TestEnumValue(TestCase):
         value = EnumValue(values=[1, 2], images=lambda x: "dummy")
         image = value.get_image(self.model, [0], [0])
         self.assertEqual(image, "dummy")
+
+    def test_image_function_none(self):
+        value = EnumValue(values=[1, 2], images=lambda x: None)
+        has_image = value.has_image(self.model, [0], [0])
+        self.assertTrue(has_image)
+        image = value.get_image(self.model, [0], [0])
+        self.assertIsNone(image)
