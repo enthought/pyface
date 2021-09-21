@@ -10,16 +10,18 @@
 
 import logging
 
-from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, List, Str
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.ui_traits import PyfaceColor
 from pyface.data_view.data_models.api import (
     AttributeDataAccessor, RowTableDataModel
 )
-from pyface.data_view.api import DataViewWidget, IDataViewWidget
+from pyface.data_view.api import (
+    DataViewSetError, DataViewWidget, IDataViewWidget
+)
 from pyface.data_view.value_types.api import (
-    BoolValue, ColorValue, IntValue, TextValue
+    BoolValue, EditableValue, ColorValue, IntValue, TextValue
 )
 
 from example_data import (
@@ -30,14 +32,21 @@ from example_data import (
 logger = logging.getLogger(__name__)
 
 
-flags = {
-    'Canada': ImageResource('ca.png'),
-    'UK': ImageResource('gb.png'),
-    'USA': ImageResource('us.png'),
+# The data model
+
+class Country(HasStrictTraits):
+
+    name = Str()
+
+    flag = Image()
+
+
+countries = {
+    'Canada': Country(name='Canada', flag=ImageResource('ca.png')),
+    'UK': Country(name='UK', flag=ImageResource('gb.png')),
+    'USA': Country(name='USA', flag=ImageResource('us.png')),
 }
 
-
-# The data model
 
 class Address(HasStrictTraits):
 
@@ -45,7 +54,7 @@ class Address(HasStrictTraits):
 
     city = Str()
 
-    country = Str()
+    country = Instance(Country, allow_none=True)
 
 
 class Person(HasStrictTraits):
@@ -61,17 +70,42 @@ class Person(HasStrictTraits):
     address = Instance(Address, ())
 
 
-class CountryValue(TextValue):
+class CountryValue(EditableValue):
 
-    flags = Dict(Str, Image, update_value_type=True)
+    countries = Dict(Str, Instance(Country))
+
+    def is_valid(self, model, row, column, value):
+        return value in self.countries
+
+    def get_editor_value(self, model, row, column):
+        country = model.get_value(row, column)
+        return country.name
+
+    def set_editor_value(self, model, row, column, value):
+        if self.is_valid(model, row, column, value):
+            country = self.countries[value]
+            model.set_value(row, column, country)
+        else:
+            raise DataViewSetError("Invalid value set: {!r}".format(value))
+
+    def get_text(self, model, row, column):
+        country = model.get_value(row, column)
+        return country.name
+
+    def set_text(self, model, row, column):
+        if self.is_valid(model, row, column, value):
+            country = self.countries[value]
+            model.set_value(row, column, country)
+        else:
+            raise DataViewSetError("Invalid value set: {!r}".format(value))
 
     def has_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return value in self.flags
+        country = model.get_value(row, column)
+        return country.flag is not None
 
     def get_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return self.flags[value]
+        country = model.get_value(row, column)
+        return country.flag
 
 
 row_header_data = AttributeDataAccessor(
@@ -103,7 +137,7 @@ column_data = [
     ),
     AttributeDataAccessor(
         attr="address.country",
-        value_type=CountryValue(flags=flags),
+        value_type=CountryValue(countries=countries),
     ),
 ]
 
@@ -141,7 +175,7 @@ class MainWindow(ApplicationWindow):
                 address=Address(
                     street=street(),
                     city=city(),
-                    country=country(),
+                    country=countries[country()],
                 ),
             )
             for i in range(10000)
