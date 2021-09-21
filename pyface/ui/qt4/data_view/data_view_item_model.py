@@ -10,7 +10,6 @@
 
 import logging
 
-from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QMimeData, QModelIndex, Qt
 from pyface.qt.QtGui import QColor

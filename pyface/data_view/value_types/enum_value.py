@@ -173,7 +173,7 @@ class EnumValue(EditableValue):
 
         Returns
         -------
-        image : IImageResource
+        image : IImage
             The image associated with the underlying value.
         """
         return self.images(model.get_value(row, column))

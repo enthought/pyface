@@ -271,7 +271,7 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        image : IImageResource
+        image : IImage
             The image associated with the underlying value.
         """
         from pyface.image_resource import ImageResource
