@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,6 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Backward compatibility import
 
-from pyface.action.listening_action import ListeningAction
+""" This module exists purely for backwards compatibility.
+Please use :class:`pyface.action.listening_action.ListeningAction` instead.
+"""
+
+from pyface.action.listening_action import ListeningAction  # noqa: F401

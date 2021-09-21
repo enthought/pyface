@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,7 +17,6 @@ from traits.api import Str
 
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
-from pyface.action.group import Group
 
 
 class MenuManager(ActionManager, ActionManagerItem):

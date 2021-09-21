@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import math
 import sys
 
 
@@ -34,7 +33,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def __init__(
         self, parent, should_highlight_current_line=True, font=None, lexer=None
     ):
-        super(CodeWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self.highlighter = PygmentsHighlighter(self.document(), lexer)
         self.line_number_widget = LineNumberWidget(self)
@@ -388,7 +387,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
     def keyPressEvent(self, event):
         if self.isReadOnly():
-            return super(CodeWidget, self).keyPressEvent(event)
+            return super().keyPressEvent(event)
 
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
 
@@ -433,7 +432,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             event.accept()
             return self.block_unindent()
 
-        return super(CodeWidget, self).keyPressEvent(event)
+        return super().keyPressEvent(event)
 
     def resizeEvent(self, event):
         QtGui.QPlainTextEdit.resizeEvent(self, event)
@@ -518,11 +517,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def _get_selected_blocks(self):
         cursor = self.textCursor()
         if cursor.position() > cursor.anchor():
-            move_op = QtGui.QTextCursor.PreviousBlock
             start_pos = cursor.anchor()
             end_pos = cursor.position()
         else:
-            move_op = QtGui.QTextCursor.NextBlock
             start_pos = cursor.position()
             end_pos = cursor.anchor()
 
@@ -561,7 +558,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, font=None, lexer=None):
-        super(AdvancedCodeWidget, self).__init__(parent)
+        super().__init__(parent)
 
         self.code = CodeWidget(self, font=font, lexer=lexer)
         self.find = FindWidget(self)
@@ -807,7 +804,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
                 self.previous_find_widget = self.active_find_widget
                 self.active_find_widget = None
 
-        return super(AdvancedCodeWidget, self).keyPressEvent(event)
+        return super().keyPressEvent(event)
 
     # ------------------------------------------------------------------------
     # Private methods
@@ -831,8 +828,6 @@ if __name__ == "__main__":
         import pdb
 
         pdb.Pdb().set_trace(sys._getframe().f_back)
-
-    import sys
 
     app = QtGui.QApplication(sys.argv)
     window = AdvancedCodeWidget(None)

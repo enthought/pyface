@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,4 +12,4 @@ import logging
 logger = logging.getLogger(__name__)
 logger.warning("DEPRECATED: pyface.grid, use pyface.ui.wx.grid instead.")
 
-from pyface.ui.wx.grid.checkbox_renderer import *
+from pyface.ui.wx.grid.checkbox_renderer import *  # noqa: F401

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,15 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-from numpy import arange
-
 import wx
 from wx.grid import Grid
-from wx.grid import PyGridCellRenderer
-from wx.grid import GridCellTextEditor, GridCellStringRenderer
 from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
-
-from wx.lib.mixins.grid import GridAutoEditMixin
 
 
 class AbstractGridView(Grid):

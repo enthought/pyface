@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,7 @@ import os
 import tempfile
 import unittest
 
-from traits.api import HasTraits, Instance
+from traits.api import Instance
 
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.split_editor_area_pane import (
@@ -172,11 +172,8 @@ class TestEditorAreaWidget(unittest.TestCase):
         the tabs of the  collapsing tabwidgets.
         """
         # setup root
-        root, left, right = self._setUp_collapse()
-        btn0 = left.tabwidget().widget(0)
-        btn1 = left.tabwidget().widget(1)
+        root, _, right = self._setUp_collapse()
         btn2 = right.tabwidget().widget(0)
-        btn3 = right.tabwidget().widget(1)
 
         # perform collapse on rightchild
         root.rightchild.collapse()
@@ -335,6 +332,11 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertIsInstance(right_bottom, Tabbed)
         self.assertEqual(right_bottom.items[0].id, 1)
         self.assertEqual(right_bottom.items[1].id, 2)
+
+        # Close all of the opened temporary files
+        file0.close()
+        file1.close()
+        file2.close()
 
     def test_context_menu_merge_text_left_right_split(self):
         # Regression test for enthought/pyface#422
@@ -515,7 +517,3 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         with event_loop():
             window.close()
-
-
-if __name__ == "__main__":
-    unittest.main()

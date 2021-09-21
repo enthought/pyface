@@ -23,6 +23,9 @@ import sys
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
+    # Link to code in sphinx generated API docs
+    "sphinx.ext.viewcode",
     'traits.util.trait_documenter'
 ]
 
@@ -37,7 +40,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'pyface'
-copyright = '2008-2020, Enthought'
+copyright = '2008-2021, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -159,14 +162,6 @@ except ImportError as exc:
     html_favicon = "et.png"
     html_style = 'default.css'
 
-# Useful aliases to avoid repeating long URLs.
-extlinks = {
-    'github-examples': (
-        'https://github.com/enthought/pyface/tree/master/examples/%s',
-        'github-examples'
-    )
-}
-
 # Options for LaTeX output
 # ------------------------
 
@@ -234,3 +229,9 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
 
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
+
+intersphinx_mapping = {
+    "traits": ("http://docs.enthought.com/traits", None),
+    "traitsui": ("http://docs.enthought.com/traitsui", None),
+    "python": ("https://docs.python.org/3", None),
+}

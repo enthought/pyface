@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,7 +18,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, HasTraits, provides, Str
+from traits.api import Bool, HasTraits, observe, provides, Str
 from pyface.util.guisupport import start_event_loop_qt4
 
 
@@ -120,9 +120,10 @@ class GUI(MGUI, HasTraits):
 
         return self._default_state_location()
 
-    def _busy_changed(self, new):
+    @observe("busy")
+    def _update_busy_state(self, event):
         """ The busy trait change handler. """
-
+        new = event.new
         if new:
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
@@ -142,7 +143,7 @@ class _FutureCall(QtCore.QObject):
     _pyface_event = QtCore.QEvent.Type(QtCore.QEvent.registerEventType())
 
     def __init__(self, ms, callable, *args, **kw):
-        super(_FutureCall, self).__init__()
+        super().__init__()
 
         # Save the arguments.
         self._ms = ms
@@ -184,7 +185,7 @@ class _FutureCall(QtCore.QObject):
                 QtCore.QTimer.singleShot(self._ms, self._dispatch)
             return True
 
-        return super(_FutureCall, self).event(event)
+        return super().event(event)
 
     def _dispatch(self):
         """ Invoke the callable.

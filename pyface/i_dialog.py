@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The abstract interface for all pyface dialogs. """
 
 
-from traits.api import Bool, Enum, Int, Str
+from traits.api import Bool, Enum, HasTraits, Int, Str
 
 
 from pyface.constant import OK
@@ -134,7 +134,7 @@ class IDialog(IWindow):
         """
 
 
-class MDialog(object):
+class MDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 
@@ -180,16 +180,6 @@ class MDialog(object):
     def _create(self):
         """ Creates the window's widget hierarchy. """
 
-        super(MDialog, self)._create()
+        super()._create()
 
         self._create_contents(self.control)
-
-    # ------------------------------------------------------------------------
-    # Protected 'IWindow' interface.
-    # ------------------------------------------------------------------------
-
-    def _add_event_listeners(self):
-        """ Adds any event listeners required by the window. """
-
-        # We don't bother for dialogs.
-        pass

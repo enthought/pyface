@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,10 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-import csv
-import json
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
 
 from traits.api import HasTraits, Int, Str
 from traits.testing.optional_dependencies import numpy as np, requires_numpy

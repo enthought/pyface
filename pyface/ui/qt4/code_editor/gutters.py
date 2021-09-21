@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -39,7 +39,7 @@ class StatusGutterWidget(GutterWidget):
     """
 
     def __init__(self, *args, **kw):
-        super(StatusGutterWidget, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         self.error_lines = []
         self.warn_lines = []

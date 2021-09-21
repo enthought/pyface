@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@
 import sys
 
 
-from traits.api import Enum, Str, Int
+from traits.api import Enum, HasTraits, Int, Str
 
 
 from pyface.i_dialog import IDialog
@@ -56,7 +56,7 @@ class IFileDialog(IDialog):
     wildcard_index = Int(0)
 
 
-class MFileDialog(object):
+class MFileDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IFileDialog interface.
 

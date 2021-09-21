@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,9 @@ from os.path import basename
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, Instance, File, Str, Property, provides
+from traits.api import (
+    Bool, Event, File, Instance, observe, Property, provides, Str
+)
 from pyface.tasks.api import Editor
 
 
@@ -38,9 +40,9 @@ class PythonEditor(Editor):
 
     dirty = Bool(False)
 
-    name = Property(Str, depends_on="path")
+    name = Property(Str, observe="path")
 
-    tooltip = Property(Str, depends_on="path")
+    tooltip = Property(Str, observe="path")
 
     show_line_numbers = Bool(True)
 
@@ -104,11 +106,13 @@ class PythonEditor(Editor):
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe('path')
+    def _path_updated(self, event):
         if self.control is not None:
             self.load()
 
-    def _show_line_numbers_changed(self):
+    @observe('show_line_numbers')
+    def _show_line_numbers_updated(self, event=None):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
                 self.show_line_numbers
@@ -125,7 +129,7 @@ class PythonEditor(Editor):
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._show_line_numbers_updated()
 
         # Install event filter to trap key presses.
         event_filter = PythonEditorEventFilter(self, self.control)
@@ -159,7 +163,7 @@ class PythonEditorEventFilter(QtCore.QObject):
     """
 
     def __init__(self, editor, parent):
-        super(PythonEditorEventFilter, self).__init__(parent)
+        super().__init__(parent)
         self.__editor = editor
 
     def eventFilter(self, obj, event):
@@ -202,4 +206,4 @@ class PythonEditorEventFilter(QtCore.QObject):
                 event=event,
             )
 
-        return super(PythonEditorEventFilter, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)

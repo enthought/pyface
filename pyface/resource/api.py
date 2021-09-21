@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,6 +8,16 @@
 #
 # Thanks for using Enthought open source!
 
+
+"""
+
+API for the ``pyface.resource`` subpackage.
+
+- :class:`~.ResourceFactory`
+- :class:`~.ResourceManager`
+- :func:`~.resource_path`
+
+"""
 
 from .resource_factory import ResourceFactory
 from .resource_manager import ResourceManager

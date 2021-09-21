@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,8 +15,7 @@ from pyface.qt import QtCore, QtGui
 
 
 from traits.api import (
-    Any, Callable, DelegatesTo, Instance, List, on_trait_change, provides,
-    Tuple
+    Any, Callable, DelegatesTo, Instance, List, observe, provides, Tuple
 )
 
 
@@ -56,7 +55,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Create and set the toolkit-specific control that represents the
             pane.
         """
-        self.control = control = EditorAreaWidget(self, parent)
+        self.control = EditorAreaWidget(self, parent)
         self._filter = EditorAreaDropFilter(self)
         self.control.installEventFilter(self._filter)
 
@@ -111,7 +110,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(AdvancedEditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
@@ -207,12 +206,14 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("editors:[dirty, name]")
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         editor.control.parent().update_title()
 
-    @on_trait_change("editors:tooltip")
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         editor.control.parent().update_tooltip()
 
 
@@ -266,7 +267,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # ------------------------------------------------------------------------
 
     def __init__(self, editor_area, parent=None):
-        super(EditorAreaWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
         self.reset_drag()
 
@@ -279,7 +280,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 break
 
         # Monitor focus changes so we can set the active editor.
-        QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
+        QtGui.QApplication.instance().focusChanged.connect(self._update_active_editor)
 
         # Configure the QMainWindow.
         # FIXME: Currently animation is not supported.
@@ -295,7 +296,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def _remove_event_listeners(self):
         """ Disconnects focusChanged signal of the application """
         app = QtGui.QApplication.instance()
-        app.focusChanged.disconnect(self._focus_changed)
+        app.focusChanged.disconnect(self._update_active_editor)
 
     def add_editor_widget(self, editor_widget):
         """ Adds a dock widget to the editor area.
@@ -450,14 +451,14 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def childEvent(self, event):
         """ Reimplemented to gain access to the tab bars as they are created.
         """
-        super(EditorAreaWidget, self).childEvent(event)
+        super().childEvent(event)
         if event.polished():
             child = event.child()
             if isinstance(child, QtGui.QTabBar):
                 # Use UniqueConnections since Qt recycles the tab bars.
                 child.installEventFilter(self)
                 child.currentChanged.connect(
-                    self._tab_index_changed, QtCore.Qt.UniqueConnection
+                    self._update_editor_in_focus, QtCore.Qt.UniqueConnection
                 )
                 child.setTabsClosable(True)
                 child.setUsesScrollButtons(True)
@@ -574,20 +575,20 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # Signal handlers.
     # ------------------------------------------------------------------------
 
-    def _focus_changed(self, old, new):
+    def _update_active_editor(self, old, new):
         """ Handle an application-level focus change.
         """
         if new is not None:
             for editor in self.editor_area.editors:
                 control = editor.control
                 if control is not None and control.isAncestorOf(new):
-                    self.editor_area.active_editor = focused = editor
+                    self.editor_area.active_editor = editor
                     break
             else:
                 if not self.editor_area.editors:
                     self.editor_area.active_editor = None
 
-    def _tab_index_changed(self, index):
+    def _update_editor_in_focus(self, index):
         """ Handle a tab selection.
         """
         widgets = self.get_dock_widgets_for_bar(self.sender())
@@ -607,7 +608,7 @@ class EditorWidget(QtGui.QDockWidget):
     """
 
     def __init__(self, editor, parent=None):
-        super(EditorWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor = editor
         self.editor.create(self)
         self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
@@ -671,7 +672,7 @@ class EditorTitleBarWidget(QtGui.QTabBar):
     """
 
     def __init__(self, editor_widget):
-        super(EditorTitleBarWidget, self).__init__(editor_widget)
+        super().__init__(editor_widget)
         self.addTab(editor_widget.windowTitle())
         self.setTabToolTip(0, editor_widget.editor.tooltip)
         self.setDocumentMode(True)

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -26,7 +26,7 @@ if SKIP_REASON is not None:
     # Dummy class so that the TestEnamlTaskPane class definition below
     # doesn't fail.
 
-    class GuiTestAssistant(object):
+    class GuiTestAssistant(object):  # noqa: F811
         pass
 
 

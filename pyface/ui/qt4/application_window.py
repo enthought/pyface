@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -24,7 +24,7 @@ from pyface.qt import QtGui
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Str
+from traits.api import Instance, List, observe, provides, Str
 
 
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
@@ -129,7 +129,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        super(ApplicationWindow, self)._create()
+        super()._create()
 
         contents = self._create_contents(self.control)
         self.control.setCentralWidget(contents)
@@ -137,7 +137,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._create_trim_widgets(self.control)
 
     def _create_control(self, parent):
-        control = super(ApplicationWindow, self)._create_control(parent)
+        control = super()._create_control(parent)
         control.setObjectName("ApplicationWindow")
 
         control.setAnimated(False)
@@ -167,18 +167,21 @@ class ApplicationWindow(MApplicationWindow, Window):
     # assignment. For this reason, it is unnecessary to delete the old controls
     # in the following two handlers.
 
-    def _menu_bar_manager_changed(self):
+    @observe("menu_bar_manager")
+    def _menu_bar_manager_updated(self, event):
         if self.control is not None:
             self._create_menu_bar(self.control)
 
-    def _status_bar_manager_changed(self, old, new):
+    @observe("status_bar_manager")
+    def _status_bar_manager_updated(self, event):
+        old, new = event.old, event.new
         if self.control is not None:
             if old is not None:
                 old.destroy_status_bar()
             self._create_status_bar(self.control)
 
-    @on_trait_change("tool_bar_manager, tool_bar_managers")
-    def _update_tool_bar_managers(self):
+    @observe("tool_bar_manager, tool_bar_managers.items")
+    def _update_tool_bar_managers(self, event):
         if self.control is not None:
             # Remove the old toolbars.
             for child in self.control.children():
@@ -189,5 +192,6 @@ class ApplicationWindow(MApplicationWindow, Window):
             # Add the new toolbars.
             self._create_tool_bar(self.control)
 
-    def _icon_changed(self):
+    @observe("icon")
+    def _icon_updated(self, event):
         self._set_window_icon()

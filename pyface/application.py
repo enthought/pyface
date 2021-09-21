@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,11 +22,11 @@ However the class can be used as-is by listening to the
 :py:attr:`Application.application_initialized` event and performing
 appropriate work there::
 
-    def do_work():
+    def do_work(event):
         print("Hello world")
 
     app = Application()
-    app.on_trait_change(do_work, 'application_initialized')
+    app.observe(do_work, 'application_initialized')
 
 """
 
@@ -296,25 +296,25 @@ class Application(HasStrictTraits):
 
     def _id_default(self):
         """ Use the application's directory as the id """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
 
         return ETSConfig._get_application_dirname()
 
     def _home_default(self):
         """ Default home comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
 
         return os.path.join(ETSConfig.application_data, self.id)
 
     def _user_data_default(self):
         """ Default user_data comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
 
         return ETSConfig.user_data
 
     def _company_default(self):
         """ Default company comes from ETSConfig. """
-        from traits.etsconfig.etsconfig import ETSConfig
+        from traits.etsconfig.api import ETSConfig
 
         return ETSConfig.company
 

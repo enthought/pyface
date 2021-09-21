@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 import re
-from textwrap import dedent
 from unicodedata import category
 
 
@@ -29,7 +28,7 @@ class CallTipWidget(QtGui.QLabel):
             text edit widget.
         """
         assert isinstance(text_edit, (QtGui.QTextEdit, QtGui.QPlainTextEdit))
-        super(CallTipWidget, self).__init__(None, QtCore.Qt.ToolTip)
+        super().__init__(None, QtCore.Qt.ToolTip)
 
         self._hide_timer = QtCore.QBasicTimer()
         self._text_edit = text_edit
@@ -79,7 +78,7 @@ class CallTipWidget(QtGui.QLabel):
             elif etype == QtCore.QEvent.Leave:
                 self._leave_event_hide()
 
-        return super(CallTipWidget, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)
 
     def timerEvent(self, event):
         """ Reimplemented to hide the widget when the hide timer fires.
@@ -95,13 +94,13 @@ class CallTipWidget(QtGui.QLabel):
     def enterEvent(self, event):
         """ Reimplemented to cancel the hide timer.
         """
-        super(CallTipWidget, self).enterEvent(event)
+        super().enterEvent(event)
         self._hide_timer.stop()
 
     def hideEvent(self, event):
         """ Reimplemented to disconnect signal handlers and event filter.
         """
-        super(CallTipWidget, self).hideEvent(event)
+        super().hideEvent(event)
         self._text_edit.cursorPositionChanged.disconnect(
             self._cursor_position_changed
         )
@@ -110,7 +109,7 @@ class CallTipWidget(QtGui.QLabel):
     def leaveEvent(self, event):
         """ Reimplemented to start the hide timer.
         """
-        super(CallTipWidget, self).leaveEvent(event)
+        super().leaveEvent(event)
         self._leave_event_hide()
 
     def paintEvent(self, event):
@@ -122,17 +121,17 @@ class CallTipWidget(QtGui.QLabel):
         painter.drawPrimitive(QtGui.QStyle.PE_PanelTipLabel, option)
         painter.end()
 
-        super(CallTipWidget, self).paintEvent(event)
+        super().paintEvent(event)
 
     def setFont(self, font):
         """ Reimplemented to allow use of this method as a slot.
         """
-        super(CallTipWidget, self).setFont(font)
+        super().setFont(font)
 
     def showEvent(self, event):
         """ Reimplemented to connect signal handlers and event filter.
         """
-        super(CallTipWidget, self).showEvent(event)
+        super().showEvent(event)
         self._text_edit.cursorPositionChanged.connect(
             self._cursor_position_changed
         )
@@ -163,7 +162,6 @@ class CallTipWidget(QtGui.QLabel):
         """
         # Attempt to find the cursor position at which to show the call tip.
         text_edit = self._text_edit
-        document = text_edit.document()
         cursor = text_edit.textCursor()
         search_pos = cursor.position() - 1
         self._start_position, _ = self._find_parenthesis(

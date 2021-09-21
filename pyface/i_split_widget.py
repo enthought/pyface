@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,9 @@
 """ Mix-in class for split widgets. """
 
 
-from traits.api import Callable, Enum, Float, Interface
+from traits.api import Callable, Float, HasTraits, Interface
+
+from pyface.ui_traits import Orientation
 
 
 class ISplitWidget(Interface):
@@ -28,7 +30,7 @@ class ISplitWidget(Interface):
     #: Splitting vertically means there will be a left hand panel and a right
     #: hand panel, splitting horizontally means there will be a top panel and
     #: a bottom panel.
-    direction = Enum("vertical", "vertical", "horizontal")
+    direction = Orientation()
 
     #: The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.5)
@@ -86,7 +88,55 @@ class ISplitWidget(Interface):
         """
 
 
-class MSplitWidget(object):
+class MSplitWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISplitWidget interface.
     """
+
+    # 'ISplitWidget' interface ---------------------------------------------
+
+    #: The direction in which the widget is split.
+    #
+    #: Splitting vertically means there will be a left hand panel and a right
+    #: hand panel, splitting horizontally means there will be a top panel and
+    #: a bottom panel.
+    direction = Orientation()
+
+    #: The ratio of the size of the left/top pane to the right/bottom pane.
+    ratio = Float(0.5)
+
+    #: An optional callable that provides the left hand/top panel.
+    lhs = Callable
+
+    #: An optional callable that provides the right hand/bottom panel.
+    rhs = Callable
+
+    def _create_lhs(self, parent):
+        """ Creates the left hand/top panel depending on the direction.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The splitter's toolkit control.
+
+        Returns
+        -------
+        lhs : toolkit control
+            The toolkit control for the lhs.
+        """
+        raise NotImplementedError()
+
+    def _create_rhs(self, parent):
+        """ Creates the right hand/bottom panel depending on the direction.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The splitter's toolkit control.
+
+        Returns
+        -------
+        rhs : toolkit control
+            The toolkit control for the rhs.
+        """
+        raise NotImplementedError()

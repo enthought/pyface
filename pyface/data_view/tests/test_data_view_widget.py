@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,10 +13,11 @@ import unittest
 
 from traits.api import TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.gui import GUI
 from pyface.toolkit import toolkit
+from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
 from pyface.window import Window
 
 # This import results in an error without numpy installed
@@ -37,20 +38,7 @@ selection_types = DataViewWidget().trait("selection_type").trait_type.values
 
 
 @requires_numpy
-class TestWidget(unittest.TestCase, UnittestTools):
-
-    def setUp(self):
-        self.gui = GUI()
-
-        self.parent = Window()
-        self.parent._create()
-        self.addCleanup(self._destroy_parent)
-        self.gui.process_events()
-
-        self.widget = self._create_widget()
-
-        self.parent.open()
-        self.gui.process_events()
+class TestWidget(LayoutWidgetMixin, unittest.TestCase):
 
     def _create_widget(self):
         self.data = np.arange(120.0).reshape(4, 5, 6)
@@ -59,22 +47,6 @@ class TestWidget(unittest.TestCase, UnittestTools):
             parent=self.parent.control,
             data_model=self.model
         )
-
-    def _create_widget_control(self):
-        self.widget._create()
-        self.addCleanup(self._destroy_widget)
-        self.parent.show(True)
-        self.gui.process_events()
-
-    def _destroy_parent(self):
-        self.parent.destroy()
-        self.gui.process_events()
-        self.parent = None
-
-    def _destroy_widget(self):
-        self.widget.destroy()
-        self.gui.process_events()
-        self.widget = None
 
     def test_defaults(self):
         self.assertTrue(self.widget.header_visible)

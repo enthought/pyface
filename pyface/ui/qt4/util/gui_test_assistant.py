@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,12 +17,12 @@ import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 from traits.testing.unittest_tools import (
     _TraitsChangeCollector as TraitsChangeCollector,
 )
 
-from .testing import find_qt_widget, print_qt_widget_tree
+from .testing import find_qt_widget
 from .event_loop_helper import EventLoopHelper, ConditionTimeoutError
 
 
@@ -40,7 +40,7 @@ class GuiTestAssistant(UnittestTools):
             qt_app=self.qt_app, gui=self.gui
         )
         try:
-            import traitsui.api
+            import traitsui.api  # noqa: F401
         except ImportError:
             self.traitsui_raise_patch = None
         else:
@@ -257,7 +257,7 @@ class GuiTestAssistant(UnittestTools):
                 condition.set()
 
         def make_handler(trait):
-            def handler():
+            def handler(event):
                 set_event(trait)
 
             return handler
@@ -265,7 +265,7 @@ class GuiTestAssistant(UnittestTools):
         handlers = {trait: make_handler(trait) for trait in traits}
 
         for trait, handler in handlers.items():
-            traits_object.on_trait_change(handler, trait)
+            traits_object.observe(handler, trait)
         try:
             with self.event_loop_until_condition(
                 condition=condition.is_set, timeout=timeout
@@ -273,7 +273,7 @@ class GuiTestAssistant(UnittestTools):
                 yield
         finally:
             for trait, handler in handlers.items():
-                traits_object.on_trait_change(handler, trait, remove=True)
+                traits_object.observe(handler, trait, remove=True)
 
     @contextlib.contextmanager
     def event_loop_with_timeout(self, repeat=2, timeout=10.0):

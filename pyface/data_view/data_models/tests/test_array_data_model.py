@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,7 @@
 
 from unittest import TestCase
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.data_view.data_view_errors import DataViewSetError
@@ -55,7 +55,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         model = ArrayDataModel(value_type=FloatValue())
         self.assertEqual(model.data.ndim, 2)
         self.assertEqual(model.data.shape, (0, 0))
-        self.assertEqual(model.data.dtype, np.float)
+        self.assertEqual(model.data.dtype, float)
         self.assertEqual(model.get_column_count(), 0)
         self.assertTrue(model.can_have_children(()))
         self.assertEqual(model.get_row_count(()), 0)
@@ -249,7 +249,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((), (0,), (), (2,))
         )
 
-    def test_row_header_type_updated_empty(self):
+    def test_column_header_type_updated_empty(self):
         self.model.data = np.empty((2, 4, 0), dtype='int')
         with self.assertTraitDoesNotChange(self.model, "values_changed"):
             self.model.column_header_type = no_value
