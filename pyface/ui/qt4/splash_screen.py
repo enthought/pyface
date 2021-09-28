@@ -14,16 +14,12 @@
 
 from logging import DEBUG
 
+from traits.api import Any, Bool, Int, Tuple, Str, provides
 
 from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Any, Bool, Instance, Int, provides
-from traits.api import Tuple, Str
-
-
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
+from .image_resource import ImageResource
 from .window import Window
 
 
@@ -35,7 +31,7 @@ class SplashScreen(MSplashScreen, Window):
 
     # 'ISplashScreen' interface --------------------------------------------
 
-    image = Instance(ImageResource, ImageResource("splash"))
+    image = Image(ImageResource("splash"))
 
     log_level = Int(DEBUG)
 

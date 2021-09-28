@@ -14,10 +14,9 @@
 import logging
 
 
-from pyface.api import ImageResource
-from traits.api import Bool, Instance, provides, Str
+from pyface.api import Image
+from traits.api import Bool, Str, provides
 from traits.util.camel_case import camel_case_to_words
-
 
 from .i_perspective_item import IPerspectiveItem
 from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
@@ -40,7 +39,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
 
     # An image used to represent the view to the user (shown in the view tab
     # and in the view chooser etc).
-    image = Instance(ImageResource)
+    image = Image()
 
     # Whether the view is visible or not.
     visible = Bool(False)
@@ -81,7 +80,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
     # An image used to represent the view to the user (shown in the view tab
     # and in the view chooser etc).
-    image = Instance(ImageResource)
+    image = Image()
 
     # Whether the view is visible or not.
     visible = Bool(False)

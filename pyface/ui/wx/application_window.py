@@ -12,19 +12,19 @@
 """ Enthought pyface package component
 """
 
-
 import wx
-from pyface.wx.aui import aui, PyfaceAuiManager
 
+from traits.api import Instance, List, on_trait_change, provides, Str
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, observe, provides, Str
-from pyface.i_application_window import IApplicationWindow
-from pyface.i_application_window import MApplicationWindow
-from pyface.image_resource import ImageResource
-
-
+from pyface.i_application_window import (
+    IApplicationWindow, MApplicationWindow,
+)
+from pyface.ui_traits import Image
+from pyface.wx.aui import aui, PyfaceAuiManager
+from .image_resource import ImageResource
 from .window import Window
 
 
@@ -36,7 +36,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     # 'IApplicationWindow' interface ---------------------------------------
 
-    icon = Instance(ImageResource)
+    icon = Image()
 
     menu_bar_manager = Instance(MenuBarManager)
 

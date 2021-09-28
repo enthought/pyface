@@ -17,7 +17,9 @@ import wx
 from traits.api import Instance, provides
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
+from pyface.wx.util.font_helper import new_font_like
+from .image_resource import ImageResource
 from .layout_widget import LayoutWidget
 
 
@@ -26,8 +28,10 @@ class HeadingText(MHeadingText, LayoutWidget):
     """ The Wx-specific implementation of a HeadingText.
     """
 
+    # 'IHeadingText' interface ---------------------------------------------
+
     #: Background image.  This is deprecated and no-longer used.
-    image = Instance(ImageResource, ImageResource("heading_level_1"))
+    image = Image(ImageResource("heading_level_1"))
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.

@@ -12,16 +12,14 @@
 
 import platform
 
+from traits.api import Any, Callable, List, provides, Str, Tuple
 
 from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Any, Callable, Instance, List, provides, Str, Tuple
-
-
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .dialog import Dialog
+from .image_resource import ImageResource
+
 
 # The HTML displayed in the QLabel.
 _DIALOG_TEXT = """
@@ -68,7 +66,7 @@ class AboutDialog(MAboutDialog, Dialog):
 
     copyrights = List(Str)
 
-    image = Instance(ImageResource, ImageResource("about"))
+    image = Image(ImageResource("about"))
 
     # Private interface ---------------------------------------------------#
 

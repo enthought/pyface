@@ -11,11 +11,11 @@
 """ The interface for a simple 'About' dialog. """
 
 
-from traits.api import HasTraits, Instance, List, Str
+from traits.api import HasTraits, List, Str
 
 
 from pyface.i_dialog import IDialog
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 
 
 class IAboutDialog(IDialog):
@@ -30,7 +30,7 @@ class IAboutDialog(IDialog):
     copyrights = List(Str)
 
     #: The image displayed in the dialog.
-    image = Instance(ImageResource, ImageResource("about"))
+    image = Image()
 
 
 class MAboutDialog(HasTraits):

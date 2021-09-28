@@ -18,11 +18,10 @@ import warnings
 
 import wx
 
-
-from traits.api import Instance, Event, Str, Bool
-
+from traits.api import Event, Str, Bool
 
 from pyface.wx.util.font_helper import new_font_like
+from pyface.ui_traits import Image
 from .image_resource import ImageResource
 from .widget import Widget
 
@@ -38,33 +37,29 @@ class ExpandableHeader(Widget):
     title = Str("Panel")
 
     #: The carat image to show when the panel is collapsed.
-    collapsed_carat_image = Instance(
-        ImageResource, ImageResource("carat_closed")
-    )
+    collapsed_carat_image = Image(ImageResource("carat_closed"))
 
     #: The carat image to show when the panel is expanded.
-    expanded_carat_image = Instance(ImageResource, ImageResource("carat_open"))
+    expanded_carat_image = Image(ImageResource("carat_open"))
 
-    #: The backing header image when the mouse is elsewhere.
+    #: The backing header image when the mouse is elsewhere
     #: This is not used and deprecated.
-    header_bar_image = Instance(ImageResource, ImageResource("panel_gradient"))
+    header_bar_image = Image(ImageResource("panel_gradient"))
 
-    #: The backing header image when the mouse is over.
+    #: The backing header image when the mouse is over
     #: This is not used and deprecated.
-    header_mouseover_image = Instance(
-        ImageResource, ImageResource("panel_gradient_over")
-    )
+    header_mouseover_image = Image(ImageResource("panel_gradient_over"))
 
     #: The image to use for the close button.
     #: This is not used and deprecated.
-    remove_image = Instance(ImageResource, ImageResource("close"))
+    remove_image = Image(ImageResource("close"))
 
     #: Represents the current state of the panel. True means expanded.
     state = Bool(False)
 
     # Events ----
 
-    # The panel has been expanded or collapsed
+    #: The panel has been expanded or collapsed
     panel_expanded = Event()
 
     # The panel has been closed

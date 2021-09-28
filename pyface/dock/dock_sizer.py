@@ -43,6 +43,7 @@ from traitsui.wx.helper import BufferDC
 
 from pyface.api import SystemMetrics
 from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.wx.drag_and_drop import PythonDropSource
 from pyface.timer.api import do_later, do_after
 from .idockable import IDockable
@@ -261,10 +262,10 @@ class DockImages(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     # Image for closing a tab:
-    close_tab = Instance(ImageResource, ImageResource("close_tab"))
+    close_tab = Image(ImageResource("close_tab"))
 
     # Image for closing a drag bar:
-    close_drag = Instance(ImageResource, ImageResource("close_drag"))
+    close_drag = Image(ImageResource("close_drag"))
 
     # ---------------------------------------------------------------------------
     #  Initalizes the object:
@@ -1639,7 +1640,7 @@ class DockControl(DockItem):
     feature_changed = Event()
 
     # The image to display for this control:
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The UI name of this control:
     name = Str()

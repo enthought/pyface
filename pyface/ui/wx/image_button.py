@@ -19,11 +19,10 @@ import wx
 
 from numpy import array, frombuffer, reshape, ravel, dtype
 
-from traits.api import Any, Bool, Str, Range, Enum, Instance, Event
+from traits.api import Any, Bool, Str, Range, Enum, Event
 
-from pyface.ui_traits import Orientation
+from pyface.ui_traits import Image, Orientation
 from .layout_widget import LayoutWidget
-from .image_resource import ImageResource
 
 # -------------------------------------------------------------------------------
 #  Constants:
@@ -56,7 +55,7 @@ class ImageButton(LayoutWidget):
     # ---------------------------------------------------------------------------
 
     # The image:
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The (optional) label:
     label = Str()

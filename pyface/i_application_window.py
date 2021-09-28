@@ -15,8 +15,8 @@ from traits.api import HasTraits, Instance, List
 
 
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
-from pyface.i_image_resource import IImageResource
 from pyface.i_window import IWindow
+from pyface.ui_traits import Image
 
 
 class IApplicationWindow(IWindow):
@@ -35,7 +35,7 @@ class IApplicationWindow(IWindow):
     # 'IApplicationWindow' interface ---------------------------------------
 
     #: The window icon.  The default is toolkit specific.
-    icon = Instance(IImageResource)
+    icon = Image()
 
     #: The menu bar manager (None iff there is no menu bar).
     menu_bar_manager = Instance(MenuBarManager)

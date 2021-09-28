@@ -30,7 +30,7 @@ from traits.api import (
 from traitsui.menu import Menu, Action
 
 from pyface.timer.api import do_later
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .dock_window import DockWindow
 from .dock_sizer import DockControl, add_feature
 from .ifeature_tool import IFeatureTool
@@ -99,7 +99,7 @@ class DockWindowFeature(HasPrivateTraits):
     # **ImageResource** object causes the associated image to be updated on the
     # feature bar. Setting the value to **None** removes the image from the
     # feature bar.
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The tooltip to display when the pointer hovers over the image. The value
     # can be changed dynamically to reflect changes in the feature's state.

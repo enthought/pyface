@@ -14,10 +14,10 @@
 import logging
 
 
-from traits.api import Any, Bool, HasTraits, Instance, Int, Tuple, Str
+from traits.api import Any, Bool, HasTraits, Int, Tuple, Str
 
 
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.splash_screen_log_handler import SplashScreenLogHandler
 from pyface.i_window import IWindow
 
@@ -28,7 +28,7 @@ class ISplashScreen(IWindow):
     # 'ISplashScreen' interface --------------------------------------------
 
     #: The image to display on the splash screen.
-    image = Instance(ImageResource, ImageResource("splash"))
+    image = Image()
 
     #: If log messages are to be displayed then this is the logging level. See
     #: the Python documentation for the 'logging' module for more details.

@@ -17,6 +17,7 @@ import wx
 from traits.api import Bool, Instance, Int, Tuple
 
 
+from pyface.ui_traits import Image
 from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
@@ -25,7 +26,7 @@ try:
     from wx.lib.agw import aui  # noqa: F401
 
     AUI = True
-except:
+except ImportError:
     AUI = False
 
 
@@ -43,7 +44,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # 'MDIApplicationWindow' interface -------------------------------------
 
     # The workarea background image.
-    background_image = Instance(ImageResource, ImageResource("background"))
+    background_image = Image(ImageResource("background"))
 
     # Should we tile the workarea  background image?  The alternative is to
     # scale it.  Be warned that scaling the image allows for 'pretty' images,

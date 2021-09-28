@@ -14,9 +14,9 @@ import warnings
 
 import wx
 
-from traits.api import Dict, Instance, Str
+from traits.api import Dict, Str
 
-
+from pyface.ui_traits import Image
 from .expandable_header import ExpandableHeader
 from .image_resource import ImageResource
 from .layout_widget import LayoutWidget
@@ -28,8 +28,8 @@ class ExpandablePanel(LayoutWidget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
-    expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
+    collapsed_image = Image(ImageResource("mycarat1"))
+    expanded_image = Image(ImageResource("mycarat2"))
 
     _layers = Dict(Str)
 
