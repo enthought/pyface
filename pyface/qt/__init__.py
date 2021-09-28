@@ -55,3 +55,5 @@ elif qt_api not in {api_name for api_name, module in QtAPIs}:
 # useful constants
 is_qt4 = qt_api in {"pyqt"}
 is_qt5 = qt_api in {"pyqt5", "pyside2"}
+is_pyqt = qt_api in {"pyqt", "pyqt5"}
+is_pyside = qt_api in {"pyside", "pyside2"}

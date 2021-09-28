@@ -55,11 +55,18 @@ ComboField
 ==========
 
 The :py:class:`~pyface.fields.i_combo_field.IComboField` interface has an arbitrary
-:py:attr:`~pyface.fields.i_spin_field.IComboField.value` that must come from a list
-of valid :py:attr:`~pyface.fields.i_spin_field.IComboField.values`.  For non-text
-values, a :py:attr:`~pyface.fields.i_spin_field.IComboField.formatter` function
+:py:attr:`~pyface.fields.i_combo_field.IComboField.value` that must come from a list
+of valid :py:attr:`~pyface.fields.i_combo_field.IComboField.values`.  For non-text
+values, a :py:attr:`~pyface.fields.i_combo_field.IComboField.formatter` function
 should be provided - this defaults to either :py:func:`str` (Python 3+) or
 :py:func:`unicode` (Python 2).
+
+TimeField
+==========
+
+The :py:class:`~pyface.fields.i_time_field.ITimeField` interface has a
+:py:class:`datetime.time` :py:attr:`~pyface.fields.i_time_field.ITimeField.value`.
+This value defaults to the current time.
 
 ToggleField and Subclasses
 ==========================
