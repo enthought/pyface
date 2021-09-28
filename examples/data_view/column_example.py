@@ -20,7 +20,7 @@ from pyface.data_view.api import (
 )
 from pyface.data_view.exporters.api import RowExporter
 from pyface.data_view.value_types.api import (
-    BoolValue, ColorValue, IntValue, TextValue, no_value
+    BoolValue, EnumValue, ColorValue, IntValue, TextValue, no_value
 )
 from pyface.ui_traits import PyfaceColor
 
@@ -63,19 +63,6 @@ class Person(HasStrictTraits):
     address = Instance(Address)
 
 
-class CountryValue(TextValue):
-
-    flags = Dict(Str, Image, update_value_type=True)
-
-    def has_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return value in self.flags
-
-    def get_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return self.flags[value]
-
-
 row_info = HasTraitsRowInfo(
     title='People',
     value='name',
@@ -114,7 +101,10 @@ row_info = HasTraitsRowInfo(
                 HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
-                    value_type=CountryValue(flags=flags),
+                    value_type=EnumValue(
+                        values=sorted(flags.keys()),
+                        images=flags.get,
+                    ),
                 ),
             ],
         ),

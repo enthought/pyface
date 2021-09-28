@@ -19,7 +19,7 @@ from pyface.data_view.data_models.api import (
 )
 from pyface.data_view.api import DataViewWidget, IDataViewWidget
 from pyface.data_view.value_types.api import (
-    BoolValue, ColorValue, IntValue, TextValue
+    BoolValue, EnumValue, ColorValue, IntValue, TextValue
 )
 
 from example_data import (
@@ -61,19 +61,6 @@ class Person(HasStrictTraits):
     address = Instance(Address, ())
 
 
-class CountryValue(TextValue):
-
-    flags = Dict(Str, Image, update_value_type=True)
-
-    def has_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return value in self.flags
-
-    def get_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return self.flags[value]
-
-
 row_header_data = AttributeDataAccessor(
     title='People',
     attr='name',
@@ -103,7 +90,10 @@ column_data = [
     ),
     AttributeDataAccessor(
         attr="address.country",
-        value_type=CountryValue(flags=flags),
+        value_type=EnumValue(
+            values=['Canada', 'UK', 'USA'],
+            images=flags.get,
+        ),
     ),
 ]
 

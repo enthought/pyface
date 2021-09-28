@@ -10,7 +10,6 @@
 
 import logging
 
-from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QMimeData, QModelIndex, Qt
 from pyface.qt.QtGui import QColor
@@ -189,16 +188,17 @@ class DataViewItemModel(QAbstractItemModel):
             elif role == Qt.DecorationRole:
                 if value_type.has_image(self.model, row, column):
                     image = value_type.get_image(self.model, row, column)
-                    if isinstance(image, IImageResource):
+                    if image is not None:
                         return image.create_image()
             elif role == Qt.BackgroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
-                    return color.to_toolkit()
+                    if color is not None:
+                        return color.to_toolkit()
             elif role == Qt.ForegroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
-                    if color.is_dark:
+                    if color is not None and color.is_dark:
                         return WHITE
                     else:
                         return BLACK

@@ -195,6 +195,17 @@ class AbstractValueType(ABCHasStrictTraits):
     def has_color(self, model, row, column):
         """ Whether or not the value has color data.
 
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
         has_color : bool
             Whether or not the value has data-associated color
             values.
@@ -206,6 +217,17 @@ class AbstractValueType(ABCHasStrictTraits):
 
         The default implementation returns white.
 
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
         color : Color instance
             The color associated with the cell.
         """
@@ -249,7 +271,7 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        image : IImageResource
+        image : IImage
             The image associated with the underlying value.
         """
         from pyface.image_resource import ImageResource
