@@ -13,8 +13,9 @@
 
 from traits.api import provides
 
-from pyface.fields.i_time_field import ITimeField, MTimeField
 from pyface.qt.QtGui import QTimeEdit
+
+from pyface.fields.i_time_field import ITimeField, MTimeField
 from pyface.ui.qt4.util.datetime import pytime_to_qtime, qtime_to_pytime
 from .field import Field
 
