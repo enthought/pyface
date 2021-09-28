@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,9 +10,8 @@
 
 import logging
 
-from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
-from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
+from pyface.qt.QtCore import QAbstractItemModel, QMimeData, QModelIndex, Qt
 from pyface.qt.QtGui import QColor
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_value_type import CheckState
@@ -20,6 +19,7 @@ from pyface.data_view.data_view_errors import (
     DataViewGetError, DataViewSetError
 )
 from pyface.data_view.index_manager import Root
+from .data_wrapper import DataWrapper
 
 
 logger = logging.getLogger(__name__)
@@ -42,9 +42,11 @@ get_check_state_map = {
 class DataViewItemModel(QAbstractItemModel):
     """ A QAbstractItemModel that understands AbstractDataModels. """
 
-    def __init__(self, model, parent=None):
+    def __init__(self, model, selection_type, exporters, parent=None):
         super().__init__(parent)
         self.model = model
+        self.selectionType = selection_type
+        self.exporters = exporters
         self.destroyed.connect(self._on_destroyed)
 
     @property
@@ -140,9 +142,9 @@ class DataViewItemModel(QAbstractItemModel):
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
         if row == () and column == ():
-            return 0
+            return Qt.ItemIsEnabled
 
-        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled
         if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
@@ -186,16 +188,17 @@ class DataViewItemModel(QAbstractItemModel):
             elif role == Qt.DecorationRole:
                 if value_type.has_image(self.model, row, column):
                     image = value_type.get_image(self.model, row, column)
-                    if isinstance(image, IImageResource):
+                    if image is not None:
                         return image.create_image()
             elif role == Qt.BackgroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
-                    return color.to_toolkit()
+                    if color is not None:
+                        return color.to_toolkit()
             elif role == Qt.ForegroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
-                    if color.is_dark:
+                    if color is not None and color.is_dark:
                         return WHITE
                     else:
                         return BLACK
@@ -285,6 +288,27 @@ class DataViewItemModel(QAbstractItemModel):
 
         return None
 
+    def mimeData(self, indexes):
+        mimedata = super().mimeData(indexes)
+        if mimedata is None:
+            mimedata = QMimeData()
+        data_wrapper = DataWrapper(toolkit_data=mimedata)
+
+        indices = self._normalize_indices(indexes)
+        for exporter in self.exporters:
+            try:
+                exporter.add_data(data_wrapper, self.model, indices)
+            except Exception:
+                # unexpected error, log and raise
+                logger.exception(
+                    "data export failed: mimetype {}, indices {}",
+                    exporter.format.mimetype,
+                    indices,
+                )
+                raise
+
+        return data_wrapper.toolkit_data
+
     # Private utility methods
 
     def _on_destroyed(self):
@@ -353,3 +377,33 @@ class DataViewItemModel(QAbstractItemModel):
 
         return self.createIndex(row, column, index)
 
+    def _extract_rows(self, indices):
+        rows = []
+        for index in indices:
+            row = self._to_row_index(index)
+            if (row, ()) not in rows:
+                rows.append((row, ()))
+        return rows
+
+    def _extract_columns(self, indices):
+        columns = []
+        for index in indices:
+            row = self._to_row_index(index)[:-1]
+            column = self._to_column_index(index)
+            if (row, column) not in columns:
+                columns.append((row, column))
+        return columns
+
+    def _extract_indices(self, indices):
+        return [
+            (self._to_row_index(index), self._to_column_index(index))
+            for index in indices
+        ]
+
+    def _normalize_indices(self, indices):
+        if self.selectionType == 'row':
+            return self._extract_rows(indices)
+        elif self.selectionType == 'column':
+            return self._extract_columns(indices)
+        else:
+            return self._extract_indices(indices)

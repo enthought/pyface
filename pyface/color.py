@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,7 +25,8 @@ from traits.api import (
     Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
-from pyface.util.color_helpers import channels_to_ints, ints_to_channels, is_dark
+from pyface.util.color_helpers import channels_to_ints, is_dark
+from pyface.util.color_helpers import ints_to_channels  # noqa: F401
 from pyface.util.color_parser import parse_text
 
 
@@ -62,34 +63,34 @@ class Color(HasStrictTraits):
     rgba = AlphaChannelTuple()
 
     #: A tuple holding the red, green, and blue channels.
-    rgb = Property(ChannelTuple(), depends_on='rgba')
+    rgb = Property(ChannelTuple(), observe='rgba')
 
     #: The red channel.
-    red = Property(Channel, depends_on='rgba')
+    red = Property(Channel, observe='rgba')
 
     #: The green channel.
-    green = Property(Channel, depends_on='rgba')
+    green = Property(Channel, observe='rgba')
 
     #: The blue channel.
-    blue = Property(Channel, depends_on='rgba')
+    blue = Property(Channel, observe='rgba')
 
     #: The alpha channel.
-    alpha = Property(Channel, depends_on='rgba')
+    alpha = Property(Channel, observe='rgba')
 
     #: A tuple holding the hue, saturation, value, and alpha channels.
-    hsva = Property(AlphaChannelTuple, depends_on='rgba')
+    hsva = Property(AlphaChannelTuple, observe='rgba')
 
     #: A tuple holding the hue, saturation, and value channels.
-    hsv = Property(ChannelTuple, depends_on='rgb')
+    hsv = Property(ChannelTuple, observe='rgb')
 
     #: A tuple holding the hue, lightness, saturation, and alpha channels.
-    hlsa = Property(AlphaChannelTuple, depends_on='rgba')
+    hlsa = Property(AlphaChannelTuple, observe='rgba')
 
     #: A tuple holding the hue, lightness, and saturation channels.
-    hls = Property(ChannelTuple, depends_on='rgb')
+    hls = Property(ChannelTuple, observe='rgb')
 
     #: Whether the color is dark for contrast purposes.
-    is_dark = Property(Bool, depends_on='rgba')
+    is_dark = Property(Bool, observe='rgba')
 
     @classmethod
     def from_str(cls, text, **traits):

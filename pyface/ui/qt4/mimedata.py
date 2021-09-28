@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,6 @@
 from pickle import dumps, load, loads, PickleError
 import warnings
 import io
-import sys
 
 from pyface.qt import QtCore
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -624,24 +624,27 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         editor_dock_control.on_close = self._wx_on_editor_closed
 
-        def on_id_changed(editor, trait_name, old, new):
+        def on_id_changed(event):
+            editor = event.object
             editor_dock_control.id = editor.id
             return
 
-        editor.on_trait_change(on_id_changed, "id")
+        editor.observe(on_id_changed, "id")
 
-        def on_name_changed(editor, trait_name, old, new):
+        def on_name_changed(event):
+            editor = event.object
             editor_dock_control.set_name(editor.name)
             return
 
-        editor.on_trait_change(on_name_changed, "name")
+        editor.observe(on_name_changed, "name")
 
-        def on_activated_changed(editor_dock_control, trait_name, old, new):
+        def on_activated_changed(event):
+            editor_dock_control = event.object
             if editor_dock_control._editor is not None:
                 editor_dock_control._editor.set_focus()
             return
 
-        editor_dock_control.on_trait_change(on_activated_changed, "activated")
+        editor_dock_control.observe(on_activated_changed, "activated")
 
     def _wx_initialize_view_dock_control(self, view, view_dock_control):
         """ Initializes a view dock control.
@@ -680,24 +683,27 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         view_dock_control.on_close = self._wx_on_view_closed
 
-        def on_id_changed(view, trait_name, old, new):
+        def on_id_changed(event):
+            view = event.object
             view_dock_control.id = view.id
             return
 
-        view.on_trait_change(on_id_changed, "id")
+        view.observe(on_id_changed, "id")
 
-        def on_name_changed(view, trait_name, old, new):
+        def on_name_changed(event):
+            view = event.object
             view_dock_control.set_name(view.name)
             return
 
-        view.on_trait_change(on_name_changed, "name")
+        view.observe(on_name_changed, "name")
 
-        def on_activated_changed(view_dock_control, trait_name, old, new):
+        def on_activated_changed(event):
+            view_dock_control = event.object
             if view_dock_control._view is not None:
                 view_dock_control._view.set_focus()
             return
 
-        view_dock_control.on_trait_change(on_activated_changed, "activated")
+        view_dock_control.observe(on_activated_changed, "activated")
 
         return
 
@@ -709,20 +715,20 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Static trait change handler. """
 
         if old is not None:
-            old.on_trait_change(
+            old.observe(
                 self._wx_on_editor_area_size_changed,
                 "editor_area_size",
                 remove=True,
             )
 
         if new is not None:
-            new.on_trait_change(
+            new.observe(
                 self._wx_on_editor_area_size_changed, "editor_area_size"
             )
 
     # Dynamic ----
 
-    def _wx_on_editor_area_size_changed(self, new):
+    def _wx_on_editor_area_size_changed(self, event):
         """ Dynamic trait change handler. """
 
         window_width, window_height = self.window.control.GetSize().Get()
@@ -732,8 +738,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # We actually resize the region that the editor area is in.
         region = control.parent
-        region.width = int(new[0] * window_width)
-        region.height = int(new[1] * window_height)
+        region.width = int(event.new[0] * window_width)
+        region.height = int(event.new[1] * window_height)
         return
 
     # Dock window handlers -------------------------------------------------

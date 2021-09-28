@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -45,7 +45,7 @@ class ImageResource(MImageResource, HasTraits):
     search_path = List()
 
     # ------------------------------------------------------------------------
-    # 'ImageResource' interface.
+    # 'IImage' interface.
     # ------------------------------------------------------------------------
 
     # Qt doesn't specifically require bitmaps anywhere so just use images.

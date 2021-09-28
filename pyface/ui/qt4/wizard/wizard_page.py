@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,10 +17,10 @@
 """ A page in a wizard. """
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 
 
-from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
+from traits.api import Bool, HasTraits, provides, Str, Tuple
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 
@@ -117,7 +117,7 @@ class _WizardPage(QtGui.QWizardPage):
 
         self.pyface_wizard = None
 
-        page.on_trait_change(self._on_complete_changed, "complete")
+        page.observe(self._on_complete_changed, "complete")
         self._page = page
 
     def initializePage(self):
@@ -137,7 +137,7 @@ class _WizardPage(QtGui.QWizardPage):
 
         return self._page.complete
 
-    def _on_complete_changed(self):
+    def _on_complete_changed(self, event):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()

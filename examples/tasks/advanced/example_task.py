@@ -21,7 +21,7 @@ from pyface.api import (
     OK,
     CANCEL,
 )
-from traits.api import on_trait_change, Property, Instance
+from traits.api import observe, Property, Instance
 
 
 from example_panes import PythonScriptBrowserPane
@@ -38,7 +38,7 @@ class ExampleTask(Task):
     name = "Multi-Tab Editor"
 
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     editor_area = Instance(IEditorAreaPane)
@@ -100,8 +100,8 @@ class ExampleTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         browser = PythonScriptBrowserPane()
-        handler = lambda: self._open_file(browser.selected_file)
-        browser.on_trait_change(handler, "activated")
+        handler = lambda _: self._open_file(browser.selected_file)
+        browser.observe(handler, "activated")
         return [browser]
 
     # ------------------------------------------------------------------------
@@ -185,12 +185,13 @@ class ExampleTask(Task):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
-        event.veto = not close
+        window = event.new
+        window.veto = not close
 
     # Trait property getter/setters ----------------------------------------
 

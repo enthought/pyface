@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 
 
 from pyface.workbench.api import IPerspective
-from traits.api import Delegate, Instance, on_trait_change
+from traits.api import Delegate, Instance, observe
 
 
 from .workbench_action import WorkbenchAction
@@ -59,8 +59,8 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change("perspective,window.active_perspective")
-    def _refresh_checked(self):
+    @observe("perspective,window.active_perspective")
+    def _refresh_checked(self, event):
         """ Refresh the checked state of the action. """
 
         self.checked = (

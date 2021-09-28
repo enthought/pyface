@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface for all pyface wizards. """
 
 
-from traits.api import Bool, Instance, List, Str
+from traits.api import Bool, HasTraits, Instance, List, Str
 from pyface.i_dialog import IDialog
 
 
@@ -50,7 +50,7 @@ class IWizard(IDialog):
         """ Return to the previous page in the wizard. """
 
 
-class MWizard(object):
+class MWizard(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWizard interface.
 
@@ -85,7 +85,7 @@ class MWizard(object):
         """ Creates the window contents. """
 
         # This creates the dialog and button areas.
-        super(MWizard, self)._create_contents(parent)
+        super()._create_contents(parent)
 
         # Wire up the controller.
         self._initialize_controller(self.controller)
@@ -109,7 +109,7 @@ class MWizard(object):
         # page?
         self.controller.current_page = page
 
-    def _update(self):
+    def _update(self, event):
         """ Enables/disables buttons depending on the state of the wizard. """
 
         pass
@@ -121,26 +121,24 @@ class MWizard(object):
     def _initialize_controller(self, controller):
         """ Initializes the wizard controller. """
 
-        controller.on_trait_change(self._update, "complete")
+        controller.observe(self._update, "complete")
 
-        controller.on_trait_change(
-            self._on_current_page_changed, "current_page"
-        )
+        controller.observe(self._on_current_page_changed, "current_page")
 
         return
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_current_page_changed(self, obj, trait_name, old, new):
+    def _on_current_page_changed(self, event):
         """ Called when the current page is changed. """
 
-        if old is not None:
-            old.on_trait_change(self._update, "complete", remove=True)
+        if event.old is not None:
+            event.old.observe(self._update, "complete", remove=True)
 
-        if new is not None:
-            new.on_trait_change(self._update, "complete")
+        if event.new is not None:
+            event.new.observe(self._update, "complete")
 
-        self._update()
+        self._update(event=None)
 
     def _on_closed_changed(self):
         """ Called when the wizard is closed. """

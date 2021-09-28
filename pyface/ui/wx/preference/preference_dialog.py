@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,7 +25,6 @@ from pyface.ui.wx.viewer.tree_viewer import TreeViewer
 from pyface.viewer.default_tree_content_provider import (
     DefaultTreeContentProvider,
 )
-from pyface.wx.util.font_helper import new_font_like
 
 
 class PreferenceDialog(SplitDialog):
@@ -89,7 +88,8 @@ class PreferenceDialog(SplitDialog):
         panel.SetAutoLayout(True)
 
         # The 'pretty' title bar ;^)
-        self.__title = HeadingText(panel)
+        self.__title = HeadingText(parent=panel, create=False)
+        self.__title.create()
         sizer.Add(
             self.__title.control,
             0,
@@ -98,7 +98,13 @@ class PreferenceDialog(SplitDialog):
         )
 
         # The preference page of the node currently selected in the tree.
-        self._layered_panel = LayeredPanel(panel, min_width=-1, min_height=-1)
+        self._layered_panel = LayeredPanel(
+            parent=panel,
+            create=False,
+            min_width=-1,
+            min_height=-1,
+        )
+        self._layered_panel.create()
         sizer.Add(
             self._layered_panel.control,
             1,
@@ -134,7 +140,7 @@ class PreferenceDialog(SplitDialog):
             content_provider=DefaultTreeContentProvider(),
         )
 
-        tree_viewer.on_trait_change(self._on_selection_changed, "selection")
+        tree_viewer.observe(self._on_selection_changed, "selection")
 
         return tree_viewer.control
 
@@ -181,9 +187,9 @@ class PreferenceDialog(SplitDialog):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_selection_changed(self, selection):
+    def _on_selection_changed(self, event):
         """ Called when a node in the tree is selected. """
-
+        selection = event.new
         if len(selection) > 0:
             # The tree is in single selection mode.
             node = selection[0]

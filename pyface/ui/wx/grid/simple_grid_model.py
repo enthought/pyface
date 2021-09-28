@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,8 +14,8 @@ for rows and columns. By default these are built off the data itself,
 with row/column labels as the index + 1."""
 
 
-from pyface.action.api import Action, Group, MenuManager, Separator
-from traits.api import Either, Any, Instance, List
+from pyface.action.api import Action, Group, MenuManager
+from traits.api import Any, Instance, List, Union
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 
 
@@ -32,21 +32,10 @@ class SimpleGridModel(GridModel):
     data = Any()
 
     # The rows in the model.
-    rows = Either(None, List(Instance(GridRow)))
+    rows = Union(None, List(Instance(GridRow)))
 
     # The columns in the model.
-    columns = Either(None, List(Instance(GridColumn)))
-
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-    def __init__(self, **traits):
-        """ Create a SimpleGridModel object. """
-
-        # Base class constructor
-        super(SimpleGridModel, self).__init__(**traits)
-
-        return
+    columns = Union(None, List(Instance(GridColumn)))
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface.
@@ -282,7 +271,7 @@ class SimpleGridModel(GridModel):
 class _CopyAction(Action):
     def __init__(self, model, row, col, **kw):
 
-        super(_CopyAction, self).__init__(**kw)
+        super().__init__(**kw)
         self._model = model
         self._row = row
         self._col = col

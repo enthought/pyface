@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,7 +18,7 @@ from logging import DEBUG
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Any, Bool, Font, Instance, Int, provides
+from traits.api import Any, Bool, Instance, Int, provides
 from traits.api import Tuple, Str
 
 

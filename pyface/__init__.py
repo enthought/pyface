@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,13 +18,17 @@ except ImportError:
     __version__ = "not-built"
 
 
-__requires__ = ["traits>=6"]
+__requires__ = [
+    'importlib-metadata>=3.6.0; python_version<"3.8"',
+    'importlib-resources>=1.1.0; python_version<"3.9"',
+    "traits>=6.2",
+]
 __extras_require__ = {
     "wx": ["wxpython>=4", "numpy"],
     "pyqt": ["pyqt>=4.10", "pygments"],
     "pyqt5": ["pyqt5", "pygments"],
-    "pyside": ["pyside>=1.2", "pygments"],
     "pyside2": ["pyside2", "shiboken2", "pygments"],
+    "pillow": ["pillow"],
     "test": ["packaging"],
 }
 
@@ -51,7 +55,7 @@ def load_tests(loader, standard_tests, pattern):
     """
     from os import environ
     from os.path import dirname
-    from pyface.util.testing import filter_tests, is_traits_version_ge
+    from pyface.util.testing import filter_tests
     from unittest import TestSuite
 
     # Make sure the right toolkit is up and running before importing tests
@@ -69,12 +73,6 @@ def load_tests(loader, standard_tests, pattern):
     additional_exclude = environ.get("EXCLUDE_TESTS", None)
     if additional_exclude is not None:
         exclusion_patterns.append(additional_exclude)
-
-    # Only data_view requires Traits 6.1.
-    # We will skip tests in data_view package in Traits 6.0 environment
-    # Remove this when Traits 6.0 is dropped for the entire code base.
-    if not is_traits_version_ge("6.1"):
-        exclusion_patterns.append("\.data_view\.")
 
     filtered_package_tests = TestSuite()
     for test_suite in package_tests:

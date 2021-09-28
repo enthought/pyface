@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,14 +8,19 @@
 #
 # Thanks for using Enthought open source!
 
-from unittest import TestCase
+import unittest
 
-import wx
+try:
+    import wx
+except ImportError:
+    wx_available = False
+else:
+    from pyface.ui.wx.data_view.data_wrapper import DataWrapper
+    wx_available = True
 
-from pyface.ui.wx.data_view.data_wrapper import DataWrapper
 
-
-class TestDataWrapper(TestCase):
+@unittest.skipUnless(wx_available, "Test requires wx")
+class TestDataWrapper(unittest.TestCase):
 
     def test_get_mimedata(self):
         toolkit_data = wx.DataObjectComposite()

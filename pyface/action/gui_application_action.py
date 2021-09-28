@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -28,7 +28,7 @@ class GUIApplicationAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application")
+    object = Property(observe="application")
 
     # 'WindowAction' interface -----------------------------------------------
 
@@ -45,7 +45,7 @@ class GUIApplicationAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to application and dependent properties.
         self.application = None
-        super(GUIApplicationAction, self).destroy()
+        super().destroy()
 
 
 class ActiveWindowAction(GUIApplicationAction):
@@ -53,7 +53,7 @@ class ActiveWindowAction(GUIApplicationAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application.active_window")
+    object = Property(observe="application.active_window")
 
     # ------------------------------------------------------------------------
     # Protected interface.

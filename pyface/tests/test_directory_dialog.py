@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,6 @@ import os
 import unittest
 
 from ..directory_dialog import DirectoryDialog
-from ..gui import GUI
 from ..toolkit import toolkit_object
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")

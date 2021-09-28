@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,7 +25,7 @@ class HistoryConsoleWidget(ConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def __init__(self, *args, **kw):
-        super(HistoryConsoleWidget, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         # HistoryConsoleWidget protected variables.
         self._history = []
@@ -42,9 +42,7 @@ class HistoryConsoleWidget(ConsoleWidget):
         if not hidden:
             history = self.input_buffer if source is None else source
 
-        executed = super(HistoryConsoleWidget, self).execute(
-            source, hidden, interactive
-        )
+        executed = super().execute(source, hidden, interactive)
 
         if executed and not hidden:
             # Save the command unless it was an empty string or was identical

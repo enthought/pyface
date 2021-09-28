@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,9 +11,9 @@
 """ The base class for all node types. """
 
 
-from traits.api import Any, HasPrivateTraits, Instance, List
+from traits.api import Any, HasPrivateTraits, Instance
 from pyface.api import ImageResource
-from pyface.action.api import Action, ActionManagerItem, Group
+from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
 
 

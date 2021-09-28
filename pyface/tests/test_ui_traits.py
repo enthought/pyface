@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,12 +12,24 @@
 import os
 import unittest
 
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
+
+try:
+    import PIL.Image
+except ImportError:
+    PIL = None
+
 from traits.api import DefaultValue, HasTraits, TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..color import Color
-from ..i_image_resource import IImageResource
 from ..image_resource import ImageResource
 from ..ui_traits import (
     Border,
@@ -31,7 +43,7 @@ from ..ui_traits import (
 )
 
 
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class ImageClass(HasTraits):
@@ -82,7 +94,7 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         from pyface.image_resource import ImageResource
 
         image_class = ImageClass(image="about")
-        im = image_class.image.create_image()
+        image_class.image.create_image()
 
         self.assertIsInstance(image_class.image, ImageResource)
         self.assertEqual(image_class.image.name, "about")
@@ -101,6 +113,27 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
             image_class.image._ref.file_name, "dialog-warning.png"
         )
         self.assertEqual(image_class.image._ref.volume_name, "icons")
+
+    @requires_numpy
+    def test_init_array_image(self):
+        from pyface.array_image import ArrayImage
+
+        data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        image = ArrayImage(data)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, ArrayImage)
+        self.assertTrue((image_class.image.data == data).all())
+
+    @unittest.skipIf(PIL is None, "PIL/Pillow is not available")
+    def test_init_pil_image(self):
+        from pyface.pil_image import PILImage
+
+        pil_image = PIL.Image.open(IMAGE_PATH)
+        image = PILImage(pil_image)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, PILImage)
 
 
 class TestMargin(unittest.TestCase):

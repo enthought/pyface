@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,7 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" A menu bar manager realizes itself in errr, a menu bar control. """
+""" A toolkit-specific menu bar manager that realizes itself in a menu bar
+control.
+
+- :attr:`~.MenuBarManager`
+"""
 
 
 # Import the toolkit specific version.

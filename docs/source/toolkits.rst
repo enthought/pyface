@@ -76,9 +76,9 @@ widgets, if needed.
 Toolkit Entrypoints
 ===================
 
-Pyface uses the standard ``pkg_resources`` "entry point" system to allow other
-libraries to contribute new toolkit implementations to Pyface.  The toolkit
-selection process discussed above looks for things contributed to the
+Pyface uses the standard ``importlib_metadata`` "entry point" system to allow
+other libraries to contribute new toolkit implementations to Pyface.  The
+toolkit selection process discussed above looks for things contributed to the
 ``pyface.toolkits`` entry point.  These are specified in the ``setup.py`` of
 the third party library, something like this::
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -46,7 +46,8 @@ class MainWindow(SplitApplicationWindow):
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
 
-        self._expandable = expandable = ExpandablePanel(parent)
+        self._expandable = expandable = ExpandablePanel(parent, create=False)
+        self._expandable.create()
 
         for i in range(10):
             panel = self._create_content(expandable.control)

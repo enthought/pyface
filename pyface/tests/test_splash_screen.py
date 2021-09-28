@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,6 @@
 
 import unittest
 
-from ..gui import GUI
 from ..image_resource import ImageResource
 from ..splash_screen import SplashScreen
 from ..toolkit import toolkit_object
