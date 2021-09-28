@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,7 @@
 """ The base class for user perspective actions. """
 
 
-from traits.api import on_trait_change
+from traits.api import observe
 
 
 from .workbench_action import WorkbenchAction
@@ -48,8 +48,8 @@ class UserPerspectiveAction(WorkbenchAction):
 
         return (id[:19] == "__user_perspective_") and (id[-2:] == "__")
 
-    @on_trait_change("window.active_perspective")
-    def _refresh_enabled(self):
+    @observe("window.active_perspective")
+    def _refresh_enabled(self, event):
         """ Refresh the enabled state of the action. """
 
         self.enabled = (

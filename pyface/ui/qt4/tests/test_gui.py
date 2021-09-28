@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -35,7 +35,7 @@ class SimpleApplication(HasStrictTraits):
     application_running = Event()
 
     def __init__(self):
-        super(HasStrictTraits, self).__init__()
+        super().__init__()
         self.gui = GUI()
 
     def start(self):
@@ -57,12 +57,12 @@ class TestGui(unittest.TestCase):
 
         application_running = []
 
-        def exit_app():
+        def exit_app(event):
             # Record whether the event loop is running or not, then exit.
             application_running.append(is_event_loop_running_qt4())
             application.stop()
 
-        application.on_trait_change(exit_app, "application_running")
+        application.observe(exit_app, "application_running")
 
         # Make sure that the application stops after 10 seconds, no matter
         # what.

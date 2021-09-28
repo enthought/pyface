@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,18 +10,16 @@
 
 import logging
 
-from traits.api import Bool, HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.ui_traits import PyfaceColor
-from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
-from pyface.data_view.data_models.row_table_data_model import (
-    RowTableDataModel
+from pyface.data_view.data_models.api import (
+    AttributeDataAccessor, RowTableDataModel
 )
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.api import DataViewWidget, IDataViewWidget
 from pyface.data_view.value_types.api import (
-    BoolValue, ColorValue, IntValue, TextValue
+    BoolValue, EnumValue, ColorValue, IntValue, TextValue
 )
 
 from example_data import (
@@ -30,6 +28,13 @@ from example_data import (
 
 
 logger = logging.getLogger(__name__)
+
+
+flags = {
+    'Canada': ImageResource('ca.png'),
+    'UK': ImageResource('gb.png'),
+    'USA': ImageResource('us.png'),
+}
 
 
 # The data model
@@ -85,7 +90,10 @@ column_data = [
     ),
     AttributeDataAccessor(
         attr="address.country",
-        value_type=TextValue(),
+        value_type=EnumValue(
+            values=['Canada', 'UK', 'USA'],
+            images=flags.get,
+        ),
     ),
 ]
 

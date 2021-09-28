@@ -103,7 +103,7 @@ seconds for the timer to run (which could potentially mean that the timer never
 gets performed).
 
 For example, a timer which repeats every 0.5 seconds and runs no more than 10
-times and for no longer than 10 seconds can be started like this:
+times and for no longer than 10 seconds can be started like this -
 
 .. code-block:: python
 
@@ -112,7 +112,7 @@ times and for no longer than 10 seconds can be started like this:
 
 :py:class:`~pyface.timer.timer.PyfaceTimer` also provides two convenience class
 methods for creating and starting a timer in one line.  The above example
-could instead be written as::
+could instead be written as -
 
 .. code-block:: python
 
@@ -121,7 +121,7 @@ could instead be written as::
 For the common case of a "single-shot" timer that is only performed once,
 there is the :py:meth:`~pyface.timer.timer.PyfaceTimer.single_shot` class
 method that creates a timer that will be called once after the specified
-interval::
+interval -
 
 .. code-block:: python
 
@@ -165,16 +165,21 @@ EventTimer
 Another common use case is that you want a Traits Event to be fired
 periodically or at some future time.  This permits many possible listeners
 to be called from the same timer, and have them be turned on and turned off
-dynamically, if desired.  The :py:class:`~pyface.timer.timer.EventTimer`
-provides this functionality via its
-:py:class:`~pyface.timer.timer.EventTimer.timeout` event trait.
+dynamically, if desired, via
+`Traits' observe <https://docs.enthought.com/traits/traits_user_manual/notification.html>`_
+(note that observe listeners are required to take a single event argument).
+The :py:class:`~pyface.timer.timer.EventTimer` provides this functionality via
+its :py:class:`~pyface.timer.timer.EventTimer.timeout` event trait.
 
 .. code-block:: python
 
     from pyface.timer.api import EventTimer
 
+    def print_time(event):
+        print("The time is {}".format(datetime.datetime.now()))
+
     timer = EventTimer(interval=0.5, expire=60)
-    timer.on_trait_change(print_time, 'timeout')
+    timer.observe(print_time, 'timeout')
 
     timer.start()
 

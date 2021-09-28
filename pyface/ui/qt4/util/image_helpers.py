@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,23 +11,93 @@
 """ Helper functions for working with images
 
 This module provides helper functions for converting between numpy arrays
-and Qt QImages in a standardized way.
+and Qt QImages, as well as between the various image types in a standardized
+way.
 """
 
-# Imports of numpy are deferred so we can keep it an optional dependency.
+from enum import Enum
 
 from pyface.qt import qt_api
-from pyface.qt.QtGui import QImage
+from pyface.qt.QtCore import Qt
+from pyface.qt.QtGui import QImage, QPixmap, QIcon
 
 
-def QImage_to_array(qimage):
+class ScaleMode(Enum):
+    fast = Qt.FastTransformation
+    smooth = Qt.SmoothTransformation
+
+
+class AspectRatio(Enum):
+    ignore = Qt.IgnoreAspectRatio
+    keep_constrain = Qt.KeepAspectRatio
+    keep_expand = Qt.KeepAspectRatioByExpanding
+
+
+def image_to_bitmap(image):
+    """ Convert a QImage to a QPixmap.
+    Parameters
+    ----------
+    image : QImage
+        The QImage to convert.
+
+    Return
+    ------
+    bitmap : QPixmap
+        The corresponding QPixmap.
+    """
+    return QPixmap.fromImage(image)
+
+
+def bitmap_to_image(bitmap):
+    """ Convert a QPixmap to a QImage.
+    Parameters
+    ----------
+    bitmap : QPixmap
+        The QPixmap to convert.
+
+    Return
+    ------
+    image : QImage
+        The corresponding QImage.
+    """
+    return bitmap.toImage()
+
+
+def bitmap_to_icon(bitmap):
+    """ Convert a QPixmap to a QIcon.
+    Parameters
+    ----------
+    bitmap : QPixmap
+        The QPixmap to convert.
+
+    Return
+    ------
+    icon : QIcon
+        The corresponding QIcon.
+    """
+    return QIcon(bitmap)
+
+
+def resize_image(image, size, aspect_ratio=AspectRatio.ignore,
+                 mode=ScaleMode.fast):
+    """ Resize a toolkit image to the given size. """
+    return image.scaled(*size, aspect_ratio.value, mode.value)
+
+
+def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
+                  mode=ScaleMode.fast):
+    """ Resize a toolkit bitmap to the given size. """
+    return bitmap.scaled(*size, aspect_ratio.value, mode.value)
+
+
+def image_to_array(image):
     """ Convert a QImage to a numpy array.
 
     This copies the data returned from Qt.
 
     Parameters
     ----------
-    qimage : QImage
+    image : QImage
         The QImage that we want to extract the values from.  The format must
         be either RGB32 or ARGB32.
 
@@ -38,24 +108,24 @@ def QImage_to_array(qimage):
     """
     import numpy as np
 
-    width, height = qimage.width(), qimage.height()
-    channels = qimage.pixelFormat().channelCount()
-    data = qimage.bits()
+    width, height = image.width(), image.height()
+    channels = image.pixelFormat().channelCount()
+    data = image.bits()
     if qt_api in {'pyqt', 'pyqt5'}:
         data = data.asarray(width * height * channels)
     array = np.array(data, dtype='uint8')
     array.shape = (height, width, channels)
-    if qimage.format() in {QImage.Format_RGB32, QImage.Format_ARGB32}:
+    if image.format() in {QImage.Format_RGB32, QImage.Format_ARGB32}:
         # comes in as BGRA, but want RGBA
         array = array[:, :, [2, 1, 0, 3]]
     else:
         raise ValueError(
-            "Unsupported QImage format {}".format(qimage.format())
+            "Unsupported QImage format {}".format(image.format())
         )
     return array
 
 
-def array_to_QImage(array):
+def array_to_image(array):
     """ Convert a numpy array to a QImage.
 
     This copies the data before passing it to Qt.
@@ -68,7 +138,7 @@ def array_to_QImage(array):
 
     Return
     ------
-    qimage : QImage
+    image : QImage
         The QImage created from the data.  The pixel format is
         QImage.Format_RGB32.
     """
@@ -99,3 +169,7 @@ def array_to_QImage(array):
     image._numpy_data = data
     return image
 
+
+# backwards compatible names - will be removed in Pyface 8
+array_to_QImage = array_to_image
+QImage_to_array = image_to_array

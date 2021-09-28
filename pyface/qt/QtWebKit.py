@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -28,7 +28,7 @@ elif qt_api == "pyqt5":
         from PyQt5.QtWebKit import *
         from PyQt5.QtWebKitWidgets import *
 
-elif qt_api == "pyside2":
+else:
     from PySide2.QtWidgets import *
 
     # WebKit is currently in flux in PySide2
@@ -43,6 +43,3 @@ elif qt_api == "pyside2":
     except ImportError:
         from PySide2.QtWebKit import *
         from PySide2.QtWebKitWidgets import *
-
-else:
-    from PySide.QtWebKit import *

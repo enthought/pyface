@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -23,7 +23,7 @@ class PyfaceTimer(BaseTimer):
 
     def __init__(self, **traits):
         traits.setdefault("_timer", QTimer())
-        super(PyfaceTimer, self).__init__(**traits)
+        super().__init__(**traits)
         self._timer.timeout.connect(self.perform)
 
     def _start(self):

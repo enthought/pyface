@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The base interface for all pyface widgets. """
 
 
-from traits.api import Any, Bool, HasTraits, Interface
+from traits.api import Any, Bool, HasTraits, Interface, Instance, Str
 
 
 class IWidget(Interface):
@@ -32,6 +32,12 @@ class IWidget(Interface):
     #: Whether or not the control is enabled
     enabled = Bool(True)
 
+    #: A tooltip for the widget.
+    tooltip = Str()
+
+    #: An optional context menu for the widget.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
+
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
     # ------------------------------------------------------------------------
@@ -39,8 +45,8 @@ class IWidget(Interface):
     def show(self, visible):
         """ Show or hide the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         visible : bool
             Visible should be ``True`` if the widget should be shown.
         """
@@ -48,10 +54,30 @@ class IWidget(Interface):
     def enable(self, enabled):
         """ Enable or disable the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         enabled : bool
             The enabled state to set the widget to.
+        """
+
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
         """
 
     def destroy(self):
@@ -60,13 +86,6 @@ class IWidget(Interface):
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
-
-    def _create(self):
-        """ Creates the toolkit specific control.
-
-        This method should create the control and assign it to the
-        :py:attr:``control`` trait.
-        """
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
@@ -90,10 +109,33 @@ class IWidget(Interface):
         """ Remove toolkit-specific bindings for events """
 
 
-class MWidget(object):
+class MWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
     """
+
+    #: A tooltip for the widget.
+    tooltip = Str()
+
+    #: An optional context menu for the widget.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
+
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        The default implementation simply calls _create()
+        """
+        self._create()
+
+    def destroy(self):
+        """ Call clean-up code and destroy toolkit objects.
+
+        Subclasses should override to perform any additional clean-up, ensuring
+        that they call super() after that clean-up.
+        """
+        if self.control is not None:
+            self._remove_event_listeners()
+            self.control = None
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
@@ -106,6 +148,7 @@ class MWidget(object):
         :py:attr:``control`` trait.
         """
         self.control = self._create_control(self.parent)
+        self._initialize_control()
         self._add_event_listeners()
 
     def _create_control(self, parent):
@@ -124,10 +167,68 @@ class MWidget(object):
         """
         raise NotImplementedError()
 
+    def _initialize_control(self):
+        """ Perform any post-creation initialization for the control.
+        """
+        self._set_control_tooltip(self.tooltip)
+
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        pass
+        self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
+        self.observe(
+            self._context_menu_updated, "context_menu", dispatch="ui"
+        )
+        if self.control is not None and self.context_menu is not None:
+            self._observe_control_context_menu()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        pass
+        self.observe(
+            self._tooltip_updated, "tooltip", dispatch="ui", remove=True
+        )
+
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        raise NotImplementedError()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        raise NotImplementedError()
+
+    def _observe_control_context_menu(self, remove=False):
+        """ Toolkit specific method to change the context menu observer.
+
+        This should use _handle_control_context_menu as the event handler.
+
+        Parameters
+        ----------
+        remove : bool
+            Whether the context menu handler should be removed or added.
+        """
+        raise NotImplementedError()
+
+    def _handle_control_context_menu(self, event):
+        """ Handle a context menu event.
+
+        Implementations should override this with a method suitable to be used
+        as a toolkit event handler that invokes a context menu.
+
+        The function signature will likely vary from toolkit to toolkit.
+        """
+        raise NotImplementedError()
+
+    # Trait change handlers -------------------------------------------------
+
+    def _tooltip_updated(self, event):
+        tooltip = event.new
+        if self.control is not None:
+            self._set_control_tooltip(tooltip)
+
+    def _context_menu_updated(self, event):
+        if self.control is not None:
+            if event.new is None:
+                self._observe_control_context_menu(remove=True)
+            if event.old is None:
+                self._observe_control_context_menu()

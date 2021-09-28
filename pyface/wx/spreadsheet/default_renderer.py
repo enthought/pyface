@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import types
 from string import atof
 import wx
 from wx.grid import PyGridCellRenderer
@@ -32,7 +31,7 @@ class DefaultRenderer(PyGridCellRenderer):
         self.foundary = font
         self.fontsize = fontsize
         self.font = wx.Font(
-            fontsize, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, font
+            fontsize, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, font
         )
 
     def Clone(self):

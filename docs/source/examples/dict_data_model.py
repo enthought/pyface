@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,20 +8,18 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import ComparisonMode, Dict, Instance, Str, observe
+from traits.api import Dict, Instance, Str, observe
 
-from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+from pyface.data_view.api import (
+    AbstractDataModel, AbstractValueType, DataViewSetError, IntIndexManager
 )
-from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.index_manager import IntIndexManager
 
 
 class DictDataModel(AbstractDataModel):
     """ A data model that provides data from a dictionary. """
 
     #: The dictionary containing the data.
-    data = Dict(comparison_mode=ComparisonMode.identity)
+    data = Dict()
 
     #: The index manager.  Because the data is flat, we use the
     #: IntIndexManager.
@@ -121,7 +119,6 @@ if __name__ == '__main__':
     from pyface.data_view.data_view_widget import DataViewWidget
     from pyface.data_view.value_types.api import IntValue, TextValue
 
-
     class MainWindow(ApplicationWindow):
         """ The main application window. """
 
@@ -143,7 +140,6 @@ if __name__ == '__main__':
         def destroy(self):
             self.data_view.destroy()
             super().destroy()
-
 
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()

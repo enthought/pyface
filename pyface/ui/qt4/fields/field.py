@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,15 +11,14 @@
 """ The Qt-specific implementation of the text field class """
 
 
-from traits.api import Any, Instance, Str, provides
+from traits.api import Any, provides
 
-from pyface.qt.QtCore import Qt
 from pyface.fields.i_field import IField, MField
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 
 
 @provides(IField)
-class Field(MField, Widget):
+class Field(MField, LayoutWidget):
     """ The Qt-specific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.
@@ -27,40 +26,3 @@ class Field(MField, Widget):
 
     #: The value held by the field.
     value = Any()
-
-    #: A tooltip for the field.
-    tooltip = Str()
-
-    #: An optional context menu for the field.
-    context_menu = Instance("pyface.action.menu_manager.MenuManager")
-
-    # ------------------------------------------------------------------------
-    # Private interface
-    # ------------------------------------------------------------------------
-
-    def _get_control_tooltip(self):
-        """ Toolkit specific method to get the control's tooltip. """
-        return self.control.toolTip()
-
-    def _set_control_tooltip(self, tooltip):
-        """ Toolkit specific method to set the control's tooltip. """
-        self.control.setToolTip(tooltip)
-
-    def _observe_control_context_menu(self, remove=False):
-        """ Toolkit specific method to change the control menu observer. """
-        if remove:
-            self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
-            self.control.customContextMenuRequested.disconnect(
-                self._handle_control_context_menu
-            )
-        else:
-            self.control.customContextMenuRequested.connect(
-                self._handle_control_context_menu
-            )
-            self.control.setContextMenuPolicy(Qt.CustomContextMenu)
-
-    def _handle_control_context_menu(self, pos):
-        """ Signal handler for displaying context menu. """
-        if self.control is not None and self.context_menu is not None:
-            menu = self.context_menu.create_menu(self.control)
-            menu.show(pos.x(), pos.y())

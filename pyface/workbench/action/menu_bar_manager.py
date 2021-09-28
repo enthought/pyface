@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -35,8 +35,6 @@ class MenuBarManager(BaseMenuBarManager):
         # The controller handles the invocation of every action.
         controller = ActionController(window=self.window)
 
-        menu_bar = super(MenuBarManager, self).create_menu_bar(
-            parent, controller=controller
-        )
+        menu_bar = super().create_menu_bar(parent, controller=controller)
 
         return menu_bar

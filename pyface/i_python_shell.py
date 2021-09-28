@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,14 +11,14 @@
 """ The interface for an interactive Python shell. """
 
 
-from traits.api import Event
+from traits.api import Event, HasTraits
 
 
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
-class IPythonShell(IWidget):
+class IPythonShell(ILayoutWidget):
     """ The interface for an interactive Python shell. """
 
     # 'IPythonShell' interface ---------------------------------------------
@@ -100,7 +100,7 @@ class IPythonShell(IWidget):
         """
 
 
-class MPythonShell(object):
+class MPythonShell(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonShell interface.
 

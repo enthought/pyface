@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ A wizard model that can be chained with other wizards. """
 
 
-from traits.api import Instance
+from traits.api import Instance, observe
 
 
 from .i_wizard import IWizard
@@ -43,9 +43,10 @@ class ChainedWizard(Wizard):
 
     # Static ----
 
-    def _next_wizard_changed(self, old, new):
+    @observe("next_wizard")
+    def _reset_next_controller_and_update(self, event):
         """ Handle the next wizard being changed. """
-
+        old, new = event.old, event.new
         if new is not None:
             self.controller.next_controller = new.controller
 
@@ -58,9 +59,10 @@ class ChainedWizard(Wizard):
             # self._create_buttons(self.control)
             self._update()
 
-    def _controller_changed(self, old, new):
+    @observe("controller")
+    def _reset_traits_on_controller_and_update(self, event):
         """ handle the controller being changed. """
-
+        old, new = event.old, event.new
         if new is not None and self.next_wizard is not None:
             self.controller.next_controller = self.next_wizard.controller
 

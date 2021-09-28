@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,11 +10,10 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore
+from pyface.qt.QtCore import Qt
 
-
-from traits.api import Any, Bool, HasTraits, Instance, provides
-
+from traits.api import Any, Bool, HasTraits, Instance, Str, provides
 
 from pyface.i_widget import IWidget, MWidget
 
@@ -38,6 +37,12 @@ class Widget(MWidget, HasTraits):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    #: A tooltip for the widget.
+    tooltip = Str()
+
+    #: An optional context menu for the widget.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # Private interface ----------------------------------------------------
 
@@ -72,14 +77,33 @@ class Widget(MWidget, HasTraits):
         if self.control is not None:
             self.control.setEnabled(enabled)
 
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+        if self.control is not None:
+            self.control.setFocus()
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+        return (
+            self.control is not None
+            and self.control.hasFocus()
+        )
+
     def destroy(self):
-        self._remove_event_listeners()
         if self.control is not None:
             self.control.hide()
             self.control.deleteLater()
-            self.control = None
+            super().destroy()
 
     def _add_event_listeners(self):
+        super()._add_event_listeners()
         self.control.installEventFilter(self._event_filter)
 
     def _remove_event_listeners(self):
@@ -87,6 +111,38 @@ class Widget(MWidget, HasTraits):
             if self.control is not None:
                 self.control.removeEventFilter(self._event_filter)
             self._event_filter = None
+        super()._remove_event_listeners()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        return self.control.toolTip()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        self.control.setToolTip(tooltip)
+
+    def _observe_control_context_menu(self, remove=False):
+        """ Toolkit specific method to change the control menu observer. """
+        if remove:
+            self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
+            self.control.customContextMenuRequested.disconnect(
+                self._handle_control_context_menu
+            )
+        else:
+            self.control.customContextMenuRequested.connect(
+                self._handle_control_context_menu
+            )
+            self.control.setContextMenuPolicy(Qt.CustomContextMenu)
+
+    def _handle_control_context_menu(self, pos):
+        """ Signal handler for displaying context menu. """
+        if self.control is not None and self.context_menu is not None:
+            menu = self.context_menu.create_menu(self.control)
+            menu.show(pos.x(), pos.y())
 
     # Trait change handlers --------------------------------------------------
 
@@ -105,6 +161,10 @@ class Widget(MWidget, HasTraits):
 class WidgetEventFilter(QtCore.QObject):
     """ An internal class that watches for certain events on behalf of the
     Widget instance.
+
+    This filter watches for show and hide events to make sure that visible
+    state of the widget is the opposite of Qt's isHidden() state.  This is
+    needed in case other code hides the toolkit widget
     """
 
     def __init__(self, widget):
@@ -122,6 +182,6 @@ class WidgetEventFilter(QtCore.QObject):
         event_type = event.type()
 
         if event_type in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
-            widget.visible = widget.control.isVisible()
+            widget.visible = not widget.control.isHidden()
 
         return False

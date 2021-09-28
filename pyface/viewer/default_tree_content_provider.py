@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,6 +12,7 @@
 
 
 from .tree_content_provider import TreeContentProvider
+from .tree_item import TreeItem
 
 
 class DefaultTreeContentProvider(TreeContentProvider):
@@ -50,9 +51,6 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         index, child = parent.insert_before(before, child)
 
-        # Trait notification.
-        # self.items_inserted(parent, [index], [child])
-
         return (index, child)
 
     def insert(self, parent, index, child):
@@ -60,19 +58,12 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         parent.insert(index, child)
 
-        # Trait notification.
-        # self.items_inserted(parent, [index], [child])
-
         return child
 
     def remove(self, parent, child):
         """ Removes 'child' from the 'parent' item. """
 
-        index = parent.children.index(child)
         parent.remove(child)
-
-        # Trait notification.
-        # self.items_removed(parent, [index], [child])
 
         return child
 
