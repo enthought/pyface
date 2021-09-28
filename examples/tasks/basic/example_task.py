@@ -14,7 +14,7 @@ from pyface.api import (
     OK,
     CANCEL,
 )
-from traits.api import on_trait_change
+from traits.api import observe
 
 
 from example_panes import PythonEditorPane, PythonScriptBrowserPane
@@ -79,8 +79,8 @@ class ExampleTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         browser = PythonScriptBrowserPane()
-        handler = lambda: self._open_file(browser.selected_file)
-        browser.on_trait_change(handler, "activated")
+        handler = lambda _: self._open_file(browser.selected_file)
+        browser.observe(handler, "activated")
         return [browser]
 
     # ------------------------------------------------------------------------
@@ -148,9 +148,10 @@ class ExampleTask(Task):
                     return self._prompt_for_save()
         return True
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
+        window = event.new
         if not self._prompt_for_save():
-            event.veto = True
+            window.veto = True

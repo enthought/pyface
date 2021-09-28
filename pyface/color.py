@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,50 +22,12 @@ from native toolkit color objects.
 import colorsys
 
 from traits.api import (
-    HasStrictTraits, Property, Range, Tuple, cached_property
+    Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
-
-def channels_to_ints(channels, maximum=255):
-    """ Convert an iterable of floating point channel values to integers.
-
-    Values are rounded to the nearest integer, rather than truncated.
-
-    Parameters
-    ----------
-    channels : iterable of float
-        An iterable of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    values : tuple of int
-        A tuple of values as integers between 0 and max, inclusive.
-    """
-    return tuple(int(round(channel * maximum)) for channel in channels)
-
-
-def ints_to_channels(values, maximum=255):
-    """ Convert an iterable of integers to floating point channel values.
-
-    Parameters
-    ----------
-    values : tuple of int
-        An iterable of values as integers between 0 and max, inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    channels : iterable of float
-        A tuple of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    """
-    return tuple(value / maximum for value in values)
+from pyface.util.color_helpers import channels_to_ints, is_dark
+from pyface.util.color_helpers import ints_to_channels  # noqa: F401
+from pyface.util.color_parser import parse_text
 
 
 #: A trait holding a single channel value.
@@ -101,31 +63,68 @@ class Color(HasStrictTraits):
     rgba = AlphaChannelTuple()
 
     #: A tuple holding the red, green, and blue channels.
-    rgb = Property(ChannelTuple(), depends_on='rgba')
+    rgb = Property(ChannelTuple(), observe='rgba')
 
     #: The red channel.
-    red = Property(Channel, depends_on='rgba')
+    red = Property(Channel, observe='rgba')
 
     #: The green channel.
-    green = Property(Channel, depends_on='rgba')
+    green = Property(Channel, observe='rgba')
 
     #: The blue channel.
-    blue = Property(Channel, depends_on='rgba')
+    blue = Property(Channel, observe='rgba')
 
     #: The alpha channel.
-    alpha = Property(Channel, depends_on='rgba')
+    alpha = Property(Channel, observe='rgba')
 
     #: A tuple holding the hue, saturation, value, and alpha channels.
-    hsva = Property(AlphaChannelTuple, depends_on='rgba')
+    hsva = Property(AlphaChannelTuple, observe='rgba')
 
     #: A tuple holding the hue, saturation, and value channels.
-    hsv = Property(ChannelTuple, depends_on='rgb')
+    hsv = Property(ChannelTuple, observe='rgb')
 
     #: A tuple holding the hue, lightness, saturation, and alpha channels.
-    hlsa = Property(AlphaChannelTuple, depends_on='rgba')
+    hlsa = Property(AlphaChannelTuple, observe='rgba')
 
     #: A tuple holding the hue, lightness, and saturation channels.
-    hls = Property(ChannelTuple, depends_on='rgb')
+    hls = Property(ChannelTuple, observe='rgb')
+
+    #: Whether the color is dark for contrast purposes.
+    is_dark = Property(Bool, observe='rgba')
+
+    @classmethod
+    def from_str(cls, text, **traits):
+        """ Create a new Color object from a string.
+
+        Parameters
+        ----------
+        text : str
+            A string holding the representation of the color.  This can be:
+
+            - a color name, including all CSS color names, plus any additional
+              names found in pyface.color.color_table.  The names are
+              normalized to lower case and stripped of whitespace, hyphens and
+              underscores.
+
+            - a hex representation of the color in the form '#RGB', '#RGBA',
+              '#RRGGBB', '#RRGGBBAA', '#RRRRGGGGBBBB', or '#RRRRGGGGBBBBAAAA'.
+
+        **traits
+            Any additional trait values to be passed as keyword arguments.
+
+        Raises
+        ------
+        ColorParseError
+            If the string cannot be converted to a valid color.
+        """
+        space, channels = parse_text(text)
+        if space in traits:
+            raise TypeError(
+                "from_str() got multiple values for keyword argument "
+                + repr(space)
+            )
+        traits[space] = channels
+        return cls(**traits)
 
     @classmethod
     def from_toolkit(cls, toolkit_color, **traits):
@@ -258,3 +257,7 @@ class Color(HasStrictTraits):
         h, l, s = value
         r, g, b = colorsys.hls_to_rgb(h, l, s)
         self.rgb = (r, g, b)
+
+    @cached_property
+    def _get_is_dark(self):
+        return is_dark(self.rgb)

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,50 +12,7 @@ from unittest import TestCase
 
 from traits.testing.api import UnittestTools
 
-from pyface.color import Color, channels_to_ints, ints_to_channels
-
-
-class TestChannelConversion(TestCase):
-
-    def test_ints_to_channels(self):
-        values = (102, 102, 0, 255)
-        channels = ints_to_channels(values)
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_ints_to_channels_maximum(self):
-        values = (6, 6, 0, 15)
-        channels = ints_to_channels(values, maximum=15)
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_channels_to_ints(self):
-        channels = (0.4, 0.4, 0.0, 1.0)
-        values = channels_to_ints(channels)
-        self.assertEqual(values, (102, 102, 0, 255))
-
-    def test_channels_to_ints_maximum(self):
-        channels = (0.4, 0.4, 0.0, 1.0)
-        values = channels_to_ints(channels, maximum=15)
-        self.assertEqual(values, (6, 6, 0, 15))
-
-    def test_round_trip(self):
-        """ Test to assert stability of values through round-trips """
-        for value in range(256):
-            with self.subTest(int=value):
-                result = channels_to_ints(ints_to_channels([value]))
-                self.assertEqual(result, (value,))
-
-    def test_round_trip_maximum(self):
-        """ Test to assert stability of values through round-trips """
-        for value in range(65536):
-            with self.subTest(int=value):
-                result = channels_to_ints(
-                    ints_to_channels(
-                        [value],
-                        maximum=65535,
-                    ),
-                    maximum=65535,
-                )
-                self.assertEqual(result, (value,))
+from pyface.color import Color
 
 
 class TestColor(UnittestTools, TestCase):
@@ -101,6 +58,22 @@ class TestColor(UnittestTools, TestCase):
     def test_init_hls(self):
         color = Color(hls=(0.4, 0.2, 0.6))
         self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 1.0))
+
+    def test_from_str_name(self):
+        color = Color.from_str('rebeccapurple')
+        self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 1.0))
+
+    def test_from_str_hex(self):
+        color = Color.from_str('#663399ff')
+        self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 1.0))
+
+    def test_from_str_extra_argument(self):
+        color = Color.from_str('#663399', alpha=0.5)
+        self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 0.5))
+
+    def test_from_str_duplicate_argument(self):
+        with self.assertRaises(TypeError):
+            Color.from_str('rebeccapurple', rgba=(1.0, 1.0, 1.0, 1.0))
 
     def test_toolkit_round_trip(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
@@ -230,5 +203,8 @@ class TestColor(UnittestTools, TestCase):
     def test_set_hlsa(self):
         color = Color()
         color.hlsa = (0.4, 0.2, 0.6, 0.8)
-        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8)
-        )
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8))
+
+    def test_get_is_dark(self):
+        color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
+        self.assertTrue(color.is_dark)

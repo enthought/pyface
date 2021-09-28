@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,6 +17,7 @@ import builtins
 import codeop
 import re
 import sys
+import warnings
 
 
 import IPython
@@ -60,7 +61,7 @@ class IPython010Controller(IPythonController):
     def execute_command(self, command, hidden=False):
         # XXX: Overriden to fix bug where executing a hidden command still
         # causes the prompt number to increase.
-        super(IPython010Controller, self).execute_command(command, hidden)
+        super().execute_command(command, hidden)
         if hidden:
             self.shell.current_cell_number -= 1
 
@@ -140,9 +141,7 @@ class IPython09Controller(IPythonController):
         """
 
         completion_text = self._get_completion_text(line)
-        suggestion, completions = super(IPython09Controller, self).complete(
-            completion_text
-        )
+        suggestion, completions = super().complete(completion_text)
         new_line = line[: -len(completion_text)] + suggestion
         return new_line, completions
 
@@ -185,7 +184,7 @@ class IPython09Controller(IPythonController):
                     clean_string, "<string>", "exec"
                 )
                 self.release_output()
-            except Exception as e:
+            except Exception:
                 # XXX: Hack: return True so that the
                 # code gets executed and the error captured.
                 is_complete = True
@@ -347,8 +346,14 @@ class IPythonWidget(Widget):
     def __init__(self, parent, **traits):
         """ Creates a new pager. """
 
+        warnings.warn(
+            "the Wx IPython widget us deprecated and will be removed in a "
+            "future Pyface version",
+            PendingDeprecationWarning,
+        )
+
         # Base class constructor.
-        super(IPythonWidget, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

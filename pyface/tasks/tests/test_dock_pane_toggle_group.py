@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -137,7 +137,3 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         names = self.get_dock_pane_toggle_action_names()
         expected_names = ["Dock Pane 1"]
         self.assertEqual(list(sorted(expected_names)), list(sorted(names)))
-
-
-if __name__ == "__main__":
-    unittest.main()

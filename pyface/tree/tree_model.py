@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -173,7 +173,7 @@ class TreeModel(HasTraits):
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
-    def fire_nodes_removed(self, parent, children):
+    def fire_nodes_removed(self, node, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)

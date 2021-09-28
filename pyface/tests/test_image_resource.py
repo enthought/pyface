@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,8 +11,15 @@
 
 import os
 import platform
-import pkg_resources
 import unittest
+
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
 import pyface
 import pyface.tests
@@ -28,9 +35,8 @@ is_pyqt4_windows = (
 )
 
 
-SEARCH_PATH = pkg_resources.resource_filename("pyface", "images")
-IMAGE_DIR = pkg_resources.resource_filename(__name__, "images")
-IMAGE_PATH = os.path.join(IMAGE_DIR, "core.png")
+SEARCH_PATH = os.fspath(files("pyface") / "images")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class TestImageResource(unittest.TestCase):

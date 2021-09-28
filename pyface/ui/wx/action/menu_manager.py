@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -106,10 +106,16 @@ class _Menu(wx.Menu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.on_trait_change(self.refresh, "changed")
-        self._manager.on_trait_change(self._on_enabled_changed, "enabled")
+        self._manager.observe(self.refresh, "changed")
+        self._manager.observe(self._on_enabled_changed, "enabled")
 
         return
+
+    def dispose(self):
+        self._manager.observe(self.refresh, "changed", remove=True)
+        self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
+        # Removes event listeners from downstream menu items
+        self.clear()
 
     # ------------------------------------------------------------------------
     # '_Menu' interface.
@@ -133,7 +139,7 @@ class _Menu(wx.Menu):
 
         return self.GetMenuItemCount() == 0
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()
@@ -161,7 +167,7 @@ class _Menu(wx.Menu):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _on_enabled_changed(self, obj, trait_name, old, new):
+    def _on_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
@@ -170,7 +176,7 @@ class _Menu(wx.Menu):
         # we don't give them an '_id'...
 
         if hasattr(self, "_id"):
-            self._menu.Enable(self._id, new)
+            self._menu.Enable(self._id, event.new)
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """

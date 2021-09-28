@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,16 +10,19 @@
 
 """ A Layered panel. """
 
+import warnings
 
 import wx
+
+from traits.api import Dict, Str
 
 from pyface.ui_traits import Image
 from .expandable_header import ExpandableHeader
 from .image_resource import ImageResource
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
-class ExpandablePanel(Widget):
+class ExpandablePanel(LayoutWidget):
     """ An expandable panel. """
 
     # The default style.
@@ -28,27 +31,31 @@ class ExpandablePanel(Widget):
     collapsed_image = Image(ImageResource("mycarat1"))
     expanded_image = Image(ImageResource("mycarat2"))
 
+    _layers = Dict(Str)
+
+    _headers = Dict(Str)
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new LayeredPanel. """
 
+        create = traits.pop("create", True)
+
         # Base class constructor.
-        super(ExpandablePanel, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # The layers in the panel.
-        #
-        # { str name : wx.Window layer }
-        self._layers = {}
-        self._headers = {}
-
-        return
-
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
     # ------------------------------------------------------------------------
     # 'Expandale' interface.
     # ------------------------------------------------------------------------
@@ -96,8 +103,6 @@ class ExpandablePanel(Widget):
 
         sizer.Layout()
 
-        return
-
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
@@ -121,10 +126,13 @@ class ExpandablePanel(Widget):
         panel.SetAutoLayout(True)
 
         # Add the panel header.
-        heading = ExpandableHeader(panel, self, title=text)
+        heading = ExpandableHeader(panel, title=text, create=False)
+        heading.create()
         sizer.Add(heading.control, 1, wx.EXPAND)
 
-        heading.on_trait_change(self._on_button, "panel_expanded")
+        # connect observers
+        heading.observe(self._on_button, "panel_expanded")
+        heading.observe(self._on_panel_closed, "panel_closed")
 
         # Resize the panel to match the sizer's minimum size.
         sizer.Fit(panel)
@@ -134,12 +142,12 @@ class ExpandablePanel(Widget):
 
         return panel
 
-    # wx event handlers ----------------------------------------------------
+    # event handlers ----------------------------------------------------
 
     def _on_button(self, event):
         """ called when one of the expand/contract buttons is pressed. """
 
-        header = event
+        header = event.new
         name = header.title
         visible = header.state
 
@@ -151,3 +159,10 @@ class ExpandablePanel(Widget):
         w, h = self.control.GetSize().Get()
         self.control.SetSize((w + 1, h + 1))
         self.control.SetSize((w, h))
+
+    def _on_panel_closed(self, event):
+        """ Called when the close button is clicked in a header. """
+
+        header = event.new
+        name = header.title
+        self.remove_panel(name)

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,10 +12,11 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 from traits.api import Str
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
+from pyface.color import Color
 from pyface.data_view.data_view_errors import DataViewSetError
-from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.data_view.abstract_value_type import AbstractValueType, CheckState
 
 
 class ValueType(AbstractValueType):
@@ -75,6 +76,16 @@ class TestAbstractValueType(UnittestTools, TestCase):
         with self.assertRaises(DataViewSetError):
             value_type.set_text(self.model, [0], [0], "2.0")
 
+    def test_has_color(self):
+        value_type = ValueType()
+        result = value_type.has_color(self.model, [0], [0])
+        self.assertFalse(result)
+
+    def test_get_color(self):
+        value_type = ValueType()
+        result = value_type.get_color(self.model, [0], [0])
+        self.assertEqual(result, Color(rgb=(1.0, 1.0, 1.0)))
+
     def test_has_image(self):
         value_type = ValueType()
         result = value_type.has_image(self.model, [0], [0])
@@ -84,6 +95,21 @@ class TestAbstractValueType(UnittestTools, TestCase):
         value_type = ValueType()
         result = value_type.get_image(self.model, [0], [0])
         self.assertEqual(result.name, "image_not_found")
+
+    def test_has_check_state(self):
+        value_type = ValueType()
+        result = value_type.has_check_state(self.model, [0], [0])
+        self.assertFalse(result)
+
+    def test_get_check_state(self):
+        value_type = ValueType()
+        result = value_type.get_check_state(self.model, [0], [0])
+        self.assertEqual(result, CheckState.CHECKED)
+
+    def test_set_check_state(self):
+        value_type = ValueType()
+        with self.assertRaises(DataViewSetError):
+            value_type.set_check_state(self.model, [0], [0], CheckState.CHECKED)
 
     def test_parameter_update(self):
         value_type = ValueType()

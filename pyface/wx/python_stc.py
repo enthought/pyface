@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -457,13 +457,3 @@ and <a href="http://www.scintilla.org/ScintillaDoc.html">this</a> should
 be helpful.
 </body><html>
 """
-
-
-if __name__ == "__main__":
-    # fixme: This has been re-factored into not working.  No run module.
-    import sys, os
-    import run
-
-    run.main(["", os.path.basename(sys.argv[0])])
-
-# ----------------------------------------------------------------------

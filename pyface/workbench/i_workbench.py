@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 
 
 from traits.api import Event, Instance, Interface, List, Str
-from traits.api import provides, VetoableEvent
+from traits.api import VetoableEvent
 
 
 from .user_perspective_manager import UserPerspectiveManager
@@ -35,7 +35,7 @@ class IWorkbench(Interface):
     state_location = Str()
 
     # The optional undo manager.
-    undo_manager = Instance("apptools.undo.api.IUndoManager")
+    undo_manager = Instance("pyface.undo.api.IUndoManager")
 
     # The user defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)

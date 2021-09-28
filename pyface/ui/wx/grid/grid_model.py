@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,6 @@
 
 
 from traits.api import (
-    Any,
     Bool,
     Event,
     HasPrivateTraits,
@@ -89,17 +88,6 @@ class GridModel(HasPrivateTraits):
 
     # Event fired when a cell is double-clicked on:
     dclick = Event  # = (row, column) that was double-clicked on
-
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-    def __init__(self, **traits):
-        """ Creates a new grid model. """
-
-        # Base class constructors.
-        super(GridModel, self).__init__(**traits)
-
-        return
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MUST override the following
@@ -294,7 +282,7 @@ class GridModel(HasPrivateTraits):
                     value = float(value)
                 except ValueError:
                     value = value
-        rows_appended = self._set_value(row, col, value)
+        self._set_value(row, col, value)
 
         self.fire_content_changed()
 

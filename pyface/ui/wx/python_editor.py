@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,6 +12,7 @@
 """ Enthought pyface package component
 """
 
+import warnings
 
 import wx.stc
 
@@ -22,11 +23,11 @@ from traits.api import Bool, Event, provides, Str
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.wx.python_stc import PythonSTC, faces
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
@@ -49,14 +50,23 @@ class PythonEditor(MPythonEditor, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
-        # Base class constructor.
-        super(PythonEditor, self).__init__(**traits)
+        create = traits.pop("create", True)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
+        # Base class constructor.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
         return
 

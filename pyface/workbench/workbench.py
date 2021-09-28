@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -58,7 +58,7 @@ class Workbench(HasTraits):
     state_location = Str()
 
     # The optional undo manager.
-    undo_manager = Instance("apptools.undo.api.IUndoManager")
+    undo_manager = Instance("pyface.undo.api.IUndoManager")
 
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
@@ -131,11 +131,11 @@ class Workbench(HasTraits):
         # NOTE: 'activated' is not fired on a window when the window first
         # opens and gets focus. It is only fired when the window comes from
         # lower in the stack to be the active window.
-        window.on_trait_change(self._on_window_activated, "activated")
-        window.on_trait_change(self._on_window_opening, "opening")
-        window.on_trait_change(self._on_window_opened, "opened")
-        window.on_trait_change(self._on_window_closing, "closing")
-        window.on_trait_change(self._on_window_closed, "closed")
+        window.observe(self._on_window_activated, "activated")
+        window.observe(self._on_window_opening, "opening")
+        window.observe(self._on_window_opened, "opened")
+        window.observe(self._on_window_closing, "closing")
+        window.observe(self._on_window_closed, "closed")
 
         # Event notification.
         self.window_created = WindowEvent(window=window)
@@ -266,7 +266,7 @@ class Workbench(HasTraits):
 
         # We make sure the undo package is entirely optional.
         try:
-            from apptools.undo.api import UndoManager
+            from pyface.undo.api import UndoManager
         except ImportError:
             return None
 
@@ -349,24 +349,24 @@ class Workbench(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _on_window_activated(self, window, trait_name, event):
+    def _on_window_activated(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         logger.debug("window %s activated", window)
 
         self.active_window = window
 
-    def _on_window_opening(self, window, trait_name, event):
+    def _on_window_opening(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # Event notification.
         self.window_opening = window_event = VetoableWindowEvent(window=window)
         if window_event.veto:
-            event.veto = True
+            event.new.veto = True
 
-    def _on_window_opened(self, window, trait_name, event):
+    def _on_window_opened(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # We maintain a list of all open windows so that (amongst other things)
         # we can detect when the user is attempting to close the last one.
         self.windows.append(window)
@@ -379,14 +379,14 @@ class Workbench(HasTraits):
         # Event notification.
         self.window_opened = WindowEvent(window=window)
 
-    def _on_window_closing(self, window, trait_name, event):
+    def _on_window_closing(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         # Event notification.
         self.window_closing = window_event = VetoableWindowEvent(window=window)
 
         if window_event.veto:
-            event.veto = True
+            event.new.veto = True
 
         else:
             # Is this the last open window?
@@ -397,15 +397,15 @@ class Workbench(HasTraits):
                     # Event notification.
                     self.exiting = window_event = Vetoable()
                     if window_event.veto:
-                        event.veto = True
+                        event.new.veto = True
 
-                if not event.veto:
+                if not event.new.veto:
                     # Save the window size, position and layout.
                     self._save_window_layout(window)
 
-    def _on_window_closed(self, window, trait_name, event):
+    def _on_window_closed(self, event):
         """ Dynamic trait change handler. """
-
+        window = event.object
         self.windows.remove(window)
 
         # Event notification.

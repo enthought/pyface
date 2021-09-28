@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,10 +16,15 @@ from pyface.qt import QtGui, QtCore
 
 class FindWidget(QtGui.QWidget):
     def __init__(self, parent):
-        super(FindWidget, self).__init__(parent)
+        super().__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
 
-        self.button_size = self.fontMetrics().width("Replace All") + 20
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            self.button_size = self.fontMetrics().horizontalAdvance("Replace All") + 20
+        else:
+            self.button_size = self.fontMetrics().width("Replace All") + 20
 
         form_layout = QtGui.QFormLayout()
         form_layout.addRow("Fin&d", self._create_find_control())

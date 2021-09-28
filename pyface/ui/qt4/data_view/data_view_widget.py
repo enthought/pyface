@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,17 +10,16 @@
 
 import logging
 
-from traits.api import Bool, Enum, Instance, observe, provides
+from traits.api import Callable, Enum, Instance, observe, provides
 
 from pyface.qt.QtCore import QAbstractItemModel
 from pyface.qt.QtGui import (
     QAbstractItemView, QItemSelection, QItemSelectionModel, QTreeView
 )
-from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 from .data_view_item_model import DataViewItemModel
 
 # XXX This file is scaffolding and may need to be rewritten
@@ -45,9 +44,55 @@ pyface_selection_modes = {
 }
 
 
+class DataViewTreeView(QTreeView):
+    """ QTreeView subclass that handles drag and drop via DropHandlers. """
+
+    _widget = None
+
+    def dragEnterEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragEnterEvent(event)
+
+    def dragMoveEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
+
+    def dragLeaveEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragLeaveEvent(event)
+
+    def dropEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            drop_handler.handle_drop(event, self)
+            event.acceptProposedAction()
+        else:
+            super().dropEvent(event)
+
+    def _get_drop_handler(self, event):
+        if self._widget is not None:
+            widget = self._widget
+            for drop_handler in widget.drop_handlers:
+                if drop_handler.can_handle_drop(event, self):
+                    return drop_handler
+        return None
+
+
 @provides(IDataViewWidget)
-class DataViewWidget(MDataViewWidget, Widget):
+class DataViewWidget(MDataViewWidget, LayoutWidget):
     """ The Qt implementation of the DataViewWidget. """
+
+    #: Factory for the underlying Qt control, to facilitate replacement
+    control_factory = Callable(DataViewTreeView)
 
     # IDataViewWidget Interface traits --------------------------------------
 
@@ -73,7 +118,11 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _create_item_model(self):
         """ Create the DataViewItemModel which wraps the data model. """
-        self._item_model = DataViewItemModel(self.data_model)
+        self._item_model = DataViewItemModel(
+            self.data_model,
+            self.selection_type,
+            self.exporters,
+        )
 
     def _get_control_header_visible(self):
         """ Method to get the control's header visibility. """
@@ -92,6 +141,7 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Toolkit specific method to change the selection type. """
         qt_selection_type = qt_selection_types[selection_type]
         self.control.setSelectionBehavior(qt_selection_type)
+        self._item_model.selectionType = selection_type
 
     def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
@@ -105,28 +155,13 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _get_control_selection(self):
         """ Toolkit specific method to get the selection. """
+        indices = self.control.selectedIndexes()
         if self.selection_type == 'row':
-            selection = []
-            for index in self.control.selectedIndexes():
-                row = self._item_model._to_row_index(index)
-                if (row, ()) not in selection:
-                    selection.append((row, ()))
+            return self._item_model._extract_rows(indices)
         elif self.selection_type == 'column':
-            selection = []
-            for index in self.control.selectedIndexes():
-                row = self._item_model._to_row_index(index)[:-1]
-                column = self._item_model._to_column_index(index)
-                if (row, column) not in selection:
-                    selection.append((row, column))
+            return self._item_model._extract_columns(indices)
         else:
-            selection = [
-                (
-                    self._item_model._to_row_index(index),
-                    self._item_model._to_column_index(index),
-                )
-                for index in self.control.selectedIndexes()
-            ]
-        return selection
+            return self._item_model._extract_indices(indices)
 
     def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
@@ -173,19 +208,27 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Create the DataViewWidget's toolkit control. """
         self._create_item_model()
 
-        control = QTreeView(parent)
+        control = self.control_factory(parent)
+        control._widget = self
         control.setUniformRowHeights(True)
         control.setAnimated(True)
+        control.setDragEnabled(True)
         control.setModel(self._item_model)
+        control.setAcceptDrops(True)
+        control.setDropIndicatorShown(True)
         return control
 
     def destroy(self):
         """ Perform any actions required to destroy the control.
         """
-        self.control.setModel(None)
+        if self.control is not None:
+            self.control.setModel(None)
+
+            # ensure that we release references
+            self.control._widget = None
+            self._item_model = None
+
         super().destroy()
-        # ensure that we release the reference to the item model
-        self._item_model = None
 
     # ------------------------------------------------------------------------
     # Private methods
@@ -197,3 +240,8 @@ class DataViewWidget(MDataViewWidget, Widget):
     def _update_item_model(self, event):
         if self._item_model is not None:
             self._item_model.model = event.new
+
+    @observe('exporters.items', dispatch='ui')
+    def _update_exporters(self, event):
+        if self._item_model is not None:
+            self._item_model.exporters = self.exporters

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,8 +18,10 @@ from traits.api import Instance, List, on_trait_change, provides, Str
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from pyface.i_application_window import IApplicationWindow
-from pyface.i_application_window import MApplicationWindow
+from traits.api import Instance, List, observe, provides, Str
+from pyface.i_application_window import (
+    IApplicationWindow, MApplicationWindow,
+)
 from pyface.ui_traits import Image
 from pyface.wx.aui import aui, PyfaceAuiManager
 from .image_resource import ImageResource
@@ -108,7 +110,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create(self):
 
-        super(ApplicationWindow, self)._create()
+        super()._create()
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)
@@ -150,7 +152,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def destroy(self):
         if self.control:
             self._aui_manager.UnInit()
-        super(ApplicationWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -224,8 +226,8 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.remove_status_bar(self.control)
             self._create_status_bar(self.control)
 
-    @on_trait_change("tool_bar_manager, tool_bar_managers")
-    def _update_tool_bar_managers(self):
+    @observe("tool_bar_manager, tool_bar_managers.items")
+    def _update_tool_bar_managers(self, event):
         if self.control is not None:
             self._create_tool_bar(self.control)
 

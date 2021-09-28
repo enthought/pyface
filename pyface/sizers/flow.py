@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -24,7 +24,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def __init__(self, orient=wx.HORIZONTAL):
-        super(FlowSizer, self).__init__()
+        super().__init__()
         self._orient = orient
         self._frozen = False
         self._needed_size = None

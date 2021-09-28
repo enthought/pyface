@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface for a dialog that prompts for a choice from a list. """
 
 
-from traits.api import Any, List, Str
+from traits.api import Any, HasTraits, List, Str
 
 
 from pyface.i_dialog import IDialog
@@ -35,7 +35,7 @@ class ISingleChoiceDialog(IDialog):
     message = Str()
 
 
-class MSingleChoiceDialog(object):
+class MSingleChoiceDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """

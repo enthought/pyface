@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -61,7 +61,3 @@ class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
             self.area_pane.create(None)
         with self.event_loop():
             self.area_pane.destroy()
-
-
-if __name__ == "__main__":
-    unittest.main()

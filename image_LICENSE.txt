@@ -5,66 +5,37 @@ Project                 License                   File
 ----------------------------------------------------------------------------
 Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
 Enthought               BSD 3-Clause              LICENSE.txt
+FamFamFam Flags         Public Domain             http://www.famfamfam.com/lab/icons/flags/
 GV (Gael Varoquaux)     Public Domain             N/A
 Nuvola                  LGPL                      image_LICENSE_Nuvola.txt
 OOo                     LGPL                      image_LICENSE_OOo.txt
+Oxygen                  CC-SA 3.0                 LICENSE-CC-BY-3.0.txt
+PSF                     Trademark                 https://www.python.org/community/logos/
 
 Unless stated in this file, icons are the work of Enthought, and are
 released under a 3 clause BSD license.
 
 Files and orginal authors:
 ----------------------------------------------------------------------------
-pyface/action/images:
-                         action.png | Eclipse
+examples/application/python_editor/images:
+                   document_new.png | Oxygen
+                  document_open.png | Oxygen
+                  document_save.png | Oxygen
+                    python_icon.png | PSF
+                    python_logo.png | PSF
 
-pyface/images:
-                          about.jpg | Enthought
-                     background.jpg | Enthought
-                    caret_close.png | Enthought
-                     caret_open.png | Enthought
-                          close.png | GV
-                image_not_found.png | Nuvola
-                 panel_gradient.png | Enthought
-            panel_gradient_over.png | Enthought
-                       question.png | GV
-                         splash.png | Enthought
+examples/application/python_shell/images:
+                    python_icon.png | PSF
+                    python_logo.png | PSF
 
-pyface/dock/images:
-            bar_feature_changed.png | Enthought
-           bar_feature_disabled.png | Enthought
-               bar_feature_drop.png | Enthought
-            bar_feature_no_drop.png | Enthought
-             bar_feature_normal.png | Enthought
-                     close_drag.png | GV
-                      close_tab.png | GV
-                   feature_tool.png | GV
-                      sh_bottom.png | Enthought
-                      sh_middle.png | Enthought
-                         sh_top.png | Enthought
-                          shell.ico | Enthought
-                        sv_left.png | Enthought
-                      sv_middle.png | Enthought
-                       sv_right.png | Enthought
-            tab_feature_changed.png | Enthought
-           tab_feature_disabled.png | Enthought
-               tab_feature_drop.png | Enthought
-            tab_feature_no_drop.png | OOo
-             tab_feature_normal.png | OOo
-                   tab_scroll_l.png | Enthought
-                  tab_scroll_lr.png | Enthought
-                   tab_scroll_r.png | Enthought
-                         window.png | Eclipse
+examples/data_view/images:
+                             ca.png | FamFamFam Flags
+                             gb.png | FamFamFam Flags
+                             us.png | FamFamFam Flags
 
-pyface/ui/wx/grid/images:
-                        checked.png | GV
-                image_not_found.png | Nuvola
-                     table_edit.png | OOo
-                      unchecked.png | GV
-
-pyface/tree/images:
-                  closed_folder.png | Nuvola
-                       document.png | GV
-                    open_folder.png | Nuvola
+examples/dock/images:
+                         folder.png | Nuvola
+                           gear.png | Nuvola
 
 examples/images:
             closed_folder_24x24.png | Nuvola
@@ -72,9 +43,46 @@ examples/images:
                        document.png | GV
                     open_folder.png | Nuvola
 
-examples/dock/images:
-                         folder.png | Nuvola
-                           gear.png | Nuvola
+examples/tasks/advanced/images:
+                   document_new.png | Oxygen
+                  document_open.png | Oxygen
+                  document_save.png | Oxygen
 
-examples/workbench/images:
-                        example.ico | Enthought
+examples/tasks/basic/images:
+                  document_open.png | Oxygen
+                  document_save.png | Oxygen
+
+pyface/action/images:
+                         action.png | Eclipse
+
+pyface/dock/images:
+                     close_drag.png | GV
+                      close_tab.png | GV
+                   feature_tool.png | GV
+            tab_feature_no_drop.png | OOo
+             tab_feature_normal.png | OOo
+                         window.png | Eclipse
+
+pyface/images:
+                          about.jpg | Python Software Foundation
+                          close.png | GV
+                image_not_found.png | Nuvola
+                       question.png | GV
+                         splash.png | Python Software Foundation
+
+pyface/tests/images:
+                           core.png | Nuvola
+
+pyface/tree/images:
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola
+
+pyface/ui/wx/grid/images:
+                        checked.png | GV
+                image_not_found.png | Nuvola
+                     table_edit.png | OOo
+                      unchecked.png | GV
+
+pyface/ui/wx/images:
+                        warning.png | GV

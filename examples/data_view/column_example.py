@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,22 +10,32 @@
 
 """ Example showing DataView for ColumnDataModel using row info. """
 
+import logging
 
-from functools import partial
-from random import choice, randint
-
-from traits.api import Dict, HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
-from pyface.data_view.i_data_view_widget import IDataViewWidget
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import IntValue, TextValue, no_value
+from pyface.data_view.api import (
+    DataViewWidget, IDataViewWidget, table_format, csv_format
+)
+from pyface.data_view.exporters.api import RowExporter
+from pyface.data_view.value_types.api import (
+    BoolValue, EnumValue, ColorValue, IntValue, TextValue, no_value
+)
+from pyface.ui_traits import PyfaceColor
 
 from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
 )
+from example_data import (
+    any_name, family_name, favorite_color, age, street, city, country
+)
+
+logger = logging.getLogger(__name__)
+
 
 flags = {
+    'Canada': ImageResource('ca.png'),
     'UK': ImageResource('gb.png'),
     'USA': ImageResource('us.png'),
 }
@@ -33,33 +43,24 @@ flags = {
 
 class Address(HasStrictTraits):
 
-    street = Str
+    street = Str()
 
-    city = Str
+    city = Str()
 
-    country = Str
+    country = Str()
 
 
 class Person(HasStrictTraits):
 
-    name = Str
+    name = Str()
 
-    age = Int
+    age = Int()
+
+    favorite_color = PyfaceColor()
+
+    contacted = Bool()
 
     address = Instance(Address)
-
-
-class CountryValue(TextValue):
-
-    flags = Dict(Str, Image, update_value_type=True)
-
-    def has_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return value in self.flags
-
-    def get_image(self, model, row, column):
-        value = model.get_value(row, column)
-        return self.flags[value]
 
 
 row_info = HasTraitsRowInfo(
@@ -71,6 +72,16 @@ row_info = HasTraitsRowInfo(
             title="Age",
             value="age",
             value_type=IntValue(minimum=0),
+        ),
+        HasTraitsRowInfo(
+            title="Favorite Color",
+            value="favorite_color",
+            value_type=ColorValue(),
+        ),
+        HasTraitsRowInfo(
+            title="Contacted",
+            value="contacted",
+            value_type=BoolValue(true_text="Yes", false_text="No"),
         ),
         HasTraitsRowInfo(
             title="Address",
@@ -90,8 +101,9 @@ row_info = HasTraitsRowInfo(
                 HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
-                    value_type=CountryValue(
-                        flags=flags,
+                    value_type=EnumValue(
+                        values=sorted(flags.keys()),
+                        images=flags.get,
                     ),
                 ),
             ],
@@ -118,98 +130,56 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 row_info=self.row_info,
             ),
-            selection_mode='single',
+            selection_mode='extended',
+            exporters=[
+                RowExporter(
+                    format=table_format,
+                    column_headers=True,
+                    row_headers=True,
+                ),
+                RowExporter(
+                    format=csv_format,
+                    column_headers=True,
+                ),
+            ]
         )
         self.data_view._create()
         return self.data_view.control
 
     def _data_default(self):
-        import numpy
-        return numpy.random.uniform(size=(100000, 10))
+        logger.info("Initializing data")
+        people = [
+            Person(
+                name='%s %s' % (any_name(), family_name()),
+                age=age(),
+                favorite_color=favorite_color(),
+                address=Address(
+                    street=street(),
+                    city=city(),
+                    country=country(),
+                ),
+            )
+            for i in range(100)
+        ]
+        logger.info("Data initialized")
+        return people
 
     def destroy(self):
         self.data_view.destroy()
         super().destroy()
 
-male_names = [
-    'Michael', 'Edward', 'Timothy', 'James', 'George', 'Ralph', 'David',
-    'Martin', 'Bryce', 'Richard', 'Eric', 'Travis', 'Robert', 'Bryan',
-    'Alan', 'Harold', 'John', 'Stephen', 'Gael', 'Frederic', 'Eli', 'Scott',
-    'Samuel', 'Alexander', 'Tobias', 'Sven', 'Peter', 'Albert', 'Thomas',
-    'Horatio', 'Julius', 'Henry', 'Walter', 'Woodrow', 'Dylan', 'Elmer',
-]
-
-female_names = [
-    'Leah', 'Jaya', 'Katrina', 'Vibha', 'Diane', 'Lisa', 'Jean', 'Alice',
-    'Rebecca', 'Delia', 'Christine', 'Marie', 'Dorothy', 'Ellen', 'Victoria',
-    'Elizabeth', 'Margaret', 'Joyce', 'Sally', 'Ethel', 'Esther', 'Suzanne',
-    'Monica', 'Hortense', 'Samantha', 'Tabitha', 'Judith', 'Ariel', 'Helen',
-    'Mary', 'Jane', 'Janet', 'Jennifer', 'Rita', 'Rena', 'Rianna',
-]
-
-all_names = male_names + female_names
-any_name = partial(choice, all_names)
-age = partial(randint, 15, 72)
-
-
-def family_name():
-    return choice([
-        'Jones', 'Smith', 'Thompson', 'Hayes', 'Thomas', 'Boyle', "O'Reilly",
-        'Lebowski', 'Lennon', 'Starr', 'McCartney', 'Harrison', 'Harrelson',
-        'Steinbeck', 'Rand', 'Hemingway', 'Zhivago', 'Clemens', 'Heinlien',
-        'Farmer', 'Niven', 'Van Vogt', 'Sturbridge', 'Washington', 'Adams',
-        'Bush', 'Kennedy', 'Ford', 'Lincoln', 'Jackson', 'Johnson',
-        'Eisenhower', 'Truman', 'Roosevelt', 'Wilson', 'Coolidge', 'Mack',
-        'Moon', 'Monroe', 'Springsteen', 'Rigby', "O'Neil", 'Philips',
-        'Clinton', 'Clapton', 'Santana', 'Midler', 'Flack', 'Conner', 'Bond',
-        'Seinfeld', 'Costanza', 'Kramer', 'Falk', 'Moore', 'Cramdon', 'Baird',
-        'Baer', 'Spears', 'Simmons', 'Roberts', 'Michaels', 'Stuart',
-        'Montague', 'Miller',
-    ])
-
-
-def street():
-    number = randint(11, 999)
-    text_1 = choice([
-        'Spring', 'Summer', 'Moonlight', 'Winding', 'Windy', 'Whispering',
-        'Falling', 'Roaring', 'Hummingbird', 'Mockingbird', 'Bluebird',
-        'Robin', 'Babbling', 'Cedar', 'Pine', 'Ash', 'Maple', 'Oak', 'Birch',
-        'Cherry', 'Blossom', 'Rosewood', 'Apple', 'Peach', 'Blackberry',
-        'Strawberry', 'Starlight', 'Wilderness', 'Dappled', 'Beaver', 'Acorn',
-        'Pecan', 'Pheasant', 'Owl'
-    ])
-    text_2 = choice([
-        'Way', 'Lane', 'Boulevard', 'Street', 'Drive', 'Circle', 'Avenue',
-        'Trail',
-    ])
-    return '%d %s %s' % (number, text_1, text_2)
-
-
-city = partial(choice, ['Boston', 'Cambridge', ])
-country = partial(choice, ['USA', 'UK'])
-
-people = [
-    Person(
-        name='%s %s' % (any_name(), family_name()),
-        age=age(),
-        address=Address(
-            street=street(),
-            city=city(),
-            country=country(),
-        ),
-    )
-    for i in range(100)
-]
-
 
 # Application entry point.
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
     # Create and open the main window.
-    window = MainWindow(data=people, row_info=row_info)
+    window = MainWindow(row_info=row_info)
     window.open()
 
     # Start the GUI event loop!
     gui.start_event_loop()
+    logger.info("Shutting down")

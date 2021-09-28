@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface for a simple 'About' dialog. """
 
 
-from traits.api import List, Str
+from traits.api import HasTraits, List, Str
 
 
 from pyface.i_dialog import IDialog
@@ -33,7 +33,7 @@ class IAboutDialog(IDialog):
     image = Image()
 
 
-class MAboutDialog(object):
+class MAboutDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IAboutDialog interface.
     """

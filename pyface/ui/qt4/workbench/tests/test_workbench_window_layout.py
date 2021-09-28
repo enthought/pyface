@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -26,11 +26,15 @@ class TestWorkbenchWindowLayout(unittest.TestCase):
 
         layout = WorkbenchWindowLayout(_qt4_editor_area=mock_split_tab_widget)
 
+        class DummyEvent:
+            def __init__(self, new):
+                self.new = new
+
         # This should not throw
-        layout._qt4_active_editor_changed(None, None)
+        layout._qt4_active_editor_changed(DummyEvent(new=None))
         self.assertEqual(mock_split_tab_widget.setTabTextColor.called, False)
 
         mock_active_editor = mock.Mock()
-        layout._qt4_active_editor_changed(None, mock_active_editor)
+        layout._qt4_active_editor_changed(mock_active_editor)
 
         self.assertEqual(mock_split_tab_widget.setTabTextColor.called, True)

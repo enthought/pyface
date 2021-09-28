@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface of a top-level application window. """
 
 
-from traits.api import Instance, List
+from traits.api import HasTraits, Instance, List
 
 
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
@@ -109,7 +109,7 @@ class IApplicationWindow(IWindow):
         """ Sets the window icon (if required). """
 
 
-class MApplicationWindow(object):
+class MApplicationWindow(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the :py:class:`IApplicationWindow` interface.
 
@@ -131,7 +131,7 @@ class MApplicationWindow(object):
         for tool_bar_manager in self.tool_bar_managers:
             tool_bar_manager.destroy()
 
-        super(MApplicationWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.

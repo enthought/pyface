@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,8 @@
 """ The base class for all node types. """
 
 
-from traits.api import Any, HasPrivateTraits, Instance, List
+from traits.api import Any, HasPrivateTraits, Instance
+
 from pyface.api import Image, ImageResource
 from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
@@ -37,14 +38,14 @@ class NodeType(HasPrivateTraits):
     node_manager = Instance("pyface.tree.node_manager.NodeManager")
 
     # The image used to represent nodes that DO NOT allow children.
-    image = Image()
+    image = Image(DOCUMENT)
 
     # The image used to represent nodes that allow children and are NOT
     # expanded.
-    closed_image = Image()
+    closed_image = Image(CLOSED_FOLDER)
 
     # The image used to represent nodes that allow children and ARE expanded.
-    open_image = Image()
+    open_image = Image(OPEN_FOLDER)
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@
 import contextlib
 import threading
 
-from pyface.gui import GUI
+from pyface.i_gui import IGUI
 from pyface.qt import QtCore, QtGui
 from traits.api import HasStrictTraits, Instance
 
@@ -39,7 +39,7 @@ class EventLoopHelper(HasStrictTraits):
 
     qt_app = Instance(QtGui.QApplication)
 
-    gui = Instance(GUI)
+    gui = Instance(IGUI)
 
     def event_loop_with_timeout(self, repeat=2, timeout=10.0):
         """Helper function to send all posted events to the event queue and

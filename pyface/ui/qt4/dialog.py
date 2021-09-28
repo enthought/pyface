@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -157,7 +157,7 @@ class Dialog(MDialog, Window):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(Dialog, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.

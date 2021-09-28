@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,10 +8,13 @@
 #
 # Thanks for using Enthought open source!
 
-""" A header for an entry in a collection of expandables. The header
-provides a visual indicator of the current state, a text label, and a
-'remove' button. """
+""" A header for an entry in a collection of expandables.
 
+The header provides a visual indicator of the current state, a text label,
+and a 'remove' button.
+"""
+
+import warnings
 
 import wx
 
@@ -24,9 +27,11 @@ from .widget import Widget
 
 
 class ExpandableHeader(Widget):
-    """ A header for an entry in a collection of expandables. The header
-    provides a visual indicator of the current state, a text label, and a
-    'remove' button. """
+    """ A header for an entry in a collection of expandables.
+
+    The header provides a visual indicator of the current state, a text label,
+    and a 'remove' button.
+    """
 
     #: The title of the panel.
     title = Str("Panel")
@@ -38,15 +43,18 @@ class ExpandableHeader(Widget):
     expanded_carat_image = Image(ImageResource("carat_open"))
 
     #: The backing header image when the mouse is elsewhere
+    #: This is not used and deprecated.
     header_bar_image = Image(ImageResource("panel_gradient"))
 
     #: The backing header image when the mouse is over
+    #: This is not used and deprecated.
     header_mouseover_image = Image(ImageResource("panel_gradient_over"))
 
-    #: The carat image to show when the panel is expanded.
+    #: The image to use for the close button.
+    #: This is not used and deprecated.
     remove_image = Image(ImageResource("close"))
 
-    #: Represents the current state of the button. True means pressed.
+    #: Represents the current state of the panel. True means expanded.
     state = Bool(False)
 
     # Events ----
@@ -54,8 +62,11 @@ class ExpandableHeader(Widget):
     #: The panel has been expanded or collapsed
     panel_expanded = Event()
 
+    # The panel has been closed
+    panel_closed = Event()
+
     _CARAT_X = 4
-    _CARAT_Y = 2
+    _CARAT_Y = 4
     _TEXT_Y = 0
     _TEXT_X_OFFSET = 10
 
@@ -63,17 +74,33 @@ class ExpandableHeader(Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, container, **traits):
+    def __init__(self, parent=None, container=None, **traits):
         """ Creates the panel. """
 
+        if container is not None:
+            warnings.warn(
+                "the container parameter is deprecated and will be "
+                "removed in a future Pyface release",
+                DeprecationWarning,
+            )
+            self.observe(
+                lambda event: container.remove_panel(event.new),
+                "panel_closed",
+            )
+        create = traits.pop("create", True)
+
         # Base class constructor.
-        super(ExpandableHeader, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        self._container = container
-        return
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -89,30 +116,17 @@ class ExpandableHeader(Widget):
         expanded_carat = self.expanded_carat_image.create_image()
         self._expanded_bmp = expanded_carat.ConvertToBitmap()
 
-        header_bar = self.header_bar_image.create_image()
-        self._header_bmp = header_bar.ConvertToBitmap()
-
-        header_bar_over = self.header_mouseover_image.create_image()
-        self._header_mouseover_bmp = header_bar_over.ConvertToBitmap()
-
-        self._background_bmp = self._header_bmp
-
-        close_image = self.remove_image.create_image()
-        self._remove_bmp = close_image.ConvertToBitmap()
-
         # create our panel and initialize it appropriately
         sizer = wx.BoxSizer(wx.VERTICAL)
-        panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
+        panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN | wx.BORDER_SIMPLE)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
 
         # needed on GTK systems for EVT_ERASE_BACKGROUND to work
-        panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
+        #panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         # create the remove button
-        remove = wx.BitmapButton(
-            panel, -1, self._remove_bmp, style=0, pos=(-1, 3)
-        )
+        remove = wx.BitmapButton.NewCloseButton(panel, -1)
         sizer.Add(remove, 0, wx.ALIGN_RIGHT, 5)
 
         # Create a suitable font.
@@ -121,14 +135,10 @@ class ExpandableHeader(Widget):
         )
 
         height = self._get_preferred_height(parent, self.title, self._font)
-        panel.SetSize((-1, height))
+        panel.SetMinSize((-1, height+2))
 
-        panel.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
-        panel.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_leave)
-        panel.Bind(wx.EVT_LEAVE_WINDOW, self._on_enter_leave)
+        panel.Bind(wx.EVT_PAINT, self._on_paint)
         panel.Bind(wx.EVT_LEFT_DOWN, self._on_down)
-        panel.Bind(wx.EVT_RIGHT_DOWN, self._on_down)
-
         panel.Bind(wx.EVT_BUTTON, self._on_remove)
 
         return panel
@@ -139,11 +149,11 @@ class ExpandableHeader(Widget):
         dc = wx.MemoryDC()
 
         dc.SetFont(font)
-        text_w, text_h = dc.GetTextExtent(text)
-        text_h = text_h + self._TEXT_Y
+        metrics = dc.GetFontMetrics()
+        text_h = metrics.height + 2 * self._TEXT_Y
 
-        # add in width of buttons
-        carat_h = self._collapsed_bmp.GetHeight() + self._CARAT_Y
+        # add in height of buttons
+        carat_h = self._collapsed_bmp.GetHeight() + 2 * self._CARAT_Y
 
         return max(text_h, carat_h)
 
@@ -157,22 +167,6 @@ class ExpandableHeader(Widget):
 
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
-    def _tile_background_image(self, dc, width, height):
-        """ Tiles the background image. """
-
-        w = self._background_bmp.GetWidth()
-        h = self._background_bmp.GetHeight()
-
-        x = 0
-        while x < width:
-            y = 0
-            while y < height:
-                dc.DrawBitmap(self._background_bmp, x, y)
-
-                y = y + h
-
-            x = x + w
-
     def _draw_title(self, dc):
         """ Draws the text label for the header. """
         dc.SetFont(self._font)
@@ -182,48 +176,30 @@ class ExpandableHeader(Widget):
             self.title, self._carat_w + self._TEXT_X_OFFSET, self._TEXT_Y
         )
 
+
     def _draw(self, dc):
         """ Draws the control. """
 
-        size = self.control.GetClientSize()
-
-        # Tile the background image.
-        self._tile_background_image(dc, size.width, size.height)
-
+        # Draw the title text
         self._draw_title(dc)
 
         # Draw the carat button
         self._draw_carat_button(dc)
 
-        return
-
     # ------------------------------------------------------------------------
     # wx event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_erase_background(self, event):
+    def _on_paint(self, event):
         """ Called when the background of the panel is erased. """
 
-        # print 'ImageButton._on_erase_background'
-        dc = event.GetDC()
+        # print('ImageButton._on_erase_background')
+        dc = wx.PaintDC(self.control)
         self._draw(dc)
-
-    def _on_enter_leave(self, event):
-        """ Called when button is pressed. """
-
-        # print 'ExpandableHeader._on_enter_leave'
-        if event.Entering():
-            self._background_bmp = self._header_mouseover_bmp
-        else:
-            self._background_bmp = self._header_bmp
-
-        self.control.Refresh()
-        event.Skip()
 
     def _on_down(self, event):
         """ Called when button is pressed. """
 
-        # print 'ImageButton._on_down'
         self.state = not self.state
         self.control.Refresh()
 
@@ -233,5 +209,4 @@ class ExpandableHeader(Widget):
 
     def _on_remove(self, event):
         """ Called when remove button is pressed. """
-
-        self._container.remove_panel(self.title)
+        self.panel_closed = self

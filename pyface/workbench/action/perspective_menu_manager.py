@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 
 
 from pyface.action.api import Group, MenuManager
-from traits.api import Instance, List, on_trait_change
+from traits.api import Instance, List, observe
 
 
 from .delete_user_perspective_action import DeleteUserPerspectiveAction
@@ -68,9 +68,8 @@ class PerspectiveMenuManager(MenuManager):
     # 'PerspectiveMenuManager' interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change("window.perspectives")
-    @on_trait_change("window.perspectives_items")
-    def rebuild(self):
+    @observe("window.perspectives.items")
+    def rebuild(self, event):
         """ Rebuild the menu.
 
         This is called when user perspectives have been added or removed.

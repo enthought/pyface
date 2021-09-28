@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,11 +14,10 @@
 
 from logging import DEBUG
 
-from traits.api import Any, Bool, Int, provides
-from traits.api import Tuple, Str
+from traits.api import Any, Bool, Int, Tuple, Str, provides
 
-from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.qt import QtCore, QtGui
+from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.ui_traits import Image
 from .image_resource import ImageResource
 from .window import Window

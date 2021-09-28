@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -69,4 +69,4 @@ class TraitsUIWidgetAction(Action):
         if self.model is not None:
             context = {"object": self.model, "action": self}
             return context
-        return super(TraitsUIWidgetAction, self).trait_context()
+        return super().trait_context()

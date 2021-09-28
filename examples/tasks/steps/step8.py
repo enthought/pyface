@@ -45,7 +45,7 @@ from pyface.tasks.action.api import (
     TaskAction,
     TaskToggleGroup,
 )
-from traits.api import on_trait_change, Property, Instance, Str, List
+from traits.api import Property, Instance, Str, List
 
 
 class Pane1(DockPane):
@@ -93,7 +93,7 @@ class ExampleTask(Task):
     name = "Multi-Tab Editor"
 
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     editor_area = Instance(IEditorAreaPane)
