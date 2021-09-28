@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,9 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
 
 """ Utility functions for handling Qt dates and times. """
 
@@ -39,7 +36,7 @@ def qtime_to_pytime(qtime):
 
 
 def pytime_to_qtime(pytime):
-    """ Converta Python datetime.time to a QTime
+    """ Convert a Python datetime.time to a QTime
 
     This is a convenience function to construct a qtime from a Python time.
     This loses any :attr:`fold` information in the Python time.
