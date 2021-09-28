@@ -17,6 +17,7 @@ API for the ``pyface.fields`` subpackage.
 - :class:`~.RadioButtonField`
 - :class:`~.SpinField`
 - :class:`~.TextField`
+- :class:`~.TimeField`
 - :class:`~.ToggleButtonField`
 
 Interfaces
@@ -25,6 +26,7 @@ Interfaces
 - :class:`~.IField`
 - :class:`~.ISpinField`
 - :class:`~.ITextField`
+- :class:`~.ITimeField`
 - :class:`~.IToggleField`
 
 """
