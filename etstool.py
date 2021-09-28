@@ -99,6 +99,8 @@ dependencies = {
     "pygments",
     "coverage",
     "pillow",
+    "flake8",
+    "flake8_ets",
 }
 
 source_dependencies = {
@@ -460,6 +462,30 @@ def test_all(edm):
 
     if error:
         sys.exit(1)
+
+
+@cli.command()
+@edm_option
+@click.option('--runtime', default="3.6")
+@click.option('--toolkit', default="pyqt5")
+@click.option(
+    "--environment", default=None, help="Name of EDM environment to check."
+)
+@click.option(
+    '--strict/--not-strict',
+    default=False,
+    help="Use strict configuration for flake8 [default: --not-strict]",
+)
+def flake8(edm, runtime, toolkit, environment, strict):
+    """Run a flake8 check in a given environment."""
+    parameters = get_parameters(edm, runtime, toolkit, environment)
+    config = ""
+    if strict:
+        config = "--config=flake8_strict.cfg "
+    commands = [
+        "edm run -e {environment} -- python -m flake8 " + config,
+    ]
+    execute(commands, parameters)
 
 
 # ----------------------------------------------------------------------------
