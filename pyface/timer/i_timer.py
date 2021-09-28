@@ -30,7 +30,6 @@ from traits.api import (
     Property,
     Range,
     Tuple,
-    Union,
     provides,
     Union,
 )
