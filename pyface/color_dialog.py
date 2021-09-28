@@ -21,8 +21,8 @@ ColorDialog = toolkit_object("color_dialog:ColorDialog")
 def get_color(parent, color, show_alpha=False):
     """ Convenience function that displays a color dialog.
 
-    Paramters
-    ---------
+    Parameters
+    ----------
     parent : toolkit control
         The parent toolkit control for the modal dialog.
     color : Color or color description
