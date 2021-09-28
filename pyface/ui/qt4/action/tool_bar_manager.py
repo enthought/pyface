@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -66,7 +66,7 @@ class ToolBarManager(ActionManager):
         """ Creates a new tool bar manager. """
 
         # Base class constructor.
-        super(ToolBarManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.
@@ -121,7 +121,7 @@ class ToolBarManager(ActionManager):
             toolbar = self._toolbars.pop()
             toolbar.dispose()
 
-        super(ToolBarManager, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -136,7 +136,7 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(
+                    group.observe(
                         self._separator_visibility_method(separator), "visible"
                     )
 
@@ -154,7 +154,7 @@ class ToolBarManager(ActionManager):
 
     def _separator_visibility_method(self, separator):
         """ Method to return closure to set visibility of group separators. """
-        return lambda visible: separator.setVisible(visible)
+        return lambda event: separator.setVisible(event.new)
 
 
 class _ToolBar(QtGui.QToolBar):
@@ -176,21 +176,21 @@ class _ToolBar(QtGui.QToolBar):
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         return
 
     def dispose(self):
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
         )
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible", remove=True
         )
         # Removes event listeners from downstream tools and clears their
@@ -204,14 +204,14 @@ class _ToolBar(QtGui.QToolBar):
     # Trait change handlers.
     # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(new)
+        self.setEnabled(event.new)
 
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setVisible(new)
+        self.setVisible(event.new)
 
         return

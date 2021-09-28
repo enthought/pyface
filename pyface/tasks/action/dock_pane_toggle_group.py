@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@ from traits.api import (
     cached_property,
     Instance,
     List,
-    on_trait_change,
+    observe,
     Property,
     Str,
 )
@@ -34,16 +34,16 @@ class DockPaneToggleAction(Action):
 
     # 'Action' interface ---------------------------------------------------
 
-    name = Property(Str, depends_on="dock_pane.name")
+    name = Property(Str, observe="dock_pane.name")
     style = "toggle"
-    tooltip = Property(Str, depends_on="name")
+    tooltip = Property(Str, observe="name")
 
     # ------------------------------------------------------------------------
     # 'Action' interface.
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        super(DockPaneToggleAction, self).destroy()
+        super().destroy()
 
         # Make sure that we are not listening to changes to the pane anymore.
         # In traits style, we will set the basic object to None and have the
@@ -64,15 +64,15 @@ class DockPaneToggleAction(Action):
         return self.dock_pane.name
 
     def _get_tooltip(self):
-        return u"Toggles the visibility of the %s pane." % self.name
+        return "Toggles the visibility of the %s pane." % self.name
 
-    @on_trait_change("dock_pane.visible")
-    def _update_checked(self):
+    @observe("dock_pane.visible")
+    def _update_checked(self, event):
         if self.dock_pane:
             self.checked = self.dock_pane.visible
 
-    @on_trait_change("dock_pane.closable")
-    def _update_visible(self):
+    @observe("dock_pane.closable")
+    def _update_visible(self, event):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
 
@@ -89,7 +89,7 @@ class DockPaneToggleGroup(Group):
 
     # 'DockPaneToggleGroup' interface -------------------------------------#
 
-    task = Property(depends_on="parent.controller")
+    task = Property(observe="parent.controller")
 
     @cached_property
     def _get_task(self):
@@ -100,7 +100,7 @@ class DockPaneToggleGroup(Group):
 
         return manager.controller.task
 
-    dock_panes = Property(depends_on="task.window._states.dock_panes")
+    dock_panes = Property(observe="task.window._states.items.dock_panes")
 
     @cached_property
     def _get_dock_panes(self):
@@ -119,8 +119,8 @@ class DockPaneToggleGroup(Group):
 
     # Private interface ----------------------------------------------------
 
-    @on_trait_change("dock_panes[]")
-    def _dock_panes_updated(self):
+    @observe("dock_panes.items")
+    def _dock_panes_updated(self, event):
         """Recreate the group items when dock panes have been added/removed.
         """
 

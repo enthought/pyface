@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,7 +22,7 @@ from .image_resource import ImageResource
 
 try:
     # import wx.aui
-    from wx.lib.agw import aui
+    from wx.lib.agw import aui  # noqa: F401
 
     AUI = True
 except:
@@ -103,7 +103,7 @@ class MDIApplicationWindow(ApplicationWindow):
             # Let the AUI manager look after the frame.
             self._aui_manager.SetManagedWindow(self.control)
 
-        contents = super(MDIApplicationWindow, self)._create_contents(parent)
+        contents = super()._create_contents(parent)
 
         return contents
 

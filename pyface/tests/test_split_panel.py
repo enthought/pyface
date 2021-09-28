@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -43,7 +43,26 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = SplitPanel(self.window.control)
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = SplitPanel(self.window.control)
+
+        self.assertIsNotNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_two_stage_create(self):
+        # test that create=False works
+        self.widget = SplitPanel(create=False)
+
+        self.assertIsNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
+
         with self.event_loop():
             self.widget.destroy()
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,14 +12,13 @@
 This module provides a concrete implementation of a data model for an
 n-dim numpy array.
 """
-from collections.abc import Sequence
-
 from traits.api import Array, HasRequiredTraits, Instance, observe
 
-from pyface.data_view.abstract_data_model import AbstractDataModel, DataViewSetError
+from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
-    ConstantValue, FloatValue, IntValue, TextValue, no_value
+    ConstantValue, IntValue, no_value
 )
 from pyface.data_view.index_manager import TupleIndexManager
 
@@ -254,29 +253,33 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     def data_updated(self, event):
         """ Handle the array being replaced with a new array. """
         if event.new.shape == event.old.shape:
-            self.values_changed = (
-                    (0,), (0,),
-                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
-            )
+            if self.data.size > 0:
+                self.values_changed = (
+                        (0,), (0,),
+                        (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
+                )
         else:
             self.structure_changed = True
 
     @observe('value_type.updated')
     def value_type_updated(self, event):
         """ Handle the value type being updated. """
-        self.values_changed = (
-            (0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,)
-        )
+        if self.data.size > 0:
+            self.values_changed = (
+                (0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,)
+            )
 
     @observe('column_header_type.updated')
     def column_header_type_updated(self, event):
         """ Handle the column header type being updated. """
-        self.values_changed = ((), (0,), (), (self.data.shape[-1] - 1,))
+        if self.data.shape[-1] > 0:
+            self.values_changed = ((), (0,), (), (self.data.shape[-1] - 1,))
 
     @observe('row_header_type.updated')
     def value_header_type_updated(self, event):
         """ Handle the value header type being updated. """
-        self.values_changed = ((0,), (), (self.data.shape[0] - 1,), ())
+        if self.data.shape[0] > 0:
+            self.values_changed = ((0,), (), (self.data.shape[0] - 1,), ())
 
     @observe('label_header_type.updated')
     def label_header_type_updated(self, event):

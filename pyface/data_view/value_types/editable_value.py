@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,7 @@
 
 from traits.api import Bool
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 
 
@@ -19,7 +19,7 @@ class EditableValue(AbstractValueType):
 
     This class provides two things beyond the base AbstractValueType:
     a trait ``is_editable`` which allows toggling editing state on and
-    off, and an ``is_valid` method that is used for validation before
+    off, and an ``is_valid`` method that is used for validation before
     setting a value.
     """
 

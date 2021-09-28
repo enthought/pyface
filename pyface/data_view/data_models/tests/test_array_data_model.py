@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,15 +10,18 @@
 
 from unittest import TestCase
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
-    FloatValue, IntValue, TextValue, no_value
+    FloatValue, IntValue, no_value
 )
-from pyface.data_view.data_models.array_data_model import ArrayDataModel
+# This import results in an error without numpy installed
+# see enthought/pyface#742
+if np is not None:
+    from pyface.data_view.data_models.api import ArrayDataModel
 
 
 @requires_numpy
@@ -52,7 +55,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         model = ArrayDataModel(value_type=FloatValue())
         self.assertEqual(model.data.ndim, 2)
         self.assertEqual(model.data.shape, (0, 0))
-        self.assertEqual(model.data.dtype, np.float)
+        self.assertEqual(model.data.dtype, float)
         self.assertEqual(model.get_column_count(), 0)
         self.assertTrue(model.can_have_children(()))
         self.assertEqual(model.get_row_count(()), 0)
@@ -194,6 +197,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((0,), (0,), (4,), (2,))
         )
 
+    def test_type_updated_empty(self):
+        self.model.data = np.empty((0, 0, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.value_type = IntValue()
+
     def test_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.value_type.is_editable = False
@@ -201,6 +209,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((0,), (0,), (4,), (2,))
         )
+
+    def test_type_attribute_updated_empty(self):
+        self.model.data = np.empty((0, 0, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.value_type.is_editable = False
 
     def test_row_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
@@ -210,6 +223,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((0,), (), (4,), ())
         )
 
+    def test_row_header_type_updated_empty(self):
+        self.model.data = np.empty((0, 4, 2), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.row_header_type = no_value
+
     def test_row_header_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.row_header_type.format = str
@@ -217,6 +235,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((0,), (), (4,), ())
         )
+
+    def test_row_header_attribute_updated_empty(self):
+        self.model.data = np.empty((0, 4, 2), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.row_header_type.format = str
 
     def test_column_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
@@ -226,6 +249,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((), (0,), (), (2,))
         )
 
+    def test_column_header_type_updated_empty(self):
+        self.model.data = np.empty((2, 4, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.column_header_type = no_value
+
     def test_column_header_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.column_header_type.format = str
@@ -233,6 +261,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((), (0,), (), (2,))
         )
+
+    def test_column_header_attribute_updated_empty(self):
+        self.model.data = np.empty((2, 4, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.column_header_type.format = str
 
     def test_label_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
@@ -249,6 +282,37 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((), (), (), ())
         )
+
+    def test_is_row_valid(self):
+        # valid rows are valid
+        for row in self.model.iter_rows():
+            with self.subTest(row=row):
+                result = self.model.is_row_valid(row)
+                self.assertTrue(result)
+
+    def test_is_row_valid_big(self):
+        result = self.model.is_row_valid((5,))
+        self.assertFalse(result)
+
+    def test_is_row_valid_long(self):
+        result = self.model.is_row_valid((1, 1, 1))
+        self.assertFalse(result)
+
+    def test_is_column_valid(self):
+        # valid columns are valid
+        columns = [()] + [(i,) for i in range(3)]
+        for column in columns:
+            with self.subTest(column=column):
+                result = self.model.is_column_valid(column)
+                self.assertTrue(result)
+
+    def test_is_column_valid_big(self):
+        result = self.model.is_column_valid((3,))
+        self.assertFalse(result)
+
+    def test_is_column_valid_long(self):
+        result = self.model.is_column_valid((1, 1))
+        self.assertFalse(result)
 
     def test_iter_rows(self):
         result = list(self.model.iter_rows())

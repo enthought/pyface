@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -29,7 +29,9 @@ from traits.api import (
     List,
     Str,
     Type,
+    Union,
 )
+from traits.observation.api import match
 
 
 from .grid_model import GridColumn, GridModel, GridSortEvent
@@ -40,10 +42,10 @@ class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
 
     # The trait name for this column. This takes precedence over method
-    name = Either(None, Str)
+    name = Union(None, Str)
 
     # A method name to call to get the value for this column
-    method = Either(None, Str)
+    method = Union(None, Str)
 
     # A method to be used to sort on this column
     sorter = Callable
@@ -53,7 +55,7 @@ class TraitGridColumn(GridColumn):
     formats = Dict(Type, Either(Str, Callable))
 
     # A name to designate the type of this column
-    typename = Either(None, Str)
+    typename = Union(None, Str)
     # note: context menus should go in here as well? but we need
     #       more info than we have available at this point
 
@@ -67,7 +69,7 @@ class TraitGridSelection(HasTraits):
     obj = Instance(HasTraits)
 
     # The specific trait selected on the object
-    trait_name = Either(None, Str)
+    trait_name = Union(None, Str)
 
 
 # The meat.
@@ -83,10 +85,10 @@ class TraitGridModel(GridModel):
     data = List(Any)
 
     # The column definitions
-    columns = Either(None, List(Either(None, Str, Instance(TraitGridColumn))))
+    columns = Union(None, List(Union(None, Str, Instance(TraitGridColumn))))
 
     # The trait to look at to get the row name
-    row_name_trait = Either(None, Str)
+    row_name_trait = Union(None, Str)
 
     # Allow column sorting?
     allow_column_sort = Bool(True)
@@ -102,7 +104,7 @@ class TraitGridModel(GridModel):
         """ Create a TraitGridModel object. """
 
         # Base class constructor
-        super(TraitGridModel, self).__init__(**traits)
+        super().__init__(**traits)
 
         # if no columns are pass in then create the list of names
         # from the first trait in the list. if the list is empty,
@@ -122,21 +124,21 @@ class TraitGridModel(GridModel):
                 self._auto_columns = []
 
         # attach trait handlers to the list object
-        self.on_trait_event(self._on_data_changed, "data")
-        self.on_trait_event(self._on_data_items_changed, "data_items")
+        self.observe(self._on_data_changed, "data")
+        self.observe(self._on_data_items_changed, "data:items")
 
         # attach appropriate trait handlers to objects in the list
         self.__manage_data_listeners(self.data)
 
         # attach a listener to the column definitions so we refresh when
         # they change
-        self.on_trait_change(self._on_columns_changed, "columns")
-        self.on_trait_event(self._on_columns_items_changed, "columns_items")
+        self.observe(self._on_columns_changed, "columns")
+        self.observe(self._on_columns_items_changed, "columns:items")
         # attach listeners to the column definitions themselves
         self.__manage_column_listeners(self.columns)
 
         # attach a listener to the row_name_trait
-        self.on_trait_change(self._on_row_name_trait_changed, "row_name_trait")
+        self.observe(self._on_row_name_trait_changed, "row_name_trait")
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface.
@@ -559,13 +561,13 @@ class TraitGridModel(GridModel):
     # trait handlers
     # ------------------------------------------------------------------------
 
-    def _on_row_name_trait_changed(self, new):
+    def _on_row_name_trait_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
 
-    def _on_columns_changed(self, object, name, old, new):
+    def _on_columns_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
-        self.__manage_column_listeners(old, remove=True)
+        self.__manage_column_listeners(event.old, remove=True)
         self.__manage_column_listeners(self.columns)
         self._auto_columns = self.columns
         self.fire_structure_changed()
@@ -577,14 +579,14 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(event.added)
         self.fire_structure_changed()
 
-    def _on_contained_trait_changed(self, new):
+    def _on_contained_trait_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
 
-    def _on_data_changed(self, object, name, old, new):
+    def _on_data_changed(self, event):
         """ Force the grid to refresh when the underlying list changes. """
 
-        self.__manage_data_listeners(old, remove=True)
+        self.__manage_data_listeners(event.old, remove=True)
         self.__manage_data_listeners(self.data)
         self.fire_structure_changed()
 
@@ -640,7 +642,7 @@ class TraitGridModel(GridModel):
 
     def __get_column_typename(self, col):
 
-        name = column = self.__get_column(col)
+        column = self.__get_column(col)
         typename = None
         if isinstance(column, TraitGridColumn):
             typename = column.typename
@@ -684,8 +686,10 @@ class TraitGridModel(GridModel):
         # attach appropriate trait handlers to objects in the list
         if list is not None:
             for item in list:
-                item.on_trait_change(
-                    self._on_contained_trait_changed, remove=remove
+                item.observe(
+                    self._on_contained_trait_changed,
+                    match(lambda name, trait: True),
+                    remove=remove
                 )
 
     def __manage_column_listeners(self, collist, remove=False):
@@ -693,6 +697,8 @@ class TraitGridModel(GridModel):
         if collist is not None:
             for col in collist:
                 if isinstance(col, TraitGridColumn):
-                    col.on_trait_change(
-                        self._on_columns_changed, remove=remove
+                    col.observe(
+                        self._on_columns_changed,
+                        match(lambda name, trait: True),
+                        remove=remove,
                     )

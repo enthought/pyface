@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,14 +11,14 @@
 from abc import abstractmethod
 
 from traits.api import (
-    ABCHasStrictTraits, ComparisonMode, Event, HasTraits, Instance,
+    ABCHasStrictTraits, Event, HasTraits, Instance,
     List, Str, observe
 )
 from traits.trait_base import xgetattr, xsetattr
 
-from pyface.data_view.abstract_data_model import AbstractDataModel
-from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.index_manager import TupleIndexManager
+from pyface.data_view.api import (
+    AbstractDataModel, AbstractValueType, DataViewSetError, TupleIndexManager
+)
 from pyface.data_view.value_types.api import TextValue
 
 
@@ -30,10 +30,7 @@ class AbstractRowInfo(ABCHasStrictTraits):
     title = Str()
 
     #: The child rows of this row, if any.
-    rows = List(
-        Instance('AbstractRowInfo'),
-        comparison_mode=ComparisonMode.identity,
-    )
+    rows = List(Instance('AbstractRowInfo'))
 
     #: The value type of the data stored in this row.
     title_type = Instance(
@@ -155,10 +152,7 @@ class ColumnDataModel(AbstractDataModel):
     """
 
     #: A list of objects to display in columns.
-    data = List(
-        Instance(HasTraits),
-        comparison_mode=ComparisonMode.identity,
-    )
+    data = List(Instance(HasTraits))
 
     #: An object which describes how to map data for each row.
     row_info = Instance(AbstractRowInfo)
@@ -214,7 +208,7 @@ class ColumnDataModel(AbstractDataModel):
         if len(column) == 0:
             raise DataViewSetError("Cannot set value for row header.")
         obj = self.data[column[0]]
-       row_info.set_value(obj, value)
+        row_info.set_value(obj, value)
 
     def get_value_type(self, row, column):
         row_info = self._row_info_object(row)

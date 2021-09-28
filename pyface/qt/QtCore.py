@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -33,14 +33,7 @@ elif qt_api == "pyqt5":
     __version__ = QT_VERSION_STR
     __version_info__ = tuple(map(int, QT_VERSION_STR.split(".")))
 
-
-elif qt_api == "pyside2":
+else:
     from PySide2.QtCore import *
 
     from PySide2 import __version__, __version_info__
-else:
-    try:
-        from PySide import __version__, __version_info__
-    except ImportError:
-        pass
-    from PySide.QtCore import *

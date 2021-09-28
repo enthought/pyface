@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -90,7 +90,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_yes_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -98,7 +98,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_no_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.no_label = u"No Way"
+        self.dialog.no_label = "No Way"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -191,10 +191,10 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_yes(self):
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         # test that Yes works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
 
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
@@ -224,10 +224,10 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_no(self):
-        self.dialog.no_label = u"No way"
+        self.dialog.no_label = "No way"
         # test that No works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"No way"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("No way"))
 
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
@@ -259,10 +259,10 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel_renamed(self):
         self.dialog.cancel = True
-        self.dialog.cancel_label = u"Back"
+        self.dialog.cancel_label = "Back"
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Back"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Back"))
 
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)

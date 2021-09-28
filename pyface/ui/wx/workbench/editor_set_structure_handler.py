@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -70,7 +70,7 @@ class EditorSetStructureHandler(SetStructureHandler):
             window.editors.append(editor)
 
         except:
-            logger.warn("could not restore editor [%s]", id)
+            logger.warning("could not restore editor [%s]", id)
             control = None
 
         return control

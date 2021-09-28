@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,12 +20,8 @@ from abc import abstractmethod
 
 from traits.api import ABCHasStrictTraits, Event, Instance
 
+from .data_view_errors import DataViewSetError
 from .index_manager import AbstractIndexManager
-
-
-class DataViewSetError(ValueError):
-    """ An exception raised when setting a value fails. """
-    pass
 
 
 class AbstractDataModel(ABCHasStrictTraits):
@@ -156,6 +152,13 @@ class AbstractDataModel(ABCHasStrictTraits):
         -------
         value : any
             The value represented by the given row and column.
+
+        Raises
+        -------
+        DataViewGetError
+            If the value cannot be accessed in an expected way.  If this is
+            raised then the error will be ignored and not logged by the
+            data view infrastructure.
         """
         raise NotImplementedError()
 
@@ -232,20 +235,65 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         raise NotImplementedError()
 
-    # Convenience iterator methods
+    # Convenience methods
+
+    def is_row_valid(self, row):
+        """ Return whether or not the given row index refers to a valid row.
+
+        A row index is valid if every value in the tuple is between 0 and the
+        number of child rows of the parent.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The row to check as indices of the row from root to leaf.
+
+        Returns
+        -------
+        valid : bool
+            Whether or not the row index is valid.
+        """
+        for i, index in enumerate(row):
+            parent = row[:i]
+            if not self.can_have_children(parent):
+                return False
+            if not 0 <= index < self.get_row_count(parent):
+                return False
+        return True
+
+    def is_column_valid(self, column):
+        """ Return whether or not the given column index refers to a valid column.
+
+        A column index is valid if it is the root, or the value is between 0 and
+        the number of columns in the model.
+
+        Parameters
+        ----------
+        column :  sequence of int
+            The column to check.
+
+        Returns
+        -------
+        valid : bool
+            Whether or not the column index is valid.
+        """
+        if len(column) == 1:
+            return 0 <= column[0] < self.get_column_count()
+
+        return len(column) == 0
 
     def iter_rows(self, start_row=()):
         """ Iterator that yields rows in preorder.
 
         Parameters
         ----------
-        start_row : row index
+        start_row : sequence of int
             The row to start at.  The iterator will yeild the row and all
             descendant rows.
 
         Yields
         ------
-        row_index
+        row_index : sequence of int
             The current row index.
         """
         start_row = tuple(start_row)
@@ -263,7 +311,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Parameters
         ----------
-        start_row : row index
+        start_row : sequence of int
             The row to start iteration from.
 
         Yields

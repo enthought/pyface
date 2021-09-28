@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,9 +12,9 @@
 """ Enthought pyface package component
 """
 
+import wx
 
-from traits.api import Any, Bool, HasTraits, provides
-
+from traits.api import Any, Bool, HasTraits, Instance, Str, provides
 
 from pyface.i_widget import IWidget, MWidget
 
@@ -38,6 +38,12 @@ class Widget(MWidget, HasTraits):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    #: A tooltip for the widget.
+    tooltip = Str()
+
+    #: An optional context menu for the widget.
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -67,7 +73,56 @@ class Widget(MWidget, HasTraits):
         if self.control is not None:
             self.control.Enable(enabled)
 
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+        if self.control is not None:
+            self.control.SetFocus()
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+        return (
+            self.control is not None
+            and self.control.HasFocus()
+        )
+
     def destroy(self):
         if self.control is not None:
-            self.control.Destroy()
-            self.control = None
+            control = self.control
+            super().destroy()
+            control.Destroy()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        return self.control.GetToolTipText()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        self.control.SetToolTip(tooltip)
+
+    def _observe_control_context_menu(self, remove=False):
+        """ Toolkit specific method to change the control menu observer. """
+        if remove:
+            self.control.Unbind(
+                wx.EVT_CONTEXT_MENU, handler=self._handle_control_context_menu
+            )
+        else:
+            self.control.Bind(
+                wx.EVT_CONTEXT_MENU, self._handle_control_context_menu
+            )
+
+    def _handle_control_context_menu(self, event):
+        """ Signal handler for displaying context menu. """
+        if self.control is not None and self.context_menu is not None:
+            menu = self.context_menu.create_menu(self.control)
+            self.control.PopupMenu(menu)

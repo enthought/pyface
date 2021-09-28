@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -181,7 +181,7 @@ class Shell(wx.StyledTextCtrl):
         **kwds
     ):
         """Create a PyCrust Shell instance."""
-        wxStyledTextCtrl.__init__(self, parent, id, pos, size, style)
+        wx.StyledTextCtrl.__init__(self, parent, id, pos, size, style)
         # Grab these so they can be restored by self.redirect* methods.
         self.stdin = sys.stdin
         self.stdout = sys.stdout

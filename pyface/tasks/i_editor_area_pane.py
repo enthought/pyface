@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -42,22 +42,23 @@ class IEditorAreaPane(ITaskPane):
 
     # 'IEditorAreaPane' interface -----------------------------------------#
 
-    # The currently active editor.
+    #: The currently active editor.
     active_editor = Instance(IEditor)
 
-    # The list of all the visible editors in the pane.
+    #: The list of all the visible editors in the pane.
     editors = List(IEditor)
 
-    # A list of extensions for file types to accept via drag and drop.
-    # Note: This functionality is provided because it is very common, but drag
-    # and drop support is in general highly toolkit-specific. If more
-    # sophisticated support is required, subclass an editor area implementation.
+    #: A list of extensions for file types to accept via drag and drop.
+    #: Note: This functionality is provided because it is very common, but
+    #: drag and drop support is in general highly toolkit-specific. If more
+    #: sophisticated support is required, subclass an editor area
+    #: implementation.
     file_drop_extensions = List(Str)
 
-    # A file with a supported extension was dropped into the editor area.
+    #: A file with a supported extension was dropped into the editor area.
     file_dropped = Event(File)
 
-    # Whether to hide the tab bar when there is only a single editor.
+    #: Whether to hide the tab bar when there is only a single editor.
     hide_tab_bar = Bool(False)
 
     # ------------------------------------------------------------------------
@@ -110,10 +111,12 @@ class IEditorAreaPane(ITaskPane):
 
         The 'factory' parameter is a callabe of form:
             callable(editor_area=editor_area, obj=obj) -> IEditor
+
         Often, factory will be a class that provides the 'IEditor' interface.
 
         The 'filter' parameter is a callable of form:
             callable(obj) -> bool
+
         that indicates whether the editor factory is suitable for an object.
 
         If multiple factories apply to a single object, it is undefined which
@@ -173,7 +176,7 @@ class MEditorAreaPane(HasTraits):
         # If not, create an editor for it.
         editor = self.create_editor(obj, factory)
         if editor is None:
-            logger.warn("Cannot create editor for obj %r", obj)
+            logger.warning("Cannot create editor for obj %r", obj)
 
         else:
             self.add_editor(editor)

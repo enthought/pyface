@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -28,7 +28,7 @@ class EditorAreaPaneTestCase(unittest.TestCase):
         """
         area = EditorAreaPane()
         area.register_factory(Editor, lambda obj: isinstance(obj, int))
-        self.assert_(isinstance(area.create_editor(0), Editor))
+        self.assertTrue(isinstance(area.create_editor(0), Editor))
 
     @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
     def test_factories(self):
@@ -61,7 +61,3 @@ class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
             self.area_pane.create(None)
         with self.event_loop():
             self.area_pane.destroy()
-
-
-if __name__ == "__main__":
-    unittest.main()

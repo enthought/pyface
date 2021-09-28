@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -161,7 +161,3 @@ class PyMimeDataTestCase(unittest.TestCase):
         # remove local instance to simulate cross-process
         md._local_instance = None
         self.assertEqual(md.instanceType(), None)
-
-
-if __name__ == "__main__":
-    unittest.main()

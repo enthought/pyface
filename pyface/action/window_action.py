@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,7 +25,7 @@ class WindowAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="window")
+    object = Property(observe="window")
 
     # 'WindowAction' interface -----------------------------------------------
 
@@ -42,12 +42,12 @@ class WindowAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to window and dependent properties.
         self.window = None
-        super(WindowAction, self).destroy()
+        super().destroy()
 
 
 class CloseWindowAction(WindowAction):
     """ Close the specified window """
 
-    name = u"Close"
+    name = "Close"
     accelerator = "Ctrl+W"
     method = "close"

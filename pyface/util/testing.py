@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,6 +10,10 @@
 from functools import wraps
 import re
 from unittest import TestSuite
+
+from packaging.version import Version
+
+from traits import __version__ as TRAITS_VERSION
 
 
 def filter_tests(test_suite, exclusion_pattern):
@@ -32,7 +36,7 @@ def filter_tests(test_suite, exclusion_pattern):
 def has_traitsui():
     """ Is traitsui installed? """
     try:
-        import traitsui
+        import traitsui  # noqa: F401
     except ImportError:
         return False
     return True
@@ -49,3 +53,17 @@ def skip_if_no_traitsui(test):
             self.skipTest("Can't import traitsui.")
 
     return new_test
+
+
+def is_traits_version_ge(version):
+    """ Return true if the traits version is greater than or equal to the
+    required value.
+
+    Parameters
+    ----------
+    version : str
+        Version to be parsed. e.g. "6.0"
+    """
+    traits_version = Version(TRAITS_VERSION)
+    given_version = Version(version)
+    return traits_version >= given_version

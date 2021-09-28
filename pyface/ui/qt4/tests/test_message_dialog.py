@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,7 @@ import contextlib
 import unittest
 
 from pyface.api import MessageDialog
-from pyface.qt import QtGui
+from pyface.qt import QtCore, QtGui
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 
 
@@ -24,10 +24,10 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
     def test_escape_button_no_details(self):
         dialog = MessageDialog(
             parent=None,
-            title=u"Dialog title",
-            message=u"Printer on fire",
-            informative=u"Your printer is on fire",
-            severity=u"error",
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            severity="error",
             size=(600, 400),
         )
 
@@ -41,11 +41,11 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
     def test_escape_button_with_details(self):
         dialog = MessageDialog(
             parent=None,
-            title=u"Dialog title",
-            message=u"Printer on fire",
-            informative=u"Your printer is on fire",
-            details=u"Temperature exceeds 1000 degrees",
-            severity=u"error",
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            details="Temperature exceeds 1000 degrees",
+            severity="error",
             size=(600, 400),
         )
 
@@ -55,6 +55,22 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
+
+    def test_text_format(self):
+        dialog = MessageDialog(
+            parent=None,
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            details="Temperature exceeds 1000 degrees",
+            severity="error",
+            text_format="plain",
+            size=(600, 400),
+        )
+
+        with self.create_dialog(dialog):
+            text_format = dialog.control.textFormat()
+            self.assertEqual(text_format, QtCore.Qt.PlainText)
 
     @contextlib.contextmanager
     def create_dialog(self, dialog):

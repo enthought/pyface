@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,7 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-""" Mulit-tool bar example. """
+""" Mulit-tool bar example.
+    Note: This demo only works on the wx backend.
+"""
 
 
 import os, sys
@@ -42,7 +44,7 @@ class MainWindow(MultiToolbarWindow):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(

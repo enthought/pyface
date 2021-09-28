@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@ import logging
 
 
 from pyface.api import ImageResource
-from traits.api import Bool, Enum, Float, Instance, List, provides, Str
+from traits.api import Bool, Instance, provides, Str
 from traits.util.camel_case import camel_case_to_words
 
 
@@ -94,7 +94,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         """ Trait initializer. """
 
         id = "%s.%s" % (type(self).__module__, type(self).__name__)
-        logger.warn("view %s has no Id - using <%s>" % (self, id))
+        logger.warning("view %s has no Id - using <%s>" % (self, id))
 
         # If no Id is specified then use the name.
         return id
@@ -103,7 +103,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         """ Trait initializer. """
 
         name = camel_case_to_words(type(self).__name__)
-        logger.warn("view %s has no name - using <%s>" % (self, name))
+        logger.warning("view %s has no name - using <%s>" % (self, name))
 
         return name
 

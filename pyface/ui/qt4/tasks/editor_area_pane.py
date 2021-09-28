@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@ import sys
 
 
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
-from traits.api import Any, Callable, List, on_trait_change, provides, Tuple
+from traits.api import Any, Callable, List, observe, provides, Tuple
 
 
 from pyface.qt import QtCore, QtGui
@@ -110,7 +110,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(EditorAreaPane, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
@@ -129,7 +129,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         index = self.control.addTab(editor.control, self._get_label(editor))
         self.control.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
 
         # The 'currentChanged' signal, used below, is not emitted when the first
         # editor is added.
@@ -143,7 +143,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.removeTab(self.control.indexOf(editor.control))
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
         if not self.editors:
             self.active_editor = None
 
@@ -179,13 +179,15 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("editors:[dirty, name]")
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         index = self.control.indexOf(editor.control)
         self.control.setTabText(index, self._get_label(editor))
 
-    @on_trait_change("editors:tooltip")
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         index = self.control.indexOf(editor.control)
         self.control.setTabToolTip(index, editor.tooltip)
 
@@ -204,8 +206,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             control = self.control.widget(index)
             self.active_editor = self._get_editor_with_control(control)
 
-    @on_trait_change("hide_tab_bar")
-    def _update_tab_bar(self):
+    @observe("hide_tab_bar")
+    def _update_tab_bar(self, event):
         if self.control is not None:
             visible = self.control.count() > 1 if self.hide_tab_bar else True
             self.control.tabBar().setVisible(visible)
@@ -221,7 +223,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
     """
 
     def __init__(self, editor_area, parent=None):
-        super(EditorAreaWidget, self).__init__(parent)
+        super().__init__(parent)
         self.editor_area = editor_area
 
         # Configure the QTabWidget.
@@ -246,7 +248,7 @@ class EditorAreaDropFilter(QtCore.QObject):
     """
 
     def __init__(self, editor_area):
-        super(EditorAreaDropFilter, self).__init__()
+        super().__init__()
         self.editor_area = editor_area
 
     def eventFilter(self, object, event):
@@ -273,4 +275,4 @@ class EditorAreaDropFilter(QtCore.QObject):
 
             return True
 
-        return super(EditorAreaDropFilter, self).eventFilter(object, event)
+        return super().eventFilter(object, event)

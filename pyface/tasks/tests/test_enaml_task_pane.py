@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,13 +20,13 @@ else:
         from enaml.widgets.api import Label
         from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
     except ImportError:
-        SKIP_REASON = "Enaml not installed"
+        SKIP_REASON = "traits_enaml is not installed"
 
 if SKIP_REASON is not None:
     # Dummy class so that the TestEnamlTaskPane class definition below
     # doesn't fail.
 
-    class GuiTestAssistant(object):
+    class GuiTestAssistant(object):  # noqa: F811
         pass
 
 

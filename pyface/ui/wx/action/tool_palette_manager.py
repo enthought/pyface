@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,10 +13,7 @@
 """
 
 
-import wx
-
-
-from traits.api import Any, Bool, Enum, Instance, Tuple
+from traits.api import Bool, Instance, Tuple
 
 
 from pyface.image_cache import ImageCache
@@ -48,7 +45,7 @@ class ToolPaletteManager(ActionManager):
         """ Creates a new tool bar manager. """
 
         # Base class contructor.
-        super(ToolPaletteManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.
@@ -80,15 +77,15 @@ class ToolPaletteManager(ActionManager):
     def _add_tools(self, tool_palette, groups):
         """ Adds tools for all items in a list of groups. """
 
-        previous_non_empty_group = None
+        # previous_non_empty_group = None
         for group in self.groups:
             if len(group.items) > 0:
                 # Is a separator required?
                 ## FIXME : Does the palette need the notion of a separator?
-                ##                 if previous_non_empty_group is not None and group.separator:
-                ##                     tool_bar.AddSeparator()
+                ## if previous_non_empty_group is not None and group.separator:
+                ##     tool_bar.AddSeparator()
                 ##
-                ##                 previous_non_empty_group = group
+                ## previous_non_empty_group = group
 
                 # Create a tool bar tool for each item in the group.
                 for item in group.items:

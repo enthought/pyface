@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,11 +11,10 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.value_types.editable_value import EditableValue
-
 
 class EditableWithValid(EditableValue):
 

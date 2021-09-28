@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,7 @@ from math import inf
 
 from traits.api import Callable, Float
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from .editable_value import EditableValue
 
 

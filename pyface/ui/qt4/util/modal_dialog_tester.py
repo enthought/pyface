@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,19 +11,18 @@
 
 """
 import contextlib
-import platform
 import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtGui
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
 from .testing import find_qt_widget
 
 
-BUTTON_TEXT = {OK: u"OK", CANCEL: u"Cancel", YES: u"Yes", NO: u"No"}
+BUTTON_TEXT = {OK: "OK", CANCEL: "Cancel", YES: "Yes", NO: "No"}
 
 
 class ModalDialogTester(object):

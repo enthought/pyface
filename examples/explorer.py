@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,7 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-""" A file explorer example. """
+""" A file explorer example.
+    Note: This demo only works on the wx backend.
+"""
 
 
 import os
@@ -57,7 +59,7 @@ class MainWindow(SplitApplicationWindow):
         """ Creates a new window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the window's menu, tool and status bars.
         self._create_action_bars()
@@ -143,7 +145,7 @@ class MainWindow(SplitApplicationWindow):
             filters=[AllowOnlyFolders()],
         )
 
-        tree_viewer.on_trait_change(self._on_selection_changed, "selection")
+        tree_viewer.observe(self._on_selection_changed, "selection")
 
         return tree_viewer.control
 
@@ -169,9 +171,9 @@ class MainWindow(SplitApplicationWindow):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_selection_changed(self, selection):
+    def _on_selection_changed(self, event):
         """ Called when the selection in the tree is changed. """
-
+        selection = event.new
         if len(selection) > 0:
             self._table_viewer.input = selection[0]
 

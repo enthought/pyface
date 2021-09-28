@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,6 +16,7 @@ from code import compile_command, InteractiveInterpreter
 from io import StringIO
 import sys
 from time import time
+import warnings
 
 
 from pyface.qt import QtCore, QtGui
@@ -35,11 +36,11 @@ from .console.api import (
 )
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonShell)
-class PythonShell(MPythonShell, Widget):
+class PythonShell(MPythonShell, LayoutWidget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
@@ -56,11 +57,21 @@ class PythonShell(MPythonShell, Widget):
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
-    def __init__(self, parent, **traits):
-        super(PythonShell, self).__init__(parent=parent, **traits)
+    def __init__(self, parent=None, **traits):
 
-        # Create the toolkit-specific control that represents the widget.
-        self._create()
+        create = traits.pop("create", True)
+
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the toolkit-specific control that represents the widget.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # --------------------------------------------------------------------------
     # 'IPythonShell' interface
@@ -109,7 +120,7 @@ class PythonShell(MPythonShell, Widget):
         return PyfacePythonWidget(self, parent)
 
     def _add_event_listeners(self):
-        super(PythonShell, self)._add_event_listeners()
+        super()._add_event_listeners()
 
         # Connect signals for events.
         self.control.executed.connect(self._on_command_executed)
@@ -123,7 +134,7 @@ class PythonShell(MPythonShell, Widget):
 
             self.control._remove_event_listeners()
 
-        super(PythonShell, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     def __event_filter_default(self):
         return _DropEventEmitter(self.control)
@@ -169,7 +180,7 @@ class PythonWidget(HistoryConsoleWidget):
     # --------------------------------------------------------------------------
 
     def __init__(self, parent=None):
-        super(PythonWidget, self).__init__(parent)
+        super().__init__(parent)
 
         # PythonWidget attributes.
         self.locals = dict(__name__="__console__", __doc__=None)
@@ -209,7 +220,7 @@ class PythonWidget(HistoryConsoleWidget):
 
         self._bracket_matcher._remove_event_listeners()
 
-        super(PythonWidget, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     # --------------------------------------------------------------------------
     # file-like object interface
@@ -284,7 +295,7 @@ class PythonWidget(HistoryConsoleWidget):
         # Run the source code in the interpeter
         self._hidden = hidden
         try:
-            more = self.interpreter.runsource(source)
+            self.interpreter.runsource(source)
         finally:
             self._hidden = False
 
@@ -352,12 +363,12 @@ class PythonWidget(HistoryConsoleWidget):
                     cursor.removeSelectedText()
                     return True
 
-        return super(PythonWidget, self)._event_filter_console_keypress(event)
+        return super()._event_filter_console_keypress(event)
 
     def _insert_continuation_prompt(self, cursor):
         """ Reimplemented for auto-indentation.
         """
-        super(PythonWidget, self)._insert_continuation_prompt(cursor)
+        super()._insert_continuation_prompt(cursor)
         source = self.input_buffer
         space = 0
         for c in source.splitlines()[-1]:
@@ -499,7 +510,6 @@ class PythonWidget(HistoryConsoleWidget):
         # Calculate where the cursor should be *after* the change:
         position += added
 
-        document = self._control.document()
         if position == self._get_cursor().position():
             self._call_tip()
 
@@ -515,9 +525,7 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
     """
 
     def __init__(self, python_widget):
-        super(PythonWidgetHighlighter, self).__init__(
-            python_widget._control.document()
-        )
+        super().__init__(python_widget._control.document())
         self._current_offset = 0
         self._python_widget = python_widget
         self.highlighting_on = False
@@ -547,21 +555,21 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         else:
             self._current_offset = 0
 
-        super(PythonWidgetHighlighter, self).highlightBlock(string)
+        super().highlightBlock(string)
 
     def rehighlightBlock(self, block):
         """ Reimplemented to temporarily enable highlighting if disabled.
         """
         old = self.highlighting_on
         self.highlighting_on = True
-        super(PythonWidgetHighlighter, self).rehighlightBlock(block)
+        super().rehighlightBlock(block)
         self.highlighting_on = old
 
     def setFormat(self, start, count, format):
         """ Reimplemented to highlight selectively.
         """
         start += self._current_offset
-        super(PythonWidgetHighlighter, self).setFormat(start, count, format)
+        super().setFormat(start, count, format)
 
 
 # -------------------------------------------------------------------------------
@@ -583,7 +591,7 @@ class PyfacePythonWidget(PythonWidget):
         """
         self._pyface_widget = pyface_widget
 
-        super(PyfacePythonWidget, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
     # ---------------------------------------------------------------------------
     # 'QWidget' interface
@@ -613,7 +621,7 @@ class PyfacePythonWidget(PythonWidget):
             event=event,
         )
 
-        super(PyfacePythonWidget, self).keyPressEvent(event)
+        super().keyPressEvent(event)
 
 
 class _DropEventEmitter(QtCore.QObject):

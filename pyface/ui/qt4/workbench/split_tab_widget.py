@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -1020,7 +1020,7 @@ class _DragableTabBar(QtGui.QTabBar):
     def _setCurrentTabText(self):
         idx = self.currentIndex()
         text = self._title_edit.text()
-        self.setTabText(idx, u"\u25b6" + text)
+        self.setTabText(idx, "\u25b6" + text)
         self._root.tabTextChanged.emit(self.parent().widget(idx), text)
 
     def _resize_title_edit_to_current_tab(self):

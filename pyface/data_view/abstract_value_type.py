@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -19,9 +19,19 @@ It is up to the data view to take this standardized data and determine what
 and how to actually display it.
 """
 
+from enum import IntEnum
+
 from traits.api import ABCHasStrictTraits, Event, observe
 
-from .abstract_data_model import DataViewSetError
+from pyface.color import Color
+from .data_view_errors import DataViewSetError
+
+
+class CheckState(IntEnum):
+    "Possible checkbox states"
+    # XXX in the future this may need a "partial" state, see Pyface #695
+    UNCHECKED = 0
+    CHECKED = 1
 
 
 class AbstractValueType(ABCHasStrictTraits):
@@ -181,6 +191,193 @@ class AbstractValueType(ABCHasStrictTraits):
             If the value cannot be set.
         """
         raise DataViewSetError("Cannot set value.")
+
+    def has_color(self, model, row, column):
+        """ Whether or not the value has color data.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_color : bool
+            Whether or not the value has data-associated color
+            values.
+        """
+        return False
+
+    def get_color(self, model, row, column):
+        """ Get data-associated colour values for the given item.
+
+        The default implementation returns white.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        color : Color instance
+            The color associated with the cell.
+        """
+        return Color(rgba=(1.0, 1.0, 1.0, 1.0))
+
+    def has_image(self, model, row, column):
+        """ Whether or not the value has an image associated with it.
+
+        The default implementation returns True if ``get_image``
+        returns a non-None value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_image : bool
+            Whether or not the value has an image associated with it.
+        """
+        return False
+
+    def get_image(self, model, row, column):
+        """ An image associated with the underlying value.
+
+        The default implementation returns None.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        image : IImage
+            The image associated with the underlying value.
+        """
+        from pyface.image_resource import ImageResource
+        return ImageResource("image_not_found")
+
+    def has_check_state(self, model, row, column):
+        """ Whether or not the value has checked state.
+
+        The default implementation returns False.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_check_state : bool
+            Whether or not the value has a checked state.
+        """
+        return False
+
+    def get_check_state(self, model, row, column):
+        """ The state of the item check box.
+
+        The default implementation returns "checked" if the value is
+        truthy, or "unchecked" if the value is falsey.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        check_state : CheckState
+            The current checked state.
+        """
+        return (
+            CheckState.CHECKED
+            if model.get_value(row, column)
+            else CheckState.UNCHECKED
+        )
+
+    def set_check_state(self, model, row, column, check_state):
+        """ Set the checked state of the underlying value.
+
+        The default implementation does not allow setting the checked state.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+        check_state : CheckState
+            The check state value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If the value cannot be set.
+        """
+        raise DataViewSetError("Cannot set check state.")
+
+    def has_tooltip(self, model, row, column):
+        """ Whether or not the value has a tooltip.
+
+        The default implementation returns True if ``get_tooltip``
+        returns a non-empty value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_tooltip : bool
+            Whether or not the value has a textual representation.
+        """
+        return self.get_tooltip(model, row, column) != ""
+
+    def get_tooltip(self, model, row, column):
+        """ The tooltip for the underlying value.
+
+        The default implementation returns an empty string.
+
+        tooltip : str
+            The textual representation of the underlying value.
+        """
+        return ""
 
     @observe('+update_value_type')
     def update_value_type(self, event=None):

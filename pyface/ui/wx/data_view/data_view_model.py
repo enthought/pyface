@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,23 +10,14 @@
 
 import logging
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import (
+    DataViewGetError, DataViewSetError
+)
 from pyface.data_view.index_manager import Root
 from wx.dataview import DataViewItem, DataViewModel as wxDataViewModel
 
 
 logger = logging.getLogger(__name__)
-
-
-type_hint_to_variant = {
-    'str': "string",
-    'int': "longlong",
-    'float': "double",
-    'bool': "bool",
-    'datetime': "datetime",
-    'container': "list",
-    'object': "void*",
-}
 
 
 # XXX This file is scaffolding and may need to be rewritten or expanded
@@ -146,8 +137,19 @@ class DataViewModel(wxDataViewModel):
         else:
             column_index = (column - 1,)
         value_type = self.model.get_value_type(row_index, column_index)
-        if value_type.has_text(self.model, row_index, column_index):
-            return value_type.get_text(self.model, row_index, column_index)
+        try:
+            if value_type.has_text(self.model, row_index, column_index):
+                return value_type.get_text(self.model, row_index, column_index)
+        except DataViewGetError:
+            return ''
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get data failed: row %r, column %r",
+                row_index,
+                column_index,
+            )
+            raise
         return ''
 
     def SetValue(self, value, item, column):
@@ -176,8 +178,8 @@ class DataViewModel(wxDataViewModel):
         return self.model.get_column_count() + 1
 
     def GetColumnType(self, column):
-        value_type = self.model.get_value_type((), (column-1,))
-        return type_hint_to_variant.get(value_type.type_hint, "string")
+        # XXX This may need refinement when we deal with different editor types
+        return "string"
 
     def _to_row_index(self, item):
         id = item.GetID()

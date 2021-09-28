@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@
 from inspect import getfullargspec
 
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtGui
 
 
 from traits.api import Any, Bool, HasTraits
@@ -26,7 +26,7 @@ from pyface.action.action_event import ActionEvent
 
 class PyfaceWidgetAction(QtGui.QWidgetAction):
     def __init__(self, parent, action):
-        super(PyfaceWidgetAction, self).__init__(parent)
+        super().__init__(parent)
         self.action = action
 
     def createWidget(self, parent):
@@ -119,15 +119,13 @@ class _MenuItem(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_visible_changed, "visible")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
-        action.on_trait_change(self._on_action_name_changed, "name")
-        action.on_trait_change(
-            self._on_action_accelerator_changed, "accelerator"
-        )
-        action.on_trait_change(self._on_action_image_changed, "image")
-        action.on_trait_change(self._on_action_tooltip_changed, "tooltip")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_visible_changed, "visible")
+        action.observe(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_name_changed, "name")
+        action.observe(self._on_action_accelerator_changed, "accelerator")
+        action.observe(self._on_action_image_changed, "image")
+        action.observe(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -138,27 +136,15 @@ class _MenuItem(HasTraits):
 
     def dispose(self):
         action = self.item.action
-        action.on_trait_change(
-            self._on_action_enabled_changed, "enabled", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_visible_changed, "visible", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_checked_changed, "checked", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_name_changed, "name", remove=True
-        )
-        action.on_trait_change(
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_visible_changed, "visible", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
+        action.observe(self._on_action_name_changed, "name", remove=True)
+        action.observe(
             self._on_action_accelerator_changed, "accelerator", remove=True
         )
-        action.on_trait_change(
-            self._on_action_image_changed, "image", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_tooltip_changed, "tooltip", remove=True
-        )
+        action.observe(self._on_action_image_changed, "image", remove=True)
+        action.observe(self._on_action_tooltip_changed, "tooltip", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -230,38 +216,45 @@ class _MenuItem(HasTraits):
         if self.control is not None:
             self.control.setChecked(self.checked)
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setEnabled(action.enabled)
 
-    def _on_action_visible_changed(self, action, trait_name, old, new):
+    def _on_action_visible_changed(self, event):
         """ Called when the visible trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setVisible(action.visible)
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setChecked(action.checked)
 
-    def _on_action_name_changed(self, action, trait_name, old, new):
+    def _on_action_name_changed(self, event):
         """ Called when the name trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setText(action.name)
 
-    def _on_action_accelerator_changed(self, action, trait_name, old, new):
+    def _on_action_accelerator_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
 
-    def _on_action_image_changed(self, action, trait_name, old, new):
+    def _on_action_image_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setIcon(action.image.create_icon())
 
-    def _on_action_tooltip_changed(self, action, trait_name, old, new):
+    def _on_action_tooltip_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setToolTip(action.tooltip)
 
@@ -346,15 +339,13 @@ class _Tool(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_visible_changed, "visible")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
-        action.on_trait_change(self._on_action_name_changed, "name")
-        action.on_trait_change(
-            self._on_action_accelerator_changed, "accelerator"
-        )
-        action.on_trait_change(self._on_action_image_changed, "image")
-        action.on_trait_change(self._on_action_tooltip_changed, "tooltip")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_visible_changed, "visible")
+        action.observe(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_name_changed, "name")
+        action.observe(self._on_action_accelerator_changed, "accelerator")
+        action.observe(self._on_action_image_changed, "image")
+        action.observe(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -365,27 +356,15 @@ class _Tool(HasTraits):
 
     def dispose(self):
         action = self.item.action
-        action.on_trait_change(
-            self._on_action_enabled_changed, "enabled", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_visible_changed, "visible", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_checked_changed, "checked", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_name_changed, "name", remove=True
-        )
-        action.on_trait_change(
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_visible_changed, "visible", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
+        action.observe(self._on_action_name_changed, "name", remove=True)
+        action.observe(
             self._on_action_accelerator_changed, "accelerator", remove=True
         )
-        action.on_trait_change(
-            self._on_action_image_changed, "image", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_tooltip_changed, "tooltip", remove=True
-        )
+        action.observe(self._on_action_image_changed, "image", remove=True)
+        action.observe(self._on_action_tooltip_changed, "tooltip", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -453,41 +432,48 @@ class _Tool(HasTraits):
         if self.control is not None:
             self.control.setChecked(self.checked)
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setEnabled(action.enabled)
 
-    def _on_action_visible_changed(self, action, trait_name, old, new):
+    def _on_action_visible_changed(self, event):
         """ Called when the visible trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setVisible(action.visible)
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setChecked(action.checked)
 
-    def _on_action_name_changed(self, action, trait_name, old, new):
+    def _on_action_name_changed(self, event):
         """ Called when the name trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setText(action.name)
 
-    def _on_action_accelerator_changed(self, action, trait_name, old, new):
+    def _on_action_accelerator_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
 
-    def _on_action_image_changed(self, action, trait_name, old, new):
+    def _on_action_image_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             size = self.tool_bar.iconSize()
             self.control.setIcon(
                 action.image.create_icon((size.width(), size.height()))
             )
 
-    def _on_action_tooltip_changed(self, action, trait_name, old, new):
+    def _on_action_tooltip_changed(self, event):
         """ Called when the accelerator trait is changed on an action. """
+        action = event.object
         if self.control is not None:
             self.control.setToolTip(action.tooltip)
 
@@ -526,7 +512,6 @@ class _PaletteTool(HasTraits):
         # And they never contain shortcuts.
         label = label.replace("&", "")
 
-        image = action.image.create_image()
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
@@ -547,8 +532,8 @@ class _PaletteTool(HasTraits):
 
         # Listen to the trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_checked_changed, "checked")
 
         return
 
@@ -558,25 +543,25 @@ class _PaletteTool(HasTraits):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
-
+        action = event.object
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
-
+        action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
-            if new:
+            if event.new:
                 for item in self.item.parent.items:
                     if item is not self.item:
                         item.action.checked = False
 
         # This will *not* emit a tool event.
-        self.tool_palette.toggle_tool(self.tool_id, new)
+        self.tool_palette.toggle_tool(self.tool_id, event.new)
 
         return
 
@@ -588,10 +573,13 @@ class _PaletteTool(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = action.style == "radio" or action.style == "check"
-
         # Perform the action!
         action.checked = self.tool_palette.get_tool_state(self.tool_id) == 1
         action.perform(action_event)
 
         return
+
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)

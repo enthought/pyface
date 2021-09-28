@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,6 @@
 
 
 import platform
-import sys
 
 
 from pyface.qt import QtCore, QtGui
@@ -48,7 +47,7 @@ _DIALOG_TEXT = """
       %s
       </p>
       <p>
-      Copyright &copy; 2003-2020 Enthought, Inc.<br>
+      Copyright &copy; 2003-2021 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
   </center>
@@ -87,7 +86,7 @@ class AboutDialog(MAboutDialog, Dialog):
             signal, handler = self._connections_to_remove.pop()
             signal.disconnect(handler)
 
-        super(AboutDialog, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -127,7 +126,6 @@ class AboutDialog(MAboutDialog, Dialog):
 
     def _create_html(self):
         # Load the image to be displayed in the about box.
-        image = self.image.create_image()
         path = self.image.absolute_path
 
         # The additional strings.
