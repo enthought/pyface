@@ -102,7 +102,7 @@ row_info = HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
                     value_type=EnumValue(
-                        values=['Canada', 'UK', 'USA'],
+                        values=sorted(flags.keys()),
                         images=flags.get,
                     ),
                 ),

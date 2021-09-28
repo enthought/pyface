@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -35,8 +35,6 @@ class EnumValue(EditableValue):
 
     def is_valid(self, model, row, column, value):
         """ Whether or not the value is valid for the data item specified.
-
-        The default implementation returns True for all values.
 
         Parameters
         ----------
@@ -137,9 +135,6 @@ class EnumValue(EditableValue):
 
     def has_image(self, model, row, column):
         """ Whether or not the value has an image associated with it.
-
-        The default implementation returns True if ``get_image``
-        returns a non-None value.
 
         Parameters
         ----------
