@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,7 @@ from pyface.qt import QtGui, QtCore
 
 class FindWidget(QtGui.QWidget):
     def __init__(self, parent):
-        super(FindWidget, self).__init__(parent)
+        super().__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
 
         # QFontMetrics.width() is deprecated and Qt docs suggest using

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@ from unittest import TestCase
 
 from traits.testing.api import UnittestTools
 
-from pyface.color import Color, channels_to_ints, ints_to_channels
+from pyface.color import Color
 
 
 class TestColor(UnittestTools, TestCase):

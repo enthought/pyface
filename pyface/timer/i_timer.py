@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,6 @@ provides a base implementation that can be easily specialized for a particular
 back-end, and mixins that provide additional capabilities.
 """
 from abc import abstractmethod
-import sys
 import time
 
 from traits.api import (
@@ -33,6 +32,7 @@ from traits.api import (
     Tuple,
     Union,
     provides,
+    Union,
 )
 
 perf_counter = time.perf_counter
@@ -138,7 +138,7 @@ class BaseTimer(ABCHasTraits):
     expire = Union(None, Float)
 
     #: Property that controls the state of the timer.
-    active = Property(Bool, depends_on="_active")
+    active = Property(Bool, observe="_active")
 
     # Private interface ------------------------------------------------------
 

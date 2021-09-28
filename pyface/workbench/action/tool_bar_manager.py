@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -36,7 +36,7 @@ class ToolBarManager(pyface.ToolBarManager):
         if controller is None:
             controller = ActionController(window=self.window)
 
-        tool_bar = super(ToolBarManager, self).create_tool_bar(
+        tool_bar = super().create_tool_bar(
             parent, controller=controller, **kwargs
         )
 

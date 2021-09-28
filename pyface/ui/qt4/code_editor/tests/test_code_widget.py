@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -108,7 +108,3 @@ class TestCodeWidget(unittest.TestCase):
             self.assertTrue(acw.replace.isVisible())
         acw.replace.hide()
         self.assertFalse(acw.replace.isVisible())
-
-
-if __name__ == "__main__":
-    unittest.main()

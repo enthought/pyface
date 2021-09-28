@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,6 +8,63 @@
 #
 # Thanks for using Enthought open source!
 
+
+"""
+
+API for the ``pyface.action`` subpackage.
+
+Actions
+-------
+
+- :class:`~.Action`
+- :class:`~.FieldAction`
+- :class:`~.GUIApplicationAction`
+- :class:`~.ListeningAction`
+- :class:`~.TraitsUIWidgetAction`
+- :class:`~.WindowAction`
+
+Action Controller
+-----------------
+
+- :class:`~pyface.action.action_controller.ActionController`
+
+Action Event
+------------
+
+- :class:`~.ActionEvent`
+
+Action Managers
+---------------
+
+- :class:`~.ActionManager`
+- ``MenuManager``
+- ``MenuBarManager``
+- ``StatusBarManager``
+- ``ToolBarManager``
+- ``ToolPaletteManager``, only for the Wx toolkit.
+
+Action Manager Items
+--------------------
+
+- :class:`~.ActionManagerItem`
+- :class:`~.ActionItem`
+
+Layout support
+--------------
+
+- :class:`~.Group`
+- :class:`~.Separator`
+
+Useful Application and Window actions
+-------------------------------------
+
+- :class:`~.AboutAction`
+- :class:`~.CloseActiveWindowAction`
+- :class:`~.CreateWindowAction`
+- :class:`~.ExitAction`
+- :class:`~.CloseWindowAction`
+
+"""
 
 from .action import Action
 from .action_controller import ActionController

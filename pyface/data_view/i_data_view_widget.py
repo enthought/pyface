@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, ComparisonMode, Enum, HasStrictTraits, Instance, List, Property,
+    Bool, Enum, HasStrictTraits, Instance, List, Property,
     TraitError, Tuple, cached_property,
 )
 
@@ -75,7 +75,7 @@ class MDataViewWidget(HasStrictTraits):
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
-    selection = Property(depends_on='_selection[]')
+    selection = Property(observe='_selection.items')
 
     #: Exporters available for the DataViewWidget.
     exporters = List(Instance(AbstractDataExporter))
@@ -87,7 +87,7 @@ class MDataViewWidget(HasStrictTraits):
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
-    _selection = List(Tuple, comparison_mode=ComparisonMode.identity)
+    _selection = List(Tuple)
 
     # ------------------------------------------------------------------------
     # MDataViewWidget Interface
@@ -228,9 +228,7 @@ class MDataViewWidget(HasStrictTraits):
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        super()._create()
 
         self.show(self.visible)
         self.enable(self.enabled)
@@ -239,6 +237,7 @@ class MDataViewWidget(HasStrictTraits):
         """ Initializes the toolkit specific control.
         """
         logger.debug('Initializing DataViewWidget')
+        super()._initialize_control()
         self._set_control_header_visible(self.header_visible)
         self._set_control_selection_mode(self.selection_mode)
         self._set_control_selection_type(self.selection_type)

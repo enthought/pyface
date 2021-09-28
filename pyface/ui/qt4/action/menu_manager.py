@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -75,7 +75,7 @@ class MenuManager(ActionManager, ActionManagerItem):
             menu = self._menus.pop()
             menu.dispose()
 
-        super(MenuManager, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
@@ -140,30 +140,22 @@ class _Menu(QtGui.QMenu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.on_trait_change(self.refresh, "changed")
-        self._manager.on_trait_change(self._on_enabled_changed, "enabled")
-        self._manager.on_trait_change(self._on_visible_changed, "visible")
-        self._manager.on_trait_change(self._on_name_changed, "name")
-        self._manager.on_trait_change(self._on_image_changed, "image")
+        self._manager.observe(self.refresh, "changed")
+        self._manager.observe(self._on_enabled_changed, "enabled")
+        self._manager.observe(self._on_visible_changed, "visible")
+        self._manager.observe(self._on_name_changed, "name")
+        self._manager.observe(self._on_image_changed, "action:image")
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
         return
 
     def dispose(self):
-        self._manager.on_trait_change(self.refresh, "changed", remove=True)
-        self._manager.on_trait_change(
-            self._on_enabled_changed, "enabled", remove=True
-        )
-        self._manager.on_trait_change(
-            self._on_visible_changed, "visible", remove=True
-        )
-        self._manager.on_trait_change(
-            self._on_name_changed, "name", remove=True
-        )
-        self._manager.on_trait_change(
-            self._on_image_changed, "image", remove=True
-        )
+        self._manager.observe(self.refresh, "changed", remove=True)
+        self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
+        self._manager.observe(self._on_visible_changed, "visible", remove=True)
+        self._manager.observe(self._on_name_changed, "name", remove=True)
+        self._manager.observe(self._on_image_changed, "action:image", remove=True)
         # Removes event listeners from downstream menu items
         self.clear()
 
@@ -179,14 +171,14 @@ class _Menu(QtGui.QMenu):
 
         self.menu_items = []
 
-        super(_Menu, self).clear()
+        super().clear()
 
     def is_empty(self):
         """ Is the menu empty? """
 
         return self.isEmpty()
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()
@@ -215,25 +207,25 @@ class _Menu(QtGui.QMenu):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _on_enabled_changed(self, obj, trait_name, old, new):
+    def _on_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(new)
+        self.setEnabled(event.new)
 
-    def _on_visible_changed(self, obj, trait_name, old, new):
+    def _on_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setVisible(new)
+        self.menuAction().setVisible(event.new)
 
-    def _on_name_changed(self, obj, trait_name, old, new):
+    def _on_name_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setText(new)
+        self.menuAction().setText(event.new)
 
-    def _on_image_changed(self, obj, trait_name, old, new):
+    def _on_image_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setIcon(new.create_icon())
+        self.menuAction().setIcon(event.new.create_icon())
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """

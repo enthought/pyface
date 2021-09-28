@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -65,7 +65,7 @@ class CompositeGridModelTestCase(unittest.TestCase):
             "Cell containing None should be empty.",
         )
         self.assertEqual(
-            self.model.is_cell_empty(10, 10),
+            self.model.is_cell_empty(rows+1, columns+1),
             True,
             "Cell outside the range of values should be empty.",
         )

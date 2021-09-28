@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,7 +22,7 @@ class TestItem(HasTraits):
     after = Int()
 
     def __init__(self, id, **traits):
-        super(TestItem, self).__init__(id=id, **traits)
+        super().__init__(id=id, **traits)
 
     def __hash__(self):
         return hash(self.id)
@@ -98,7 +98,3 @@ class TopologicalSortTestCase(unittest.TestCase):
         pairs = [(1, 2), (2, 3), (3, 1)]
         result, has_cycles = topological_sort(pairs)
         self.assertTrue(has_cycles)
-
-
-if __name__ == "__main__":
-    unittest.main()

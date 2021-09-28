@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface for a dialog that prompts the user for confirmation. """
 
 
-from traits.api import Bool, Enum, Instance, Str
+from traits.api import Bool, Enum, HasTraits, Instance, Str
 
 
 from pyface.constant import CANCEL, NO, YES
@@ -50,7 +50,7 @@ class IConfirmationDialog(IDialog):
     yes_label = Str()
 
 
-class MConfirmationDialog(object):
+class MConfirmationDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """

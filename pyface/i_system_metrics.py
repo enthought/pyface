@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface to system metrics (screen width and height etc). """
 
 
-from traits.api import Int, Interface, Tuple
+from traits.api import HasTraits, Int, Interface, Tuple
 
 
 class ISystemMetrics(Interface):
@@ -31,7 +31,7 @@ class ISystemMetrics(Interface):
     dialog_background_color = Tuple()
 
 
-class MSystemMetrics(object):
+class MSystemMetrics(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISystemMetrics interface.
     """

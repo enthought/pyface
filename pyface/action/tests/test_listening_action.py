@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@
 import unittest
 
 from traits.api import Any, Bool, HasTraits
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..listening_action import ListeningAction
 from ..action_event import ActionEvent

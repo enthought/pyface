@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,9 +9,7 @@
 #
 # Thanks for using Enthought open source!
 
-
-import sys
-
+import warnings
 
 from pyface.qt import QtCore, QtGui
 
@@ -21,12 +19,12 @@ from traits.api import Bool, Event, provides, Str
 
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
@@ -49,9 +47,20 @@ class PythonEditor(MPythonEditor, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
-        super(PythonEditor, self).__init__(parent=parent, **traits)
-        self._create()
+    def __init__(self, parent=None, **traits):
+
+        create = traits.pop("create", True)
+
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
 
     # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
@@ -99,7 +108,7 @@ class PythonEditor(MPythonEditor, Widget):
     # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
-        super(PythonEditor, self)._add_event_listeners()
+        super()._add_event_listeners()
         self.control.code.installEventFilter(self._event_filter)
 
         # Connect signals for text changes.
@@ -119,7 +128,7 @@ class PythonEditor(MPythonEditor, Widget):
             if self._event_filter is not None:
                 self.control.code.removeEventFilter(self._event_filter)
 
-        super(PythonEditor, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     def __event_filter_default(self):
         return PythonEditorEventFilter(self, self.control)
@@ -171,7 +180,7 @@ class PythonEditorEventFilter(QtCore.QObject):
     """
 
     def __init__(self, editor, parent):
-        super(PythonEditorEventFilter, self).__init__(parent)
+        super().__init__(parent)
         self.__editor = editor
 
     def eventFilter(self, obj, event):
@@ -214,4 +223,4 @@ class PythonEditorEventFilter(QtCore.QObject):
                 event=event,
             )
 
-        return super(PythonEditorEventFilter, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)

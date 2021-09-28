@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,13 +17,13 @@ import numpy as np
 from traits.api import Array, Instance, observe
 
 from pyface.api import ApplicationWindow, GUI
-from pyface.drop_handler import FileDropHandler
-from pyface.data_view.data_models.array_data_model import ArrayDataModel
-from pyface.data_view.exporters.row_exporter import RowExporter
-from pyface.data_view.data_formats import table_format, csv_format, npy_format
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.api import (
+    DataViewWidget, IDataViewWidget, table_format, csv_format, npy_format
+)
+from pyface.data_view.data_models.api import ArrayDataModel
+from pyface.data_view.exporters.api import RowExporter
 from pyface.data_view.value_types.api import FloatValue
+from pyface.drop_handler import FileDropHandler
 
 
 logger = logging.getLogger(__name__)

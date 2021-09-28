@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -30,7 +30,7 @@ elif qt_api == "pyqt5":
     QStyleOptionTabV3 = QStyleOptionTab
     QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
 
-elif qt_api == "pyside2":
+else:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *
     from PySide2.QtPrintSupport import *
@@ -45,6 +45,3 @@ elif qt_api == "pyside2":
     QStyleOptionTabV2 = QStyleOptionTab
     QStyleOptionTabV3 = QStyleOptionTab
     QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
-
-else:
-    from PySide.QtGui import *

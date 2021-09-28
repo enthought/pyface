@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,8 +25,8 @@ from traits.api import (
     Instance,
     List,
     Property,
-    Tuple,
     Str,
+    Tuple,
     Union,
 )
 
@@ -47,20 +47,20 @@ class Schema(HasTraits):
     """ The abstract base class for all Tasks action schemas.
     """
 
-    # The schema's identifier (unique within its parent schema).
+    #: The schema's identifier (unique within its parent schema).
     id = Str()
 
     def _id_default(self):
         return get_unique_id(self)
 
-    # The list of sub-items in the schema. These items can be other
-    # (non-top-level) schema or concrete instances from the Pyface API.
+    #: The list of sub-items in the schema. These items can be other
+    #: (non-top-level) schema or concrete instances from the Pyface API.
     items = List(SubSchema)
 
     def __init__(self, *items, **traits):
         """ Creates a new schema.
         """
-        super(Schema, self).__init__(**traits)
+        super().__init__(**traits)
         self.items.extend(items)
 
     def create(self, children):
@@ -102,10 +102,10 @@ class GroupSchema(Schema):
     """ A schema for a Pyface Group.
     """
 
-    # A factory for instantiating a pyface Group.
+    #: A factory for instantiating a pyface Group.
     group_factory = Callable(Group)
 
-    # Does the group require a separator when it is visualized?
+    #: Does the group require a separator when it is visualized?
     separator = Bool(True)
 
     def create(self, children):
@@ -117,16 +117,16 @@ class MenuSchema(Schema):
     """ A schema for a Pyface MenuManager.
     """
 
-    # The menu's user visible name.
+    #: The menu's user visible name.
     name = Str()
 
-    # Does the menu require a separator before the menu item?
+    #: Does the menu require a separator before the menu item?
     separator = Bool(False)
 
-    # The default action for tool button when shown in a toolbar (Qt only)
+    #: The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
-    # A factory for instantiating a pyface MenuManager.
+    #: A factory for instantiating a pyface MenuManager.
     menu_manager_factory = Callable(MenuManager)
 
     def create(self, children):
@@ -140,10 +140,10 @@ class MenuBarSchema(Schema):
     """ A schema for a Pyface MenuBarManager.
     """
 
-    # Assign a default ID for menu bar schemas.
+    #: Assign a default ID for menu bar schemas.
     id = "MenuBar"
 
-    # A factory for instantiating a pyface MenuBarManager.
+    #: A factory for instantiating a pyface MenuBarManager.
     menu_bar_manager_factory = Callable(MenuBarManager)
 
     def create(self, children):
@@ -155,26 +155,26 @@ class ToolBarSchema(Schema):
     """ A schema for a Pyface ToolBarManager.
     """
 
-    # Assign a default ID for tool bar schemas.
+    #: Assign a default ID for tool bar schemas.
     id = "ToolBar"
 
-    # The tool bar's user visible name. Note that this name may not be used on
-    # all platforms.
+    #: The tool bar's user visible name. Note that this name may not be used on
+    #: all platforms.
     name = Str("Tool Bar")
 
-    # The size of tool images (width, height).
+    #: The size of tool images (width, height).
     image_size = Tuple((16, 16))
 
-    # The orientation of the toolbar.
+    #: The orientation of the toolbar.
     orientation = Enum("horizontal", "vertical")
 
-    # Should we display the horizontal divider?
+    #: Should we display the horizontal divider?
     show_divider = Bool(True)
 
-    # Should we display the name of each tool bar tool under its image?
+    #: Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
 
-    # A factory for instantiating a pyface ToolBarManager
+    #: A factory for instantiating a pyface ToolBarManager
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):

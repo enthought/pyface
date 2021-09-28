@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Bool, Instance, Property, Str, cached_property
+from traits.api import Instance, Property, Str, cached_property
 
 
 from pyface.tasks.api import Editor, Task, TaskPane
@@ -25,11 +25,11 @@ class TaskAction(ListeningAction):
 
     # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on="task")
+    object = Property(observe="task")
 
     # TaskAction interface -------------------------------------------------
 
-    # The Task with which the action is associated. Set by the framework.
+    #: The Task with which the action is associated. Set by the framework.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------
@@ -42,7 +42,7 @@ class TaskAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to task and dependent properties.
         self.task = None
-        super(TaskAction, self).destroy()
+        super().destroy()
 
 
 class TaskWindowAction(TaskAction):
@@ -51,7 +51,7 @@ class TaskWindowAction(TaskAction):
 
     # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on="task.window")
+    object = Property(observe="task.window")
 
     # ------------------------------------------------------------------------
     # Protected interface.
@@ -69,12 +69,12 @@ class CentralPaneAction(TaskAction):
 
     # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on="central_pane")
+    object = Property(observe="central_pane")
 
     # CentralPaneAction interface -----------------------------------------#
 
-    # The central pane with which the action is associated.
-    central_pane = Property(Instance(TaskPane), depends_on="task")
+    #: The central pane with which the action is associated.
+    central_pane = Property(Instance(TaskPane), observe="task")
 
     # ------------------------------------------------------------------------
     # Protected interface.
@@ -96,14 +96,14 @@ class DockPaneAction(TaskAction):
 
     # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on="dock_pane")
+    object = Property(observe="dock_pane")
 
     # DockPaneAction interface ---------------------------------------------
 
-    # The dock pane with which the action is associated. Set by the framework.
-    dock_pane = Property(Instance(TaskPane), depends_on="task")
+    #: The dock pane with which the action is associated. Set by the framework.
+    dock_pane = Property(Instance(TaskPane), observe="task")
 
-    # The ID of the dock pane with which the action is associated.
+    #: The ID of the dock pane with which the action is associated.
     dock_pane_id = Str()
 
     # ------------------------------------------------------------------------
@@ -126,13 +126,13 @@ class EditorAction(CentralPaneAction):
 
     # ListeningAction interface --------------------------------------------
 
-    object = Property(depends_on="active_editor")
+    object = Property(observe="active_editor")
 
     # EditorAction interface -----------------------------------------------
 
-    # The active editor in the central pane with which the action is associated.
+    #: The active editor in the central pane with which the action is associated.
     active_editor = Property(
-        Instance(Editor), depends_on="central_pane.active_editor"
+        Instance(Editor), observe="central_pane.active_editor"
     )
 
     # ------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -30,10 +30,10 @@ class TaskActionManagerBuilder(HasTraits):
     with any additions provided by the task.
     """
 
-    # The controller to assign to the menubar and toolbars.
+    #: The controller to assign to the menubar and toolbars.
     controller = Instance(ActionController)
 
-    # The Task to build menubars and toolbars for.
+    #: The Task to build menubars and toolbars for.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------

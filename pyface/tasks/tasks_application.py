@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,6 @@ the creation of tasks and corresponding windows.
 """
 
 
-from functools import partial
 import logging
 
 from traits.api import (
@@ -23,8 +22,9 @@ from traits.api import (
     Property,
     Str,
     cached_property,
-    on_trait_change,
+    observe,
 )
+from traits.observation.api import trait
 
 from pyface.gui_application import GUIApplication
 
@@ -44,7 +44,7 @@ class TaskFactory(HasStrictTraits):
 
     #: A callable with the following signature:
     #:
-    #:     callable(**traits) -> Task
+    #:     callable(\**traits) -> Task
     #:
     #: Often this attribute will simply be a Task subclass.
     factory = Callable
@@ -71,7 +71,9 @@ class TasksApplication(GUIApplication):
     tasks = List(Instance("pyface.tasks.task.Task"))
 
     #: Currently active Task if any.
-    active_task = Property(depends_on="active_window.active_task")
+    active_task = Property(
+        observe=trait("active_window").trait("active_task", optional=True)
+    )
 
     #: List of all application task factories.
     task_factories = List()
@@ -132,7 +134,7 @@ class TasksApplication(GUIApplication):
         """
         from pyface.tasks.task_window_layout import TaskWindowLayout
 
-        window = super(TasksApplication, self).create_window(**kwargs)
+        window = super().create_window(**kwargs)
 
         if layout is not None:
             for task_id in layout.get_tasks():
@@ -172,15 +174,14 @@ class TasksApplication(GUIApplication):
 
     # Destruction utilities ---------------------------------------------------
 
-    @on_trait_change("windows:closed")
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
+        window = event.object
         if getattr(window, "active_task", None) in self.tasks:
             self.tasks.remove(window.active_task)
-        super(TasksApplication, self)._on_window_closed(
-            window, trait, old, new
-        )
+        super()._on_window_closed(event)
 
     # Trait initializers and property getters ---------------------------------
 

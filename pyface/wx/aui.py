@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,9 +9,6 @@
 # Thanks for using Enthought open source!
 
 import logging
-
-import os
-
 
 import wx
 
@@ -49,7 +46,6 @@ class PyfaceAuiManager(aui.AuiManager):
         docks, panes = aui.CopyDocksAndPanes2(self._docks, self._panes)
 
         sash_size = self._art.GetMetric(aui.AUI_DOCKART_SASH_SIZE)
-        caption_size = self._art.GetMetric(aui.AUI_DOCKART_CAPTION_SIZE)
         opposite_size = self.GetOppositeDockTotalSize(
             docks, dock.dock_direction
         )

@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,14 +15,6 @@ from traits.trait_notifiers import set_ui_handler, ui_handler
 
 from pyface.base_toolkit import Toolkit
 from .gui import GUI
-
-
-# Check the version number is late enough.
-if wx.VERSION < (2, 8):
-    raise RuntimeError(
-        "Need wx version 2.8 or higher, but got %s" % str(wx.VERSION)
-    )
-
 
 # It's possible that it has already been initialised.
 _app = wx.GetApp()

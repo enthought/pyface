@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@
 import logging
 
 
-from traits.api import HasPrivateTraits, List
+from traits.api import HasPrivateTraits, List, observe
 
 
 from .node_type import NodeType
@@ -44,7 +44,7 @@ class NodeManager(HasPrivateTraits):
         """ Creates a new tree model. """
 
         # Base class constructor.
-        super(NodeManager, self).__init__(**traits)
+        super().__init__(**traits)
 
         # This saves looking up a node's type every time.  If we ever have
         # nodes that change type dynamically then we will obviously have to
@@ -122,9 +122,10 @@ class NodeManager(HasPrivateTraits):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _node_types_changed(self, new):
+    @observe("node_types")
+    def _update_node_manager_on_new_node_types(self, event):
         """ Called when the entire list of node types has been changed. """
-
+        new = event.new
         for node_type in new:
             node_type.node_manager = self
 

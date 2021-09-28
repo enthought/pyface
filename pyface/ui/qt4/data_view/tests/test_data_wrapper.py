@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -30,4 +30,7 @@ class TestDataWrapper(TestCase):
         toolkit_data = data_wrapper.toolkit_data
 
         self.assertEqual(set(toolkit_data.formats()), {'text/plain'})
-        self.assertEqual(toolkit_data.data('text/plain'), b'hello world')
+        self.assertEqual(
+            toolkit_data.data('text/plain').data(),
+            b'hello world'
+        )

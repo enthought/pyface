@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,15 +12,14 @@ import logging
 
 from traits.api import Callable, Enum, Instance, observe, provides
 
-from pyface.qt.QtCore import QAbstractItemModel, QEvent, QObject
+from pyface.qt.QtCore import QAbstractItemModel
 from pyface.qt.QtGui import (
-    QAbstractItemView, QItemSelection, QItemSelectionModel, QPalette,
-    QTreeView
+    QAbstractItemView, QItemSelection, QItemSelectionModel, QTreeView
 )
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt4.layout_widget import LayoutWidget
 from .data_view_item_model import DataViewItemModel
 
 # XXX This file is scaffolding and may need to be rewritten
@@ -89,7 +88,7 @@ class DataViewTreeView(QTreeView):
 
 
 @provides(IDataViewWidget)
-class DataViewWidget(MDataViewWidget, Widget):
+class DataViewWidget(MDataViewWidget, LayoutWidget):
     """ The Qt implementation of the DataViewWidget. """
 
     #: Factory for the underlying Qt control, to facilitate replacement

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,6 @@
 
 
 import os
-import sys
 import unittest
 
 from ..python_editor import PythonEditor
@@ -46,8 +45,26 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control)
+            with self.assertWarns(PendingDeprecationWarning):
+                self.widget = PythonEditor(self.window.control)
 
+        self.assertIsNotNone(self.widget.control)
+        self.assertFalse(self.widget.dirty)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_two_stage_create(self):
+        # test that create and destroy work
+        self.widget = PythonEditor(create=False)
+
+        self.assertIsNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
         self.assertFalse(self.widget.dirty)
 
         with self.event_loop():
@@ -57,19 +74,29 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
         # test that destroy works
         with self.event_loop():
             self.widget = PythonEditor(
-                self.window.control, show_line_numbers=False
+                parent=self.window.control,
+                show_line_numbers=False,
+                create=False,
             )
+            self.widget.create()
+
         with self.event_loop():
             self.widget.show_line_numbers = True
+
         with self.event_loop():
             self.widget.show_line_numbers = False
+
         with self.event_loop():
             self.widget.destroy()
 
     def test_load(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control)
+            self.widget = PythonEditor(
+                parent=self.window.control,
+                create=False,
+            )
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "changed", count=1):
             with self.event_loop():
@@ -82,7 +109,12 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def test_select_line(self):
         # test that destroy works
         with self.event_loop():
-            self.widget = PythonEditor(self.window.control, path=PYTHON_SCRIPT)
+            self.widget = PythonEditor(
+                parent=self.window.control,
+                path=PYTHON_SCRIPT,
+                create=False,
+            )
+            self.widget.create()
 
         with self.event_loop():
             self.widget.select_line(3)

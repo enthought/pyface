@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -19,9 +19,7 @@ from traits.api import (
     Event,
     VetoableEvent,
     Vetoable,
-    HasTraits,
     Instance,
-    Interface,
 )
 from traits.api import provides
 
@@ -33,7 +31,7 @@ class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
 
     # The optional command stack.
-    command_stack = Instance("apptools.undo.api.ICommandStack")
+    command_stack = Instance("pyface.undo.api.ICommandStack")
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -71,7 +69,7 @@ class MEditor(MWorkbenchPart):
     # 'IEditor' interface -------------------------------------------------#
 
     # The optional command stack.
-    command_stack = Instance("apptools.undo.api.ICommandStack")
+    command_stack = Instance("pyface.undo.api.ICommandStack")
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -140,7 +138,7 @@ class MEditor(MWorkbenchPart):
 
         # We make sure the undo package is entirely optional.
         try:
-            from apptools.undo.api import CommandStack
+            from pyface.undo.api import CommandStack
         except ImportError:
             return None
 

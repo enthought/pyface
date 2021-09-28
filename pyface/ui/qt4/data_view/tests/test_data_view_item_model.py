@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,10 @@ from unittest import TestCase
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.qt.QtCore import QMimeData
-from pyface.data_view.data_models.api import ArrayDataModel
+# This import results in an error without numpy installed
+# see enthought/pyface#742
+if np is not None:
+    from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.exporters.row_exporter import RowExporter
 from pyface.data_view.data_formats import table_format
 from pyface.data_view.value_types.api import FloatValue
@@ -54,7 +57,7 @@ class TestDataViewItemModel(TestCase):
         self.assertIsInstance(mime_data, QMimeData)
         self.assertTrue(mime_data.hasFormat('text/plain'))
 
-        raw_data = mime_data.data('text/plain')
+        raw_data = mime_data.data('text/plain').data()
         data = table_format.deserialize(bytes(raw_data))
         np.testing.assert_array_equal(
             data,

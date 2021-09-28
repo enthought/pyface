@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@ case of non-hierarchical, row-oriented data.
 """
 from collections.abc import Sequence
 
-from traits.api import ComparisonMode, Instance, List, observe
+from traits.api import Instance, List, observe
 from traits.observation.api import trait
 
 from pyface.data_view.abstract_data_model import (
@@ -35,20 +35,13 @@ class RowTableDataModel(AbstractDataModel):
     """
 
     #: A sequence of objects to display as rows.
-    data = Instance(
-        Sequence,
-        comparison_mode=ComparisonMode.identity,
-        allow_none=False,
-    )
+    data = Instance(Sequence, allow_none=False)
 
     #: An object which describes how to map data for the row headers.
     row_header_data = Instance(AbstractDataAccessor, allow_none=False)
 
     #: An object which describes how to map data for each column.
-    column_data = List(
-        Instance(AbstractDataAccessor, allow_none=False),
-        comparison_mode=ComparisonMode.identity,
-    )
+    column_data = List(Instance(AbstractDataAccessor, allow_none=False))
 
     #: The index manager that helps convert toolkit indices to data view
     #: indices.

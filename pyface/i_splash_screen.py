@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@
 import logging
 
 
-from traits.api import Any, Bool, Instance, Int, Tuple, Str
+from traits.api import Any, Bool, HasTraits, Instance, Int, Tuple, Str
 
 
 from pyface.image_resource import ImageResource
@@ -58,7 +58,7 @@ class ISplashScreen(IWindow):
     text_location = Tuple(5, 5)
 
 
-class MSplashScreen(object):
+class MSplashScreen(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISplashScreen interface.
 
@@ -72,7 +72,7 @@ class MSplashScreen(object):
     def open(self):
         """ Creates the toolkit-specific control for the widget. """
 
-        super(MSplashScreen, self).open()
+        super().open()
 
         if self.show_log_messages:
             self._log_handler = SplashScreenLogHandler(self)
@@ -90,4 +90,4 @@ class MSplashScreen(object):
             logger = logging.getLogger()
             logger.removeHandler(self._log_handler)
 
-        super(MSplashScreen, self).close()
+        super().close()

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,36 +25,37 @@ class Task(HasTraits):
     its view (a TaskWindow) and an application-specific model.
     """
 
-    # The task's identifier.
+    #: The task's identifier.
     id = Str()
 
-    # The task's user-visible name.
+    #: The task's user-visible name.
     name = Str()
 
-    # The default layout to use for the task. If not overridden, only the
-    # central pane is displayed.
+    #: The default layout to use for the task. If not overridden, only the
+    #: central pane is displayed.
     default_layout = Instance(TaskLayout, ())
 
-    # A list of extra IDockPane factories for the task. These dock panes are
-    # used in conjunction with the dock panes returned by create_dock_panes().
+    #: A list of extra IDockPane factories for the task. These dock panes are
+    #: used in conjunction with the dock panes returned by
+    #: create_dock_panes().
     extra_dock_pane_factories = List(Callable)
 
-    # The window to which the task is attached. Set by the framework.
+    #: The window to which the task is attached. Set by the framework.
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
     # Actions -------------------------------------------------------------#
 
-    # The menu bar for the task.
+    #: The menu bar for the task.
     menu_bar = Instance(MenuBarSchema)
 
-    # The (optional) status bar for the task.
+    #: The (optional) status bar for the task.
     status_bar = Instance(StatusBarManager)
 
-    # The list of tool bars for the tasks.
+    #: The list of tool bars for the tasks.
     tool_bars = List(ToolBarSchema)
 
-    # A list of extra actions, groups, and menus that are inserted into menu
-    # bars and tool bars constructed from the above schemas.
+    #: A list of extra actions, groups, and menus that are inserted into menu
+    #: bars and tool bars constructed from the above schemas.
     extra_actions = List(SchemaAddition)
 
     # ------------------------------------------------------------------------

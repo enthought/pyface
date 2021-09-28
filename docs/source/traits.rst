@@ -1,3 +1,5 @@
+.. _ui-trait-types:
+
 ===========
 Trait Types
 ===========

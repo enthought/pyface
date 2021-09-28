@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,18 +9,17 @@
 # Thanks for using Enthought open source!
 """ A simple list box widget with a model-view architecture. """
 
+import warnings
 
 import wx
 
-
 from traits.api import Event, Instance, Int
 
-
 from pyface.list_box_model import ListBoxModel
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
-class ListBox(Widget):
+class ListBox(LayoutWidget):
     """ A simple list box widget with a model-view architecture. """
 
     # The model that provides the data for the list box.
@@ -37,24 +36,37 @@ class ListBox(Widget):
     # Default style.
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new list box. """
 
+        create = traits.pop('create', True)
+
         # Base-class constructors.
-        super(ListBox, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
         # Create the widget!
-        self._create_control(parent)
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
+                PendingDeprecationWarning,
+            )
+
+    def _create(self):
+        super()._create()
+
+        self._populate()
 
         # Listen for changes to the model.
-        self.model.on_trait_change(self._on_model_changed, "list_changed")
+        self.model.observe(self._on_model_changed, "list_changed")
 
     def dispose(self):
-        self.model.on_trait_change(
+        self.model.observe(
             self._on_model_changed, "list_changed", remove=True
         )
         self.model.dispose()
-        return
 
     # ------------------------------------------------------------------------
     # 'ListBox' interface.
@@ -68,8 +80,6 @@ class ListBox(Widget):
 
         # Populate the list.
         self._populate()
-
-        return
 
     # ------------------------------------------------------------------------
     # wx event handlers.
@@ -91,8 +101,6 @@ class ListBox(Widget):
         # Trait event notification.
         self.item_activated = index
 
-        return
-
     # ------------------------------------------------------------------------
     # Trait handlers.
     # ------------------------------------------------------------------------
@@ -105,8 +113,6 @@ class ListBox(Widget):
         if index != -1:
             self.control.SetSelection(index)
 
-        return
-
     # Dynamic -------------------------------------------------------------#
 
     def _on_model_changed(self, event):
@@ -115,8 +121,6 @@ class ListBox(Widget):
         # For now we just clear out the entire list.
         self.refresh()
 
-        return
-
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
@@ -124,20 +128,20 @@ class ListBox(Widget):
     def _create_control(self, parent):
         """ Creates the widget. """
 
-        self.control = wx.ListBox(parent, -1, style=self.STYLE)
+        control = wx.ListBox(parent, -1, style=self.STYLE)
 
         # Wire it up!
-        self.control.Bind(
+        control.Bind(
             wx.EVT_LISTBOX, self._on_item_selected, id=self.control.GetId()
         )
-        self.control.Bind(
+        control.Bind(
             wx.EVT_LISTBOX_DCLICK,
             self._on_item_activated,
             id=self.control.GetId(),
         )
 
         # Populate the list.
-        self._populate()
+        return control
 
     def _populate(self):
         """ Populates the list box. """
@@ -145,5 +149,3 @@ class ListBox(Widget):
         for index in range(self.model.get_item_count()):
             label, item = self.model.get_item_at(index)
             self.control.Append(label, item)
-
-        return

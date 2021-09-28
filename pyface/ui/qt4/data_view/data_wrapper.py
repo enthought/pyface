@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import HasRequiredTraits, Instance, provides
+from traits.api import Instance, provides
 
 from pyface.data_view.i_data_wrapper import IDataWrapper, MDataWrapper
 from pyface.qt.QtCore import QMimeData
@@ -47,7 +47,7 @@ class DataWrapper(MDataWrapper):
         mimedata : bytes
             The mime media data as bytes.
         """
-        return self.toolkit_data.data(mimetype)
+        return self.toolkit_data.data(mimetype).data()
 
     def set_mimedata(self, mimetype, raw_data):
         """ Set raw data for the given media type.

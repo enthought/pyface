@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -138,7 +138,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
     """ Syntax highlighter that uses Pygments for parsing. """
 
     def __init__(self, parent, lexer=None):
-        super(PygmentsHighlighter, self).__init__(parent)
+        super().__init__(parent)
 
         try:
             self._lexer = get_lexer_by_name(lexer)

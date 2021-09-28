@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -111,7 +111,6 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        self._remove_event_listeners()
 
         if self.control is not None:
             # Avoid problems with recursive calls.
@@ -125,7 +124,7 @@ class Window(MWindow, Widget):
             # hides it), but the close may trigger an application shutdown,
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
-            super(Window, self).destroy()
+            super().destroy()
             control.close()
 
     # -------------------------------------------------------------------------

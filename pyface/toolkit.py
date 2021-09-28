@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@
 """
 This module provides the toolkit object for the current backend toolkit
 
-See :py_func:`pyface.base_toolkit.find_toolkit` for details on the loading
+See :py:func:`pyface.base_toolkit.find_toolkit` for details on the loading
 algorithm.
 """
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,6 +18,8 @@ from .find_widget import FindWidget
 
 class ReplaceWidget(FindWidget):
     def __init__(self, parent):
+        # We explicitly call __init__ on the classes which FindWidget inherits from
+        # instead of calling FindWidget.__init__.
         super(FindWidget, self).__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
 
