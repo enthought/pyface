@@ -13,7 +13,7 @@ import sys
 
 
 from traits.api import (
-    Either, Enum, HasStrictTraits, Int, Instance, List, Str, Union,
+    Enum, HasStrictTraits, Int, Instance, List, Str, Union,
 )
 
 
