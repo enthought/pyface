@@ -47,6 +47,7 @@ generic_family_to_wx_family = {
     'monospace': wx.FONTFAMILY_MODERN,
     'modern': wx.FONTFAMILY_MODERN,
     'typewriter': wx.FONTFAMILY_TELETYPE,
+    'teletype': wx.FONTFAMILY_TELETYPE,
 }
 
 if wx_python_4_1:
@@ -128,7 +129,7 @@ def font_to_toolkit_font(font):
         default_family = wx.FONTFAMILY_DEFAULT
     weight = weight_to_wx_weight[font.weight_]
     style = style_to_wx_style[font.style]
-    underline = ('underline' in font.variants)
+    underline = ('underline' in font.decorations)
 
     # get a default font candidate
     wx_font = wx.Font(size, default_family, style, weight, underline)
@@ -142,7 +143,7 @@ def font_to_toolkit_font(font):
         if wx_font.GetFaceName().lower() == face.lower():
             break
 
-    wx_font.SetStrikethrough('strikethrough' in font.variants)
+    wx_font.SetStrikethrough('strikethrough' in font.decorations)
     return wx_font
 
 
@@ -167,11 +168,11 @@ def toolkit_font_to_properties(toolkit_font):
         size = toolkit_font.GetPointSize()
     style = wx_style_to_style[toolkit_font.GetStyle()]
     weight = wx_weight_to_weight[toolkit_font.GetWeight()]
-    variants = set()
+    decorations = set()
     if toolkit_font.GetUnderlined():
-        variants.add('underline')
+        decorations.add('underline')
     if toolkit_font.GetStrikethrough():
-        variants.add('strikethrough')
+        decorations.add('strikethrough')
 
     return {
         'family': [face, family],
@@ -179,5 +180,6 @@ def toolkit_font_to_properties(toolkit_font):
         'weight': weight,
         'stretch': 'normal',
         'style': style,
-        'variants': variants,
+        'variants': set(),
+        'decorations': decorations,
     }

@@ -42,10 +42,11 @@ generic_family_to_qt_family = {
     'monospace': QFont.Monospace,
     'modern': QFont.Monospace,
     'typewriter': QFont.TypeWriter,
+    'teletype': QFont.TypeWriter,
 }
 
 weight_to_qt_weight = {
-    100: 0,
+    100: QFont.Thin,
     200: QFont.ExtraLight,
     300: QFont.Light,
     400: QFont.Normal,
@@ -57,12 +58,12 @@ weight_to_qt_weight = {
     1000: 99,
 }
 qt_weight_to_weight = {
-    0: 'thin',
+    QFont.Thin: 'thin',
     QFont.ExtraLight: 'extra-light',
     QFont.Light: 'light',
     QFont.Normal: 'normal',
     QFont.Medium: 'medium',
-    QFont.DemiBold: 'demibold',
+    QFont.DemiBold: 'demi-bold',
     QFont.Bold: 'bold',
     QFont.ExtraBold: 'extra-bold',
     QFont.Black: 'black',
@@ -115,9 +116,9 @@ def font_to_toolkit_font(font):
     qt_font.setWeight(weight_to_qt_weight[font.weight_])
     qt_font.setStretch(font.stretch)
     qt_font.setStyle(style_to_qt_style[font.style])
-    qt_font.setUnderline('underline' in font.variants)
-    qt_font.setStrikeOut('strikethrough' in font.variants)
-    qt_font.setOverline('overline' in font.variants)
+    qt_font.setUnderline('underline' in font.decorations)
+    qt_font.setStrikeOut('strikethrough' in font.decorations)
+    qt_font.setOverline('overline' in font.decorations)
     if 'small-caps' in font.variants:
         qt_font.setCapitalization(QFont.SmallCaps)
     return qt_font
@@ -152,14 +153,15 @@ def toolkit_font_to_properties(toolkit_font):
     weight = map_to_nearest(toolkit_font.weight(), qt_weight_to_weight)
     stretch = toolkit_font.stretch()
     variants = set()
-    if toolkit_font.underline():
-        variants.add('underline')
-    if toolkit_font.strikeOut():
-        variants.add('strikethrough')
-    if toolkit_font.overline():
-        variants.add('overline')
     if toolkit_font.capitalization() == QFont.SmallCaps:
         variants.add('small-caps')
+    decorations = set()
+    if toolkit_font.underline():
+        decorations.add('underline')
+    if toolkit_font.strikeOut():
+        decorations.add('strikethrough')
+    if toolkit_font.overline():
+        decorations.add('overline')
 
     return {
         'family': family,
@@ -168,6 +170,7 @@ def toolkit_font_to_properties(toolkit_font):
         'stretch': stretch,
         'style': style,
         'variants': variants,
+        'decorations': decorations,
     }
 
 

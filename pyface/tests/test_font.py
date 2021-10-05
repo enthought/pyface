@@ -13,6 +13,7 @@ import unittest
 from traits.api import HasStrictTraits, TraitError
 
 from pyface.font import Font, FontSize, FontStretch, SIZES, STRETCHES
+from pyface.toolkit import toolkit_object
 
 
 class FontSizeDummy(HasStrictTraits):
@@ -43,47 +44,29 @@ class TestFontSizeTrait(unittest.TestCase):
                 self.assertEqual(dummy.size, value)
 
     def test_font_size_trait_invalid_default(self):
-        with self.assertRaises(TraitError):
-            FontSize("badvalue")
-
-        with self.assertRaises(TraitError):
-            FontSize(-1.0)
-
-        with self.assertRaises(TraitError):
-            FontSize("-1.0")
-
-        with self.assertRaises(TraitError):
-            FontSize("0pt")
+        for size in ["badvalue", -1.0, "-1.0", "0pt"]:
+            with self.subTest(size=size):
+                with self.assertRaises(TraitError):
+                    FontSize(size)
 
     def test_font_size_trait_validate(self):
         dummy = FontSizeDummy()
-
-        dummy.size = 14.0
-        self.assertEqual(dummy.size, 14.0)
-
-        dummy.size = "15.0"
-        self.assertEqual(dummy.size, 15.0)
-
-        dummy.size = "16.0pt"
-        self.assertEqual(dummy.size, 16.0)
-
-        dummy.size = "17.0px"
-        self.assertEqual(dummy.size, 17.0)
+        for size, expected in [
+            (14.0, 14.0),
+            ("15.0", 15.0),
+            ("16pt", 16.0),
+            ("17.0px", 17.0),
+        ]:
+            with self.subTest(size=size):
+                dummy.size = size
+                self.assertEqual(dummy.size, expected)
 
     def test_font_size_trait_invalid_validate(self):
         dummy = FontSizeDummy()
-
-        with self.assertRaises(TraitError):
-            dummy.size = "badvalue"
-
-        with self.assertRaises(TraitError):
-            dummy.size = -1.0
-
-        with self.assertRaises(TraitError):
-            dummy.size = "-1.0"
-
-        with self.assertRaises(TraitError):
-            dummy.size = "0pt"
+        for size in ["badvalue", -1.0, "-1.0", "0pt"]:
+            with self.subTest(size=size):
+                with self.assertRaises(TraitError):
+                    dummy.size = size
 
 
 class FontStretchDummy(HasStrictTraits):
@@ -114,50 +97,30 @@ class TestFontStretchTrait(unittest.TestCase):
                 self.assertEqual(dummy.stretch, value)
 
     def test_font_stretch_trait_invalid_default(self):
-        with self.assertRaises(TraitError):
-            FontStretch("badvalue")
-
-        with self.assertRaises(TraitError):
-            FontStretch(49.5)
-
-        with self.assertRaises(TraitError):
-            FontStretch("49.5")
-
-        with self.assertRaises(TraitError):
-            FontStretch("49.5%")
-
-        with self.assertRaises(TraitError):
-            FontStretch(200.1)
+        for stretch in ["badvalue", 49.5, "49.5", "49.5%", 200.1]:
+            with self.subTest(stretch=stretch):
+                with self.assertRaises(TraitError):
+                    FontStretch(stretch)
 
     def test_font_stretch_trait_validate(self):
         dummy = FontStretchDummy()
 
-        dummy.stretch = 150.0
-        self.assertEqual(dummy.stretch, 150.0)
-
-        dummy.stretch = "125"
-        self.assertEqual(dummy.stretch, 125.0)
-
-        dummy.stretch = "50%"
-        self.assertEqual(dummy.stretch, 50.0)
-
-        dummy.stretch = "ultra-expanded"
-        self.assertEqual(dummy.stretch, 200.0)
+        for stretch, expected in [
+            (150.0, 150.0),
+            ("125", 125.0),
+            ("50%", 50.0),
+            ("ultra-expanded", 200.0)
+        ]:
+            with self.subTest(stretch=stretch):
+                dummy.stretch = stretch
+                self.assertEqual(dummy.stretch, expected)
 
     def test_font_stretch_trait_invalid_validate(self):
         dummy = FontStretchDummy()
-
-        with self.assertRaises(TraitError):
-            dummy.stretch = "badvalue"
-
-        with self.assertRaises(TraitError):
-            dummy.stretch = 49.5
-
-        with self.assertRaises(TraitError):
-            dummy.stretch = "200.1"
-
-        with self.assertRaises(TraitError):
-            dummy.stretch = "49.9%"
+        for stretch in ["badvalue", 49.5, "200.1", "49.9%"]:
+            with self.subTest(stretch=stretch):
+                with self.assertRaises(TraitError):
+                    dummy.stretch = stretch
 
 
 class TestFont(unittest.TestCase):
@@ -176,27 +139,33 @@ class TestFont(unittest.TestCase):
         font = Font(
             family=['Helvetica', 'sans-serif'],
             size='large',
-            weight='demibold',
+            weight='demi-bold',
             stretch='condensed',
             style='italic',
-            variants={'small-caps', 'underline'},
+            variants={'small-caps'},
+            decorations={'underline'},
         )
 
         self.assertEqual(font.family, ['Helvetica', 'sans-serif'])
         self.assertEqual(font.size, 14.0)
-        self.assertEqual(font.weight, 'demibold')
+        self.assertEqual(font.weight, 'demi-bold')
         self.assertEqual(font.weight_, 600)
         self.assertEqual(font.stretch, 75)
         self.assertEqual(font.style, 'italic')
-        self.assertEqual(font.variants, {'small-caps', 'underline'})
+        self.assertEqual(font.variants, {'small-caps'})
+        self.assertEqual(font.decorations, {'underline'})
 
     def test_family_sequence(self):
         font = Font(family=('Helvetica', 'sans-serif'))
         self.assertEqual(font.family, ['Helvetica', 'sans-serif'])
 
     def test_variants_frozenset(self):
-        font = Font(variants=frozenset({'small-caps', 'underline'}))
-        self.assertEqual(font.variants, {'small-caps', 'underline'})
+        font = Font(variants=frozenset({'small-caps'}))
+        self.assertEqual(font.variants, {'small-caps'})
+
+    def test_decorations_frozenset(self):
+        font = Font(decorations=frozenset({'underline'}))
+        self.assertEqual(font.decorations, {'underline'})
 
     def test_str(self):
         font = Font()
@@ -209,17 +178,18 @@ class TestFont(unittest.TestCase):
         font = Font(
             family=['Comic Sans', 'decorative'],
             size='large',
-            weight='demibold',
+            weight='demi-bold',
             stretch='condensed',
             style='italic',
-            variants={'small-caps', 'underline'},
+            variants={'small-caps'},
+            decorations={'underline'},
         )
 
         description = str(font)
 
         self.assertEqual(
             description,
-            "italic small-caps underline demibold 75% 14pt "
+            "italic small-caps underline demi-bold 75% 14pt "
             "'Comic Sans', decorative"
         )
 
@@ -235,10 +205,11 @@ class TestFont(unittest.TestCase):
         font = Font(
             family=['Helvetica', 'sans-serif'],
             size='large',
-            weight='demibold',
+            weight='demi-bold',
             stretch='condensed',
             style='italic',
-            variants={'small-caps', 'underline'},
+            variants={'small-caps'},
+            decorations={'underline'},
         )
 
         text = repr(font)
@@ -256,30 +227,70 @@ class TestFont(unittest.TestCase):
         font = Font(
             family=['Helvetica', 'sans-serif'],
             size='large',
-            weight='demibold',
+            weight='demi-bold',
             stretch='condensed',
             style='italic',
-            variants={'small-caps', 'underline'},
+            variants={'small-caps'},
+            decorations={'underline', 'strikethrough', 'overline'},
         )
 
         # smoke test
         toolkit_font = font.to_toolkit()
 
-    def test_from_toolkit(self):
+    def test_toolkit_default_roundtrip(self):
         font = Font()
 
         # smoke test
         result = Font.from_toolkit(font.to_toolkit())
 
+        # defaults should round-trip
+        self.assertTrue(result.family[-1], 'default')
+        self.assertEqual(result.size, font.size)
+        self.assertEqual(result.weight, font.weight)
+        self.assertEqual(result.stretch, font.stretch)
+        self.assertEqual(result.variants, font.variants)
+        self.assertEqual(result.decorations, font.decorations)
+
     def test_from_toolkit_typical(self):
         font = Font(
             family=['Helvetica', 'sans-serif'],
             size='large',
-            weight='demibold',
+            weight='bold',
             stretch='condensed',
             style='italic',
-            variants={'small-caps', 'underline'},
+            variants={'small-caps'},
+            decorations={'underline', 'strikethrough', 'overline'},
         )
 
         # smoke test
         result = Font.from_toolkit(font.to_toolkit())
+
+        # we expect some things should round-trip no matter what system
+        self.assertEqual(result.family, font.family)
+        self.assertEqual(result.size, font.size)
+        self.assertEqual(result.weight, font.weight)
+        self.assertEqual(result.style, font.style)
+
+    def test_toolkit_font_to_properties(self):
+        toolkit_font_to_properties = toolkit_object(
+            'font:toolkit_font_to_properties')
+
+        font = Font(
+            family=['Helvetica', 'sans-serif'],
+            size='large',
+            weight='demi-bold',
+            stretch='condensed',
+            style='italic',
+            variants={'small-caps'},
+            decorations={'underline', 'strikethrough', 'overline'},
+        )
+
+        properties = toolkit_font_to_properties(font.to_toolkit())
+
+        self.assertEqual(
+            set(properties.keys()),
+            {
+                'family', 'size', 'stretch', 'weight', 'style', 'variants',
+                'decorations'
+            }
+        )

@@ -18,6 +18,10 @@ description and produce something that is as close as possible to the
 specification, but within the constraints of the toolkit, operating system
 and available fonts on the machine where this is being executed.
 
+Because of this inherent ambiguity in font specification, this system tries to
+be flexible in what it accepts as a font specification, rather than trying to
+specify a unique canoncial form.
+
 Font Properties
 ---------------
 
@@ -25,10 +29,56 @@ The properties that fonts have are:
 
 Font Family
     A list of font family names in order of preference, such as "Helvetica"
-    or "Comic Sans".  There are several generic font family names that can
-    be used as fall-backs in case all preferred fonts are unavailable.  In
-    the case of a font that has been selected by the toolkit this list will
-    have one value which is the actual font family name.
+    or "Comic Sans".  In the case of a font that has been selected by the
+    toolkit this list will have one value which is the actual font family name.
+
+    There are several generic font family names that can be used as fall-backs
+    in case all preferred fonts are unavailable.  The allowed values are:
+
+    "default"
+        The application's default system font.
+
+    "fantasy"
+        A primarily decorative font, but with recognisable characters.
+
+    "decorative"
+        A synonym for "fantasy".
+
+    "serif"
+        A proportional serif font, such as Times New Roman or Garamond.
+
+    "roman"
+        A synonym for "serif".
+
+    "cursive"
+        A font which resembles hand-written cursive text, such as Zapf
+        Chancery.
+
+    "script"
+        A synonym for "cursive".
+
+    "sans-serif"
+        A proportional sans-serif font, such as Helvetica or Arial.
+
+    "swiss"
+        A synonym for "sans-serif".
+
+    "monospace"
+        A fixed-pitch sans-serif font, such as Source Code Pro or Roboto Mono.
+        Commonly used for display of code.
+
+    "modern"
+        A synonym for "monospace".
+
+    "typewriter"
+        A fixed-pitch serif font which resembles typewritten text, such as
+        Courier.  Commonly used for display of code.
+
+    "teletype"
+        A synonym for "typewriter".
+
+    These special names will be converted into appropriate toolkit flags which
+    correspond to these generic font specifications.
 
 Weight
     How thick or dark the font glyphs are.  These can be given as a number
@@ -58,63 +108,78 @@ Font Specificiation Class
 -------------------------
 
 The Pyface Font class is a HasStrictTraits class which specifies a requested
-font.  It has traits for all of the font properties, plus additional utility
-methods that produce modifed versions of the font.
-
-It also has methods that convert the Font class to and from a toolkit Font
+font.  It has methods that convert the Font class to and from a toolkit Font
 class.
 
 """
-import re
-
 from traits.api import (
-    BaseCFloat, CList, CSet, DefaultValue, Enum, HasStrictTraits, Map, Range,
-    Str, TraitError, TraitType
+    BaseCFloat, CList, CSet, Enum, HasStrictTraits, Map, Str,
 )
 from traits.trait_type import NoDefaultSpecified
 
-WEIGHTS = {str(i): i for i in range(100, 1001, 100)}
 
-# Note: we don't support 'medium' as an alias for weight 500 because it
-# conflicts with the usage of 'medium' as an alias for a 12pt font in the CSS
-# specification for font attributes.
+#: Font weight synonyms.
+#: These are alternate convenience names for font weights.
+#: The intent is to allow a developer to use a common name (eg. "bold") instead
+#: of having to remember the corresponding number (eg. 700).
+#: These come from:
+#: - the OpenType specification: https://docs.microsoft.com/en-us/typography/opentype/spec/os2#usweightclass
+#: - QFont weights: https://doc.qt.io/qt-5/qfont.html#Weight-enum
+#: - WxPython font weights: https://wxpython.org/Phoenix/docs/html/wx.FontWeight.enumeration.html
+#: - CSS Common weight name mapping: https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#common_weight_name_mapping
+#: - values used by Enable: https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L90-L105
+#: See also: https://gist.github.com/lukaszgrolik/5849599
+WEIGHTS = {str(i): i for i in range(100, 1001, 100)}
 WEIGHTS.update({
     'thin': 100,
+    'hairline': 100,
     'extra-light': 200,
     'ultra-light': 200,
+    'ultralight': 200,
     'light': 300,
     'normal': 400,
     'regular': 400,
     'book': 400,
-    'semibold': 600,
-    'demibold': 600,
+    'medium': 500,
+    'roman': 500,
+    'semi-bold': 600,
+    'demi-bold': 600,
     'demi': 600,
     'bold': 700,
     'extra-bold': 800,
     'ultra-bold': 800,
+    'extra bold': 800,
     'black': 900,
     'heavy': 900,
     'extra-heavy': 1000,
 })
 
+#: Font stretch synonyms.
+#: These are alternate convenience names for font stretch/width values.
+#: The intent is to allow a developer to use a common name (eg. "expanded")
+#: instead of having to remember the corresponding number (eg. 125).
+#: These come from:
+#: - the OpenType specification: https://docs.microsoft.com/en-us/typography/opentype/spec/os2#uswidthclass
+#: - QFont stetch: https://doc.qt.io/qt-5/qfont.html#Stretch-enum
+#: - CSS font-stretch: https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch
+#: - values used by Enable: https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L78-L88
 STRETCHES = {
     'ultra-condensed': 50,
-    'ultracondensed': 62.5,
     'extra-condensed': 62.5,
-    'extracondensed': 62.5,
     'condensed': 75,
     'semi-condensed': 87.5,
-    'semicondensed': 87.5,
     'normal': 100,
     'semi-expanded': 112.5,
-    'semiexpanded': 112.5,
     'expanded': 125,
     'extra-expanded': 150,
-    'extraexpanded': 150,
     'ultra-expanded': 200,
-    'ultraexpanded': 200,
 }
 
+#: Font size synonyms.
+#: These are alternate convenience names for font size values.
+#: The intent is to allow a developer to use a common name (eg. "small")
+#: instead of having to remember the corresponding number (eg. 10).
+#: These come from CSS font-size: https://developer.mozilla.org/en-US/docs/Web/CSS/font-size
 SIZES = {
     'xx-small': 7.0,
     'x-small': 9.0,
@@ -127,7 +192,16 @@ SIZES = {
 
 STYLES = ('normal', 'italic', 'oblique')
 
-VARIANTS = ['small-caps', 'underline', 'strikethrough', 'overline']
+#: Font variants. Currently only small caps variants are exposed in Qt, and
+#: nothing in Wx.  In the future this could include things like swashes,
+#: numeric variants, and so on, as exposed in the toolkit.
+VARIANTS = ['small-caps']
+
+#: Additional markings on or around the glyphs of the font that are not part
+#: of the glyphs themselves.  Currently Qt and Wx support underline and
+#: strikethrough, and Qt supports overline.  In the future overlines and other
+#: decorations may be supported, as exposed in the toolkit.
+DECORATIONS = ['underline', 'strikethrough', 'overline']
 
 #: A trait for font families.
 FontFamily = CList(Str, ['default'])
@@ -141,12 +215,27 @@ FontStyle = Enum(STYLES)
 #: A trait for font variant properties.
 FontVariants = CSet(Enum(VARIANTS))
 
+#: A trait for font decorator properties.
+FontDecorations = CSet(Enum(DECORATIONS))
+
 
 class FontStretch(BaseCFloat):
     """ Trait type for font stretches.
 
-    The is a CFloat trait which also allows values which are keys of the
-    stretch dictionary.  Values must be floats between 50 and 200, inclusive.
+    The is a CFloat trait which holds floating point values between 50 and 200,
+    inclusive.  In addition to values which can be converted to floats, this
+    trait also accepts named synonyms for sizes which are converted to the
+    associated commonly accepted weights:
+
+    - 'ultra-condensed': 50
+    - 'extra-condensed': 62.5
+    - 'condensed': 75
+    - 'semi-condensed': 87.5
+    - 'normal': 100
+    - 'semi-expanded': 112.5
+    - 'expanded': 125
+    - 'extra-expanded': 150
+    - 'ultra-expanded': 200
     """
 
     #: The default value for the trait.
@@ -216,7 +305,14 @@ class FontSize(BaseCFloat):
 
 
 class Font(HasStrictTraits):
-    """ A toolkit-independent font specification. """
+    """A toolkit-independent font specification.
+
+    This class represents a *request* for a font with certain characteristics,
+    not a concrete font that can be used for drawing.  Font objects returned
+    from the toolkit may or may not match what was requested, depending on the
+    capabilities of the toolkit, OS, and the fonts installed on a particular
+    computer.
+    """
 
     #: The preferred font families.
     family = FontFamily()
@@ -235,6 +331,9 @@ class Font(HasStrictTraits):
 
     #: The font variants.
     variants = FontVariants()
+
+    #: The font decorations.
+    decorations = FontDecorations()
 
     @classmethod
     def from_toolkit(cls, toolkit_font):
@@ -275,12 +374,16 @@ class Font(HasStrictTraits):
             variant for variant in VARIANTS
             if variant in self.variants
         )
+        terms.extend(
+            decoration for decoration in DECORATIONS
+            if decoration in self.decorations
+        )
         if self.weight != 'normal':
             terms.append(self.weight)
         if self.stretch != 100:
             terms.append("{:g}%".format(self.stretch))
         size = self.size
-        # if size is an integer
+        # if size is an integer we want "12pt" not "12.pt"
         if int(size) == size:
             size = int(size)
         terms.append("{}pt".format(size))
@@ -299,16 +402,3 @@ class Font(HasStrictTraits):
             for name, value in traits.items()
         )
         return "{}({})".format(self.__class__.__name__, trait_args)
-
-    def __eq__(self, other):
-        if isinstance(other, Font):
-            return (
-                self.family == other.family
-                and self.weight == other.weight
-                and self.stretch == other.stretch
-                and self.style == other.style
-                and self.size == other.size
-                and self.variants == other.variants
-            )
-        else:
-            return NotImplemented
