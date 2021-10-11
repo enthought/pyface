@@ -266,7 +266,6 @@ class TestFont(unittest.TestCase):
         result = Font.from_toolkit(font.to_toolkit())
 
         # we expect some things should round-trip no matter what system
-        self.assertEqual(result.family, font.family)
         self.assertEqual(result.size, font.size)
         self.assertEqual(result.weight, font.weight)
         self.assertEqual(result.style, font.style)
