@@ -89,7 +89,7 @@ Weight
 Stretch
     The amount of horizontal compression or expansion to apply to the glyphs.
     These can be given as a percentage between 50% and 200%, or by strings
-    such as as 'condensed' and 'expanded' that correspond to those values.
+    such as 'condensed' and 'expanded' that correspond to those values.
 
 Style
     This selects either 'oblique' or 'italic' variants typefaces of the given
@@ -284,8 +284,10 @@ class FontSize(BaseCFloat):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
-        if isinstance(value, str) and (
-                    value.endswith('pt') or value.endswith('px')):
+        if (
+            isinstance(value, str)
+            and value.endswith('pt') or value.endswith('px')
+        ):
             value = value[:-2]
         value = SIZES.get(value, value)
         value = super().validate(object, name, value)
