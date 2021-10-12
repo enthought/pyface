@@ -286,7 +286,7 @@ class FontSize(BaseCFloat):
     def validate(self, object, name, value):
         if (
             isinstance(value, str)
-            and value.endswith('pt') or value.endswith('px')
+            and (value.endswith('pt') or value.endswith('px'))
         ):
             value = value[:-2]
         value = SIZES.get(value, value)
