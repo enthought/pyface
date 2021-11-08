@@ -257,7 +257,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _editor_manager_default(self):
         """ Trait initializer. """
 
-        from editor_manager import EditorManager
+        from .editor_manager import EditorManager
 
         return EditorManager(window=self)
 
