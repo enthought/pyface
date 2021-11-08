@@ -1215,7 +1215,7 @@ class DockItem(HasPrivateTraits):
                 if object.feature_can_drop_on(
                     self.object
                 ) or object.feature_can_drop_on_dock_control(self):
-                    from feature_tool import FeatureTool
+                    from .feature_tool import FeatureTool
 
                     self.drop_features = [FeatureTool(dock_control=self)]
             else:

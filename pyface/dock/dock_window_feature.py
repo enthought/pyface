@@ -660,7 +660,7 @@ class DockWindowFeature(HasPrivateTraits):
                     object.feature_can_drop_on(dc.object)
                     or object.feature_can_drop_on_dock_control(dc)
                 ):
-                    from feature_tool import FeatureTool
+                    from .feature_tool import FeatureTool
 
                     feature_lists.append([FeatureTool(dock_control=dc)])
         else:

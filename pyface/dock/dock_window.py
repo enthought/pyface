@@ -187,7 +187,7 @@ class DockWindowHandler(HasPrivateTraits):
     def open_view_for(self, control, use_mouse=True):
         """ Creates a new view of a specified control.
         """
-        from dock_window_shell import DockWindowShell
+        from .dock_window_shell import DockWindowShell
 
         DockWindowShell(control, use_mouse=use_mouse)
 
@@ -426,7 +426,7 @@ class DockWindow(HasPrivateTraits):
         """
         fb = self._feature_bar
         if fb is None:
-            from feature_bar import FeatureBar
+            from .feature_bar import FeatureBar
 
             self._feature_bar = fb = FeatureBar(parent=self.control)
             fb.observe(self._feature_bar_closed, "completed")
