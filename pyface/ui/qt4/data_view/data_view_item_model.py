@@ -141,14 +141,18 @@ class DataViewItemModel(QAbstractItemModel):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
-        if row == () and column == ():
-            return Qt.ItemIsEnabled
 
-        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled
-        if is_qt5 and not self.model.can_have_children(row):
-            flags |= Qt.ItemNeverHasChildren
-
+        flags = Qt.ItemIsDragEnabled
         try:
+            if self.model.is_enabled(row, column):
+                flags |= Qt.ItemIsEnabled
+
+            if self.model.is_selectable(row, column):
+                flags |= Qt.ItemIsSelectable
+
+            if is_qt5 and not self.model.can_have_children(row):
+                flags |= Qt.ItemNeverHasChildren
+
             if value_type:
                 if value_type.has_editor_value(self.model, row, column):
                     flags |= Qt.ItemIsEditable
