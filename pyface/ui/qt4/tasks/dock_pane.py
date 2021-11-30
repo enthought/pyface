@@ -12,7 +12,7 @@ from contextlib import contextmanager
 
 
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, Enum, observe, Property, provides, Tuple
+from traits.api import Bool, observe, Property, provides, Tuple
 
 
 from pyface.qt import QtCore, QtGui
