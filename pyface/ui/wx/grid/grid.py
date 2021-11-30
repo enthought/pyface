@@ -30,20 +30,19 @@ from wx.grid import (
     GRID_VALUE_STRING,
 )
 
-
-from pyface.ui.wx.layout_widget import LayoutWidget
-from pyface.timer.api import do_later
 from traits.api import (
     Bool,
-    Color,
     Enum,
     Event,
-    Font,
     Instance,
     Int,
     Undefined,
     Union,
 )
+
+from pyface.timer.api import do_later
+from pyface.ui.wx.layout_widget import LayoutWidget
+from pyface.ui_traits import TraitsUIColor as Color, TraitsUIFont as Font
 from pyface.wx.drag_and_drop import (
     PythonDropSource,
     PythonDropTarget,
