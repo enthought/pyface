@@ -24,6 +24,7 @@ from traits.api import (
     Enum,
     Range,
     TraitError,
+    TraitFactory,
     TraitType,
 )
 from traits.trait_base import get_resource_path
@@ -337,3 +338,39 @@ Alignment = Enum("default", "left", "center", "right")
 
 #: Whether the orientation of a widget's contents is horizontal or vertical.
 Orientation = Enum("vertical", "horizontal")
+
+
+# -------------------------------------------------------------------------------
+#  Legacy TraitsuI Color and Font Traits
+# -------------------------------------------------------------------------------
+
+def TraitsUIColor(*args, **metadata):
+    """ Returns a trait whose value must be a GUI toolkit-specific color.
+
+    This is copied from the deprecated trait that is in traits.api.  It adds
+    a deferred dependency on TraitsUI.
+
+    This trait will be replaced by native Pyface color traits in Pyface 8.0.
+    New code should not use this trait.
+    """
+    from traitsui.toolkit_traits import ColorTrait
+
+    return ColorTrait(*args, **metadata)
+
+TraitsUIColor = TraitFactory(TraitsUIColor)
+
+
+def TraitsUIFont(*args, **metadata):
+    """ Returns a trait whose value must be a GUI toolkit-specific font.
+
+    This is copied from the deprecated trait that is in traits.api.  It adds
+    a deferred dependency on TraitsUI.
+
+    This trait will be replaced by native Pyface font traits in Pyface 8.0.
+    New code should not use this trait.
+    """
+    from traitsui.toolkit_traits import FontTrait
+
+    return FontTrait(*args, **metadata)
+
+TraitsUIFont = TraitFactory(TraitsUIFont)
