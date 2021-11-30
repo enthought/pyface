@@ -18,9 +18,6 @@ them.
 
 import wx
 
-from pyface.font import Font
-
-
 # font weight and size features changed in wxPython 4.1/wxWidgets 3.1
 wx_python_4_1 = (wx.VERSION >= (4, 1))
 
