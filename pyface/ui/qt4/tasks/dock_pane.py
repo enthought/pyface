@@ -27,7 +27,6 @@ AREA_MAP = {
     "right": QtCore.Qt.RightDockWidgetArea,
     "top": QtCore.Qt.TopDockWidgetArea,
     "bottom": QtCore.Qt.BottomDockWidgetArea,
-    "none": QtCore.Qt.NoDockWidgetArea,
 }
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
@@ -42,7 +41,6 @@ class DockPane(TaskPane, MDockPane):
     # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
-    dock_area = Enum("left", "right", "top", "bottom", "none")
 
     # Protected traits -----------------------------------------------------
 
@@ -187,7 +185,8 @@ class DockPane(TaskPane, MDockPane):
 
     def _receive_dock_area(self, area):
         with self._signal_context():
-            self.dock_area = INVERSE_AREA_MAP[int(area)]
+            if int(area) not in INVERSE_AREA_MAP:
+                self.dock_area = INVERSE_AREA_MAP[int(area)]
 
     def _receive_floating(self, floating):
         with self._signal_context():
