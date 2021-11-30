@@ -517,3 +517,81 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         with event_loop():
             window.close()
+
+    def test_editor_label_change_inactive(self):
+        # regression test for pyface#523
+        window = TaskWindow(size=(800, 600))
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        # Show the window.
+        with event_loop():
+            window.open()
+
+        with event_loop():
+            app = get_app_qt4()
+            app.setActiveWindow(window.control)
+
+        # Add and activate an editor which contains tabs.
+        left_editor = ViewWithTabsEditor()
+        right_editor = ViewWithTabsEditor()
+
+        with event_loop():
+            editor_area.add_editor(left_editor)
+        with event_loop():
+            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+        with event_loop():
+            editor_area.add_editor(right_editor)
+
+        editor_area.activate_editor(right_editor)
+
+        # change the name of the inactive editor
+        left_editor.name = "New Name"
+
+        # the text of the editor's tab should have changed
+        left_tabwidget = editor_area.tabwidgets()[0]
+        index = left_tabwidget.indexOf(left_editor.control)
+        tab_text = left_tabwidget.tabText(index)
+
+        self.assertEqual(tab_text, "New Name")
+
+    def test_editor_tooltip_change_inactive(self):
+        # regression test related to pyface#523
+        window = TaskWindow(size=(800, 600))
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        # Show the window.
+        with event_loop():
+            window.open()
+
+        with event_loop():
+            app = get_app_qt4()
+            app.setActiveWindow(window.control)
+
+        # Add and activate an editor which contains tabs.
+        left_editor = ViewWithTabsEditor()
+        right_editor = ViewWithTabsEditor()
+
+        with event_loop():
+            editor_area.add_editor(left_editor)
+        with event_loop():
+            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+        with event_loop():
+            editor_area.add_editor(right_editor)
+
+        editor_area.activate_editor(right_editor)
+
+        # change the name of the inactive editor
+        left_editor.tooltip = "New Tooltip"
+
+        # the text of the editor's tab should have changed
+        left_tabwidget = editor_area.tabwidgets()[0]
+        index = left_tabwidget.indexOf(left_editor.control)
+        tab_tooltip = left_tabwidget.tabToolTip(index)
+
+        self.assertEqual(tab_tooltip, "New Tooltip")
