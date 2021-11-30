@@ -12,7 +12,7 @@ from contextlib import contextmanager
 
 
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, observe, Property, provides, Tuple
+from traits.api import Bool, Enum, observe, Property, provides, Tuple
 
 
 from pyface.qt import QtCore, QtGui
@@ -27,6 +27,7 @@ AREA_MAP = {
     "right": QtCore.Qt.RightDockWidgetArea,
     "top": QtCore.Qt.TopDockWidgetArea,
     "bottom": QtCore.Qt.BottomDockWidgetArea,
+    "none": QtCore.Qt.NoDockWidgetArea,
 }
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
@@ -41,6 +42,7 @@ class DockPane(TaskPane, MDockPane):
     # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
+    dock_area = Enum("left", "right", "top", "bottom", "none")
 
     # Protected traits -----------------------------------------------------
 
