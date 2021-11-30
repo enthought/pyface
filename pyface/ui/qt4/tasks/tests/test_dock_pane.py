@@ -50,6 +50,7 @@ class MyApplication(TasksApplication):
 
 
 class TestDockPane(unittest.TestCase):
+
     @unittest.skipUnless(sys.platform == "darwin", "only applicable to macOS")
     def test_dock_windows_visible_on_macos(self):
         # Regression test for enthought/pyface#427: check that dock panes
@@ -75,3 +76,28 @@ class TestDockPane(unittest.TestCase):
         self.assertTrue(tool_attributes)
         for attr in tool_attributes:
             self.assertTrue(attr)
+
+    def test_dock_windows_undock(self):
+        # Regression test for enthought/pyface#1028: check that undocking
+        # dockpanes doesn't crash
+
+        tool_attributes = []
+
+        def check_panes_and_exit(app_event):
+            app = app_event.application
+            print('here')
+            app.windows[0].dock_panes[0].control.setFloating(True)
+            for window in app.windows:
+                for dock_pane in window.dock_panes:
+                    attr = dock_pane.dock_area
+                    tool_attributes.append(attr)
+
+            app.exit()
+
+        app = MyApplication()
+        app.on_trait_change(check_panes_and_exit, "application_initialized")
+        app.run()
+
+        self.assertTrue(tool_attributes)
+        for attr in tool_attributes:
+            self.assertEqual(attr, 'left')
