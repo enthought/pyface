@@ -341,7 +341,7 @@ Orientation = Enum("vertical", "horizontal")
 
 
 # -------------------------------------------------------------------------------
-#  Legacy TraitsuI Color and Font Traits
+#  Legacy TraitsUI Color and Font Traits
 # -------------------------------------------------------------------------------
 
 def TraitsUIColor(*args, **metadata):
