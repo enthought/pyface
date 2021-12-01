@@ -41,8 +41,8 @@ from traits.api import (
     Font,
     Instance,
     Int,
-    Trait,
     Undefined,
+    Union,
 )
 from pyface.wx.drag_and_drop import (
     PythonDropSource,
@@ -88,10 +88,12 @@ class Grid(LayoutWidget):
     default_label_text_color = Color("black")
 
     # The color to use for a selection background
-    selection_bg_color = Trait(wx.Colour(49, 106, 197), None, Color)
+    selection_bg_color = Union(None, Color,
+                               default_value=wx.Colour(49, 106, 197))
 
     # The color to use for a selection foreground/text
-    selection_text_color = Trait(wx.Colour(255, 255, 255), None, Color)
+    selection_text_color = Union(None, Color,
+                                 default_value=wx.Colour(255, 255, 255))
 
     # The default font to use for text in cells
     default_cell_font = Font(None)
@@ -103,7 +105,6 @@ class Grid(LayoutWidget):
     default_cell_bg_color = Color("white")
 
     # The default background color to use for read-only cells
-    # default_cell_read_only_color = Trait(Color("linen"), None, Color)
     default_cell_read_only_color = Color(wx.Colour(248, 247, 241))
 
     # Should the grid be read-only? If this is set to false, individual
