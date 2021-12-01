@@ -8,29 +8,25 @@
 #
 # Thanks for using Enthought open source!
 
-""" Expandable example. """
+""" Grid example.
 
+This is currently only supported by the WxPython toolkit.
+"""
+import os
 
-import os, sys
-
-
-import wx
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+from traits.api import Float, Str
+from traits.observation.api import match
 
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.ui.wx.grid.api import (
     Grid,
     TraitGridModel,
-    SimpleGridModel,
     GridRow,
     GridColumn,
     TraitGridColumn,
 )
-from traits.api import Float, Str
-from traits.observation.api import match
+
+from file_tree import FileTree
 
 
 class MainWindow(SplitApplicationWindow):

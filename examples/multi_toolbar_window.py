@@ -9,14 +9,12 @@
 # Thanks for using Enthought open source!
 
 """ Mulit-tool bar example.
-    Note: This demo only works on the wx backend.
+
+Note: This demo only works on the wx backend.
 """
 
 
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
+import sys
 
 # FIXME: This is a hack to disable the AUI module which causes the example to
 # not layout correctly.

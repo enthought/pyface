@@ -10,19 +10,15 @@
 
 """ Node tree example. """
 
+import os
 
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
-
-from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from traits.api import Float, Str
 from traits.observation.api import match
 
-from file_node_tree import node_manager
+from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.tree.api import NodeTree, NodeTreeModel
+
+from file_node_tree import node_manager
 
 
 class MainWindow(SplitApplicationWindow):
