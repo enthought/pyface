@@ -151,7 +151,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        active_tabwidget = editor.control.parent().parent()
+        active_tabwidget = self._get_editor_tabwidget(editor)
         active_tabwidget.setCurrentWidget(editor.control)
         self.active_tabwidget = active_tabwidget
         editor_widget = editor.control.parent()
@@ -184,8 +184,8 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
         """
-        tabwidget = editor.control.parent().parent()
-        tabwidget.removeTab(tabwidget.indexOf(editor.control))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.removeTab(index)
         self.editors.remove(editor)
         editor.destroy()
         editor.editor_area = None
@@ -377,19 +377,29 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         return self.control.tabwidgets()
 
+    def _get_editor_tabwidget(self, editor):
+        """ Given an editor, return its tabwidget. """
+        return editor.control.parent().parent()
+
+    def _get_editor_tabwidget_index(self, editor):
+        """ Given an editor, return its tabwidget and index. """
+        tabwidget = self._get_editor_tabwidget(editor)
+        index = tabwidget.indexOf(editor.control)
+        return tabwidget, index
+
     # Trait change handlers ------------------------------------------------
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
         editor = event.object
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabText(index, self._get_label(editor))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.setTabText(index, self._get_label(editor))
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
         editor = event.object
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.setTabToolTip(index, editor.tooltip)
 
     # Signal handlers -----------------------------------------------------#
 
