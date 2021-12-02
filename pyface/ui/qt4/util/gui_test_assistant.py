@@ -133,6 +133,20 @@ class GuiTestAssistant(UnittestTools):
         This should not be used to wait for widget deletion. Use
         delete_widget() instead.
 
+        Notes
+        -----
+
+        This runs the real Qt event loop, polling the condition every 50 ms and
+        returning as soon as the condition becomes true. If the condition does
+        not become true within the given timeout, a ConditionTimeoutError is
+        raised.
+
+        Because the state of the condition is only polled every 50 ms, it
+        may fail to detect transient states that appear and disappear within
+        a 50 ms window.  Code should ensure that any state that is being
+        tested by the condition cannot revert to a False value once it becomes
+        True.
+
         Parameters
         ----------
         condition : callable
@@ -155,9 +169,19 @@ class GuiTestAssistant(UnittestTools):
         Assert that the given condition becomes true if we run the GUI
         event loop for long enough.
 
+        Notes
+        -----
+
         This assertion runs the real Qt event loop, polling the condition
-        and returning as soon as the condition becomes true. If the condition
-        does not become true within the given timeout, the assertion fails.
+        every 50 ms and returning as soon as the condition becomes true. If
+        the condition does not become true within the given timeout, the
+        assertion fails.
+
+        Because the state of the condition is only polled every 50 ms, it
+        may fail to detect transient states that appear and disappear within
+        a 50 ms window.  Tests should ensure that any state that is being
+        tested by the condition cannot revert to a False value once it becomes
+        True.
 
         Parameters
         ----------
