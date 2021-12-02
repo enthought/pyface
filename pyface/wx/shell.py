@@ -192,7 +192,7 @@ class Shell(wx.StyledTextCtrl):
         sys.path.insert(0, os.curdir)
         # Import a default interpreter class if one isn't provided.
         if InterpClass is None:
-            from PyCrust.interpreter import Interpreter
+            from wx.py.interpreter import Interpreter
         else:
             Interpreter = InterpClass
         # Create default locals so we have something interesting.
