@@ -33,6 +33,23 @@ elif qt_api == "pyqt5":
     __version__ = QT_VERSION_STR
     __version_info__ = tuple(map(int, QT_VERSION_STR.split(".")))
 
+elif qt_api == "pyqt6":
+    from PyQt6.QtCore import *
+
+    from PyQt6.QtCore import pyqtProperty as Property
+    from PyQt6.QtCore import pyqtSignal as Signal
+    from PyQt6.QtCore import pyqtSlot as Slot
+    from PyQt6.Qt import QCoreApplication
+    from PyQt6.Qt import Qt
+
+    __version__ = QT_VERSION_STR
+    __version_info__ = tuple(map(int, QT_VERSION_STR.split(".")))
+
+elif qt_api == "pyside6":
+    from PySide6.QtCore import *
+
+    from PySide6 import __version__, __version_info__
+
 else:
     from PySide2.QtCore import *
 

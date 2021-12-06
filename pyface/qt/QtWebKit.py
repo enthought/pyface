@@ -28,6 +28,38 @@ elif qt_api == "pyqt5":
         from PyQt5.QtWebKit import *
         from PyQt5.QtWebKitWidgets import *
 
+elif qt_api == "pyqt6":
+    from PyQt5.QtWidgets import *
+
+    try:
+        from PyQt6.QtWebEngine import *
+        from PyQt6.QtWebEngineWidgets import (
+            QWebEngineHistory as QWebHistory,
+            QWebEngineHistoryItem as QWebHistoryItem,
+            QWebEnginePage as QWebPage,
+            QWebEngineView as QWebView,
+            QWebEngineSettings as QWebSettings,
+        )
+    except ImportError:
+        from PyQt6.QtWebKit import *
+        from PyQt6.QtWebKitWidgets import *
+
+elif qt_api == "pyside6":
+    from PySide6.QtWidgets import *
+
+    # WebKit is currently in flux in PySide2
+    try:
+        from PySide6.QtWebEngineWidgets import (
+            # QWebEngineHistory as QWebHistory,
+            QWebEngineHistoryItem as QWebHistoryItem,
+            QWebEnginePage as QWebPage,
+            QWebEngineView as QWebView,
+            QWebEngineSettings as QWebSettings,
+        )
+    except ImportError:
+        from PySide6.QtWebKit import *
+        from PySide6.QtWebKitWidgets import *
+
 else:
     from PySide2.QtWidgets import *
 
