@@ -47,7 +47,7 @@ elif qt_api == "pyqt6":
 elif qt_api == "pyside6":
     from PySide6.QtWidgets import *
 
-    # WebKit is currently in flux in PySide2
+    # WebKit is currently in flux in PySide6
     try:
         from PySide6.QtWebEngineWidgets import (
             # QWebEngineHistory as QWebHistory,
