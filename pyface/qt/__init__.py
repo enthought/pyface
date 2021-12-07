@@ -20,7 +20,7 @@ QtAPIs = [
     ("pyqt6", "PyQt6"),
     ("pyqt", "PyQt4"),
 ]
-api_names, modules = zip(QtAPIs)
+api_names, modules = zip(*QtAPIs)
 
 
 qt_api = None
@@ -45,7 +45,7 @@ if qt_api is None:
         except ImportError:
             continue
     else:
-        raise ImportError("Cannot import an of " + ", ".join(modules))
+        raise ImportError("Cannot import any of " + ", ".join(modules))
 
 # otherwise check QT_API value is valid
 elif qt_api not in api_names:
