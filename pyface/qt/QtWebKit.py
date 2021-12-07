@@ -29,7 +29,7 @@ elif qt_api == "pyqt5":
         from PyQt5.QtWebKitWidgets import *
 
 elif qt_api == "pyqt6":
-    from PyQt5.QtWidgets import *
+    from PyQt6.QtWidgets import *
 
     try:
         from PyQt6.QtWebEngine import *
