@@ -20,6 +20,7 @@ QtAPIs = [
     ("pyqt6", "PyQt6"),
     ("pyqt", "PyQt4"),
 ]
+api_names, modules = zip(QtAPIs)
 
 
 qt_api = None
@@ -44,13 +45,13 @@ if qt_api is None:
         except ImportError:
             continue
     else:
-        raise ImportError("Cannot import PySide2, PySide6, PyQt5 or PyQt6")
+        raise ImportError("Cannot import an of " + ", ".join(modules))
 
 # otherwise check QT_API value is valid
-elif qt_api not in {api_name for api_name, module in QtAPIs}:
+elif qt_api not in api_names:
     msg = (
         "Invalid Qt API %r, valid values are: "
-        + ', '.join(f"'{api_name}'" for api_name, module in QtAPIs)
+        + ', '.join(api_names)
     ) % qt_api
     raise RuntimeError(msg)
 
