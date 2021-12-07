@@ -15,5 +15,11 @@ if qt_api == "pyqt":
 elif qt_api == "pyqt5":
     from PyQt5.QtSvg import *
 
+elif qt_api == "pyqt6":
+    from PyQt6.QtSvg import *
+
+elif qt_api == "pyside6":
+    from PySide6.QtSvg import *
+
 else:
     from PySide2.QtSvg import *
