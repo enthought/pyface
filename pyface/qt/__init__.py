@@ -50,7 +50,7 @@ if qt_api is None:
 elif qt_api not in {api_name for api_name, module in QtAPIs}:
     msg = (
         "Invalid Qt API %r, valid values are: "
-        + "'pyside2', 'pyside6', 'pyqt', 'pyqt5' or 'pyqt6'"
+        + ', '.join(f"'{api_name}'" for api_name, module in QtAPIs)
     ) % qt_api
     raise RuntimeError(msg)
 

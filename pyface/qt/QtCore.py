@@ -39,8 +39,6 @@ elif qt_api == "pyqt6":
     from PyQt6.QtCore import pyqtProperty as Property
     from PyQt6.QtCore import pyqtSignal as Signal
     from PyQt6.QtCore import pyqtSlot as Slot
-    from PyQt6.Qt import QCoreApplication
-    from PyQt6.Qt import Qt
 
     __version__ = QT_VERSION_STR
     __version_info__ = tuple(map(int, QT_VERSION_STR.split(".")))
