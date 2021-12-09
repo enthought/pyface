@@ -44,8 +44,8 @@ Confirmation Dialog
    A Confirmation Dialog
 
 A dialog that presents a message and allows the user to select a Yes/No
-response, with the option to present a Cancel button as well.  The button
-which is the default, as well as the labels for the buttons can be controlled.
+response, with the option to present a Cancel button as well.  The default
+button, as well as the labels for the buttons can be controlled.
 The result value is one of the pyface constants of |CANCEL|, |YES| or
 |NO|.
 
@@ -92,7 +92,7 @@ Message Dialog
 
    An Error Message Dialog
 
-A dialog that shows the a standard OS message dialog, where the user is only
+A dialog that shows the standard OS message dialog, where the user is only
 presented with the ability to confirm the message.  The dialog has a "severity"
 trait which can take the values of ``"information"``, ``"warning"`` or
 ``"error"`` and displays an appropriate icon along with the message.
@@ -132,7 +132,7 @@ responsive::
             if not cont or skip:
                 break
 
-        progress_update(len(paths))
+        progress.update(len(paths))
 
 It can also be used with Python's standard library |Executor| classes to take
 advantage of potential parallelism::
@@ -160,9 +160,9 @@ advantage of potential parallelism::
 
         executor.shutdown(cancel_futures=True)
 
-        progress_update(len(paths))
+        progress.update(len(paths))
 
-This is contrasted with a situation where operations are handled using a
+This is in contrast with the situation where operations are handled using a
 "fire-and-forget" process where computations are dispatched in the background,
 with any opportunity for updates coming via callbacks.  Since these sorts of
 jobs run in the background, a dialog (particularly a modal dialog), may not
