@@ -67,7 +67,9 @@ Miscellaneous
 -------------
 
 - :class:`~.ArrayImage`
+- :class:`~.BaseDropHandler`
 - :class:`~.beep`
+- :class:`~.FileDropHandler`
 - :class:`~.Filter`
 - :class:`~.HeadingText`
 - :class:`~.ImageCache`
@@ -109,6 +111,7 @@ from .confirmation_dialog import confirm, ConfirmationDialog
 from .constant import OK, CANCEL, YES, NO
 from .dialog import Dialog
 from .directory_dialog import DirectoryDialog
+from .drop_handler import BaseDropHandler, FileDropHandler
 from .file_dialog import FileDialog
 from .filter import Filter
 from .gui import GUI
@@ -124,9 +127,9 @@ from .progress_dialog import ProgressDialog
 from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse numpy dependency, otherwise re-raise
-with _optional_import( 
-         "numpy", 
-         msg="ArrayImage not available due to missing numpy.", 
+with _optional_import(
+         "numpy",
+         msg="ArrayImage not available due to missing numpy.",
          logger=_logging.getLogger(__name__)):
 
      # We need to manually try importing numpy because the ``ArrayImage``
@@ -139,10 +142,10 @@ with _optional_import(
      del numpy
 
 # Excuse pillow dependency, otherwise re-raise
-with _optional_import( 
-         "pillow", 
-         msg="PILImage not available due to missing pillow.", 
-         logger=_logging.getLogger(__name__)): 
+with _optional_import(
+         "pillow",
+         msg="PILImage not available due to missing pillow.",
+         logger=_logging.getLogger(__name__)):
      from .pil_image import PILImage
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
