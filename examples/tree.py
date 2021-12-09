@@ -11,16 +11,12 @@
 """ Tree example. """
 
 
-import os, sys
+import os
 
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
-
-from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from traits.api import Float, Str
 from traits.observation.api import match
 
+from pyface.api import GUI, PythonShell, SplitApplicationWindow
 
 from file_tree import FileTree
 

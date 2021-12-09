@@ -15,6 +15,12 @@ from . import qt_api
 if qt_api == "pyqt5":
     from PyQt5.QtMultimediaWidgets import *
 
+elif qt_api == "pyqt6":
+    from PyQt6.QtMultimediaWidgets import *
+
+elif qt_api == "pyside6":
+    from PySide6.QtMultimediaWidgets import *
+
 elif qt_api == "pyside2":
     from PySide2.QtMultimediaWidgets import *
 
