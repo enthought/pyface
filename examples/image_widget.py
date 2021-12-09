@@ -8,14 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Application window example. """
+""" ImageWidget example.
 
-
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+This is only supported by the WxPython toolkit.
+"""
 
 import wx
 import wx.html
