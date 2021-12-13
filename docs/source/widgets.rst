@@ -115,6 +115,14 @@ of the dialog and its buttons.  In most cases you will need to, at a minimum,
 override the :meth:`~pyface.i_dialog.IDialog._create_dialog_area` method to
 populate the widgets inside the main dialog.
 
+Pyface provides a number of standard dialog classes and convenience functions
+to access them.
+
+.. toctree::
+   :maxdepth: 2
+
+   standard_dialogs.rst
+
 IApplicationWindow
 ------------------
 
