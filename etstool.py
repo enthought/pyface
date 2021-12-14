@@ -109,12 +109,12 @@ source_dependencies = {
 
 extra_dependencies = {
     # XXX once pyside2 is available in EDM, we will want it here
-    "pyside2": set("pillow"),
+    "pyside2": {"pillow"},
     # XXX once pyside6 is available in EDM, we will want it here
     "pyside6": set(),
     "pyqt5": {"pyqt5", "pillow"},
     # XXX once wxPython 4 is available in EDM, we will want it here
-    "wx": set("pillow"),
+    "wx": {"pillow"},
     "null": set(),
 }
 
