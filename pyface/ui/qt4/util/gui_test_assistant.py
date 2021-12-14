@@ -75,7 +75,6 @@ class GuiTestAssistant(UnittestTools):
             with self.event_loop_with_timeout(repeat=5):
                 self.gui.invoke_later(self.qt_app.closeAllWindows)
 
-        self.qt_app.flush()
         self.pyface_raise_patch.stop()
         if self.traitsui_raise_patch is not None:
             self.traitsui_raise_patch.stop()

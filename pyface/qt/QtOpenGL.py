@@ -16,7 +16,7 @@ elif qt_api == "pyqt5":
     from PyQt5.QtOpenGL import *
 
 elif qt_api == "pyqt6":
-    from PyQt6.QtOpenGL import *
+    from PyQt6.QtGui import *
 
 elif qt_api == "pyside6":
     from PySide6.QtOpenGL import *

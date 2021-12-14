@@ -12,7 +12,7 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-from pyface.qt import QtGui, is_qt5
+from pyface.qt import QtGui, is_qt4
 
 
 from traits.api import HasTraits, Int, Property, provides, Tuple
@@ -43,7 +43,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # QDesktopWidget.screenGeometry() is deprecated and Qt docs
         # suggest using screens() instead, but screens in not available in qt4
         # see issue: enthought/pyface#721
-        if is_qt5:
+        if not is_qt4:
             return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
         else:
             return QtGui.QApplication.instance().desktop().availableGeometry().width()
@@ -52,7 +52,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
         # suggest using screens() instead, but screens in not available in qt4
         # see issue: enthought/pyface#721
-        if is_qt5:
+        if not is_qt4:
             return (
                 QtGui.QApplication.instance().screens()[0].availableGeometry().height()
             )

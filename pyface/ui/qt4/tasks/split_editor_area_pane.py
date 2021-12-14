@@ -26,7 +26,7 @@ from traits.api import (
     Str,
     Tuple,
 )
-from pyface.qt import is_qt4, QtCore, QtGui
+from pyface.qt import is_qt4, QtCore, QtGui, is_qt6, is_pyside
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -331,10 +331,16 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
-        mapper.mapped.connect(self._activate_tab)
-        self._connections_to_remove.append(
-            (mapper.mapped, self._activate_tab)
-        )
+        if is_pyside and is_qt6:
+            mapper.mappedInt.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mappedInt, self._activate_tab)
+            )
+        else:
+            mapper.mapped.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mapped, self._activate_tab)
+            )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)

@@ -79,6 +79,5 @@ class TestGui(unittest.TestCase):
             # Attempt to leave the QApplication in a reasonably clean
             # state in case of failure.
             qt_app.sendPostedEvents()
-            qt_app.flush()
 
         self.assertTrue(application_running[0])

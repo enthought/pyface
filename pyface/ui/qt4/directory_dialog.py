@@ -70,7 +70,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         dlg = QtGui.QFileDialog(parent, self.title, self.default_path)
 
         dlg.setViewMode(QtGui.QFileDialog.Detail)
-        dlg.setFileMode(QtGui.QFileDialog.DirectoryOnly)
+        dlg.setFileMode(QtGui.QFileDialog.Directory)
 
         if not self.new_directory:
             dlg.setOptions(QtGui.QFileDialog.ReadOnly)

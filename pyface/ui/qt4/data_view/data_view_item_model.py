@@ -10,7 +10,7 @@
 
 import logging
 
-from pyface.qt import is_qt5
+from pyface.qt import is_qt4
 from pyface.qt.QtCore import QAbstractItemModel, QMimeData, QModelIndex, Qt
 from pyface.qt.QtGui import QColor
 from pyface.data_view.abstract_data_model import AbstractDataModel
@@ -145,7 +145,7 @@ class DataViewItemModel(QAbstractItemModel):
             return Qt.ItemIsEnabled
 
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled
-        if is_qt5 and not self.model.can_have_children(row):
+        if not is_qt4 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
         try:
