@@ -57,6 +57,7 @@ class TestFieldAction(unittest.TestCase):
             self.assertEqual(memo, ["b"])
         finally:
             control._field.destroy()
+            self.gui.process_events()
 
     def test_text_field_action(self):
         # test whether function is called by updating list
@@ -83,6 +84,7 @@ class TestFieldAction(unittest.TestCase):
             self.assertEqual(memo, ["b"])
         finally:
             control._field.destroy()
+            self.gui.process_events()
 
     def test_spin_field_action(self):
         # test whether function is called by updating list
@@ -113,3 +115,4 @@ class TestFieldAction(unittest.TestCase):
             self.assertEqual(memo, [5])
         finally:
             control._field.destroy()
+            self.gui.process_events()
