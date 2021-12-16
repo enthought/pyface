@@ -27,6 +27,7 @@ class TestFieldAction(unittest.TestCase):
 
     def _destroy_parent(self):
         self.parent.destroy()
+        self.gui.process_events()
         self.parent = None
 
     def test_combo_field_action(self):
