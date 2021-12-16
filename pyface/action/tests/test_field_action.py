@@ -14,21 +14,22 @@ import unittest
 from pyface.fields.api import ComboField, SpinField, TextField
 from pyface.gui import GUI
 from pyface.window import Window
+from pyface.util.gui_test_assistant import GuiTestAssistant
 from ..field_action import FieldAction
 
 
-class TestFieldAction(unittest.TestCase):
+class TestFieldAction(GuiTestAssistant, unittest.TestCase):
     def setUp(self):
-        self.gui = GUI()
+        super().setUp()
 
         self.parent = Window()
         self.parent._create()
-        self.addCleanup(self._destroy_parent)
 
-    def _destroy_parent(self):
+    def tearDown(self):
         self.parent.destroy()
         self.gui.process_events()
-        self.parent = None
+        del self.parent
+        super().tearDown()
 
     def test_combo_field_action(self):
         # test whether function is called by updating list
