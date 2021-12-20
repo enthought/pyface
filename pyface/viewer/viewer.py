@@ -11,7 +11,7 @@
 """ Abstract base class for all viewers. """
 
 
-from pyface.widget.layout_widget import LayoutWidget
+from pyface.layout_widget import LayoutWidget
 
 
 class Viewer(LayoutWidget):

@@ -11,7 +11,7 @@
 import sys
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, is_pyside, is_qt6
 
 
 from traits.api import (
@@ -80,10 +80,17 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
-        mapper.mapped.connect(self._activate_tab)
-        self._connections_to_remove.append(
-            (mapper.mapped, self._activate_tab)
-        )
+        if is_pyside and is_qt6:
+            mapper.mappedInt.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mappedInt, self._activate_tab)
+            )
+        else:
+            mapper.mapped.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mapped, self._activate_tab)
+            )
+
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)

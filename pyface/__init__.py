@@ -27,7 +27,9 @@ __extras_require__ = {
     "wx": ["wxpython>=4", "numpy"],
     "pyqt": ["pyqt>=4.10", "pygments"],
     "pyqt5": ["pyqt5", "pygments"],
+    "pyqt6": ["pyqt6", "pygments"],
     "pyside2": ["pyside2", "shiboken2", "pygments"],
+    "pyside6": ["pyside6", "pygments"],
     "pillow": ["pillow"],
     "test": ["packaging"],
 }

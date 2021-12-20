@@ -28,6 +28,32 @@ elif qt_api == "pyqt5":
         from PyQt5.QtWebKit import *
         from PyQt5.QtWebKitWidgets import *
 
+elif qt_api == "pyqt6":
+    from PyQt6.QtWidgets import *
+
+    from PyQt6.QtWebEngineCore import (
+        QWebEngineHistory as QWebHistory,
+        QWebEngineHistoryItem as QWebHistoryItem,
+        QWebEnginePage as QWebPage,
+        QWebEngineSettings as QWebSettings,
+    )
+    from PyQt6.QtWebEngineWidgets import (
+        QWebEngineView as QWebView,
+    )
+
+elif qt_api == "pyside6":
+    from PySide6.QtWidgets import *
+
+    from PySide6.QtWebEngineCore import (
+        QWebEngineHistory as QWebHistory,
+        QWebEngineSettings as QWebSettings,
+        QWebEnginePage as QWebPage,
+        QWebEngineHistoryItem as QWebHistoryItem,
+    )
+    from PySide6.QtWebEngineWidgets import (
+        QWebEngineView as QWebView,
+    )
+
 else:
     from PySide2.QtWidgets import *
 

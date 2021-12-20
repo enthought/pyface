@@ -10,13 +10,6 @@
 
 """ Menu Manager example. """
 
-
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
-
 from pyface.action.api import Action
 from pyface.action.api import Group, MenuManager, Separator
 

@@ -26,7 +26,7 @@ from traits.api import (
     Str,
     Tuple,
 )
-from pyface.qt import is_qt4, QtCore, QtGui
+from pyface.qt import is_qt4, QtCore, QtGui, is_qt6, is_pyside
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -151,7 +151,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        active_tabwidget = editor.control.parent().parent()
+        active_tabwidget = self._get_editor_tabwidget(editor)
         active_tabwidget.setCurrentWidget(editor.control)
         self.active_tabwidget = active_tabwidget
         editor_widget = editor.control.parent()
@@ -184,8 +184,8 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
         """
-        tabwidget = editor.control.parent().parent()
-        tabwidget.removeTab(tabwidget.indexOf(editor.control))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.removeTab(index)
         self.editors.remove(editor)
         editor.destroy()
         editor.editor_area = None
@@ -331,10 +331,16 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
-        mapper.mapped.connect(self._activate_tab)
-        self._connections_to_remove.append(
-            (mapper.mapped, self._activate_tab)
-        )
+        if is_pyside and is_qt6:
+            mapper.mappedInt.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mappedInt, self._activate_tab)
+            )
+        else:
+            mapper.mapped.connect(self._activate_tab)
+            self._connections_to_remove.append(
+                (mapper.mapped, self._activate_tab)
+            )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
@@ -377,19 +383,29 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         return self.control.tabwidgets()
 
+    def _get_editor_tabwidget(self, editor):
+        """ Given an editor, return its tabwidget. """
+        return editor.control.parent().parent()
+
+    def _get_editor_tabwidget_index(self, editor):
+        """ Given an editor, return its tabwidget and index. """
+        tabwidget = self._get_editor_tabwidget(editor)
+        index = tabwidget.indexOf(editor.control)
+        return tabwidget, index
+
     # Trait change handlers ------------------------------------------------
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
         editor = event.object
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabText(index, self._get_label(editor))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.setTabText(index, self._get_label(editor))
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
         editor = event.object
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
+        tabwidget, index = self._get_editor_tabwidget_index(editor)
+        tabwidget.setTabToolTip(index, editor.tooltip)
 
     # Signal handlers -----------------------------------------------------#
 

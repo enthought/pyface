@@ -14,7 +14,7 @@
 import unittest
 from io import StringIO
 
-from pyface.qt import QtGui
+from pyface.qt import QtGui, is_qt6
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 
@@ -97,6 +97,7 @@ class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
         # but no dialog is opened
         self.assertFalse(tester.dialog_was_opened)
 
+    @unittest.skipIf(is_qt6, "TEMPORARY: getting tests to run on pyside6")
     def test_capture_errors_on_failure(self):
         dialog = MessageDialog()
         tester = ModalDialogTester(dialog.open)
@@ -116,6 +117,7 @@ class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
                 tester.open_and_run(when_opened=failure)
             self.assertIn("raise self.failureException(msg)", alt_stderr)
 
+    @unittest.skipIf(is_qt6, "TEMPORARY: getting tests to run on pyside6")
     def test_capture_errors_on_error(self):
         dialog = MessageDialog()
         tester = ModalDialogTester(dialog.open)

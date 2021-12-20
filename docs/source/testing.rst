@@ -16,7 +16,7 @@ to be able to post events to the event loop, process them manually, and then
 make assertions about the desired behavior. Even further, the event loop is
 global state. Therefore, great care needs to be taken in each test to pick up
 after itself to avoid interactions with other tests. This is still necessary
-even if the test fails. 
+even if the test fails.
 
 Pyface provides a few utilities that are useful in this process.  Namely,
 :class:`~pyface.util.GuiTestAssistant` and
@@ -36,7 +36,7 @@ GuiTestAssistant
 gives access to methods like
 :meth:`~traits.testing.unittest_tools.UnittestTools.assertTraitChanges`. See the
 `Traits Testing documentation <https://docs.enthought.com/traits/traits_user_manual/testing.html#testing>`_
-for more. 
+for more.
 
 :class:`GuiTestAssistant` holds a reference to a :class:`pyface.gui.GUI` object
 (for api details see the interface :class:`~pyface.i_gui.IGUI`) which is what
@@ -62,7 +62,7 @@ event loop access needed to write your GUI tests.
 This class provides the following methods (some of them being context managers):
 
 - :meth:`event_loop`
-  
+
     Context Manager
 
     Takes an integer ``repeat`` parameter and artificially replicates the event
@@ -118,7 +118,7 @@ This class provides the following methods (some of them being context managers):
     an easier to use, safer alternative if working with a TraitsUI based
     application.
 
-- :meth:`assertEventuallyTrueInGui` 
+- :meth:`assertEventuallyTrueInGui`
 
     Assert that the given condition becomes true if we run the GUI
     event loop for long enough.
@@ -126,6 +126,19 @@ This class provides the following methods (some of them being context managers):
     This assertion runs the real Qt event loop, polling the condition
     and returning as soon as the condition becomes true. If the condition
     does not become true within the given timeout, the assertion fails.
+
+.. warning::
+    Some care needs to be taken with the various methods that run the event
+    loop while waiting for a condition function to return true, such as
+    :meth:`event_loop_until_condition` and :meth:`assertEventuallyTrueInGui`.
+    These work by running the real application event loop and polling for the
+    state of the condition being tested.  If the condition being tested is
+    transient, it is possible that it may switch from False to True and back to
+    False in between polling checks, and so fail to detect that the condition
+    occurred.
+
+    When writing tests that use these methods, you should be careful to test
+    for conditions that once True, remains True.
 
 For a very simple example consider this (slightly modified) test from pyface's
 own test suite.
@@ -161,6 +174,7 @@ own test suite.
                     self.window, "closing", "closed"):
                 self.window.close()
 
+
 ModalDialogTester
 =================
 
@@ -169,7 +183,7 @@ ModalDialogTester
    ModalDialogTester is currently only available on Qt.
 
 :class:`ModalDialogTester` is, as the name suggests, intended specifically for
-use testing modal dialogs. Modal dialogs are dialogs which sit on top of the 
+use testing modal dialogs. Modal dialogs are dialogs which sit on top of the
 main content of the application, and effectively demand interaction.  The
 rest of the UI is blocked until the dialog is addressed. These require special
 care to test and :class:`GuiTestAssistant` doesen't provide this functionality.

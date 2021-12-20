@@ -36,6 +36,39 @@ elif qt_api == "pyqt5":
     QStyleOptionTabV3 = QStyleOptionTab
     QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
 
+elif qt_api == "pyqt6":
+    from PyQt6.QtGui import *
+    from PyQt6.QtWidgets import *
+    from PyQt6.QtPrintSupport import *
+    from PyQt6.QtCore import (
+        QAbstractProxyModel,
+        QItemSelection,
+        QItemSelectionModel,
+        QItemSelectionRange,
+        QSortFilterProxyModel,
+        QStringListModel,
+    )
+
+    QStyleOptionTabV2 = QStyleOptionTab
+    QStyleOptionTabV3 = QStyleOptionTab
+    QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
+
+elif qt_api == "pyside6":
+    from PySide6.QtGui import *
+    from PySide6.QtWidgets import *
+    from PySide6.QtPrintSupport import *
+    from PySide6.QtCore import (
+        QAbstractProxyModel,
+        QItemSelection,
+        QItemSelectionModel,
+        QItemSelectionRange,
+        QSortFilterProxyModel,
+    )
+
+    QStyleOptionTabV2 = QStyleOptionTab
+    QStyleOptionTabV3 = QStyleOptionTab
+    QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
+
 else:
     from PySide2.QtGui import *
     from PySide2.QtWidgets import *

@@ -14,9 +14,10 @@ import warnings
 
 import wx
 
-from traits.api import Color, Event, Instance, Int, Tuple
+from traits.api import Event, Instance, Int, Tuple
 
 from pyface.ui.wx.image_list import ImageList
+from pyface.ui_traits import TraitsUIColor as Color
 from pyface.viewer.content_viewer import ContentViewer
 from pyface.viewer.table_column_provider import TableColumnProvider
 from pyface.viewer.table_content_provider import TableContentProvider

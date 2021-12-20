@@ -34,11 +34,16 @@ def filter_tests(test_suite, exclusion_pattern):
 
 
 def has_traitsui():
-    """ Is traitsui installed? """
+    """ Is traitsui installed and sufficiently recent? """
     try:
         import traitsui  # noqa: F401
     except ImportError:
         return False
+    from pyface.toolkit import toolkit
+    if toolkit.toolkit.startswith("qt"):
+        from pyface.qt import is_qt6
+        if is_qt6:
+            return Version(traitsui.__version__) >= Version("7.4")
     return True
 
 
