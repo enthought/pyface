@@ -185,7 +185,8 @@ class DockPane(TaskPane, MDockPane):
 
     def _receive_dock_area(self, area):
         with self._signal_context():
-            self.dock_area = INVERSE_AREA_MAP[int(area)]
+            if int(area) in INVERSE_AREA_MAP:
+                self.dock_area = INVERSE_AREA_MAP[int(area)]
 
     def _receive_floating(self, floating):
         with self._signal_context():
