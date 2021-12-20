@@ -69,7 +69,7 @@ Contents
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    Overview <overview>
    Toolkits <toolkits>
@@ -77,6 +77,7 @@ Contents
    Pyface Applications <applications>
    Pyface Trait Types <traits>
    Images in Pyface <image_types>
+   Standard Dialogs <standard_dialogs>
    Submodules <submodules>
    Testing <testing>
    API Documentation <api/pyface>

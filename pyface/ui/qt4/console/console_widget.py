@@ -248,7 +248,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Make middle-click paste safe.
         elif (
             etype == QtCore.QEvent.MouseButtonRelease
-            and event.button() == QtCore.Qt.MidButton
+            and event.button() == QtCore.Qt.MiddleButton
             and obj == self._control.viewport()
         ):
             cursor = self._control.cursorForPosition(event.pos())
@@ -561,7 +561,7 @@ class ConsoleWidget(QtGui.QWidget):
         else:
             width = font_metrics.width(" ")
 
-        self._control.setTabStopWidth(self.tab_width * width)
+        self._control.setTabStopDistance(self.tab_width * width)
 
         self._control.document().setDefaultFont(font)
         if self._page_control:
@@ -871,7 +871,7 @@ class ConsoleWidget(QtGui.QWidget):
         else:
             width = font_metrics.width(" ")
 
-        self._control.setTabStopWidth(tab_width * width)
+        self._control.setTabStopDistance(tab_width * width)
 
         self._tab_width = tab_width
 

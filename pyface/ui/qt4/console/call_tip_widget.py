@@ -179,7 +179,11 @@ class CallTipWidget(QtGui.QLabel):
         # the current line.
         padding = 3  # Distance in pixels between cursor bounds and tip box.
         cursor_rect = text_edit.cursorRect(cursor)
-        screen_rect = QtGui.QApplication.desktop().screenGeometry(text_edit)
+        if QtCore.__version_info__ >= (5, 10):
+            screen = text_edit.window().windowHandle().screen()
+            screen_rect = screen.availableGeometry()
+        else:
+            screen_rect = QtGui.QApplication.desktop().screenGeometry(text_edit)
         point = text_edit.mapToGlobal(cursor_rect.bottomRight())
         point.setY(point.y() + padding)
         tip_height = self.size().height()

@@ -8,14 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Application window example. """
+""" Application window example.
 
-
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+This example only works with the WxPython toolkit.
+"""
 
 from pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager

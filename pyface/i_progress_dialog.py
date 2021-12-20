@@ -8,7 +8,8 @@
 #
 # Thanks for using Enthought open source!
 
-""" The interface for a dialog that allows the user to open/save files etc. """
+"""The interface for a dialog that allows the user to display progress of an
+operation."""
 
 
 from traits.api import Any, Bool, HasTraits, Int, Str

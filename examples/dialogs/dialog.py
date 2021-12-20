@@ -11,12 +11,6 @@
 """ Dialog example. """
 
 
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
-
 from pyface.api import (
     ApplicationWindow,
     GUI,

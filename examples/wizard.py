@@ -10,17 +10,11 @@
 
 """ Wizard example. """
 
-
-import os
-import sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+from traits.api import HasTraits, Str
 
 from pyface.api import GUI, OK
 from pyface.wizard.api import SimpleWizard, WizardPage
-from traits.api import Color, HasTraits, Int, Str
+from pyface.ui_traits import TraitsUIColor as Color
 
 
 class Details(HasTraits):

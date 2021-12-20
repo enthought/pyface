@@ -12,4 +12,4 @@
 
 from .toolkit import toolkit_object
 
-layout_widget = toolkit_object("layout_widget:LayoutWidget")
+LayoutWidget = toolkit_object("layout_widget:LayoutWidget")
