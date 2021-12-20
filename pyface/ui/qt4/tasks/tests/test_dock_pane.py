@@ -85,7 +85,6 @@ class TestDockPane(unittest.TestCase):
 
         def check_panes_and_exit(app_event):
             app = app_event.application
-            print('here')
             app.windows[0].dock_panes[0].control.setFloating(True)
             for window in app.windows:
                 for dock_pane in window.dock_panes:
