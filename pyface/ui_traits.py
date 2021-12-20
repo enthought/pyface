@@ -203,13 +203,13 @@ class PyfaceFont(TraitType):
     #: The parser to use when converting text to keyword args.  This should
     #: accept a string and return a dictionary of Font class trait values (ie.
     #: "family", "size", "weight", etc.).
-    parser = simple_parser
+    parser = None
 
-    def __init__(self, value=None, *, parser=None, **metadata):
+    def __init__(self, value=None, *, parser=simple_parser, **metadata):
         if parser is not None:
             self.parser = parser
         if value is not None:
-            font = self.validate(value)
+            font = self.validate(None, None, value)
             default_value = (
                 Font,
                 (),

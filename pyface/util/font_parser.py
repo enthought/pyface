@@ -79,7 +79,7 @@ def simple_parser(description):
         else:
             if size is None:
                 try:
-                    size = int(word)
+                    size = float(word)
                     continue
                 except ValueError:
                     pass
@@ -92,6 +92,8 @@ def simple_parser(description):
         family.append(generic_family)
     if not family:
         family = ["default"]
+    if size is None:
+        size = 12
 
     return {
         'family': family,

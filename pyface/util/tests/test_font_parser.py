@@ -32,7 +32,7 @@ class TestSimpleParser(TestCase):
             properties,
             {
                 'family': ["default"],
-                'size': None,
+                'size': 12.0,
                 'weight': "normal",
                 'stretch': "normal",
                 'style': "normal",
@@ -48,7 +48,7 @@ class TestSimpleParser(TestCase):
             properties,
             {
                 'family': ["helvetica", "sans-serif"],
-                'size': 10,
+                'size': 10.0,
                 'weight': "bold",
                 'stretch': "condensed",
                 'style': "italic",
@@ -65,7 +65,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': "normal",
                         'style': "normal",
@@ -82,7 +82,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': [family],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': "normal",
                         'style': "normal",
@@ -92,7 +92,7 @@ class TestSimpleParser(TestCase):
                 )
 
     def test_size(self):
-        for size in [12, 24]:
+        for size in [12, 24, 12.5]:
             with self.subTest(size=size):
                 properties = simple_parser(str(size))
                 self.assertEqual(
@@ -116,7 +116,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': weight,
                         'stretch': "normal",
                         'style': "normal",
@@ -133,7 +133,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': stretch,
                         'style': "normal",
@@ -150,7 +150,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': "normal",
                         'style': style,
@@ -167,7 +167,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': "normal",
                         'style': "normal",
@@ -189,7 +189,7 @@ class TestSimpleParser(TestCase):
                     properties,
                     {
                         'family': ["default"],
-                        'size': None,
+                        'size': 12.0,
                         'weight': "normal",
                         'stretch': "normal",
                         'style': "normal",
