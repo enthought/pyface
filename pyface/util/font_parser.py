@@ -77,9 +77,10 @@ def simple_parser(description):
         elif word in DECORATIONS:
             decorations.add(word)
         else:
-            if size is not None:
+            if size is None:
                 try:
                     size = int(word)
+                    continue
                 except ValueError:
                     pass
             face.append(word)
