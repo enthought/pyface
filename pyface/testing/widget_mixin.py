@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+from unittest.mock import patch
 
 from traits.testing.api import UnittestTools
 
@@ -61,7 +62,42 @@ class WidgetMixin(UnittestTools):
 
         self.assertEqual(self.widget._get_control_tooltip(), "New tooltip.")
 
+    def test_widget_tooltip_cleanup(self):
+        widget = self._create_widget()
+        with patch.object(widget, '_tooltip_updated', return_value=None) as updated:
+            widget._create()
+            try:
+                widget.show(True)
+                self.gui.process_events()
+            finally:
+                widget.destroy()
+                self.gui.process_events()
+
+            widget.tooltip = "New tooltip."
+
+            updated.assert_not_called()
+
+        widget = None
+
     def test_widget_menu(self):
         self._create_widget_control()
         self.widget.context_menu = MenuManager(Action(name="Test"), name="Test")
+
         self.gui.process_events()
+
+    def test_widget_context_menu_cleanup(self):
+        widget = self._create_widget()
+        with patch.object(widget, '_context_menu_updated', return_value=None) as updated:
+            widget._create()
+            try:
+                widget.show(True)
+                self.gui.process_events()
+            finally:
+                widget.destroy()
+                self.gui.process_events()
+
+            widget.context_menu = MenuManager(Action(name="Test"), name="Test")
+
+            updated.assert_not_called()
+
+        widget = None
