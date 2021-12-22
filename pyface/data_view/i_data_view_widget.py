@@ -12,7 +12,7 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, Enum, HasStrictTraits, Instance, List, Property,
+    Bool, Enum, HasTraits, Instance, List, Property,
     TraitError, Tuple, cached_property,
 )
 
@@ -56,7 +56,7 @@ class IDataViewWidget(ILayoutWidget):
     exporters = List(Instance(AbstractDataExporter))
 
 
-class MDataViewWidget(HasStrictTraits):
+class MDataViewWidget(HasTraits):
     """ Mixin class for data view widgets. """
 
     # IDataViewWidget Interface traits --------------------------------------
