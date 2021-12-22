@@ -50,10 +50,9 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        if self.control.GetReturnCode() == wx.ID_OK:
-            colour_data = self.control.GetColourData()
-            wx_colour = colour_data.GetColour()
-            self.color = Color.from_toolkit(wx_colour)
+        colour_data = self.control.GetColourData()
+        wx_colour = colour_data.GetColour()
+        self.color = Color.from_toolkit(wx_colour)
         super(ColorDialog, self).close()
 
     # ------------------------------------------------------------------------
