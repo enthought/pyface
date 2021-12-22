@@ -19,13 +19,13 @@ from traits.api import (
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_data_exporter import AbstractDataExporter
 from pyface.i_drop_handler import IDropHandler
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
 logger = logging.getLogger(__name__)
 
 
-class IDataViewWidget(IWidget):
+class IDataViewWidget(ILayoutWidget):
     """ Interface for data view widgets. """
 
     #: The data model for the data view.
