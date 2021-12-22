@@ -83,6 +83,13 @@ Typical usage for a save dialog looks like this::
         print(f"Save to {dialog.path}")
 
 
+Font Dialog
+===========
+
+A dialog that takes a |Font| object and displays a standard OS font selection.
+A convenience function |get_font| opens the dialog and returns a font value.
+
+
 Message Dialog
 ==============
 
@@ -195,6 +202,7 @@ user's selection or ``None`` if nothing is selected.
 .. |CANCEL| replace:: :py:obj:`~pyface.constants.CANCEL`
 .. |Color| replace:: :py:class:`~pyface.color.Color`
 .. |Executor| replace:: :py:class:`~concurrent.futures.Executor`
+.. |Font| replace:: :py:class:`~pyface.font.Font`
 .. |IDialog| replace:: :py:class:`~pyface.i_dialog.IDialog`
 .. |NO| replace:: :py:obj:`~pyface.constants.NO`
 .. |OK| replace:: :py:obj:`~pyface.constants.OK`
@@ -203,6 +211,7 @@ user's selection or ``None`` if nothing is selected.
 .. |confirm| replace:: :py:func:`~pyface.confirmation_dialog.confirm`
 .. |error| replace:: :py:func:`~pyface.message_dialog.error`
 .. |get_color| replace:: :py:func:`~pyface.color_dialog.get_color`
+.. |get_font| replace:: :py:func:`~pyface.font_dialog.get_font`
 .. |information| replace:: :py:func:`~pyface.message_dialog.information`
 .. |open| replace:: :py:meth:`~pyface.i_dialog.IDialog.open`
 .. |warning| replace:: :py:func:`~pyface.message_dialog.warning`
