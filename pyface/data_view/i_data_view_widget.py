@@ -12,20 +12,20 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, Enum, HasStrictTraits, Instance, List, Property,
+    Bool, Enum, HasTraits, Instance, List, Property,
     TraitError, Tuple, cached_property,
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_data_exporter import AbstractDataExporter
 from pyface.i_drop_handler import IDropHandler
-from pyface.i_widget import IWidget
+from pyface.i_layout_widget import ILayoutWidget
 
 
 logger = logging.getLogger(__name__)
 
 
-class IDataViewWidget(IWidget):
+class IDataViewWidget(ILayoutWidget):
     """ Interface for data view widgets. """
 
     #: The data model for the data view.
@@ -56,7 +56,7 @@ class IDataViewWidget(IWidget):
     exporters = List(Instance(AbstractDataExporter))
 
 
-class MDataViewWidget(HasStrictTraits):
+class MDataViewWidget(HasTraits):
     """ Mixin class for data view widgets. """
 
     # IDataViewWidget Interface traits --------------------------------------

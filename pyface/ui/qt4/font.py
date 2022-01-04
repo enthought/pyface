@@ -139,19 +139,20 @@ def toolkit_font_to_properties(toolkit_font):
     """
     family = []
 
+    if toolkit_font.family():
+        family.append(toolkit_font.family())
     if hasattr(toolkit_font, 'families'):
         # Qt 5.13 and later
-        family = list(toolkit_font.families())
-    elif toolkit_font.family():
-        family.append(toolkit_font.family())
-    if toolkit_font.defaultFamily():
-        family.append(toolkit_font.defaultFamily())
+        family.extend(toolkit_font.families())
     family.append(qt_family_to_generic_family[toolkit_font.styleHint()])
 
     size = toolkit_font.pointSizeF()
     style = qt_style_to_style[toolkit_font.style()]
     weight = map_to_nearest(toolkit_font.weight(), qt_weight_to_weight)
     stretch = toolkit_font.stretch()
+    if stretch == 0:
+        # stretch 0 means any stretch is allowed, we default to no stretch
+        stretch = 100.0
     variants = set()
     if toolkit_font.capitalization() == QFont.SmallCaps:
         variants.add('small-caps')
