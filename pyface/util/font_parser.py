@@ -32,10 +32,45 @@ class FontParseError(ValueError):
 def simple_parser(description):
     """An extremely simple font description parser.
 
-    This is roughly compatible with the various ad-hoc parsers in TraitsUI
-    and Kiva, allowing for the slight differences between them and adding
-    support for additional options supported by Pyface fonts, such as stretch
-    and variants.
+    The parser is simple, and works by splitting the description on whitespace
+    and examining each resulting token for understood terms:
+
+    Size
+        The first numeric term is treated as the font size.
+
+    Weight
+        The following weight terms are accepted: 'thin', 'extra-light',
+        'light', 'regular', 'medium', 'demi-bold', 'bold', 'extra-bold',
+        'heavy', 'extra-heavy'.
+
+    Stretch
+        The following stretch terms are accepted: 'ultra-condensed',
+        'extra-condensed', 'condensed', 'semi-condensed', 'semi-expanded',
+        'expanded', 'extra-expanded', 'ultra-expanded'.
+
+    Style
+        The following style terms are accepted: 'italic', 'oblique'.
+
+    Variant
+        The following variant terms are accepted: 'small-caps'.
+
+    Decorations
+        The following decoration terms are accepted: 'underline',
+        'strikethrough', 'overline'.
+
+    Generic Families
+        The following generic family terms are accepted: 'default', 'fantasy',
+        'decorative', 'serif', 'roman', 'cursive', 'script', 'sans-serif',
+        'swiss', 'monospace', 'modern', 'typewriter', 'teletype'.
+
+    In addtion, the parser ignores the terms 'pt', 'point', 'px', and 'family'.
+    Any remaining terms are combined into the typeface name.  There is no
+    expected order to the terms.
+
+    This parser is roughly compatible with the various ad-hoc parsers in
+    TraitsUI and Kiva, allowing for the slight differences between them and
+    adding support for additional options supported by Pyface fonts, such as
+    stretch and variants.
 
     Parameters
     ----------
