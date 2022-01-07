@@ -317,7 +317,7 @@ class MainWindowLayout(HasTraits):
                     if layout.height > 0:
                         dock_widget.widget().setFixedHeight(layout.height)
                 else:
-                    sizeHint = lambda : QtCore.QSize(layout.width, layout.height)
+                    sizeHint = lambda: QtCore.QSize(layout.width, layout.height)
                     dock_widget.widget().sizeHint = sizeHint
             return dock_widget
 

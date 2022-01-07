@@ -2569,7 +2569,7 @@ class DockRegion(DockGroup):
         if isinstance(item, DockGroup) and (len(item.contents) == 1):
             item = item.contents[0]
             if isinstance(item, DockRegion):
-                contents[i : i + 1] = item.contents[:]
+                contents[i:i + 1] = item.contents[:]
             else:
                 contents[i] = item
         else:

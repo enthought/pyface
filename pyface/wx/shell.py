@@ -690,7 +690,7 @@ class Shell(wx.StyledTextCtrl):
             command = self.history[i]
             if command[: len(searchText)] == searchText:
                 # Replace the current selection with the one we've found.
-                self.ReplaceSelection(command[len(searchText) :])
+                self.ReplaceSelection(command[len(searchText):])
                 endpos = self.GetCurrentPos()
                 self.SetSelection(endpos, startpos)
                 # We've now warped into middle of the history.
@@ -1015,7 +1015,7 @@ class Shell(wx.StyledTextCtrl):
         if len(completions) == 0:
             return 0
         if len(completions) == 1:
-            self.write(completions[0][len(command) :])
+            self.write(completions[0][len(command):])
         else:
             self.AutoCompShow(len(command), "\n".join(completions))
         return 1

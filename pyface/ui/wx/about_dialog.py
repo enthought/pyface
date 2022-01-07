@@ -129,7 +129,7 @@ class AboutDialog(MAboutDialog, Dialog):
         additions = "<br />".join(self.additions)
 
         # Get the version numbers.
-        py_version = sys.version[0 : sys.version.find("(")]
+        py_version = sys.version[0:sys.version.find("(")]
         wx_version = wx.VERSION_STRING
 
         # The additional copyright strings.

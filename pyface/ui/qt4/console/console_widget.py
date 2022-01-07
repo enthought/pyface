@@ -737,7 +737,7 @@ class ConsoleWidget(QtGui.QWidget):
             assert offset > -1
             html = (
                 '<html xmlns="http://www.w3.org/1999/xhtml">\n'
-                + html[offset + 6 :]
+                + html[offset + 6:]
             )
             # And now declare UTF-8 encoding
             html = self.fix_html_encoding(html)
@@ -773,7 +773,7 @@ class ConsoleWidget(QtGui.QWidget):
                 html[: offset + 6]
                 + '\n<meta http-equiv="Content-Type" '
                 + 'content="text/html; charset=utf-8" />\n'
-                + html[offset + 6 :]
+                + html[offset + 6:]
             )
 
         return html
@@ -1604,7 +1604,7 @@ class ConsoleWidget(QtGui.QWidget):
         else:
             cursor = self._control.textCursor()
             text = self._get_block_plain_text(cursor.block())
-            return text[len(prompt) :]
+            return text[len(prompt):]
 
     def _get_input_buffer_cursor_prompt(self):
         """ Returns the (plain text) prompt for line of the input buffer that
