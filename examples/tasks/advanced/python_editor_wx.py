@@ -136,14 +136,6 @@ class PythonEditor(Editor):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Creates the toolkit-specific control for the widget.
-        """
-        from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
-
-        self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_updated()
-
-    def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """
 
         # Base-class constructor.

@@ -439,29 +439,6 @@ class TestImageVolume(unittest.TestCase):
             self.assertEqual(len(volume.info), 1)
             self.assertIsInstance(volume.info[0], ImageVolumeInfo)
 
-    def test_icons_zipfile_volume(self):
-        time_stamp = time_stamp_for(stat(ICONS_FILE).st_mtime)
-        with closing(FastZipFile(path=ICONS_FILE)) as zf:
-            volume = ImageVolume(name="icons", path=ICONS_FILE, zip_file=zf)
-
-            self.assertEqual(volume.name, "icons")
-            self.assertTrue(
-                any(
-                    image.image_name == "@icons:red_ball"
-                    for image in volume.images
-                )
-            )
-            self.assertTrue("@icons:red_ball" in volume.catalog)
-            self.assertEqual(volume.category, "General")
-            self.assertEqual(volume.keywords, [])
-            self.assertEqual(volume.aliases, [])
-            self.assertEqual(Path(volume.path), ICONS_FILE)
-            self.assertTrue(volume.is_zip_file)
-            self.assertIs(volume.zip_file, zf)
-            self.assertEqual(volume.time_stamp, time_stamp)
-            self.assertEqual(len(volume.info), 1)
-            self.assertIsInstance(volume.info[0], ImageVolumeInfo)
-
     def test_icons_image_resource(self):
         with closing(FastZipFile(path=ICONS_FILE)) as zf:
             volume = ImageVolume(name="icons", path=ICONS_FILE, zip_file=zf)
