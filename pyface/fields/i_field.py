@@ -44,16 +44,8 @@ class MField(HasTraits):
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None and self.context_menu is not None:
-            self._observe_control_context_menu(remove=True)
         self.observe(
             self._value_updated, "value", dispatch="ui", remove=True
-        )
-        self.observe(
-            self._context_menu_updated,
-            "context_menu",
-            dispatch="ui",
-            remove=True,
         )
         super()._remove_event_listeners()
 
