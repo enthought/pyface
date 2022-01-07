@@ -90,9 +90,8 @@ class PythonEditor(Editor):
         if path is None:
             path = self.path
 
-        f = file(path, "w")
-        f.write(self.control.GetText())
-        f.close()
+        with open(path, "w") as f:
+            f.write(self.control.GetText())
 
         self.dirty = False
 
