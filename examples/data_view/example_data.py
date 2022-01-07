@@ -14,7 +14,7 @@ This module provides some routines for randomly generating data for use
 in examples.
 """
 
-from random import choice, randint, uniform
+from random import choice, randint
 
 from pyface.color import Color
 
@@ -51,6 +51,10 @@ family_names = [
     'Montague', 'Miller',
 ]
 
+favorite_colors = [
+    Color(hsv=(hue/100, 1.0, 1.0))
+    for hue in range(100)
+]
 
 def any_name():
     return choice(all_names)
@@ -65,7 +69,7 @@ def age():
 
 
 def favorite_color():
-    return Color(hsv=(uniform(0.0, 1.0), 1.0, 1.0))
+    return choice(favorite_colors)
 
 
 def street():
