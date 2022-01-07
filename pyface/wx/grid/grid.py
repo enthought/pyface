@@ -33,14 +33,6 @@ class Grid(wxGrid):
         # The model that provides the data and row/column information.
         self.model = None
 
-        # Automatically size columns and rows to fit their content.
-        #
-        # fixme: wx seems sensitive to the location of these two lines. Put
-        # them *before* the call to 'SetTable', otherwise the grid takes
-        # forever to initialize!
-        ##self.AutoSizeColumns()
-        ##self.AutoSizeRows()
-
         # Don't display any extra space around the rows and columns.
         self.SetMargins(0, 0)
 

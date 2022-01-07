@@ -62,7 +62,7 @@ class ExpandableHeader(Widget):
     #: The panel has been expanded or collapsed
     panel_expanded = Event()
 
-    # The panel has been closed
+    #: The panel has been closed
     panel_closed = Event()
 
     _CARAT_X = 4
@@ -121,9 +121,6 @@ class ExpandableHeader(Widget):
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN | wx.BORDER_SIMPLE)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
-
-        # needed on GTK systems for EVT_ERASE_BACKGROUND to work
-        #panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         # create the remove button
         remove = wx.BitmapButton.NewCloseButton(panel, -1)

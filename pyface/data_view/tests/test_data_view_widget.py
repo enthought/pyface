@@ -159,7 +159,7 @@ class TestWidget(LayoutWidgetMixin, unittest.TestCase):
         self.gui.process_events()
 
         self.assertEqual(self.widget.selection, [((1, 4), ())])
-        self.assertEqual(self.widget._get_control_selection(),  [((1, 4), ())])
+        self.assertEqual(self.widget._get_control_selection(), [((1, 4), ())])
 
     def test_selection_mode_single_invalid(self):
         self.widget.selection_mode = "single"
