@@ -343,7 +343,7 @@ class Shell(wx.StyledTextCtrl):
             startupText = "Startup script executed: " + startupScript
             self.push(
                 "print(%s);exec(open(%s).read())"
-                % ("startupText", "startupScript")
+                % (repr(startupText), repr(startupScript))
             )
         else:
             self.push("")
@@ -488,7 +488,6 @@ class Shell(wx.StyledTextCtrl):
         altDown = event.AltDown()
         shiftDown = event.ShiftDown()
         currpos = self.GetCurrentPos()
-        endpos = self.GetTextLength()
         selecting = self.GetSelectionStart() != self.GetSelectionEnd()
         # Return (Enter) is used to submit a command to the interpreter.
         if not controlDown and key == WXK_RETURN:
