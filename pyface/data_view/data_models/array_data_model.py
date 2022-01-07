@@ -255,8 +255,8 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         if event.new.shape == event.old.shape:
             if self.data.size > 0:
                 self.values_changed = (
-                        (0,), (0,),
-                        (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
+                    (0,), (0,),
+                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
                 )
         else:
             self.structure_changed = True
