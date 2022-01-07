@@ -12,14 +12,14 @@ import logging
 
 import wx
 
-# Logger.
-logger = logging.getLogger(__name__)
-
 # Multiple AUI versions are no longer supported; the C version in wx.aui is not
 # capable of supporting the windowing flexibility needed by tasks. Therefore,
 # only AGW's pure-python AUI implementation is used.
 
 from wx.lib.agw import aui
+
+# Logger.
+logger = logging.getLogger(__name__)
 
 # AGW's library does need some patching for some usability differences desired
 # for pyface but not for the standard wxPython version
