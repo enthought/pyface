@@ -8,8 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Either, List, Str, Tuple, Enum, Instance, Union
-
+from traits.api import List, Str, Tuple, Enum, Instance, Union
 
 from pyface.tasks.task_layout import LayoutContainer, TaskLayout
 

@@ -19,7 +19,6 @@ from ..font_parser import (
     STYLES,
     VARIANTS,
     WEIGHTS,
-    FontParseError,
     simple_parser,
 )
 

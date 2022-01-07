@@ -14,7 +14,7 @@
 
 import wx
 
-from traits.api import Instance, List, on_trait_change, provides, Str
+from traits.api import Instance, List, provides, Str
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager

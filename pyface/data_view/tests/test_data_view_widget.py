@@ -13,12 +13,9 @@ import unittest
 
 from traits.api import TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.api import UnittestTools
 
-from pyface.gui import GUI
 from pyface.toolkit import toolkit
 from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
-from pyface.window import Window
 
 # This import results in an error without numpy installed
 # see enthought/pyface#742
