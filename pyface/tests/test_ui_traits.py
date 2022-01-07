@@ -392,11 +392,7 @@ class TestPyfaceFont(unittest.TestCase):
             )
         )
 
-<<<<<<< HEAD
-    def test_init_empty_string(self):
-=======
     def test_init_typical_string(self):
->>>>>>> main
         trait = PyfaceFont(
             "10 pt bold condensed italic underline Helvetica sans-serif")
         self.assertEqual(
