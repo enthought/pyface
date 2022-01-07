@@ -30,8 +30,10 @@ from traits.api import (
 from traits.trait_base import get_resource_path
 
 from pyface.color import Color
+from pyface.font import Font
 from pyface.i_image import IImage
 from pyface.util.color_parser import ColorParseError
+from pyface.util.font_parser import simple_parser, FontParseError
 
 
 logger = logging.getLogger(__name__)
@@ -144,7 +146,7 @@ class Image(TraitType):
 
 
 class PyfaceColor(TraitType):
-    """ A Trait which casts strings and tuples to a PyfaceColor value.
+    """ A Trait which casts strings and tuples to a Pyface Color value.
     """
 
     #: The default value should be a tuple (factory, args, kwargs)
@@ -183,6 +185,59 @@ class PyfaceColor(TraitType):
         return (
             "a Pyface Color, a #-hexadecimal rgb or rgba string,  a standard "
             "color name, or a sequence of RGBA or RGB values between 0 and 1"
+        )
+
+
+# -------------------------------------------------------------------------------
+#  Font
+# -------------------------------------------------------------------------------
+
+
+class PyfaceFont(TraitType):
+    """ A Trait which casts strings to a Pyface Font value.
+    """
+
+    #: The default value should be a tuple (factory, args, kwargs)
+    default_value_type = DefaultValue.callable_and_args
+
+    #: The parser to use when converting text to keyword args.  This should
+    #: accept a string and return a dictionary of Font class trait values (ie.
+    #: "family", "size", "weight", etc.).
+    parser = None
+
+    def __init__(self, value=None, *, parser=simple_parser, **metadata):
+        self.parser = parser
+        if value is not None:
+            try:
+                font = self.validate(None, None, value)
+            except TraitError:
+                raise ValueError(
+                    "expected " + self.info()
+                    + f", but got {value!r}"
+                )
+            default_value = (
+                Font,
+                (),
+                font.trait_get(transient=lambda x: not x),
+            )
+        else:
+            default_value = (Font, (), {})
+        super().__init__(default_value, **metadata)
+
+    def validate(self, object, name, value):
+        if isinstance(value, Font):
+            return value
+        if isinstance(value, str):
+            try:
+                return Font(**self.parser(value))
+            except FontParseError:
+                self.error(object, name, value)
+
+        self.error(object, name, value)
+
+    def info(self):
+        return (
+            "a Pyface Font, or a string describing a Pyface Font"
         )
 
 

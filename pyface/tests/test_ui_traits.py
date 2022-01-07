@@ -12,6 +12,8 @@
 import os
 import unittest
 
+from pyface.util.font_parser import simple_parser
+
 # importlib.resources is new in Python 3.7, and importlib.resources.files is
 # new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
 # importlib_resources package.
@@ -30,6 +32,7 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.api import UnittestTools
 
 from ..color import Color
+from ..font import Font
 from ..image_resource import ImageResource
 from ..ui_traits import (
     Border,
@@ -38,6 +41,7 @@ from ..ui_traits import (
     Image,
     Margin,
     PyfaceColor,
+    PyfaceFont,
     image_resource_cache,
     image_bitmap_cache,
 )
@@ -54,6 +58,11 @@ class ImageClass(HasTraits):
 class ColorClass(HasTraits):
 
     color = PyfaceColor()
+
+
+class FontClass(HasTraits):
+
+    font = PyfaceFont()
 
 
 class HasMarginClass(HasTraits):
@@ -352,6 +361,134 @@ class TestPyfaceColor(unittest.TestCase):
         )
         color_class = ColorClass(color=arr[0])
         self.assertEqual(color_class.color, color)
+
+
+class TestPyfaceFont(unittest.TestCase):
+
+    def test_init(self):
+        trait = PyfaceFont()
+        self.assertEqual(trait.default_value, (Font, (), {}))
+        self.assertEqual(
+            trait.default_value_type,
+            DefaultValue.callable_and_args,
+        )
+
+    def test_init_empty_string(self):
+        trait = PyfaceFont("")
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["default"],
+                    'size': 12.0,
+                    'weight': "normal",
+                    'stretch': 100,
+                    'style': "normal",
+                    'variants': set(),
+                    'decorations': set(),
+                },
+            )
+        )
+
+    def test_init_typical_string(self):
+        trait = PyfaceFont(
+            "10 pt bold condensed italic underline Helvetica sans-serif")
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["helvetica", "sans-serif"],
+                    'size': 10.0,
+                    'weight': "bold",
+                    'stretch': 75.0,
+                    'style': "italic",
+                    'variants': set(),
+                    'decorations': {"underline"},
+                },
+            )
+        )
+
+    def test_init_font(self):
+        font = Font(
+            family=["helvetica", "sans-serif"],
+            size=10.0,
+            weight="bold",
+            stretch=75.0,
+            style="italic",
+            variants=set(),
+            decorations={"underline"},
+        )
+        trait = PyfaceFont(font)
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["helvetica", "sans-serif"],
+                    'size': 10.0,
+                    'weight': "bold",
+                    'stretch': 75.0,
+                    'style': "italic",
+                    'variants': set(),
+                    'decorations': {"underline"},
+                },
+            )
+        )
+
+    def test_init_invalid(self):
+        with self.assertRaises(ValueError):
+            trait = PyfaceFont(0)
+
+    def test_set_empty_string(self):
+        font_class = FontClass()
+        font_class.font = ""
+        self.assertFontEqual(font_class.font, Font())
+
+    def test_set_typical_string(self):
+        font_class = FontClass()
+        font_class.font = "10 pt bold condensed italic underline Helvetica sans-serif"  # noqa: E501
+        self.assertFontEqual(
+            font_class.font,
+            Font(
+                family=["helvetica", "sans-serif"],
+                size=10.0,
+                weight="bold",
+                stretch=75.0,
+                style="italic",
+                variants=set(),
+                decorations={"underline"},
+            ),
+        )
+
+    def test_set_font(self):
+        font_class = FontClass()
+        font = Font(
+            family=["helvetica", "sans-serif"],
+            size=10.0,
+            weight="bold",
+            stretch=75.0,
+            style="italic",
+            variants=set(),
+            decorations={"underline"},
+        )
+        font_class.font = font
+        self.assertIs(font_class.font, font)
+
+    def test_set_failure(self):
+        font_class = FontClass()
+
+        with self.assertRaises(TraitError):
+            font_class.font = None
+
+    def assertFontEqual(self, font1, font2):
+        state1 = font1.trait_get(transient=lambda x: not x)
+        state2 = font2.trait_get(transient=lambda x: not x)
+        self.assertEqual(state1, state2)
 
 
 class TestHasMargin(unittest.TestCase, UnittestTools):

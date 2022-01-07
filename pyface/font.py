@@ -368,7 +368,7 @@ class Font(HasStrictTraits):
         return font_to_toolkit_font(self)
 
     def __str__(self):
-        """ Produce a CSS-style representation of the font. """
+        """ Produce a CSS2-style representation of the font. """
         terms = []
         if self.style != 'normal':
             terms.append(self.style)
