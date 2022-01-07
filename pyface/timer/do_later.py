@@ -36,7 +36,7 @@ def do_later(callable, *args, **kwargs):
     ----------
     callable : callable
         The callable to call in 50ms time.
-    *args, \**kwargs : tuple, dict
+    args, kwargs : tuple, dict
         Arguments to be passed through to the callable.
     """
     return CallbackTimer.single_shot(
@@ -53,9 +53,9 @@ def do_after(interval, callable, *args, **kwargs):
         The time interval in milliseconds to wait before calling.
     callable : callable
         The callable to call.
-    \*args
+    args
         Positional arguments to be passed through to the callable.
-    \*\*kwargs
+    kwargs
         Keyword arguments to be passed through to the callable.
         Arguments to be passed through to the callable.
     """

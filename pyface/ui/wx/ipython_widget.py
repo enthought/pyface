@@ -289,7 +289,7 @@ class IPython09Controller(IPythonController):
         # that in the 'pyreadline' module (modes/basemode.py) where we break at
         # each delimiter and try to complete the residual line, until we get a
         # successful list of completions.
-        expression = "\s|=|,|:|\((?!.*\))|\[(?!.*\])|\{(?!.*\})"
+        expression = r"\s|=|,|:|\((?!.*\))|\[(?!.*\])|\{(?!.*\})"
         complete_sep = re.compile(expression)
         text = complete_sep.split(line)[-1]
         return text
