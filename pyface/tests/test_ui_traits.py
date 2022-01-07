@@ -440,6 +440,10 @@ class TestPyfaceFont(unittest.TestCase):
             )
         )
 
+    def test_init_invalid(self):
+        with self.assertRaises(ValueError):
+            trait = PyfaceFont(0)
+
     def test_set_empty_string(self):
         font_class = FontClass()
         font_class.font = ""

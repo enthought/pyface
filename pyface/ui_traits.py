@@ -206,10 +206,15 @@ class PyfaceFont(TraitType):
     parser = None
 
     def __init__(self, value=None, *, parser=simple_parser, **metadata):
-        if parser is not None:
-            self.parser = parser
+        self.parser = parser
         if value is not None:
-            font = self.validate(None, None, value)
+            try:
+                font = self.validate(None, None, value)
+            except TraitError:
+                raise ValueError(
+                    "expected " + self.info()
+                    + f", but got {value!r}"
+                )
             default_value = (
                 Font,
                 (),
