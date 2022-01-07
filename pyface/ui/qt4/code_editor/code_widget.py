@@ -767,8 +767,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
         while (
             self.find_in_document(
                 search_text=search_text, replace=replace_text
-            )
-            != None
+            ) is not None
         ):
             count += 1
         cursor.endEditBlock()

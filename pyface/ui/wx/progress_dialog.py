@@ -296,7 +296,7 @@ class ProgressDialog(MProgressDialog, Window):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._cancel = None
 
-        if self.can_cancel == True:
+        if self.can_cancel:
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(
                 dialog, wx.ID_CANCEL, self.cancel_button_label

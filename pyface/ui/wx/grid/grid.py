@@ -892,7 +892,7 @@ class Grid(LayoutWidget):
         """ Immediately jumps into editing mode, bypassing the
             usual select mode of a spreadsheet. See also self.OnSelectCell().
         """
-        if self._edit == True and self.edit_on_first_click:
+        if self._edit and self.edit_on_first_click:
             if self._grid.CanEnableCellControl():
                 self._grid.EnableCellEditControl()
             self._edit = False

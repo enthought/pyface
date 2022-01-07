@@ -270,9 +270,9 @@ class IPython09Controller(IPythonController):
             print("_popup_completion", self.input_buffer, file=sys.__stdout__)
 
         line = self.input_buffer
-        if (
+        if create or (
             self.AutoCompActive() and line and not line[-1] == "."
-        ) or create == True:
+        ):
             suggestion, completions = self.complete(line)
             if completions:
                 offset = len(self._get_completion_text(line))
