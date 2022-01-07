@@ -21,6 +21,7 @@ from wx.grid import (
     GRIDTABLE_NOTIFY_COLS_DELETED,
 )
 
+
 class Grid(wxGrid):
     """ A grid (spreadsheet) widget. """
 

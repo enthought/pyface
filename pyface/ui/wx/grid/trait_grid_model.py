@@ -32,9 +32,9 @@ from traits.api import (
 )
 from traits.observation.api import match
 
-
 from .grid_model import GridColumn, GridModel, GridSortEvent
 from .trait_grid_cell_adapter import TraitGridCellAdapter
+
 
 # The classes below are part of the table specification.
 class TraitGridColumn(GridColumn):

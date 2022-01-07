@@ -173,7 +173,6 @@ class ExpandableHeader(Widget):
             self.title, self._carat_w + self._TEXT_X_OFFSET, self._TEXT_Y
         )
 
-
     def _draw(self, dc):
         """ Draws the control. """
 

@@ -14,6 +14,7 @@ from pyface.toolkit import toolkit
 
 is_wx = (toolkit.toolkit == "wx")
 
+
 class TestGuiTestAssistant(unittest.TestCase):
 
     @unittest.skipIf(is_wx, "wx is not supported")

@@ -56,6 +56,7 @@ favorite_colors = [
     for hue in range(100)
 ]
 
+
 def any_name():
     return choice(all_names)
 
