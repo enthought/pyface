@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The implementation of a dialog that allows the user to select a color.
+""" The implementation of a dialog that allows the user to select a font.
 """
 
 from .constant import OK
@@ -19,7 +19,7 @@ FontDialog = toolkit_object("font_dialog:FontDialog")
 
 
 def get_font(parent, font):
-    """ Convenience function that displays a color dialog.
+    """ Convenience function that displays a font dialog.
 
     Parameters
     ----------
