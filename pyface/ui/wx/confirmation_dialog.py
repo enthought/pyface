@@ -15,7 +15,7 @@
 
 import wx
 
-from traits.api import Bool, Enum, Instance, provides, Str
+from traits.api import Bool, Enum, provides, Str
 
 from pyface.i_confirmation_dialog import (
     IConfirmationDialog,

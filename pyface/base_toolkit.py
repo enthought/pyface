@@ -75,7 +75,7 @@ try:
 except ImportError:
     import importlib_metadata
 
-from traits.api import HasTraits, List, ReadOnly, Str, TraitError
+from traits.api import HasTraits, List, ReadOnly, Str
 from traits.etsconfig.api import ETSConfig
 
 logger = logging.getLogger(__name__)

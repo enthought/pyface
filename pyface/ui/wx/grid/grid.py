@@ -10,15 +10,18 @@
 
 """ A grid control with a model/ui architecture. """
 
+from os.path import abspath, exists
 import sys
 import warnings
 
 import wx
 import wx.lib.gridmovers as grid_movers
-from os.path import abspath, exists
-from wx.grid import Grid as wxGrid
-from wx.grid import GridCellAttr, GridTableBase
+
 from wx.grid import (
+    Grid as wxGrid,
+    GridCellAttr,
+    GridCellEditor,
+    GridTableBase,
     GridTableMessage,
     GRIDTABLE_NOTIFY_ROWS_APPENDED,
     GRIDTABLE_NOTIFY_ROWS_DELETED,
@@ -48,7 +51,6 @@ from pyface.wx.drag_and_drop import (
     PythonDropTarget,
 )
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
-
 from .grid_model import GridModel
 
 # Is this code running on MS Windows?
@@ -890,7 +892,7 @@ class Grid(LayoutWidget):
         """ Immediately jumps into editing mode, bypassing the
             usual select mode of a spreadsheet. See also self.OnSelectCell().
         """
-        if self._edit == True and self.edit_on_first_click:
+        if self._edit and self.edit_on_first_click:
             if self._grid.CanEnableCellControl():
                 self._grid.EnableCellEditControl()
             self._edit = False
@@ -1850,9 +1852,6 @@ class _GridTableBase(GridTableBase):
     def _editor_dispose(self, editors):
         for editor in editors:
             editor.dispose()
-
-
-from wx.grid import GridCellEditor
 
 
 class DummyGridCellEditor(GridCellEditor):

@@ -12,7 +12,7 @@
 
 import warnings
 
-from traits.api import HasTraits, Int, Interface, Str, observe
+from traits.api import HasTraits, Int, Interface, Str
 
 
 from pyface.ui_traits import Image

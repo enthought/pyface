@@ -15,7 +15,7 @@ from traits.api import provides
 
 from pyface.fields.i_toggle_field import IToggleField, MToggleField
 from pyface.qt.QtGui import (
-    QCheckBox, QIcon, QPushButton, QRadioButton, QToolButton,
+    QCheckBox, QIcon, QPushButton, QRadioButton
 )
 from .field import Field
 

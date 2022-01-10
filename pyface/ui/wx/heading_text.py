@@ -14,11 +14,10 @@
 
 import wx
 
-from traits.api import Instance, provides
+from traits.api import provides
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from pyface.ui_traits import Image
-from pyface.wx.util.font_helper import new_font_like
 from .image_resource import ImageResource
 from .layout_widget import LayoutWidget
 

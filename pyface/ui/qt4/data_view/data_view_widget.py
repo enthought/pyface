@@ -192,7 +192,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         if remove:
             try:
                 selection_model.selectionChanged.disconnect(
-                  self._update_selection
+                    self._update_selection
                 )
             except (TypeError, RuntimeError):
                 # has already been disconnected

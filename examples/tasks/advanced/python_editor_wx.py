@@ -90,9 +90,8 @@ class PythonEditor(Editor):
         if path is None:
             path = self.path
 
-        f = file(path, "w")
-        f.write(self.control.GetText())
-        f.close()
+        with open(path, "w") as f:
+            f.write(self.control.GetText())
 
         self.dirty = False
 
@@ -134,14 +133,6 @@ class PythonEditor(Editor):
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
-
-    def _create_control(self, parent):
-        """ Creates the toolkit-specific control for the widget.
-        """
-        from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
-
-        self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_updated()
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """

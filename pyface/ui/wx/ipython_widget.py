@@ -205,7 +205,7 @@ class IPython09Controller(IPythonController):
             # XXX: we are not storing the input buffer previous to the
             # execution, as this forces us to run the execution
             # input_buffer a yield, which is not good.
-            ##current_buffer = self.shell.control.input_buffer
+            # #current_buffer = self.shell.control.input_buffer
             command = command.rstrip()
             if len(command.split("\n")) > 1:
                 # The input command is several lines long, we need to
@@ -270,9 +270,9 @@ class IPython09Controller(IPythonController):
             print("_popup_completion", self.input_buffer, file=sys.__stdout__)
 
         line = self.input_buffer
-        if (
+        if create or (
             self.AutoCompActive() and line and not line[-1] == "."
-        ) or create == True:
+        ):
             suggestion, completions = self.complete(line)
             if completions:
                 offset = len(self._get_completion_text(line))
@@ -289,7 +289,7 @@ class IPython09Controller(IPythonController):
         # that in the 'pyreadline' module (modes/basemode.py) where we break at
         # each delimiter and try to complete the residual line, until we get a
         # successful list of completions.
-        expression = "\s|=|,|:|\((?!.*\))|\[(?!.*\])|\{(?!.*\})"
+        expression = r"\s|=|,|:|\((?!.*\))|\[(?!.*\])|\{(?!.*\})"
         complete_sep = re.compile(expression)
         text = complete_sep.split(line)[-1]
         return text

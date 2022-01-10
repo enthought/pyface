@@ -266,7 +266,7 @@ def shell(edm, runtime, toolkit, environment):
     (aka 'activate' it).
 
     """
-    parameters = get_parameters(edm ,runtime, toolkit, environment)
+    parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = [
         "{edm} shell -e {environment}",
     ]

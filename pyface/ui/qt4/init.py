@@ -14,7 +14,7 @@ import sys
 
 from traits.trait_notifiers import set_ui_handler, ui_handler
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 from pyface.base_toolkit import Toolkit
 from .gui import GUI
 

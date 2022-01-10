@@ -220,7 +220,7 @@ class ImageWidget(LayoutWidget):
             wdc.DrawLine(wdx - 1, 1, wdx - 1, wdy)
             wdc.DrawLine(1, wdy - 1, wdx - 1, wdy - 1)
 
-        if self._selected == True:
+        if self._selected:
             wdc.SetBrush(wx.TRANSPARENT_BRUSH)
             wdc.SetPen(pens[bd])
             wdc.DrawLine(1, 1, wdx - 1, 1)

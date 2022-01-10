@@ -14,11 +14,10 @@
 
 import wx
 
-from traits.api import Instance, List, on_trait_change, provides, Str
+from traits.api import Instance, List, Str, observe, provides
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, observe, provides, Str
 from pyface.i_application_window import (
     IApplicationWindow, MApplicationWindow,
 )

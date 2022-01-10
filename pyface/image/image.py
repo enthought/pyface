@@ -187,7 +187,7 @@ def split_image_name(image_name):
     """
     col = image_name.find(":")
     volume_name = image_name[1:col]
-    file_name = image_name[col + 1 :]
+    file_name = image_name[col + 1:]
     if file_name.find(".") < 0:
         file_name += ".png"
 

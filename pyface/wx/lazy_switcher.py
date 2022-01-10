@@ -100,7 +100,6 @@ class SwitcherControl(wx.Panel):
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-        ##self.SetBackgroundColour("light grey")
 
         # Switcher combo.
         sizer.Add(self._combo(self, model, label), 1, wx.EXPAND)

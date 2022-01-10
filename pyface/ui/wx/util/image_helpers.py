@@ -141,8 +141,6 @@ def array_to_image(array):
     image : wx.Image
         The wx.Image created from the data.
     """
-    import numpy as np
-
     if array.ndim != 3:
         raise ValueError("Array must be either RGB or RGBA values.")
 

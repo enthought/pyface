@@ -551,7 +551,7 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         # Don't highlight the part of the string that contains the prompt.
         if string.startswith(prompt):
             self._current_offset = len(prompt)
-            string = string[len(prompt) :]
+            string = string[len(prompt):]
         else:
             self._current_offset = 0
 

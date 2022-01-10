@@ -10,7 +10,6 @@
 
 from traits.api import Callable, List
 
-from pyface.data_view.data_view_errors import DataViewGetError
 from .editable_value import EditableValue
 
 

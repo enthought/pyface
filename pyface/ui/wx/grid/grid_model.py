@@ -22,6 +22,7 @@ from traits.api import (
     Tuple,
 )
 
+
 # The classes below are part of the table specification.
 class GridRow(HasTraits):
     """ Structure for holding row/column specifications. """

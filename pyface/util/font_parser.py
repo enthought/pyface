@@ -13,11 +13,15 @@ GENERIC_FAMILIES = {
     'default', 'fantasy', 'decorative', 'serif', 'roman', 'cursive', 'script',
     'sans-serif', 'swiss', 'monospace', 'modern', 'typewriter', 'teletype'
 }
-WEIGHTS = {'thin', 'extra-light', 'light', 'regular', 'medium', 'demi-bold',
-    'bold', 'extra-bold', 'heavy', 'extra-heavy'}
-STRETCHES = {'ultra-condensed', 'extra-condensed', 'condensed',
+WEIGHTS = {
+    'thin', 'extra-light', 'light', 'regular', 'medium', 'demi-bold',
+    'bold', 'extra-bold', 'heavy', 'extra-heavy'
+}
+STRETCHES = {
+    'ultra-condensed', 'extra-condensed', 'condensed',
     'semi-condensed', 'semi-expanded', 'expanded', 'extra-expanded',
-    'ultra-expanded'}
+    'ultra-expanded'
+}
 STYLES = {'italic', 'oblique'}
 VARIANTS = {'small-caps'}
 DECORATIONS = {'underline', 'strikethrough', 'overline'}

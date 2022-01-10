@@ -165,7 +165,7 @@ class GridModel(HasTraits):
     def DeleteRows(self, pos, num_rows):
         """ Called when the view is deleting rows. """
 
-        del self.data[pos : pos + num_rows]
+        del self.data[pos:pos + num_rows]
 
         # Tell the grid that we've deleted some rows.
         #

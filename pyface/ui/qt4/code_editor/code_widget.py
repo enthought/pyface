@@ -334,7 +334,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def line_uncomment(self, cursor, position=0):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         text = cursor.block().text()
-        new_text = text[:position] + text[position + 1 :]
+        new_text = text[:position] + text[position + 1:]
         cursor.movePosition(
             QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
         )
@@ -358,7 +358,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         if cursor.block().text().startswith(tab):
-            new_text = cursor.block().text()[len(tab) :]
+            new_text = cursor.block().text()[len(tab):]
             cursor.movePosition(
                 QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
             )
@@ -767,8 +767,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
         while (
             self.find_in_document(
                 search_text=search_text, replace=replace_text
-            )
-            != None
+            ) is not None
         ):
             count += 1
         cursor.endEditBlock()

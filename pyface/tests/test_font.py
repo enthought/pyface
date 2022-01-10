@@ -222,6 +222,7 @@ class TestFont(unittest.TestCase):
 
         # smoke test
         toolkit_font = font.to_toolkit()
+        self.assertIsNotNone(toolkit_font)
 
     def test_to_toolkit_typical(self):
         font = Font(
@@ -236,6 +237,7 @@ class TestFont(unittest.TestCase):
 
         # smoke test
         toolkit_font = font.to_toolkit()
+        self.assertIsNotNone(toolkit_font)
 
     def test_toolkit_default_roundtrip(self):
         font = Font()

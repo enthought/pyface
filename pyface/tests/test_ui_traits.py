@@ -12,8 +12,6 @@
 import os
 import unittest
 
-from pyface.util.font_parser import simple_parser
-
 # importlib.resources is new in Python 3.7, and importlib.resources.files is
 # new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
 # importlib_resources package.
@@ -442,7 +440,7 @@ class TestPyfaceFont(unittest.TestCase):
 
     def test_init_invalid(self):
         with self.assertRaises(ValueError):
-            trait = PyfaceFont(0)
+            PyfaceFont(0)
 
     def test_set_empty_string(self):
         font_class = FontClass()

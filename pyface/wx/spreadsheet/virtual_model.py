@@ -36,7 +36,6 @@ class VirtualModel(PyGridTableBase):
         [(rowname, dictionary),
         dictionary.get(colname, None) returns the data for a cell
         """
-        ##print 'Initializing virtual model'
         PyGridTableBase.__init__(self)
         self.set_data_source(data)
         self.colnames = column_names
@@ -106,7 +105,6 @@ class VirtualModel(PyGridTableBase):
         (wxGrid) -> Reset the grid view.   Call this to
         update the grid if rows and columns have been added or deleted
         """
-        ##print 'VirtualModel.reset_view'
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
             (

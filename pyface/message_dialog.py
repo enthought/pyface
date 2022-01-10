@@ -11,6 +11,13 @@
 """ The implementation of a dialog that displays a message. """
 
 
+# Import the toolkit specific version.
+from .toolkit import toolkit_object
+
+
+MessageDialog = toolkit_object("message_dialog:MessageDialog")
+
+
 # Convenience functions.
 def information(
     parent,
@@ -130,9 +137,3 @@ def error(
         text_format=text_format,
     )
     dialog.open()
-
-
-# Import the toolkit specific version.
-from .toolkit import toolkit_object
-
-MessageDialog = toolkit_object("message_dialog:MessageDialog")

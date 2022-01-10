@@ -8,8 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from pyface.qt.QtGui import QIcon, QPixmap
-
 from traits.api import provides
 
 from pyface.i_pil_image import IPILImage, MPILImage

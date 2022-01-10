@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Bool, Instance, Int, Tuple
+from traits.api import Bool, Int, Tuple
 
 
 from pyface.ui_traits import Image

@@ -168,7 +168,7 @@ class AbstractGridView(Grid):
         of a spreadsheet. See also self.OnSelectCell().
         """
 
-        if self.edit == True:
+        if self.edit:
             if self.CanEnableCellControl():
                 self.EnableCellEditControl()
             self.edit = False
@@ -195,6 +195,3 @@ class AbstractGridView(Grid):
 
     def OnEditorCreated(self, evt):
         evt.Skip()
-
-
-# -------------------------------------------------------------------------------

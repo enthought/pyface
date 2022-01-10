@@ -13,7 +13,7 @@ from enum import Enum
 from traits.api import provides
 
 from pyface.qt import QtGui
-from pyface.i_layout_item import DEFAULT_SIZE, SizePolicy
+from pyface.i_layout_item import DEFAULT_SIZE
 from pyface.i_layout_widget import ILayoutWidget, MLayoutWidget
 from pyface.ui.qt4.widget import Widget
 
