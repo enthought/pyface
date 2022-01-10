@@ -412,6 +412,7 @@ def TraitsUIColor(*args, **metadata):
 
     return ColorTrait(*args, **metadata)
 
+
 TraitsUIColor = TraitFactory(TraitsUIColor)
 
 
@@ -427,5 +428,6 @@ def TraitsUIFont(*args, **metadata):
     from traitsui.toolkit_traits import FontTrait
 
     return FontTrait(*args, **metadata)
+
 
 TraitsUIFont = TraitFactory(TraitsUIFont)
