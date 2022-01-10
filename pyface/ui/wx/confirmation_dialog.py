@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@
 
 import wx
 
-from traits.api import Bool, Enum, Instance, provides, Str
+from traits.api import Bool, Enum, provides, Str
 
 from pyface.i_confirmation_dialog import (
     IConfirmationDialog,

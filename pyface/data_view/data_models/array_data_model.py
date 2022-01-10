@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -255,8 +255,8 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         if event.new.shape == event.old.shape:
             if self.data.size > 0:
                 self.values_changed = (
-                        (0,), (0,),
-                        (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
+                    (0,), (0,),
+                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
                 )
         else:
             self.structure_changed = True

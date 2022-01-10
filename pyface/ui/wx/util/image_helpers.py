@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -141,8 +141,6 @@ def array_to_image(array):
     image : wx.Image
         The wx.Image created from the data.
     """
-    import numpy as np
-
     if array.ndim != 3:
         raise ValueError("Array must be either RGB or RGBA values.")
 

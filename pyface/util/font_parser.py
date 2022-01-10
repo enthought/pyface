@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,11 +13,15 @@ GENERIC_FAMILIES = {
     'default', 'fantasy', 'decorative', 'serif', 'roman', 'cursive', 'script',
     'sans-serif', 'swiss', 'monospace', 'modern', 'typewriter', 'teletype'
 }
-WEIGHTS = {'thin', 'extra-light', 'light', 'regular', 'medium', 'demi-bold',
-    'bold', 'extra-bold', 'heavy', 'extra-heavy'}
-STRETCHES = {'ultra-condensed', 'extra-condensed', 'condensed',
+WEIGHTS = {
+    'thin', 'extra-light', 'light', 'regular', 'medium', 'demi-bold',
+    'bold', 'extra-bold', 'heavy', 'extra-heavy'
+}
+STRETCHES = {
+    'ultra-condensed', 'extra-condensed', 'condensed',
     'semi-condensed', 'semi-expanded', 'expanded', 'extra-expanded',
-    'ultra-expanded'}
+    'ultra-expanded'
+}
 STYLES = {'italic', 'oblique'}
 VARIANTS = {'small-caps'}
 DECORATIONS = {'underline', 'strikethrough', 'overline'}

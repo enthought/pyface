@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -348,7 +348,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_active_editor_changed(self, event):
         """ Handle change of active editor """
         # Reset tab title to foreground color
-        editor = event.new 
+        editor = event.new
         if editor is not None:
             self._qt4_editor_area.setTabTextColor(editor.control)
 

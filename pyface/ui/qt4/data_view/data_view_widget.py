@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -192,7 +192,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         if remove:
             try:
                 selection_model.selectionChanged.disconnect(
-                  self._update_selection
+                    self._update_selection
                 )
             except (TypeError, RuntimeError):
                 # has already been disconnected

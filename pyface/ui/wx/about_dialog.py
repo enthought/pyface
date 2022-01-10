@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -129,7 +129,7 @@ class AboutDialog(MAboutDialog, Dialog):
         additions = "<br />".join(self.additions)
 
         # Get the version numbers.
-        py_version = sys.version[0 : sys.version.find("(")]
+        py_version = sys.version[0:sys.version.find("(")]
         wx_version = wx.VERSION_STRING
 
         # The additional copyright strings.

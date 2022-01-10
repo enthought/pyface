@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -43,7 +43,7 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
         with self.assert_n_commands_pushed(self.stack, n):
             for i in range(n):
                 with self.assertTraitChanges(self.stack.undo_manager,
-                                            'stack_updated', count=1):
+                                             'stack_updated', count=1):
                     self.stack.push(self.command)
 
     def test_push_after_undo(self):
@@ -62,7 +62,7 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             n = 4
             for i in range(n):
                 self.stack.undo()
-    
+
             with self.assertTraitChanges(self.stack.undo_manager,
                                          'stack_updated', count=1):
                 self.stack.push(self.command)

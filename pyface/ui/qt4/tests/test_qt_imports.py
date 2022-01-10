@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,15 +15,15 @@ import warnings
 class TestPyfaceQtImports(unittest.TestCase):
     def test_imports(self):
         # check that all Qt API imports work
-        import pyface.qt.QtCore
-        import pyface.qt.QtGui
-        import pyface.qt.QtNetwork
-        import pyface.qt.QtOpenGL
-        import pyface.qt.QtSvg
-        import pyface.qt.QtTest
-        import pyface.qt.QtWebKit
-        import pyface.qt.QtMultimedia
-        import pyface.qt.QtMultimediaWidgets
+        import pyface.qt.QtCore  # noqa: F401
+        import pyface.qt.QtGui  # noqa: F401
+        import pyface.qt.QtNetwork  # noqa: F401
+        import pyface.qt.QtOpenGL  # noqa: F401
+        import pyface.qt.QtSvg  # noqa: F401
+        import pyface.qt.QtTest  # noqa: F401
+        import pyface.qt.QtWebKit  # noqa: F401
+        import pyface.qt.QtMultimedia  # noqa: F401
+        import pyface.qt.QtMultimediaWidgets  # noqa: F401
 
     def test_import_QtScript(self):
         # QtScript is not supported on PyQt5/PySide2 and
@@ -32,7 +32,7 @@ class TestPyfaceQtImports(unittest.TestCase):
             # Cause all warnings to always be triggered.
             warnings.simplefilter("always", category=DeprecationWarning)
 
-            import pyface.qt.QtScript
+            import pyface.qt.QtScript  # noqa: F401
 
         self.assertTrue(len(w) == 1)
         for warn in w:

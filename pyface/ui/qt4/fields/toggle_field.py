@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@ from traits.api import provides
 
 from pyface.fields.i_toggle_field import IToggleField, MToggleField
 from pyface.qt.QtGui import (
-    QCheckBox, QIcon, QPushButton, QRadioButton, QToolButton,
+    QCheckBox, QIcon, QPushButton, QRadioButton
 )
 from .field import Field
 

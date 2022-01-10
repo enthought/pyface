@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -21,6 +21,7 @@ from wx.grid import (
     GRIDTABLE_NOTIFY_COLS_DELETED,
 )
 
+
 class Grid(wxGrid):
     """ A grid (spreadsheet) widget. """
 
@@ -32,14 +33,6 @@ class Grid(wxGrid):
 
         # The model that provides the data and row/column information.
         self.model = None
-
-        # Automatically size columns and rows to fit their content.
-        #
-        # fixme: wx seems sensitive to the location of these two lines. Put
-        # them *before* the call to 'SetTable', otherwise the grid takes
-        # forever to initialize!
-        ##self.AutoSizeColumns()
-        ##self.AutoSizeRows()
 
         # Don't display any extra space around the rows and columns.
         self.SetMargins(0, 0)

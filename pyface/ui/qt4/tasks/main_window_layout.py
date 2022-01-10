@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -317,7 +317,7 @@ class MainWindowLayout(HasTraits):
                     if layout.height > 0:
                         dock_widget.widget().setFixedHeight(layout.height)
                 else:
-                    sizeHint = lambda : QtCore.QSize(layout.width, layout.height)
+                    sizeHint = lambda: QtCore.QSize(layout.width, layout.height)
                     dock_widget.widget().sizeHint = sizeHint
             return dock_widget
 

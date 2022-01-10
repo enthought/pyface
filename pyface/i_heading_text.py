@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@
 
 import warnings
 
-from traits.api import HasTraits, Int, Interface, Str, observe
+from traits.api import HasTraits, Int, Interface, Str
 
 
 from pyface.ui_traits import Image

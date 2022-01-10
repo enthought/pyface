@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,7 +10,7 @@
 # dummy script for testing python shell and python editor widgets
 
 # simple import
-import sys
+import sys  # noqa: F401
 
 # set a variable
 x = 1

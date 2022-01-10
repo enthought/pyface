@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,6 +9,13 @@
 # Thanks for using Enthought open source!
 
 """ The implementation of a dialog that displays a message. """
+
+
+# Import the toolkit specific version.
+from .toolkit import toolkit_object
+
+
+MessageDialog = toolkit_object("message_dialog:MessageDialog")
 
 
 # Convenience functions.
@@ -130,9 +137,3 @@ def error(
         text_format=text_format,
     )
     dialog.open()
-
-
-# Import the toolkit specific version.
-from .toolkit import toolkit_object
-
-MessageDialog = toolkit_object("message_dialog:MessageDialog")

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -19,7 +19,6 @@ from ..font_parser import (
     STYLES,
     VARIANTS,
     WEIGHTS,
-    FontParseError,
     simple_parser,
 )
 

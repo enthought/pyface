@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -128,25 +128,25 @@ from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse numpy dependency, otherwise re-raise
 with _optional_import(
-         "numpy",
-         msg="ArrayImage not available due to missing numpy.",
-         logger=_logging.getLogger(__name__)):
+        "numpy",
+        msg="ArrayImage not available due to missing numpy.",
+        logger=_logging.getLogger(__name__)):
 
-     # We need to manually try importing numpy because the ``ArrayImage``
-     # import will end up raising a ``TraitError`` exception instead of an
-     # ``ImportError``, which isnt caught by ``_optional_import``.
-     import numpy
+    # We need to manually try importing numpy because the ``ArrayImage``
+    # import will end up raising a ``TraitError`` exception instead of an
+    # ``ImportError``, which isnt caught by ``_optional_import``.
+    import numpy
 
-     from .array_image import ArrayImage
+    from .array_image import ArrayImage
 
-     del numpy
+    del numpy
 
 # Excuse pillow dependency, otherwise re-raise
 with _optional_import(
-         "pillow",
-         msg="PILImage not available due to missing pillow.",
-         logger=_logging.getLogger(__name__)):
-     from .pil_image import PILImage
+        "pillow",
+        msg="PILImage not available due to missing pillow.",
+        logger=_logging.getLogger(__name__)):
+    from .pil_image import PILImage
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
 with _optional_import(

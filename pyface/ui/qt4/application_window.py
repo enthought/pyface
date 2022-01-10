@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -175,10 +175,9 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     @observe("status_bar_manager")
     def _status_bar_manager_updated(self, event):
-        old, new = event.old, event.new
         if self.control is not None:
-            if old is not None:
-                old.destroy_status_bar()
+            if event.old is not None:
+                event.old.destroy_status_bar()
             self._create_status_bar(self.control)
 
     @observe("tool_bar_manager, tool_bar_managers.items")

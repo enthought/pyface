@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,12 +13,9 @@ import unittest
 
 from traits.api import TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.api import UnittestTools
 
-from pyface.gui import GUI
 from pyface.toolkit import toolkit
 from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
-from pyface.window import Window
 
 # This import results in an error without numpy installed
 # see enthought/pyface#742
@@ -162,7 +159,7 @@ class TestWidget(LayoutWidgetMixin, unittest.TestCase):
         self.gui.process_events()
 
         self.assertEqual(self.widget.selection, [((1, 4), ())])
-        self.assertEqual(self.widget._get_control_selection(),  [((1, 4), ())])
+        self.assertEqual(self.widget._get_control_selection(), [((1, 4), ())])
 
     def test_selection_mode_single_invalid(self):
         self.widget.selection_mode = "single"

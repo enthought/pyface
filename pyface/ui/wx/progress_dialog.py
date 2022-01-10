@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -296,7 +296,7 @@ class ProgressDialog(MProgressDialog, Window):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._cancel = None
 
-        if self.can_cancel == True:
+        if self.can_cancel:
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(
                 dialog, wx.ID_CANCEL, self.cancel_button_label

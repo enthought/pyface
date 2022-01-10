@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -220,7 +220,7 @@ class ImageWidget(LayoutWidget):
             wdc.DrawLine(wdx - 1, 1, wdx - 1, wdy)
             wdc.DrawLine(1, wdy - 1, wdx - 1, wdy - 1)
 
-        if self._selected == True:
+        if self._selected:
             wdc.SetBrush(wx.TRANSPARENT_BRUSH)
             wdc.SetPen(pens[bd])
             wdc.DrawLine(1, 1, wdx - 1, 1)

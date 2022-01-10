@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -46,9 +46,8 @@ class ChainedWizard(Wizard):
     @observe("next_wizard")
     def _reset_next_controller_and_update(self, event):
         """ Handle the next wizard being changed. """
-        old, new = event.old, event.new
-        if new is not None:
-            self.controller.next_controller = new.controller
+        if event.new is not None:
+            self.controller.next_controller = event.new.controller
 
         if self.control is not None:
             # FIXME: Do we need to call _create_buttons? Buttons would have
@@ -62,8 +61,7 @@ class ChainedWizard(Wizard):
     @observe("controller")
     def _reset_traits_on_controller_and_update(self, event):
         """ handle the controller being changed. """
-        old, new = event.old, event.new
-        if new is not None and self.next_wizard is not None:
+        if event.new is not None and self.next_wizard is not None:
             self.controller.next_controller = self.next_wizard.controller
 
         if self.control is not None:

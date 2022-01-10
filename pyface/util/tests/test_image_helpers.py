@@ -1,4 +1,4 @@
-# Copyright (c) 2005-2021, Enthought Inc.
+# Copyright (c) 2005-2022, Enthought Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_imports(self):
         # actual functions are tested in toolkits
-        from ..image_helpers import (
+        from ..image_helpers import (  # noqa: F401
             AspectRatio, ScaleMode, array_to_image, bitmap_to_icon,
             bitmap_to_image, image_to_array, image_to_bitmap,
             resize_bitmap, resize_image,

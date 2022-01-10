@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -83,7 +83,7 @@ class ChainedWizardController(WizardController):
         if page in self._pages:
             # If page is not this controller's last page, then it cannot be
             # *the* last page.
-            if not page is self._pages[-1]:
+            if page is not self._pages[-1]:
                 is_last = False
 
             # Otherwise, it is *the* last page if this controller has no next

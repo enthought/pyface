@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -165,7 +165,7 @@ class GridModel(HasTraits):
     def DeleteRows(self, pos, num_rows):
         """ Called when the view is deleting rows. """
 
-        del self.data[pos : pos + num_rows]
+        del self.data[pos:pos + num_rows]
 
         # Tell the grid that we've deleted some rows.
         #

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -55,6 +55,7 @@ favorite_colors = [
     Color(hsv=(hue/100, 1.0, 1.0))
     for hue in range(100)
 ]
+
 
 def any_name():
     return choice(all_names)

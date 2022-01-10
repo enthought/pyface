@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -222,6 +222,7 @@ class TestFont(unittest.TestCase):
 
         # smoke test
         toolkit_font = font.to_toolkit()
+        self.assertIsNotNone(toolkit_font)
 
     def test_to_toolkit_typical(self):
         font = Font(
@@ -236,6 +237,7 @@ class TestFont(unittest.TestCase):
 
         # smoke test
         toolkit_font = font.to_toolkit()
+        self.assertIsNotNone(toolkit_font)
 
     def test_toolkit_default_roundtrip(self):
         font = Font()

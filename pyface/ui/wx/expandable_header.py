@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -62,7 +62,7 @@ class ExpandableHeader(Widget):
     #: The panel has been expanded or collapsed
     panel_expanded = Event()
 
-    # The panel has been closed
+    #: The panel has been closed
     panel_closed = Event()
 
     _CARAT_X = 4
@@ -122,9 +122,6 @@ class ExpandableHeader(Widget):
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
 
-        # needed on GTK systems for EVT_ERASE_BACKGROUND to work
-        #panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
-
         # create the remove button
         remove = wx.BitmapButton.NewCloseButton(panel, -1)
         sizer.Add(remove, 0, wx.ALIGN_RIGHT, 5)
@@ -175,7 +172,6 @@ class ExpandableHeader(Widget):
         dc.DrawText(
             self.title, self._carat_w + self._TEXT_X_OFFSET, self._TEXT_Y
         )
-
 
     def _draw(self, dc):
         """ Draws the control. """

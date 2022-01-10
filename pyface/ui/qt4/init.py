@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@ import sys
 
 from traits.trait_notifiers import set_ui_handler, ui_handler
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 from pyface.base_toolkit import Toolkit
 from .gui import GUI
 

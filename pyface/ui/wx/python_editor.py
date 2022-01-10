@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -107,30 +107,9 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     def set_style(self, n, fore, back):
 
         self.control.StyleSetForeground(n, fore)
-        # self.StyleSetBackground(n, '#c0c0c0')
-        # self.StyleSetBackground(n, '#ffffff')
         self.control.StyleSetBackground(n, back)
         self.control.StyleSetFaceName(n, "courier new")
         self.control.StyleSetSize(n, faces["size"])
-
-        # self.StyleSetForeground(n, "#f0f0f0")
-        ##self.StyleSetBackground(n, "#000000")
-        # self.StyleSetFaceName(n, "courier new")
-        # self.StyleSetSize(n, 20)
-        # self.StyleSetUnderline(n, 1)
-        # self.StyleSetItalic(n, 1)
-        # self.StyleSetBold(n, 1)
-        # StyleClearAll
-        # StyleResetDefault
-        # StyleSetCase
-        # StyleSetChangeable
-        # StyleSetCharacterSet
-        # StyleSetEOLFilled
-        # StyleSetFont
-        # StyleSetFontAttr
-        # StyleSetHotSpot
-        # StyleSetSpec --- batch
-        # StyleSetVisible
 
     def select_line(self, lineno):
         """ Selects the specified line. """

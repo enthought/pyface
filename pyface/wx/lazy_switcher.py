@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -100,7 +100,6 @@ class SwitcherControl(wx.Panel):
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-        ##self.SetBackgroundColour("light grey")
 
         # Switcher combo.
         sizer.Add(self._combo(self, model, label), 1, wx.EXPAND)

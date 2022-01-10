@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2021 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -412,6 +412,7 @@ def TraitsUIColor(*args, **metadata):
 
     return ColorTrait(*args, **metadata)
 
+
 TraitsUIColor = TraitFactory(TraitsUIColor)
 
 
@@ -427,5 +428,6 @@ def TraitsUIFont(*args, **metadata):
     from traitsui.toolkit_traits import FontTrait
 
     return FontTrait(*args, **metadata)
+
 
 TraitsUIFont = TraitFactory(TraitsUIFont)
