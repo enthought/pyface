@@ -12,7 +12,7 @@
 
 import wx
 
-from traits.api import Bool, provides
+from traits.api import provides
 
 from pyface.font import Font
 from pyface.ui_traits import PyfaceFont
