@@ -25,7 +25,7 @@ from .widget import Widget
 
 @provides(IWindow)
 class Window(MWindow, Widget):
-    """ The toolkit specific implementation of a Window.  See the IWindow
+    """The toolkit specific implementation of a Window.  See the IWindow
     interface for the API documentation.
     """
 
@@ -127,12 +127,12 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def _get_position(self):
-        """ Property getter for position. """
+        """Property getter for position."""
 
         return self._position
 
     def _set_position(self, position):
-        """ Property setter for position. """
+        """Property setter for position."""
 
         if self.control is not None:
             self.control.SetPosition(position)
@@ -143,12 +143,12 @@ class Window(MWindow, Widget):
         self.trait_property_changed("position", old, position)
 
     def _get_size(self):
-        """ Property getter for size. """
+        """Property getter for size."""
 
         return self._size
 
     def _set_size(self, size):
-        """ Property setter for size. """
+        """Property setter for size."""
 
         if self.control is not None:
             self.control.SetSize(size)
@@ -159,7 +159,7 @@ class Window(MWindow, Widget):
         self.trait_property_changed("size", old, size)
 
     def _title_changed(self, title):
-        """ Static trait change handler. """
+        """Static trait change handler."""
 
         if self.control is not None:
             self.control.SetTitle(title)
@@ -167,7 +167,7 @@ class Window(MWindow, Widget):
     # wx event handlers ------------------------------------------------------
 
     def _wx_on_activate(self, event):
-        """ Called when the frame is being activated or deactivated. """
+        """Called when the frame is being activated or deactivated."""
 
         if event.GetActive():
             self.activated = self
@@ -177,19 +177,19 @@ class Window(MWindow, Widget):
         event.Skip()
 
     def _wx_on_show(self, event):
-        """ Called when the frame is being activated or deactivated. """
+        """Called when the frame is being activated or deactivated."""
 
         self.visible = event.IsShown()
 
         event.Skip()
 
     def _wx_on_close(self, event):
-        """ Called when the frame is being closed. """
+        """Called when the frame is being closed."""
 
         self.close()
 
     def _wx_on_control_move(self, event):
-        """ Called when the window is resized. """
+        """Called when the window is resized."""
 
         # Get the real position and set the trait without performing
         # notification.
@@ -208,7 +208,7 @@ class Window(MWindow, Widget):
         event.Skip()
 
     def _wx_on_control_size(self, event):
-        """ Called when the window is resized. """
+        """Called when the window is resized."""
 
         # Get the new size and set the shadow trait without performing
         # notification.
@@ -219,7 +219,7 @@ class Window(MWindow, Widget):
         event.Skip()
 
     def _wx_on_char(self, event):
-        """ Called when a key is pressed when the tree has focus. """
+        """Called when a key is pressed when the tree has focus."""
 
         self.key_pressed = KeyPressedEvent(
             alt_down=event.altDown,

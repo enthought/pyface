@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 @provides(IDockPane)
 class DockPane(TaskPane, MDockPane):
-    """ The toolkit-specific implementation of a DockPane.
+    """The toolkit-specific implementation of a DockPane.
 
     See the IDockPane interface for API documentation.
     """
@@ -79,8 +79,7 @@ class DockPane(TaskPane, MDockPane):
         return "\n".join(lines)
 
     def create(self, parent):
-        """ Create and set the dock widget that contains the pane contents.
-        """
+        """Create and set the dock widget that contains the pane contents."""
         # wx doesn't need a wrapper control, so the contents become the control
         self.control = self.create_contents(parent)
 
@@ -130,7 +129,7 @@ class DockPane(TaskPane, MDockPane):
         )
 
     def validate_traits_from_pane_info(self):
-        """ Sync traits from the AUI pane info.
+        """Sync traits from the AUI pane info.
 
         Useful after perspective restore to make sure e.g. visibility state
         is set correctly.
@@ -139,8 +138,7 @@ class DockPane(TaskPane, MDockPane):
         self.visible = info.IsShown()
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the contents.
-        """
+        """Destroy the toolkit-specific control that represents the contents."""
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
@@ -160,8 +158,7 @@ class DockPane(TaskPane, MDockPane):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Create and return the toolkit-specific contents of the dock pane.
-        """
+        """Create and return the toolkit-specific contents of the dock pane."""
         return wx.Window(parent, name=self.task.id + ":" + self.id)
 
     # Trait property getters/setters ---------------------------------------

@@ -28,7 +28,7 @@ class CallbackTimer(wx.Timer):
 
 
 class PyfaceTimer(BaseTimer):
-    """ Abstract base class for Wx toolkit timers. """
+    """Abstract base class for Wx toolkit timers."""
 
     #: The wx.Timer for the PyfaceTimer.
     _timer = Instance(wx.Timer)

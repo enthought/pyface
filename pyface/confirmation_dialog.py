@@ -19,7 +19,7 @@ ConfirmationDialog = toolkit_object("confirmation_dialog:ConfirmationDialog")
 
 
 def confirm(parent, message, title=None, cancel=False, default=NO):
-    """ Convenience method to show a confirmation dialog.
+    """Convenience method to show a confirmation dialog.
 
     Parameters
     ----------

@@ -31,7 +31,6 @@ trivial_text_format = DataFormat(
 
 
 class TrivialExporter(AbstractDataExporter):
-
     def get_data(self, model, indices):
         if len(indices) == 0:
             raise DataViewGetError('bad data')
@@ -39,7 +38,6 @@ class TrivialExporter(AbstractDataExporter):
 
 
 class TestAbstractDataExporter(TestCase):
-
     def setUp(self):
         self.value_type = Mock()
         self.value_type.has_text = Mock(return_value=True)

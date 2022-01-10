@@ -17,7 +17,7 @@ from traits.api import Float, HasTraits
 
 
 class ActionEvent(HasTraits):
-    """ The event passed to an action's 'perform' method. """
+    """The event passed to an action's 'perform' method."""
 
     # 'ActionEvent' interface ---------------------------------------------#
 
@@ -29,7 +29,7 @@ class ActionEvent(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new action event.
+        """Creates a new action event.
 
         Note: Every keyword argument becomes a public attribute of the event.
         """

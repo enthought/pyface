@@ -37,7 +37,7 @@ __extras_require__ = {
 
 # ============================= Test Loader ==================================
 def load_tests(loader, standard_tests, pattern):
-    """ Custom test loading function that enables test filtering using regex
+    """Custom test loading function that enables test filtering using regex
     exclusion pattern.
 
     Parameters

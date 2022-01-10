@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class NodeMonitor(HasTraits):
-    """ A monitor for appearance and structural changes to a node. """
+    """A monitor for appearance and structural changes to a node."""
 
     # 'NodeMonitor' interface ---------------------------------------------#
 
@@ -62,24 +62,24 @@ class NodeMonitor(HasTraits):
     # public methods -------------------------------------------------------
 
     def start(self):
-        """ Start listening to changes to the node. """
+        """Start listening to changes to the node."""
 
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj)
 
     def stop(self):
-        """ Stop listening to changes to the node. """
+        """Stop listening to changes to the node."""
 
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj, remove=True)
 
     def fire_nodes_changed(self, children=[]):
-        """ Fires the nodes changed event. """
+        """Fires the nodes changed event."""
 
         self.nodes_changed = NodeEvent(node=self.node, children=children)
 
     def fire_nodes_inserted(self, children, index=-1):
-        """ Fires the nodes inserted event.
+        """Fires the nodes inserted event.
 
         If the index is -1 it means the nodes were appended.
 
@@ -92,19 +92,19 @@ class NodeMonitor(HasTraits):
         )
 
     def fire_nodes_removed(self, children):
-        """ Fires the nodes removed event. """
+        """Fires the nodes removed event."""
 
         self.nodes_removed = NodeEvent(node=self.node, children=children)
 
     def fire_nodes_replaced(self, old_children, new_children):
-        """ Fires the nodes replaced event. """
+        """Fires the nodes replaced event."""
 
         self.nodes_replaced = NodeEvent(
             node=self.node, old_children=old_children, children=new_children
         )
 
     def fire_structure_changed(self):
-        """ Fires the structure changed event. """
+        """Fires the structure changed event."""
 
         self.structure_changed = NodeEvent(node=self.node)
 
@@ -113,7 +113,7 @@ class NodeMonitor(HasTraits):
     # protected methods ----------------------------------------------------
 
     def _setup_trait_change_handlers(self, obj, remove=False):
-        """ Add or remove trait change handlers to/from a node. """
+        """Add or remove trait change handlers to/from a node."""
 
         logger.debug(
             "%s trait listeners on (%s) in NodeMonitor (%s)",

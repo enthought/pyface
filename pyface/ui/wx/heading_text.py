@@ -24,8 +24,7 @@ from .layout_widget import LayoutWidget
 
 @provides(IHeadingText)
 class HeadingText(MHeadingText, LayoutWidget):
-    """ The Wx-specific implementation of a HeadingText.
-    """
+    """The Wx-specific implementation of a HeadingText."""
 
     # 'IHeadingText' interface ---------------------------------------------
 
@@ -37,7 +36,7 @@ class HeadingText(MHeadingText, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = wx.StaticText(parent)
         return control
 
@@ -46,11 +45,11 @@ class HeadingText(MHeadingText, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _set_control_text(self, text):
-        """ Set the text on the toolkit specific widget. """
+        """Set the text on the toolkit specific widget."""
         # Bold the text. Wx supports a limited subset of HTML for rich text.
         text = f"<b>{text}</b>"
         self.control.SetLabelMarkup(text)
 
     def _get_control_text(self):
-        """ Get the text on the toolkit specific widget. """
+        """Get the text on the toolkit specific widget."""
         return self.control.GetLabelText()

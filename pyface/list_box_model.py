@@ -15,11 +15,11 @@ from traits.api import Event, HasTraits
 
 # Classes for event traits.
 class ListModelEvent(object):
-    """ Information about list model changes. """
+    """Information about list model changes."""
 
 
 class ListBoxModel(HasTraits):
-    """ The model for list boxes. """
+    """The model for list boxes."""
 
     # Events ----
 
@@ -27,7 +27,7 @@ class ListBoxModel(HasTraits):
     list_changed = Event()
 
     def get_item_count(self):
-        """ Get the number of items in the list.
+        """Get the number of items in the list.
 
         Returns
         -------
@@ -37,7 +37,7 @@ class ListBoxModel(HasTraits):
         raise NotImplementedError()
 
     def get_item_at(self, index):
-        """ Returns the item at the specified index.
+        """Returns the item at the specified index.
 
         Parameters
         ----------
@@ -52,5 +52,5 @@ class ListBoxModel(HasTraits):
         raise NotImplementedError()
 
     def fire_list_changed(self):
-        """ Invoke this method when the list has changed. """
+        """Invoke this method when the list has changed."""
         self.list_changed = ListModelEvent()

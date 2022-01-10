@@ -26,7 +26,7 @@ _PaletteTool = toolkit_object("action.action_item:_PaletteTool")
 
 
 class ActionItem(ActionManagerItem):
-    """ An action manager item that represents an actual action. """
+    """An action manager item that represents an actual action."""
 
     # 'ActionManagerItem' interface ----------------------------------------
 
@@ -76,7 +76,7 @@ class ActionItem(ActionManagerItem):
 
     @observe("_wrappers:items:control")
     def _on_destroy(self, event):
-        """ Handle the destruction of the wrapper. """
+        """Handle the destruction of the wrapper."""
         if event.new is None:
             self._wrappers.remove(event.object)
 
@@ -85,7 +85,7 @@ class ActionItem(ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
-        """ Add the item to a menu.
+        """Add the item to a menu.
 
         Parameters
         ----------
@@ -109,7 +109,7 @@ class ActionItem(ActionManagerItem):
     def add_to_toolbar(
         self, parent, tool_bar, image_cache, controller, show_labels=True
     ):
-        """ Adds the item to a tool bar.
+        """Adds the item to a tool bar.
 
         Parameters
         ----------
@@ -137,7 +137,7 @@ class ActionItem(ActionManagerItem):
             self._wrappers.append(wrapper)
 
     def add_to_palette(self, tool_palette, image_cache, show_labels=True):
-        """ Adds the item to a tool palette.
+        """Adds the item to a tool palette.
 
         Parameters
         ----------
@@ -154,7 +154,7 @@ class ActionItem(ActionManagerItem):
         self._wrappers.append(wrapper)
 
     def destroy(self):
-        """ Called when the action is no longer required.
+        """Called when the action is no longer required.
 
         By default this method calls 'destroy' on the action itself.
         """

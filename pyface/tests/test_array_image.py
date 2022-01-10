@@ -19,7 +19,7 @@ from ..array_image import ArrayImage
 @requires_numpy
 class TestArrayImage(unittest.TestCase):
     def setUp(self):
-        self.data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        self.data = np.full((32, 64, 4), 0xEE, dtype='uint8')
 
     def test_init(self):
         image = ArrayImage(self.data)

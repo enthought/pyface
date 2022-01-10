@@ -14,7 +14,7 @@ from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
 
 
 class AbstractGridView(Grid):
-    """ Enthought's default spreadsheet view.
+    """Enthought's default spreadsheet view.
 
     Uses a virtual data source.
 
@@ -52,7 +52,7 @@ class AbstractGridView(Grid):
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
     def init_data_types(self):
-        """ If the model says a cell is of a specified type, the grid uses
+        """If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
         """
         self.RegisterDataType(
@@ -85,8 +85,7 @@ class AbstractGridView(Grid):
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
 
     def SetColLabelsVisible(self, show=True):
-        """ This only works if you 'hide' then 'show' the labels.
-        """
+        """This only works if you 'hide' then 'show' the labels."""
         if not show:
             self._default_col_label_size = self.GetColLabelSize()
             self.SetColLabelSize(0)
@@ -94,8 +93,7 @@ class AbstractGridView(Grid):
             self.SetColLabelSize(self._default_col_label_size)
 
     def SetRowLabelsVisible(self, show=True):
-        """ This only works if you 'hide' then 'show' the labels.
-        """
+        """This only works if you 'hide' then 'show' the labels."""
         if not show:
             self._default_row_label_size = self.GetRowLabelSize()
             self.SetRowLabelSize(0)
@@ -103,7 +101,7 @@ class AbstractGridView(Grid):
             self.SetRowLabelSize(self._default_row_label_size)
 
     def SetTable(self, table, *args):
-        """ Some versions of wxPython do not return the correct
+        """Some versions of wxPython do not return the correct
         table - hence we store our own copy here - weak ref?
         todo - does this apply to Enthought?
         """
@@ -116,7 +114,7 @@ class AbstractGridView(Grid):
         return self._table
 
     def Reset(self):
-        """ Resets the view based on the data in the table.
+        """Resets the view based on the data in the table.
 
         Call this when rows are added or destroyed.
         """
@@ -164,7 +162,7 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnIdle(self, evt):
-        """ Immediately jumps into editing mode, bypassing the usual select mode
+        """Immediately jumps into editing mode, bypassing the usual select mode
         of a spreadsheet. See also self.OnSelectCell().
         """
 
@@ -181,7 +179,7 @@ class AbstractGridView(Grid):
 
     def OnSelectCell(self, evt):
 
-        """ Immediately jumps into editing mode, bypassing the usual select mode
+        """Immediately jumps into editing mode, bypassing the usual select mode
         of a spreadsheet. See also self.OnIdle().
         """
         self.edit = True

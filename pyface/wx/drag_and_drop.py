@@ -18,7 +18,7 @@ import wx
 
 
 class Clipboard(object):
-    """ The clipboard is used when dragging and dropping Python objects. """
+    """The clipboard is used when dragging and dropping Python objects."""
 
     # fixme: This obviously only works within a single process!
     pass
@@ -31,12 +31,10 @@ clipboard.data = None
 
 
 class FileDropSource(wx.DropSource):
-    """ Represents a draggable file.
-    """
+    """Represents a draggable file."""
 
     def __init__(self, source, files):
-        """ Initializes the object.
-        """
+        """Initializes the object."""
         self.handler = None
         self.allow_move = True
 
@@ -58,14 +56,14 @@ class FileDropSource(wx.DropSource):
         self.result = self.DoDragDrop(True)
 
     def on_dropped(self, drag_result):
-        """ Called when the data has been dropped. """
+        """Called when the data has been dropped."""
 
 
 class FileDropTarget(wx.FileDropTarget):
-    """ Drop target for files. """
+    """Drop target for files."""
 
     def __init__(self, handler):
-        """ Constructor. """
+        """Constructor."""
 
         # Base-class constructor.
         wx.FileDropTarget.__init__(self)
@@ -73,7 +71,7 @@ class FileDropTarget(wx.FileDropTarget):
         self.handler = handler
 
     def OnDropFiles(self, x, y, filenames):
-        """ Called when the files have been dropped. """
+        """Called when the files have been dropped."""
 
         for filename in filenames:
             self.handler(x, y, filename)
@@ -87,10 +85,10 @@ PythonObject = wx.DataFormat("PythonObject")
 
 
 class PythonDropSource(wx.DropSource):
-    """ Drop source for Python objects. """
+    """Drop source for Python objects."""
 
     def __init__(self, source, data, handler=None, allow_move=True):
-        """ Creates a new drop source.
+        """Creates a new drop source.
 
         A drop source should be created for *every* drag operation.
 
@@ -124,7 +122,7 @@ class PythonDropSource(wx.DropSource):
         self.result = self.DoDragDrop(flags)
 
     def on_dropped(self, drag_result):
-        """ Called when the data has been dropped. """
+        """Called when the data has been dropped."""
 
         if self.handler is not None:
             if hasattr(self.handler, "on_dropped"):
@@ -151,10 +149,10 @@ class PythonDropSource(wx.DropSource):
 
 
 class PythonDropTarget(wx.DropTarget):
-    """ Drop target for Python objects. """
+    """Drop target for Python objects."""
 
     def __init__(self, handler):
-        """ Constructor
+        """Constructor
 
         The handler can be either a function that will be called when
         *any* data is dropped onto the target, or an instance that supports
@@ -181,7 +179,7 @@ class PythonDropTarget(wx.DropTarget):
         self.SetDataObject(self.data_object)
 
     def OnData(self, x, y, default_drag_result):
-        """ Called when OnDrop returns True. """
+        """Called when OnDrop returns True."""
 
         # First, if we have a source in the clipboard and the source
         # doesn't allow moves then change the default to copy
@@ -244,7 +242,7 @@ class PythonDropTarget(wx.DropTarget):
 
     # Some virtual methods that track the progress of the drag.
     def OnDragOver(self, x, y, default_drag_result):
-        """ Called when a data object is being dragged over the target. """
+        """Called when a data object is being dragged over the target."""
 
         # First, if we have a source in the clipboard and the source
         # doesn't allow moves then change the default to copy
@@ -290,13 +288,13 @@ class PythonDropTarget(wx.DropTarget):
         return drag_result
 
     def OnLeave(self):
-        """ Called when the mouse leaves the drop target. """
+        """Called when the mouse leaves the drop target."""
 
         if hasattr(self.handler, "wx_drag_leave"):
             self.handler.wx_drag_leave(clipboard.data)
 
     def OnDrop(self, x, y):
-        """ Called when the user drops a data object on the target.
+        """Called when the user drops a data object on the target.
 
         Return 'False' to veto the operation.
 

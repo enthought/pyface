@@ -22,8 +22,7 @@ from .pygments_highlighter import PygmentsHighlighter
 
 
 class CodeWidget(QtGui.QPlainTextEdit):
-    """ A widget for viewing and editing code.
-    """
+    """A widget for viewing and editing code."""
 
     # ------------------------------------------------------------------------
     # CodeWidget interface
@@ -98,12 +97,11 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.cursorPositionChanged.disconnect(self.highlight_current_line)
 
     def lines(self):
-        """ Return the number of lines.
-        """
+        """Return the number of lines."""
         return self.blockCount()
 
     def set_line_column(self, line, column):
-        """ Move the cursor to a particular line/column number.
+        """Move the cursor to a particular line/column number.
 
         These line and column numbers are 1-indexed.
         """
@@ -123,7 +121,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.setTextCursor(cursor)
 
     def get_line_column(self):
-        """ Get the current line and column numbers.
+        """Get the current line and column numbers.
 
         These line and column numbers are 1-indexed.
         """
@@ -135,28 +133,24 @@ class CodeWidget(QtGui.QPlainTextEdit):
         return line, column
 
     def get_selected_text(self):
-        """ Return the currently selected text.
-        """
+        """Return the currently selected text."""
         return str(self.textCursor().selectedText())
 
     def set_font(self, font):
-        """ Set the new QFont.
-        """
+        """Set the new QFont."""
         self.document().setDefaultFont(font)
         self.line_number_widget.set_font(font)
         self.update_line_number_width()
 
     def update_line_number_width(self, nblocks=0):
-        """ Update the width of the line number widget.
-        """
+        """Update the width of the line number widget."""
         left = 0
         if not self.line_number_widget.isHidden():
             left = self.line_number_widget.digits_width()
         self.setViewportMargins(left, 0, 0, 0)
 
     def update_line_numbers(self, rect, dy):
-        """ Update the line numbers.
-        """
+        """Update the line numbers."""
         if dy:
             self.line_number_widget.scroll(0, dy)
         self.line_number_widget.update(
@@ -178,8 +172,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.status_widget.update()
 
     def highlight_current_line(self):
-        """ Highlight the line with the cursor.
-        """
+        """Highlight the line with the cursor."""
         if self.should_highlight_current_line:
             selection = QtGui.QTextEdit.ExtraSelection()
             selection.format.setBackground(self.line_highlight_color)
@@ -276,12 +269,12 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
     def block_comment(self):
         """the comment char will be placed at the first non-whitespace
-            char of the first line. For example:
-                if foo:
-                    bar
-            will be commented as:
-                #if foo:
-                #    bar
+        char of the first line. For example:
+            if foo:
+                bar
+        will be commented as:
+            #if foo:
+            #    bar
         """
         cursor = self.textCursor()
 
@@ -334,7 +327,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def line_uncomment(self, cursor, position=0):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         text = cursor.block().text()
-        new_text = text[:position] + text[position + 1:]
+        new_text = text[:position] + text[position + 1 :]
         cursor.movePosition(
             QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
         )
@@ -349,8 +342,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
         cursor.insertText(tab)
 
     def line_unindent(self, cursor):
-        """ Unindents the cursor's line. Returns the number of characters
-            removed.
+        """Unindents the cursor's line. Returns the number of characters
+        removed.
         """
         tab = "\t"
         if self.tabs_as_spaces:
@@ -358,7 +351,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         if cursor.block().text().startswith(tab):
-            new_text = cursor.block().text()[len(tab):]
+            new_text = cursor.block().text()[len(tab) :]
             cursor.movePosition(
                 QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
             )
@@ -369,8 +362,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             return 0
 
     def word_under_cursor(self):
-        """ Return the word under the cursor.
-        """
+        """Return the word under the cursor."""
         cursor = self.textCursor()
         cursor.select(QtGui.QTextCursor.WordUnderCursor)
         return str(cursor.selectedText())
@@ -497,8 +489,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             return len(line)
 
     def _show_selected_blocks(self, selected_blocks):
-        """ Assumes contiguous blocks
-        """
+        """Assumes contiguous blocks"""
         cursor = self.textCursor()
         cursor.clearSelection()
         cursor.setPosition(selected_blocks[0].position())
@@ -549,8 +540,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
 
 class AdvancedCodeWidget(QtGui.QWidget):
-    """ Advanced widget for viewing and editing code, with support
-        for search & replace
+    """Advanced widget for viewing and editing code, with support
+    for search & replace
     """
 
     # ------------------------------------------------------------------------
@@ -614,23 +605,19 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.code._remove_event_listeners()
 
     def lines(self):
-        """ Return the number of lines.
-        """
+        """Return the number of lines."""
         return self.code.lines()
 
     def set_line_column(self, line, column):
-        """ Move the cursor to a particular line/column position.
-        """
+        """Move the cursor to a particular line/column position."""
         self.code.set_line_column(line, column)
 
     def get_line_column(self):
-        """ Get the current line and column numbers.
-        """
+        """Get the current line and column numbers."""
         return self.code.get_line_column()
 
     def get_selected_text(self):
-        """ Return the currently selected text.
-        """
+        """Return the currently selected text."""
         return self.code.get_selected_text()
 
     def set_info_lines(self, info_lines):
@@ -667,12 +654,12 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.active_find_widget = self.replace
 
     def find_in_document(self, search_text, direction="forward", replace=None):
-        """ Finds the next occurance of the desired text and optionally
-            replaces it. If 'replace' is None, a regular search will
-            be executed, otherwise it will replace the occurance with
-            the value of 'replace'.
+        """Finds the next occurance of the desired text and optionally
+        replaces it. If 'replace' is None, a regular search will
+        be executed, otherwise it will replace the occurance with
+        the value of 'replace'.
 
-            Returns the number of occurances found (0 or 1)
+        Returns the number of occurances found (0 or 1)
         """
 
         if not search_text:
@@ -767,15 +754,15 @@ class AdvancedCodeWidget(QtGui.QWidget):
         while (
             self.find_in_document(
                 search_text=search_text, replace=replace_text
-            ) is not None
+            )
+            is not None
         ):
             count += 1
         cursor.endEditBlock()
         return count
 
     def print_(self, printer):
-        """ Convenience method to call 'print_' on the CodeWidget.
-        """
+        """Convenience method to call 'print_' on the CodeWidget."""
         self.code.print_(printer)
 
     def ensureCursorVisible(self):

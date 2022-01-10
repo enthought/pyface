@@ -69,7 +69,7 @@ class IUndoManager(Interface):
     ###########################################################################
 
     def redo(self):
-        """ Redo the last undone command of the active command stack. """
+        """Redo the last undone command of the active command stack."""
 
     def undo(self):
-        """ Undo the last command of the active command stack. """
+        """Undo the last command of the active command stack."""

@@ -49,9 +49,5 @@ class TestApi(unittest.TestCase):
         else:
             expected_count += 1
 
-        items_in_api = {
-            name
-            for name in dir(api)
-            if not name.startswith("_")
-        }
+        items_in_api = {name for name in dir(api) if not name.startswith("_")}
         self.assertEqual(len(items_in_api), expected_count)

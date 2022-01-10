@@ -13,4 +13,4 @@ from pyface.tasks.enaml_pane import EnamlPane
 
 
 class EnamlEditor(EnamlPane, Editor):
-    """ Create an Editor for Enaml Components. """
+    """Create an Editor for Enaml Components."""

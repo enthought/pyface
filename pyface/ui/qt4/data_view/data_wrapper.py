@@ -16,7 +16,7 @@ from pyface.qt.QtCore import QMimeData
 
 @provides(IDataWrapper)
 class DataWrapper(MDataWrapper):
-    """ Qt implementaton of IDataWrapper.
+    """Qt implementaton of IDataWrapper.
 
     This wraps a QMimeData in a straightforward way.
     """
@@ -24,7 +24,7 @@ class DataWrapper(MDataWrapper):
     toolkit_data = Instance(QMimeData, args=(), allow_none=False)
 
     def mimetypes(self):
-        """ Return a set of mimetypes holding data.
+        """Return a set of mimetypes holding data.
 
         Returns
         -------
@@ -35,7 +35,7 @@ class DataWrapper(MDataWrapper):
         return set(self.toolkit_data.formats())
 
     def get_mimedata(self, mimetype):
-        """ Get raw data for the given media type.
+        """Get raw data for the given media type.
 
         Parameters
         ----------
@@ -50,7 +50,7 @@ class DataWrapper(MDataWrapper):
         return self.toolkit_data.data(mimetype).data()
 
     def set_mimedata(self, mimetype, raw_data):
-        """ Set raw data for the given media type.
+        """Set raw data for the given media type.
 
         Parameters
         ----------

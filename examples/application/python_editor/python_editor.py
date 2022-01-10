@@ -42,7 +42,7 @@ from traitsui.api import (
 
 
 class LineNumberDialog(HasStrictTraits):
-    """ A simple line number dialog. """
+    """A simple line number dialog."""
 
     #: The total number of lines.
     max_line = Int()
@@ -61,7 +61,7 @@ class LineNumberDialog(HasStrictTraits):
 
 
 class PythonEditor(TraitsEditor):
-    """ Tasks Editor that provides a code editor via TraitsUI """
+    """Tasks Editor that provides a code editor via TraitsUI"""
 
     #: The Python code being edited.
     code = Str()
@@ -111,7 +111,7 @@ class PythonEditor(TraitsEditor):
     # -------------------------------------------------------------------------
 
     def load(self, path=None):
-        """ Load text from a path, or set text empty if no path.
+        """Load text from a path, or set text empty if no path.
 
         This method uses the default encoding for io.open, which may or may
         not make sense; a real, robust editor should use tokenize.open or
@@ -139,7 +139,7 @@ class PythonEditor(TraitsEditor):
             self._last_save = 0
 
     def save(self, path=None):
-        """ Load text from a path, or set text empty if no path.
+        """Load text from a path, or set text empty if no path.
 
         This method uses the default encoding for io.open, which may or may
         not make sense; a real, robust editor should detect the encoding
@@ -163,7 +163,7 @@ class PythonEditor(TraitsEditor):
             self._last_save = self.ui.history.now
 
     def go_to_line(self):
-        """ Ask the use for a line number and jump to that line. """
+        """Ask the use for a line number and jump to that line."""
         max_line = len(self.code.splitlines()) + 1
         dialog = LineNumberDialog(max_line=max_line, line=self.line)
         ui = dialog.edit_traits(kind="livemodal")
@@ -172,18 +172,17 @@ class PythonEditor(TraitsEditor):
             self.line = dialog.line
 
     def undo(self):
-        """ Undo an operation. """
+        """Undo an operation."""
         if self.ui is not None and self.ui.history is not None:
             self.ui.history.undo()
 
     def redo(self):
-        """ Redo an operation. """
+        """Redo an operation."""
         if self.ui is not None and self.ui.history is not None:
             self.ui.history.redo()
 
     def create(self, parent):
-        """ Create and set the toolkit-specific contents of the editor.
-        """
+        """Create and set the toolkit-specific contents of the editor."""
         super().create(parent)
         self.ui.history = UndoHistory()
         self._last_save = 0
@@ -193,7 +192,7 @@ class PythonEditor(TraitsEditor):
     # -------------------------------------------------------------------------
 
     def _get_dirty(self):
-        """ Whether or not the editor is matches saved data.
+        """Whether or not the editor is matches saved data.
 
         This is True if there is no file path, or history is not at last
         save point.
@@ -201,15 +200,13 @@ class PythonEditor(TraitsEditor):
         return self.obj == "" or self._last_save != self.ui.history.now
 
     def _get_can_undo(self):
-        """ Whether or not undo operations can be performed.
-        """
+        """Whether or not undo operations can be performed."""
         if self.ui is not None and self.ui.history is not None:
             return self.ui.history.can_undo
         return False
 
     def _get_can_redo(self):
-        """ Whether or not redo operations can be performed.
-        """
+        """Whether or not redo operations can be performed."""
         if self.ui is not None and self.ui.history is not None:
             return self.ui.history.can_redo
         return False
@@ -220,7 +217,7 @@ class PythonEditor(TraitsEditor):
 
     @cached_property
     def _get_name(self):
-        """ The current name for the editor.
+        """The current name for the editor.
 
         Either the last component of the path
         """
@@ -231,7 +228,7 @@ class PythonEditor(TraitsEditor):
 
     @cached_property
     def _get_tooltip(self):
-        """ The tooltip for the editor tab.
+        """The tooltip for the editor tab.
 
         The full path name or "untitiled.py".
         """

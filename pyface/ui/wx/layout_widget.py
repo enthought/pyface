@@ -23,34 +23,34 @@ WX_DEFAULT_SIZE = -1
 
 @provides(ILayoutWidget)
 class LayoutWidget(MLayoutWidget, Widget):
-    """ A widget which can participate as part of a layout.
+    """A widget which can participate as part of a layout.
 
     This is an abstract class, as Widget._create_control needs to be
     implemented at a minimum.
     """
 
     def _set_control_minimum_size(self, size):
-        """ Set the minimum size of the control. """
+        """Set the minimum size of the control."""
         wx_size = _size_to_wx_size(size)
         self.control.SetMinSize(wx_size)
 
     def _get_control_minimum_size(self):
-        """ Get the minimum size of the control. """
+        """Get the minimum size of the control."""
         wx_size = self.control.GetMinSize()
         return _wx_size_to_size(wx_size)
 
     def _set_control_maximum_size(self, size):
-        """ Set the maximum size of the control. """
+        """Set the maximum size of the control."""
         wx_size = _size_to_wx_size(size)
         self.control.SetMaxSize(wx_size)
 
     def _get_control_maximum_size(self):
-        """ Get the maximum size of the control. """
+        """Get the maximum size of the control."""
         wx_size = self.control.GetMaxSize()
         return _wx_size_to_size(wx_size)
 
     def _set_control_stretch(self, size_policy):
-        """ Set the stretch factor of the control.
+        """Set the stretch factor of the control.
 
         In Wx the stretch factor is set at layout time and can't be changed
         without removing and adding the widget back into a layout.
@@ -58,7 +58,7 @@ class LayoutWidget(MLayoutWidget, Widget):
         pass
 
     def _get_control_stretch(self):
-        """ Get the stretch factor of the control.
+        """Get the stretch factor of the control.
 
         In Wx the stretch factor is set at layout time and can't be obtained
         from the widget itself.  As a result, this method simply returns the
@@ -67,7 +67,7 @@ class LayoutWidget(MLayoutWidget, Widget):
         return self.stretch
 
     def _set_control_size_policy(self, size_policy):
-        """ Set the size policy of the control
+        """Set the size policy of the control
 
         In Wx the size policy is set at layout time and can't be changed
         without removing and adding the widget back into a layout.
@@ -75,7 +75,7 @@ class LayoutWidget(MLayoutWidget, Widget):
         pass
 
     def _get_control_size_policy(self):
-        """ Get the size policy of the control
+        """Get the size policy of the control
 
         In Wx the size policy is set at layout time and can't be obtained from
         the widget itself.  As a result, this method simply returns the
@@ -85,7 +85,7 @@ class LayoutWidget(MLayoutWidget, Widget):
 
 
 def _size_to_wx_size(size):
-    """ Convert a size tuple to a wx.Size instance.
+    """Convert a size tuple to a wx.Size instance.
 
     Parameters
     ----------
@@ -97,14 +97,13 @@ def _size_to_wx_size(size):
     wx_size : wx.Size instance
         A corresponding wx Size instance.
     """
-    return wx.Size(*(
-        x if x != DEFAULT_SIZE else WX_DEFAULT_SIZE
-        for x in size
-    ))
+    return wx.Size(
+        *(x if x != DEFAULT_SIZE else WX_DEFAULT_SIZE for x in size)
+    )
 
 
 def _wx_size_to_size(wx_size):
-    """ Convert a wx.Size instance to a size tuple.
+    """Convert a wx.Size instance to a size tuple.
 
     Parameters
     ----------

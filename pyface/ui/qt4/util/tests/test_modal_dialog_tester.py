@@ -47,7 +47,7 @@ class MyClass(HasStrictTraits):
 
 
 class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
-    """ Tests for the modal dialog tester. """
+    """Tests for the modal dialog tester."""
 
     # Tests ----------------------------------------------------------------
 

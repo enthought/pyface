@@ -12,12 +12,12 @@ import unittest
 
 from pyface.toolkit import toolkit
 
-is_wx = (toolkit.toolkit == "wx")
+is_wx = toolkit.toolkit == "wx"
 
 
 class TestGuiTestAssistant(unittest.TestCase):
-
     @unittest.skipIf(is_wx, "wx is not supported")
     def test_import(self):
         from pyface.util.gui_test_assistant import GuiTestAssistant
+
         self.assertNotEqual(GuiTestAssistant.__name__, "Unimplemented")

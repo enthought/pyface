@@ -15,16 +15,17 @@ from pyface.i_widget import IWidget
 
 
 class ILayoutWidget(IWidget, ILayoutItem):
-    """ Interface for widgets that can participate in layout.
+    """Interface for widgets that can participate in layout.
 
     Most widgets implement ILayoutWidget, but widgets like top-level windows,
     menus, toolbars, etc. do not.
     """
+
     pass
 
 
 class MLayoutWidget(HasTraits):
-    """ A mixin for Widgets that can participate in layouts.
+    """A mixin for Widgets that can participate in layouts.
 
     Most widgets implement ILayoutWidget, but widgets like top-level windows,
     menus, toolbars, etc. do not.
@@ -43,7 +44,7 @@ class MLayoutWidget(HasTraits):
     size_policy = Tuple(SizePolicy, SizePolicy)
 
     def _initialize_control(self):
-        """ Initialize the toolkit control. """
+        """Initialize the toolkit control."""
         super()._initialize_control()
         self._set_control_minimum_size(self.minimum_size)
         self._set_control_maximum_size(self.maximum_size)
@@ -51,7 +52,7 @@ class MLayoutWidget(HasTraits):
         self._set_control_size_policy(self.size_policy)
 
     def _add_event_listeners(self):
-        """ Add trait observers and toolkit binding. """
+        """Add trait observers and toolkit binding."""
         super()._add_event_listeners()
         self.observe(
             self._minimum_size_updated,
@@ -75,7 +76,7 @@ class MLayoutWidget(HasTraits):
         )
 
     def _remove_event_listeners(self):
-        """ Remove trait observers and toolkit binding. """
+        """Remove trait observers and toolkit binding."""
         self.observe(
             self._minimum_size_updated,
             "minimum_size",
@@ -103,34 +104,34 @@ class MLayoutWidget(HasTraits):
         super()._remove_event_listeners()
 
     def _minimum_size_updated(self, event):
-        """ Trait observer for minimum size. """
+        """Trait observer for minimum size."""
         if self.control is not None:
             self._set_control_minimum_size(event.new)
 
     def _maximum_size_updated(self, event):
-        """ Trait observer for maximum size. """
+        """Trait observer for maximum size."""
         if self.control is not None:
             self._set_control_maximum_size(event.new)
 
     def _stretch_updated(self, event):
-        """ Trait observer for stretch. """
+        """Trait observer for stretch."""
         if self.control is not None:
             self._set_control_stretch(event.new)
 
     def _size_policy_updated(self, event):
-        """ Trait observer for size policy. """
+        """Trait observer for size policy."""
         if self.control is not None:
             self._set_control_size_policy(event.new)
 
     def _set_control_minimum_size(self, size):
-        """ Set the minimum size of the control.
+        """Set the minimum size of the control.
 
         Toolkit implementations will need to override this method.
         """
         raise NotImplementedError()
 
     def _get_control_minimum_size(self):
-        """ Get the minimum size of the control.
+        """Get the minimum size of the control.
 
         Toolkit implementations will need to override this method.
         This method is only used for testing.
@@ -138,14 +139,14 @@ class MLayoutWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_maximum_size(self, size):
-        """ Set the maximum size of the control.
+        """Set the maximum size of the control.
 
         Toolkit implementations will need to override this method.
         """
         raise NotImplementedError()
 
     def _get_control_maximum_size(self):
-        """ Get the maximum size of the control.
+        """Get the maximum size of the control.
 
         Toolkit implementations will need to override this method.
         This method is only used for testing.
@@ -153,14 +154,14 @@ class MLayoutWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_stretch(self, stretch):
-        """ Set the stretch factor of the control.
+        """Set the stretch factor of the control.
 
         Toolkit implementations will need to override this method.
         """
         raise NotImplementedError()
 
     def _get_control_stretch(self):
-        """ Get the stretch factor of the control.
+        """Get the stretch factor of the control.
 
         Toolkit implementations will need to override this method.
         This method is only used for testing.
@@ -168,14 +169,14 @@ class MLayoutWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_size_policy(self, size_policy):
-        """ Set the size policy of the control.
+        """Set the size policy of the control.
 
         Toolkit implementations will need to override this method.
         """
         raise NotImplementedError()
 
     def _get_control_size_policy(self):
-        """ Get the size policy of the control.
+        """Get the size policy of the control.
 
         Toolkit implementations will need to override this method.
         This method is only used for testing.

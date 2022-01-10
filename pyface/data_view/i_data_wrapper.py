@@ -16,7 +16,7 @@ from traits.api import Any, HasStrictTraits, Interface
 
 
 class DataFormat(NamedTuple):
-    """ Information about a mimetype and serializers.
+    """Information about a mimetype and serializers.
 
     Simple namedtuple-based class that stores the mimetype, serializer and
     deserializer together.
@@ -35,8 +35,7 @@ class DataFormat(NamedTuple):
 
 
 def text_format(encoding='utf-8', mimetype='text/plain'):
-    """ DataFormat factory for text mimetypes.
-    """
+    """DataFormat factory for text mimetypes."""
     return DataFormat(
         mimetype=mimetype,
         serialize=partial(encode, encoding=encoding),
@@ -45,7 +44,7 @@ def text_format(encoding='utf-8', mimetype='text/plain'):
 
 
 class IDataWrapper(Interface):
-    """ Wrapper around polymorphic toolkit data object containing mimedata.
+    """Wrapper around polymorphic toolkit data object containing mimedata.
 
     To support clipboard and drag and drop operations, toolkits need a way
     of generically representing data in multiple formats.  This is a wrapper
@@ -57,7 +56,7 @@ class IDataWrapper(Interface):
     toolkit_data = Any()
 
     def mimetypes(self):
-        """ Return a set of mimetypes holding data.
+        """Return a set of mimetypes holding data.
 
         Returns
         -------
@@ -68,7 +67,7 @@ class IDataWrapper(Interface):
         pass
 
     def has_format(self, format):
-        """ Whether or not a particular format has available data.
+        """Whether or not a particular format has available data.
 
         Parameters
         ----------
@@ -84,7 +83,7 @@ class IDataWrapper(Interface):
         raise NotImplementedError()
 
     def get_format(self, format):
-        """ The decoded data associted with the format.
+        """The decoded data associted with the format.
 
         Parameters
         ----------
@@ -99,7 +98,7 @@ class IDataWrapper(Interface):
         raise NotImplementedError()
 
     def set_format(self, format, data):
-        """ Encode and set data for the format.
+        """Encode and set data for the format.
 
         Parameters
         ----------
@@ -111,7 +110,7 @@ class IDataWrapper(Interface):
         raise NotImplementedError()
 
     def get_mimedata(self, mimetype):
-        """ Get raw data for the given media type.
+        """Get raw data for the given media type.
 
         Parameters
         ----------
@@ -126,7 +125,7 @@ class IDataWrapper(Interface):
         raise NotImplementedError()
 
     def set_mimedata(self, mimetype, mimedata):
-        """ Set raw data for the given media type.
+        """Set raw data for the given media type.
 
         Parameters
         ----------
@@ -139,14 +138,14 @@ class IDataWrapper(Interface):
 
 
 class MDataWrapper(HasStrictTraits):
-    """ Mixin class for DataWrappers.
+    """Mixin class for DataWrappers.
 
     This provides standard methods for using DataFormat objects, but not the
     low-level communication with the underlying toolkit.
     """
 
     def has_format(self, format):
-        """ Whether or not a particular format has available data.
+        """Whether or not a particular format has available data.
 
         Parameters
         ----------
@@ -162,7 +161,7 @@ class MDataWrapper(HasStrictTraits):
         return format.mimetype in self.mimetypes()
 
     def get_format(self, format):
-        """ The decoded data associted with the format.
+        """The decoded data associted with the format.
 
         Parameters
         ----------
@@ -177,7 +176,7 @@ class MDataWrapper(HasStrictTraits):
         return format.deserialize(self.get_mimedata(format.mimetype))
 
     def set_format(self, format, data):
-        """ Encode and set data for the format.
+        """Encode and set data for the format.
 
         Parameters
         ----------

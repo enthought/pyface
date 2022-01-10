@@ -20,7 +20,7 @@ from traits.api import Any, Dict, HasTraits, Interface, Str
 
 
 class ILayeredPanel(Interface):
-    """ A Layered panel.
+    """A Layered panel.
 
     A layered panel contains one or more named layers, with only one layer
     visible at any one time (think of a 'tab' control minus the tabs!).  Each
@@ -41,7 +41,7 @@ class ILayeredPanel(Interface):
     # ------------------------------------------------------------------------
 
     def add_layer(self, name, layer):
-        """ Adds a layer with the specified name.
+        """Adds a layer with the specified name.
 
         All layers are hidden when they are added.  Use 'show_layer' to make a
         layer visible.
@@ -49,14 +49,14 @@ class ILayeredPanel(Interface):
         """
 
     def show_layer(self, name):
-        """ Shows the layer with the specified name. """
+        """Shows the layer with the specified name."""
 
     def has_layer(self, name):
-        """ Does the panel contain a layer with the specified name? """
+        """Does the panel contain a layer with the specified name?"""
 
 
 class MLayeredPanel(HasTraits):
-    """ A Layered panel mixin.
+    """A Layered panel mixin.
 
     A layered panel contains one or more named layers, with only one layer
     visible at any one time (think of a 'tab' control minus the tabs!).  Each
@@ -81,7 +81,7 @@ class MLayeredPanel(HasTraits):
     # ------------------------------------------------------------------------
 
     def has_layer(self, name):
-        """ Does the panel contain a layer with the specified name? """
+        """Does the panel contain a layer with the specified name?"""
         return name in self._layers
 
     # ------------------------------------------------------------------------
@@ -89,7 +89,7 @@ class MLayeredPanel(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent=None, **traits):
-        """ Creates a new LayeredPanel. """
+        """Creates a new LayeredPanel."""
 
         create = traits.pop("create", True)
 

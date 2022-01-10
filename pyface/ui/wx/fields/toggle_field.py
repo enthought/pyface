@@ -20,7 +20,7 @@ from .field import Field
 
 @provides(IToggleField)
 class ToggleField(MToggleField, Field):
-    """ The Wx-specific implementation of the toggle field class """
+    """The Wx-specific implementation of the toggle field class"""
 
     # ------------------------------------------------------------------------
     # Private interface
@@ -29,44 +29,44 @@ class ToggleField(MToggleField, Field):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return self.control.GetValue()
 
     def _get_control_text(self):
-        """ Toolkit specific method to get the control's text. """
+        """Toolkit specific method to get the control's text."""
         return self.control.GetLabel()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         self.control.SetValue(value)
 
     def _set_control_text(self, text):
-        """ Toolkit specific method to set the control's text. """
+        """Toolkit specific method to set the control's text."""
         self.control.SetLabel(text)
 
     def _set_control_icon(self, icon):
-        """ Toolkit specific method to set the control's icon. """
+        """Toolkit specific method to set the control's icon."""
         # don't support icons on Wx for now
         pass
 
 
 class CheckBoxField(ToggleField):
-    """ The Wx-specific implementation of the checkbox class """
+    """The Wx-specific implementation of the checkbox class"""
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = wx.CheckBox(parent)
         return control
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         super()._set_control_value(value)
         event = wx.CommandEvent(wx.EVT_CHECKBOX.typeId, self.control.GetId())
         event.SetInt(value)
         wx.PostEvent(self.control.GetEventHandler(), event)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.Unbind(wx.EVT_CHECKBOX, handler=self._update_value)
         else:
@@ -74,25 +74,27 @@ class CheckBoxField(ToggleField):
 
 
 class RadioButtonField(ToggleField):
-    """ The Wx-specific implementation of the radio button class
+    """The Wx-specific implementation of the radio button class
 
     This is intended to be used in groups, and shouldn't be used by itself.
     """
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = wx.RadioButton(parent)
         return control
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         super()._set_control_value(value)
-        event = wx.CommandEvent(wx.EVT_RADIOBUTTON.typeId, self.control.GetId())
+        event = wx.CommandEvent(
+            wx.EVT_RADIOBUTTON.typeId, self.control.GetId()
+        )
         event.SetInt(value)
         wx.PostEvent(self.control.GetEventHandler(), event)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.Unbind(wx.EVT_RADIOBUTTON, handler=self._update_value)
         else:
@@ -100,22 +102,24 @@ class RadioButtonField(ToggleField):
 
 
 class ToggleButtonField(ToggleField):
-    """ The Wx-specific implementation of the toggle button class """
+    """The Wx-specific implementation of the toggle button class"""
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = wx.ToggleButton(parent)
         return control
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         super()._set_control_value(value)
-        event = wx.CommandEvent(wx.EVT_TOGGLEBUTTON.typeId, self.control.GetId())
+        event = wx.CommandEvent(
+            wx.EVT_TOGGLEBUTTON.typeId, self.control.GetId()
+        )
         event.SetInt(value)
         wx.PostEvent(self.control.GetEventHandler(), event)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.Unbind(
                 wx.EVT_TOGGLEBUTTON,

@@ -19,7 +19,7 @@ from pyface.action.api import MenuManager
 
 
 class NodeType(HasPrivateTraits):
-    """ The base class for all node types. """
+    """The base class for all node types."""
 
     # The default image used to represent nodes that DO NOT allow children.
     DOCUMENT = ImageResource("document")
@@ -66,22 +66,22 @@ class NodeType(HasPrivateTraits):
     # These methods are specific to the 'NodeType' interface ---------------
 
     def is_type_for(self, node):
-        """ Returns True if a node is deemed to be of this type. """
+        """Returns True if a node is deemed to be of this type."""
 
         raise NotImplementedError()
 
     def allows_children(self, node):
-        """ Does the node allow children (ie. a folder vs a file). """
+        """Does the node allow children (ie. a folder vs a file)."""
 
         return False
 
     def get_actions(self, node):
-        """ Returns the node-specific actions for a node. """
+        """Returns the node-specific actions for a node."""
 
         return self.actions
 
     def get_context_menu(self, node):
-        """ Returns the context menu for a node. """
+        """Returns the context menu for a node."""
 
         sat = Group(id="SystemActionsTop")
         nsa = Group(id="NodeSpecificActions")
@@ -110,7 +110,7 @@ class NodeType(HasPrivateTraits):
         return context_menu
 
     def get_copy_value(self, node):
-        """ Get the value that is copied for a node.
+        """Get the value that is copied for a node.
 
         By default, returns the node itself.
 
@@ -119,17 +119,17 @@ class NodeType(HasPrivateTraits):
         return node
 
     def get_default_action(self, node):
-        """ Returns the default action for a node. """
+        """Returns the default action for a node."""
 
         return self.default_action
 
     def get_new_actions(self, node):
-        """ Returns the new actions for a node. """
+        """Returns the new actions for a node."""
 
         return self.new_actions
 
     def get_paste_value(self, node):
-        """ Get the value that is pasted for a node.
+        """Get the value that is pasted for a node.
 
         By default, returns the node itself.
 
@@ -138,7 +138,7 @@ class NodeType(HasPrivateTraits):
         return node
 
     def get_monitor(self, node):
-        """ Returns a monitor that detects changes to a node.
+        """Returns a monitor that detects changes to a node.
 
         Returns None by default,  which indicates that the node is not
         monitored.
@@ -150,7 +150,7 @@ class NodeType(HasPrivateTraits):
     # These methods are exactly the same as the 'TreeModel' interface -----#
 
     def has_children(self, node):
-        """ Returns True if a node has children, otherwise False.
+        """Returns True if a node has children, otherwise False.
 
         You only need to implement this method if children are allowed for the
         node (ie. 'allows_children' returns True).
@@ -160,7 +160,7 @@ class NodeType(HasPrivateTraits):
         return False
 
     def get_children(self, node):
-        """ Returns the children of a node.
+        """Returns the children of a node.
 
         You only need to implement this method if children are allowed for the
         node.
@@ -170,7 +170,7 @@ class NodeType(HasPrivateTraits):
         raise NotImplementedError()
 
     def get_drag_value(self, node):
-        """ Get the value that is dragged for a node.
+        """Get the value that is dragged for a node.
 
         By default, returns the node itself.
 
@@ -179,17 +179,17 @@ class NodeType(HasPrivateTraits):
         return node
 
     def can_drop(self, node, data):
-        """ Returns True if a node allows an object to be dropped onto it. """
+        """Returns True if a node allows an object to be dropped onto it."""
 
         return False
 
     def drop(self, obj, data):
-        """ Drops an object onto a node. """
+        """Drops an object onto a node."""
 
         raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
-        """ Returns the label image for a node. """
+        """Returns the label image for a node."""
 
         if self.allows_children(node):
             if expanded:
@@ -217,7 +217,7 @@ class NodeType(HasPrivateTraits):
         return image
 
     def get_selection_value(self, node):
-        """ Get the value that is used when a node is selected.
+        """Get the value that is used when a node is selected.
 
         By default the selection value is the node itself.
 
@@ -226,37 +226,37 @@ class NodeType(HasPrivateTraits):
         return node
 
     def get_text(self, node):
-        """ Returns the label text for a node. """
+        """Returns the label text for a node."""
 
         return str(node)
 
     def can_set_text(self, node, text):
-        """ Returns True if the node's label can be set. """
+        """Returns True if the node's label can be set."""
 
         return len(text.strip()) > 0
 
     def set_text(self, node, text):
-        """ Sets the label text for a node. """
+        """Sets the label text for a node."""
 
         pass
 
     def is_collapsible(self, node):
-        """ Returns True if the node is collapsible, otherwise False. """
+        """Returns True if the node is collapsible, otherwise False."""
 
         return True
 
     def is_draggable(self, node):
-        """ Returns True if the node is draggablee, otherwise False. """
+        """Returns True if the node is draggablee, otherwise False."""
 
         return True
 
     def can_rename(self, node):
-        """ Returns True if the node can be renamed, otherwise False. """
+        """Returns True if the node can be renamed, otherwise False."""
 
         return False
 
     def is_editable(self, node):
-        """ Returns True if the node is editable, otherwise False.
+        """Returns True if the node is editable, otherwise False.
 
         If the node is editable, its text can be set via the UI.
 
@@ -267,6 +267,6 @@ class NodeType(HasPrivateTraits):
         return self.can_rename(node)
 
     def is_expandable(self, node):
-        """ Returns True if the node is expandanble, otherwise False. """
+        """Returns True if the node is expandanble, otherwise False."""
 
         return True

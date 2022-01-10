@@ -26,7 +26,7 @@ from .grid_row import GridRow
 
 
 class GridModel(HasTraits):
-    """ A model that provides data for a grid. """
+    """A model that provides data for a grid."""
 
     # fixme : factor this default model into "SimpleGridModel" or similar
     # An optional 2-dimensional list/array containing the grid data.
@@ -48,7 +48,7 @@ class GridModel(HasTraits):
     model_changed = Event()
 
     def __init__(self, **traits):
-        """ Create a new grid model. """
+        """Create a new grid model."""
 
         # Base class constructors.
         HasTraits.__init__(self, **traits)
@@ -71,17 +71,17 @@ class GridModel(HasTraits):
     # ------------------------------------------------------------------------
 
     def GetNumberRows(self):
-        """ Return the number of rows in the model. """
+        """Return the number of rows in the model."""
 
         return len(self.data)
 
     def GetNumberCols(self):
-        """ Return the number of columns in the model. """
+        """Return the number of columns in the model."""
 
         return len(self.columns)
 
     def IsEmptyCell(self, row, col):
-        """ Is the specified cell empty? """
+        """Is the specified cell empty?"""
 
         try:
             return not self.data[row][col]
@@ -93,7 +93,7 @@ class GridModel(HasTraits):
     # handle any data-type, (as long as the Editor and Renderer understands the
     # type too,) not just strings as in the C++ version.
     def GetValue(self, row, col):
-        """ Get the value at the specified row and column. """
+        """Get the value at the specified row and column."""
 
         try:
             return self.data[row][col]
@@ -104,7 +104,7 @@ class GridModel(HasTraits):
         return ""
 
     def SetValue(self, row, col, value):
-        """ Set the value at the specified row and column. """
+        """Set the value at the specified row and column."""
 
         try:
             self.data[row][col] = value
@@ -123,17 +123,17 @@ class GridModel(HasTraits):
             self.model_changed = message
 
     def GetRowLabelValue(self, row):
-        """ Called when the grid needs to display a row label. """
+        """Called when the grid needs to display a row label."""
 
         return str(row)
 
     def GetColLabelValue(self, col):
-        """ Called when the grid needs to display a column label. """
+        """Called when the grid needs to display a column label."""
 
         return self.columns[col].label
 
     def GetTypeName(self, row, col):
-        """ Called to determine the kind of editor/renderer to use.
+        """Called to determine the kind of editor/renderer to use.
 
         This doesn't necessarily have to be the same type used natively by the
         editor/renderer if they know how to convert.
@@ -143,7 +143,7 @@ class GridModel(HasTraits):
         return self.columns[col].type
 
     def CanGetValueAs(self, row, col, type_name):
-        """ Called to determine how the data can be fetched.
+        """Called to determine how the data can be fetched.
 
         This allows you to enforce some type-safety in the grid.
 
@@ -154,7 +154,7 @@ class GridModel(HasTraits):
         return type_name == column_typename
 
     def CanSetValueAs(self, row, col, type_name):
-        """ Called to determine how the data can be stored.
+        """Called to determine how the data can be stored.
 
         This allows you to enforce some type-safety in the grid.
 
@@ -163,9 +163,9 @@ class GridModel(HasTraits):
         return self.CanGetValueAs(row, col, type_name)
 
     def DeleteRows(self, pos, num_rows):
-        """ Called when the view is deleting rows. """
+        """Called when the view is deleting rows."""
 
-        del self.data[pos:pos + num_rows]
+        del self.data[pos : pos + num_rows]
 
         # Tell the grid that we've deleted some rows.
         #
@@ -183,14 +183,14 @@ class GridModel(HasTraits):
 
 
 class _GridTableBase(GridTableBase):
-    """ A model that provides data for a grid. """
+    """A model that provides data for a grid."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, model):
-        """ Creates a new table base. """
+        """Creates a new table base."""
 
         # Base class constructor.
         GridTableBase.__init__(self)
@@ -205,42 +205,42 @@ class _GridTableBase(GridTableBase):
     # ------------------------------------------------------------------------
 
     def GetNumberRows(self):
-        """ Return the number of rows in the model. """
+        """Return the number of rows in the model."""
 
         return self.model.GetNumberRows()
 
     def GetNumberCols(self):
-        """ Return the number of columns in the model. """
+        """Return the number of columns in the model."""
 
         return self.model.GetNumberCols()
 
     def IsEmptyCell(self, row, col):
-        """ Is the specified cell empty? """
+        """Is the specified cell empty?"""
 
         return self.model.IsEmptyCell(row, col)
 
     def GetValue(self, row, col):
-        """ Get the value at the specified row and column. """
+        """Get the value at the specified row and column."""
 
         return self.model.GetValue(row, col)
 
     def SetValue(self, row, col, value):
-        """ Set the value at the specified row and column. """
+        """Set the value at the specified row and column."""
 
         return self.model.SetValue(row, col, value)
 
     def GetRowLabelValue(self, row):
-        """ Called when the grid needs to display a row label. """
+        """Called when the grid needs to display a row label."""
 
         return self.model.GetRowLabelValue(row)
 
     def GetColLabelValue(self, col):
-        """ Called when the grid needs to display a column label. """
+        """Called when the grid needs to display a column label."""
 
         return self.model.GetColLabelValue(col)
 
     def GetTypeName(self, row, col):
-        """ Called to determine the kind of editor/renderer to use.
+        """Called to determine the kind of editor/renderer to use.
 
         This doesn't necessarily have to be the same type used natively by the
         editor/renderer if they know how to convert.
@@ -250,7 +250,7 @@ class _GridTableBase(GridTableBase):
         return self.model.GetTypeName(row, col)
 
     def CanGetValueAs(self, row, col, type_name):
-        """ Called to determine how the data can be fetched.
+        """Called to determine how the data can be fetched.
 
         This allows you to enforce some type-safety in the grid.
 
@@ -259,7 +259,7 @@ class _GridTableBase(GridTableBase):
         return self.model.CanGetValueAs(row, col, type_name)
 
     def CanSetValueAs(self, row, col, type_name):
-        """ Called to determine how the data can be stored.
+        """Called to determine how the data can be stored.
 
         This allows you to enforce some type-safety in the grid.
 
@@ -268,6 +268,6 @@ class _GridTableBase(GridTableBase):
         return self.model.CanSetValueAs(row, col, type_name)
 
     def DeleteRows(self, pos, num_rows):
-        """ Called when the view is deleting rows. """
+        """Called when the view is deleting rows."""
 
         return self.model.DeleteRows(pos, num_rows)

@@ -21,7 +21,7 @@ MESSAGE = 'Do you want to reset the current "%s" perspective to its defaults?'
 
 
 class ResetActivePerspectiveAction(WorkbenchAction):
-    """ An action that resets the active perspective. """
+    """An action that resets the active perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -36,7 +36,7 @@ class ResetActivePerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         window = self.window
 

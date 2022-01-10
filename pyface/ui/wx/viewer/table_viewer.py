@@ -24,11 +24,11 @@ from pyface.viewer.table_content_provider import TableContentProvider
 from pyface.viewer.table_label_provider import TableLabelProvider
 
 
-version_4_0 = (wx.VERSION < (4, 1))
+version_4_0 = wx.VERSION < (4, 1)
 
 
 class TableViewer(ContentViewer):
-    """ A viewer for tabular data. """
+    """A viewer for tabular data."""
 
     # The content provider provides the actual table data.
     content_provider = Instance(TableContentProvider)
@@ -58,7 +58,7 @@ class TableViewer(ContentViewer):
     _image_size = Tuple(Int, Int)
 
     def __init__(self, parent, image_size=(16, 16), **traits):
-        """ Creates a new table viewer.
+        """Creates a new table viewer.
 
         'parent' is the toolkit-specific control that is the table's parent.
 
@@ -115,7 +115,7 @@ class TableViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def select_row(self, row):
-        """ Select the specified row. """
+        """Select the specified row."""
 
         self.control.SetItemState(
             row, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
@@ -139,7 +139,7 @@ class TableViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def _on_input_changed(self, event):
-        """ Called when the input is changed. """
+        """Called when the input is changed."""
 
         # Update the table contents.
         self._update_contents()
@@ -154,7 +154,7 @@ class TableViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def _on_item_selected(self, event):
-        """ Called when an item in the list is selected. """
+        """Called when an item in the list is selected."""
 
         # Get the index of the row that was selected (nice wx interface huh?!).
         row = event.Index
@@ -167,13 +167,13 @@ class TableViewer(ContentViewer):
     # fixme: Bug[732104] indicates that this event does not get fired in a
     # virtual list control (it *does* get fired in a regular list control 8^().
     def _on_item_deselected(self, event):
-        """ Called when an item in the list is selected. """
+        """Called when an item in the list is selected."""
 
         # Trait event notification.
         self.row_selected = -1
 
     def _on_item_activated(self, event):
-        """ Called when an item in the list is activated. """
+        """Called when an item in the list is activated."""
 
         # Get the index of the row that was activated (nice wx interface!).
         row = event.Index
@@ -182,23 +182,23 @@ class TableViewer(ContentViewer):
         self.row_activated = row
 
     def _on_list_begin_drag(self, event=None, is_rdrag=False):
-        """ Called when a drag operation is starting on a list item. """
+        """Called when a drag operation is starting on a list item."""
 
         # Trait notification.
         self.row_begin_drag = event.GetIndex()
 
     def _on_list_begin_rdrag(self, event=None):
-        """ Called when a drag operation is starting on a list item. """
+        """Called when a drag operation is starting on a list item."""
 
         self._on_list_begin_drag(event, True)
 
     def _on_list_begin_label_edit(self, event=None):
-        """ Called when a label edit is started. """
+        """Called when a label edit is started."""
 
         event.Veto()
 
     def _on_list_end_label_edit(self, event=None):
-        """ Called when a label edit is completed. """
+        """Called when a label edit is completed."""
 
         return
 
@@ -214,7 +214,7 @@ class TableViewer(ContentViewer):
     }
 
     def _create_widget(self, parent):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         # Set up a default list item descriptor.
         info = wx.ListItem()
@@ -236,7 +236,7 @@ class TableViewer(ContentViewer):
         self._update_column_widths()
 
     def _update_contents(self):
-        """ Updates the table content. """
+        """Updates the table content."""
 
         self._elements = []
         if self.input is not None:
@@ -257,7 +257,7 @@ class TableViewer(ContentViewer):
         self.control.SetItemCount(len(self._elements))
 
     def _update_column_widths(self):
-        """ Updates the column widths. """
+        """Updates the column widths."""
 
         # Set all columns to be the size of their largest item, or the size of
         # their header whichever is the larger.
@@ -269,7 +269,7 @@ class TableViewer(ContentViewer):
             self.control.SetColumnWidth(column, width)
 
     def _get_column_width(self, column):
-        """ Return an appropriate width for the specified column. """
+        """Return an appropriate width for the specified column."""
 
         self.control.SetColumnWidth(column, wx.LIST_AUTOSIZE_USEHEADER)
         header_width = self.control.GetColumnWidth(column)
@@ -287,7 +287,7 @@ class TableViewer(ContentViewer):
 
 
 class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
-    """ The wx control that we use to implement the table viewer. """
+    """The wx control that we use to implement the table viewer."""
 
     # Default style.
     STYLE = (
@@ -302,7 +302,7 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
     )
 
     def __init__(self, parent, image_size, viewer):
-        """ Creates a new table viewer.
+        """Creates a new table viewer.
 
         'parent' is the toolkit-specific control that is the table's parent.
 
@@ -346,7 +346,7 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
     # ------------------------------------------------------------------------
 
     def OnGetItemText(self, row, column_index):
-        """ Returns the text for the specified CELL. """
+        """Returns the text for the specified CELL."""
 
         viewer = self._viewer
         element = viewer._elements[row]
@@ -354,7 +354,7 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
         return viewer.label_provider.get_text(viewer, element, column_index)
 
     def OnGetItemImage(self, row):
-        """ Returns the image for the specified ROW. """
+        """Returns the image for the specified ROW."""
 
         viewer = self._viewer
         element = viewer._elements[row]
@@ -370,7 +370,7 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
         return image_index
 
     def OnGetItemAttr(self, row):
-        """ Returns the attribute for the specified row. """
+        """Returns the attribute for the specified row."""
 
         if row % 2 == 0:
             attribute = self._even_row_attribute

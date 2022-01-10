@@ -28,7 +28,7 @@ from .layout_widget import LayoutWidget
 
 @provides(IPythonEditor)
 class PythonEditor(MPythonEditor, LayoutWidget):
-    """ The toolkit specific implementation of a PythonEditor.  See the
+    """The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
 
@@ -51,7 +51,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent=None, **traits):
-        """ Creates a new pager. """
+        """Creates a new pager."""
 
         create = traits.pop("create", True)
 
@@ -75,7 +75,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def load(self, path=None):
-        """ Loads the contents of the editor. """
+        """Loads the contents of the editor."""
 
         if path is None:
             path = self.path
@@ -93,7 +93,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
         self.dirty = False
 
     def save(self, path=None):
-        """ Saves the contents of the editor. """
+        """Saves the contents of the editor."""
 
         if path is None:
             path = self.path
@@ -112,7 +112,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
         self.control.StyleSetSize(n, faces["size"])
 
     def select_line(self, lineno):
-        """ Selects the specified line. """
+        """Selects the specified line."""
 
         start = self.control.PositionFromLine(lineno)
         end = self.control.GetLineEndPosition(lineno)
@@ -126,7 +126,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _path_changed(self):
-        """ Handle a change to path. """
+        """Handle a change to path."""
 
         self._changed_path()
 
@@ -137,7 +137,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Creates the toolkit-specific control for the widget. """
+        """Creates the toolkit-specific control for the widget."""
 
         # Base-class constructor.
         self.control = stc = PythonSTC(parent, -1)
@@ -249,7 +249,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
         return stc
 
     def destroy(self):
-        """ Destroy the toolkit control. """
+        """Destroy the toolkit control."""
         if self.control is not None:
             self.control.Unbind(wx.stc.EVT_STC_CHANGE)
             self.control.Unbind(wx.EVT_CHAR)
@@ -258,7 +258,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         self.dirty = True
         self.changed = True
@@ -267,7 +267,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
         event.Skip()
 
     def _on_char(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         self.key_pressed = KeyPressedEvent(
             alt_down=event.altDown,

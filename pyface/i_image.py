@@ -12,14 +12,14 @@ from traits.api import Interface
 
 
 class IImage(Interface):
-    """ The base interface for an image.
+    """The base interface for an image.
 
     This provides the interface specification that different types of image
     classes need to provide to be used by Pyface.
     """
 
     def create_image(self, size=None):
-        """ Creates a toolkit-specific image for this image.
+        """Creates a toolkit-specific image for this image.
 
         An image is a toolkit datastructure that is optimized for I/O,
         pixel-level access and modification, such as a wx.Image or a
@@ -41,7 +41,7 @@ class IImage(Interface):
         """
 
     def create_bitmap(self, size=None):
-        """ Creates a toolkit-specific bitmap image for this image.
+        """Creates a toolkit-specific bitmap image for this image.
 
         A bitmap is a toolkit datastructure that is optimized for rendering
         to the screen, such as a wx.Bitmap or a QPixmap.
@@ -62,7 +62,7 @@ class IImage(Interface):
         """
 
     def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this image.
+        """Creates a toolkit-specific icon for this image.
 
         An icon is a toolkit datastructure that holds several different
         variants of an image (eg. selected, disabled, etc.), such as a wx.Icon

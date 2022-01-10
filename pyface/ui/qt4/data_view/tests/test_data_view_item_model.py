@@ -13,6 +13,7 @@ from unittest import TestCase
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.qt.QtCore import QMimeData
+
 # This import results in an error without numpy installed
 # see enthought/pyface#742
 if np is not None:
@@ -25,7 +26,6 @@ from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
 
 @requires_numpy
 class TestDataViewItemModel(TestCase):
-
     def setUp(self):
         self.item_model = self._create_item_model()
 
@@ -46,11 +46,13 @@ class TestDataViewItemModel(TestCase):
 
     def test_mimeData(self):
         self.item_model.exporters = [RowExporter(format=table_format)]
-        indexes = self._make_indexes([
-            ((0, row), (column,))
-            for column in range(2, 5)
-            for row in range(2, 4)
-        ])
+        indexes = self._make_indexes(
+            [
+                ((0, row), (column,))
+                for column in range(2, 5)
+                for row in range(2, 4)
+            ]
+        )
 
         mime_data = self.item_model.mimeData(indexes)
 
@@ -64,7 +66,7 @@ class TestDataViewItemModel(TestCase):
             [
                 ['12', '13', '14', '15', '16', '17'],
                 ['18', '19', '20', '21', '22', '23'],
-            ]
+            ],
         )
 
     def test_mimeData_empty(self):

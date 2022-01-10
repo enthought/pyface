@@ -18,7 +18,7 @@ from .i_perspective_item import IPerspectiveItem
 
 @provides(IPerspectiveItem)
 class PerspectiveItem(HasTraits):
-    """ An item in a Perspective contents list. """
+    """An item in a Perspective contents list."""
 
     # The Id of the view to display in the perspective.
     id = Str()

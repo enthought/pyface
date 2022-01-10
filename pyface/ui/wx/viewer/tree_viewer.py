@@ -24,7 +24,7 @@ from pyface.wx.drag_and_drop import PythonDropSource
 
 
 class TreeViewer(ContentViewer):
-    """ A viewer based on a tree control. """
+    """A viewer based on a tree control."""
 
     # The default tree style.
     STYLE = wx.TR_EDIT_LABELS | wx.TR_HAS_BUTTONS | wx.CLIP_CHILDREN
@@ -81,7 +81,7 @@ class TreeViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, image_size=(16, 16), **traits):
-        """ Creates a new tree viewer.
+        """Creates a new tree viewer.
 
         'parent' is the toolkit-specific control that is the tree's parent.
 
@@ -142,7 +142,7 @@ class TreeViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def is_expanded(self, element):
-        """ Returns True if the element is expanded, otherwise False. """
+        """Returns True if the element is expanded, otherwise False."""
 
         key = self._get_key(element)
 
@@ -155,7 +155,7 @@ class TreeViewer(ContentViewer):
         return is_expanded
 
     def is_selected(self, element):
-        """ Returns True if the element is selected, otherwise False. """
+        """Returns True if the element is selected, otherwise False."""
 
         key = self._get_key(element)
 
@@ -168,7 +168,7 @@ class TreeViewer(ContentViewer):
         return is_selected
 
     def refresh(self, element):
-        """ Refresh the tree starting from the specified element.
+        """Refresh the tree starting from the specified element.
 
         Call this when the STRUCTURE of the content has changed.
 
@@ -198,7 +198,7 @@ class TreeViewer(ContentViewer):
             print("**** pid is None!!! ****")
 
     def update(self, element):
-        """ Update the tree starting from the specified element.
+        """Update the tree starting from the specified element.
 
         Call this when the APPEARANCE of the content has changed.
 
@@ -220,7 +220,7 @@ class TreeViewer(ContentViewer):
     # ------------------------------------------------------------------------
 
     def _get_style(self):
-        """ Returns the wx style flags for creating the tree control. """
+        """Returns the wx style flags for creating the tree control."""
 
         # Start with the default flags.
         style = self.STYLE
@@ -234,7 +234,7 @@ class TreeViewer(ContentViewer):
         return style
 
     def _add_element(self, pid, element):
-        """ Adds 'element' as a child of the element identified by 'pid'.
+        """Adds 'element' as a child of the element identified by 'pid'.
 
         If 'pid' is None then we are adding the root element.
 
@@ -280,7 +280,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(wxid)
 
     def _get_image_index(self, element):
-        """ Returns the tree item image index for an element. """
+        """Returns the tree item image index for an element."""
 
         # Get the image used to represent the element.
         image = self.label_provider.get_image(self, element)
@@ -293,7 +293,7 @@ class TreeViewer(ContentViewer):
         return image_index
 
     def _get_key(self, element):
-        """ Generate the key for the element to id map. """
+        """Generate the key for the element to id map."""
 
         try:
             key = hash(element)
@@ -304,7 +304,7 @@ class TreeViewer(ContentViewer):
         return key
 
     def _get_text(self, element):
-        """ Returns the tree item text for an element. """
+        """Returns the tree item text for an element."""
 
         text = self.label_provider.get_text(self, element)
         if text is None:
@@ -313,7 +313,7 @@ class TreeViewer(ContentViewer):
         return text
 
     def _refresh_element(self, wxid, element):
-        """ Refreshes the image and text of the specified element. """
+        """Refreshes the image and text of the specified element."""
 
         # Get the tree item image index.
         image_index = self._get_image_index(element)
@@ -329,7 +329,7 @@ class TreeViewer(ContentViewer):
         self.control.SetItemHasChildren(wxid, has_children)
 
     def _unpack_event(self, event):
-        """ Unpacks the event to see whether a tree element was involved. """
+        """Unpacks the event to see whether a tree element was involved."""
 
         try:
             point = event.GetPosition()
@@ -351,7 +351,7 @@ class TreeViewer(ContentViewer):
         return data, wxid, flags, point
 
     def _get_selection(self):
-        """ Returns a list of the selected elements. """
+        """Returns a list of the selected elements."""
 
         elements = []
         for wxid in self.control.GetSelections():
@@ -370,7 +370,7 @@ class TreeViewer(ContentViewer):
         return elements
 
     def _delete_children(self, pid):
-        """ Recursively deletes the children of the specified element. """
+        """Recursively deletes the children of the specified element."""
 
         cookie = 0
 
@@ -394,7 +394,7 @@ class TreeViewer(ContentViewer):
     # Trait event handlers -------------------------------------------------
 
     def _input_changed(self):
-        """ Called when the tree's input has been changed. """
+        """Called when the tree's input has been changed."""
 
         # Delete everything...
         if self.control is not None:
@@ -407,7 +407,7 @@ class TreeViewer(ContentViewer):
                 self._add_element(None, self.input)
 
     def _element_begin_drag_changed(self, element):
-        """ Called when a drag is started on a element. """
+        """Called when a drag is started on a element."""
 
         # We ask the label provider for the actual value to drag.
         drag_value = self.label_provider.get_drag_value(self, element)
@@ -420,7 +420,7 @@ class TreeViewer(ContentViewer):
     # wx event handlers ----------------------------------------------------
 
     def _on_right_down(self, event):
-        """ Called when the right mouse button is clicked on the tree. """
+        """Called when the right mouse button is clicked on the tree."""
 
         data, id, flags, point = self._unpack_event(event)
 
@@ -435,7 +435,7 @@ class TreeViewer(ContentViewer):
         event.Skip()
 
     def _on_left_down(self, event):
-        """ Called when the left mouse button is clicked on the tree. """
+        """Called when the left mouse button is clicked on the tree."""
 
         data, wxid, flags, point = self._unpack_event(event)
 
@@ -455,7 +455,7 @@ class TreeViewer(ContentViewer):
         event.Skip()
 
     def _on_tree_item_expanding(self, event):
-        """ Called when a tree item is about to expand. """
+        """Called when a tree item is about to expand."""
 
         # Which item is expanding?
         wxid = event.GetItem()
@@ -491,7 +491,7 @@ class TreeViewer(ContentViewer):
             event.Veto()
 
     def _on_tree_item_expanded(self, event):
-        """ Called when a tree item has been expanded. """
+        """Called when a tree item has been expanded."""
 
         # Which item was expanded?
         wxid = event.GetItem()
@@ -508,7 +508,7 @@ class TreeViewer(ContentViewer):
         self.element_expanded = element
 
     def _on_tree_item_collapsing(self, event):
-        """ Called when a tree item is about to collapse. """
+        """Called when a tree item is about to collapse."""
 
         # Which item is collapsing?
         wxid = event.GetItem()
@@ -523,7 +523,7 @@ class TreeViewer(ContentViewer):
             event.Veto()
 
     def _on_tree_item_collapsed(self, event):
-        """ Called when a tree item has been collapsed. """
+        """Called when a tree item has been collapsed."""
 
         # Which item was collapsed?
         wxid = event.GetItem()
@@ -540,7 +540,7 @@ class TreeViewer(ContentViewer):
         self.element_collapsed = element
 
     def _on_tree_item_activated(self, event):
-        """ Called when a tree item is activated (i.e., double clicked). """
+        """Called when a tree item is activated (i.e., double clicked)."""
 
         # Which item was activated?
         wxid = event.GetItem()
@@ -554,13 +554,13 @@ class TreeViewer(ContentViewer):
         self.element_activated = element
 
     def _on_tree_sel_changed(self, event):
-        """ Called when the selection is changed. """
+        """Called when the selection is changed."""
 
         # Trait notification.
         self.selection = self._get_selection()
 
     def _on_tree_begin_drag(self, event):
-        """ Called when a drag operation is starting on a tree item. """
+        """Called when a drag operation is starting on a tree item."""
 
         # Get the element, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event)
@@ -578,7 +578,7 @@ class TreeViewer(ContentViewer):
             self.element_begin_drag = element
 
     def _on_tree_begin_label_edit(self, event):
-        """ Called when the user has started editing an item's label. """
+        """Called when the user has started editing an item's label."""
 
         wxid = event.GetItem()
 
@@ -592,7 +592,7 @@ class TreeViewer(ContentViewer):
             event.Veto()
 
     def _on_tree_end_label_edit(self, event):
-        """ Called when the user has finished editing an item's label. """
+        """Called when the user has finished editing an item's label."""
 
         wxid = event.GetItem()
 
@@ -607,7 +607,7 @@ class TreeViewer(ContentViewer):
             event.Veto()
 
     def _on_char(self, event):
-        """ Called when a key is pressed when the tree has focus. """
+        """Called when a key is pressed when the tree has focus."""
 
         # Trait notification.
         self.key_pressed = event.GetKeyCode()

@@ -21,7 +21,7 @@ MESSAGE = "Do you want to reset ALL perspectives to their defaults?"
 
 
 class ResetAllPerspectivesAction(WorkbenchAction):
-    """ An action that resets *all* perspectives. """
+    """An action that resets *all* perspectives."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -36,7 +36,7 @@ class ResetAllPerspectivesAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         window = self.window
 

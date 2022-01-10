@@ -20,7 +20,7 @@ from .viewer_sorter import ViewerSorter
 
 
 class ContentViewer(Viewer):
-    """ Abstract base class for all content viewers.
+    """Abstract base class for all content viewers.
 
     A content viewer is a model-based adapter on some underlying
     toolkit-specific widget that acceses the model via a content provider and

@@ -21,16 +21,16 @@ from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
 
 class GridCellImageRenderer(GridCellRenderer):
-    """ A renderer which will display a cell-specific image in addition to some
-        text displayed in the same way the standard string renderer normally
-        would. """
+    """A renderer which will display a cell-specific image in addition to some
+    text displayed in the same way the standard string renderer normally
+    would."""
 
     def __init__(self, provider=None):
-        """ Build a new PyGridCellImageRenderer.
+        """Build a new PyGridCellImageRenderer.
 
-            'provider', if provided, should implement
-            get_image_for_cell(row, col) to specify an image to appear
-            in the cell at row, col. """
+        'provider', if provided, should implement
+        get_image_for_cell(row, col) to specify an image to appear
+        in the cell at row, col."""
 
         GridCellRenderer.__init__(self)
 
@@ -45,7 +45,7 @@ class GridCellImageRenderer(GridCellRenderer):
     # GridCellRenderer interface.
     # ------------------------------------------------------------------------
     def Draw(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Draw the appropriate icon into the specified grid cell. """
+        """Draw the appropriate icon into the specified grid cell."""
 
         # clear the cell first
         if isSelected:
@@ -102,7 +102,7 @@ class GridCellImageRenderer(GridCellRenderer):
         dc.DestroyClippingRegion()
 
     def GetBestSize(self, grid, attr, dc, row, col):
-        """ Determine best size for the cell. """
+        """Determine best size for the cell."""
 
         # find the correct image
         bmp = self._get_image(grid, row, col)
@@ -136,7 +136,7 @@ class GridCellImageRenderer(GridCellRenderer):
     # protected 'GridCellIconRenderer' interface.
     # ------------------------------------------------------------------------
     def _get_image(self, grid, row, col):
-        """ Returns the correct bmp for the data at row, col. """
+        """Returns the correct bmp for the data at row, col."""
         bmp = None
         if self._provider is not None and hasattr(
             self._provider, "get_image_for_cell"
@@ -151,7 +151,7 @@ class GridCellImageRenderer(GridCellRenderer):
         return bmp
 
     def _get_text(self, grid, row, col):
-        """ Returns the correct text for the data at row, col. """
+        """Returns the correct text for the data at row, col."""
 
         text = None
         if self._provider is not None and hasattr(

@@ -15,14 +15,14 @@ from .editable_value import EditableValue
 
 
 class ColorValue(EditableValue):
-    """ Editable value that presents a color value.
+    """Editable value that presents a color value.
 
     This is suitable for use where the value returned by an item in
     the model is a Color object.
     """
 
     def is_valid(self, model, row, column, value):
-        """ Is the given value valid for this item.
+        """Is the given value valid for this item.
 
         The default implementation says the value must be a Color.
 
@@ -45,7 +45,7 @@ class ColorValue(EditableValue):
         return isinstance(value, Color)
 
     def get_editor_value(self, model, row, column):
-        """ Get the editable representation of the underlying value.
+        """Get the editable representation of the underlying value.
 
         The default uses a text hex representation of the color.
 
@@ -66,7 +66,7 @@ class ColorValue(EditableValue):
         return model.get_value(row, column).hex()
 
     def set_editor_value(self, model, row, column, value):
-        """ Set the editable representation of the underlying value.
+        """Set the editable representation of the underlying value.
 
         The default expects a string that can be parsed to a color value.
 
@@ -93,7 +93,7 @@ class ColorValue(EditableValue):
         return super().set_editor_value(model, row, column, color)
 
     def get_text(self, model, row, column):
-        """ Get the textual representation of the underlying value.
+        """Get the textual representation of the underlying value.
 
         Parameters
         ----------
@@ -112,7 +112,7 @@ class ColorValue(EditableValue):
         return model.get_value(row, column).hex()
 
     def set_text(self, model, row, column, text):
-        """ Set the textual representation of the underlying value.
+        """Set the textual representation of the underlying value.
 
         Parameters
         ----------
@@ -133,7 +133,7 @@ class ColorValue(EditableValue):
         return self.set_editor_value(model, row, column, text)
 
     def has_color(self, model, row, column):
-        """ Whether or not the value has color data.
+        """Whether or not the value has color data.
 
         The default implementation returns False.
 
@@ -155,7 +155,7 @@ class ColorValue(EditableValue):
         return True
 
     def get_color(self, model, row, column):
-        """ Get data-associated colour values for the given item.
+        """Get data-associated colour values for the given item.
 
         Parameters
         ----------

@@ -33,26 +33,24 @@ from pyface.ui.qt4.util.testing import event_loop
 
 
 class ViewWithTabsEditor(Editor):
-    """ Test editor, displaying a labels in tabs. """
+    """Test editor, displaying a labels in tabs."""
 
     name = "Test Editor"
 
     def create(self, parent):
-        """ Create and set the toolkit-specific contents of the editor.
-        """
+        """Create and set the toolkit-specific contents of the editor."""
         control = QtGui.QTabWidget()
         control.addTab(QtGui.QLabel("tab 1"), "group 1")
         control.addTab(QtGui.QLabel("tab 2"), "group 2")
         self.control = control
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the editor.
-        """
+        """Destroy the toolkit-specific control that represents the editor."""
         self.control = None
 
 
 class SplitEditorAreaPaneTestTask(Task):
-    """ A test task containing a SplitEditorAreaPane. """
+    """A test task containing a SplitEditorAreaPane."""
 
     id = "test_task"
     name = "Test Task"
@@ -64,10 +62,10 @@ class SplitEditorAreaPaneTestTask(Task):
 
 
 class TestEditorAreaWidget(unittest.TestCase):
-    """ Tests for the SplitEditorAreaPane class. """
+    """Tests for the SplitEditorAreaPane class."""
 
     def _setUp_split(self, parent=None):
-        """ Sets up the root splitter for splitting. Returns this root.
+        """Sets up the root splitter for splitting. Returns this root.
 
         parent : parent of the returned root
         """
@@ -84,8 +82,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         return root
 
     def test_split(self):
-        """ Does split function work correct?
-        """
+        """Does split function work correct?"""
         # setup
         root = self._setUp_split()
         tabwidget = root.tabwidget()
@@ -130,7 +127,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         )
 
     def _setUp_collapse(self, parent=None):
-        """ Creates a root, its leftchild and rightchild, so that collapse can
+        """Creates a root, its leftchild and rightchild, so that collapse can
         be tested on one of the children.
 
         Returns the root, leftchild and rightchild of such layout.
@@ -167,7 +164,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         return root, left, right
 
     def test_collapse_nonempty(self):
-        """ Test for collapse function when the source of collapse is not an
+        """Test for collapse function when the source of collapse is not an
         empty  tabwidget. This would result in a new tabwidget which merges
         the tabs of the  collapsing tabwidgets.
         """
@@ -188,7 +185,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEqual(root.tabwidget().currentWidget(), btn2)
 
     def test_collapse_empty(self):
-        """ Test for collapse function when the collapse origin is an empty
+        """Test for collapse function when the collapse origin is an empty
         tabwidget. It's sibling can have an arbitrary layout and the result
         would be such that this layout is transferred to the parent.
         """
@@ -222,7 +219,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         )
 
     def test_persistence(self):
-        """ Tests whether get_layout/set_layout work correctly by setting a
+        """Tests whether get_layout/set_layout work correctly by setting a
         given layout and getting back the obtained layout.
         """
         # setup the test layout - one horizontal split and one vertical split
@@ -425,7 +422,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         editor_area = task.editor_area
         editor_area_widget = editor_area.control
-        tab_widget, = editor_area_widget.tabwidgets()
+        (tab_widget,) = editor_area_widget.tabwidgets()
 
         # Position is relative to the receiving widget, so (-1, -1) should be
         # reliably outside.

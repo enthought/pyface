@@ -44,7 +44,7 @@ NAVKEYS = (
     wx.WXK_UP,
     wx.WXK_DOWN,
     wx.WXK_PAGEUP,
-    wx.WXK_PAGEDOWN
+    wx.WXK_PAGEDOWN,
 )
 
 if wxPlatform == "__WXMSW__":
@@ -178,7 +178,7 @@ class Shell(wx.StyledTextCtrl):
         locals=None,
         InterpClass=None,
         *args,
-        **kwds
+        **kwds,
     ):
         """Create a PyCrust Shell instance."""
         wx.StyledTextCtrl.__init__(self, parent, id, pos, size, style)
@@ -216,7 +216,7 @@ class Shell(wx.StyledTextCtrl):
             stdout=PseudoFileOut(self.writeOut),
             stderr=PseudoFileErr(self.writeErr),
             *args,
-            **kwds
+            **kwds,
         )
         # Find out for which keycodes the interpreter will autocomplete.
         self.autoCompleteKeys = self.interp.getAutoCompleteKeys()
@@ -690,7 +690,7 @@ class Shell(wx.StyledTextCtrl):
             command = self.history[i]
             if command[: len(searchText)] == searchText:
                 # Replace the current selection with the one we've found.
-                self.ReplaceSelection(command[len(searchText):])
+                self.ReplaceSelection(command[len(searchText) :])
                 endpos = self.GetCurrentPos()
                 self.SetSelection(endpos, startpos)
                 # We've now warped into middle of the history.
@@ -1015,7 +1015,7 @@ class Shell(wx.StyledTextCtrl):
         if len(completions) == 0:
             return 0
         if len(completions) == 1:
-            self.write(completions[0][len(command):])
+            self.write(completions[0][len(command) :])
         else:
             self.AutoCompShow(len(command), "\n".join(completions))
         return 1

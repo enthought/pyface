@@ -27,10 +27,10 @@ WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
 
 class OpenFileDialog(wx.FileDialog):
-    """ An open-file dialog. """
+    """An open-file dialog."""
 
     def __init__(self, parent=None, **kw):
-        """ Constructor. """
+        """Constructor."""
 
         style = wx.OPEN | wx.HIDE_READONLY
 
@@ -39,10 +39,10 @@ class OpenFileDialog(wx.FileDialog):
 
 
 class OpenDirDialog(wx.DirDialog):
-    """ An open-directory dialog. """
+    """An open-directory dialog."""
 
     def __init__(self, parent=None, **kw):
-        """ Constructor. """
+        """Constructor."""
 
         style = wx.OPEN | wx.HIDE_READONLY | wx.DD_NEW_DIR_BUTTON
 
@@ -51,10 +51,10 @@ class OpenDirDialog(wx.DirDialog):
 
 
 class SaveFileAsDialog(wx.FileDialog):
-    """ A save-file dialog. """
+    """A save-file dialog."""
 
     def __init__(self, parent=None, **kw):
-        """ Constructor. """
+        """Constructor."""
 
         style = wx.SAVE | wx.OVERWRITE_PROMPT
 
@@ -63,7 +63,7 @@ class SaveFileAsDialog(wx.FileDialog):
 
 
 def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
-    """ Displays a confirmation dialog. """
+    """Displays a confirmation dialog."""
 
     dialog = wx.MessageDialog(
         parent,
@@ -79,7 +79,7 @@ def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
 
 
 def yes_no_cancel(parent, message, title=None, default=wx.NO_DEFAULT):
-    """ Displays a Yes/No/Cancel dialog. """
+    """Displays a Yes/No/Cancel dialog."""
 
     dialog = wx.MessageDialog(
         parent,
@@ -95,7 +95,7 @@ def yes_no_cancel(parent, message, title=None, default=wx.NO_DEFAULT):
 
 
 def information(parent, message, title=None):
-    """ Displays a modal information dialog. """
+    """Displays a modal information dialog."""
 
     dialog = wx.MessageDialog(
         parent,
@@ -109,7 +109,7 @@ def information(parent, message, title=None):
 
 
 def warning(parent, message, title=None):
-    """ Displays a modal warning dialog. """
+    """Displays a modal warning dialog."""
 
     dialog = wx.MessageDialog(
         parent,
@@ -123,7 +123,7 @@ def warning(parent, message, title=None):
 
 
 def error(parent, message, title=None):
-    """ Displays a modal error dialog. """
+    """Displays a modal error dialog."""
 
     dialog = wx.MessageDialog(
         parent,
@@ -137,7 +137,7 @@ def error(parent, message, title=None):
 
 
 def _get_title(title, parent, default):
-    """ Get a sensible title for a dialog! """
+    """Get a sensible title for a dialog!"""
 
     if title is None:
         if parent is not None:

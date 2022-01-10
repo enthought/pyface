@@ -65,7 +65,7 @@ class CompositeGridModelTestCase(unittest.TestCase):
             "Cell containing None should be empty.",
         )
         self.assertEqual(
-            self.model.is_cell_empty(rows+1, columns+1),
+            self.model.is_cell_empty(rows + 1, columns + 1),
             True,
             "Cell outside the range of values should be empty.",
         )

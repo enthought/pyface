@@ -11,12 +11,13 @@
 from unittest import TestCase
 
 from pyface.data_view.index_manager import (
-    IntIndexManager, Root, TupleIndexManager,
+    IntIndexManager,
+    Root,
+    TupleIndexManager,
 )
 
 
 class IndexManagerMixin:
-
     def test_root_has_no_parent(self):
         with self.assertRaises(IndexError):
             self.index_manager.get_parent_and_row(Root)
@@ -81,7 +82,6 @@ class IndexManagerMixin:
 
 
 class TestIntIndexManager(IndexManagerMixin, TestCase):
-
     def setUp(self):
         super().setUp()
         self.index_manager = IntIndexManager()
@@ -103,7 +103,6 @@ class TestIntIndexManager(IndexManagerMixin, TestCase):
 
 
 class TestTupleIndexManager(IndexManagerMixin, TestCase):
-
     def setUp(self):
         super().setUp()
         self.index_manager = TupleIndexManager()
@@ -133,8 +132,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
 
         self.assertEqual(row, 10)
         self.assertIs(
-            parent,
-            self.index_manager.from_sequence((5, 6, 7, 8, 9))
+            parent, self.index_manager.from_sequence((5, 6, 7, 8, 9))
         )
 
     def test_complex_index_round_trip(self):
@@ -167,7 +165,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
             with self.subTest(depth=depth):
                 index = self.index_manager.create_index(parent, row)
                 result = self.index_manager.to_sequence(index)
-                self.assertEqual(result, sequence[:depth+1])
+                self.assertEqual(result, sequence[: depth + 1])
                 parent = index
 
     def test_complex_index_sequence_round_trip(self):

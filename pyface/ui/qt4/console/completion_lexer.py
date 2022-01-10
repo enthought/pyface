@@ -12,8 +12,8 @@ from pygments.token import Token, is_token_subtype
 
 
 class CompletionLexer(object):
-    """ Uses Pygments and some auxillary information to lex code snippets for
-        symbol contexts.
+    """Uses Pygments and some auxillary information to lex code snippets for
+    symbol contexts.
     """
 
     # Maps Lexer names to a list of possible name separators
@@ -24,13 +24,12 @@ class CompletionLexer(object):
     }
 
     def __init__(self, lexer):
-        """ Create a CompletionLexer using the specified Pygments lexer.
-        """
+        """Create a CompletionLexer using the specified Pygments lexer."""
         self.lexer = lexer
 
     def get_context(self, string):
-        """ Assuming the cursor is at the end of the specified string, get the
-            context (a list of names) for the symbol at cursor position.
+        """Assuming the cursor is at the end of the specified string, get the
+        context (a list of names) for the symbol at cursor position.
         """
         context = []
         reversed_tokens = list(self._lexer.get_tokens(string))

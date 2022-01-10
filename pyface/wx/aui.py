@@ -204,7 +204,7 @@ class PyfaceAuiManager(aui.AuiManager):
         return d
 
     def RestrictResize(self, clientPt, screenPt, createDC):
-        """ Common method between :meth:`DoEndResizeAction` and :meth:`OnLeftUp_Resize`. """
+        """Common method between :meth:`DoEndResizeAction` and :meth:`OnLeftUp_Resize`."""
 
         dock = self._action_part.dock
         pane = self._action_part.pane

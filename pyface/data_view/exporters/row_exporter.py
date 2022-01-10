@@ -14,7 +14,7 @@ from pyface.data_view.abstract_data_exporter import AbstractDataExporter
 
 
 class RowExporter(AbstractDataExporter):
-    """ Export a collection of rows from a data view as a list of lists.
+    """Export a collection of rows from a data view as a list of lists.
 
     This is suitable for drag and drop or copying of the content of multiple
     selected rows.
@@ -36,7 +36,7 @@ class RowExporter(AbstractDataExporter):
     column_headers = Bool()
 
     def get_data(self, model, indices):
-        """ Get the data to be exported from the model and indices.
+        """Get the data to be exported from the model and indices.
 
         This exports a list of data associated with each row in the
         indices.  Each row item is itself a list of values extracted
@@ -64,6 +64,13 @@ class RowExporter(AbstractDataExporter):
             columns = [()] + columns
 
         return [
-            [self.get_value(model, row, column,) for column in columns]
+            [
+                self.get_value(
+                    model,
+                    row,
+                    column,
+                )
+                for column in columns
+            ]
             for row in rows
         ]

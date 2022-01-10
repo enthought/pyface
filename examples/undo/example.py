@@ -42,7 +42,7 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 
 class ExampleUndo(Workbench):
-    """ The ExampleUndo class is a workbench that creates ExampleUndoWindow
+    """The ExampleUndo class is a workbench that creates ExampleUndoWindow
     windows.
     """
 
@@ -57,7 +57,7 @@ class ExampleUndo(Workbench):
     ###########################################################################
 
     def _exiting_changed(self, event):
-        """ Called when the workbench is exiting. """
+        """Called when the workbench is exiting."""
 
         if self.active_window.confirm('Ok to exit?') != YES:
             event.veto = True
@@ -66,7 +66,7 @@ class ExampleUndo(Workbench):
 
 
 def main(argv):
-    """ A simple example of using the the undo framework in a workbench. """
+    """A simple example of using the the undo framework in a workbench."""
 
     # Create the GUI.
     gui = GUI()
@@ -93,4 +93,5 @@ def main(argv):
 
 if __name__ == '__main__':
     import sys
+
     main(sys.argv)

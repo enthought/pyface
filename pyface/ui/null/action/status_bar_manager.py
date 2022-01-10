@@ -15,7 +15,7 @@ from traits.api import Any, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
-    """ A status bar manager realizes itself in a status bar control. """
+    """A status bar manager realizes itself in a status bar control."""
 
     # The manager's unique identifier (if it has one).
     id = Str()
@@ -34,7 +34,7 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_status_bar(self, parent):
-        """ Creates a status bar. """
+        """Creates a status bar."""
 
         return self.status_bar
 
@@ -69,8 +69,8 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _messages_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
 
     def _messages_items_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
         return

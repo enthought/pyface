@@ -23,7 +23,7 @@ from pyface.i_window import IWindow
 
 
 class ISplashScreen(IWindow):
-    """ The interface for a splash screen. """
+    """The interface for a splash screen."""
 
     # 'ISplashScreen' interface --------------------------------------------
 
@@ -59,7 +59,7 @@ class ISplashScreen(IWindow):
 
 
 class MSplashScreen(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the ISplashScreen interface.
 
     Reimplements: open(), close()
@@ -70,7 +70,7 @@ class MSplashScreen(HasTraits):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Creates the toolkit-specific control for the widget. """
+        """Creates the toolkit-specific control for the widget."""
 
         super().open()
 
@@ -83,7 +83,7 @@ class MSplashScreen(HasTraits):
             logger.addHandler(self._log_handler)
 
     def close(self):
-        """ Close the window. """
+        """Close the window."""
 
         if self.show_log_messages:
             # Get the root logger.

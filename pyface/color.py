@@ -22,7 +22,12 @@ from native toolkit color objects.
 import colorsys
 
 from traits.api import (
-    Bool, HasStrictTraits, Property, Range, Tuple, cached_property
+    Bool,
+    HasStrictTraits,
+    Property,
+    Range,
+    Tuple,
+    cached_property,
 )
 
 from pyface.util.color_helpers import channels_to_ints, is_dark
@@ -41,7 +46,7 @@ AlphaChannelTuple = Tuple(Channel, Channel, Channel, Channel)
 
 
 class Color(HasStrictTraits):
-    """ A mutable specification of a color with alpha.
+    """A mutable specification of a color with alpha.
 
     This is a class designed to be used by user interface elements which
     need to color some or all of the interface element.  Each color has a
@@ -94,7 +99,7 @@ class Color(HasStrictTraits):
 
     @classmethod
     def from_str(cls, text, **traits):
-        """ Create a new Color object from a string.
+        """Create a new Color object from a string.
 
         Parameters
         ----------
@@ -128,7 +133,7 @@ class Color(HasStrictTraits):
 
     @classmethod
     def from_toolkit(cls, toolkit_color, **traits):
-        """ Create a new Color object from a toolkit color object.
+        """Create a new Color object from a toolkit color object.
 
         Parameters
         ----------
@@ -138,12 +143,13 @@ class Color(HasStrictTraits):
             Any additional trait values to be passed as keyword arguments.
         """
         from pyface.toolkit import toolkit_object
+
         toolkit_color_to_rgba = toolkit_object('color:toolkit_color_to_rgba')
         rgba = toolkit_color_to_rgba(toolkit_color)
         return cls(rgba=rgba, **traits)
 
     def to_toolkit(self):
-        """ Create a new toolkit color object from a Color object.
+        """Create a new toolkit color object from a Color object.
 
         Returns
         -------
@@ -151,11 +157,12 @@ class Color(HasStrictTraits):
             A toolkit color object, such as a Qt QColor or a Wx wx.Colour.
         """
         from pyface.toolkit import toolkit_object
+
         rgba_to_toolkit_color = toolkit_object('color:rgba_to_toolkit_color')
         return rgba_to_toolkit_color(self.rgba)
 
     def hex(self):
-        """ Provide a hex representation of the Color object.
+        """Provide a hex representation of the Color object.
 
         Note that because the hex value is restricted to 0-255 integer values
         for each channel, the representation is not exact.

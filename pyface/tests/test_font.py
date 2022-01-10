@@ -26,7 +26,6 @@ class FontSizeDummy(HasStrictTraits):
 
 
 class TestFontSizeTrait(unittest.TestCase):
-
     def test_font_size_trait_defaults(self):
         dummy = FontSizeDummy()
 
@@ -79,7 +78,6 @@ class FontStretchDummy(HasStrictTraits):
 
 
 class TestFontStretchTrait(unittest.TestCase):
-
     def test_font_stretch_trait_defaults(self):
         dummy = FontStretchDummy()
 
@@ -109,7 +107,7 @@ class TestFontStretchTrait(unittest.TestCase):
             (150.0, 150.0),
             ("125", 125.0),
             ("50%", 50.0),
-            ("ultra-expanded", 200.0)
+            ("ultra-expanded", 200.0),
         ]:
             with self.subTest(stretch=stretch):
                 dummy.stretch = stretch
@@ -124,7 +122,6 @@ class TestFontStretchTrait(unittest.TestCase):
 
 
 class TestFont(unittest.TestCase):
-
     def test_default(self):
         font = Font()
 
@@ -190,7 +187,7 @@ class TestFont(unittest.TestCase):
         self.assertEqual(
             description,
             "italic small-caps underline demi-bold 75% 14pt "
-            "'Comic Sans', decorative"
+            "'Comic Sans', decorative",
         )
 
     def test_repr(self):
@@ -274,7 +271,8 @@ class TestFont(unittest.TestCase):
 
     def test_toolkit_font_to_properties(self):
         toolkit_font_to_properties = toolkit_object(
-            'font:toolkit_font_to_properties')
+            'font:toolkit_font_to_properties'
+        )
 
         font = Font(
             family=['Helvetica', 'sans-serif'],
@@ -291,7 +289,12 @@ class TestFont(unittest.TestCase):
         self.assertEqual(
             set(properties.keys()),
             {
-                'family', 'size', 'stretch', 'weight', 'style', 'variants',
-                'decorations'
-            }
+                'family',
+                'size',
+                'stretch',
+                'weight',
+                'style',
+                'variants',
+                'decorations',
+            },
         )

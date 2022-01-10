@@ -29,7 +29,7 @@ from pyface.workbench.api import Editor, EditorManager
 
 
 class _wxLabelEditor(Editor):
-    """ _wxLabelEditor is the wx implementation of a label editor. """
+    """_wxLabelEditor is the wx implementation of a label editor."""
 
     def create_control(self, parent):
         import wx
@@ -57,11 +57,8 @@ class _wxLabelEditor(Editor):
     def _set_text(self, w):
         w.SetValue("")
         w.WriteText(
-            "%s(%d points, %s)" % (
-                self.obj.text,
-                self.obj.size,
-                self.obj.style
-            )
+            "%s(%d points, %s)"
+            % (self.obj.text, self.obj.size, self.obj.style)
         )
 
     def _update_size(self, event):
@@ -72,6 +69,7 @@ class _wxLabelEditor(Editor):
 
     def _set_size_and_style(self, w):
         import wx
+
         if self.obj.style == 'normal':
             style, weight = wx.NORMAL, wx.NORMAL
         elif self.obj.style == 'italic':
@@ -90,7 +88,7 @@ class _wxLabelEditor(Editor):
 
 
 class _PyQt4LabelEditor(Editor):
-    """ _PyQt4LabelEditor is the PyQt implementation of a label editor. """
+    """_PyQt4LabelEditor is the PyQt implementation of a label editor."""
 
     def create_control(self, parent):
 
@@ -117,11 +115,8 @@ class _PyQt4LabelEditor(Editor):
 
     def _set_text(self, w):
         w.setText(
-            "%s\n(%d points, %s)" % (
-                self.obj.text,
-                self.obj.size,
-                self.obj.style
-            )
+            "%s\n(%d points, %s)"
+            % (self.obj.text, self.obj.size, self.obj.style)
         )
 
     def _update_size(self, event):
@@ -147,7 +142,7 @@ class _PyQt4LabelEditor(Editor):
 
 
 class ExampleEditorManager(EditorManager):
-    """ The ExampleEditorManager class creates the example editors. """
+    """The ExampleEditorManager class creates the example editors."""
 
     def create_editor(self, window, obj, kind):
 
@@ -159,8 +154,6 @@ class ExampleEditorManager(EditorManager):
         elif tk_name == 'qt4' or tk_name == 'qt':
             ed = _PyQt4LabelEditor(window=window, obj=obj)
         else:
-            raise NotImplementedError(
-                "unsupported toolkit: %s" % tk_name
-            )
+            raise NotImplementedError("unsupported toolkit: %s" % tk_name)
 
         return ed

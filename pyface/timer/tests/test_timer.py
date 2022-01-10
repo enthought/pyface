@@ -39,7 +39,7 @@ class ConditionHandler(object):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestEventTimer(TestCase, GuiTestAssistant):
-    """ Test the EventTimer. """
+    """Test the EventTimer."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -189,7 +189,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestCallbackTimer(TestCase, GuiTestAssistant):
-    """ Test the CallbackTimer. """
+    """Test the CallbackTimer."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -358,7 +358,7 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestTimer(TestCase, GuiTestAssistant):
-    """ Test the CallbackTimer. """
+    """Test the CallbackTimer."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)

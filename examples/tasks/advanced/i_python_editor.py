@@ -19,7 +19,7 @@ from pyface.key_pressed_event import KeyPressedEvent
 
 
 class IPythonEditor(IEditor):
-    """ A widget for editing Python code. """
+    """A widget for editing Python code."""
 
     # 'IPythonEditor' interface --------------------------------------------
 
@@ -45,10 +45,10 @@ class IPythonEditor(IEditor):
     # ------------------------------------------------------------------------
 
     def load(self, path=None):
-        """ Loads the contents of the editor. """
+        """Loads the contents of the editor."""
 
     def save(self, path=None):
-        """ Saves the contents of the editor. """
+        """Saves the contents of the editor."""
 
     def select_line(self, lineno):
-        """ Selects the specified line. """
+        """Selects the specified line."""

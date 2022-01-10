@@ -15,7 +15,7 @@ from pyface.api import ApplicationWindow, GUI, HeadingText
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # --------------------------------------------------------------------------
     # 'IWindow' interface
@@ -29,7 +29,7 @@ class MainWindow(ApplicationWindow):
     # --------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create the editor. """
+        """Create the editor."""
 
         self._label = HeadingText(parent, text="Hello World")
 

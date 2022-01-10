@@ -24,14 +24,14 @@ from .field import Field
 
 @provides(ISpinField)
 class SpinField(MSpinField, Field):
-    """ The Wx-specific implementation of the spin field class """
+    """The Wx-specific implementation of the spin field class"""
 
     # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         control = wx.SpinCtrl(parent, style=wx.TE_PROCESS_ENTER)
         return control
@@ -41,27 +41,27 @@ class SpinField(MSpinField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return self.control.GetValue()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         self.control.SetValue(value)
         event = wx.SpinEvent(wx.EVT_SPINCTRL.typeId, self.control.GetId())
         event.SetInt(value)
         wx.PostEvent(self.control.GetEventHandler(), event)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.Unbind(wx.EVT_SPINCTRL, handler=self._update_value)
         else:
             self.control.Bind(wx.EVT_SPINCTRL, self._update_value)
 
     def _get_control_bounds(self):
-        """ Toolkit specific method to get the control's bounds. """
+        """Toolkit specific method to get the control's bounds."""
         return (self.control.GetMin(), self.control.GetMax())
 
     def _set_control_bounds(self, bounds):
-        """ Toolkit specific method to set the control's bounds. """
+        """Toolkit specific method to set the control's bounds."""
         self.control.SetRange(*bounds)

@@ -14,14 +14,14 @@ from traits.api import HasTraits
 
 
 class Sorter(HasTraits):
-    """ Abstract base class for all sorters. """
+    """Abstract base class for all sorters."""
 
     # ------------------------------------------------------------------------
     # 'ViewerSorter' interface.
     # ------------------------------------------------------------------------
 
     def sort(self, widget, parent, nodes):
-        """ Sorts a list of nodes IN PLACE.
+        """Sorts a list of nodes IN PLACE.
 
         'widget' is the widget that we are sorting nodes for.
         'parent' is the parent node.
@@ -34,7 +34,7 @@ class Sorter(HasTraits):
         # This creates a comparison function with the names 'widget' and
         # 'parent' bound to the corresponding arguments to this method.
         def key(node):
-            """ Comparator. """
+            """Comparator."""
 
             return self.key(widget, parent, node)
 
@@ -48,7 +48,7 @@ class Sorter(HasTraits):
         return (category, text)
 
     def category(self, widget, parent, node):
-        """ Returns the category (an integer) for an node.
+        """Returns the category (an integer) for an node.
 
         'parent' is the parent node.
         'nodes'  is the node to return the category for.
@@ -64,7 +64,7 @@ class Sorter(HasTraits):
         return 0
 
     def is_sorter_trait(self, node, trait_name):
-        """ Is the sorter affected by changes to a node's trait?
+        """Is the sorter affected by changes to a node's trait?
 
         'node'       is the node.
         'trait_name' is the name of the trait.

@@ -32,8 +32,7 @@ from .dialog import Dialog
 
 
 class XrcDialog(Dialog):
-    """A dialog that is loaded from an XRC resource file.
-    """
+    """A dialog that is loaded from an XRC resource file."""
 
     # ------------------------------------------------------------------------
     # Traits

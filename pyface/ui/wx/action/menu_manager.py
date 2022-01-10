@@ -25,7 +25,7 @@ from pyface.action.group import Group
 
 
 class MenuManager(ActionManager, ActionManagerItem):
-    """ A menu manager realizes itself in a menu control.
+    """A menu manager realizes itself in a menu control.
 
     This could be a sub-menu or a context (popup) menu.
     """
@@ -44,7 +44,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
-        """ Creates a menu representation of the manager. """
+        """Creates a menu representation of the manager."""
 
         # If a controller is required it can either be set as a trait on the
         # menu manager (the trait is part of the 'ActionManager' API), or
@@ -60,7 +60,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu. """
+        """Adds the item to a menu."""
 
         sub = self.create_menu(parent, controller)
         id = sub.GetId()
@@ -72,20 +72,20 @@ class MenuManager(ActionManager, ActionManagerItem):
         menu.Append(id, self.name, sub)
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
-        """ Adds the item to a tool bar. """
+        """Adds the item to a tool bar."""
 
         raise ValueError("Cannot add a menu manager to a toolbar.")
 
 
 class _Menu(wx.Menu):
-    """ The toolkit-specific menu control. """
+    """The toolkit-specific menu control."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
-        """ Creates a new tree. """
+        """Creates a new tree."""
 
         # Base class constructor.
         wx.Menu.__init__(self)
@@ -122,7 +122,7 @@ class _Menu(wx.Menu):
     # ------------------------------------------------------------------------
 
     def clear(self):
-        """ Clears the items from the menu. """
+        """Clears the items from the menu."""
 
         for item in self.GetMenuItems():
             if item.GetSubMenu() is not None:
@@ -135,12 +135,12 @@ class _Menu(wx.Menu):
         self.menu_items = []
 
     def is_empty(self):
-        """ Is the menu empty? """
+        """Is the menu empty?"""
 
         return self.GetMenuItemCount() == 0
 
     def refresh(self, event=None):
-        """ Ensures that the menu reflects the state of the manager. """
+        """Ensures that the menu reflects the state of the manager."""
 
         self.clear()
 
@@ -154,7 +154,7 @@ class _Menu(wx.Menu):
             )
 
     def show(self, x=None, y=None):
-        """ Show the menu at the specified location. """
+        """Show the menu at the specified location."""
 
         if x is None or y is None:
             self._parent.PopupMenu(self)
@@ -168,7 +168,7 @@ class _Menu(wx.Menu):
     # ------------------------------------------------------------------------
 
     def _on_enabled_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
         #
@@ -179,7 +179,7 @@ class _Menu(wx.Menu):
             self._menu.Enable(self._id, event.new)
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
-        """ Adds a group to a menu. """
+        """Adds a group to a menu."""
 
         if len(group.items) > 0:
             # Is a separator required?

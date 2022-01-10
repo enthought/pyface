@@ -18,13 +18,11 @@ from pyface.data_view.value_types.editable_value import EditableValue
 
 
 class EditableWithValid(EditableValue):
-
     def is_valid(self, model, row, column, value):
         return value >= 0
 
 
 class TestEditableValue(UnittestTools, TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1.0)

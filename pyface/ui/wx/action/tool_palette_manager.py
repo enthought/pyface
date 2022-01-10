@@ -22,7 +22,7 @@ from .tool_palette import ToolPalette
 
 
 class ToolPaletteManager(ActionManager):
-    """ A tool bar manager realizes itself in a tool palette bar control. """
+    """A tool bar manager realizes itself in a tool palette bar control."""
 
     # 'ToolPaletteManager' interface ---------------------------------------
 
@@ -42,7 +42,7 @@ class ToolPaletteManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
-        """ Creates a new tool bar manager. """
+        """Creates a new tool bar manager."""
 
         # Base class contructor.
         super().__init__(*args, **traits)
@@ -58,7 +58,7 @@ class ToolPaletteManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def create_tool_palette(self, parent, controller=None):
-        """ Creates a tool bar. """
+        """Creates a tool bar."""
 
         # Create the control.
         tool_palette = ToolPalette(parent)
@@ -75,7 +75,7 @@ class ToolPaletteManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def _add_tools(self, tool_palette, groups):
-        """ Adds tools for all items in a list of groups. """
+        """Adds tools for all items in a list of groups."""
 
         # previous_non_empty_group = None
         for group in self.groups:
@@ -97,7 +97,7 @@ class ToolPaletteManager(ActionManager):
         tool_palette.realize()
 
     def _set_initial_tool_state(self, tool_palette, groups):
-        """ Workaround for the wxPython tool bar bug.
+        """Workaround for the wxPython tool bar bug.
 
         Without this,  only the first item in a radio group can be selected
          when the tool bar is first realised 8^()

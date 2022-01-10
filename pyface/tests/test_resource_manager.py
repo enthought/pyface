@@ -16,7 +16,7 @@ import shutil
 import tempfile
 import unittest
 
-import pyface     # a package with images as package resources
+import pyface  # a package with images as package resources
 from ..resource_manager import PyfaceResourceFactory
 from ..resource_manager import ResourceManager
 

@@ -23,10 +23,10 @@ from wx.grid import (
 
 
 class Grid(wxGrid):
-    """ A grid (spreadsheet) widget. """
+    """A grid (spreadsheet) widget."""
 
     def __init__(self, parent, model):
-        """ Constructor. """
+        """Constructor."""
 
         # Base class constructor.
         wxGrid.__init__(self, parent, -1)
@@ -72,7 +72,7 @@ class Grid(wxGrid):
         self._initialize_fonts()
 
     def _initialize_fonts(self):
-        """ Initialize the label fonts. """
+        """Initialize the label fonts."""
 
         self.SetLabelFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
         self.SetGridLineColour("blue")
@@ -80,7 +80,7 @@ class Grid(wxGrid):
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
     def _initialize_rows(self, model):
-        """ Initialize the row headers. """
+        """Initialize the row headers."""
 
         if not model.show_row_headers:
             self.SetRowLabelSize(0)
@@ -95,7 +95,7 @@ class Grid(wxGrid):
                     self.SetRowAttr(index, attr)
 
     def _initialize_columns(self, model):
-        """ Initialize the column headers. """
+        """Initialize the column headers."""
 
         if not model.show_column_headers:
             self.SetColLabelSize(0)
@@ -116,17 +116,17 @@ class Grid(wxGrid):
     # ------------------------------------------------------------------------
 
     def _on_cell_change(self, evt):
-        """ Called when the contents of a cell have been changed. """
+        """Called when the contents of a cell have been changed."""
 
         evt.Skip()
 
     def _on_select_cell(self, evt):
-        """ Called when the user has moved to another cell. """
+        """Called when the user has moved to another cell."""
 
         evt.Skip()
 
     def _on_cell_left_dclick(self, evt):
-        """ Called when the left mouse button was double-clicked.
+        """Called when the left mouse button was double-clicked.
 
         From the wxPython demo code:-
 
@@ -141,7 +141,7 @@ class Grid(wxGrid):
             self.EnableCellEditControl()
 
     def _on_cell_right_click(self, evt):
-        """ Called when a right click occurred in a cell. """
+        """Called when a right click occurred in a cell."""
 
         row = evt.GetRow()
 
@@ -163,7 +163,7 @@ class Grid(wxGrid):
             self.PopupMenu(menu, evt.GetPosition())
 
     def _on_key_down(self, evt):
-        """ Called when a key is pressed. """
+        """Called when a key is pressed."""
 
         # This changes the behaviour of the <Enter> and <Tab> keys to make
         # manual data entry smoother!
@@ -185,7 +185,7 @@ class Grid(wxGrid):
             evt.Skip()
 
     def _on_delete_row(self, evt):
-        """ Called when the 'Delete Row' context menu item is selected. """
+        """Called when the 'Delete Row' context menu item is selected."""
 
         # Get the selected row (there must be exactly one at this point!).
         selected_rows = self.GetSelectedRows()
@@ -199,7 +199,7 @@ class Grid(wxGrid):
     # ------------------------------------------------------------------------
 
     def _on_model_changed(self, event):
-        """ Called when the model has changed. """
+        """Called when the model has changed."""
         message = event.new
         self.BeginBatch()
         self.ProcessTableMessage(message)
@@ -273,7 +273,7 @@ class Grid(wxGrid):
     # ------------------------------------------------------------------------
 
     def _move_to_next_cell(self, expandSelection=False):
-        """ Move to the 'next' cell. """
+        """Move to the 'next' cell."""
 
         # Complete the edit on the current cell.
         self.DisableCellEditControl()
@@ -297,7 +297,7 @@ class Grid(wxGrid):
         return success
 
     def _move_to_previous_cell(self, expandSelection=False):
-        """ Move to the 'previous' cell. """
+        """Move to the 'previous' cell."""
 
         # Complete the edit on the current cell.
         self.DisableCellEditControl()

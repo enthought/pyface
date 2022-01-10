@@ -19,7 +19,7 @@ from pyface.color import channels_to_ints, ints_to_channels
 
 
 def toolkit_color_to_rgba(qcolor):
-    """ Convert a QColor to an RGBA tuple.
+    """Convert a QColor to an RGBA tuple.
 
     Parameters
     ----------
@@ -41,7 +41,7 @@ def toolkit_color_to_rgba(qcolor):
 
 
 def rgba_to_toolkit_color(rgba):
-    """ Convert an RGBA tuple to a QColor.
+    """Convert an RGBA tuple to a QColor.
 
     Parameters
     ----------

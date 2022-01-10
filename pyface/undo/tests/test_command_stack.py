@@ -13,7 +13,9 @@ import unittest
 
 from pyface.undo.api import CommandStack, UndoManager
 from pyface.undo.tests.testing_commands import (
-    MergeableCommand, SimpleCommand, UnnamedCommand,
+    MergeableCommand,
+    SimpleCommand,
+    UnnamedCommand,
 )
 from traits.testing.api import UnittestTools
 
@@ -34,24 +36,27 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
 
     def test_1_command_pushed(self):
         with self.assert_n_commands_pushed(self.stack, 1):
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(self.command)
 
     def test_n_command_pushed(self):
         n = 4
         with self.assert_n_commands_pushed(self.stack, n):
             for i in range(n):
-                with self.assertTraitChanges(self.stack.undo_manager,
-                                             'stack_updated', count=1):
+                with self.assertTraitChanges(
+                    self.stack.undo_manager, 'stack_updated', count=1
+                ):
                     self.stack.push(self.command)
 
     def test_push_after_undo(self):
         with self.assert_n_commands_pushed(self.stack, 1):
             self.stack.push(self.command)
             self.stack.undo()
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(self.command)
 
     def test_push_after_n_undo(self):
@@ -63,8 +68,9 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             for i in range(n):
                 self.stack.undo()
 
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(self.command)
 
     # Command merging tests ---------------------------------------------------
@@ -72,8 +78,9 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
     def test_1_merge_command_pushed(self):
         self.command = MergeableCommand()
         with self.assert_n_commands_pushed(self.stack, 1):
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(self.command)
 
     def test_n_merge_command_pushed(self):
@@ -83,10 +90,11 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             self.stack.push(self.command)
             for i in range(n):
                 command = MergeableCommand()
-                with self.assertTraitChanges(self.stack.undo_manager,
-                                             'stack_updated', count=1):
+                with self.assertTraitChanges(
+                    self.stack.undo_manager, 'stack_updated', count=1
+                ):
                     self.stack.push(command)
-        self.assertEqual(self.command.amount, n+1)
+        self.assertEqual(self.command.amount, n + 1)
 
     def test_merge_after_undo(self):
         with self.assert_n_commands_pushed(self.stack, 2):
@@ -97,8 +105,9 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             self.stack.push(command)
             self.stack.undo()
             command = MergeableCommand()
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(command)
 
     def test_merge_after_clean(self):
@@ -107,8 +116,9 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             self.stack.push(command)
             self.stack.clean = True
             command = MergeableCommand()
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.push(command)
 
     # Undo/Redo tests ---------------------------------------------------------
@@ -117,8 +127,9 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
         with self.assert_n_commands_pushed_and_undone(self.stack, 1):
             self.stack.push(self.command)
             self.assertEqual(self.stack.undo_name, self.command.name)
-            with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+            with self.assertTraitChanges(
+                self.stack.undo_manager, 'stack_updated', count=1
+            ):
                 self.stack.undo()
 
     def test_undo_n_command(self):

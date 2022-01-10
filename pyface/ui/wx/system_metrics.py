@@ -27,7 +27,7 @@ from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
 @provides(ISystemMetrics)
 class SystemMetrics(MSystemMetrics, HasTraits):
-    """ The toolkit specific implementation of a SystemMetrics.  See the
+    """The toolkit specific implementation of a SystemMetrics.  See the
     ISystemMetrics interface for the API documentation.
     """
 

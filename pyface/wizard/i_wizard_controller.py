@@ -18,7 +18,7 @@ from .i_wizard_page import IWizardPage
 
 
 class IWizardController(Interface):
-    """ The interface for all pyface wizard controllers. """
+    """The interface for all pyface wizard controllers."""
 
     # 'IWizardController' interface ----------------------------------------
 
@@ -36,19 +36,19 @@ class IWizardController(Interface):
     # ------------------------------------------------------------------------
 
     def get_first_page(self):
-        """ Returns the first page in the model. """
+        """Returns the first page in the model."""
 
     def get_next_page(self, page):
-        """ Returns the next page. """
+        """Returns the next page."""
 
     def get_previous_page(self, page):
-        """ Returns the previous page. """
+        """Returns the previous page."""
 
     def is_first_page(self, page):
-        """ Is the page the first page? """
+        """Is the page the first page?"""
 
     def is_last_page(self, page):
-        """ Is the page the last page? """
+        """Is the page the last page?"""
 
     def dispose_pages(self):
-        """ Dispose all the pages. """
+        """Dispose all the pages."""

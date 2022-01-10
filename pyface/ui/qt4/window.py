@@ -32,7 +32,7 @@ from .widget import Widget
 
 @provides(IWindow)
 class Window(MWindow, Widget):
-    """ The toolkit specific implementation of a Window.  See the IWindow
+    """The toolkit specific implementation of a Window.  See the IWindow
     interface for the API documentation.
     """
 
@@ -89,7 +89,7 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create a default QMainWindow. """
+        """Create a default QMainWindow."""
         control = QtGui.QMainWindow(parent)
 
         if self.size != (-1, -1):
@@ -132,12 +132,12 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def _get_position(self):
-        """ Property getter for position. """
+        """Property getter for position."""
 
         return self._position
 
     def _set_position(self, position):
-        """ Property setter for position. """
+        """Property setter for position."""
 
         if self.control is not None:
             self.control.move(*position)
@@ -148,12 +148,12 @@ class Window(MWindow, Widget):
         self.trait_property_changed("position", old, position)
 
     def _get_size(self):
-        """ Property getter for size. """
+        """Property getter for size."""
 
         return self._size
 
     def _set_size(self, size):
-        """ Property setter for size. """
+        """Property setter for size."""
 
         if self.control is not None:
             self.control.resize(*size)
@@ -178,7 +178,7 @@ class Window(MWindow, Widget):
             )
 
     def _title_changed(self, title):
-        """ Static trait change handler. """
+        """Static trait change handler."""
 
         if self.control is not None:
             self.control.setWindowTitle(title)
@@ -188,17 +188,17 @@ class Window(MWindow, Widget):
 
 
 class WindowEventFilter(QtCore.QObject):
-    """ An internal class that watches for certain events on behalf of the
+    """An internal class that watches for certain events on behalf of the
     Window instance.
     """
 
     def __init__(self, window):
-        """ Initialise the event filter. """
+        """Initialise the event filter."""
         QtCore.QObject.__init__(self)
         self._window = window
 
     def eventFilter(self, obj, e):
-        """ Adds any event listeners required by the window. """
+        """Adds any event listeners required by the window."""
 
         window = self._window
 

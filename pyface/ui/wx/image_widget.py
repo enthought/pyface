@@ -20,7 +20,7 @@ from .layout_widget import LayoutWidget
 
 
 class ImageWidget(LayoutWidget):
-    """ A clickable/draggable widget containing an image. """
+    """A clickable/draggable widget containing an image."""
 
     # 'ImageWidget' interface ---------------------------------------------#
 
@@ -62,7 +62,7 @@ class ImageWidget(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
-        """ Creates a new widget. """
+        """Creates a new widget."""
         # Base class constructors.
 
         create = traits.pop('create', True)
@@ -118,13 +118,13 @@ class ImageWidget(LayoutWidget):
     # Trait event handlers -------------------------------------------------
 
     def _bitmap_changed(self, bitmap):
-        """ Called when the widget's bitmap is changed. """
+        """Called when the widget's bitmap is changed."""
 
         if self.control is not None:
             self.control.Refresh()
 
     def _selected_changed(self, selected):
-        """ Called when the selected state of the widget is changed. """
+        """Called when the selected state of the widget is changed."""
 
         if selected:
             for control in self.GetParent().GetChildren():
@@ -140,28 +140,28 @@ class ImageWidget(LayoutWidget):
     # wx event handlers ----------------------------------------------------
 
     def _on_enter_window(self, event):
-        """ Called when the mouse enters the widget. """
+        """Called when the mouse enters the widget."""
 
         if self._selected is not None:
             self._mouse_over = True
             self.Refresh()
 
     def _on_leave_window(self, event):
-        """ Called when the mouse leaves the widget. """
+        """Called when the mouse leaves the widget."""
 
         if self._mouse_over:
             self._mouse_over = False
             self.Refresh()
 
     def _on_left_dclick(self, event):
-        """ Called when the left mouse button is double-clicked. """
+        """Called when the left mouse button is double-clicked."""
 
         # print 'left dclick'
 
         event.Skip()
 
     def _on_left_down(self, event=None):
-        """ Called when the left mouse button goes down on the widget. """
+        """Called when the left mouse button goes down on the widget."""
 
         # print 'left down'
 
@@ -173,7 +173,7 @@ class ImageWidget(LayoutWidget):
         event.Skip()
 
     def _on_left_up(self, event=None):
-        """ Called when the left mouse button goes up on the widget. """
+        """Called when the left mouse button goes up on the widget."""
 
         # print 'left up'
 
@@ -200,7 +200,7 @@ class ImageWidget(LayoutWidget):
         event.Skip()
 
     def _on_paint(self, event=None):
-        """ Called when the widget needs repainting. """
+        """Called when the widget needs repainting."""
 
         wdc = wx.PaintDC(self.control)
         wdx, wdy = self.control.GetClientSize().Get()

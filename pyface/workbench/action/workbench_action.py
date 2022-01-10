@@ -16,7 +16,7 @@ from traits.api import Instance
 
 
 class WorkbenchAction(Action):
-    """ Abstract base class for all workbench actions. """
+    """Abstract base class for all workbench actions."""
 
     # 'WorkbenchAction' interface -----------------------------------------#
 

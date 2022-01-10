@@ -15,7 +15,7 @@ from .workbench_action import WorkbenchAction
 
 
 class NewUserPerspectiveAction(WorkbenchAction):
-    """ An action that creates a new (and empty) user perspective. """
+    """An action that creates a new (and empty) user perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -30,7 +30,7 @@ class NewUserPerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Peform the action. """
+        """Peform the action."""
 
         window = event.window
         manager = window.workbench.user_perspective_manager

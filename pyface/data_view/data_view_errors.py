@@ -13,15 +13,18 @@
 
 
 class DataViewError(ValueError):
-    """ The base exception class for DataView errors. """
+    """The base exception class for DataView errors."""
+
     pass
 
 
 class DataViewGetError(DataViewError):
-    """ An exception raised when getting a value fails. """
+    """An exception raised when getting a value fails."""
+
     pass
 
 
 class DataViewSetError(DataViewError):
-    """ An exception raised when setting a value fails. """
+    """An exception raised when setting a value fails."""
+
     pass

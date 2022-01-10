@@ -14,8 +14,7 @@ from pyface.data_view.abstract_value_type import AbstractValueType, CheckState
 
 
 class BoolValue(AbstractValueType):
-    """ Value that presents a boolean value via checked state.
-    """
+    """Value that presents a boolean value via checked state."""
 
     #: The text to display next to a True value.
     true_text = Str()
@@ -24,7 +23,7 @@ class BoolValue(AbstractValueType):
     false_text = Str()
 
     def has_editor_value(self, model, row, column):
-        """ BoolValues don't use editors, but have always-on checkbox.
+        """BoolValues don't use editors, but have always-on checkbox.
 
         Parameters
         ----------
@@ -43,7 +42,7 @@ class BoolValue(AbstractValueType):
         return False
 
     def get_text(self, model, row, column):
-        """ The textual representation of the underlying value.
+        """The textual representation of the underlying value.
 
 
         Parameters
@@ -65,7 +64,7 @@ class BoolValue(AbstractValueType):
         )
 
     def has_check_state(self, model, row, column):
-        """ Whether or not the value has checked state.
+        """Whether or not the value has checked state.
 
         The default implementation returns True.
 
@@ -86,7 +85,7 @@ class BoolValue(AbstractValueType):
         return True
 
     def set_check_state(self, model, row, column, check_state):
-        """ Set the boolean value from the check state.
+        """Set the boolean value from the check state.
 
         Parameters
         ----------
@@ -104,5 +103,5 @@ class BoolValue(AbstractValueType):
         DataViewSetError
             If the value cannot be set.
         """
-        value = (check_state == CheckState.CHECKED)
+        value = check_state == CheckState.CHECKED
         model.set_value(row, column, value)

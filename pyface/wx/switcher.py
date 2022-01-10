@@ -23,7 +23,7 @@ from traits.api import HasTraits
 
 
 class SwitcherModel(HasTraits):
-    """ Base class for switcher models. """
+    """Base class for switcher models."""
 
     __traits__ = {
         # The index of the selected 'page'.
@@ -31,7 +31,7 @@ class SwitcherModel(HasTraits):
     }
 
     def __init__(self):
-        """ Creates a new switcher model. """
+        """Creates a new switcher model."""
 
         # The items to display in the switcher control.
         self.items = []  # (str label, object value)
@@ -43,16 +43,16 @@ class SwitcherModel(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_page(self, parent, index):
-        """ Creates a page for the switcher panel. """
+        """Creates a page for the switcher panel."""
 
         raise NotImplementedError()
 
 
 class SwitcherControl(wx.Panel):
-    """ The default switcher control (a combo box). """
+    """The default switcher control (a combo box)."""
 
     def __init__(self, parent, id, model, label=None, **kw):
-        """ Create a new switcher control. """
+        """Create a new switcher control."""
 
         # Base-class constructor.
         wx.Panel.__init__(self, parent, id, **kw)
@@ -76,7 +76,7 @@ class SwitcherControl(wx.Panel):
     # ------------------------------------------------------------------------
 
     def _on_selected_changed(self, event):
-        """ Called when the selected item in the model is changed. """
+        """Called when the selected item in the model is changed."""
         selected = event.new
         self.combo.SetSelection(selected)
 
@@ -87,7 +87,7 @@ class SwitcherControl(wx.Panel):
     # ------------------------------------------------------------------------
 
     def _on_combobox(self, event):
-        """ Called when the combo box selection is changed. """
+        """Called when the combo box selection is changed."""
 
         combo = event.GetEventObject()
 
@@ -101,7 +101,7 @@ class SwitcherControl(wx.Panel):
     # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
@@ -114,7 +114,7 @@ class SwitcherControl(wx.Panel):
         sizer.Fit(self)
 
     def _combo(self, parent, model, label):
-        """ Creates the switcher combo box. """
+        """Creates the switcher combo box."""
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -146,7 +146,7 @@ class SwitcherControl(wx.Panel):
 
 
 class SwitcherPanel(wxScrolledPanel):
-    """ The default switcher panel. """
+    """The default switcher panel."""
 
     def __init__(self, parent, id, model, label=None, cache=True, **kw):
 
@@ -179,7 +179,7 @@ class SwitcherPanel(wxScrolledPanel):
     # ------------------------------------------------------------------------
 
     def _on_selected_changed(self, event):
-        """ Called when the selected item in the model is changed. """
+        """Called when the selected item in the model is changed."""
         selected = event.new
         self._show_page(selected)
 
@@ -190,7 +190,7 @@ class SwitcherPanel(wxScrolledPanel):
     # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
@@ -206,7 +206,7 @@ class SwitcherPanel(wxScrolledPanel):
         sizer.Fit(self)
 
     def _show_page(self, index):
-        """ Shows the page at the specified index. """
+        """Shows the page at the specified index."""
 
         # If a page is already displayed then hide it.
         if self.current is not None:
@@ -234,7 +234,7 @@ class SwitcherPanel(wxScrolledPanel):
 
 
 class Switcher(wx.Panel):
-    """ A switcher. """
+    """A switcher."""
 
     def __init__(self, parent, id, model, label=None, **kw):
 
@@ -254,7 +254,7 @@ class Switcher(wx.Panel):
     # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)

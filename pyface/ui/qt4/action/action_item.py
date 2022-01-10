@@ -36,7 +36,7 @@ class PyfaceWidgetAction(QtGui.QWidgetAction):
 
 
 class _MenuItem(HasTraits):
-    """ A menu item representation of an action item. """
+    """A menu item representation of an action item."""
 
     # '_MenuItem' interface ------------------------------------------------
 
@@ -67,7 +67,7 @@ class _MenuItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
-        """ Creates a new menu item for an action item. """
+        """Creates a new menu item for an action item."""
 
         self.item = item
         action = item.action
@@ -151,13 +151,13 @@ class _MenuItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def _qt4_on_destroyed(self, control=None):
-        """ Delete the reference to the control to avoid attempting to talk to
+        """Delete the reference to the control to avoid attempting to talk to
         it again.
         """
         self.control = None
 
     def _qt4_on_triggered(self):
-        """ Called when the menu item has been clicked. """
+        """Called when the menu item has been clicked."""
 
         action = self.item.action
         action_event = ActionEvent()
@@ -202,65 +202,65 @@ class _MenuItem(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
-        """ Called when our 'enabled' trait is changed. """
+        """Called when our 'enabled' trait is changed."""
         if self.control is not None:
             self.control.setEnabled(self.enabled)
 
     def _visible_changed(self):
-        """ Called when our 'visible' trait is changed. """
+        """Called when our 'visible' trait is changed."""
         if self.control is not None:
             self.control.setVisible(self.visible)
 
     def _checked_changed(self):
-        """ Called when our 'checked' trait is changed. """
+        """Called when our 'checked' trait is changed."""
         if self.control is not None:
             self.control.setChecked(self.checked)
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setEnabled(action.enabled)
 
     def _on_action_visible_changed(self, event):
-        """ Called when the visible trait is changed on an action. """
+        """Called when the visible trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setVisible(action.visible)
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setChecked(action.checked)
 
     def _on_action_name_changed(self, event):
-        """ Called when the name trait is changed on an action. """
+        """Called when the name trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setText(action.name)
 
     def _on_action_accelerator_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
 
     def _on_action_image_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setIcon(action.image.create_icon())
 
     def _on_action_tooltip_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setToolTip(action.tooltip)
 
 
 class _Tool(HasTraits):
-    """ A tool bar tool representation of an action item. """
+    """A tool bar tool representation of an action item."""
 
     # '_Tool' interface ----------------------------------------------------
 
@@ -293,7 +293,7 @@ class _Tool(HasTraits):
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
     ):
-        """ Creates a new tool bar tool for an action item. """
+        """Creates a new tool bar tool for an action item."""
 
         self.item = item
         self.tool_bar = tool_bar
@@ -371,13 +371,13 @@ class _Tool(HasTraits):
     # ------------------------------------------------------------------------
 
     def _qt4_on_destroyed(self, control=None):
-        """ Delete the reference to the control to avoid attempting to talk to
+        """Delete the reference to the control to avoid attempting to talk to
         it again.
         """
         self.control = None
 
     def _qt4_on_triggered(self):
-        """ Called when the tool bar tool is clicked. """
+        """Called when the tool bar tool is clicked."""
 
         action = self.item.action
         action_event = ActionEvent()
@@ -418,52 +418,52 @@ class _Tool(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
-        """ Called when our 'enabled' trait is changed. """
+        """Called when our 'enabled' trait is changed."""
         if self.control is not None:
             self.control.setEnabled(self.enabled)
 
     def _visible_changed(self):
-        """ Called when our 'visible' trait is changed. """
+        """Called when our 'visible' trait is changed."""
         if self.control is not None:
             self.control.setVisible(self.visible)
 
     def _checked_changed(self):
-        """ Called when our 'checked' trait is changed. """
+        """Called when our 'checked' trait is changed."""
         if self.control is not None:
             self.control.setChecked(self.checked)
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setEnabled(action.enabled)
 
     def _on_action_visible_changed(self, event):
-        """ Called when the visible trait is changed on an action. """
+        """Called when the visible trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setVisible(action.visible)
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setChecked(action.checked)
 
     def _on_action_name_changed(self, event):
-        """ Called when the name trait is changed on an action. """
+        """Called when the name trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setText(action.name)
 
     def _on_action_accelerator_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
 
     def _on_action_image_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             size = self.tool_bar.iconSize()
@@ -472,14 +472,14 @@ class _Tool(HasTraits):
             )
 
     def _on_action_tooltip_changed(self, event):
-        """ Called when the accelerator trait is changed on an action. """
+        """Called when the accelerator trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.setToolTip(action.tooltip)
 
 
 class _PaletteTool(HasTraits):
-    """ A tool palette representation of an action item. """
+    """A tool palette representation of an action item."""
 
     # '_PaletteTool' interface ---------------------------------------------
 
@@ -492,7 +492,7 @@ class _PaletteTool(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
-        """ Creates a new tool palette tool for an action item. """
+        """Creates a new tool palette tool for an action item."""
 
         self.item = item
         self.tool_palette = tool_palette
@@ -544,12 +544,12 @@ class _PaletteTool(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
@@ -568,7 +568,7 @@ class _PaletteTool(HasTraits):
     # Tool palette event handlers -----------------------------------------#
 
     def _on_tool(self, event):
-        """ Called when the tool palette button is clicked. """
+        """Called when the tool palette button is clicked."""
 
         action = self.item.action
         action_event = ActionEvent()

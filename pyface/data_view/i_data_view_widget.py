@@ -12,8 +12,15 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, Enum, HasTraits, Instance, List, Property,
-    TraitError, Tuple, cached_property,
+    Bool,
+    Enum,
+    HasTraits,
+    Instance,
+    List,
+    Property,
+    TraitError,
+    Tuple,
+    cached_property,
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
@@ -26,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class IDataViewWidget(ILayoutWidget):
-    """ Interface for data view widgets. """
+    """Interface for data view widgets."""
 
     #: The data model for the data view.
     data_model = Instance(AbstractDataModel, allow_none=False)
@@ -42,7 +49,9 @@ class IDataViewWidget(ILayoutWidget):
 
     #: What can be selected.  Implementations may optionally allow "column"
     #: and "item" selection types.
-    selection_type = Enum("row",)
+    selection_type = Enum(
+        "row",
+    )
 
     #: How selections are modified.  Implementations may optionally allow
     #: "none" for no selection, or possibly other multiple selection modes
@@ -57,7 +66,7 @@ class IDataViewWidget(ILayoutWidget):
 
 
 class MDataViewWidget(HasTraits):
-    """ Mixin class for data view widgets. """
+    """Mixin class for data view widgets."""
 
     # IDataViewWidget Interface traits --------------------------------------
 
@@ -94,12 +103,12 @@ class MDataViewWidget(HasTraits):
     # ------------------------------------------------------------------------
 
     def _header_visible_updated(self, event):
-        """ Observer for header_visible trait. """
+        """Observer for header_visible trait."""
         if self.control is not None:
             self._set_control_header_visible(event.new)
 
     def _get_control_header_visible(self):
-        """ Toolkit specific method to get the visibility of the header.
+        """Toolkit specific method to get the visibility of the header.
 
         Returns
         -------
@@ -109,7 +118,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_header_visible(self, control_header_visible):
-        """ Toolkit specific method to set the visibility of the header.
+        """Toolkit specific method to set the visibility of the header.
 
         Parameters
         ----------
@@ -119,13 +128,13 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _selection_type_updated(self, event):
-        """ Observer for selection_type trait. """
+        """Observer for selection_type trait."""
         if self.control is not None:
             self._set_control_selection_type(event.new)
             self.selection = []
 
     def _get_control_selection_type(self):
-        """ Toolkit specific method to get the selection type.
+        """Toolkit specific method to get the selection type.
 
         Returns
         -------
@@ -135,7 +144,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_selection_type(self, selection_type):
-        """ Toolkit specific method to change the selection type.
+        """Toolkit specific method to change the selection type.
 
         Parameters
         ----------
@@ -145,13 +154,13 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _selection_mode_updated(self, event):
-        """ Observer for selection_mode trait. """
+        """Observer for selection_mode trait."""
         if self.control is not None:
             self._set_control_selection_mode(event.new)
             self.selection = []
 
     def _get_control_selection_mode(self):
-        """ Toolkit specific method to get the selection mode.
+        """Toolkit specific method to get the selection mode.
 
         Returns
         -------
@@ -162,7 +171,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_selection_mode(self, selection_mode):
-        """ Toolkit specific method to change the selection mode.
+        """Toolkit specific method to change the selection mode.
 
         Parameters
         ----------
@@ -173,13 +182,13 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _selection_updated(self, event):
-        """ Observer for selection trait. """
+        """Observer for selection trait."""
         if self.control is not None and not self._selection_updating_flag:
             with self._selection_updating():
                 self._set_control_selection(self.selection)
 
     def _get_control_selection(self):
-        """ Toolkit specific method to get the selection.
+        """Toolkit specific method to get the selection.
 
         Returns
         -------
@@ -189,7 +198,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _set_control_selection(self, selection):
-        """ Toolkit specific method to change the selection.
+        """Toolkit specific method to change the selection.
 
         Parameters
         ----------
@@ -199,7 +208,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _observe_control_selection(self, remove=False):
-        """ Toolkit specific method to watch for changes in the selection.
+        """Toolkit specific method to watch for changes in the selection.
 
         The _update_selection method is available as a toolkit-independent
         callback when the selection changes, but particular toolkits may
@@ -209,7 +218,7 @@ class MDataViewWidget(HasTraits):
         raise NotImplementedError()
 
     def _update_selection(self, *args, **kwargs):
-        """ Handle a toolkit even that  changes the selection.
+        """Handle a toolkit even that  changes the selection.
 
         This is designed to be usable as a callback for a toolkit event
         or signal handler, so it accepts any arguments.
@@ -223,7 +232,7 @@ class MDataViewWidget(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        """ Creates the toolkit specific control.
+        """Creates the toolkit specific control.
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
@@ -234,8 +243,7 @@ class MDataViewWidget(HasTraits):
         self.enable(self.enabled)
 
     def _initialize_control(self):
-        """ Initializes the toolkit specific control.
-        """
+        """Initializes the toolkit specific control."""
         logger.debug('Initializing DataViewWidget')
         super()._initialize_control()
         self._set_control_header_visible(self.header_visible)
@@ -305,7 +313,7 @@ class MDataViewWidget(HasTraits):
 
     @contextmanager
     def _selection_updating(self):
-        """ Context manager to prevent loopback when updating selections. """
+        """Context manager to prevent loopback when updating selections."""
         if self._selection_updating_flag:
             yield
         else:
@@ -341,14 +349,14 @@ class MDataViewWidget(HasTraits):
                         "'row', got {!r}".format(column)
                     )
                 if not self.data_model.is_row_valid(row):
-                    raise TraitError(
-                        "Invalid row index {!r}".format(row)
-                    )
+                    raise TraitError("Invalid row index {!r}".format(row))
         elif self.selection_type == 'column':
             for row, column in selection:
-                if not (self.data_model.is_row_valid(row)
-                        and self.data_model.can_have_children(row)
-                        and self.data_model.get_row_count(row) > 0):
+                if not (
+                    self.data_model.is_row_valid(row)
+                    and self.data_model.can_have_children(row)
+                    and self.data_model.get_row_count(row) > 0
+                ):
                     raise TraitError(
                         "Row values must have children when selection_type "
                         "is 'column', got {!r}".format(column)
@@ -360,9 +368,7 @@ class MDataViewWidget(HasTraits):
         else:
             for row, column in selection:
                 if not self.data_model.is_row_valid(row):
-                    raise TraitError(
-                        "Invalid row index {!r}".format(row)
-                    )
+                    raise TraitError("Invalid row index {!r}".format(row))
                 if not self.data_model.is_column_valid(column):
                     raise TraitError(
                         "Invalid column index {!r}".format(column)

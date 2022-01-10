@@ -15,7 +15,7 @@ from .workbench_action import WorkbenchAction
 
 
 class SaveAsUserPerspectiveAction(WorkbenchAction):
-    """ An action that saves the active perspective as a user perspective. """
+    """An action that saves the active perspective as a user perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -30,7 +30,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         window = event.window
         manager = window.workbench.user_perspective_manager

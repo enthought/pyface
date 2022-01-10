@@ -35,7 +35,7 @@ from .window import Window
 
 @provides(IApplicationWindow)
 class ApplicationWindow(MApplicationWindow, Window):
-    """ The toolkit specific implementation of an ApplicationWindow.  See the
+    """The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
 
@@ -121,7 +121,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _size_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return (800, 600)
 
@@ -151,7 +151,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _get_tool_bar_managers(self):
-        """ Return all tool bar managers specified for the window. """
+        """Return all tool bar managers specified for the window."""
 
         # fixme: V3 remove the old-style single toolbar option!
         if self.tool_bar_manager is not None:

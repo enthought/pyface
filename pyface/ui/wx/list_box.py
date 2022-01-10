@@ -20,7 +20,7 @@ from .layout_widget import LayoutWidget
 
 
 class ListBox(LayoutWidget):
-    """ A simple list box widget with a model-view architecture. """
+    """A simple list box widget with a model-view architecture."""
 
     # The model that provides the data for the list box.
     model = Instance(ListBoxModel)
@@ -37,7 +37,7 @@ class ListBox(LayoutWidget):
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB
 
     def __init__(self, parent=None, **traits):
-        """ Creates a new list box. """
+        """Creates a new list box."""
 
         create = traits.pop('create', True)
 
@@ -63,9 +63,7 @@ class ListBox(LayoutWidget):
         self.model.observe(self._on_model_changed, "list_changed")
 
     def dispose(self):
-        self.model.observe(
-            self._on_model_changed, "list_changed", remove=True
-        )
+        self.model.observe(self._on_model_changed, "list_changed", remove=True)
         self.model.dispose()
 
     # ------------------------------------------------------------------------
@@ -73,7 +71,7 @@ class ListBox(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def refresh(self):
-        """ Refreshes the list box. """
+        """Refreshes the list box."""
 
         # For now we just clear out the entire list.
         self.control.Clear()
@@ -86,14 +84,14 @@ class ListBox(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _on_item_selected(self, event):
-        """ Called when an item in the list is selected. """
+        """Called when an item in the list is selected."""
 
         listbox = event.GetEventObject()
 
         self.selection = listbox.GetSelection()
 
     def _on_item_activated(self, event):
-        """ Called when an item in the list is activated. """
+        """Called when an item in the list is activated."""
 
         listbox = event.GetEventObject()
         index = listbox.GetSelection()
@@ -108,7 +106,7 @@ class ListBox(LayoutWidget):
     # Static ---------------------------------------------------------------
 
     def _selection_changed(self, index):
-        """ Called when the selected item is changed. """
+        """Called when the selected item is changed."""
 
         if index != -1:
             self.control.SetSelection(index)
@@ -116,7 +114,7 @@ class ListBox(LayoutWidget):
     # Dynamic -------------------------------------------------------------#
 
     def _on_model_changed(self, event):
-        """ Called when the model has changed. """
+        """Called when the model has changed."""
 
         # For now we just clear out the entire list.
         self.refresh()
@@ -126,7 +124,7 @@ class ListBox(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         control = wx.ListBox(parent, -1, style=self.STYLE)
 
@@ -144,7 +142,7 @@ class ListBox(LayoutWidget):
         return control
 
     def _populate(self):
-        """ Populates the list box. """
+        """Populates the list box."""
 
         for index in range(self.model.get_item_count()):
             label, item = self.model.get_item_at(index)

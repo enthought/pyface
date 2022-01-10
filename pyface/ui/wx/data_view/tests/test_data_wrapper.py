@@ -16,12 +16,12 @@ except ImportError:
     wx_available = False
 else:
     from pyface.ui.wx.data_view.data_wrapper import DataWrapper
+
     wx_available = True
 
 
 @unittest.skipUnless(wx_available, "Test requires wx")
 class TestDataWrapper(unittest.TestCase):
-
     def test_get_mimedata(self):
         toolkit_data = wx.DataObjectComposite()
         text_data = wx.CustomDataObject(wx.DataFormat('text/plain'))
@@ -29,7 +29,9 @@ class TestDataWrapper(unittest.TestCase):
         toolkit_data.Add(text_data)
         data_wrapper = DataWrapper(toolkit_data=toolkit_data)
         self.assertEqual(data_wrapper.mimetypes(), {'text/plain'})
-        self.assertEqual(data_wrapper.get_mimedata('text/plain'), b'hello world')
+        self.assertEqual(
+            data_wrapper.get_mimedata('text/plain'), b'hello world'
+        )
 
     def test_set_mimedata(self):
         data_wrapper = DataWrapper()
@@ -51,4 +53,6 @@ class TestDataWrapper(unittest.TestCase):
         toolkit_data.Add(text_data)
         data_wrapper = DataWrapper(toolkit_data=toolkit_data)
         self.assertTrue('text/plain' in data_wrapper.mimetypes())
-        self.assertEqual(data_wrapper.get_mimedata('text/plain'), b'hello world')
+        self.assertEqual(
+            data_wrapper.get_mimedata('text/plain'), b'hello world'
+        )

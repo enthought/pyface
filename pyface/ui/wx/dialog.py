@@ -41,7 +41,7 @@ _RESULT_MAP = {
 
 @provides(IDialog)
 class Dialog(MDialog, Window):
-    """ The toolkit specific implementation of a Dialog.  See the IDialog
+    """The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
 
@@ -159,7 +159,7 @@ class Dialog(MDialog, Window):
     # wx event handlers ----------------------------------------------------
 
     def _wx_on_ok(self, event):
-        """ Called when the 'OK' button is pressed. """
+        """Called when the 'OK' button is pressed."""
 
         self.return_code = OK
 
@@ -167,7 +167,7 @@ class Dialog(MDialog, Window):
         event.Skip()
 
     def _wx_on_cancel(self, event):
-        """ Called when the 'Cancel' button is pressed. """
+        """Called when the 'Cancel' button is pressed."""
 
         self.return_code = CANCEL
 
@@ -175,5 +175,5 @@ class Dialog(MDialog, Window):
         event.Skip()
 
     def _wx_on_help(self, event):
-        """ Called when the 'Help' button is pressed. """
+        """Called when the 'Help' button is pressed."""
         pass

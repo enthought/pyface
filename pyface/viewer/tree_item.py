@@ -33,7 +33,7 @@ from traits.api import Any, Bool, HasTraits, Instance, List, Property
 
 
 class TreeItem(HasTraits):
-    """ A generic base-class for items in a tree data structure. """
+    """A generic base-class for items in a tree data structure."""
 
     # 'TreeItem' interface -------------------------------------------------
 
@@ -57,7 +57,7 @@ class TreeItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def __str__(self):
-        """ Returns the informal string representation of the object. """
+        """Returns the informal string representation of the object."""
 
         if self.data is None:
             s = ""
@@ -75,14 +75,14 @@ class TreeItem(HasTraits):
 
     # has_children
     def _get_has_children(self):
-        """ True iff the item has children. """
+        """True iff the item has children."""
 
         return len(self.children) != 0
 
     # Methods -------------------------------------------------------------#
 
     def append(self, child):
-        """ Appends a child to this item.
+        """Appends a child to this item.
 
         This removes the child from its current parent (if it has one).
 
@@ -91,7 +91,7 @@ class TreeItem(HasTraits):
         return self.insert(len(self.children), child)
 
     def insert(self, index, child):
-        """ Inserts a child into this item at the specified index.
+        """Inserts a child into this item at the specified index.
 
         This removes the child from its current parent (if it has one).
 
@@ -106,7 +106,7 @@ class TreeItem(HasTraits):
         return child
 
     def remove(self, child):
-        """ Removes a child from this item. """
+        """Removes a child from this item."""
 
         child.parent = None
         self.children.remove(child)
@@ -114,7 +114,7 @@ class TreeItem(HasTraits):
         return child
 
     def insert_before(self, before, child):
-        """ Inserts a child into this item before the specified item.
+        """Inserts a child into this item before the specified item.
 
         This removes the child from its current parent (if it has one).
 
@@ -127,7 +127,7 @@ class TreeItem(HasTraits):
         return (index, child)
 
     def insert_after(self, after, child):
-        """ Inserts a child into this item after the specified item.
+        """Inserts a child into this item after the specified item.
 
         This removes the child from its current parent (if it has one).
 

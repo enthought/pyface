@@ -15,7 +15,7 @@ from pyface.qt.QtCore import QTime
 
 
 def qtime_to_pytime(qtime):
-    """ Convert a QTime to a Python datetime.time
+    """Convert a QTime to a Python datetime.time
 
     This is needed to paper over the differences between PyQt and PySide.
 
@@ -36,7 +36,7 @@ def qtime_to_pytime(qtime):
 
 
 def pytime_to_qtime(pytime):
-    """ Convert a Python datetime.time to a QTime
+    """Convert a Python datetime.time to a QTime
 
     This is a convenience function to construct a qtime from a Python time.
     This loses any :attr:`fold` information in the Python time.
@@ -52,8 +52,5 @@ def pytime_to_qtime(pytime):
         The corresponding Qt QTime.
     """
     return QTime(
-        pytime.hour,
-        pytime.minute,
-        pytime.second,
-        pytime.microsecond // 1000
+        pytime.hour, pytime.minute, pytime.second, pytime.microsecond // 1000
     )

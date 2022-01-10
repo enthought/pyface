@@ -81,13 +81,13 @@ class UndoManager(HasTraits):
     ###########################################################################
 
     def redo(self):
-        """ Redo the last undone command of the active command stack. """
+        """Redo the last undone command of the active command stack."""
 
         if self.active_stack is not None:
             self.active_stack.redo()
 
     def undo(self):
-        """ Undo the last command of the active command stack. """
+        """Undo the last command of the active command stack."""
 
         if self.active_stack is not None:
             self.active_stack.undo()
@@ -98,13 +98,13 @@ class UndoManager(HasTraits):
 
     @observe("active_stack")
     def _update_stack_updated(self, event):
-        """ Handle a different stack becoming active. """
+        """Handle a different stack becoming active."""
         new = event.new
         # Pretend that the stack contents have changed.
         self.stack_updated = new
 
     def _get_active_stack_clean(self):
-        """ Get the current clean state. """
+        """Get the current clean state."""
 
         if self.active_stack is None:
             active_stack_clean = True
@@ -114,7 +114,7 @@ class UndoManager(HasTraits):
         return active_stack_clean
 
     def _get_redo_name(self):
-        """ Get the current redo name. """
+        """Get the current redo name."""
 
         if self.active_stack is None:
             redo_name = ""
@@ -124,7 +124,7 @@ class UndoManager(HasTraits):
         return redo_name
 
     def _get_undo_name(self):
-        """ Get the current undo name. """
+        """Get the current undo name."""
 
         if self.active_stack is None:
             undo_name = ""

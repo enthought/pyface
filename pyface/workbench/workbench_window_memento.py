@@ -14,7 +14,7 @@ from traits.api import Any, Dict, HasTraits, Str, Tuple
 
 
 class WorkbenchWindowMemento(HasTraits):
-    """ A memento for a workbench window. """
+    """A memento for a workbench window."""
 
     # The Id of the active perspective.
     active_perspective_id = Str()

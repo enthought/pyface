@@ -29,7 +29,7 @@ from .dialog import Dialog, _RESULT_MAP
 
 @provides(IConfirmationDialog)
 class ConfirmationDialog(MConfirmationDialog, Dialog):
-    """ The toolkit specific implementation of a ConfirmationDialog.  See the
+    """The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
 

@@ -21,7 +21,7 @@ from traits.api import Any, Bool, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
-    """ A status bar manager realizes itself in a status bar control. """
+    """A status bar manager realizes itself in a status bar control."""
 
     # The message displayed in the first field of the status bar.
     message = Property
@@ -43,7 +43,7 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_status_bar(self, parent):
-        """ Creates a status bar. """
+        """Creates a status bar."""
 
         if self.status_bar is None:
             self.status_bar = QtGui.QStatusBar(parent)
@@ -58,7 +58,7 @@ class StatusBarManager(HasTraits):
         return self.status_bar
 
     def destroy_status_bar(self):
-        """ Destroys the status bar. """
+        """Destroys the status bar."""
         if self.status_bar is not None:
             self.status_bar.deleteLater()
             self.status_bar = None
@@ -92,25 +92,25 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _messages_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
 
         if self.status_bar is not None:
             self._show_messages()
 
     def _messages_items_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
 
         if self.status_bar is not None:
             self._show_messages()
 
     def _size_grip_changed(self):
-        """ Turns the size grip on the status bar on and off. """
+        """Turns the size grip on the status bar on and off."""
 
         if self.status_bar is not None:
             self.status_bar.setSizeGripEnabled(self.size_grip)
 
     def _visible_changed(self):
-        """ Turns the status bar visibility on and off. """
+        """Turns the status bar visibility on and off."""
 
         if self.status_bar is not None:
             self.status_bar.setVisible(self.visible)
@@ -120,7 +120,7 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _show_messages(self):
-        """ Display the list of messages. """
+        """Display the list of messages."""
 
         # FIXME v3: At the moment we just string them together but we may
         # decide to put all but the first message into separate widgets.  We

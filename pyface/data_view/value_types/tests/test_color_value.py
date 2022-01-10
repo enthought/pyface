@@ -17,7 +17,6 @@ from pyface.data_view.value_types.color_value import ColorValue
 
 
 class TestColorValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(

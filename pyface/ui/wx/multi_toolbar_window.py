@@ -22,7 +22,7 @@ from .application_window import ApplicationWindow
 
 
 class MultiToolbarWindow(ApplicationWindow):
-    """ A top-level application window that supports multiple toolbars.
+    """A top-level application window that supports multiple toolbars.
 
     The multi-toolbar window has support for a menu bar, status bar, and
     multiple toolbars (all of which are optional).
@@ -61,7 +61,7 @@ class MultiToolbarWindow(ApplicationWindow):
         self.sizer = self._create_tool_bars(parent)
 
     def _create_tool_bars(self, parent):
-        """ Create the tool bars for this window. """
+        """Create the tool bars for this window."""
 
         if len(self._tool_bar_managers) > 0:
             # Create a top level sizer to handle to main layout and attach
@@ -81,7 +81,7 @@ class MultiToolbarWindow(ApplicationWindow):
         return None
 
     def _create_tool_bar(self, parent, sizer, tool_bar_manager, location):
-        """ Create and add the toolbar to the parent window at the specified
+        """Create and add the toolbar to the parent window at the specified
         location.
 
         Returns the sizer where the remaining content should be added.  For
@@ -136,7 +136,7 @@ class MultiToolbarWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def add_tool_bar(self, tool_bar_manager, location="top"):
-        """ Add a toolbar in the specified location.
+        """Add a toolbar in the specified location.
 
         Valid locations are 'top', 'bottom', 'left', and 'right'
         """

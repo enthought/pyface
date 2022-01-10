@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ViewSetStructureHandler(SetStructureHandler):
-    """ The handler used to restore views.
+    """The handler used to restore views.
 
     This is part of the 'dock window' API. It is used to resolve dock control
     IDs when setting the structure of a dock window.
@@ -35,7 +35,7 @@ class ViewSetStructureHandler(SetStructureHandler):
     # ------------------------------------------------------------------------
 
     def __init__(self, window_layout):
-        """ Creates a new handler. """
+        """Creates a new handler."""
 
         self.window_layout = window_layout
 
@@ -46,7 +46,7 @@ class ViewSetStructureHandler(SetStructureHandler):
     # ------------------------------------------------------------------------
 
     def resolve_id(self, id):
-        """ Resolves an unresolved dock control *id*. """
+        """Resolves an unresolved dock control *id*."""
 
         window_layout = self.window_layout
         window = window_layout.window

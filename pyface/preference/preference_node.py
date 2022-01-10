@@ -21,7 +21,7 @@ from traits.api import Str
 
 
 class PreferenceNode(TreeItem):
-    """ Abstract base class for a node in a preference dialog.
+    """Abstract base class for a node in a preference dialog.
 
     A preference node has a name and an image which are used to represent the
     node in a preference dialog (usually in the form of a tree).
@@ -47,7 +47,7 @@ class PreferenceNode(TreeItem):
     # ------------------------------------------------------------------------
 
     def __str__(self):
-        """ Returns the string representation of the item. """
+        """Returns the string representation of the item."""
 
         return self.name
 
@@ -56,12 +56,12 @@ class PreferenceNode(TreeItem):
     # ------------------------------------------------------------------------
 
     def create_page(self):
-        """ Creates the preference page for this node. """
+        """Creates the preference page for this node."""
 
         raise NotImplementedError()
 
     def lookup(self, id):
-        """ Returns the child of this node with the specified Id.
+        """Returns the child of this node with the specified Id.
 
         Returns None if no such child exists.
 

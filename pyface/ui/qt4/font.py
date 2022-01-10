@@ -79,7 +79,7 @@ qt_style_to_style = {value: key for key, value in style_to_qt_style.items()}
 
 
 def font_to_toolkit_font(font):
-    """ Convert a Pyface font to a Qfont.
+    """Convert a Pyface font to a Qfont.
 
     Parameters
     ----------
@@ -125,7 +125,7 @@ def font_to_toolkit_font(font):
 
 
 def toolkit_font_to_properties(toolkit_font):
-    """ Convert a QFont to a dictionary of font properties.
+    """Convert a QFont to a dictionary of font properties.
 
     Parameters
     ----------
@@ -176,7 +176,7 @@ def toolkit_font_to_properties(toolkit_font):
 
 
 def map_to_nearest(target, mapping):
-    """ Given mapping with keys from 0 and 99, return closest value.
+    """Given mapping with keys from 0 and 99, return closest value.
 
     Parameters
     ----------

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class UserPerspectiveManager(HasTraits):
-    """ Manages a set of user perspectives. """
+    """Manages a set of user perspectives."""
 
     # 'UserPerspective' interface -----------------------------------------#
 
@@ -56,7 +56,7 @@ class UserPerspectiveManager(HasTraits):
     # Properties -----------------------------------------------------------
 
     def _get_next_id(self):
-        """ Property getter. """
+        """Property getter."""
 
         # Get all of the current perspective ids:
         ids = list(self.id_to_perspective.keys())
@@ -72,7 +72,7 @@ class UserPerspectiveManager(HasTraits):
         return int(ids[-1][19:-2]) + 1
 
     def _get_id_to_perspective(self):
-        """ Property getter. """
+        """Property getter."""
 
         if self._id_to_perspective is None:
             self._id_to_perspective = dic = {}
@@ -92,19 +92,19 @@ class UserPerspectiveManager(HasTraits):
         return self._id_to_perspective
 
     def _get_perspectives(self):
-        """ Property getter. """
+        """Property getter."""
 
         return list(self.id_to_perspective.values())
 
     def _get_file_name(self):
-        """ Property getter. """
+        """Property getter."""
 
         return os.path.join(self.state_location, "__user_perspective__")
 
     # Methods -------------------------------------------------------------#
 
     def create_perspective(self, name, show_editor_area=True):
-        """ Create a new (and empty) user-defined perspective. """
+        """Create a new (and empty) user-defined perspective."""
 
         perspective = Perspective(
             id="__user_perspective_%09d__" % self.next_id,
@@ -121,7 +121,7 @@ class UserPerspectiveManager(HasTraits):
         return perspective
 
     def clone_perspective(self, window, perspective, **traits):
-        """ Clone a perspective as a user perspective. """
+        """Clone a perspective as a user perspective."""
 
         clone = perspective.clone_traits()
 
@@ -147,12 +147,12 @@ class UserPerspectiveManager(HasTraits):
         return clone
 
     def save(self):
-        """ Persist the current state of the user perspectives. """
+        """Persist the current state of the user perspectives."""
 
         self._update_persistent_data()
 
     def add(self, perspective, name=None):
-        """ Add a perspective with an optional name. """
+        """Add a perspective with an optional name."""
 
         # Define the id for the new perspective:
         perspective.id = id = "__user_perspective_%09d__" % self.next_id
@@ -171,7 +171,7 @@ class UserPerspectiveManager(HasTraits):
         return perspective
 
     def rename(self, perspective, name):
-        """ Rename the user perspective with the specified id. """
+        """Rename the user perspective with the specified id."""
 
         perspective.name = name
 
@@ -181,7 +181,7 @@ class UserPerspectiveManager(HasTraits):
         self._update_persistent_data()
 
     def remove(self, id):
-        """ Remove the user perspective with the specified id.
+        """Remove the user perspective with the specified id.
 
         This method also updates the persistent data.
 
@@ -206,7 +206,7 @@ class UserPerspectiveManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _update_persistent_data(self):
-        """ Update the persistent file information. """
+        """Update the persistent file information."""
 
         try:
             fh = open(self.file_name, "w")

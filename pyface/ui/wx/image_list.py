@@ -19,10 +19,10 @@ from .image_resource import ImageResource
 
 # fixme: rename to 'CachedImageList'?!?
 class ImageList(wx.ImageList):
-    """ A cached image list. """
+    """A cached image list."""
 
     def __init__(self, width, height):
-        """ Creates a new cached image list. """
+        """Creates a new cached image list."""
 
         # Base-class constructor.
         wx.ImageList.__init__(self, width, height)
@@ -40,7 +40,7 @@ class ImageList(wx.ImageList):
     # ------------------------------------------------------------------------
 
     def GetIndex(self, filename):
-        """ Returns the index of the specified image.
+        """Returns the index of the specified image.
 
         The image will be loaded and added to the image list if it is not
         already there.
@@ -90,7 +90,7 @@ class ImageList(wx.ImageList):
     # ------------------------------------------------------------------------
 
     def _scale(self, image):
-        """ Scales the specified image (if necessary). """
+        """Scales the specified image (if necessary)."""
 
         if (
             image.GetWidth() != self._width

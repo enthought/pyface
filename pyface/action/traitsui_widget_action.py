@@ -14,7 +14,7 @@ from .action import Action
 
 
 class TraitsUIWidgetAction(Action):
-    """ A widget action containing a TraitsUI.
+    """A widget action containing a TraitsUI.
 
     If a object is supplied, then the UI is generated from the object's view,
     otherwise the ui is generated on using the Action object.
@@ -39,7 +39,7 @@ class TraitsUIWidgetAction(Action):
     # ------------------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Called when creating a "widget" style action.
+        """Called when creating a "widget" style action.
 
         This constructs an TraitsUI subpanel-based control.  It does no binding
         to the `perform` method.
@@ -64,8 +64,7 @@ class TraitsUIWidgetAction(Action):
     # ------------------------------------------------------------------------
 
     def trait_context(self):
-        """ Use the model object for the Traits UI context, if appropriate.
-        """
+        """Use the model object for the Traits UI context, if appropriate."""
         if self.model is not None:
             context = {"object": self.model, "action": self}
             return context

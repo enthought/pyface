@@ -15,7 +15,7 @@ from .user_perspective_name import UserPerspectiveName
 
 
 class RenameUserPerspectiveAction(UserPerspectiveAction):
-    """ An action that renames a user perspective. """
+    """An action that renames a user perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -30,7 +30,7 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         window = event.window
         manager = window.workbench.user_perspective_manager

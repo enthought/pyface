@@ -11,12 +11,15 @@
 from traits.api import Dict, Instance, Str, observe
 
 from pyface.data_view.api import (
-    AbstractDataModel, AbstractValueType, DataViewSetError, IntIndexManager
+    AbstractDataModel,
+    AbstractValueType,
+    DataViewSetError,
+    IntIndexManager,
 )
 
 
 class DictDataModel(AbstractDataModel):
-    """ A data model that provides data from a dictionary. """
+    """A data model that provides data from a dictionary."""
 
     #: The dictionary containing the data.
     data = Dict()
@@ -120,12 +123,12 @@ if __name__ == '__main__':
     from pyface.data_view.value_types.api import IntValue, TextValue
 
     class MainWindow(ApplicationWindow):
-        """ The main application window. """
+        """The main application window."""
 
         data_view = Instance(IDataViewWidget)
 
         def _create_contents(self, parent):
-            """ Creates the left hand side or top depending on the style. """
+            """Creates the left hand side or top depending on the style."""
 
             self.data_view = DataViewWidget(
                 parent=parent,

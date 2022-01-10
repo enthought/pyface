@@ -22,7 +22,7 @@ from file_node_tree import node_manager
 
 
 class MainWindow(SplitApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'SplitApplicationWindow' interface -----------------------------------
 
@@ -37,7 +37,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
-        """ Creates the left hand side or top depending on the split. """
+        """Creates the left hand side or top depending on the split."""
 
         model = NodeTreeModel(node_manager=node_manager)
         model.root = os.path.abspath(os.curdir)
@@ -45,13 +45,13 @@ class MainWindow(SplitApplicationWindow):
         self._tree = NodeTree(parent, model=model)
         self._tree.observe(
             self._on_tree_anytrait_changed,
-            match(lambda name, ctrait: True)  # listen to all traits
+            match(lambda name, ctrait: True),  # listen to all traits
         )
 
         return self._tree.control
 
     def _create_rhs(self, parent):
-        """ Creates the right hand side or bottom depending on the split. """
+        """Creates the right hand side or bottom depending on the split."""
 
         self._python_shell = PythonShell(parent)
         self._python_shell.bind("widget", self._tree)
@@ -66,7 +66,7 @@ class MainWindow(SplitApplicationWindow):
     # Trait event handlers -------------------------------------------------
 
     def _on_tree_anytrait_changed(self, event):
-        """ Called when any trait on the tree has changed. """
+        """Called when any trait on the tree has changed."""
 
         print("trait", event.name, "value", event.new)
 

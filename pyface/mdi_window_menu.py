@@ -22,7 +22,7 @@ from .action.api import MenuManager, Separator, WindowAction
 
 
 class Cascade(WindowAction):
-    """ Cascades the windows. """
+    """Cascades the windows."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -34,13 +34,13 @@ class Cascade(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Cascades the windows. """
+        """Cascades the windows."""
 
         self.window.control.Cascade()
 
 
 class Tile(WindowAction):
-    """ Tiles the windows horizontally. """
+    """Tiles the windows horizontally."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -52,13 +52,13 @@ class Tile(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Tiles the windows horizontally. """
+        """Tiles the windows horizontally."""
 
         self.window.control.Tile()
 
 
 class ArrangeIcons(WindowAction):
-    """ Arranges the icons. """
+    """Arranges the icons."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -70,13 +70,13 @@ class ArrangeIcons(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Arranges the icons. """
+        """Arranges the icons."""
 
         self.window.control.ArrangeIcons()
 
 
 class Next(WindowAction):
-    """ Activates the next window. """
+    """Activates the next window."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -88,13 +88,13 @@ class Next(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Activates the next window. """
+        """Activates the next window."""
 
         self.window.control.ActivateNext()
 
 
 class Previous(WindowAction):
-    """ Activates the previous window. """
+    """Activates the previous window."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -106,13 +106,13 @@ class Previous(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Activates the previous window. """
+        """Activates the previous window."""
 
         self.window.control.ActivatePrevious()
 
 
 class Close(WindowAction):
-    """ Closes the current window. """
+    """Closes the current window."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -124,7 +124,7 @@ class Close(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Closes the current window. """
+        """Closes the current window."""
 
         page = self.window.control.GetActiveChild()
         if page is not None:
@@ -132,7 +132,7 @@ class Close(WindowAction):
 
 
 class CloseAll(WindowAction):
-    """ Closes all of the child windows. """
+    """Closes all of the child windows."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -144,14 +144,14 @@ class CloseAll(WindowAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Closes the child windows. """
+        """Closes the child windows."""
 
         for page in self.window.control.GetChildren():
             page.Close()
 
 
 class MDIWindowMenu(MenuManager):
-    """ A menu that mimics the standard MDI window menus.
+    """A menu that mimics the standard MDI window menus.
 
     This is the menu that has the tile/cascade actions etc.
 
@@ -162,7 +162,7 @@ class MDIWindowMenu(MenuManager):
     # ------------------------------------------------------------------------
 
     def __init__(self, window):
-        """ Creates a new MDI window menu. """
+        """Creates a new MDI window menu."""
 
         # Base class constructor.
         super().__init__(

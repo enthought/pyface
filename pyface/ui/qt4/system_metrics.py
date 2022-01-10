@@ -23,7 +23,7 @@ from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
 @provides(ISystemMetrics)
 class SystemMetrics(MSystemMetrics, HasTraits):
-    """ The toolkit specific implementation of a SystemMetrics.  See the
+    """The toolkit specific implementation of a SystemMetrics.  See the
     ISystemMetrics interface for the API documentation.
     """
 
@@ -44,9 +44,19 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # suggest using screens() instead, but screens in not available in qt4
         # see issue: enthought/pyface#721
         if not is_qt4:
-            return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
+            return (
+                QtGui.QApplication.instance()
+                .screens()[0]
+                .availableGeometry()
+                .width()
+            )
         else:
-            return QtGui.QApplication.instance().desktop().availableGeometry().width()
+            return (
+                QtGui.QApplication.instance()
+                .desktop()
+                .availableGeometry()
+                .width()
+            )
 
     def _get_screen_height(self):
         # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
@@ -54,11 +64,17 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # see issue: enthought/pyface#721
         if not is_qt4:
             return (
-                QtGui.QApplication.instance().screens()[0].availableGeometry().height()
+                QtGui.QApplication.instance()
+                .screens()[0]
+                .availableGeometry()
+                .height()
             )
         else:
             return (
-                QtGui.QApplication.instance().desktop().availableGeometry().height()
+                QtGui.QApplication.instance()
+                .desktop()
+                .availableGeometry()
+                .height()
             )
 
     def _get_dialog_background_color(self):

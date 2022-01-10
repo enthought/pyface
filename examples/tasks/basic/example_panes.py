@@ -8,8 +8,7 @@ from traitsui.api import View, Item, FileEditor
 
 
 class FileBrowserPane(TraitsDockPane):
-    """ A simple file browser pane.
-    """
+    """A simple file browser pane."""
 
     # TaskPane interface ---------------------------------------------------
 
@@ -40,8 +39,7 @@ class FileBrowserPane(TraitsDockPane):
 
 
 class PythonScriptBrowserPane(FileBrowserPane):
-    """ A file browser pane restricted to Python scripts.
-    """
+    """A file browser pane restricted to Python scripts."""
 
     # TaskPane interface ---------------------------------------------------
 
@@ -54,8 +52,7 @@ class PythonScriptBrowserPane(FileBrowserPane):
 
 
 class PythonEditorPane(TaskPane):
-    """ A wrapper around the Pyface Python editor.
-    """
+    """A wrapper around the Pyface Python editor."""
 
     # TaskPane interface ---------------------------------------------------
 

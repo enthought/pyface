@@ -63,12 +63,11 @@ Root = ()
 
 
 class AbstractIndexManager(ABCHasStrictTraits):
-    """ Abstract base class for index managers.
-    """
+    """Abstract base class for index managers."""
 
     @abstractmethod
     def create_index(self, parent, row):
-        """ Given a parent index and a row number, create an index.
+        """Given a parent index and a row number, create an index.
 
         The internal structure of the index should not matter to
         consuming code.  However obejcts returned from this method
@@ -98,7 +97,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
     @abstractmethod
     def get_parent_and_row(self, index):
-        """ Given an index object, return the parent index and row.
+        """Given an index object, return the parent index and row.
 
         Parameters
         ----------
@@ -121,7 +120,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def from_sequence(self, indices):
-        """ Given a sequence of indices, return the index object.
+        """Given a sequence of indices, return the index object.
 
         The default implementation starts at the root and repeatedly calls
         create_index() to find the index at each level, returning the final
@@ -149,7 +148,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         return index
 
     def to_sequence(self, index):
-        """ Given an index, return the corresponding sequence of row values.
+        """Given an index, return the corresponding sequence of row values.
 
         The default implementation repeatedly calls get_parent_and_row()
         to walk up the hierarchy and push the row values into the start
@@ -173,7 +172,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
     @abstractmethod
     def from_id(self, id):
-        """ Given an integer id, return the corresponding index.
+        """Given an integer id, return the corresponding index.
 
         Parameters
         ----------
@@ -189,7 +188,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
     @abstractmethod
     def id(self, index):
-        """ Given an index, return the corresponding id.
+        """Given an index, return the corresponding id.
 
         Parameters
         ----------
@@ -204,7 +203,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def reset(self):
-        """ Reset any caches and other state.
+        """Reset any caches and other state.
 
         Resettable traits in subclasses are indicated by having
         ``can_reset=True`` metadata.  This is provided to allow
@@ -223,7 +222,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
 
 class IntIndexManager(AbstractIndexManager):
-    """ Efficient IndexManager for non-hierarchical indexes.
+    """Efficient IndexManager for non-hierarchical indexes.
 
     This is a simple index manager for flat data structures.  The
     index values returned are either the Root, or simple integers
@@ -235,7 +234,7 @@ class IntIndexManager(AbstractIndexManager):
     """
 
     def create_index(self, parent, row):
-        """ Given a parent index and a row number, create an index.
+        """Given a parent index and a row number, create an index.
 
         This should only ever be called with Root as the parent.
 
@@ -263,14 +262,13 @@ class IntIndexManager(AbstractIndexManager):
         if parent != Root:
             raise RuntimeError(
                 "{} cannot create persistent index value for {}.".format(
-                    self.__class__.__name__,
-                    (parent, row)
+                    self.__class__.__name__, (parent, row)
                 )
             )
         return row
 
     def get_parent_and_row(self, index):
-        """ Given an index object, return the parent index and row.
+        """Given an index object, return the parent index and row.
 
         Parameters
         ----------
@@ -295,7 +293,7 @@ class IntIndexManager(AbstractIndexManager):
         return Root, int(index)
 
     def from_id(self, id):
-        """ Given an integer id, return the corresponding index.
+        """Given an integer id, return the corresponding index.
 
         Parameters
         ----------
@@ -312,7 +310,7 @@ class IntIndexManager(AbstractIndexManager):
         return id - 1
 
     def id(self, index):
-        """ Given an index, return the corresponding id.
+        """Given an index, return the corresponding id.
 
         Parameters
         ----------
@@ -338,7 +336,7 @@ class TupleIndexManager(AbstractIndexManager):
     _id_cache = Dict(Int, Tuple, {0: Root}, can_reset=True)
 
     def create_index(self, parent, row):
-        """ Given a parent index and a row number, create an index.
+        """Given a parent index and a row number, create an index.
 
         Parameters
         ----------
@@ -366,7 +364,7 @@ class TupleIndexManager(AbstractIndexManager):
         return canonical_index
 
     def get_parent_and_row(self, index):
-        """ Given an index object, return the parent index and row.
+        """Given an index object, return the parent index and row.
 
         Parameters
         ----------
@@ -391,7 +389,7 @@ class TupleIndexManager(AbstractIndexManager):
         return index
 
     def from_id(self, id):
-        """ Given an integer id, return the corresponding index.
+        """Given an integer id, return the corresponding index.
 
         Parameters
         ----------
@@ -406,7 +404,7 @@ class TupleIndexManager(AbstractIndexManager):
         return self._id_cache[id]
 
     def id(self, index):
-        """ Given an index, return the corresponding id.
+        """Given an index, return the corresponding id.
 
         Parameters
         ----------

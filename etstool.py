@@ -170,9 +170,7 @@ def cli():
 )
 @click.option('--source/--no-source', default=False)
 def install(edm, runtime, toolkit, environment, editable, source):
-    """ Install project and dependencies into a clean EDM environment.
-
-    """
+    """Install project and dependencies into a clean EDM environment."""
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
 
@@ -195,12 +193,14 @@ def install(edm, runtime, toolkit, environment, editable, source):
             "edm environments create {environment} --force --version={runtime}"
         ]
 
-    commands.extend([
-        "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
-        "{edm} run -e {environment} -- python setup.py clean --all",
-        install_pyface,
-    ])
+    commands.extend(
+        [
+            "{edm} install -y -e {environment} " + packages,
+            "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
+            "{edm} run -e {environment} -- python setup.py clean --all",
+            install_pyface,
+        ]
+    )
 
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
@@ -240,7 +240,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
             "edm plumbing remove-package --environment {environment} --force "
         )
         commands = [
-            cmd_fmt+dependency for dependency in source_dependencies.keys()
+            cmd_fmt + dependency for dependency in source_dependencies.keys()
         ]
         execute(commands, parameters)
         source_pkgs = source_dependencies.values()
@@ -262,7 +262,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
 @click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def shell(edm, runtime, toolkit, environment):
-    """ Create a shell into the EDM development environment
+    """Create a shell into the EDM development environment
     (aka 'activate' it).
 
     """
@@ -284,9 +284,7 @@ def shell(edm, runtime, toolkit, environment):
     help="Do not set ETS_TOOLKIT and QT_API",
 )
 def test(edm, runtime, toolkit, environment, no_environment_vars=False):
-    """ Run the test suite in a given environment with the specified toolkit.
-
-    """
+    """Run the test suite in a given environment with the specified toolkit."""
     parameters = get_parameters(edm, runtime, toolkit, environment)
     if toolkit == "wx":
         parameters["exclude"] = "qt"
@@ -332,9 +330,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 @click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def cleanup(edm, runtime, toolkit, environment):
-    """ Remove a development environment.
-
-    """
+    """Remove a development environment."""
     parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = [
         "{edm} run -e {environment} -- python setup.py clean",
@@ -355,9 +351,7 @@ def cleanup(edm, runtime, toolkit, environment):
     help="Do not set ETS_TOOLKIT and QT_API",
 )
 def test_clean(edm, runtime, toolkit, no_environment_vars=False):
-    """ Run tests in a clean environment, cleaning up afterwards
-
-    """
+    """Run tests in a clean environment, cleaning up afterwards"""
     args = ["--toolkit={}".format(toolkit), "--runtime={}".format(runtime)]
     if edm is not None:
         args.append("--edm={}".format(edm))
@@ -379,9 +373,7 @@ def test_clean(edm, runtime, toolkit, no_environment_vars=False):
 @click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def update(edm, runtime, toolkit, environment):
-    """ Update/Reinstall package into environment.
-
-    """
+    """Update/Reinstall package into environment."""
     parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = ["{edm} run -e {environment} -- python setup.py install"]
     click.echo("Re-installing in  '{environment}'".format(**parameters))
@@ -395,9 +387,7 @@ def update(edm, runtime, toolkit, environment):
 @click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def docs(edm, runtime, toolkit, environment):
-    """ Autogenerate documentation
-
-    """
+    """Autogenerate documentation"""
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(doc_dependencies)
     ignore = " ".join(doc_ignore)
@@ -449,9 +439,7 @@ def docs(edm, runtime, toolkit, environment):
 @cli.command()
 @edm_option
 def test_all(edm):
-    """ Run test_clean across all supported environment combinations.
-
-    """
+    """Run test_clean across all supported environment combinations."""
     error = False
     for runtime, toolkits in supported_combinations.items():
         for toolkit in toolkits:
@@ -503,7 +491,7 @@ def flake8(edm, runtime, toolkit, environment, strict):
 
 
 def get_parameters(edm, runtime, toolkit, environment):
-    """ Set up parameters dictionary for format() substitution """
+    """Set up parameters dictionary for format() substitution"""
     parameters = {
         "runtime": runtime,
         "toolkit": toolkit,
@@ -528,7 +516,7 @@ def get_parameters(edm, runtime, toolkit, environment):
 
 @contextmanager
 def do_in_tempdir(files=(), capture_files=()):
-    """ Create a temporary directory, cleaning up after done.
+    """Create a temporary directory, cleaning up after done.
 
     Creates the temporary directory, and changes into it.  On exit returns to
     original directory and removes temporary dir.

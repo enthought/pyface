@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 @provides(IGUI)
 class GUI(MGUI, HasTraits):
-    """ The toolkit specific implementation of a GUI.  See the IGUI interface
+    """The toolkit specific implementation of a GUI.  See the IGUI interface
     for the API documentation.
     """
 
@@ -116,13 +116,13 @@ class GUI(MGUI, HasTraits):
     # ------------------------------------------------------------------------
 
     def _state_location_default(self):
-        """ The default state location handler. """
+        """The default state location handler."""
 
         return self._default_state_location()
 
     @observe("busy")
     def _update_busy_state(self, event):
-        """ The busy trait change handler. """
+        """The busy trait change handler."""
         new = event.new
         if new:
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
@@ -131,7 +131,7 @@ class GUI(MGUI, HasTraits):
 
 
 class _FutureCall(QtCore.QObject):
-    """ This is a helper class that is similar to the wx FutureCall class. """
+    """This is a helper class that is similar to the wx FutureCall class."""
 
     # Keep a list of references so that they don't get garbage collected.
     _calls = []
@@ -168,8 +168,7 @@ class _FutureCall(QtCore.QObject):
         QtGui.QApplication.postEvent(self, event)
 
     def event(self, event):
-        """ QObject event handler.
-        """
+        """QObject event handler."""
         if event.type() == self._pyface_event:
             if self._ms == 0:
                 # Invoke the callable now
@@ -188,16 +187,14 @@ class _FutureCall(QtCore.QObject):
         return super().event(event)
 
     def _dispatch(self):
-        """ Invoke the callable.
-        """
+        """Invoke the callable."""
         try:
             self._callable(*self._args, **self._kw)
         finally:
             self._finished()
 
     def _finished(self):
-        """ Remove the call from the list, so it can be garbage collected.
-        """
+        """Remove the call from the list, so it can be garbage collected."""
         self._calls_mutex.lock()
         try:
             self._calls.remove(self)

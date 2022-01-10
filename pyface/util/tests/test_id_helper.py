@@ -16,7 +16,7 @@ from pyface.util.id_helper import get_unique_id, object_counter
 
 
 class IDHelperTestCase(unittest.TestCase):
-    """ Test the scripting tools. """
+    """Test the scripting tools."""
 
     # Tests ----------------------------------------------------------------
 

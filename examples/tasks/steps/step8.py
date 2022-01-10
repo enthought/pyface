@@ -84,8 +84,7 @@ class Pane2(DockPane):
 
 
 class ExampleTask(Task):
-    """ A simple task for opening a blank editor.
-    """
+    """A simple task for opening a blank editor."""
 
     # Task interface -------------------------------------------------------
 
@@ -138,14 +137,12 @@ class ExampleTask(Task):
         )
 
     def create_central_pane(self):
-        """ Create the central pane: the script editor.
-        """
+        """Create the central pane: the script editor."""
         self.editor_area = EditorAreaPane()
         return self.editor_area
 
     def create_dock_panes(self):
-        """ Create the file browser and connect to its double click event.
-        """
+        """Create the file browser and connect to its double click event."""
         return [Pane1(), Pane2()]
 
     # ------------------------------------------------------------------------
@@ -153,23 +150,20 @@ class ExampleTask(Task):
     # ------------------------------------------------------------------------
 
     def new(self):
-        """ Opens a new empty window
-        """
+        """Opens a new empty window"""
         editor = Editor()
         self.editor_area.add_editor(editor)
         self.editor_area.activate_editor(editor)
         self.activated()
 
     def add_task(self):
-        """ Opens a new empty window
-        """
+        """Opens a new empty window"""
         task3 = ThirdTask()
         self.window.add_task(task3)
         self.window.activate_task(task3)
 
     def remove_task(self):
-        """ Opens a new empty window
-        """
+        """Opens a new empty window"""
         task = self.window.tasks[0]
         window = self.window
         window.remove_task(self)
@@ -184,8 +178,7 @@ class ExampleTask(Task):
 
 
 class SecondTask(ExampleTask):
-    """ A simple task for opening a blank editor.
-    """
+    """A simple task for opening a blank editor."""
 
     # Task interface -------------------------------------------------------
 
@@ -221,8 +214,7 @@ class SecondTask(ExampleTask):
 
 
 class ThirdTask(ExampleTask):
-    """ A simple task for opening a blank editor.
-    """
+    """A simple task for opening a blank editor."""
 
     # Task interface -------------------------------------------------------
 
@@ -268,8 +260,7 @@ class ThirdTask(ExampleTask):
 
 
 def main(argv):
-    """ A simple example of using Tasks.
-    """
+    """A simple example of using Tasks."""
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

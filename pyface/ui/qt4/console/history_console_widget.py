@@ -16,8 +16,8 @@ from .console_widget import ConsoleWidget
 
 
 class HistoryConsoleWidget(ConsoleWidget):
-    """ A ConsoleWidget that keeps a history of the commands that have been
-        executed and provides a readline-esque interface to this history.
+    """A ConsoleWidget that keeps a history of the commands that have been
+    executed and provides a readline-esque interface to this history.
     """
 
     # ---------------------------------------------------------------------------
@@ -37,8 +37,7 @@ class HistoryConsoleWidget(ConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def execute(self, source=None, hidden=False, interactive=False):
-        """ Reimplemented to the store history.
-        """
+        """Reimplemented to the store history."""
         if not hidden:
             history = self.input_buffer if source is None else source
 
@@ -61,8 +60,8 @@ class HistoryConsoleWidget(ConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def _up_pressed(self):
-        """ Called when the up key is pressed. Returns whether to continue
-            processing the event.
+        """Called when the up key is pressed. Returns whether to continue
+        processing the event.
         """
         prompt_cursor = self._get_prompt_cursor()
         if self._get_cursor().blockNumber() == prompt_cursor.blockNumber():
@@ -96,8 +95,8 @@ class HistoryConsoleWidget(ConsoleWidget):
         return True
 
     def _down_pressed(self):
-        """ Called when the down key is pressed. Returns whether to continue
-            processing the event.
+        """Called when the down key is pressed. Returns whether to continue
+        processing the event.
         """
         end_cursor = self._get_end_cursor()
         if self._get_cursor().blockNumber() == end_cursor.blockNumber():
@@ -125,7 +124,7 @@ class HistoryConsoleWidget(ConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def history_previous(self, prefix=""):
-        """ If possible, set the input buffer to a previous item in the history.
+        """If possible, set the input buffer to a previous item in the history.
 
         Parameters:
         -----------
@@ -146,7 +145,7 @@ class HistoryConsoleWidget(ConsoleWidget):
             self.input_buffer = history
 
     def history_next(self, prefix=""):
-        """ Set the input buffer to a subsequent item in the history, or to the
+        """Set the input buffer to a subsequent item in the history, or to the
         original search prefix if there is no such item.
 
         Parameters:
@@ -169,8 +168,7 @@ class HistoryConsoleWidget(ConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def _set_history(self, history, history_index=None):
-        """ Replace the current history with a sequence of history items.
-        """
+        """Replace the current history with a sequence of history items."""
         if history_index is None:
             history_index = len(history)
 

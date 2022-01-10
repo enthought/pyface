@@ -33,7 +33,7 @@ from .window import Window
 
 @provides(ISplashScreen)
 class SplashScreen(MSplashScreen, Window):
-    """ The toolkit specific implementation of a SplashScreen.  See the
+    """The toolkit specific implementation of a SplashScreen.  See the
     ISplashScreen interface for the API documentation.
     """
 
@@ -95,7 +95,7 @@ class SplashScreen(MSplashScreen, Window):
     # ------------------------------------------------------------------------
 
     def _text_changed(self):
-        """ Called when the splash screen text has been changed. """
+        """Called when the splash screen text has been changed."""
 
         # Passing 'False' to 'Refresh' means "do not erase the background".
         if self.control is not None:
@@ -104,7 +104,7 @@ class SplashScreen(MSplashScreen, Window):
         wx.GetApp().Yield(True)
 
     def _on_paint(self, event):
-        """ Called when the splash window is being repainted. """
+        """Called when the splash window is being repainted."""
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.

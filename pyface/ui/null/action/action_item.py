@@ -16,7 +16,7 @@ from traits.api import Any, Bool, HasTraits
 
 
 class _MenuItem(HasTraits):
-    """ A menu item representation of an action item. """
+    """A menu item representation of an action item."""
 
     # '_MenuItem' interface ------------------------------------------------
 
@@ -41,7 +41,7 @@ class _MenuItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
-        """ Creates a new menu item for an action item. """
+        """Creates a new menu item for an action item."""
 
         self.item = item
 
@@ -54,7 +54,7 @@ class _MenuItem(HasTraits):
 
 
 class _Tool(HasTraits):
-    """ A tool bar tool representation of an action item. """
+    """A tool bar tool representation of an action item."""
 
     # '_Tool' interface ----------------------------------------------------
 
@@ -81,7 +81,7 @@ class _Tool(HasTraits):
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
     ):
-        """ Creates a new tool bar tool for an action item. """
+        """Creates a new tool bar tool for an action item."""
 
         self.item = item
         self.tool_bar = tool_bar
@@ -94,7 +94,7 @@ class _Tool(HasTraits):
 
 
 class _PaletteTool(HasTraits):
-    """ A tool palette representation of an action item. """
+    """A tool palette representation of an action item."""
 
     # '_PaletteTool' interface ---------------------------------------------
 
@@ -107,7 +107,7 @@ class _PaletteTool(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
-        """ Creates a new tool palette tool for an action item. """
+        """Creates a new tool palette tool for an action item."""
 
         self.item = item
         self.tool_palette = tool_palette

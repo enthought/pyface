@@ -21,7 +21,7 @@ SizePolicy = Enum("default", "fixed", "preferred", "expand")
 
 
 class ILayoutItem(Interface):
-    """ An item that can participate in layout. """
+    """An item that can participate in layout."""
 
     #: The minimum size that the item can take.
     minimum_size = Size

@@ -66,7 +66,7 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
         )
 
     def test_editor_area_with_perspectives(self):
-        """ Test show_editor_area is respected while switching perspective"""
+        """Test show_editor_area is respected while switching perspective"""
 
         # The workbench and workbench window with layout mocked
         workbench, workbench_window = self.get_workbench_with_window()
@@ -105,7 +105,7 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
         self.assertTrue(workbench_window.show_editor_area.called)
 
     def test_editor_area_restore_from_saved_state(self):
-        """ Test if show_editor_area is restored properly from saved state """
+        """Test if show_editor_area is restored properly from saved state"""
 
         # The workbench and workbench window with layout mocked
         workbench, workbench_window = self.get_workbench_with_window()

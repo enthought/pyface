@@ -22,8 +22,7 @@ def format_locale(value):
 
 
 class NumericValue(EditableValue):
-    """ Data channels for a numeric value.
-    """
+    """Data channels for a numeric value."""
 
     #: The minimum value for the numeric value.
     minimum = Float(-inf)
@@ -41,7 +40,7 @@ class NumericValue(EditableValue):
     unformat = Callable(locale.delocalize)
 
     def is_valid(self, model, row, column, value):
-        """ Whether or not the value within the specified range.
+        """Whether or not the value within the specified range.
 
         Parameters
         ----------
@@ -65,7 +64,7 @@ class NumericValue(EditableValue):
             return False
 
     def get_editor_value(self, model, row, column):
-        """ Get the numerical value for the editor to use.
+        """Get the numerical value for the editor to use.
 
         This uses the evaluate method to convert the underlying value to a
         number.
@@ -89,7 +88,7 @@ class NumericValue(EditableValue):
         return self.evaluate(model.get_value(row, column))
 
     def get_text(self, model, row, column):
-        """ Get the display text from the underlying value.
+        """Get the display text from the underlying value.
 
         Parameters
         ----------
@@ -108,7 +107,7 @@ class NumericValue(EditableValue):
         return self.format(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
-        """ Set the text of the underlying value.
+        """Set the text of the underlying value.
 
         Parameters
         ----------
@@ -129,21 +128,17 @@ class NumericValue(EditableValue):
         try:
             value = self.evaluate(self.unformat(text))
         except ValueError:
-            raise DataViewSetError(
-                "Can't evaluate value: {!r}".format(text)
-            )
+            raise DataViewSetError("Can't evaluate value: {!r}".format(text))
         self.set_editor_value(model, row, column, value)
 
 
 class IntValue(NumericValue):
-    """ Data channels for an integer value.
-    """
+    """Data channels for an integer value."""
 
     evaluate = Callable(int)
 
 
 class FloatValue(NumericValue):
-    """ Data channels for a floating point value.
-    """
+    """Data channels for a floating point value."""
 
     evaluate = Callable(float)

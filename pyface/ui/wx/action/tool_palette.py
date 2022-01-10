@@ -54,7 +54,7 @@ class ToolPalette(Widget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
-        """ Creates a new tool palette. """
+        """Creates a new tool palette."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -69,7 +69,7 @@ class ToolPalette(Widget):
     # ------------------------------------------------------------------------
 
     def add_tool(self, label, bmp, kind, tooltip, longtip):
-        """ Add a tool with the specified properties to the palette.
+        """Add a tool with the specified properties to the palette.
 
         Return an id that can be used to reference this tool in the future.
         """
@@ -85,7 +85,7 @@ class ToolPalette(Widget):
         return wxid
 
     def toggle_tool(self, id, checked):
-        """ Toggle the tool identified by 'id' to the 'checked' state.
+        """Toggle the tool identified by 'id' to the 'checked' state.
 
         If the button is a toggle or radio button, the button will be checked
         if the 'checked' parameter is True; unchecked otherwise.  If the button
@@ -97,26 +97,26 @@ class ToolPalette(Widget):
             button.SetToggle(checked)
 
     def enable_tool(self, id, enabled):
-        """ Enable or disable the tool identified by 'id'. """
+        """Enable or disable the tool identified by 'id'."""
 
         button = self.tool_id_to_button_map.get(id, None)
         if button is not None:
             button.SetEnabled(enabled)
 
     def on_tool_event(self, id, callback):
-        """ Register a callback for events on the tool identified by 'id'. """
+        """Register a callback for events on the tool identified by 'id'."""
 
         callbacks = self.tool_listeners.setdefault(id, [])
         callbacks.append(callback)
 
     def realize(self):
-        """ Realize the control so that it can be displayed. """
+        """Realize the control so that it can be displayed."""
 
         self.is_realized = True
         self._reflow()
 
     def get_tool_state(self, id):
-        """ Get the toggle state of the tool identified by 'id'. """
+        """Get the toggle state of the tool identified by 'id'."""
 
         button = self.tool_id_to_button_map.get(id, None)
         if hasattr(button, "GetToggle"):
@@ -140,7 +140,7 @@ class ToolPalette(Widget):
         return html_window
 
     def _reflow(self):
-        """ Reflow the layout. """
+        """Reflow the layout."""
 
         # Create a bit of html for each tool.
         parts = []
@@ -157,7 +157,7 @@ class ToolPalette(Widget):
             self._initialize_tool(param)
 
     def _initialize_tool(self, param):
-        """ Initialize the tool palette button. """
+        """Initialize the tool palette button."""
 
         wxid, label, bmp, kind, tooltip, longtip = param
 

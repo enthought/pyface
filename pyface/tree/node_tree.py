@@ -26,7 +26,7 @@ from .tree import Tree
 
 
 class NodeTree(Tree):
-    """ A tree control with extensible node types. """
+    """A tree control with extensible node types."""
 
     # 'Tree' interface -----------------------------------------------------
 
@@ -49,12 +49,12 @@ class NodeTree(Tree):
 
     # node_manager
     def _get_node_manager(self):
-        """ Returns the root node of the tree. """
+        """Returns the root node of the tree."""
 
         return self.model.node_manager
 
     def _set_node_manager(self, node_manager):
-        """ Sets the root node of the tree. """
+        """Sets the root node of the tree."""
 
         self.model.node_manager = node_manager
 
@@ -62,12 +62,12 @@ class NodeTree(Tree):
 
     # node_types
     def _get_node_types(self):
-        """ Returns the node types in the tree. """
+        """Returns the node types in the tree."""
 
         return self.model.node_manager.node_types
 
     def _set_node_types(self, node_types):
-        """ Sets the node types in the tree. """
+        """Sets the node types in the tree."""
 
         self.model.node_manager.node_types = node_types
 
@@ -81,7 +81,7 @@ class NodeTree(Tree):
 
     @observe("node_activated")
     def _perform_default_action_on_activated_node(self, event):
-        """ Called when a node has been activated (i.e., double-clicked). """
+        """Called when a node has been activated (i.e., double-clicked)."""
         obj = event.new
         default_action = self.model.get_default_action(obj)
         if default_action is not None:
@@ -89,7 +89,7 @@ class NodeTree(Tree):
 
     @observe("node_right_clicked")
     def _show_menu_on_right_clicked_object(self, event):
-        """ Called when the right mouse button is clicked on the tree. """
+        """Called when the right mouse button is clicked on the tree."""
         obj_point = event.new
         obj, point = obj_point
         # Add the node that the right-click occurred on to the selection.
@@ -111,22 +111,22 @@ class NodeTree(Tree):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, menu_item):
-        """ Adds a menu item to a menu bar. """
+        """Adds a menu item to a menu bar."""
 
         pass
 
     def add_to_toolbar(self, toolvar_item):
-        """ Adds a tool bar item to a tool bar. """
+        """Adds a tool bar item to a tool bar."""
 
         pass
 
     def can_add_to_menu(self, action):
-        """ Returns True iff an action can be added to the menu. """
+        """Returns True iff an action can be added to the menu."""
 
         return True
 
     def perform(self, action, event):
-        """ Perform an action. """
+        """Perform an action."""
 
         # fixme: We need a more formal event structure!
         event.widget = self
@@ -150,17 +150,17 @@ class NodeTree(Tree):
     # ------------------------------------------------------------------------
 
     def _create_action_event(self, obj):
-        """ Return a new action event for the specified object. """
+        """Return a new action event for the specified object."""
 
         return ActionEvent(widget=self, context=obj)
 
     def _perform_default_action(self, action, obj):
-        """ Perform the default action on the specified object. """
+        """Perform the default action on the specified object."""
 
         action.perform(self._create_action_event(obj))
 
     def _popup_menu(self, menu_manager, obj, point):
-        """ Popup the menu described by the menu manager. """
+        """Popup the menu described by the menu manager."""
 
         # Create the actual menu control.
         menu = menu_manager.create_menu(self.control, self)

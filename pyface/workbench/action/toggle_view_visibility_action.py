@@ -18,7 +18,7 @@ from .workbench_action import WorkbenchAction
 
 
 class ToggleViewVisibilityAction(WorkbenchAction):
-    """ An action that toggles a view's visibility (ie. hides/shows it). """
+    """An action that toggles a view's visibility (ie. hides/shows it)."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -41,13 +41,13 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Called when the action is no longer required. """
+        """Called when the action is no longer required."""
 
         if self.view is not None:
             self._remove_view_listeners(self.view)
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         self._toggle_view_visibility(self.view)
 
@@ -60,7 +60,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # Trait change handlers ------------------------------------------------
 
     def _view_changed(self, old, new):
-        """ Static trait change handler. """
+        """Static trait change handler."""
 
         if old is not None:
             self._remove_view_listeners(old)
@@ -75,19 +75,19 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # Methods -------------------------------------------------------------#
 
     def _add_view_listeners(self, view):
-        """ Add listeners for trait events on a view. """
+        """Add listeners for trait events on a view."""
 
         view.observe(self._refresh_checked, "visible")
         view.observe(self._refresh_checked, "window")
 
     def _remove_view_listeners(self, view):
-        """ Add listeners for trait events on a view. """
+        """Add listeners for trait events on a view."""
 
         view.observe(self._refresh_checked, "visible", remove=True)
         view.observe(self._refresh_checked, "window", remove=True)
 
     def _refresh_checked(self, event=None):
-        """ Refresh the checked state of the action. """
+        """Refresh the checked state of the action."""
 
         self.checked = (
             self.view is not None
@@ -96,7 +96,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         )
 
     def _toggle_view_visibility(self, view):
-        """ Toggle the visibility of a view. """
+        """Toggle the visibility of a view."""
 
         if view.visible:
             view.hide()

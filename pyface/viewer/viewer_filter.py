@@ -15,14 +15,14 @@ from traits.api import HasTraits
 
 
 class ViewerFilter(HasTraits):
-    """ Abstract base class for all viewer filters. """
+    """Abstract base class for all viewer filters."""
 
     # ------------------------------------------------------------------------
     # 'ViewerFilter' interface.
     # ------------------------------------------------------------------------
 
     def filter(self, viewer, parent, elements):
-        """ Filters a list of elements.
+        """Filters a list of elements.
 
         'viewer'   is the viewer that we are filtering elements for.
         'parent'   is the parent element.
@@ -36,7 +36,7 @@ class ViewerFilter(HasTraits):
         return [e for e in elements if self.select(viewer, parent, e)]
 
     def select(self, viewer, parent, element):
-        """ Returns True if the element is 'allowed' (ie. NOT filtered).
+        """Returns True if the element is 'allowed' (ie. NOT filtered).
 
         'viewer'  is the viewer that we are filtering elements for.
         'parent'  is the parent element.
@@ -49,7 +49,7 @@ class ViewerFilter(HasTraits):
         return True
 
     def is_filter_trait(self, element, trait_name):
-        """ Is the filter affected by changes to an element's trait?
+        """Is the filter affected by changes to an element's trait?
 
         'element'    is the element.
         'trait_name' is the name of the trait.

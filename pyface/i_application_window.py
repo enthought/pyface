@@ -20,7 +20,7 @@ from pyface.ui_traits import Image
 
 
 class IApplicationWindow(IWindow):
-    """ The interface for a top-level application window.
+    """The interface for a top-level application window.
 
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
@@ -55,7 +55,7 @@ class IApplicationWindow(IWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create and return the window's contents.
+        """Create and return the window's contents.
 
         Parameters
         ----------
@@ -70,7 +70,7 @@ class IApplicationWindow(IWindow):
         """
 
     def _create_menu_bar(self, parent):
-        """ Creates the menu bar (if required).
+        """Creates the menu bar (if required).
 
         Parameters
         ----------
@@ -79,7 +79,7 @@ class IApplicationWindow(IWindow):
         """
 
     def _create_status_bar(self, parent):
-        """ Creates the status bar (if required).
+        """Creates the status bar (if required).
 
         Parameters
         ----------
@@ -88,7 +88,7 @@ class IApplicationWindow(IWindow):
         """
 
     def _create_tool_bar(self, parent):
-        """ Creates the tool bar (if required).
+        """Creates the tool bar (if required).
 
         Parameters
         ----------
@@ -97,7 +97,7 @@ class IApplicationWindow(IWindow):
         """
 
     def _create_trim_widgets(self, parent):
-        """ Creates the 'trim' widgets (the widgets around the window).
+        """Creates the 'trim' widgets (the widgets around the window).
 
         Parameters
         ----------
@@ -106,11 +106,11 @@ class IApplicationWindow(IWindow):
         """
 
     def _set_window_icon(self):
-        """ Sets the window icon (if required). """
+        """Sets the window icon (if required)."""
 
 
 class MApplicationWindow(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the :py:class:`IApplicationWindow` interface.
 
     Implements: destroy(), _create_trim_widgets()
@@ -121,7 +121,7 @@ class MApplicationWindow(HasTraits):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the control if it exists. """
+        """Destroy the control if it exists."""
 
         if self.menu_bar_manager is not None:
             self.menu_bar_manager.destroy()
@@ -138,7 +138,7 @@ class MApplicationWindow(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create_trim_widgets(self, parent):
-        """ Creates the 'trim' widgets (the widgets around the window).
+        """Creates the 'trim' widgets (the widgets around the window).
 
         Parameters
         ----------

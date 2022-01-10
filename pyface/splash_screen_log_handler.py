@@ -15,10 +15,10 @@ from logging import Handler
 
 
 class SplashScreenLogHandler(Handler):
-    """ A log handler that displays log messages on a splash screen. """
+    """A log handler that displays log messages on a splash screen."""
 
     def __init__(self, splash_screen):
-        """ Creates a new handler for a splash screen.
+        """Creates a new handler for a splash screen.
 
         Parameters
         ----------
@@ -32,7 +32,7 @@ class SplashScreenLogHandler(Handler):
         self._splash_screen = splash_screen
 
     def emit(self, record):
-        """ Emits the log record's message to the splash screen.
+        """Emits the log record's message to the splash screen.
 
         Parameters
         ----------

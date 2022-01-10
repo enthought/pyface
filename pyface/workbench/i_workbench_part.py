@@ -16,7 +16,7 @@ from traits.api import List, provides, Str
 
 
 class IWorkbenchPart(Interface):
-    """ The interface for workbench parts.
+    """The interface for workbench parts.
 
     A workbench part is a visual section within the workbench. There are two
     sub-types, 'View' and 'Editor'.
@@ -48,7 +48,7 @@ class IWorkbenchPart(Interface):
     # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the part.
+        """Create the toolkit-specific control that represents the part.
 
         The parameter *parent* is the toolkit-specific control that is the
         parts's parent.
@@ -58,14 +58,14 @@ class IWorkbenchPart(Interface):
         """
 
     def destroy_control(self):
-        """ Destroy the toolkit-specific control that represents the part.
+        """Destroy the toolkit-specific control that represents the part.
 
         Return None.
 
         """
 
     def set_focus(self):
-        """ Set the focus to the appropriate control in the part.
+        """Set the focus to the appropriate control in the part.
 
         Return None.
 
@@ -74,7 +74,7 @@ class IWorkbenchPart(Interface):
 
 @provides(IWorkbenchPart)
 class MWorkbenchPart(HasTraits):
-    """ Mixin containing common code for toolkit-specific implementations. """
+    """Mixin containing common code for toolkit-specific implementations."""
 
     # 'IWorkbenchPart' interface -------------------------------------------
 
@@ -103,16 +103,16 @@ class MWorkbenchPart(HasTraits):
     # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the part. """
+        """Create the toolkit-specific control that represents the part."""
 
         raise NotImplementedError()
 
     def destroy_control(self):
-        """ Destroy the toolkit-specific control that represents the part. """
+        """Destroy the toolkit-specific control that represents the part."""
 
         raise NotImplementedError()
 
     def set_focus(self):
-        """ Set the focus to the appropriate control in the part. """
+        """Set the focus to the appropriate control in the part."""
 
         raise NotImplementedError()

@@ -34,7 +34,7 @@ Echo = Map(ECHO_TO_QT_ECHO_MODE, default_value="normal")
 
 @provides(ITextField)
 class TextField(MTextField, Field):
-    """ The Qt-specific implementation of the text field class """
+    """The Qt-specific implementation of the text field class"""
 
     #: Display typed text, or one of several hidden "password" modes.
     echo = Echo
@@ -44,7 +44,7 @@ class TextField(MTextField, Field):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = QLineEdit(parent)
         return control
 
@@ -53,11 +53,11 @@ class TextField(MTextField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return self.control.text()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         self.control.setText(value)
         # fire update
         if self.update_text == "editing_finished":
@@ -66,38 +66,38 @@ class TextField(MTextField, Field):
             self.control.textEdited.emit(value)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.textEdited.disconnect(self._update_value)
         else:
             self.control.textEdited.connect(self._update_value)
 
     def _get_control_placeholder(self):
-        """ Toolkit specific method to set the control's placeholder. """
+        """Toolkit specific method to set the control's placeholder."""
         return self.control.placeholderText()
 
     def _set_control_placeholder(self, placeholder):
-        """ Toolkit specific method to set the control's placeholder. """
+        """Toolkit specific method to set the control's placeholder."""
         self.control.setPlaceholderText(placeholder)
 
     def _get_control_echo(self):
-        """ Toolkit specific method to get the control's echo. """
+        """Toolkit specific method to get the control's echo."""
         return QT_ECHO_MODE_TO_ECHO[self.control.echoMode()]
 
     def _set_control_echo(self, echo):
-        """ Toolkit specific method to set the control's echo. """
+        """Toolkit specific method to set the control's echo."""
         self.control.setEchoMode(ECHO_TO_QT_ECHO_MODE[echo])
 
     def _get_control_read_only(self):
-        """ Toolkit specific method to get the control's read_only state. """
+        """Toolkit specific method to get the control's read_only state."""
         return self.control.isReadOnly()
 
     def _set_control_read_only(self, read_only):
-        """ Toolkit specific method to set the control's read_only state. """
+        """Toolkit specific method to set the control's read_only state."""
         self.control.setReadOnly(read_only)
 
     def _observe_control_editing_finished(self, remove=False):
-        """ Change observation of whether editing is finished. """
+        """Change observation of whether editing is finished."""
         if remove:
             self.control.editingFinished.disconnect(self._editing_finished)
         else:

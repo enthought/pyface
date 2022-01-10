@@ -28,7 +28,7 @@ from pyface.viewer.default_tree_content_provider import (
 
 
 class PreferenceDialog(SplitDialog):
-    """ The preference dialog. """
+    """The preference dialog."""
 
     # 'Dialog' interface ---------------------------------------------------
 
@@ -58,7 +58,7 @@ class PreferenceDialog(SplitDialog):
     # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
-        """ Creates the buttons. """
+        """Creates the buttons."""
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -75,12 +75,12 @@ class PreferenceDialog(SplitDialog):
     # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
-        """ Creates the panel containing the preference page tree. """
+        """Creates the panel containing the preference page tree."""
 
         return self._create_tree(parent)
 
     def _create_rhs(self, parent):
-        """ Creates the panel containing the selected preference page. """
+        """Creates the panel containing the selected preference page."""
 
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -130,7 +130,7 @@ class PreferenceDialog(SplitDialog):
     # ------------------------------------------------------------------------
 
     def _create_tree(self, parent):
-        """ Creates the preference page tree. """
+        """Creates the preference page tree."""
 
         tree_viewer = TreeViewer(
             parent,
@@ -145,7 +145,7 @@ class PreferenceDialog(SplitDialog):
         return tree_viewer.control
 
     def _create_page_buttons(self, parent):
-        """ Creates the 'Restore Defaults' button, etc.
+        """Creates the 'Restore Defaults' button, etc.
 
         At the moment the "etc." is an optional 'Help' button.
 
@@ -170,13 +170,13 @@ class PreferenceDialog(SplitDialog):
     # ------------------------------------------------------------------------
 
     def _on_restore_defaults(self, event):
-        """ Called when the 'Restore Defaults' button is pressed. """
+        """Called when the 'Restore Defaults' button is pressed."""
 
         page = self._pages[self._layered_panel.current_layer_name]
         page.restore_defaults()
 
     def _on_help(self, event):
-        """ Called when the 'Help' button is pressed. """
+        """Called when the 'Help' button is pressed."""
 
         page = self._pages[self._layered_panel.current_layer_name]
         page.show_help_topic()
@@ -188,7 +188,7 @@ class PreferenceDialog(SplitDialog):
     # ------------------------------------------------------------------------
 
     def _on_selection_changed(self, event):
-        """ Called when a node in the tree is selected. """
+        """Called when a node in the tree is selected."""
         selection = event.new
         if len(selection) > 0:
             # The tree is in single selection mode.

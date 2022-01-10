@@ -17,7 +17,7 @@ from pyface.data_view.i_data_wrapper import DataFormat
 
 
 class AbstractDataExporter(ABCHasStrictTraits):
-    """ ABC for classes that export data from a data view.
+    """ABC for classes that export data from a data view.
 
     Concrete classes should implement the ``get_data`` method so that
     it produces a value that can be serialized using the provided
@@ -32,7 +32,7 @@ class AbstractDataExporter(ABCHasStrictTraits):
     is_text = Bool()
 
     def add_data(self, data_wrapper, model, indices):
-        """ Add data to the data wrapper from the model and indices.
+        """Add data to the data wrapper from the model and indices.
 
         Parameters
         ----------
@@ -51,7 +51,7 @@ class AbstractDataExporter(ABCHasStrictTraits):
 
     @abstractmethod
     def get_data(self, model, indices):
-        """ Get the data to be exported from the model and indices.
+        """Get the data to be exported from the model and indices.
 
         Parameters
         ----------
@@ -68,7 +68,7 @@ class AbstractDataExporter(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def get_value(self, model, row, column):
-        """ Utility method to extract a value at a given index.
+        """Utility method to extract a value at a given index.
 
         If ``is_text`` is True, it will use the ``get_text()`` method
         to extract the value, otherwise it will try to use the

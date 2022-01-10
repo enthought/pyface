@@ -13,9 +13,7 @@ import unittest
 
 
 from pyface.image_resource import ImageResource
-from ..toggle_field import (
-    CheckBoxField, RadioButtonField, ToggleButtonField
-)
+from ..toggle_field import CheckBoxField, RadioButtonField, ToggleButtonField
 from .field_mixin import FieldMixin
 
 
@@ -59,7 +57,6 @@ class ToggleFieldMixin(FieldMixin):
 
 
 class TestCheckboxField(ToggleFieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return CheckBoxField(
             parent=self.parent.control,
@@ -69,7 +66,6 @@ class TestCheckboxField(ToggleFieldMixin, unittest.TestCase):
 
 
 class TestRadioButtonField(ToggleFieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return RadioButtonField(
             parent=self.parent.control,
@@ -79,7 +75,6 @@ class TestRadioButtonField(ToggleFieldMixin, unittest.TestCase):
 
 
 class TestToggleButtonField(ToggleFieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return ToggleButtonField(
             parent=self.parent.control,

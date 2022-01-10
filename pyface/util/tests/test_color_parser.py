@@ -11,12 +11,15 @@
 from unittest import TestCase
 
 from ..color_parser import (
-    ColorParseError, color_table, parse_text, _parse_hex, _parse_name
+    ColorParseError,
+    color_table,
+    parse_text,
+    _parse_hex,
+    _parse_name,
 )
 
 
 class TestParseHex(TestCase):
-
     def test_hex_3(self):
         space, channels = _parse_hex('#06c')
         self.assertEqual(space, 'rgb')
@@ -53,7 +56,6 @@ class TestParseHex(TestCase):
 
 
 class TestParseName(TestCase):
-
     def test_names(self):
         for name, value in color_table.items():
             with self.subTest(color=name):
@@ -73,7 +75,6 @@ class TestParseName(TestCase):
 
 
 class TestParseText(TestCase):
-
     def test_name(self):
         space, channels = parse_text('rebeccapurple')
         self.assertEqual(space, 'rgba')

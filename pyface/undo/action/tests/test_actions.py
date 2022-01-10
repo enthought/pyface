@@ -17,7 +17,6 @@ from pyface.undo.action.api import RedoAction, UndoAction
 
 
 class TestRedoAction(unittest.TestCase):
-
     def setUp(self):
         self.stack = CommandStack()
         self.undo_manager = UndoManager()
@@ -27,7 +26,9 @@ class TestRedoAction(unittest.TestCase):
         self.command = SimpleCommand()
 
     def test_update(self):
-        redo_action = RedoAction(command=self.command, undo_manager=self.undo_manager)
+        redo_action = RedoAction(
+            command=self.command, undo_manager=self.undo_manager
+        )
         self.stack.push(self.command)
         self.undo_manager.undo()
         self.assertTrue(redo_action.enabled)
@@ -35,7 +36,6 @@ class TestRedoAction(unittest.TestCase):
 
 
 class TestUndoAction(unittest.TestCase):
-
     def setUp(self):
         self.stack = CommandStack()
         self.undo_manager = UndoManager()
@@ -45,7 +45,9 @@ class TestUndoAction(unittest.TestCase):
         self.command = SimpleCommand()
 
     def test_update(self):
-        undo_action = UndoAction(command=self.command, undo_manager=self.undo_manager)
+        undo_action = UndoAction(
+            command=self.command, undo_manager=self.undo_manager
+        )
         self.stack.push(self.command)
         self.assertTrue(undo_action.enabled)
         self.assertEqual(undo_action.name, "&Undo Increment by 1")

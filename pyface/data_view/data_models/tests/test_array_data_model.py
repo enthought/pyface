@@ -15,9 +15,8 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.value_types.api import (
-    FloatValue, IntValue, no_value
-)
+from pyface.data_view.value_types.api import FloatValue, IntValue, no_value
+
 # This import results in an error without numpy installed
 # see enthought/pyface#742
 if np is not None:
@@ -26,7 +25,6 @@ if np is not None:
 
 @requires_numpy
 class TestArrayDataModel(UnittestTools, TestCase):
-
     def setUp(self):
         super().setUp()
         self.array = np.arange(30.0).reshape(5, 2, 3)
@@ -38,9 +36,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
 
     def tearDown(self):
         self.model.observe(
-            self.model_values_changed, 'values_changed', remove=True)
+            self.model_values_changed, 'values_changed', remove=True
+        )
         self.model.observe(
-            self.model_structure_changed, 'structure_changed', remove=True)
+            self.model_structure_changed, 'structure_changed', remove=True
+        )
         self.values_changed_event = None
         self.structure_changed_event = None
         super().tearDown()
@@ -122,8 +122,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
                     self.assertIsNone(result)
                 else:
                     self.assertEqual(
-                        result,
-                        self.array[row[0], row[1], column[0]]
+                        result, self.array[row[0], row[1], column[0]]
                     )
 
     def test_set_value(self):
@@ -141,7 +140,8 @@ class TestArrayDataModel(UnittestTools, TestCase):
                 elif len(row) == 1:
                     value = 6.0 * row[-1] + 2 * column[0]
                     with self.assertTraitDoesNotChange(
-                            self.model, "values_changed"):
+                        self.model, "values_changed"
+                    ):
                         with self.assertRaises(DataViewSetError):
                             self.model.set_value(row, column, value)
                 else:
@@ -154,7 +154,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
                     )
                     self.assertEqual(
                         self.values_changed_event.new,
-                        (row, column, row, column)
+                        (row, column, row, column),
                     )
 
     def test_get_value_type(self):
@@ -180,8 +180,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data = 2 * self.array
         self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (0,), (4,), (2,))
+            self.values_changed_event.new, ((0,), (0,), (4,), (2,))
         )
 
     def test_data_updated_new_shape(self):
@@ -193,8 +192,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.value_type = IntValue()
         self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (0,), (4,), (2,))
+            self.values_changed_event.new, ((0,), (0,), (4,), (2,))
         )
 
     def test_type_updated_empty(self):
@@ -206,8 +204,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.value_type.is_editable = False
         self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (0,), (4,), (2,))
+            self.values_changed_event.new, ((0,), (0,), (4,), (2,))
         )
 
     def test_type_attribute_updated_empty(self):
@@ -218,10 +215,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_row_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.row_header_type = no_value
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (), (4,), ())
-        )
+        self.assertEqual(self.values_changed_event.new, ((0,), (), (4,), ()))
 
     def test_row_header_type_updated_empty(self):
         self.model.data = np.empty((0, 4, 2), dtype='int')
@@ -231,10 +225,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_row_header_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.row_header_type.format = str
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (), (4,), ())
-        )
+        self.assertEqual(self.values_changed_event.new, ((0,), (), (4,), ()))
 
     def test_row_header_attribute_updated_empty(self):
         self.model.data = np.empty((0, 4, 2), dtype='int')
@@ -244,10 +235,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_column_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.column_header_type = no_value
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (0,), (), (2,))
-        )
+        self.assertEqual(self.values_changed_event.new, ((), (0,), (), (2,)))
 
     def test_column_header_type_updated_empty(self):
         self.model.data = np.empty((2, 4, 0), dtype='int')
@@ -257,10 +245,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_column_header_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.column_header_type.format = str
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (0,), (), (2,))
-        )
+        self.assertEqual(self.values_changed_event.new, ((), (0,), (), (2,)))
 
     def test_column_header_attribute_updated_empty(self):
         self.model.data = np.empty((2, 4, 0), dtype='int')
@@ -270,18 +255,12 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_label_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.label_header_type = no_value
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (), (), ())
-        )
+        self.assertEqual(self.values_changed_event.new, ((), (), (), ()))
 
     def test_label_header_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.label_header_type.text = "My Table"
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (), (), ())
-        )
+        self.assertEqual(self.values_changed_event.new, ((), (), (), ()))
 
     def test_is_row_valid(self):
         # valid rows are valid
@@ -335,15 +314,12 @@ class TestArrayDataModel(UnittestTools, TestCase):
                 (4,),
                 (4, 0),
                 (4, 1),
-            ]
+            ],
         )
 
     def test_iter_rows_start(self):
         result = list(self.model.iter_rows((2,)))
-        self.assertEqual(
-            result,
-            [(2,), (2, 0), (2, 1)]
-        )
+        self.assertEqual(result, [(2,), (2, 0), (2, 1)])
 
     def test_iter_rows_leaf(self):
         result = list(self.model.iter_rows([2, 0]))
@@ -355,38 +331,70 @@ class TestArrayDataModel(UnittestTools, TestCase):
             result,
             [
                 ((), ()),
-                ((), (0,)), ((), (1,)), ((), (2,)),
+                ((), (0,)),
+                ((), (1,)),
+                ((), (2,)),
                 ((0,), ()),
-                ((0,), (0,)), ((0,), (1,)), ((0,), (2,)),
+                ((0,), (0,)),
+                ((0,), (1,)),
+                ((0,), (2,)),
                 ((0, 0), ()),
-                ((0, 0), (0,)), ((0, 0), (1,)), ((0, 0), (2,)),
+                ((0, 0), (0,)),
+                ((0, 0), (1,)),
+                ((0, 0), (2,)),
                 ((0, 1), ()),
-                ((0, 1), (0,)), ((0, 1), (1,)), ((0, 1), (2,)),
+                ((0, 1), (0,)),
+                ((0, 1), (1,)),
+                ((0, 1), (2,)),
                 ((1,), ()),
-                ((1,), (0,)), ((1,), (1,)), ((1,), (2,)),
+                ((1,), (0,)),
+                ((1,), (1,)),
+                ((1,), (2,)),
                 ((1, 0), ()),
-                ((1, 0), (0,)), ((1, 0), (1,)), ((1, 0), (2,)),
+                ((1, 0), (0,)),
+                ((1, 0), (1,)),
+                ((1, 0), (2,)),
                 ((1, 1), ()),
-                ((1, 1), (0,)), ((1, 1), (1,)), ((1, 1), (2,)),
+                ((1, 1), (0,)),
+                ((1, 1), (1,)),
+                ((1, 1), (2,)),
                 ((2,), ()),
-                ((2,), (0,)), ((2,), (1,)), ((2,), (2,)),
+                ((2,), (0,)),
+                ((2,), (1,)),
+                ((2,), (2,)),
                 ((2, 0), ()),
-                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
+                ((2, 0), (0,)),
+                ((2, 0), (1,)),
+                ((2, 0), (2,)),
                 ((2, 1), ()),
-                ((2, 1), (0,)), ((2, 1), (1,)), ((2, 1), (2,)),
+                ((2, 1), (0,)),
+                ((2, 1), (1,)),
+                ((2, 1), (2,)),
                 ((3,), ()),
-                ((3,), (0,)), ((3,), (1,)), ((3,), (2,)),
+                ((3,), (0,)),
+                ((3,), (1,)),
+                ((3,), (2,)),
                 ((3, 0), ()),
-                ((3, 0), (0,)), ((3, 0), (1,)), ((3, 0), (2,)),
+                ((3, 0), (0,)),
+                ((3, 0), (1,)),
+                ((3, 0), (2,)),
                 ((3, 1), ()),
-                ((3, 1), (0,)), ((3, 1), (1,)), ((3, 1), (2,)),
+                ((3, 1), (0,)),
+                ((3, 1), (1,)),
+                ((3, 1), (2,)),
                 ((4,), ()),
-                ((4,), (0,)), ((4,), (1,)), ((4,), (2,)),
+                ((4,), (0,)),
+                ((4,), (1,)),
+                ((4,), (2,)),
                 ((4, 0), ()),
-                ((4, 0), (0,)), ((4, 0), (1,)), ((4, 0), (2,)),
+                ((4, 0), (0,)),
+                ((4, 0), (1,)),
+                ((4, 0), (2,)),
                 ((4, 1), ()),
-                ((4, 1), (0,)), ((4, 1), (1,)), ((4, 1), (2,)),
-            ]
+                ((4, 1), (0,)),
+                ((4, 1), (1,)),
+                ((4, 1), (2,)),
+            ],
         )
 
     def test_iter_items_start(self):
@@ -395,12 +403,18 @@ class TestArrayDataModel(UnittestTools, TestCase):
             result,
             [
                 ((2,), ()),
-                ((2,), (0,)), ((2,), (1,)), ((2,), (2,)),
+                ((2,), (0,)),
+                ((2,), (1,)),
+                ((2,), (2,)),
                 ((2, 0), ()),
-                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
+                ((2, 0), (0,)),
+                ((2, 0), (1,)),
+                ((2, 0), (2,)),
                 ((2, 1), ()),
-                ((2, 1), (0,)), ((2, 1), (1,)), ((2, 1), (2,)),
-            ]
+                ((2, 1), (0,)),
+                ((2, 1), (1,)),
+                ((2, 1), (2,)),
+            ],
         )
 
     def test_iter_items_leaf(self):
@@ -409,6 +423,8 @@ class TestArrayDataModel(UnittestTools, TestCase):
             result,
             [
                 ((2, 0), ()),
-                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
-            ]
+                ((2, 0), (0,)),
+                ((2, 0), (1,)),
+                ((2, 0), (2,)),
+            ],
         )

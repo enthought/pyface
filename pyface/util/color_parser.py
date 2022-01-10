@@ -178,7 +178,6 @@ color_table = {
     "yellow": (1.000, 1.000, 0.000, 1.0),
     "yellowgreen": (0.604, 0.804, 0.196, 1.0),
     "rebeccapurple": (0.4, 0.2, 0.6, 1.0),
-
     # Several aliases for transparent
     "clear": (0.0, 0.0, 0.0, 0.0),
     "transparent": (0.0, 0.0, 0.0, 0.0),
@@ -190,7 +189,7 @@ ignored = str.maketrans({' ': None, '-': None, '_': None})
 
 
 def _parse_name(text):
-    """ Parse a color name.
+    """Parse a color name.
 
     Parameters
     ----------
@@ -215,7 +214,7 @@ def _parse_name(text):
 
 
 def _parse_hex(text):
-    """ Parse a hex form of a color.
+    """Parse a hex form of a color.
 
     Parameters
     ----------
@@ -246,7 +245,7 @@ def _parse_hex(text):
         return None
     maximum = (1 << 4 * step) - 1
     channels = ints_to_channels(
-        (int(text[i:i+step], 16) for i in range(0, len(text), step)),
+        (int(text[i : i + step], 16) for i in range(0, len(text), step)),
         maximum=maximum,
     )
     space = 'rgb' if len(channels) == 3 else 'rgba'
@@ -254,12 +253,13 @@ def _parse_hex(text):
 
 
 class ColorParseError(ValueError):
-    """ An Exception raised when parsing fails. """
+    """An Exception raised when parsing fails."""
+
     pass
 
 
 def parse_text(text):
-    """ Parse a text representation of a color.
+    """Parse a text representation of a color.
 
     Parameters
     ----------

@@ -18,10 +18,10 @@ from pyface.viewer.api import ViewerSorter
 
 
 class FileSorter(ViewerSorter):
-    """ A sorter that arranges folders before files. """
+    """A sorter that arranges folders before files."""
 
     def category(self, viewer, parent, element):
-        """ Returns the category (an integer) for an element.
+        """Returns the category (an integer) for an element.
 
         'parent'   is the parent element.
         'elements' is the element to return the category for.

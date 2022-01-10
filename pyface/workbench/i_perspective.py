@@ -17,7 +17,7 @@ from .perspective_item import PerspectiveItem
 
 
 class IPerspective(Interface):
-    """ The perspective interface. """
+    """The perspective interface."""
 
     # The perspective's unique identifier (unique within a workbench window).
     id = Str()
@@ -42,7 +42,7 @@ class IPerspective(Interface):
     # Methods -------------------------------------------------------------#
 
     def create(self, window):
-        """ Create the perspective in a workbench window. """
+        """Create the perspective in a workbench window."""
 
     def show(self, window):
-        """ Called when the perspective is shown in a workbench window. """
+        """Called when the perspective is shown in a workbench window."""

@@ -16,7 +16,7 @@ from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'IWindow' interface --------------------------------------------------
 
@@ -31,7 +31,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create the editor. """
+        """Create the editor."""
 
         self._shell = PythonShell(parent)
 

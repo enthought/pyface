@@ -19,7 +19,7 @@ from pyface.i_window import IWindow
 
 
 class IDialog(IWindow):
-    """ The abstract interface for all pyface dialogs.
+    """The abstract interface for all pyface dialogs.
 
     Usage: Sub-class this class and either override '_create_contents' or
     more simply, just override the two methods that do the real work:-
@@ -60,7 +60,7 @@ class IDialog(IWindow):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the dialog.
+        """Opens the dialog.
 
         If the dialog is modal then the dialog's event loop is entered and the
         dialog closed afterwards.  The 'return_code' trait is updated according
@@ -79,7 +79,7 @@ class IDialog(IWindow):
     # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
-        """ Create and return the buttons.
+        """Create and return the buttons.
 
         Parameters
         ----------
@@ -95,7 +95,7 @@ class IDialog(IWindow):
         """
 
     def _create_contents(self, parent):
-        """ Create and return the dialog's contents.
+        """Create and return the dialog's contents.
 
         Parameters
         ----------
@@ -110,7 +110,7 @@ class IDialog(IWindow):
         """
 
     def _create_dialog_area(self, parent):
-        """ Create and return the main content of the dialog's window.
+        """Create and return the main content of the dialog's window.
 
         Parameters
         ----------
@@ -125,7 +125,7 @@ class IDialog(IWindow):
         """
 
     def _show_modal(self):
-        """ Opens the dialog as a modal dialog.
+        """Opens the dialog as a modal dialog.
 
         Returns
         -------
@@ -135,7 +135,7 @@ class IDialog(IWindow):
 
 
 class MDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 
     Implements: open()
@@ -147,7 +147,7 @@ class MDialog(HasTraits):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the dialog.
+        """Opens the dialog.
 
         If the dialog is modal then the dialog's event loop is entered and the
         dialog closed afterwards.  The 'return_code' trait is updated according
@@ -178,7 +178,7 @@ class MDialog(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        """ Creates the window's widget hierarchy. """
+        """Creates the window's widget hierarchy."""
 
         super()._create()
 

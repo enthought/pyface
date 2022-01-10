@@ -26,12 +26,12 @@ from ..tool_bar_manager import ToolBarManager
 
 class FalseActionController(ActionController):
     def can_add_to_menu(self, action):
-        """ Returns True if the action can be added to a menu/menubar. """
+        """Returns True if the action can be added to a menu/menubar."""
 
         return False
 
     def can_add_to_toolbar(self, action):
-        """ Returns True if the action can be added to a toolbar. """
+        """Returns True if the action can be added to a toolbar."""
 
         return False
 

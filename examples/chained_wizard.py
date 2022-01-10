@@ -19,14 +19,14 @@ from pyface.ui_traits import TraitsUIColor as Color
 
 
 class Details(HasTraits):
-    """ Some test data. """
+    """Some test data."""
 
     name = Str()
     color = Color
 
 
 class SimpleWizardPage(WizardPage):
-    """ A simple wizard page. """
+    """A simple wizard page."""
 
     # 'SimpleWizardPage' interface -----------------------------------------
 
@@ -38,7 +38,7 @@ class SimpleWizardPage(WizardPage):
     # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
-        """ Create the wizard page. """
+        """Create the wizard page."""
 
         details = Details(color=self.color)
         details.observe(self._on_name_changed, "name")
@@ -52,7 +52,7 @@ class SimpleWizardPage(WizardPage):
     # Trait event handlers -------------------------------------------------
 
     def _on_name_changed(self, event):
-        """ Called when the name has been changed. """
+        """Called when the name has been changed."""
 
         self.complete = len(event.new.strip()) > 0
 

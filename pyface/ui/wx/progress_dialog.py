@@ -26,7 +26,7 @@ from .window import Window
 
 
 class ProgressBar(Widget):
-    """ A simple progress bar dialog intended to run in the UI thread """
+    """A simple progress bar dialog intended to run in the UI thread"""
 
     #: The progress bar's parent control.
     parent = Instance(wx.Window)
@@ -82,7 +82,7 @@ class ProgressBar(Widget):
         return wx.Gauge(parent, -1, self._max, style=style, size=self.size)
 
     def update(self, value):
-        """ Update the progress bar to the desired value. """
+        """Update the progress bar to the desired value."""
         if self._max == 0:
             self.control.Pulse()
         else:
@@ -99,7 +99,7 @@ class ProgressBar(Widget):
 
 
 class ProgressDialog(MProgressDialog, Window):
-    """ A simple progress dialog window which allows itself to be updated """
+    """A simple progress dialog window which allows itself to be updated"""
 
     #: The progress bar
     progress_bar = Instance(ProgressBar)
@@ -167,13 +167,13 @@ class ProgressDialog(MProgressDialog, Window):
     # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window. """
+        """Opens the window."""
         super().open()
         self._start_time = time.time()
         wx.GetApp().Yield(True)
 
     def close(self):
-        """ Closes the window. """
+        """Closes the window."""
         if self.progress_bar is not None:
             self.progress_bar.destroy()
             self.progress_bar = None
@@ -188,7 +188,7 @@ class ProgressDialog(MProgressDialog, Window):
     # -------------------------------------------------------------------------
 
     def change_message(self, value):
-        """ Change the displayed message in the progress dialog
+        """Change the displayed message in the progress dialog
 
         Parameters
         ----------
@@ -212,7 +212,7 @@ class ProgressDialog(MProgressDialog, Window):
                 self.control.GetSizer().Layout()
 
     def update(self, value):
-        """ Update the progress bar to the desired value
+        """Update the progress bar to the desired value
 
         If the value is >= the maximum and the progress bar is not contained
         in another panel the parent window will be closed.
@@ -291,7 +291,7 @@ class ProgressDialog(MProgressDialog, Window):
         return self._message_text
 
     def _create_buttons(self, dialog, parent_sizer):
-        """ Creates the buttons. """
+        """Creates the buttons."""
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._cancel = None
@@ -326,7 +326,9 @@ class ProgressDialog(MProgressDialog, Window):
         return label
 
     def _create_gauge(self, dialog, parent_sizer):
-        self.progress_bar = ProgressBar(dialog, self.min, self.max, create=False)
+        self.progress_bar = ProgressBar(
+            dialog, self.min, self.max, create=False
+        )
         self.progress_bar.create()
         parent_sizer.Add(
             self.progress_bar.control, 0, wx.CENTER | wx.ALL, self.margin
@@ -387,7 +389,7 @@ class ProgressDialog(MProgressDialog, Window):
         self.dialog_size.y += timer_size.y + 2 * self.margin
 
     def _create_control(self, parent):
-        """ Creates the window contents.
+        """Creates the window contents.
 
         This method is intended to be overridden if necessary.  By default we
         just create an empty panel.

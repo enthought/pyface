@@ -128,9 +128,10 @@ from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse numpy dependency, otherwise re-raise
 with _optional_import(
-        "numpy",
-        msg="ArrayImage not available due to missing numpy.",
-        logger=_logging.getLogger(__name__)):
+    "numpy",
+    msg="ArrayImage not available due to missing numpy.",
+    logger=_logging.getLogger(__name__),
+):
 
     # We need to manually try importing numpy because the ``ArrayImage``
     # import will end up raising a ``TraitError`` exception instead of an
@@ -143,22 +144,25 @@ with _optional_import(
 
 # Excuse pillow dependency, otherwise re-raise
 with _optional_import(
-        "pillow",
-        msg="PILImage not available due to missing pillow.",
-        logger=_logging.getLogger(__name__)):
+    "pillow",
+    msg="PILImage not available due to missing pillow.",
+    logger=_logging.getLogger(__name__),
+):
     from .pil_image import PILImage
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
 with _optional_import(
-        "pygments",
-        msg="PythonEditor not available due to missing pygments.",
-        logger=_logging.getLogger(__name__)):
+    "pygments",
+    msg="PythonEditor not available due to missing pygments.",
+    logger=_logging.getLogger(__name__),
+):
     from .python_editor import PythonEditor
 
 with _optional_import(
-        "pygments",
-        msg="PythonShell not available due to missing pygments.",
-        logger=_logging.getLogger(__name__)):
+    "pygments",
+    msg="PythonShell not available due to missing pygments.",
+    logger=_logging.getLogger(__name__),
+):
     from .python_shell import PythonShell
 
 from .sorter import Sorter

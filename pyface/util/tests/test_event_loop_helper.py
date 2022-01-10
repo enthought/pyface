@@ -12,12 +12,12 @@ import unittest
 
 from pyface.toolkit import toolkit
 
-is_wx = (toolkit.toolkit == "wx")
+is_wx = toolkit.toolkit == "wx"
 
 
 class TestEventLoopHelper(unittest.TestCase):
-
     @unittest.skipIf(is_wx, "wx is not supported")
     def test_import(self):
         from pyface.util.event_loop_helper import EventLoopHelper
+
         self.assertNotEqual(EventLoopHelper.__name__, "Unimplemented")

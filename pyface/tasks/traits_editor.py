@@ -15,8 +15,7 @@ from pyface.tasks.editor import Editor
 
 
 class TraitsEditor(Editor):
-    """ An Editor that displays a Traits UI View.
-    """
+    """An Editor that displays a Traits UI View."""
 
     # TraitsEditor interface -----------------------------------------------
 
@@ -32,8 +31,7 @@ class TraitsEditor(Editor):
     # ------------------------------------------------------------------------
 
     def trait_context(self):
-        """ Use the model object for the Traits UI context, if appropriate.
-        """
+        """Use the model object for the Traits UI context, if appropriate."""
         if self.model:
             return {"object": self.model, "editor": self}
         return super().trait_context()
@@ -43,14 +41,12 @@ class TraitsEditor(Editor):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific contents of the editor.
-        """
+        """Create and set the toolkit-specific contents of the editor."""
         self.ui = self.edit_traits(kind="subpanel", parent=parent)
         self.control = self.ui.control
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the editor.
-        """
+        """Destroy the toolkit-specific control that represents the editor."""
         self.control = None
         if self.ui is not None:
             self.ui.dispose()

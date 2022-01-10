@@ -15,7 +15,7 @@ from pyface.data_view.abstract_value_type import AbstractValueType
 
 
 class EditableValue(AbstractValueType):
-    """ A base class for editable values.
+    """A base class for editable values.
 
     This class provides two things beyond the base AbstractValueType:
     a trait ``is_editable`` which allows toggling editing state on and
@@ -28,7 +28,7 @@ class EditableValue(AbstractValueType):
     is_editable = Bool(True, update_value_type=True)
 
     def is_valid(self, model, row, column, value):
-        """ Whether or not the value is valid for the data item specified.
+        """Whether or not the value is valid for the data item specified.
 
         The default implementation returns True for all values.
 
@@ -53,7 +53,7 @@ class EditableValue(AbstractValueType):
     # AbstractValueType Interface --------------------------------------------
 
     def has_editor_value(self, model, row, column):
-        """ Return whether or not the value can be edited.
+        """Return whether or not the value can be edited.
 
         A cell is editable if the underlying data can be set, and the
         ``is_editable`` flag is set to True
@@ -75,7 +75,7 @@ class EditableValue(AbstractValueType):
         return model.can_set_value(row, column) and self.is_editable
 
     def set_editor_value(self, model, row, column, value):
-        """ Set the edited value.
+        """Set the edited value.
 
         Parameters
         ----------

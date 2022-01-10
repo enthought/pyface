@@ -26,14 +26,13 @@ logger = logging.getLogger(__name__)
 
 
 class AUILayout(TaskLayout):
-    """ The layout for a main window's dock area using AUI Perspectives
-    """
+    """The layout for a main window's dock area using AUI Perspectives"""
 
     perspective = Str()
 
 
 class TaskWindowBackend(MTaskWindowBackend):
-    """ The toolkit-specific implementation of a TaskWindowBackend.
+    """The toolkit-specific implementation of a TaskWindowBackend.
 
     See the ITaskWindowBackend interface for API documentation.
     """
@@ -47,8 +46,7 @@ class TaskWindowBackend(MTaskWindowBackend):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Create and return the TaskWindow's contents.
-        """
+        """Create and return the TaskWindow's contents."""
         # No extra control needed for wx (it's all handled by the AUIManager in
         # the ApplicationWindow) but we do need to handle some events here
         self.window._aui_manager.Bind(
@@ -56,13 +54,11 @@ class TaskWindowBackend(MTaskWindowBackend):
         )
 
     def destroy(self):
-        """ Destroy the backend.
-        """
+        """Destroy the backend."""
         pass
 
     def hide_task(self, state):
-        """ Assuming the specified TaskState is active, hide its controls.
-        """
+        """Assuming the specified TaskState is active, hide its controls."""
         # Save the task's layout in case it is shown again later.
         self.window._active_state.layout = self.get_layout()
 
@@ -87,8 +83,8 @@ class TaskWindowBackend(MTaskWindowBackend):
             control.Hide()
 
     def show_task(self, state):
-        """ Assuming no task is currently active, show the controls of the
-            specified TaskState.
+        """Assuming no task is currently active, show the controls of the
+        specified TaskState.
         """
         # Show the central pane.
         info = (
@@ -126,8 +122,7 @@ class TaskWindowBackend(MTaskWindowBackend):
     # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
-        """ Returns a TaskLayout for the current state of the window.
-        """
+        """Returns a TaskLayout for the current state of the window."""
         # Extract the layout from the main window.
         layout = AUILayout(id=self.window._active_state.task.id)
         self._main_window_layout.state = self.window._active_state
@@ -136,8 +131,8 @@ class TaskWindowBackend(MTaskWindowBackend):
         return layout
 
     def set_layout(self, layout):
-        """ Applies a TaskLayout (which should be suitable for the active task)
-            to the window.
+        """Applies a TaskLayout (which should be suitable for the active task)
+        to the window.
         """
         self.window._active_state.layout = layout
         self._layout_state(self.window._active_state)
@@ -148,8 +143,8 @@ class TaskWindowBackend(MTaskWindowBackend):
     # ------------------------------------------------------------------------
 
     def _layout_state(self, state):
-        """ Layout the dock panes in the specified TaskState using its
-            TaskLayout.
+        """Layout the dock panes in the specified TaskState using its
+        TaskLayout.
         """
         #        # Assign the window's corners to the appropriate dock areas.
         #        for name, corner in CORNER_MAP.iteritems():
@@ -190,8 +185,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
 
 class TaskWindowLayout(MainWindowLayout):
-    """ A MainWindowLayout for a TaskWindow.
-    """
+    """A MainWindowLayout for a TaskWindow."""
 
     # 'TaskWindowLayout' interface -----------------------------------------
 
@@ -203,8 +197,7 @@ class TaskWindowLayout(MainWindowLayout):
     # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
-        """ Returns the control associated with a PaneItem.
-        """
+        """Returns the control associated with a PaneItem."""
         for dock_pane in self.state.dock_panes:
             if dock_pane.id == pane.id:
                 self.consumed.append(dock_pane.control)
@@ -212,8 +205,7 @@ class TaskWindowLayout(MainWindowLayout):
         return None
 
     def _get_pane(self, dock_widget):
-        """ Returns a PaneItem for a control.
-        """
+        """Returns a PaneItem for a control."""
         for dock_pane in self.state.dock_panes:
             if dock_pane.control == dock_widget:
                 return PaneItem(id=dock_pane.id)

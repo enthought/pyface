@@ -6,7 +6,7 @@ from pyface.workbench.api import View
 
 
 class ColorView(View):
-    """ A view containing a colored panel! """
+    """A view containing a colored panel!"""
 
     # 'IView' interface ----------------------------------------------------
 
@@ -20,7 +20,7 @@ class ColorView(View):
     # Trait initializers ---------------------------------------------------
 
     def _id_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # By making the Id the same as the name, we make it easy to specify
         # the views in the example perspectives. Note for larger applications
@@ -31,7 +31,7 @@ class ColorView(View):
     # Methods --------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Creates the toolkit-specific control that represents the view.
+        """Creates the toolkit-specific control that represents the view.
 
         'parent' is the toolkit-specific control that is the view's parent.
 
@@ -50,7 +50,7 @@ class ColorView(View):
     # ------------------------------------------------------------------------
 
     def _wx_create_control(self, parent, color):
-        """ Create a wx version of the control. """
+        """Create a wx version of the control."""
 
         import wx
 
@@ -60,7 +60,7 @@ class ColorView(View):
         return panel
 
     def _qt4_create_control(self, parent, color):
-        """ Create a Qt4 version of the control. """
+        """Create a Qt4 version of the control."""
 
         from pyface.qt import QtGui
 

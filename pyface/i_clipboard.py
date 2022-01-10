@@ -21,8 +21,7 @@ from traits.api import HasStrictTraits, Interface, Property
 
 
 class IClipboard(Interface):
-    """ The interface for manipulating the toolkit clipboard.
-    """
+    """The interface for manipulating the toolkit clipboard."""
 
     #: The type of data in the clipboard (string)
     data_type = Property
@@ -56,8 +55,8 @@ class IClipboard(Interface):
 
 
 class BaseClipboard(HasStrictTraits):
-    """ An abstract base class that contains common code for toolkit specific
-        implementations of IClipboard.
+    """An abstract base class that contains common code for toolkit specific
+    implementations of IClipboard.
     """
 
     #: The type of data in the clipboard (string)

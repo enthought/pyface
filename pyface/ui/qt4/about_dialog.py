@@ -56,7 +56,7 @@ _DIALOG_TEXT = """
 
 @provides(IAboutDialog)
 class AboutDialog(MAboutDialog, Dialog):
-    """ The toolkit specific implementation of an AboutDialog.  See the
+    """The toolkit specific implementation of an AboutDialog.  See the
     IAboutDialog interface for the API documentation.
     """
 

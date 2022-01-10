@@ -15,7 +15,7 @@ from .workbench_action import WorkbenchAction
 
 
 class ShowViewAction(WorkbenchAction):
-    """ An action that shows a dialog to allow the user to choose a view. """
+    """An action that shows a dialog to allow the user to choose a view."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -30,7 +30,7 @@ class ShowViewAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         chooser = ViewChooser(window=self.window)
 

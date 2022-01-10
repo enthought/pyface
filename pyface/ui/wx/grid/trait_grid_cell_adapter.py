@@ -29,7 +29,7 @@ def get_control(control):
 
 
 class TraitGridCellAdapter(GridCellEditor):
-    """ Wrap a trait editor as a GridCellEditor object. """
+    """Wrap a trait editor as a GridCellEditor object."""
 
     def __init__(
         self,
@@ -43,7 +43,7 @@ class TraitGridCellAdapter(GridCellEditor):
         width=-1.0,
         height=-1.0,
     ):
-        """ Build a new TraitGridCellAdapter object. """
+        """Build a new TraitGridCellAdapter object."""
 
         super().__init__()
         self._factory = trait_editor_factory
@@ -58,7 +58,7 @@ class TraitGridCellAdapter(GridCellEditor):
         self._context = context
 
     def Create(self, parent, id, evtHandler):
-        """ Called to create the control, which must derive from wxControl. """
+        """Called to create the control, which must derive from wxControl."""
         from traitsui.api import UI, default_handler
 
         # If the editor has already been created, ignore the request:
@@ -121,9 +121,9 @@ class TraitGridCellAdapter(GridCellEditor):
             self.SetControl(control)
 
     def SetSize(self, rect):
-        """ Called to position/size the edit control within the cell rectangle.
-            If you don't fill the cell (the rect) then be sure to override
-            PaintBackground and do something meaningful there.
+        """Called to position/size the edit control within the cell rectangle.
+        If you don't fill the cell (the rect) then be sure to override
+        PaintBackground and do something meaningful there.
         """
         changed = False
         edit_width, edit_height = rect.width, rect.height
@@ -174,21 +174,21 @@ class TraitGridCellAdapter(GridCellEditor):
             )
 
     def Show(self, show, attr):
-        """ Show or hide the edit control.  You can use the attr (if not None)
-            to set colours or fonts for the control.
+        """Show or hide the edit control.  You can use the attr (if not None)
+        to set colours or fonts for the control.
         """
         if self.IsCreated():
             super().Show(show, attr)
 
     def PaintBackground(self, rect, attr):
-        """ Draws the part of the cell not occupied by the edit control.  The
-            base  class version just fills it with background colour from the
-            attribute.  In this class the edit control fills the whole cell so
-            don't do anything at all in order to reduce flicker.
+        """Draws the part of the cell not occupied by the edit control.  The
+        base  class version just fills it with background colour from the
+        attribute.  In this class the edit control fills the whole cell so
+        don't do anything at all in order to reduce flicker.
         """
 
     def BeginEdit(self, row, col, grid):
-        """ Make sure the control is ready to edit. """
+        """Make sure the control is ready to edit."""
         # We have to manually set the focus to the control
         self._editor.update_editor()
         control = self._control
@@ -198,7 +198,7 @@ class TraitGridCellAdapter(GridCellEditor):
             control.SetSelection(-1, -1)
 
     def EndEdit(self, row, col, grid):
-        """ Do anything necessary to complete the editing. """
+        """Do anything necessary to complete the editing."""
         self._control.Show(False)
 
         changed = False
@@ -226,28 +226,28 @@ class TraitGridCellAdapter(GridCellEditor):
             grid.ForceRefresh()
 
     def Reset(self):
-        """ Reset the value in the control back to its starting value. """
+        """Reset the value in the control back to its starting value."""
 
         # fixme: should we be using the undo history here?
 
     def StartingKey(self, evt):
-        """ If the editor is enabled by pressing keys on the grid, this will be
-            called to let the editor do something about that first key
-            if desired.
+        """If the editor is enabled by pressing keys on the grid, this will be
+        called to let the editor do something about that first key
+        if desired.
         """
 
     def StartingClick(self):
-        """ If the editor is enabled by clicking on the cell, this method
-            will be called to allow the editor to simulate the click on the
-            control if needed.
+        """If the editor is enabled by clicking on the cell, this method
+        will be called to allow the editor to simulate the click on the
+        control if needed.
         """
 
     def Destroy(self):
-        """ Final cleanup. """
+        """Final cleanup."""
         self._editor.dispose()
 
     def Clone(self):
-        """ Create a new object which is the copy of this one. """
+        """Create a new object which is the copy of this one."""
         return TraitGridCellAdapter(
             self._factory,
             self._obj,

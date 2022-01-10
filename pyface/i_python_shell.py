@@ -19,7 +19,7 @@ from pyface.i_layout_widget import ILayoutWidget
 
 
 class IPythonShell(ILayoutWidget):
-    """ The interface for an interactive Python shell. """
+    """The interface for an interactive Python shell."""
 
     # 'IPythonShell' interface ---------------------------------------------
 
@@ -34,7 +34,7 @@ class IPythonShell(ILayoutWidget):
     # ------------------------------------------------------------------------
 
     def interpreter(self):
-        """ Get the shell's interpreter
+        """Get the shell's interpreter
 
         Returns
         -------
@@ -43,7 +43,7 @@ class IPythonShell(ILayoutWidget):
         """
 
     def bind(self, name, value):
-        """ Binds a name to a value in the interpreter's namespace.
+        """Binds a name to a value in the interpreter's namespace.
 
         Parameters
         ----------
@@ -54,7 +54,7 @@ class IPythonShell(ILayoutWidget):
         """
 
     def execute_command(self, command, hidden=True):
-        """ Execute a command in the interpreter.
+        """Execute a command in the interpreter.
 
         Parameters
         ----------
@@ -66,7 +66,7 @@ class IPythonShell(ILayoutWidget):
         """
 
     def execute_file(self, path, hidden=True):
-        """ Execute a file in the interpeter.
+        """Execute a file in the interpeter.
 
         Parameters
         ----------
@@ -78,7 +78,7 @@ class IPythonShell(ILayoutWidget):
         """
 
     def get_history(self):
-        """ Return the current command history and index.
+        """Return the current command history and index.
 
         Returns
         -------
@@ -89,7 +89,7 @@ class IPythonShell(ILayoutWidget):
         """
 
     def set_history(self, history, history_index):
-        """ Replace the current command history and index with new ones.
+        """Replace the current command history and index with new ones.
 
         Parameters
         ----------
@@ -101,7 +101,7 @@ class IPythonShell(ILayoutWidget):
 
 
 class MPythonShell(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IPythonShell interface.
 
     Implements: bind(), _on_command_executed()
@@ -112,7 +112,7 @@ class MPythonShell(HasTraits):
     # ------------------------------------------------------------------------
 
     def bind(self, name, value):
-        """ Binds a name to a value in the interpreter's namespace.
+        """Binds a name to a value in the interpreter's namespace.
 
         Parameters
         ----------
@@ -128,6 +128,6 @@ class MPythonShell(HasTraits):
     # ------------------------------------------------------------------------
 
     def _on_command_executed(self):
-        """ Called when a command has been executed in the shell. """
+        """Called when a command has been executed in the shell."""
 
         self.command_executed = self

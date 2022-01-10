@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 @provides(IWorkbench)
 class Workbench(HasTraits):
-    """ A workbench.
+    """A workbench.
 
     There is exactly *one* workbench per application. The workbench can create
     any number of workbench windows.
@@ -115,7 +115,7 @@ class Workbench(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
-        """ Factory method that creates a new workbench window. """
+        """Factory method that creates a new workbench window."""
 
         window = self.window_factory(workbench=self, **kw)
 
@@ -143,7 +143,7 @@ class Workbench(HasTraits):
         return window
 
     def exit(self):
-        """ Exits the workbench.
+        """Exits the workbench.
 
         This closes all open workbench windows.
 
@@ -190,12 +190,12 @@ class Workbench(HasTraits):
     # Convenience methods on the active window -----------------------------
 
     def edit(self, obj, kind=None, use_existing=True):
-        """ Edit an object in the active workbench window. """
+        """Edit an object in the active workbench window."""
 
         return self.active_window.edit(obj, kind, use_existing)
 
     def get_editor(self, obj, kind=None):
-        """ Return the editor that is editing an object.
+        """Return the editor that is editing an object.
 
         Returns None if no such editor exists.
 
@@ -207,7 +207,7 @@ class Workbench(HasTraits):
         return self.active_window.get_editor(obj, kind)
 
     def get_editor_by_id(self, id):
-        """ Return the editor with the specified Id.
+        """Return the editor with the specified Id.
 
         Returns None if no such editor exists.
 
@@ -218,22 +218,22 @@ class Workbench(HasTraits):
     # Message dialogs ----
 
     def confirm(self, message, title=None, cancel=False, default=NO):
-        """ Convenience method to show a confirmation dialog. """
+        """Convenience method to show a confirmation dialog."""
 
         return self.active_window.confirm(message, title, cancel, default)
 
     def information(self, message, title="Information"):
-        """ Convenience method to show an information message dialog. """
+        """Convenience method to show an information message dialog."""
 
         return self.active_window.information(message, title)
 
     def warning(self, message, title="Warning"):
-        """ Convenience method to show a warning message dialog. """
+        """Convenience method to show a warning message dialog."""
 
         return self.active_window.warning(message, title)
 
     def error(self, message, title="Error"):
-        """ Convenience method to show an error message dialog. """
+        """Convenience method to show an error message dialog."""
 
         return self.active_window.error(message, title)
 
@@ -244,7 +244,7 @@ class Workbench(HasTraits):
     # Initializers ---------------------------------------------------------
 
     def _state_location_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # It would be preferable to base this on GUI.state_location.
         state_location = os.path.join(
@@ -262,7 +262,7 @@ class Workbench(HasTraits):
         return state_location
 
     def _undo_manager_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # We make sure the undo package is entirely optional.
         try:
@@ -273,7 +273,7 @@ class Workbench(HasTraits):
         return UndoManager()
 
     def _user_perspective_manager_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         return UserPerspectiveManager(state_location=self.state_location)
 
@@ -282,7 +282,7 @@ class Workbench(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create_window(self, **kw):
-        """ Factory method that creates a new workbench window. """
+        """Factory method that creates a new workbench window."""
 
         raise NotImplementedError()
 
@@ -291,7 +291,7 @@ class Workbench(HasTraits):
     # ------------------------------------------------------------------------
 
     def _close_all_windows(self):
-        """ Closes all open windows.
+        """Closes all open windows.
 
         Returns True if all windows were closed, False if the user changed
         their mind ;^)
@@ -316,7 +316,7 @@ class Workbench(HasTraits):
         return all_closed
 
     def _restore_window_layout(self, window):
-        """ Restore the window layout. """
+        """Restore the window layout."""
 
         filename = os.path.join(self.state_location, "window_memento")
         if os.path.exists(filename):
@@ -338,7 +338,7 @@ class Workbench(HasTraits):
                 logger.exception("restoring window layout from %s", filename)
 
     def _save_window_layout(self, window):
-        """ Save the window layout. """
+        """Save the window layout."""
 
         # Save the window layout.
         f = open(os.path.join(self.state_location, "window_memento"), "wb")
@@ -350,14 +350,14 @@ class Workbench(HasTraits):
     # Trait change handlers ------------------------------------------------
 
     def _on_window_activated(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
         window = event.object
         logger.debug("window %s activated", window)
 
         self.active_window = window
 
     def _on_window_opening(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
         window = event.object
         # Event notification.
         self.window_opening = window_event = VetoableWindowEvent(window=window)
@@ -365,7 +365,7 @@ class Workbench(HasTraits):
             event.new.veto = True
 
     def _on_window_opened(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
         window = event.object
         # We maintain a list of all open windows so that (amongst other things)
         # we can detect when the user is attempting to close the last one.
@@ -380,7 +380,7 @@ class Workbench(HasTraits):
         self.window_opened = WindowEvent(window=window)
 
     def _on_window_closing(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
         window = event.object
         # Event notification.
         self.window_closing = window_event = VetoableWindowEvent(window=window)
@@ -404,7 +404,7 @@ class Workbench(HasTraits):
                     self._save_window_layout(window)
 
     def _on_window_closed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
         window = event.object
         self.windows.remove(window)
 

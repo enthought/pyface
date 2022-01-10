@@ -25,7 +25,7 @@ from pyface.image_resource import ImageResource
 
 
 class SplitTabWidget(QtGui.QSplitter):
-    """ The SplitTabWidget class is a hierarchy of QSplitters the leaves of
+    """The SplitTabWidget class is a hierarchy of QSplitters the leaves of
     which are QTabWidgets.  Any tab may be moved around with the hierarchy
     automatically extended and reduced as required.
     """
@@ -50,7 +50,7 @@ class SplitTabWidget(QtGui.QSplitter):
     _HS_OUTSIDE = -7
 
     def __init__(self, *args):
-        """ Initialise the instance. """
+        """Initialise the instance."""
 
         QtGui.QSplitter.__init__(self, *args)
 
@@ -59,7 +59,7 @@ class SplitTabWidget(QtGui.QSplitter):
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
 
     def clear(self):
-        """ Restore the widget to its pristine state. """
+        """Restore the widget to its pristine state."""
 
         w = None
         for i in range(self.count()):
@@ -77,7 +77,7 @@ class SplitTabWidget(QtGui.QSplitter):
         self._current_tab_idx = -1
 
     def saveState(self):
-        """ Returns a Python object containing the saved state of the widget.
+        """Returns a Python object containing the saved state of the widget.
         Widgets are saved only by their object name.
         """
 
@@ -115,7 +115,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (QtGui.QSplitter.saveState(qsplitter).data(), sp_ch_states)
 
     def restoreState(self, state, factory):
-        """ Restore the contents from the given state (returned by a previous
+        """Restore the contents from the given state (returned by a previous
         call to saveState()).  factory is a callable that is passed the object
         name of the widget that is in the state and needs to be restored.  The
         callable returns the restored widget.
@@ -170,7 +170,7 @@ class SplitTabWidget(QtGui.QSplitter):
         QtGui.QSplitter.restoreState(qsplitter, sp_qstate)
 
     def addTab(self, w, text):
-        """ Add a new tab to the main tab widget. """
+        """Add a new tab to the main tab widget."""
 
         # Find the first tab widget going down the left of the hierarchy.  This
         # will be the one in the top left corner.
@@ -194,12 +194,12 @@ class SplitTabWidget(QtGui.QSplitter):
             ch.tabBar().setFocus()
 
     def _close_tab_request(self, w):
-        """ A close button was clicked in one of out _TabWidgets """
+        """A close button was clicked in one of out _TabWidgets"""
 
         self.tab_close_request.emit(w)
 
     def setCurrentWidget(self, w):
-        """ Make the given widget current. """
+        """Make the given widget current."""
 
         tw, tidx = self._tab_widget(w)
 
@@ -207,7 +207,7 @@ class SplitTabWidget(QtGui.QSplitter):
             self._set_current_tab(tw, tidx)
 
     def setActiveIcon(self, w, icon=None):
-        """ Set the active icon on a widget. """
+        """Set the active icon on a widget."""
 
         tw, tidx = self._tab_widget(w)
 
@@ -218,8 +218,7 @@ class SplitTabWidget(QtGui.QSplitter):
             tw.setTabIcon(tidx, icon)
 
     def setTabTextColor(self, w, color=None):
-        """ Set the tab text color on a particular widget w
-        """
+        """Set the tab text color on a particular widget w"""
         tw, tidx = self._tab_widget(w)
 
         if tw is not None:
@@ -229,7 +228,7 @@ class SplitTabWidget(QtGui.QSplitter):
             tw.tabBar().setTabTextColor(tidx, color)
 
     def setWidgetTitle(self, w, title):
-        """ Set the title for the given widget. """
+        """Set the title for the given widget."""
 
         tw, idx = self._tab_widget(w)
 
@@ -237,7 +236,7 @@ class SplitTabWidget(QtGui.QSplitter):
             tw.setTabText(idx, title)
 
     def _tab_widget(self, w):
-        """ Return the tab widget and index containing the given widget. """
+        """Return the tab widget and index containing the given widget."""
 
         for tw in self.findChildren(_TabWidget, None):
             idx = tw.indexOf(w)
@@ -248,7 +247,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (None, None)
 
     def _set_current_tab(self, tw, tidx):
-        """ Set the new current tab. """
+        """Set the new current tab."""
 
         # Handle the trivial case.
         if self._current_tab_w is tw and self._current_tab_idx == tidx:
@@ -262,7 +261,7 @@ class SplitTabWidget(QtGui.QSplitter):
         self._current_tab_idx = tidx
 
     def _set_focus(self):
-        """ Set the focus to an appropriate widget in the current tab. """
+        """Set the focus to an appropriate widget in the current tab."""
 
         # Only try and change the focus if the current focus isn't already a
         # child of the widget.
@@ -297,7 +296,7 @@ class SplitTabWidget(QtGui.QSplitter):
             nfw.setFocus()
 
     def _focus_changed(self, old, new):
-        """ Handle a change in focus that affects the current tab. """
+        """Handle a change in focus that affects the current tab."""
 
         # It is possible for the C++ layer of this object to be deleted between
         # the time when the focus change signal is emitted and time when the
@@ -334,7 +333,7 @@ class SplitTabWidget(QtGui.QSplitter):
             self.editor_has_focus.emit(nw)
 
     def _tab_widget_of(self, target):
-        """ Return the tab widget and index of the widget that contains the
+        """Return the tab widget and index of the widget that contains the
         given widget.
         """
 
@@ -348,7 +347,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (None, None)
 
     def _move_left(self, tw, tidx):
-        """ Move the current tab to the one logically to the left. """
+        """Move the current tab to the one logically to the left."""
 
         tidx -= 1
 
@@ -370,7 +369,7 @@ class SplitTabWidget(QtGui.QSplitter):
         tw.setFocus()
 
     def _move_right(self, tw, tidx):
-        """ Move the current tab to the one logically to the right. """
+        """Move the current tab to the one logically to the right."""
 
         tidx += 1
 
@@ -521,7 +520,7 @@ class SplitTabWidget(QtGui.QSplitter):
         QtGui.QApplication.instance().blockSignals(False)
 
     def _horizontal_split(self, spl, idx, hs):
-        """ Returns a tuple of the splitter and index where the new tab widget
+        """Returns a tuple of the splitter and index where the new tab widget
         should be put.
         """
 
@@ -550,7 +549,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (spl, idx)
 
     def _vertical_split(self, spl, idx, hs):
-        """ Returns a tuple of the splitter and index where the new tab widget
+        """Returns a tuple of the splitter and index where the new tab widget
         should be put.
         """
 
@@ -579,7 +578,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (spl, idx)
 
     def _remove_tab(self, tab_w, tab):
-        """ Remove a tab from a tab widget and return a tuple of the icon,
+        """Remove a tab from a tab widget and return a tuple of the icon,
         label text and the widget so that it can be recreated.
         """
 
@@ -593,7 +592,7 @@ class SplitTabWidget(QtGui.QSplitter):
         return (icon, text, text_color, button, w)
 
     def _hotspot(self, pos):
-        """ Return a tuple of the tab widget, hotspot and hostspot geometry (as
+        """Return a tuple of the tab widget, hotspot and hostspot geometry (as
         a tuple) at the given position.
         """
         global_pos = self.mapToGlobal(pos)
@@ -771,7 +770,7 @@ inactive_style = """QTabWidget::pane { /* The tab widget frame */
 
 
 class _TabWidget(QtGui.QTabWidget):
-    """ The _TabWidget class is a QTabWidget with a dragable tab bar. """
+    """The _TabWidget class is a QTabWidget with a dragable tab bar."""
 
     # The active icon.  It is created when it is first needed.
     _active_icon = None
@@ -779,7 +778,7 @@ class _TabWidget(QtGui.QTabWidget):
     _spinner_data = None
 
     def __init__(self, root, *args):
-        """ Initialise the instance. """
+        """Initialise the instance."""
 
         QtGui.QTabWidget.__init__(self, *args)
 
@@ -818,7 +817,7 @@ class _TabWidget(QtGui.QTabWidget):
             self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, None)
 
     def active_icon(self):
-        """ Return the QIcon to be used to indicate an active tab page. """
+        """Return the QIcon to be used to indicate an active tab page."""
 
         if _TabWidget._active_icon is None:
             # The gradient start and stop colours.
@@ -856,7 +855,7 @@ class _TabWidget(QtGui.QTabWidget):
         return _TabWidget._active_icon
 
     def _still_needed(self):
-        """ Delete the tab widget (and any relevant parent splitters) if it is
+        """Delete the tab widget (and any relevant parent splitters) if it is
         no longer needed.
         """
 
@@ -874,7 +873,7 @@ class _TabWidget(QtGui.QTabWidget):
             prune.deleteLater()
 
     def tabRemoved(self, idx):
-        """ Reimplemented to update the record of the current tab if it is
+        """Reimplemented to update the record of the current tab if it is
         removed.
         """
 
@@ -887,7 +886,7 @@ class _TabWidget(QtGui.QTabWidget):
             self._root._current_tab_w = None
 
     def _close_tab(self, index):
-        """ Close the current tab. """
+        """Close the current tab."""
 
         self._root._close_tab_request(self.widget(index))
 
@@ -900,10 +899,10 @@ class _IndependentLineEdit(QtGui.QLineEdit):
 
 
 class _DragableTabBar(QtGui.QTabBar):
-    """ The _DragableTabBar class is a QTabBar that can be dragged around. """
+    """The _DragableTabBar class is a QTabBar that can be dragged around."""
 
     def __init__(self, root, parent):
-        """ Initialise the instance. """
+        """Initialise the instance."""
 
         QtGui.QTabBar.__init__(self, parent)
 
@@ -927,7 +926,7 @@ class _DragableTabBar(QtGui.QTabBar):
         QtGui.QTabBar.resizeEvent(self, e)
 
     def keyPressEvent(self, e):
-        """ Reimplemented to handle traversal across different tab widgets. """
+        """Reimplemented to handle traversal across different tab widgets."""
 
         if e.key() == QtCore.Qt.Key_Left:
             self._root._move_left(self.parent(), self.currentIndex())
@@ -945,7 +944,7 @@ class _DragableTabBar(QtGui.QTabBar):
         te.show()
 
     def mousePressEvent(self, e):
-        """ Reimplemented to handle mouse press events. """
+        """Reimplemented to handle mouse press events."""
 
         # There is something odd in the focus handling where focus temporarily
         # moves elsewhere (actually to a View) when switching to a different
@@ -975,7 +974,7 @@ class _DragableTabBar(QtGui.QTabBar):
         self._drag_state = _DragState(self._root, self, tab, e.pos())
 
     def mouseMoveEvent(self, e):
-        """ Reimplemented to handle mouse move events. """
+        """Reimplemented to handle mouse move events."""
 
         QtGui.QTabBar.mouseMoveEvent(self, e)
 
@@ -993,7 +992,7 @@ class _DragableTabBar(QtGui.QTabBar):
                 QtGui.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
 
     def mouseReleaseEvent(self, e):
-        """ Reimplemented to handle mouse release events. """
+        """Reimplemented to handle mouse release events."""
 
         QtGui.QTabBar.mouseReleaseEvent(self, e)
 
@@ -1009,7 +1008,7 @@ class _DragableTabBar(QtGui.QTabBar):
         self._drag_state = None
 
     def _tab_at(self, pos):
-        """ Return the index of the tab at the given point. """
+        """Return the index of the tab at the given point."""
 
         for i in range(self.count()):
             if self.tabRect(i).contains(pos):
@@ -1032,10 +1031,10 @@ class _DragableTabBar(QtGui.QTabBar):
 
 
 class _DragState(object):
-    """ The _DragState class handles most of the work when dragging a tab. """
+    """The _DragState class handles most of the work when dragging a tab."""
 
     def __init__(self, root, tab_bar, tab, start_pos):
-        """ Initialise the instance. """
+        """Initialise the instance."""
 
         self.dragging = False
 
@@ -1046,7 +1045,7 @@ class _DragState(object):
         self._clone = None
 
     def start_dragging(self, pos):
-        """ Start dragging a tab. """
+        """Start dragging a tab."""
 
         if (
             pos - self._start_pos
@@ -1090,7 +1089,7 @@ class _DragState(object):
         ctb.show()
 
     def drag(self, pos):
-        """ Handle the movement of the cloned tab during dragging. """
+        """Handle the movement of the cloned tab during dragging."""
 
         self._clone.move(self._tab_bar.mapToGlobal(pos) + self._clone_offset)
         self._root._select(
@@ -1098,7 +1097,7 @@ class _DragState(object):
         )
 
     def drop(self, pos):
-        """ Handle the drop of the cloned tab. """
+        """Handle the drop of the cloned tab."""
 
         self.drag(pos)
         self._clone = None

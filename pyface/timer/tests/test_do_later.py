@@ -31,7 +31,7 @@ class ConditionHandler(object):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoLaterTimer(TestCase, GuiTestAssistant):
-    """ Test the DoLaterTimer. """
+    """Test the DoLaterTimer."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -71,7 +71,7 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoLater(TestCase, GuiTestAssistant):
-    """ Test do_later. """
+    """Test do_later."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -97,7 +97,7 @@ class TestDoLater(TestCase, GuiTestAssistant):
 
 @skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDoAfter(TestCase, GuiTestAssistant):
-    """ Test do_after. """
+    """Test do_after."""
 
     def setUp(self):
         GuiTestAssistant.setUp(self)

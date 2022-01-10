@@ -38,8 +38,7 @@ image2 = ImageResource("gear")
 
 
 def create_dock_window(parent, editor):
-    """ Creates a window for editing a workflow canvas.
-    """
+    """Creates a window for editing a workflow canvas."""
     window = DockWindow(parent).control
     button1 = wx.Button(window, -1, "Button 1")
     button2 = wx.Button(window, -1, "Button 2")

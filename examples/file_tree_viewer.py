@@ -22,24 +22,24 @@ from traits.api import Instance
 
 
 class FileTreeContentProvider(TreeContentProvider):
-    """ A tree content provider for local file systems. """
+    """A tree content provider for local file systems."""
 
     # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
     # ------------------------------------------------------------------------
 
     def get_parent(self, element):
-        """ Returns the parent of an element. """
+        """Returns the parent of an element."""
 
         return dirname(element)
 
     def get_children(self, element):
-        """ Returns the children of an element. """
+        """Returns the children of an element."""
 
         return [join(element, filename) for filename in listdir(element)]
 
     def has_children(self, element):
-        """ Returns True iff the element has children, otherwise False. """
+        """Returns True iff the element has children, otherwise False."""
 
         if isdir(element):
             for filename in listdir(element):
@@ -56,7 +56,7 @@ class FileTreeContentProvider(TreeContentProvider):
 
 
 class FileTreeLabelProvider(TreeLabelProvider):
-    """ A tree label provider for local file systems. """
+    """A tree label provider for local file systems."""
 
     # The image used to represent folders that are NOT expanded.
     CLOSED_FOLDER = ImageResource("closed_folder")
@@ -72,7 +72,7 @@ class FileTreeLabelProvider(TreeLabelProvider):
     # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element):
-        """ Returns the filename of the label image for an element. """
+        """Returns the filename of the label image for an element."""
         expanded = viewer.is_expanded(element)
         if isdir(element):
             if expanded:
@@ -84,13 +84,13 @@ class FileTreeLabelProvider(TreeLabelProvider):
         return image
 
     def get_text(self, viewer, element):
-        """ Returns the label text for an element. """
+        """Returns the label text for an element."""
 
         return basename(element)
 
 
 class FileTreeViewer(TreeViewer):
-    """ A tree viewer for local file systems. """
+    """A tree viewer for local file systems."""
 
     # 'TreeViewer' interface -----------------------------------------------
 

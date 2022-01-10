@@ -14,8 +14,7 @@ from pyface.tasks.task_layout import LayoutContainer, TaskLayout
 
 
 class TaskWindowLayout(LayoutContainer):
-    """ The layout of a TaskWindow.
-    """
+    """The layout of a TaskWindow."""
 
     #: The ID of the active task. If unspecified, the first task will be
     #: active.
@@ -35,8 +34,8 @@ class TaskWindowLayout(LayoutContainer):
     size_state = Enum("normal", "maximized")
 
     def get_active_task(self):
-        """ Returns the ID of the active task in the layout, or None if there is
-            no active task.
+        """Returns the ID of the active task in the layout, or None if there is
+        no active task.
         """
         if self.active_task:
             return self.active_task
@@ -46,15 +45,14 @@ class TaskWindowLayout(LayoutContainer):
         return None
 
     def get_tasks(self):
-        """ Returns the IDs of the tasks in the layout.
-        """
+        """Returns the IDs of the tasks in the layout."""
         return [
             (item if isinstance(item, str) else item.id) for item in self.items
         ]
 
     def is_equivalent_to(self, layout):
-        """ Returns whether two layouts are equivalent, i.e. whether they
-            contain the same tasks.
+        """Returns whether two layouts are equivalent, i.e. whether they
+        contain the same tasks.
         """
         return isinstance(layout, TaskWindowLayout) and set(
             self.get_tasks()

@@ -19,7 +19,7 @@ from pyface.action.action_manager import ActionManager
 
 
 class ToolPaletteManager(ActionManager):
-    """ A tool bar manager realizes itself in a tool palette bar control. """
+    """A tool bar manager realizes itself in a tool palette bar control."""
 
     # 'ToolPaletteManager' interface ---------------------------------------
 
@@ -39,7 +39,7 @@ class ToolPaletteManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
-        """ Creates a new tool bar manager. """
+        """Creates a new tool bar manager."""
 
         # Base class contructor.
         super().__init__(*args, **traits)
@@ -55,5 +55,5 @@ class ToolPaletteManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def create_tool_palette(self, parent, controller=None):
-        """ Creates a tool bar. """
+        """Creates a tool bar."""
         return None

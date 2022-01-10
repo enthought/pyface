@@ -18,14 +18,14 @@ from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 class MainWindow(MDIApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)

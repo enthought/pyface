@@ -27,8 +27,7 @@ class UnitRenderer(DefaultRenderer):
         dc.DrawText(text, rect.x + 1, rect.y + 1)
 
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Erases whatever is already in the cell by drawing over it.
-        """
+        """Erases whatever is already in the cell by drawing over it."""
         # We have to set the clipping region on the grid's DC,
         # otherwise the text will spill over to the next cell
         dc.SetClippingRegion(rect)
@@ -69,8 +68,7 @@ class MultiUnitRenderer(DefaultRenderer):
         dc.DrawText(text, rect.x + 1, rect.y + 1)
 
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Erases whatever is already in the cell by drawing over it.
-        """
+        """Erases whatever is already in the cell by drawing over it."""
         # We have to set the clipping region on the grid's DC,
         # otherwise the text will spill over to the next cell
         dc.SetClippingRegion(rect)

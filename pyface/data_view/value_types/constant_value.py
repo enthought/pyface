@@ -16,7 +16,7 @@ from pyface.ui_traits import Image
 
 
 class ConstantValue(AbstractValueType):
-    """ A value type that does not depend on the underlying data model.
+    """A value type that does not depend on the underlying data model.
 
     This value type is not editable, but the other data channels it
     provides can be modified by changing the appropriate trait on the
@@ -42,7 +42,7 @@ class ConstantValue(AbstractValueType):
         return self.text
 
     def has_color(self, model, row, column):
-        """ Whether or not the value has color data.
+        """Whether or not the value has color data.
 
         Returns true if the supplied color is not None.
 
@@ -64,7 +64,7 @@ class ConstantValue(AbstractValueType):
         return self.color is not None
 
     def get_color(self, model, row, column):
-        """ Get data-associated colour values for the given item.
+        """Get data-associated colour values for the given item.
 
         The default implementation returns white.
 

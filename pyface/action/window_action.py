@@ -21,7 +21,7 @@ from pyface.action.listening_action import ListeningAction
 
 
 class WindowAction(ListeningAction):
-    """ Abstract base class for window actions. """
+    """Abstract base class for window actions."""
 
     # 'ListeningAction' interface --------------------------------------------
 
@@ -46,7 +46,7 @@ class WindowAction(ListeningAction):
 
 
 class CloseWindowAction(WindowAction):
-    """ Close the specified window """
+    """Close the specified window"""
 
     name = "Close"
     accelerator = "Ctrl+W"

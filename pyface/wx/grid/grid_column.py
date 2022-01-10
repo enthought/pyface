@@ -15,7 +15,7 @@ from traits.api import Bool, HasTraits, Str
 
 
 class GridColumn(HasTraits):
-    """ A description of a column in a grid. """
+    """A description of a column in a grid."""
 
     # Column header.
     label = Str()

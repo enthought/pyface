@@ -15,14 +15,14 @@ from traits.api import HasTraits
 
 
 class ViewerSorter(HasTraits):
-    """ Abstract base class for all viewer sorters. """
+    """Abstract base class for all viewer sorters."""
 
     # ------------------------------------------------------------------------
     # 'ViewerSorter' interface.
     # ------------------------------------------------------------------------
 
     def sort(self, viewer, parent, elements):
-        """ Sorts a list of elements IN PLACE.
+        """Sorts a list of elements IN PLACE.
 
         'viewer'   is the viewer that we are sorting elements for.
         'parent'   is the parent element.
@@ -35,7 +35,7 @@ class ViewerSorter(HasTraits):
         # This creates a comparison function with the names 'viewer' and
         # 'parent' bound to the corresponding arguments to this method.
         def key(element):
-            """ Key function. """
+            """Key function."""
             return self.key(viewer, parent, element)
 
         elements.sort(key=key)
@@ -43,7 +43,7 @@ class ViewerSorter(HasTraits):
         return elements
 
     def key(self, viewer, parent, element):
-        """ Returns the result of comparing two elements.
+        """Returns the result of comparing two elements.
 
         'viewer'    is the viewer that we are sorting elements for.
         'parent'    is the parent element.
@@ -63,7 +63,7 @@ class ViewerSorter(HasTraits):
         return (category, label)
 
     def category(self, viewer, parent, element):
-        """ Returns the category (an integer) for an element.
+        """Returns the category (an integer) for an element.
 
         'parent'   is the parent element.
         'elements' is the element to return the category for.
@@ -78,7 +78,7 @@ class ViewerSorter(HasTraits):
         return 0
 
     def is_sorter_trait(self, element, trait_name):
-        """ Is the sorter affected by changes to an element's trait?
+        """Is the sorter affected by changes to an element's trait?
 
         'element'    is the element.
         'trait_name' is the name of the trait.

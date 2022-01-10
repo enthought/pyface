@@ -15,7 +15,7 @@ from wx.grid import PyGridCellRenderer
 
 
 class DefaultRenderer(PyGridCellRenderer):
-    """ This renderer provides the default representation of an
+    """This renderer provides the default representation of an
     Enthought spreadsheet cell.
     """
 
@@ -31,7 +31,12 @@ class DefaultRenderer(PyGridCellRenderer):
         self.foundary = font
         self.fontsize = fontsize
         self.font = wx.Font(
-            fontsize, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, font
+            fontsize,
+            wx.FONTFAMILY_DEFAULT,
+            wx.FONTSTYLE_NORMAL,
+            wx.FONTWEIGHT_NORMAL,
+            0,
+            font,
         )
 
     def Clone(self):
@@ -43,8 +48,7 @@ class DefaultRenderer(PyGridCellRenderer):
         dc.DestroyClippingRegion()
 
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Erases whatever is already in the cell by drawing over it.
-        """
+        """Erases whatever is already in the cell by drawing over it."""
         # We have to set the clipping region on the grid's DC,
         # otherwise the text will spill over to the next cell
         dc.SetClippingRegion(rect)
@@ -64,8 +68,7 @@ class DefaultRenderer(PyGridCellRenderer):
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
 
     def DrawForeground(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Draws the cell (text) on top of the existing background color.
-        """
+        """Draws the cell (text) on top of the existing background color."""
         dc.SetBackgroundMode(wx.TRANSPARENT)
         text = grid.model.GetValue(row, col)
         dc.SetTextForeground(self.color)
@@ -75,8 +78,7 @@ class DefaultRenderer(PyGridCellRenderer):
         self.DrawEllipses(grid, attr, dc, rect, row, col, isSelected)
 
     def FormatText(self, text):
-        """ Formats numbers to 3 decimal places.
-        """
+        """Formats numbers to 3 decimal places."""
         try:
             text = "%0.3f" % atof(text)
         except:
@@ -85,8 +87,7 @@ class DefaultRenderer(PyGridCellRenderer):
         return text
 
     def DrawEllipses(self, grid, attr, dc, rect, row, col, isSelected):
-        """ Adds three dots "..." to indicate the cell is truncated.
-        """
+        """Adds three dots "..." to indicate the cell is truncated."""
         text = grid.model.GetValue(row, col)
         if not isinstance(text, str):
             msg = 'Problem appending "..." to cell: %d %d' % (row, col)
@@ -100,7 +101,7 @@ class DefaultRenderer(PyGridCellRenderer):
             dc.DrawText("...", x, rect.y + 1)
 
     def GetBestSize88(self, grid, attr, dc, row, col):
-        """ This crashes the app - hmmmm. """
+        """This crashes the app - hmmmm."""
         size = PyGridCellRenderer.GetBestSize(self, grid, attr, dc, row, col)
         print("-----------------------------", size)
         return size

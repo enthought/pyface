@@ -15,15 +15,26 @@ from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.ui_traits import PyfaceColor
 from pyface.data_view.data_models.api import (
-    AttributeDataAccessor, RowTableDataModel
+    AttributeDataAccessor,
+    RowTableDataModel,
 )
 from pyface.data_view.api import DataViewWidget, IDataViewWidget
 from pyface.data_view.value_types.api import (
-    BoolValue, EnumValue, ColorValue, IntValue, TextValue
+    BoolValue,
+    EnumValue,
+    ColorValue,
+    IntValue,
+    TextValue,
 )
 
 from example_data import (
-    any_name, family_name, favorite_color, age, street, city, country
+    any_name,
+    family_name,
+    favorite_color,
+    age,
+    street,
+    city,
+    country,
 )
 
 
@@ -38,6 +49,7 @@ flags = {
 
 
 # The data model
+
 
 class Address(HasStrictTraits):
 
@@ -99,7 +111,7 @@ column_data = [
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     #: A collection of People.
     data = List(Instance(Person))
@@ -108,14 +120,14 @@ class MainWindow(ApplicationWindow):
     data_view = Instance(IDataViewWidget)
 
     def _create_contents(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        """Creates the left hand side or top depending on the style."""
 
         self.data_view = DataViewWidget(
             parent=parent,
             data_model=RowTableDataModel(
                 data=self.data,
                 row_header_data=row_header_data,
-                column_data=column_data
+                column_data=column_data,
             ),
         )
         self.data_view._create()

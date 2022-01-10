@@ -15,7 +15,7 @@ from .column_provider import ColumnProvider
 
 
 class TableColumnProvider(ColumnProvider):
-    """ Base class for all table label providers.
+    """Base class for all table label providers.
 
     By default an item has no icon, and 'str' is used to generate its label.
 

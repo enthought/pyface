@@ -15,7 +15,7 @@ from traits.api import Bool, HasTraits, Instance, Str
 
 
 class ActionManagerItem(HasTraits):
-    """ Abstract base class for all action manager items.
+    """Abstract base class for all action manager items.
 
     An action manager item represents a contribution to a shared UI resource
     such as a menu bar, menu or tool bar.
@@ -45,7 +45,7 @@ class ActionManagerItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu.
+        """Adds the item to a menu.
 
         Parameters
         ----------
@@ -59,7 +59,7 @@ class ActionManagerItem(HasTraits):
         raise NotImplementedError()
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
-        """ Adds the item to a tool bar.
+        """Adds the item to a tool bar.
 
         Parameters
         ----------

@@ -25,7 +25,7 @@ from .window import Window
 
 @provides(ISplashScreen)
 class SplashScreen(MSplashScreen, Window):
-    """ The toolkit specific implementation of a SplashScreen.  See the
+    """The toolkit specific implementation of a SplashScreen.  See the
     ISplashScreen interface for the API documentation.
     """
 
@@ -60,13 +60,13 @@ class SplashScreen(MSplashScreen, Window):
     # ------------------------------------------------------------------------
 
     def _text_changed(self):
-        """ Called when the splash screen text has been changed. """
+        """Called when the splash screen text has been changed."""
 
         if self.control is not None:
             self._qt4_show_message(self.control)
 
     def _qt4_show_message(self, control):
-        """ Set the message text for a splash screen control. """
+        """Set the message text for a splash screen control."""
 
         if self.text_font is not None:
             control.setFont(self.text_font)

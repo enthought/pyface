@@ -50,8 +50,7 @@ image_bitmap_cache = {}
 
 
 def convert_image(value, level=3):
-    """ Converts a specified value to an ImageResource if possible.
-    """
+    """Converts a specified value to an ImageResource if possible."""
     if not isinstance(value, str):
         return value
 
@@ -83,9 +82,9 @@ def convert_image(value, level=3):
 
 
 def convert_bitmap(image):
-    """ Converts an ImageResource to a bitmap using a cache.
-    """
+    """Converts an ImageResource to a bitmap using a cache."""
     from pyface.i_image_resource import IImageResource
+
     if not isinstance(image, IImageResource):
         # don't try to cache non-ImageResource IImages as they may be
         # dynamically changing
@@ -99,8 +98,8 @@ def convert_bitmap(image):
 
 
 class Image(TraitType):
-    """ Defines a trait whose value must be a IImage or a string
-        that can be converted to an IImageResource.
+    """Defines a trait whose value must be a IImage or a string
+    that can be converted to an IImageResource.
     """
 
     #: Define the default value for the trait.
@@ -110,7 +109,7 @@ class Image(TraitType):
     info_text = "an IImage or string that can be used to define an ImageResource"  # noqa: E501
 
     def __init__(self, value=None, **metadata):
-        """ Creates an Image trait.
+        """Creates an Image trait.
 
         Parameters
         ----------
@@ -121,8 +120,7 @@ class Image(TraitType):
         super().__init__(convert_image(value), **metadata)
 
     def validate(self, object, name, value):
-        """ Validates that a specified value is valid for this trait.
-        """
+        """Validates that a specified value is valid for this trait."""
         if value is None:
             return None
 
@@ -133,8 +131,7 @@ class Image(TraitType):
         self.error(object, name, value)
 
     def create_editor(self):
-        """ Returns the default UI editor for the trait.
-        """
+        """Returns the default UI editor for the trait."""
         from traitsui.editors.api import ImageEditor
 
         return ImageEditor()
@@ -146,8 +143,7 @@ class Image(TraitType):
 
 
 class PyfaceColor(TraitType):
-    """ A Trait which casts strings and tuples to a Pyface Color value.
-    """
+    """A Trait which casts strings and tuples to a Pyface Color value."""
 
     #: The default value should be a tuple (factory, args, kwargs)
     default_value_type = DefaultValue.callable_and_args
@@ -168,10 +164,7 @@ class PyfaceColor(TraitType):
                 return Color.from_str(value)
             except ColorParseError:
                 self.error(object, name, value)
-        is_array = (
-            np is not None
-            and isinstance(value, (np.ndarray, np.void))
-        )
+        is_array = np is not None and isinstance(value, (np.ndarray, np.void))
         if is_array or isinstance(value, Sequence):
             channels = tuple(value)
             if len(channels) == 4:
@@ -194,8 +187,7 @@ class PyfaceColor(TraitType):
 
 
 class PyfaceFont(TraitType):
-    """ A Trait which casts strings to a Pyface Font value.
-    """
+    """A Trait which casts strings to a Pyface Font value."""
 
     #: The default value should be a tuple (factory, args, kwargs)
     default_value_type = DefaultValue.callable_and_args
@@ -212,8 +204,7 @@ class PyfaceFont(TraitType):
                 font = self.validate(None, None, value)
             except TraitError:
                 raise ValueError(
-                    "expected " + self.info()
-                    + f", but got {value!r}"
+                    "expected " + self.info() + f", but got {value!r}"
                 )
             default_value = (
                 Font,
@@ -236,9 +227,7 @@ class PyfaceFont(TraitType):
         self.error(object, name, value)
 
     def info(self):
-        return (
-            "a Pyface Font, or a string describing a Pyface Font"
-        )
+        return "a Pyface Font, or a string describing a Pyface Font"
 
 
 # -------------------------------------------------------------------------------
@@ -248,7 +237,7 @@ class PyfaceFont(TraitType):
 
 class BaseMB(ABCHasStrictTraits):
     def __init__(self, *args, **traits):
-        """ Map posiitonal arguments to traits.
+        """Map posiitonal arguments to traits.
 
         If one value is provided it is taken as the value for all sides.
         If two values are provided, then the first argument is used for
@@ -307,8 +296,8 @@ class Border(BaseMB):
 
 
 class HasMargin(TraitType):
-    """ Defines a trait whose value must be a Margin object or an integer or
-        tuple value that can be converted to one.
+    """Defines a trait whose value must be a Margin object or an integer or
+    tuple value that can be converted to one.
     """
 
     # The desired value class:
@@ -325,8 +314,7 @@ class HasMargin(TraitType):
     )
 
     def validate(self, object, name, value):
-        """ Validates that a specified value is valid for this trait.
-        """
+        """Validates that a specified value is valid for this trait."""
         if isinstance(value, int):
             try:
                 value = self.klass(value)
@@ -344,10 +332,10 @@ class HasMargin(TraitType):
         self.error(object, name, value)
 
     def get_default_value(self):
-        """ Returns a tuple of the form:
-                (default_value_type, default_value)
+        """Returns a tuple of the form:
+            (default_value_type, default_value)
 
-            which describes the default value for this trait.
+        which describes the default value for this trait.
         """
         dv = self.default_value
         dvt = self.default_value_type
@@ -367,8 +355,8 @@ class HasMargin(TraitType):
 
 
 class HasBorder(HasMargin):
-    """ Defines a trait whose value must be a Border object or an integer
-        or tuple value that can be converted to one.
+    """Defines a trait whose value must be a Border object or an integer
+    or tuple value that can be converted to one.
     """
 
     # The desired value class:
@@ -399,8 +387,9 @@ Orientation = Enum("vertical", "horizontal")
 #  Legacy TraitsUI Color and Font Traits
 # -------------------------------------------------------------------------------
 
+
 def TraitsUIColor(*args, **metadata):
-    """ Returns a trait whose value must be a GUI toolkit-specific color.
+    """Returns a trait whose value must be a GUI toolkit-specific color.
 
     This is copied from the deprecated trait that is in traits.api.  It adds
     a deferred dependency on TraitsUI.
@@ -417,7 +406,7 @@ TraitsUIColor = TraitFactory(TraitsUIColor)
 
 
 def TraitsUIFont(*args, **metadata):
-    """ Returns a trait whose value must be a GUI toolkit-specific font.
+    """Returns a trait whose value must be a GUI toolkit-specific font.
 
     This is copied from the deprecated trait that is in traits.api.  It adds
     a deferred dependency on TraitsUI.

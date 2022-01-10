@@ -36,7 +36,7 @@ class FeatureTool(DockWindowFeature):
     # ---------------------------------------------------------------------------
 
     def can_drop(self, object):
-        """ Returns whether a specified object can be dropped on the feature
-            image.
+        """Returns whether a specified object can be dropped on the feature
+        image.
         """
         return True

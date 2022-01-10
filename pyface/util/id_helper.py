@@ -15,13 +15,13 @@ from weakref import WeakKeyDictionary
 
 
 class _ObjectCounter(object):
-    """ Counts objects. """
+    """Counts objects."""
 
     def __init__(self):
         self._objects_registry = WeakKeyDictionary()
 
     def get_count(self, obj):
-        """ Return the number of times an object was seen.
+        """Return the number of times an object was seen.
 
         Objects must be hashable.
 
@@ -35,7 +35,7 @@ class _ObjectCounter(object):
         return count
 
     def next_count(self, obj):
-        """ Increase and return the number of times an object was seen.
+        """Increase and return the number of times an object was seen.
 
         Objects must be hashable.
 
@@ -51,7 +51,7 @@ object_counter = _ObjectCounter()
 
 
 def get_unique_id(object):
-    """ Return a unique ID of the form ClassName_X, where X is an integer.
+    """Return a unique ID of the form ClassName_X, where X is an integer.
 
     It is only guaranteed that IDs are unique to a specific Python session, not
     across sessions.

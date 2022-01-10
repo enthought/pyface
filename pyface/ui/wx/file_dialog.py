@@ -28,7 +28,7 @@ from .dialog import Dialog
 
 @provides(IFileDialog)
 class FileDialog(MFileDialog, Dialog):
-    """ The toolkit specific implementation of a FileDialog.  See the
+    """The toolkit specific implementation of a FileDialog.  See the
     IFileDialog interface for the API documentation.
     """
 
@@ -129,6 +129,6 @@ class FileDialog(MFileDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def _wildcard_default(self):
-        """ Return the default wildcard. """
+        """Return the default wildcard."""
 
         return self.WILDCARD_ALL

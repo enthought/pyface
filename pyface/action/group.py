@@ -22,7 +22,7 @@ from pyface.action.action_item import ActionItem
 
 
 class Group(HasTraits):
-    """ A group of action manager items.
+    """A group of action manager items.
 
     By default, a group declares itself as requiring a separator when it is
     visualized, but this can be changed by setting its 'separator' trait to
@@ -61,7 +61,7 @@ class Group(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, *items, **traits):
-        """ Creates a new menu manager.
+        """Creates a new menu manager.
 
         Parameters
         ----------
@@ -94,7 +94,7 @@ class Group(HasTraits):
     # Methods -------------------------------------------------------------#
 
     def append(self, item):
-        """ Appends an item to the group.
+        """Appends an item to the group.
 
         Parameters
         ----------
@@ -116,11 +116,11 @@ class Group(HasTraits):
         return self.insert(len(self._items), item)
 
     def clear(self):
-        """ Remove all items from the group. """
+        """Remove all items from the group."""
         self._items = []
 
     def destroy(self):
-        """ Called when the manager is no longer required.
+        """Called when the manager is no longer required.
 
         By default this method simply calls 'destroy' on all items in the
         group.
@@ -129,7 +129,7 @@ class Group(HasTraits):
             item.destroy()
 
     def insert(self, index, item):
-        """ Inserts an item into the group at the specified index.
+        """Inserts an item into the group at the specified index.
 
         Parameters
         ----------
@@ -163,7 +163,7 @@ class Group(HasTraits):
         return item
 
     def remove(self, item):
-        """ Removes an item from the group.
+        """Removes an item from the group.
 
         Parameters
         ----------
@@ -174,7 +174,7 @@ class Group(HasTraits):
         item.parent = None
 
     def insert_before(self, before, item):
-        """ Inserts an item into the group before the specified item.
+        """Inserts an item into the group before the specified item.
 
         Parameters
         ----------
@@ -201,7 +201,7 @@ class Group(HasTraits):
         return (index, item)
 
     def insert_after(self, after, item):
-        """ Inserts an item into the group after the specified item.
+        """Inserts an item into the group after the specified item.
 
         Parameters
         ----------
@@ -228,7 +228,7 @@ class Group(HasTraits):
         return (index, item)
 
     def find(self, id):
-        """ Find the item with the specified id.
+        """Find the item with the specified id.
 
         Parameters
         ----------
@@ -248,7 +248,7 @@ class Group(HasTraits):
 
     @classmethod
     def factory(cls, *args, **kwargs):
-        """ Create a factory for a group with the given arguments.
+        """Create a factory for a group with the given arguments.
 
         This is particularly useful for passing context to Tasks schema
         additions.
@@ -257,7 +257,7 @@ class Group(HasTraits):
 
 
 class Separator(Group):
-    """ A convenience class.
+    """A convenience class.
 
     This is only used in 'cheap and cheerful' applications that create menus
     like::

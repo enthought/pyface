@@ -26,7 +26,6 @@ class ValueType(AbstractValueType):
 
 
 class TestAbstractValueType(UnittestTools, TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1.0)
@@ -109,7 +108,9 @@ class TestAbstractValueType(UnittestTools, TestCase):
     def test_set_check_state(self):
         value_type = ValueType()
         with self.assertRaises(DataViewSetError):
-            value_type.set_check_state(self.model, [0], [0], CheckState.CHECKED)
+            value_type.set_check_state(
+                self.model, [0], [0], CheckState.CHECKED
+            )
 
     def test_parameter_update(self):
         value_type = ValueType()

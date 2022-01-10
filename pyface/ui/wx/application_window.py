@@ -19,7 +19,8 @@ from traits.api import Instance, List, Str, observe, provides
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
 from pyface.i_application_window import (
-    IApplicationWindow, MApplicationWindow,
+    IApplicationWindow,
+    MApplicationWindow,
 )
 from pyface.ui_traits import Image
 from pyface.wx.aui import aui, PyfaceAuiManager
@@ -29,7 +30,7 @@ from .window import Window
 
 @provides(IApplicationWindow)
 class ApplicationWindow(MApplicationWindow, Window):
-    """ The toolkit specific implementation of an ApplicationWindow.  See the
+    """The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
 
@@ -100,7 +101,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _size_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
         return (800, 600)
 
     # ------------------------------------------------------------------------
@@ -158,7 +159,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # ------------------------------------------------------------------------
 
     def _add_toolbar_to_aui_manager(self, tool_bar):
-        """ Add a toolbar to the AUI manager. """
+        """Add a toolbar to the AUI manager."""
 
         info = self._get_tool_bar_pane_info(tool_bar)
         self._aui_manager.AddPane(tool_bar, info)
@@ -175,7 +176,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         return info
 
     def _get_tool_bar_managers(self):
-        """ Return all tool bar managers specified for the window. """
+        """Return all tool bar managers specified for the window."""
 
         # fixme: V3 remove the old-style single toolbar option!
         if self.tool_bar_manager is not None:
@@ -187,12 +188,12 @@ class ApplicationWindow(MApplicationWindow, Window):
         return tool_bar_managers
 
     def _wx_enable_tool_bar(self, tool_bar, enabled):
-        """ Enable/Disablea tool bar. """
+        """Enable/Disablea tool bar."""
 
         # AUI toolbars cannot be enabled/disabled.
 
     def _wx_show_tool_bar(self, tool_bar, visible):
-        """ Hide/Show a tool bar. """
+        """Hide/Show a tool bar."""
 
         pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.id)
 

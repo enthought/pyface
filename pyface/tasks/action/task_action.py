@@ -17,7 +17,7 @@ from pyface.action.listening_action import ListeningAction
 
 
 class TaskAction(ListeningAction):
-    """ An Action that makes a callback to a Task.
+    """An Action that makes a callback to a Task.
 
     Note that this is a convenience class. Actions associated with a Task need
     not inherit TaskAction, although they must, of course, inherit Action.
@@ -46,8 +46,7 @@ class TaskAction(ListeningAction):
 
 
 class TaskWindowAction(TaskAction):
-    """ An Action that makes a callback to a Task's window.
-    """
+    """An Action that makes a callback to a Task's window."""
 
     # ListeningAction interface --------------------------------------------
 
@@ -64,8 +63,7 @@ class TaskWindowAction(TaskAction):
 
 
 class CentralPaneAction(TaskAction):
-    """ An Action that makes a callback to a Task's central pane.
-    """
+    """An Action that makes a callback to a Task's central pane."""
 
     # ListeningAction interface --------------------------------------------
 
@@ -91,8 +89,7 @@ class CentralPaneAction(TaskAction):
 
 
 class DockPaneAction(TaskAction):
-    """ An Action the makes a callback to one of a Task's dock panes.
-    """
+    """An Action the makes a callback to one of a Task's dock panes."""
 
     # ListeningAction interface --------------------------------------------
 
@@ -121,8 +118,7 @@ class DockPaneAction(TaskAction):
 
 
 class EditorAction(CentralPaneAction):
-    """ An action that makes a callback to the active editor in an editor pane.
-    """
+    """An action that makes a callback to the active editor in an editor pane."""
 
     # ListeningAction interface --------------------------------------------
 

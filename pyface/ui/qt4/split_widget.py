@@ -22,7 +22,7 @@ from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 @provides(ISplitWidget)
 class SplitWidget(MSplitWidget):
-    """ The toolkit specific implementation of a SplitWidget.  See the
+    """The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
 
@@ -31,7 +31,7 @@ class SplitWidget(MSplitWidget):
     # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         splitter = QtGui.QSplitter(parent)
 
@@ -61,7 +61,7 @@ class SplitWidget(MSplitWidget):
         return splitter
 
     def _create_lhs(self, parent):
-        """ Creates the left hand/top panel depending on the direction. """
+        """Creates the left hand/top panel depending on the direction."""
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
@@ -75,7 +75,7 @@ class SplitWidget(MSplitWidget):
         return lhs
 
     def _create_rhs(self, parent):
-        """ Creates the right hand/bottom panel depending on the direction. """
+        """Creates the right hand/bottom panel depending on the direction."""
 
         if self.rhs is not None:
             rhs = self.rhs(parent)

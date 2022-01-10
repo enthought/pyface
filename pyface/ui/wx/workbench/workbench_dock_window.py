@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkbenchDockWindow(DockWindow):
-    """ Base class for workbench dock windows.
+    """Base class for workbench dock windows.
 
     This class just adds a few useful methods to the standard 'DockWindow'
     interface. Hopefully at some stage these can be part of that API too!
@@ -35,7 +35,7 @@ class WorkbenchDockWindow(DockWindow):
     # ------------------------------------------------------------------------
 
     def _right_up(self, event):
-        """ Handles the right mouse button being released.
+        """Handles the right mouse button being released.
 
         We override this to stop the default dock window context menus from
         appearing.
@@ -49,7 +49,7 @@ class WorkbenchDockWindow(DockWindow):
     # ------------------------------------------------------------------------
 
     def activate_control(self, id):
-        """ Activates the dock control with the specified Id.
+        """Activates the dock control with the specified Id.
 
         Does nothing if no such dock control exists (well, it *does* write
         a debug message to the logger).
@@ -65,7 +65,7 @@ class WorkbenchDockWindow(DockWindow):
             logger.debug("no control <%s> to activate", id)
 
     def close_control(self, id):
-        """ Closes the dock control with the specified Id.
+        """Closes the dock control with the specified Id.
 
         Does nothing if no such dock control exists (well, it *does* write
         a debug message to the logger).
@@ -81,7 +81,7 @@ class WorkbenchDockWindow(DockWindow):
             logger.debug("no control <%s> to close", id)
 
     def get_control(self, id, visible_only=True):
-        """ Returns the dock control with the specified Id.
+        """Returns the dock control with the specified Id.
 
         Returns None if no such dock control exists.
 
@@ -97,7 +97,7 @@ class WorkbenchDockWindow(DockWindow):
         return control
 
     def get_controls(self, visible_only=True):
-        """ Returns all of the dock controls in the window. """
+        """Returns all of the dock controls in the window."""
 
         sizer = self.control.GetSizer()
         section = sizer.GetContents()
@@ -105,7 +105,7 @@ class WorkbenchDockWindow(DockWindow):
         return section.get_controls(visible_only=visible_only)
 
     def get_regions(self, group):
-        """ Returns all dock regions in a dock group (recursively). """
+        """Returns all dock regions in a dock group (recursively)."""
 
         regions = []
         for item in group.contents:
@@ -118,14 +118,14 @@ class WorkbenchDockWindow(DockWindow):
         return regions
 
     def get_structure(self):
-        """ Returns the window structure (minus the content). """
+        """Returns the window structure (minus the content)."""
 
         sizer = self.control.GetSizer()
 
         return sizer.GetStructure()
 
     def reset_regions(self):
-        """ Activates the first dock control in every region. """
+        """Activates the first dock control in every region."""
 
         sizer = self.control.GetSizer()
         section = sizer.GetContents()
@@ -135,7 +135,7 @@ class WorkbenchDockWindow(DockWindow):
                 region.contents[0].activate(layout=False)
 
     def set_structure(self, structure, handler=None):
-        """ Sets the window structure. """
+        """Sets the window structure."""
 
         sizer = self.control.GetSizer()
         sizer.SetStructure(self.control.GetParent(), structure, handler)

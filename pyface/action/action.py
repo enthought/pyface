@@ -19,7 +19,7 @@ from pyface.ui_traits import Image
 
 
 class Action(HasTraits):
-    """ The base class for all actions.
+    """The base class for all actions.
 
     An action is the non-UI side of a command which can be triggered by the end
     user.  Actions are typically associated with buttons, menu items and tool
@@ -78,7 +78,7 @@ class Action(HasTraits):
     # Initializers ---------------------------------------------------------
 
     def _id_default(self):
-        """ Initializes the 'id' trait.
+        """Initializes the 'id' trait.
 
         The default is the ``name`` trait.
         """
@@ -87,7 +87,7 @@ class Action(HasTraits):
     # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
-        """ Called when creating a "widget" style action.
+        """Called when creating a "widget" style action.
 
         By default this will call whatever callable is supplied via the
         'control_factory' trait which is a callable that should take the parent
@@ -113,14 +113,14 @@ class Action(HasTraits):
         return None
 
     def destroy(self):
-        """ Called when the action is no longer required.
+        """Called when the action is no longer required.
 
         By default this method does nothing, but this would be a great place to
         unhook trait listeners etc.
         """
 
     def perform(self, event):
-        """ Performs the action.
+        """Performs the action.
 
         Parameters
         ----------
@@ -132,7 +132,7 @@ class Action(HasTraits):
 
     @classmethod
     def factory(cls, *args, **kwargs):
-        """ Create a factory for an action with the given arguments.
+        """Create a factory for an action with the given arguments.
 
         This is particularly useful for passing context to Tasks schema
         additions.

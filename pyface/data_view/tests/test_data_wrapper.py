@@ -15,7 +15,6 @@ from pyface.data_view.data_wrapper import DataWrapper
 
 
 class TestDataWrapper(TestCase):
-
     def test_instantiate(self):
         data_wrapper = DataWrapper()
         self.assertEqual(data_wrapper.mimetypes(), set())

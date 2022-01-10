@@ -15,14 +15,14 @@ from traits.api import HasTraits
 
 
 class ContentProvider(HasTraits):
-    """ Abstract base class for content providers. """
+    """Abstract base class for content providers."""
 
     # ------------------------------------------------------------------------
     # 'ContentProvider' interface.
     # ------------------------------------------------------------------------
 
     def get_elements(self, element):
-        """ Returns a list of the elements to display in a viewer.
+        """Returns a list of the elements to display in a viewer.
 
         Returns a list of elements to display in a viewer when its (ie. the
         viewer's) input is set to the given element.

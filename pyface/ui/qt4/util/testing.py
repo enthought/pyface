@@ -21,7 +21,7 @@ from pyface.util.guisupport import get_app_qt4
 
 @contextmanager
 def event_loop():
-    """ Post and process the Qt events at the exit of the code block. """
+    """Post and process the Qt events at the exit of the code block."""
 
     app = get_app_qt4()
 
@@ -33,7 +33,7 @@ def event_loop():
 
 @contextmanager
 def delete_widget(widget, timeout=1.0):
-    """ Context manager that executes the event loop so that we can safely
+    """Context manager that executes the event loop so that we can safely
     delete a Qt widget.
     """
 
@@ -58,7 +58,7 @@ def delete_widget(widget, timeout=1.0):
 
 @contextmanager
 def _convert_none_to_null_handle(stream):
-    """ If 'stream' is None, provide a temporary handle to /dev/null. """
+    """If 'stream' is None, provide a temporary handle to /dev/null."""
 
     if stream is None:
         out = open(os.devnull, "w")
@@ -72,7 +72,7 @@ def _convert_none_to_null_handle(stream):
 
 @contextmanager
 def silence_output(out=None, err=None):
-    """ Re-direct the stderr and stdout streams while in the block. """
+    """Re-direct the stderr and stdout streams while in the block."""
 
     with _convert_none_to_null_handle(out) as out:
         with _convert_none_to_null_handle(err) as err:
@@ -92,7 +92,7 @@ def silence_output(out=None, err=None):
 
 
 def print_qt_widget_tree(widget, level=0):
-    """ Debugging helper to print out the Qt widget tree starting at a
+    """Debugging helper to print out the Qt widget tree starting at a
     particular `widget`.
 
     Parameters

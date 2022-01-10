@@ -19,7 +19,7 @@ from pyface.ui_traits import Image
 
 
 class IAboutDialog(IDialog):
-    """ The interface for a simple 'About' dialog. """
+    """The interface for a simple 'About' dialog."""
 
     # 'IAboutDialog' interface ---------------------------------------------
 
@@ -34,6 +34,6 @@ class IAboutDialog(IDialog):
 
 
 class MAboutDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IAboutDialog interface.
     """

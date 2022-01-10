@@ -20,7 +20,6 @@ class DummyGUI(HasTraits):
 
 
 class TestEventLoopHelper(unittest.TestCase):
-
     def test_gui_trait_expects_IGUI_interface(self):
         # Trivial test where we simply set the trait
         # and the test passes because no errors are raised.

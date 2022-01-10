@@ -18,7 +18,7 @@ from pyface.i_dialog import IDialog
 
 
 class ISingleChoiceDialog(IDialog):
-    """ The interface for a dialog that prompts for a choice from a list. """
+    """The interface for a dialog that prompts for a choice from a list."""
 
     # 'ISingleChoiceDialog' interface -------------------------------------#
 
@@ -36,12 +36,12 @@ class ISingleChoiceDialog(IDialog):
 
 
 class MSingleChoiceDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """
 
     def _choice_strings(self):
-        """ Returns the list of strings to display in the dialog. """
+        """Returns the list of strings to display in the dialog."""
         choices = self.choices
         if self.name_attribute != "":
             # choices is a list of objects with this attribute

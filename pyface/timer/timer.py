@@ -31,10 +31,10 @@ class CallbackTimer(MCallbackTimer, PyfaceTimer):
 
 
 class Timer(CallbackTimer):
-    """ Subclass of CallbackTimer that matches the old API """
+    """Subclass of CallbackTimer that matches the old API"""
 
     def __init__(self, millisecs, callable, *args, **kwargs):
-        """ Initialize and start the timer.
+        """Initialize and start the timer.
 
         Initialize instance to invoke the given `callable` with given
         arguments and keyword args after every `millisecs` (milliseconds).
@@ -46,24 +46,20 @@ class Timer(CallbackTimer):
         self.start()
 
     def Notify(self):
-        """ Alias for `perform` to match old API.
-        """
+        """Alias for `perform` to match old API."""
         self.perform()
 
     def Start(self, millisecs=None):
-        """ Alias for `start` to match old API.
-        """
+        """Alias for `start` to match old API."""
         if millisecs is not None:
             self.interval = millisecs / 1000.0
 
         self.start()
 
     def Stop(self):
-        """ Alias for `stop` to match old API.
-        """
+        """Alias for `stop` to match old API."""
         self.stop()
 
     def IsRunning(self):
-        """ Alias for is_running property to match old API.
-        """
+        """Alias for is_running property to match old API."""
         return self._active

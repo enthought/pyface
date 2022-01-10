@@ -23,14 +23,14 @@ from .field import Field
 
 @provides(ISpinField)
 class SpinField(MSpinField, Field):
-    """ The Qt-specific implementation of the spin field class """
+    """The Qt-specific implementation of the spin field class"""
 
     # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         control = QSpinBox(parent)
         return control
@@ -40,24 +40,24 @@ class SpinField(MSpinField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return self.control.value()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         self.control.setValue(value)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.valueChanged[int].disconnect(self._update_value)
         else:
             self.control.valueChanged[int].connect(self._update_value)
 
     def _get_control_bounds(self):
-        """ Toolkit specific method to get the control's bounds. """
+        """Toolkit specific method to get the control's bounds."""
         return (self.control.minimum(), self.control.maximum())
 
     def _set_control_bounds(self, bounds):
-        """ Toolkit specific method to set the control's bounds. """
+        """Toolkit specific method to set the control's bounds."""
         self.control.setRange(*bounds)

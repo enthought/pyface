@@ -13,4 +13,4 @@ from pyface.tasks.enaml_pane import EnamlPane
 
 
 class EnamlTaskPane(EnamlPane, TaskPane):
-    """ Create a Task pane for Enaml Components. """
+    """Create a Task pane for Enaml Components."""

@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ViewMenuManager(MenuManager):
-    """ The 'View' menu.
+    """The 'View' menu.
 
     By default, this menu is displayed on the main menu bar.
 
@@ -66,7 +66,7 @@ class ViewMenuManager(MenuManager):
     # ------------------------------------------------------------------------
 
     def _groups_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         groups = []
 
@@ -90,7 +90,7 @@ class ViewMenuManager(MenuManager):
 
     @observe("window.active_perspective,window.active_part,window.views.items")
     def refresh(self, event):
-        """ Refreshes the checked state of the actions in the menu. """
+        """Refreshes the checked state of the actions in the menu."""
 
         logger.debug("refreshing view menu")
 
@@ -106,14 +106,14 @@ class ViewMenuManager(MenuManager):
     # ------------------------------------------------------------------------
 
     def _clear_group(self, group):
-        """ Remove all items in a group. """
+        """Remove all items in a group."""
 
         # fixme: Fix this API in Pyface so there is only one call!
         group.destroy()
         group.clear()
 
     def _create_other_group(self, window):
-        """ Creates a group containing the 'Other...' action. """
+        """Creates a group containing the 'Other...' action."""
 
         group = Group()
         group.append(ShowViewAction(name="Other...", window=window))
@@ -121,7 +121,7 @@ class ViewMenuManager(MenuManager):
         return group
 
     def _create_view_group(self, window):
-        """ Creates a group containing the view 'togglers'. """
+        """Creates a group containing the view 'togglers'."""
 
         group = Group()
         self._initialize_view_group(window, group)
@@ -129,7 +129,7 @@ class ViewMenuManager(MenuManager):
         return group
 
     def _initialize_view_group(self, window, group):
-        """ Initializes a group containing the view 'togglers'. """
+        """Initializes a group containing the view 'togglers'."""
 
         views = window.views[:]
         views.sort(key=lambda view: view.name)

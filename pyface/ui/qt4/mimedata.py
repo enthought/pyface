@@ -18,21 +18,20 @@ from pyface.qt import QtCore
 #  'PyMimeData' class:
 # -------------------------------------------------------------------------------
 
+
 def str2bytes(s):
     return bytes(s, "ascii")
 
 
 class PyMimeData(QtCore.QMimeData):
-    """ The PyMimeData wraps a Python instance as MIME data.
-    """
+    """The PyMimeData wraps a Python instance as MIME data."""
 
     # The MIME type for instances.
     MIME_TYPE = "application/x-ets-qt4-instance"
     NOPICKLE_MIME_TYPE = "application/x-ets-qt4-instance-no-pickle"
 
     def __init__(self, data=None, pickle=True):
-        """ Initialise the instance.
-        """
+        """Initialise the instance."""
         QtCore.QMimeData.__init__(self)
 
         # Keep a local reference to be returned if possible.
@@ -65,8 +64,7 @@ class PyMimeData(QtCore.QMimeData):
 
     @classmethod
     def coerce(cls, md):
-        """ Wrap a QMimeData or a python object to a PyMimeData.
-        """
+        """Wrap a QMimeData or a python object to a PyMimeData."""
         # See if the data is already of the right type.  If it is then we know
         # we are in the same process.
         if isinstance(md, cls):
@@ -110,8 +108,7 @@ class PyMimeData(QtCore.QMimeData):
         return nmd
 
     def instance(self):
-        """ Return the instance.
-        """
+        """Return the instance."""
         if self._local_instance is not None:
             return self._local_instance
 
@@ -133,8 +130,7 @@ class PyMimeData(QtCore.QMimeData):
         return None
 
     def instanceType(self):
-        """ Return the type of the instance.
-        """
+        """Return the type of the instance."""
         if self._local_instance is not None:
             return self._local_instance.__class__
 
@@ -147,8 +143,7 @@ class PyMimeData(QtCore.QMimeData):
         return None
 
     def localPaths(self):
-        """ The list of local paths from url list, if any.
-        """
+        """The list of local paths from url list, if any."""
         ret = []
         for url in self.urls():
             if url.scheme() == "file":

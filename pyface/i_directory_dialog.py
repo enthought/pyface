@@ -19,7 +19,7 @@ from pyface.i_dialog import IDialog
 
 
 class IDirectoryDialog(IDialog):
-    """ The interface for a dialog that allows the user to browse for a
+    """The interface for a dialog that allows the user to browse for a
     directory.
     """
 
@@ -43,6 +43,6 @@ class IDirectoryDialog(IDialog):
 
 
 class MDirectoryDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IDirectoryDialog interface.
     """

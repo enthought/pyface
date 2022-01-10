@@ -19,7 +19,6 @@ from ..datetime import pytime_to_qtime, qtime_to_pytime
 
 
 class TestTimeConversion(unittest.TestCase):
-
     def test_pytime_to_qtime(self):
         pytime = datetime.time(9, 8, 7, 123456)
 

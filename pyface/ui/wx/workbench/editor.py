@@ -17,7 +17,7 @@ from pyface.workbench.i_editor import MEditor
 
 
 class Editor(MEditor):
-    """ The toolkit specific implementation of an Editor.
+    """The toolkit specific implementation of an Editor.
 
     See the IEditor interface for the API documentation.
 
@@ -28,7 +28,7 @@ class Editor(MEditor):
     # ------------------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the part. """
+        """Create the toolkit-specific control that represents the part."""
 
         import wx
 
@@ -40,14 +40,14 @@ class Editor(MEditor):
         return control
 
     def destroy_control(self):
-        """ Destroy the toolkit-specific control that represents the part. """
+        """Destroy the toolkit-specific control that represents the part."""
 
         if self.control is not None:
             self.control.Destroy()
             self.control = None
 
     def set_focus(self):
-        """ Set the focus to the appropriate control in the part. """
+        """Set the focus to the appropriate control in the part."""
 
         if self.control is not None:
             self.control.SetFocus()

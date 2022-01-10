@@ -17,7 +17,7 @@ from pyface.fields.i_field import IField
 
 
 class ISpinField(IField):
-    """ The spin field interface.
+    """The spin field interface.
 
     This is for spinners holding integer values.
     """
@@ -71,14 +71,14 @@ class MSpinField(HasTraits):
         self._set_control_value(self.value)
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
+        """Set up toolkit-specific bindings for events"""
         super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
         if self.control is not None:
             self._observe_control_value()
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
+        """Remove toolkit-specific bindings for events"""
         if self.control is not None:
             self._observe_control_value(remove=True)
         self.observe(
@@ -89,11 +89,11 @@ class MSpinField(HasTraits):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_bounds(self):
-        """ Toolkit specific method to get the control's bounds. """
+        """Toolkit specific method to get the control's bounds."""
         raise NotImplementedError()
 
     def _set_control_bounds(self, bounds):
-        """ Toolkit specific method to set the control's bounds. """
+        """Toolkit specific method to set the control's bounds."""
         raise NotImplementedError()
 
     # Trait property handlers -----------------------------------------------

@@ -114,8 +114,8 @@ class DockWindowHandler(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def can_drop(self, object):
-        """ Returns whether or not a specified object can be inserted into the
-            view.
+        """Returns whether or not a specified object can be inserted into the
+        view.
         """
         return True
 
@@ -124,8 +124,7 @@ class DockWindowHandler(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def dock_control_for(self, parent, object):
-        """ Returns the DockControl object for a specified object.
-        """
+        """Returns the DockControl object for a specified object."""
         try:
             name = object.name
         except:
@@ -185,8 +184,7 @@ class DockWindowHandler(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def open_view_for(self, control, use_mouse=True):
-        """ Creates a new view of a specified control.
-        """
+        """Creates a new view of a specified control."""
         from .dock_window_shell import DockWindowShell
 
         DockWindowShell(control, use_mouse=use_mouse)
@@ -196,8 +194,7 @@ class DockWindowHandler(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def dock_window_empty(self, dock_window):
-        """ Handles the DockWindow becoming empty.
-        """
+        """Handles the DockWindow becoming empty."""
         if dock_window.auto_close:
             dock_window.control.GetParent().Destroy()
 
@@ -303,7 +300,7 @@ class DockWindow(HasPrivateTraits):
         pos=wx.DefaultPosition,
         size=wx.DefaultSize,
         style=wx.FULL_REPAINT_ON_RESIZE,
-        **traits
+        **traits,
     ):
         super().__init__(**traits)
 
@@ -361,8 +358,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def dock_window_empty(self):
-        """ Notifies the DockWindow that its contents are empty.
-        """
+        """Notifies the DockWindow that its contents are empty."""
         self.handler.dock_window_empty(self)
 
     # ---------------------------------------------------------------------------
@@ -370,8 +366,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def set_cursor(self, cursor=None):
-        """ Sets the cursor to a specified cursor shape.
-        """
+        """Sets the cursor to a specified cursor shape."""
         if cursor is None:
             self.control.SetCursor(wx.NullCursor)
             return
@@ -388,8 +383,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def release_mouse(self):
-        """ Releases ownership of the mouse capture.
-        """
+        """Releases ownership of the mouse capture."""
         if self._owner is not None:
             self._owner = None
             self.control.ReleaseMouse()
@@ -399,8 +393,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def update_layout(self):
-        """ Updates the layout of the window.
-        """
+        """Updates the layout of the window."""
         if self.control:
             self.control.Layout()
             self.control.Refresh()
@@ -410,8 +403,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def min_max(self, dock_control):
-        """ Minimizes/maximizes a specified DockControl.
-        """
+        """Minimizes/maximizes a specified DockControl."""
         sizer = self.sizer
         if sizer is not None:
             sizer.MinMax(self.control, dock_control)
@@ -422,8 +414,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def feature_bar_popup(self, dock_control):
-        """ Pops up the feature bar for a specified DockControl.
-        """
+        """Pops up the feature bar for a specified DockControl."""
         fb = self._feature_bar
         if fb is None:
             from .feature_bar import FeatureBar
@@ -448,7 +439,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def close(self):
-        """ Closes the dock window.  In this case, all event handlers are
+        """Closes the dock window.  In this case, all event handlers are
         unregistered.  Other cleanup operations go here, but at the moment Linux
         (and other non-Windows platforms?) are less forgiving when things like
         event handlers arent unregistered.
@@ -460,7 +451,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _unregister_event_handlers(self):
-        """ Unregister all event handlers setup in the constructor.  This is
+        """Unregister all event handlers setup in the constructor.  This is
         typically done prior to an app shutting down and is needed since Linux
         (and other non-Windows platforms?) trigger mouse, repaint, etc. events
         for controls which have already been deleted.
@@ -482,8 +473,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _paint(self, event):
-        """ Handles repainting the window.
-        """
+        """Handles repainting the window."""
         # There is a problem on macs where we get paints when the update
         # is entirely within children.
         if is_mac and self._is_child_paint():
@@ -501,13 +491,13 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _is_child_paint(self):
-        """ Returns whether or not the current update region is entirely within a child.
-        """
+        """Returns whether or not the current update region is entirely within a child."""
         if self.control.Children:
             update_rect = self.control.UpdateRegion.Box
             for child in self.control.Children:
-                if not child.HasTransparentBackground() and child.Rect.Contains(
-                    update_rect
+                if (
+                    not child.HasTransparentBackground()
+                    and child.Rect.Contains(update_rect)
                 ):
                     return True
         return False
@@ -517,8 +507,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _size(self, event):
-        """ Handles the window being resized.
-        """
+        """Handles the window being resized."""
         sizer = self.sizer
         if sizer is not None:
             try:
@@ -536,8 +525,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _left_down(self, event):
-        """ Handles the left mouse button being pressed.
-        """
+        """Handles the left mouse button being pressed."""
         sizer = self.sizer
         if sizer is not None:
             object = sizer.ObjectAt(event.GetX(), event.GetY())
@@ -551,8 +539,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _left_up(self, event):
-        """ Handles the left mouse button being released.
-        """
+        """Handles the left mouse button being released."""
         window = self.control
         if self._owner is not None:
             window.ReleaseMouse()
@@ -580,8 +567,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _left_dclick(self, event):
-        """ Handles the left mouse button being double clicked.
-        """
+        """Handles the left mouse button being double clicked."""
         sizer = self.sizer
         if sizer is not None:
             object = sizer.ObjectAt(event.GetX(), event.GetY(), True)
@@ -602,8 +588,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _right_down(self, event):
-        """ Handles the right mouse button being pressed.
-        """
+        """Handles the right mouse button being pressed."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -611,8 +596,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def right_up(self, event):
-        """ Handles the right mouse button being released.
-        """
+        """Handles the right mouse button being released."""
         sizer = self.sizer
         if sizer is not None:
             object = sizer.ObjectAt(event.GetX(), event.GetY(), True)
@@ -690,8 +674,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _mouse_move(self, event):
-        """ Handles the mouse moving over the window.
-        """
+        """Handles the mouse moving over the window."""
         if self._last_dock_control is not None:
             self._last_dock_control.reset_feature_popup()
             self._last_dock_control = None
@@ -726,8 +709,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _mouse_leave(self, event):
-        """ Handles the mouse leaving the window.
-        """
+        """Handles the mouse leaving the window."""
         if self._hover is not None:
             self._hover.hover_exit(event)
             self._hover = None
@@ -738,8 +720,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _set_cursor(self, event, object=None):
-        """ Sets the cursor for a specified object.
-        """
+        """Sets the cursor for a specified object."""
         if object is None:
             self.set_cursor()
         else:
@@ -752,8 +733,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_min_max(self):
-        """ Handles the user asking for a DockControl to be maximized/restored.
-        """
+        """Handles the user asking for a DockControl to be maximized/restored."""
         self.min_max(self._object)
 
     # ---------------------------------------------------------------------------
@@ -761,8 +741,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_undock(self):
-        """ Handles the user requesting an element to be undocked.
-        """
+        """Handles the user requesting an element to be undocked."""
         self.handler.open_view_for(self._object, use_mouse=False)
 
     # ---------------------------------------------------------------------------
@@ -770,8 +749,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_hide(self):
-        """ Handles the user requesting an element to be hidden.
-        """
+        """Handles the user requesting an element to be hidden."""
         self._object.show(False)
 
     # ---------------------------------------------------------------------------
@@ -779,8 +757,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_show(self):
-        """ Handles the user requesting an element to be shown.
-        """
+        """Handles the user requesting an element to be shown."""
         object = self._object
         if isinstance(object, DockControl):
             object = object.parent
@@ -791,8 +768,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_switch_layout(self):
-        """ Handles the user requesting that the current layout be switched.
-        """
+        """Handles the user requesting that the current layout be switched."""
         self.sizer.ResetStructure(self.control)
         self.update_layout()
 
@@ -801,8 +777,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_lock_layout(self):
-        """ Handles the user requesting that the layout be locked/unlocked.
-        """
+        """Handles the user requesting that the layout be locked/unlocked."""
         self.sizer.ToggleLock()
         self.update_layout()
 
@@ -811,8 +786,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_save_layout(self):
-        """ Handles the user requesting that the layout be saved.
-        """
+        """Handles the user requesting that the layout be saved."""
         layout_name = LayoutName(names=self._get_layout_names())
         if layout_name.edit_traits(parent=self.control).result:
             self._set_layout(layout_name.name, self.sizer.GetStructure())
@@ -822,8 +796,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_restore_layout(self, name):
-        """ Handles the user requesting a specified layout to be restored.
-        """
+        """Handles the user requesting a specified layout to be restored."""
         self.sizer.SetStructure(self.control, self._get_layout(name))
         self.update_layout()
 
@@ -832,8 +805,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_delete_layout(self, name):
-        """ Handles the user reqesting a specified layout to be deleted.
-        """
+        """Handles the user reqesting a specified layout to be deleted."""
         if error(
             message="Delete the '%s' layout?" % name,
             title="Delete Layout Warning",
@@ -846,8 +818,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_edit(self, object=None):
-        """ Handles the user requesting to edit an item.
-        """
+        """Handles the user requesting to edit an item."""
         if object is None:
             object = self._object
         control_info = ControlInfo(
@@ -867,8 +838,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_enable_all_features(self, action):
-        """ Enables all features.
-        """
+        """Enables all features."""
         for feature in features:
             if (feature.feature_name != "") and (feature.state != 1):
                 feature.toggle_feature(action)
@@ -878,8 +848,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_disable_all_features(self, action):
-        """ Disables all features.
-        """
+        """Disables all features."""
         for feature in features:
             if (feature.feature_name != "") and (feature.state == 1):
                 feature.toggle_feature(action)
@@ -889,8 +858,8 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def on_toggle_feature(self, action):
-        """ Toggles the enabled/disabled state of the action's associated
-            feature.
+        """Toggles the enabled/disabled state of the action's associated
+        feature.
         """
         action._feature.toggle_feature(action)
 
@@ -901,8 +870,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _get_layouts(self):
-        """ Gets the layout dictionary for the DockWindow.
-        """
+        """Gets the layout dictionary for the DockWindow."""
         id = self.id
         if id != "":
             db = self._get_dw_db()
@@ -918,8 +886,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _get_layout_names(self):
-        """ Gets the names of all current layouts defined for the DockWindow.
-        """
+        """Gets the names of all current layouts defined for the DockWindow."""
         layouts = self._get_layouts()
         if layouts is not None:
             return list(layouts.keys())
@@ -931,8 +898,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _get_layout(self, name):
-        """ Gets the layout data for a specified layout name.
-        """
+        """Gets the layout data for a specified layout name."""
         layouts = self._get_layouts()
         if layouts is not None:
             return layouts.get(name)
@@ -944,8 +910,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _delete_layout(self, name):
-        """ Deletes the layout data for a specified layout name.
-        """
+        """Deletes the layout data for a specified layout name."""
         id = self.id
         if id != "":
             db = self._get_dw_db(mode="c")
@@ -961,8 +926,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _set_layout(self, name, layout):
-        """ Sets the layout data for a specified layout name.
-        """
+        """Sets the layout data for a specified layout name."""
         id = self.id
         if id != "":
             db = self._get_dw_db(mode="c")
@@ -993,8 +957,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _get_feature_menu(self):
-        """ Returns the 'Features' sub_menu.
-        """
+        """Returns the 'Features' sub_menu."""
         enable_features_action.enabled = (
             disable_features_action.enabled
         ) = False
@@ -1028,7 +991,7 @@ class DockWindow(HasPrivateTraits):
 
         return Menu(
             name="Features",
-            *([enable_features_action, disable_features_action] + actions)
+            *([enable_features_action, disable_features_action] + actions),
         )
 
     # ---------------------------------------------------------------------------
@@ -1037,8 +1000,8 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _get_layout_menus(self):
-        """ Gets the sub-menus for the 'Restore layout' and 'Delete layout' menu
-            options.
+        """Gets the sub-menus for the 'Restore layout' and 'Delete layout' menu
+        options.
         """
         names = self._get_layout_names()
         if len(names) == 0:
@@ -1070,8 +1033,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_dropped_on(self, x, y, data, drag_result):
-        """ Handles a Python object being dropped on the window.
-        """
+        """Handles a Python object being dropped on the window."""
         if isinstance(data, (IDockUIProvider, DockControl)):
             window = self.control
             dock_info = self._dock_info
@@ -1111,8 +1073,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_drag_any(self, x, y, data, drag_result):
-        """ Handles a Python object being dragged over the control.
-        """
+        """Handles a Python object being dragged over the control."""
         ui_provider = isinstance(data, IDockUIProvider)
         if ui_provider or isinstance(data, DockControl):
             if ui_provider and (
@@ -1162,8 +1123,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_drag_leave(self, data):
-        """ Handles a dragged Python object leaving the window.
-        """
+        """Handles a dragged Python object leaving the window."""
         if self._dock_info is not None:
             self._dock_info.draw(self.control)
 
@@ -1181,8 +1141,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def add_to_menu(self, menu_item):
-        """ Adds a menu item to the menu bar being constructed.
-        """
+        """Adds a menu item to the menu bar being constructed."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -1190,8 +1149,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def add_to_toolbar(self, toolbar_item):
-        """ Adds a tool bar item to the tool bar being constructed.
-        """
+        """Adds a tool bar item to the tool bar being constructed."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -1199,8 +1157,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def can_add_to_menu(self, action):
-        """ Returns whether the action should be defined in the user interface.
-        """
+        """Returns whether the action should be defined in the user interface."""
         return True
 
     # ---------------------------------------------------------------------------
@@ -1209,8 +1166,8 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def can_add_to_toolbar(self, action):
-        """ Returns whether the toolbar action should be defined in the user
-            interface.
+        """Returns whether the toolbar action should be defined in the user
+        interface.
         """
         return True
 
@@ -1219,8 +1176,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def perform(self, action_object):
-        """ Performs the action described by a specified Action object.
-        """
+        """Performs the action described by a specified Action object."""
         action = action_object.action
         if action[:5] == "self.":
             eval(action, globals(), {"self": self._menu_self})
@@ -1252,8 +1208,7 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _hidden_group_for(self, group):
-        """ Finds the first group with any hidden items (if any).
-        """
+        """Finds the first group with any hidden items (if any)."""
         while True:
             if group is None:
                 return None
@@ -1267,8 +1222,8 @@ class DockWindow(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _can_drop_on_feature(self, x, y, data):
-        """ Returns a feature that the pointer is over and which can accept the
-            specified data.
+        """Returns a feature that the pointer is over and which can accept the
+        specified data.
         """
         if self.sizer is not None:
             object = self.sizer.ObjectAt(x, y)

@@ -17,7 +17,7 @@ from pyface.ui_traits import Orientation
 
 
 class ISplitWidget(Interface):
-    """ Mix-in class for split widgets.
+    """Mix-in class for split widgets.
 
     A split widget is one that is split in two either horizontally or
     vertically.
@@ -46,7 +46,7 @@ class ISplitWidget(Interface):
     # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
-        """ Create the toolkit-specific control that represents the widget.
+        """Create the toolkit-specific control that represents the widget.
 
         Parameters
         ----------
@@ -60,7 +60,7 @@ class ISplitWidget(Interface):
         """
 
     def _create_lhs(self, parent):
-        """ Creates the left hand/top panel depending on the direction.
+        """Creates the left hand/top panel depending on the direction.
 
         Parameters
         ----------
@@ -74,7 +74,7 @@ class ISplitWidget(Interface):
         """
 
     def _create_rhs(self, parent):
-        """ Creates the right hand/bottom panel depending on the direction.
+        """Creates the right hand/bottom panel depending on the direction.
 
         Parameters
         ----------
@@ -89,7 +89,7 @@ class ISplitWidget(Interface):
 
 
 class MSplitWidget(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the ISplitWidget interface.
     """
 
@@ -112,7 +112,7 @@ class MSplitWidget(HasTraits):
     rhs = Callable
 
     def _create_lhs(self, parent):
-        """ Creates the left hand/top panel depending on the direction.
+        """Creates the left hand/top panel depending on the direction.
 
         Parameters
         ----------
@@ -127,7 +127,7 @@ class MSplitWidget(HasTraits):
         raise NotImplementedError()
 
     def _create_rhs(self, parent):
-        """ Creates the right hand/bottom panel depending on the direction.
+        """Creates the right hand/bottom panel depending on the direction.
 
         Parameters
         ----------

@@ -13,7 +13,7 @@ from pyface.data_view.data_view_errors import DataViewGetError
 
 
 class ItemExporter(AbstractDataExporter):
-    """ Export a single item from a data view.
+    """Export a single item from a data view.
 
     This is suitable for drag and drop or copying of the content of a single
     item in a data view.  If passed an multiple items it will fail by
@@ -22,7 +22,7 @@ class ItemExporter(AbstractDataExporter):
     """
 
     def add_data(self, data_wrapper, model, indices):
-        """ Add data to the data wrapper from the model and indices.
+        """Add data to the data wrapper from the model and indices.
 
         Parameters
         ----------
@@ -38,7 +38,7 @@ class ItemExporter(AbstractDataExporter):
             super().add_data(data_wrapper, model, indices)
 
     def get_data(self, model, indices):
-        """ Get the data to be exported from the model and indices.
+        """Get the data to be exported from the model and indices.
 
         Parameters
         ----------
@@ -53,6 +53,8 @@ class ItemExporter(AbstractDataExporter):
             The data, of a type that can be serialized by the format.
         """
         if len(indices) != 1:
-            raise DataViewGetError("ItemExporter can only export single values")
+            raise DataViewGetError(
+                "ItemExporter can only export single values"
+            )
         row, column = indices[0]
         return self.get_value(model, row, column)

@@ -21,7 +21,7 @@ from .editor_area_pane import EditorAreaPane
 
 @provides(IEditorAreaPane)
 class SplitEditorAreaPane(EditorAreaPane):
-    """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
+    """The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """

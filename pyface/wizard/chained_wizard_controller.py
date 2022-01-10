@@ -19,7 +19,7 @@ from .wizard_controller import WizardController
 
 
 class ChainedWizardController(WizardController):
-    """ A wizard controller that can be chained with others. """
+    """A wizard controller that can be chained with others."""
 
     # 'ChainedWizardController' interface ---------------------------------#
 
@@ -31,7 +31,7 @@ class ChainedWizardController(WizardController):
     # ------------------------------------------------------------------------
 
     def get_next_page(self, page):
-        """ Returns the next page. """
+        """Returns the next page."""
 
         next_page = None
 
@@ -51,7 +51,7 @@ class ChainedWizardController(WizardController):
         return next_page
 
     def get_previous_page(self, page):
-        """ Returns the previous page. """
+        """Returns the previous page."""
 
         if page in self._pages:
             index = self._pages.index(page)
@@ -73,12 +73,12 @@ class ChainedWizardController(WizardController):
         return previous_page
 
     def is_first_page(self, page):
-        """ Is the page the first page? """
+        """Is the page the first page?"""
 
         return page is self._pages[0]
 
     def is_last_page(self, page):
-        """ Is the page the last page? """
+        """Is the page the last page?"""
 
         if page in self._pages:
             # If page is not this controller's last page, then it cannot be
@@ -108,7 +108,7 @@ class ChainedWizardController(WizardController):
         return is_last
 
     def dispose_pages(self):
-        """ Dispose the wizard's pages. """
+        """Dispose the wizard's pages."""
 
         for page in self._pages:
             page.dispose_page()
@@ -123,7 +123,7 @@ class ChainedWizardController(WizardController):
     # ------------------------------------------------------------------------
 
     def _get_pages(self):
-        """ Returns the pages in the wizard. """
+        """Returns the pages in the wizard."""
 
         pages = self._pages[:]
 
@@ -133,7 +133,7 @@ class ChainedWizardController(WizardController):
         return pages
 
     def _set_pages(self, pages):
-        """ Sets the pages in the wizard. """
+        """Sets the pages in the wizard."""
 
         self._pages = pages
 
@@ -144,7 +144,7 @@ class ChainedWizardController(WizardController):
     # ------------------------------------------------------------------------
 
     def _update(self):
-        """ Checks the completion status of the controller. """
+        """Checks the completion status of the controller."""
 
         # The entire wizard is complete when ALL pages are complete.
         for page in self._pages:
@@ -170,12 +170,10 @@ class ChainedWizardController(WizardController):
 
     @observe("current_page")
     def _reset_observers_on_current_page_and_update(self, event):
-        """ Called when the current page is changed. """
+        """Called when the current page is changed."""
         old, new = event.old, event.new
         if old is not None:
-            old.observe(
-                self._on_page_complete, "complete", remove=True
-            )
+            old.observe(self._on_page_complete, "complete", remove=True)
 
         if new is not None:
             new.observe(self._on_page_complete, "complete")
@@ -187,12 +185,10 @@ class ChainedWizardController(WizardController):
 
     @observe("next_controller")
     def _reset_observers_on_next_controller_and_update(self, event):
-        """ Called when the next controller is changed. """
+        """Called when the next controller is changed."""
         old, new = event.old, event.new
         if old is not None:
-            old.observe(
-                self._on_controller_complete, "complete", remove=True
-            )
+            old.observe(self._on_controller_complete, "complete", remove=True)
 
         if new is not None:
             new.observe(self._on_controller_complete, "complete")
@@ -204,12 +200,12 @@ class ChainedWizardController(WizardController):
     # Dynamic ----
 
     def _on_controller_complete(self, event):
-        """ Called when the next controller's complete state changes. """
+        """Called when the next controller's complete state changes."""
 
         self._update()
 
     def _on_page_complete(self, event):
-        """ Called when the current page is complete. """
+        """Called when the current page is complete."""
 
         self._update()
 

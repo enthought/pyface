@@ -28,12 +28,12 @@ from file_tree_viewer import FileTreeViewer
 
 
 class ExampleAction(Action):
-    """ An example action. """
+    """An example action."""
 
     accelerator = Str("Ctrl-K")
 
     def perform(self):
-        """ Performs the action. """
+        """Performs the action."""
 
         print("Performing", self.name)
 
@@ -41,7 +41,7 @@ class ExampleAction(Action):
 
 
 class MainWindow(SplitApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'SplitApplicationWindow' interface -----------------------------------
 
@@ -56,7 +56,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new window. """
+        """Creates a new window."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -71,12 +71,12 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        """Creates the left hand side or top depending on the style."""
 
         return self._create_file_tree(parent, os.path.abspath(os.curdir))
 
     def _create_rhs(self, parent):
-        """ Creates the panel containing the selected preference page. """
+        """Creates the panel containing the selected preference page."""
 
         self._rhs = SplitPanel(
             parent=parent,
@@ -92,7 +92,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_action_bars(self):
-        """ Creates the window's menu, tool and status bars. """
+        """Creates the window's menu, tool and status bars."""
 
         # Common actions.
         highest = Action(name="Highest", style="radio")
@@ -137,7 +137,7 @@ class MainWindow(SplitApplicationWindow):
         return
 
     def _create_file_tree(self, parent, dirname):
-        """ Creates the file tree. """
+        """Creates the file tree."""
 
         self._tree_viewer = tree_viewer = FileTreeViewer(
             parent,
@@ -150,7 +150,7 @@ class MainWindow(SplitApplicationWindow):
         return tree_viewer.control
 
     def _create_file_table(self, parent):
-        """ Creates the file table. """
+        """Creates the file table."""
 
         self._table_viewer = table_viewer = FileTableViewer(
             parent, sorter=FileSorter(), odd_row_background="white"
@@ -159,7 +159,7 @@ class MainWindow(SplitApplicationWindow):
         return table_viewer.control
 
     def _create_python_shell(self, parent):
-        """ Creates the Python shell. """
+        """Creates the Python shell."""
 
         self._python_shell = python_shell = PythonShell(parent)
         python_shell.bind("widget", self._tree_viewer)
@@ -172,7 +172,7 @@ class MainWindow(SplitApplicationWindow):
     # Trait event handlers -------------------------------------------------
 
     def _on_selection_changed(self, event):
-        """ Called when the selection in the tree is changed. """
+        """Called when the selection in the tree is changed."""
         selection = event.new
         if len(selection) > 0:
             self._table_viewer.input = selection[0]

@@ -25,14 +25,14 @@ from pyface.action.api import Action, MenuBarManager, MenuManager
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -51,7 +51,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _on_exit(self):
-        """ Called when the exit action is invoked. """
+        """Called when the exit action is invoked."""
 
         parent = self.control
 

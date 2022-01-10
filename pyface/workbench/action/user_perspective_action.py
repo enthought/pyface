@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 
 
 class UserPerspectiveAction(WorkbenchAction):
-    """ The base class for user perspective actions.
+    """The base class for user perspective actions.
 
     Instances of this class (or its subclasses ;^) are enabled only when the
     active perspective is a user perspective.
@@ -29,7 +29,7 @@ class UserPerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the action. """
+        """Destroy the action."""
 
         # This removes the active perspective listener.
         self.window = None
@@ -41,7 +41,7 @@ class UserPerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def _is_user_perspective(self, perspective):
-        """ Is the specified perspective a user perspective? """
+        """Is the specified perspective a user perspective?"""
 
         # fixme: This seems a bit of a smelly way to make the determinaction!
         id = perspective.id
@@ -50,7 +50,7 @@ class UserPerspectiveAction(WorkbenchAction):
 
     @observe("window.active_perspective")
     def _refresh_enabled(self, event):
-        """ Refresh the enabled state of the action. """
+        """Refresh the enabled state of the action."""
 
         self.enabled = (
             self.window is not None

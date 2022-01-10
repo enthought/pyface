@@ -18,14 +18,15 @@ from traits.api import Instance, List, observe
 from traits.observation.api import trait
 
 from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+    AbstractDataModel,
+    DataViewSetError,
 )
 from pyface.data_view.index_manager import IntIndexManager
 from pyface.data_view.data_models.data_accessors import AbstractDataAccessor
 
 
 class RowTableDataModel(AbstractDataModel):
-    """ A data model that presents a sequence of objects as rows.
+    """A data model that presents a sequence of objects as rows.
 
     The data is expected to be a sequence of row objects, each object
     providing values for the columns via an AbstractDataAccessor subclass.
@@ -50,7 +51,7 @@ class RowTableDataModel(AbstractDataModel):
     # Data structure methods
 
     def get_column_count(self):
-        """ How many columns in the data view model.
+        """How many columns in the data view model.
 
         Returns
         -------
@@ -60,7 +61,7 @@ class RowTableDataModel(AbstractDataModel):
         return len(self.column_data)
 
     def can_have_children(self, row):
-        """ Whether or not a row can have child rows.
+        """Whether or not a row can have child rows.
 
         Only the root has children.
 
@@ -77,7 +78,7 @@ class RowTableDataModel(AbstractDataModel):
         return len(row) == 0
 
     def get_row_count(self, row):
-        """ How many child rows the row currently has.
+        """How many child rows the row currently has.
 
         Parameters
         ----------
@@ -97,7 +98,7 @@ class RowTableDataModel(AbstractDataModel):
     # Data value methods
 
     def get_value(self, row, column):
-        """ Return the Python value for the row and column.
+        """Return the Python value for the row and column.
 
         This uses the row_header_data and column_data accessors to extract
         values for the row and column.
@@ -124,7 +125,7 @@ class RowTableDataModel(AbstractDataModel):
         return column_data.get_value(obj)
 
     def can_set_value(self, row, column):
-        """ Whether the value in the indicated row and column can be set.
+        """Whether the value in the indicated row and column can be set.
 
         This uses the row_header_data and column_data accessors to determine
         if the value may be changed.
@@ -151,7 +152,7 @@ class RowTableDataModel(AbstractDataModel):
         return column_data.can_set_value(obj)
 
     def set_value(self, row, column, value):
-        """ Set the Python value for the row and column.
+        """Set the Python value for the row and column.
 
         This uses the row_header_data and column_data accessors to set
         the value.
@@ -181,7 +182,7 @@ class RowTableDataModel(AbstractDataModel):
         self.values_changed = (row, column, row, column)
 
     def get_value_type(self, row, column):
-        """ Return the value type of the given row and column.
+        """Return the value type of the given row and column.
 
         This uses the row_header_data and column_data accessors to get
         the value type.
@@ -249,7 +250,10 @@ class RowTableDataModel(AbstractDataModel):
         if event.new[1] == 'value':
             if len(self.data) > 0:
                 self.values_changed = (
-                    (0,), (index,), (len(self.data) - 1,), (index,)
+                    (0,),
+                    (index,),
+                    (len(self.data) - 1,),
+                    (index,),
                 )
         else:
             self.values_changed = ((), (index,), (), (index,))

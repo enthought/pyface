@@ -9,7 +9,7 @@ from example_workbench_window import ExampleWorkbenchWindow
 
 
 class ExampleWorkbench(Workbench):
-    """ A simple example of using the workbench. """
+    """A simple example of using the workbench."""
 
     # 'Workbench' interface ------------------------------------------------
 
@@ -22,7 +22,7 @@ class ExampleWorkbench(Workbench):
     # ------------------------------------------------------------------------
 
     def _exiting_changed(self, event):
-        """ Called when the workbench is exiting. """
+        """Called when the workbench is exiting."""
 
         if self.confirm("Ok to exit?") != YES:
             event.veto = True

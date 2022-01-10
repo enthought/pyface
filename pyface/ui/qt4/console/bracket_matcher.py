@@ -15,8 +15,8 @@ from pyface.qt import QtCore, QtGui
 
 
 class BracketMatcher(QtCore.QObject):
-    """ Matches square brackets, braces, and parentheses based on cursor
-        position.
+    """Matches square brackets, braces, and parentheses based on cursor
+    position.
     """
 
     # Protected class variables.
@@ -28,8 +28,8 @@ class BracketMatcher(QtCore.QObject):
     # --------------------------------------------------------------------------
 
     def __init__(self, text_edit):
-        """ Create a call tip manager that is attached to the specified Qt
-            text edit widget.
+        """Create a call tip manager that is attached to the specified Qt
+        text edit widget.
         """
         assert isinstance(text_edit, (QtGui.QTextEdit, QtGui.QPlainTextEdit))
         super().__init__()
@@ -51,8 +51,8 @@ class BracketMatcher(QtCore.QObject):
     # --------------------------------------------------------------------------
 
     def _find_match(self, position):
-        """ Given a valid position in the text document, try to find the
-            position of the matching bracket. Returns -1 if unsuccessful.
+        """Given a valid position in the text document, try to find the
+        position of the matching bracket. Returns -1 if unsuccessful.
         """
         # Decide what character to search for and what direction to search in.
         document = self._text_edit.document()
@@ -84,8 +84,7 @@ class BracketMatcher(QtCore.QObject):
         return position
 
     def _selection_for_character(self, position):
-        """ Convenience method for selecting a character.
-        """
+        """Convenience method for selecting a character."""
         selection = QtGui.QTextEdit.ExtraSelection()
         cursor = self._text_edit.textCursor()
         cursor.setPosition(position)
@@ -99,8 +98,7 @@ class BracketMatcher(QtCore.QObject):
     # Signal handlers ----------------------------------------------------
 
     def _cursor_position_changed(self):
-        """ Updates the document formatting based on the new cursor position.
-        """
+        """Updates the document formatting based on the new cursor position."""
         # Clear out the old formatting.
         self._text_edit.setExtraSelections([])
 

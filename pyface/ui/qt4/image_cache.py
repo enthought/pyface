@@ -23,7 +23,7 @@ from pyface.i_image_cache import IImageCache, MImageCache
 
 @provides(IImageCache)
 class ImageCache(MImageCache, HasTraits):
-    """ The toolkit specific implementation of an ImageCache.  See the
+    """The toolkit specific implementation of an ImageCache.  See the
     IImageCache interface for the API documentation.
     """
 
@@ -66,7 +66,7 @@ class ImageCache(MImageCache, HasTraits):
     # ------------------------------------------------------------------------
 
     def _qt4_scale(self, image):
-        """ Scales the given image if necessary. """
+        """Scales the given image if necessary."""
 
         # Although Qt won't scale the image if it doesn't need to, it will make
         # a deep copy which we don't need.

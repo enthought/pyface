@@ -19,8 +19,7 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
-    """ A dummy clipboard implementationf for the null backend.
-    """
+    """A dummy clipboard implementationf for the null backend."""
 
     # ---------------------------------------------------------------------------
     #  'data' property methods:

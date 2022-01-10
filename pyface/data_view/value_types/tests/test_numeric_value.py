@@ -13,12 +13,14 @@ from unittest.mock import Mock
 
 from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.value_types.numeric_value import (
-    FloatValue, IntValue, NumericValue, format_locale
+    FloatValue,
+    IntValue,
+    NumericValue,
+    format_locale,
 )
 
 
 class TestNumericValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1.0)
@@ -88,14 +90,12 @@ class TestNumericValue(TestCase):
 
 
 class TestIntValue(TestCase):
-
     def test_defaults(self):
         value = IntValue()
         self.assertIs(value.evaluate, int)
 
 
 class TestFloatValue(TestCase):
-
     def test_defaults(self):
         value = FloatValue()
         self.assertIs(value.evaluate, float)

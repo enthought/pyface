@@ -19,20 +19,20 @@ from person import Person
 
 
 class ExampleEditorManager(EditorManager):
-    """ An editor manager that supports the editor memento protocol. """
+    """An editor manager that supports the editor memento protocol."""
 
     # ---------------------------------------------------------------------
     # 'IEditorManager' interface.
     # ---------------------------------------------------------------------
 
     def get_editor_memento(self, editor):
-        """ Return the state of the editor contents. """
+        """Return the state of the editor contents."""
 
         # Return the data attributes as a tuple.
         return (editor.obj.name, editor.obj.age)
 
     def set_editor_memento(self, memento):
-        """ Restore an editor from a memento and return it. """
+        """Restore an editor from a memento and return it."""
 
         # Create a new data object.
         name, age = memento
@@ -43,7 +43,7 @@ class ExampleEditorManager(EditorManager):
 
 
 class ExampleWorkbenchWindow(WorkbenchWindow):
-    """ A simple example of using the workbench window. """
+    """A simple example of using the workbench window."""
 
     # 'WorkbenchWindow' interface ------------------------------------------
 
@@ -90,7 +90,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # Trait initializers ---------------------------------------------------
 
     def _editor_manager_default(self):
-        """ Trait initializer.
+        """Trait initializer.
 
         Here we return the replacement editor manager.
         """
@@ -98,7 +98,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         return ExampleEditorManager()
 
     def _menu_bar_manager_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         file_menu = MenuManager(
             self._new_person_action,
@@ -111,7 +111,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         return MenuBarManager(file_menu, view_menu, window=self)
 
     def _tool_bar_managers_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # Add multiple (albeit identical!) tool bars just to show that it is
         # allowed!
@@ -131,14 +131,14 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # Trait initializers ---------------------------------------------------
 
     def _view_factories_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         from pyface.workbench.debug.api import DebugView
 
         return [DebugView, BlackView, BlueView, GreenView, RedView, YellowView]
 
     def _views_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # Using an initializer makes sure that every window instance gets its
         # own view instances (which is necessary since each view has a
@@ -150,17 +150,17 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # ------------------------------------------------------------------------
 
     def __exit_action_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         return Action(name="E&xit", on_perform=self.workbench.exit)
 
     def __new_person_action_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         return Action(name="New Person", on_perform=self._new_person)
 
     def _new_person(self):
-        """ Create a new person. """
+        """Create a new person."""
 
         from person import Person
 

@@ -24,7 +24,6 @@ trivial_format = DataFormat(
 
 
 class TestRowExporter(TestCase):
-
     def setUp(self):
         self.value_type = Mock()
         self.value_type.has_text = Mock(return_value=False)
@@ -55,7 +54,8 @@ class TestRowExporter(TestCase):
                 ((0,), (0,)),
                 ((0,), (2,)),
                 ((1,), ()),
-            ])
+            ],
+        )
 
         self.assertEqual(result, [[0, 1, 2], [3, 4, 5]])
 

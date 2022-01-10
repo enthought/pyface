@@ -12,7 +12,10 @@ from traits.api import Array, HasStrictTraits, provides
 
 from pyface.i_image import IImage
 from pyface.util.image_helpers import (
-    array_to_image, image_to_bitmap, bitmap_to_icon, resize_image
+    array_to_image,
+    image_to_bitmap,
+    bitmap_to_icon,
+    resize_image,
 )
 
 #: Trait type for image arrays.
@@ -21,8 +24,7 @@ ImageArray = Array(shape=(None, None, (3, 4)), dtype='uint8')
 
 @provides(IImage)
 class ArrayImage(HasStrictTraits):
-    """ An IImage stored in an RGB(A) numpy array.
-    """
+    """An IImage stored in an RGB(A) numpy array."""
 
     # 'ArrayImage' interface ------------------------------------------------
 
@@ -34,7 +36,7 @@ class ArrayImage(HasStrictTraits):
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a toolkit-specific image for this array.
+        """Creates a toolkit-specific image for this array.
 
         Parameters
         ----------
@@ -54,7 +56,7 @@ class ArrayImage(HasStrictTraits):
         return image
 
     def create_bitmap(self, size=None):
-        """ Creates a toolkit-specific bitmap image for this array.
+        """Creates a toolkit-specific bitmap image for this array.
 
         Parameters
         ----------
@@ -71,7 +73,7 @@ class ArrayImage(HasStrictTraits):
         return image_to_bitmap(self.create_image(size))
 
     def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this array.
+        """Creates a toolkit-specific icon for this array.
 
         Parameters
         ----------

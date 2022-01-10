@@ -27,7 +27,7 @@ from .widget import Widget
 
 
 class ExpandableHeader(Widget):
-    """ A header for an entry in a collection of expandables.
+    """A header for an entry in a collection of expandables.
 
     The header provides a visual indicator of the current state, a text label,
     and a 'remove' button.
@@ -75,7 +75,7 @@ class ExpandableHeader(Widget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent=None, container=None, **traits):
-        """ Creates the panel. """
+        """Creates the panel."""
 
         if container is not None:
             warnings.warn(
@@ -107,7 +107,7 @@ class ExpandableHeader(Widget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         collapsed_carat = self.collapsed_carat_image.create_image()
         self._collapsed_bmp = collapsed_carat.ConvertToBitmap()
@@ -132,7 +132,7 @@ class ExpandableHeader(Widget):
         )
 
         height = self._get_preferred_height(parent, self.title, self._font)
-        panel.SetMinSize((-1, height+2))
+        panel.SetMinSize((-1, height + 2))
 
         panel.Bind(wx.EVT_PAINT, self._on_paint)
         panel.Bind(wx.EVT_LEFT_DOWN, self._on_down)
@@ -141,7 +141,7 @@ class ExpandableHeader(Widget):
         return panel
 
     def _get_preferred_height(self, parent, text, font):
-        """ Calculates the preferred height of the widget. """
+        """Calculates the preferred height of the widget."""
 
         dc = wx.MemoryDC()
 
@@ -155,7 +155,7 @@ class ExpandableHeader(Widget):
         return max(text_h, carat_h)
 
     def _draw_carat_button(self, dc):
-        """ Draws the button at the correct coordinates. """
+        """Draws the button at the correct coordinates."""
 
         if self.state:
             bmp = self._expanded_bmp
@@ -165,7 +165,7 @@ class ExpandableHeader(Widget):
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
     def _draw_title(self, dc):
-        """ Draws the text label for the header. """
+        """Draws the text label for the header."""
         dc.SetFont(self._font)
 
         # Render the text.
@@ -174,7 +174,7 @@ class ExpandableHeader(Widget):
         )
 
     def _draw(self, dc):
-        """ Draws the control. """
+        """Draws the control."""
 
         # Draw the title text
         self._draw_title(dc)
@@ -187,14 +187,14 @@ class ExpandableHeader(Widget):
     # ------------------------------------------------------------------------
 
     def _on_paint(self, event):
-        """ Called when the background of the panel is erased. """
+        """Called when the background of the panel is erased."""
 
         # print('ImageButton._on_erase_background')
         dc = wx.PaintDC(self.control)
         self._draw(dc)
 
     def _on_down(self, event):
-        """ Called when button is pressed. """
+        """Called when button is pressed."""
 
         self.state = not self.state
         self.control.Refresh()
@@ -204,5 +204,5 @@ class ExpandableHeader(Widget):
         event.Skip()
 
     def _on_remove(self, event):
-        """ Called when remove button is pressed. """
+        """Called when remove button is pressed."""
         self.panel_closed = self

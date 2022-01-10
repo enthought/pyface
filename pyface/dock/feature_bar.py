@@ -62,8 +62,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def hide(self):
-        """ Hides the feature bar.
-        """
+        """Hides the feature bar."""
         if self.control is not None:
             self.control.Hide()
 
@@ -72,8 +71,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def show(self):
-        """ Shows the feature bar.
-        """
+        """Shows the feature bar."""
         # Make sure all prerequisites are met:
         dock_control, parent = self.dock_control, self.parent
         if (dock_control is None) or (parent is None):
@@ -135,8 +133,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _paint(self, event):
-        """ Handles repainting the window.
-        """
+        """Handles repainting the window."""
         window = self.control
         dx, dy = window.GetSize().Get()
         dc = wx.PaintDC(window)
@@ -176,8 +173,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _erase_background(self, event):
-        """ Handles erasing the window background.
-        """
+        """Handles erasing the window background."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -185,8 +181,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _left_down(self, event):
-        """ Handles the left mouse button being pressed.
-        """
+        """Handles the left mouse button being pressed."""
         self._feature = self._feature_at(event)
         self._dragging = False
         self._xy = (event.GetX(), event.GetY())
@@ -197,8 +192,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _left_up(self, event):
-        """ Handles the left mouse button being released.
-        """
+        """Handles the left mouse button being released."""
         # self.control.ReleaseMouse()
         self._dragging = None
         feature, self._feature = self._feature, None
@@ -214,8 +208,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _right_down(self, event):
-        """ Handles the right mouse button being pressed.
-        """
+        """Handles the right mouse button being pressed."""
         self._feature = self._feature_at(event)
         self._dragging = False
         self._xy = (event.GetX(), event.GetY())
@@ -226,8 +219,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _right_up(self, event):
-        """ Handles the right mouse button being released.
-        """
+        """Handles the right mouse button being released."""
         # self.control.ReleaseMouse()
         self._dragging = None
         feature, self._feature = self._feature, None
@@ -243,8 +235,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _mouse_move(self, event):
-        """ Handles the mouse moving over the window.
-        """
+        """Handles the mouse moving over the window."""
         # Update tooltips if no mouse button is currently pressed:
         if self._dragging is None:
             feature = self._feature_at(event)
@@ -306,8 +297,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _mouse_enter(self, event):
-        """ Handles the mouse entering the window.
-        """
+        """Handles the mouse entering the window."""
         self.control.CaptureMouse()
 
     # -- Drag and drop event handlers: ----------------------------------------------
@@ -317,8 +307,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_dropped_on(self, x, y, data, drag_result):
-        """ Handles a Python object being dropped on the window.
-        """
+        """Handles a Python object being dropped on the window."""
         # Determine what, if any, feature the object was dropped on:
         feature = self._can_drop_on_feature(x, y, data)
 
@@ -350,8 +339,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_drag_over(self, x, y, data, drag_result):
-        """ Handles a Python object being dragged over the control.
-        """
+        """Handles a Python object being dragged over the control."""
         # Handle the case of dragging a normal object over a 'feature':
         if self._can_drop_on_feature(x, y, data) is not None:
             return drag_result
@@ -363,8 +351,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def wx_drag_leave(self, data):
-        """ Handles a dragged Python object leaving the window.
-        """
+        """Handles a dragged Python object leaving the window."""
         # Indicate use of the feature bar is complete:
         self.completed = True
 
@@ -379,8 +366,8 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _can_drop_on_feature(self, x, y, data):
-        """ Returns a feature that the pointer is over and which can accept the
-            specified data.
+        """Returns a feature that the pointer is over and which can accept the
+        specified data.
         """
         feature = self._feature_at(FakeEvent(x, y))
         if (feature is not None) and feature.can_drop(data):
@@ -393,8 +380,8 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _feature_at(self, event):
-        """ Returns the DockWindowFeature (if any) at a specified window
-            position.
+        """Returns the DockWindowFeature (if any) at a specified window
+        position.
         """
         if self.horizontal:
             x = 4
@@ -424,8 +411,7 @@ class FeatureBar(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _is_in(self, event, x, y, dx, dy):
-        """ Returns whether or not an event is within a specified bounds.
-        """
+        """Returns whether or not an event is within a specified bounds."""
         return (x <= event.GetX() < (x + dx)) and (
             y <= event.GetY() < (y + dy)
         )

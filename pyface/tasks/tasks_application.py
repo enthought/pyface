@@ -32,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskFactory(HasStrictTraits):
-    """ A factory for creating a Task with some additional metadata.
-    """
+    """A factory for creating a Task with some additional metadata."""
 
     #: The task factory's unique identifier. This ID is assigned to all tasks
     #: created by the factory.
@@ -50,7 +49,7 @@ class TaskFactory(HasStrictTraits):
     factory = Callable
 
     def create(self, **traits):
-        """ Creates the Task.
+        """Creates the Task.
 
         The default implementation simply calls the 'factory' attribute.
         """
@@ -58,8 +57,7 @@ class TaskFactory(HasStrictTraits):
 
 
 class TasksApplication(GUIApplication):
-    """ A base class for Pyface tasks applications.
-    """
+    """A base class for Pyface tasks applications."""
 
     # -------------------------------------------------------------------------
     # 'TaskApplication' interface
@@ -95,7 +93,7 @@ class TasksApplication(GUIApplication):
     # Window lifecycle methods -----------------------------------------------
 
     def create_task(self, id):
-        """ Creates the Task with the specified ID.
+        """Creates the Task with the specified ID.
 
         Parameters
         ----------
@@ -117,7 +115,7 @@ class TasksApplication(GUIApplication):
         return task
 
     def create_window(self, layout=None, **kwargs):
-        """ Connect task to application and open task in a new window.
+        """Connect task to application and open task in a new window.
 
         Parameters
         ----------
@@ -153,8 +151,7 @@ class TasksApplication(GUIApplication):
         return window
 
     def _create_windows(self):
-        """ Create the initial windows to display from the default layout.
-        """
+        """Create the initial windows to display from the default layout."""
         for layout in self.default_layout:
             window = self.create_window(layout)
             self.add_window(window)
@@ -165,8 +162,7 @@ class TasksApplication(GUIApplication):
         # -------------------------------------------------------------------------
 
     def _get_task_factory(self, id):
-        """ Returns the TaskFactory with the specified ID, or None.
-        """
+        """Returns the TaskFactory with the specified ID, or None."""
         for factory in self.task_factories:
             if factory.id == id:
                 return factory
@@ -176,8 +172,7 @@ class TasksApplication(GUIApplication):
 
     @observe("windows:items:closed")
     def _on_window_closed(self, event):
-        """ Listener that ensures window handles are released when closed.
-        """
+        """Listener that ensures window handles are released when closed."""
         window = event.object
         if getattr(window, "active_task", None) in self.tasks:
             self.tasks.remove(window.active_task)
@@ -186,7 +181,7 @@ class TasksApplication(GUIApplication):
     # Trait initializers and property getters ---------------------------------
 
     def _window_factory_default(self):
-        """ Default to TaskWindow.
+        """Default to TaskWindow.
 
         This will be sufficient in many cases as customized behaviour comes
         from the Task and the TaskWindow is just a shell.
@@ -204,7 +199,7 @@ class TasksApplication(GUIApplication):
         return [window_layout]
 
     def _extra_actions_default(self):
-        """ Extra application-wide menu items
+        """Extra application-wide menu items
 
         This adds a collection of standard Tasks application menu items and
         groups to a Task's set of menus.  Whether or not they actually appear

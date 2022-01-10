@@ -16,14 +16,14 @@ from pyface.split_widget import SplitWidget
 
 
 class SplitApplicationWindow(ApplicationWindow, SplitWidget):
-    """ A window that is split in two either horizontally or vertically. """
+    """A window that is split in two either horizontally or vertically."""
 
     # ------------------------------------------------------------------------
     # Protected 'ApplicationWindow' interface.
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Creates the window contents.
+        """Creates the window contents.
 
         Parameters
         ----------

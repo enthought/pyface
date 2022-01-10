@@ -19,7 +19,7 @@ from .wizard import Wizard
 
 
 class ChainedWizard(Wizard):
-    """ A wizard model that can be chained with other wizards. """
+    """A wizard model that can be chained with other wizards."""
 
     # 'ChainedWizard' interface --------------------------------------------
 
@@ -33,7 +33,7 @@ class ChainedWizard(Wizard):
     # Trait handlers. -----------------------------------------------------#
 
     def _controller_default(self):
-        """ Provide a default controller. """
+        """Provide a default controller."""
 
         from .chained_wizard_controller import ChainedWizardController
 
@@ -45,7 +45,7 @@ class ChainedWizard(Wizard):
 
     @observe("next_wizard")
     def _reset_next_controller_and_update(self, event):
-        """ Handle the next wizard being changed. """
+        """Handle the next wizard being changed."""
         if event.new is not None:
             self.controller.next_controller = event.new.controller
 
@@ -60,7 +60,7 @@ class ChainedWizard(Wizard):
 
     @observe("controller")
     def _reset_traits_on_controller_and_update(self, event):
-        """ handle the controller being changed. """
+        """handle the controller being changed."""
         if event.new is not None and self.next_wizard is not None:
             self.controller.next_controller = self.next_wizard.controller
 

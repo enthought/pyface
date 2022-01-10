@@ -15,7 +15,7 @@ from traits.api import HasTraits
 
 
 class LabelProvider(HasTraits):
-    """ Abstract base class for label providers.
+    """Abstract base class for label providers.
 
     By default an element has no label image, and 'str' is used to generate its
     label text.
@@ -27,17 +27,17 @@ class LabelProvider(HasTraits):
     # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element):
-        """ Returns the label image for an element. """
+        """Returns the label image for an element."""
 
         return None
 
     def get_text(self, viewer, element):
-        """ Returns the label text for an element. """
+        """Returns the label text for an element."""
 
         return str(element)
 
     def set_text(self, tree, element, text):
-        """ Sets the text representation of a node.
+        """Sets the text representation of a node.
 
         Returns True if setting the text succeeded, otherwise False.
 
@@ -46,6 +46,6 @@ class LabelProvider(HasTraits):
         return True
 
     def is_editable(self, viewer, element):
-        """ Can the label text be changed via the viewer? """
+        """Can the label text be changed via the viewer?"""
 
         return False

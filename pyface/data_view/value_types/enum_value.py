@@ -14,7 +14,7 @@ from .editable_value import EditableValue
 
 
 class EnumValue(EditableValue):
-    """ Editable value that takes one of a collection of pre-set values.
+    """Editable value that takes one of a collection of pre-set values.
 
     Each value can be associated with text, colors and images by supplying
     functions ``format``, ``colors`` and ``images``, respectively.
@@ -33,7 +33,7 @@ class EnumValue(EditableValue):
     images = Callable(None, update_value_type=True)
 
     def is_valid(self, model, row, column, value):
-        """ Whether or not the value is valid for the data item specified.
+        """Whether or not the value is valid for the data item specified.
 
         Parameters
         ----------
@@ -54,7 +54,7 @@ class EnumValue(EditableValue):
         return value in self.values
 
     def has_text(self, model, row, column):
-        """ Get the display text from the underlying value.
+        """Get the display text from the underlying value.
 
         Parameters
         ----------
@@ -73,7 +73,7 @@ class EnumValue(EditableValue):
         return self.format is not None
 
     def get_text(self, model, row, column):
-        """ Get the display text from the underlying value.
+        """Get the display text from the underlying value.
 
         Parameters
         ----------
@@ -92,7 +92,7 @@ class EnumValue(EditableValue):
         return self.format(model.get_value(row, column))
 
     def has_color(self, model, row, column):
-        """ Whether or not the value has color data.
+        """Whether or not the value has color data.
 
         Parameters
         ----------
@@ -112,7 +112,7 @@ class EnumValue(EditableValue):
         return self.colors is not None
 
     def get_color(self, model, row, column):
-        """ Get data-associated colour values for the given item.
+        """Get data-associated colour values for the given item.
 
         The default implementation returns white.
 
@@ -133,7 +133,7 @@ class EnumValue(EditableValue):
         return self.colors(model.get_value(row, column))
 
     def has_image(self, model, row, column):
-        """ Whether or not the value has an image associated with it.
+        """Whether or not the value has an image associated with it.
 
         Parameters
         ----------
@@ -152,7 +152,7 @@ class EnumValue(EditableValue):
         return self.images is not None
 
     def get_image(self, model, row, column):
-        """ An image associated with the underlying value.
+        """An image associated with the underlying value.
 
         The default implementation returns None.
 

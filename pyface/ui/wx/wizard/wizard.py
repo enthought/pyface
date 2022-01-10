@@ -23,7 +23,7 @@ from pyface.wizard.i_wizard_page import IWizardPage
 
 @provides(IWizard)
 class Wizard(MWizard, Dialog):
-    """ The base class for all pyface wizards.
+    """The base class for all pyface wizards.
 
     See the IWizard interface for the API documentation.
 
@@ -50,7 +50,7 @@ class Wizard(MWizard, Dialog):
     # ------------------------------------------------------------------------
 
     def _create_dialog_area(self, parent):
-        """ Creates the main content of the dialog. """
+        """Creates the main content of the dialog."""
 
         self._layered_panel = panel = LayeredPanel(parent=parent, create=False)
         panel.create()
@@ -60,7 +60,7 @@ class Wizard(MWizard, Dialog):
         return panel.control
 
     def _create_buttons(self, parent):
-        """ Creates the buttons. """
+        """Creates the buttons."""
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -100,7 +100,7 @@ class Wizard(MWizard, Dialog):
     # ------------------------------------------------------------------------
 
     def _show_page(self, page):
-        """ Show the specified page. """
+        """Show the specified page."""
 
         panel = self._layered_panel
 
@@ -120,7 +120,7 @@ class Wizard(MWizard, Dialog):
         self.controller.current_page = page
 
     def _update(self, event):
-        """ Enables/disables buttons depending on the state of the wizard. """
+        """Enables/disables buttons depending on the state of the wizard."""
 
         controller = self.controller
         current_page = controller.current_page
@@ -153,30 +153,30 @@ class Wizard(MWizard, Dialog):
     # Trait handlers -------------------------------------------------------
 
     def _controller_default(self):
-        """ Provide a default controller. """
+        """Provide a default controller."""
 
         from pyface.wizard.wizard_controller import WizardController
 
         return WizardController()
 
     def _get_pages(self):
-        """ Returns the pages in the wizard. """
+        """Returns the pages in the wizard."""
 
         return self.controller.pages
 
     def _set_pages(self, pages):
-        """ Sets the pages in the wizard. """
+        """Sets the pages in the wizard."""
 
         self.controller.pages = pages
 
     # wx event handlers ----------------------------------------------------
 
     def _on_next(self, event):
-        """ Called when the 'Next' button is pressed. """
+        """Called when the 'Next' button is pressed."""
 
         self.next()
 
     def _on_back(self, event):
-        """ Called when the 'Back' button is pressed. """
+        """Called when the 'Back' button is pressed."""
 
         self.previous()

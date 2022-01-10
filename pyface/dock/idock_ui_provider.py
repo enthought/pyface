@@ -25,8 +25,7 @@ class IDockUIProvider(object):
     # ---------------------------------------------------------------------------
 
     def get_dockable_ui(self, parent):
-        """ Returns a Traits UI which a DockWindow can imbed.
-        """
+        """Returns a Traits UI which a DockWindow can imbed."""
         return self.edit_traits(
             parent=parent, kind="subpanel", scrollable=True
         )

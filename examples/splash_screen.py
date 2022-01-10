@@ -13,7 +13,7 @@ splash_screen = SplashScreen(image=ImageResource("images/splash"))
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # The pyface Timer.
     my_timer = Any()
@@ -22,7 +22,7 @@ class MainWindow(ApplicationWindow):
     counter = Int()
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)

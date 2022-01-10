@@ -11,12 +11,14 @@
 from unittest import TestCase
 
 from pyface.util.color_helpers import (
-    channels_to_ints, ints_to_channels, is_dark, relative_luminance
+    channels_to_ints,
+    ints_to_channels,
+    is_dark,
+    relative_luminance,
 )
 
 
 class TestChannelConversion(TestCase):
-
     def test_ints_to_channels(self):
         values = (102, 102, 0, 255)
         channels = ints_to_channels(values)
@@ -38,14 +40,14 @@ class TestChannelConversion(TestCase):
         self.assertEqual(values, (6, 6, 0, 15))
 
     def test_round_trip(self):
-        """ Test to assert stability of values through round-trips """
+        """Test to assert stability of values through round-trips"""
         for value in range(256):
             with self.subTest(int=value):
                 result = channels_to_ints(ints_to_channels([value]))
                 self.assertEqual(result, (value,))
 
     def test_round_trip_maximum(self):
-        """ Test to assert stability of values through round-trips """
+        """Test to assert stability of values through round-trips"""
         for value in range(65536):
             with self.subTest(int=value):
                 result = channels_to_ints(
@@ -59,7 +61,6 @@ class TestChannelConversion(TestCase):
 
 
 class TestRelativeLuminance(TestCase):
-
     def test_white(self):
         rgb = (1.0, 1.0, 1.0)
         result = relative_luminance(rgb)
@@ -103,16 +104,15 @@ class TestRelativeLuminance(TestCase):
     def test_dark_grey(self):
         rgb = (0.01, 0.01, 0.01)
         result = relative_luminance(rgb)
-        self.assertAlmostEqual(result, 0.01/12.92)
+        self.assertAlmostEqual(result, 0.01 / 12.92)
 
     def test_medium_grey(self):
         rgb = (0.5, 0.5, 0.5)
         result = relative_luminance(rgb)
-        self.assertAlmostEqual(result, (0.555/1.055)**2.4)
+        self.assertAlmostEqual(result, (0.555 / 1.055) ** 2.4)
 
 
 class TestIsDark(TestCase):
-
     def test_white(self):
         rgb = (1.0, 1.0, 1.0)
         result = is_dark(rgb)

@@ -23,7 +23,7 @@ from file_sorters import FileSorter
 
 
 class MainWindow(SplitApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'SplitApplicationWindow' interface -----------------------------------
 
@@ -38,7 +38,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        """Creates the left hand side or top depending on the style."""
 
         self._tree_viewer = FileTreeViewer(
             parent, input=os.path.abspath(os.curdir), sorter=FileSorter()
@@ -46,13 +46,13 @@ class MainWindow(SplitApplicationWindow):
 
         self._tree_viewer.observe(
             self._on_tree_anytrait_changed,
-            match(lambda name, ctrait: True)  # listen to all traits
+            match(lambda name, ctrait: True),  # listen to all traits
         )
 
         return self._tree_viewer.control
 
     def _create_rhs(self, parent):
-        """ Creates the right hand side or bottom depending on the style. """
+        """Creates the right hand side or bottom depending on the style."""
 
         self._python_shell = PythonShell(parent)
         self._python_shell.bind("widget", self._tree_viewer)
@@ -67,7 +67,7 @@ class MainWindow(SplitApplicationWindow):
     # Trait event handlers -------------------------------------------------
 
     def _on_tree_anytrait_changed(self, event):
-        """ Called when any trait on the tree has changed. """
+        """Called when any trait on the tree has changed."""
 
         print("trait", event.name, "value", event.new)
 

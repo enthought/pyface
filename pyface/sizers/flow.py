@@ -34,8 +34,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def CalcMin(self):
-        """ Calculates the minimum size needed by the sizer.
-        """
+        """Calculates the minimum size needed by the sizer."""
         if self._needed_size is not None:
             return self._needed_size
 
@@ -57,8 +56,8 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def RecalcSizes(self):
-        """ Layout the contents of the sizer based on the sizer's current size
-            and position.
+        """Layout the contents of the sizer based on the sizer's current size
+        and position.
         """
         horizontal = self._orient == wx.HORIZONTAL
         x, y = self.GetPosition()
@@ -134,8 +133,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def _freeze(self, window):
-        """ Prevents the specified window from doing any further screen updates.
-        """
+        """Prevents the specified window from doing any further screen updates."""
         window.Freeze()
         self._frozen = True
 
@@ -144,8 +142,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def _thaw(self, window):
-        """ Lays out a specified window and then allows it to be updated again.
-        """
+        """Lays out a specified window and then allows it to be updated again."""
         window.Layout()
         window.Refresh()
         if self._frozen:
@@ -157,8 +154,7 @@ class FlowSizer(wx.PySizer):
     # ---------------------------------------------------------------------------
 
     def _do_parent(self, method):
-        """ Does a specified operation on the sizer's parent window.
-        """
+        """Does a specified operation on the sizer's parent window."""
         i = 0
         while True:
             try:

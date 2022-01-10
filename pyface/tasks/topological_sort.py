@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def before_after_sort(items):
-    """ Sort a sequence of items with 'before', 'after', and 'id' attributes.
+    """Sort a sequence of items with 'before', 'after', and 'id' attributes.
 
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
@@ -62,7 +62,7 @@ def before_after_sort(items):
 
 
 def topological_sort(pairs):
-    """ Topologically sort a list of (parent, child) pairs.
+    """Topologically sort a list of (parent, child) pairs.
 
     Returns a tuple containing the list of elements sorted in dependency order
     (parent to child order), if possible, and a boolean indicating whether the

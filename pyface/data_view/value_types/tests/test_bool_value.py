@@ -17,7 +17,6 @@ from pyface.data_view.value_types.bool_value import BoolValue
 
 
 class TestBoolValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value=True)

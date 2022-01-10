@@ -25,7 +25,7 @@ from pyface.action.action_manager import ActionManager
 
 
 class ToolBarManager(ActionManager):
-    """ A tool bar manager realizes itself in errr, a tool bar control. """
+    """A tool bar manager realizes itself in errr, a tool bar control."""
 
     # 'ToolBarManager' interface -------------------------------------------
 
@@ -60,7 +60,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
-        """ Creates a new tool bar manager. """
+        """Creates a new tool bar manager."""
 
         # Base class contructor.
         super().__init__(*args, **traits)
@@ -76,7 +76,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None, aui=False):
-        """ Creates a tool bar. """
+        """Creates a tool bar."""
 
         # If a controller is required it can either be set as a trait on the
         # tool bar manager (the trait is part of the 'ActionManager' API), or
@@ -133,7 +133,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def _wx_add_tools(self, parent, tool_bar, controller):
-        """ Adds tools for all items in the list of groups. """
+        """Adds tools for all items in the list of groups."""
 
         previous_non_empty_group = None
         for group in self.groups:
@@ -155,7 +155,7 @@ class ToolBarManager(ActionManager):
                     )
 
     def _wx_set_initial_tool_state(self, tool_bar):
-        """ Workaround for the wxPython tool bar bug.
+        """Workaround for the wxPython tool bar bug.
 
         Without this,  only the first item in a radio group can be selected
          when the tool bar is first realised 8^()
@@ -191,14 +191,14 @@ class ToolBarManager(ActionManager):
 
 
 class _ToolBar(wx.ToolBar):
-    """ The toolkit-specific tool bar implementation. """
+    """The toolkit-specific tool bar implementation."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
-        """ Constructor. """
+        """Constructor."""
 
         wx.ToolBar.__init__(self, parent, -1, style=style)
 
@@ -221,25 +221,25 @@ class _ToolBar(wx.ToolBar):
     # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         event.object.window._wx_enable_tool_bar(self, event.new)
 
     def _on_tool_bar_manager_visible_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         event.object.window._wx_show_tool_bar(self, event.new)
 
 
 class _AuiToolBar(AUI.AuiToolBar):
-    """ The toolkit-specific tool bar implementation for AUI windows. """
+    """The toolkit-specific tool bar implementation for AUI windows."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style, agwStyle):
-        """ Constructor. """
+        """Constructor."""
 
         super().__init__(parent, -1, style=style, agwStyle=agwStyle)
 
@@ -278,14 +278,12 @@ class _AuiToolBar(AUI.AuiToolBar):
         self.ShowTool = self.ShowToolPostRealize
 
     def ShowTool(self, tool_id, state):
-        """Used before realization to flag which need to be initially hidden
-        """
+        """Used before realization to flag which need to be initially hidden"""
         if not state:
             self.initially_hidden_tool_ids.append(tool_id)
 
     def ShowToolPostRealize(self, tool_id, state):
-        """Normal ShowTool method, activated after first call to Realize
-        """
+        """Normal ShowTool method, activated after first call to Realize"""
         tool = self.FindById(tool_id)
         if state and tool is None:
             self.InsertToolInOrder(tool_id)
@@ -404,7 +402,7 @@ class _AuiToolBar(AUI.AuiToolBar):
     # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         try:
             event.object.controller.task.window._wx_enable_tool_bar(
@@ -415,7 +413,7 @@ class _AuiToolBar(AUI.AuiToolBar):
             pass
 
     def _on_tool_bar_manager_visible_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         try:
             event.object.controller.task.window._wx_show_tool_bar(

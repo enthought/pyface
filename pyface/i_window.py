@@ -22,7 +22,7 @@ from pyface.i_widget import IWidget
 
 
 class IWindow(IWidget):
-    """ The abstract interface for all pyface top-level windows.
+    """The abstract interface for all pyface top-level windows.
 
     A pyface top-level window has no visual representation until it is opened
     (ie. its 'control' trait will be None until it is opened).
@@ -69,7 +69,7 @@ class IWindow(IWidget):
     # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window.
+        """Opens the window.
 
         This fires the :py:attr:`closing` vetoable event, giving listeners the
         opportunity to veto the opening of the window.
@@ -84,7 +84,7 @@ class IWindow(IWidget):
         """
 
     def close(self, force=False):
-        """ Closes the window.
+        """Closes the window.
 
         This fires the :py:attr:`closing` vetoable event, giving listeners the
         opportunity to veto the closing of the window.  If :py:obj:`force` is
@@ -105,7 +105,7 @@ class IWindow(IWidget):
         """
 
     def confirm(self, message, title=None, cancel=False, default=NO):
-        """ Convenience method to show a confirmation dialog.
+        """Convenience method to show a confirmation dialog.
 
         Parameters
         ----------
@@ -125,9 +125,9 @@ class IWindow(IWidget):
         title="Information",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show an information message dialog.
+        """Convenience method to show an information message dialog.
 
         Parameters
         ----------
@@ -151,9 +151,9 @@ class IWindow(IWidget):
         title="Warning",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show a warning message dialog.
+        """Convenience method to show a warning message dialog.
 
         Parameters
         ----------
@@ -177,9 +177,9 @@ class IWindow(IWidget):
         title="Error",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show an error message dialog.
+        """Convenience method to show an error message dialog.
 
         Parameters
         ----------
@@ -199,7 +199,7 @@ class IWindow(IWidget):
 
 
 class MWindow(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IWindow interface.
 
     Implements: close(), confirm(), open()
@@ -211,7 +211,7 @@ class MWindow(HasTraits):
     # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window.
+        """Opens the window.
 
         This fires the :py:attr:`closing` vetoable event, giving listeners the
         opportunity to veto the opening of the window.
@@ -236,7 +236,7 @@ class MWindow(HasTraits):
         return self.control is not None and not event.veto
 
     def close(self, force=False):
-        """ Closes the window.
+        """Closes the window.
 
         This fires the :py:attr:`closing` vetoable event, giving listeners the
         opportunity to veto the closing of the window.  If :py:obj:`force` is
@@ -264,7 +264,7 @@ class MWindow(HasTraits):
         return self.control is None
 
     def confirm(self, message, title=None, cancel=False, default=NO):
-        """ Convenience method to show a confirmation dialog.
+        """Convenience method to show a confirmation dialog.
 
         Parameters
         ----------
@@ -287,9 +287,9 @@ class MWindow(HasTraits):
         title="Information",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show an information message dialog.
+        """Convenience method to show an information message dialog.
 
         Parameters
         ----------
@@ -319,9 +319,9 @@ class MWindow(HasTraits):
         title="Warning",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show a warning message dialog.
+        """Convenience method to show a warning message dialog.
 
         Parameters
         ----------
@@ -341,9 +341,7 @@ class MWindow(HasTraits):
         """
         from .message_dialog import warning
 
-        warning(
-            self.control, message, title, detail, informative, text_format
-        )
+        warning(self.control, message, title, detail, informative, text_format)
 
     def error(
         self,
@@ -351,9 +349,9 @@ class MWindow(HasTraits):
         title="Error",
         detail="",
         informative="",
-        text_format="auto"
+        text_format="auto",
     ):
-        """ Convenience method to show an error message dialog.
+        """Convenience method to show an error message dialog.
 
         Parameters
         ----------

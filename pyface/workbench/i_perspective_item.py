@@ -14,7 +14,7 @@ from traits.api import Enum, Float, Interface, Str
 
 
 class IPerspectiveItem(Interface):
-    """ The interface for perspective items. """
+    """The interface for perspective items."""
 
     # The Id of the view to display in the perspective.
     id = Str()

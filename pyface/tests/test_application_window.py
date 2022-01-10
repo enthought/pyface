@@ -158,7 +158,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
                 Action(name="Zoom in"),
                 Action(name="Zoom out"),
                 name="View",
-            )
+            ),
         )
         with self.event_loop():
             self.window._create()

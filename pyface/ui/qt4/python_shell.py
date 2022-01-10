@@ -41,7 +41,7 @@ from .layout_widget import LayoutWidget
 
 @provides(IPythonShell)
 class PythonShell(MPythonShell, LayoutWidget):
-    """ The toolkit specific implementation of a PythonShell.  See the
+    """The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
@@ -87,7 +87,7 @@ class PythonShell(MPythonShell, LayoutWidget):
         self.control.execute_file(path, hidden=hidden)
 
     def get_history(self):
-        """ Return the current command history and index.
+        """Return the current command history and index.
 
         Returns
         -------
@@ -99,7 +99,7 @@ class PythonShell(MPythonShell, LayoutWidget):
         return self.control._history, self.control._history_index
 
     def set_history(self, history, history_index):
-        """ Replace the current command history and index with new ones.
+        """Replace the current command history and index with new ones.
 
         Parameters
         ----------
@@ -144,7 +144,7 @@ class PythonShell(MPythonShell, LayoutWidget):
     # --------------------------------------------------------------------------
 
     def _on_obj_drop(self, obj):
-        """ Handle dropped objects and add to interpreter local namespace. """
+        """Handle dropped objects and add to interpreter local namespace."""
         # If we can't create a valid Python identifier for the name of an
         # object we use this instead.
         name = "dragged"
@@ -169,8 +169,7 @@ class PythonShell(MPythonShell, LayoutWidget):
 
 
 class PythonWidget(HistoryConsoleWidget):
-    """ A basic in-process Python interpreter.
-    """
+    """A basic in-process Python interpreter."""
 
     # Emitted when a command has been executed in the interpeter.
     executed = QtCore.Signal()
@@ -227,8 +226,7 @@ class PythonWidget(HistoryConsoleWidget):
     # --------------------------------------------------------------------------
 
     def flush(self):
-        """ Flush the buffer by writing its contents to the screen.
-        """
+        """Flush the buffer by writing its contents to the screen."""
         self._buffer.seek(0)
         text = self._buffer.getvalue()
         self._buffer.close()
@@ -238,13 +236,11 @@ class PythonWidget(HistoryConsoleWidget):
         self._control.moveCursor(QtGui.QTextCursor.End)
 
     def readline(self, prompt=None):
-        """ Read and return one line of input from the user.
-        """
+        """Read and return one line of input from the user."""
         return self._readline(prompt)
 
     def write(self, text, refresh=True):
-        """ Write text to the buffer, possibly flushing it if 'refresh' is set.
-        """
+        """Write text to the buffer, possibly flushing it if 'refresh' is set."""
         if not self._hidden:
             self._buffer.write(text)
             if refresh:
@@ -254,8 +250,7 @@ class PythonWidget(HistoryConsoleWidget):
                     self._last_refresh_time = current_time
 
     def writelines(self, lines, refresh=True):
-        """ Write a list of lines to the buffer.
-        """
+        """Write a list of lines to the buffer."""
         for line in lines:
             self.write(line, refresh=refresh)
 
@@ -264,9 +259,9 @@ class PythonWidget(HistoryConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def _is_complete(self, source, interactive):
-        """ Returns whether 'source' can be completely processed and a new
-            prompt created. When triggered by an Enter/Return key press,
-            'interactive' is True; otherwise, it is False.
+        """Returns whether 'source' can be completely processed and a new
+        prompt created. When triggered by an Enter/Return key press,
+        'interactive' is True; otherwise, it is False.
         """
         if interactive:
             lines = source.splitlines()
@@ -282,7 +277,7 @@ class PythonWidget(HistoryConsoleWidget):
             return True
 
     def _execute(self, source, hidden):
-        """ Execute 'source'. If 'hidden', do not show any output.
+        """Execute 'source'. If 'hidden', do not show any output.
 
         See parent class :meth:`execute` docstring for full details.
         """
@@ -311,21 +306,20 @@ class PythonWidget(HistoryConsoleWidget):
             self._show_interpreter_prompt()
 
     def _prompt_started_hook(self):
-        """ Called immediately after a new prompt is displayed.
-        """
+        """Called immediately after a new prompt is displayed."""
         if not self._reading:
             self._highlighter.highlighting_on = True
 
     def _prompt_finished_hook(self):
-        """ Called immediately after a prompt is finished, i.e. when some input
-            will be processed and a new prompt displayed.
+        """Called immediately after a prompt is finished, i.e. when some input
+        will be processed and a new prompt displayed.
         """
         if not self._reading:
             self._highlighter.highlighting_on = False
 
     def _tab_pressed(self):
-        """ Called when the tab key is pressed. Returns whether to continue
-            processing the event.
+        """Called when the tab key is pressed. Returns whether to continue
+        processing the event.
         """
         # Perform tab completion if:
         # 1) The cursor is in the input buffer.
@@ -343,8 +337,7 @@ class PythonWidget(HistoryConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def _event_filter_console_keypress(self, event):
-        """ Reimplemented for smart backspace.
-        """
+        """Reimplemented for smart backspace."""
         if (
             event.key() == QtCore.Qt.Key_Backspace
             and not event.modifiers() & QtCore.Qt.AltModifier
@@ -366,8 +359,7 @@ class PythonWidget(HistoryConsoleWidget):
         return super()._event_filter_console_keypress(event)
 
     def _insert_continuation_prompt(self, cursor):
-        """ Reimplemented for auto-indentation.
-        """
+        """Reimplemented for auto-indentation."""
         super()._insert_continuation_prompt(cursor)
         source = self.input_buffer
         space = 0
@@ -387,15 +379,15 @@ class PythonWidget(HistoryConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def execute_file(self, path, hidden=False):
-        """ Attempts to execute file with 'path'. If 'hidden', no output is
-            shown.
+        """Attempts to execute file with 'path'. If 'hidden', no output is
+        shown.
         """
 
         self.execute("exec(open(%s).read())" % repr(path), hidden=hidden)
 
     def reset(self):
-        """ Resets the widget to its initial state. Similar to ``clear``, but
-            also re-writes the banner.
+        """Resets the widget to its initial state. Similar to ``clear``, but
+        also re-writes the banner.
         """
         self._reading = False
         self._highlighter.highlighting_on = False
@@ -409,8 +401,7 @@ class PythonWidget(HistoryConsoleWidget):
     # ---------------------------------------------------------------------------
 
     def _call_tip(self):
-        """ Shows a call tip, if appropriate, at the current cursor location.
-        """
+        """Shows a call tip, if appropriate, at the current cursor location."""
         # Decide if it makes sense to show a call tip
         cursor = self._get_cursor()
         cursor.movePosition(QtGui.QTextCursor.Left)
@@ -429,8 +420,7 @@ class PythonWidget(HistoryConsoleWidget):
         return False
 
     def _complete(self):
-        """ Performs completion at the current cursor location.
-        """
+        """Performs completion at the current cursor location."""
         context = self._get_context()
         if context:
             symbol, leftover = self._get_symbol_from_context(context)
@@ -450,8 +440,7 @@ class PythonWidget(HistoryConsoleWidget):
                     self._complete_with_items(cursor, completions)
 
     def _get_banner(self):
-        """ Gets a banner to display at the beginning of a session.
-        """
+        """Gets a banner to display at the beginning of a session."""
         banner = (
             'Python %s on %s\nType "help", "copyright", "credits" or '
             '"license" for more information.'
@@ -459,8 +448,8 @@ class PythonWidget(HistoryConsoleWidget):
         return banner % (sys.version, sys.platform)
 
     def _get_context(self, cursor=None):
-        """ Gets the context for the specified cursor (or the current cursor
-            if none is specified).
+        """Gets the context for the specified cursor (or the current cursor
+        if none is specified).
         """
         if cursor is None:
             cursor = self._get_cursor()
@@ -471,8 +460,8 @@ class PythonWidget(HistoryConsoleWidget):
         return self._completion_lexer.get_context(text)
 
     def _get_symbol_from_context(self, context):
-        """ Find a python object in the interpeter namespace from a context (a
-            list of names).
+        """Find a python object in the interpeter namespace from a context (a
+        list of names).
         """
         context = list(map(str, context))
         if len(context) == 0:
@@ -496,16 +485,15 @@ class PythonWidget(HistoryConsoleWidget):
         return symbol, []
 
     def _show_interpreter_prompt(self):
-        """ Shows a prompt for the interpreter.
-        """
+        """Shows a prompt for the interpreter."""
         self.flush()
         self._show_prompt(">>> ")
 
     # Signal handlers ----------------------------------------------------
 
     def _document_contents_change(self, position, removed, added):
-        """ Called whenever the document's content changes. Display a call tip
-            if appropriate.
+        """Called whenever the document's content changes. Display a call tip
+        if appropriate.
         """
         # Calculate where the cursor should be *after* the change:
         position += added
@@ -520,8 +508,8 @@ class PythonWidget(HistoryConsoleWidget):
 
 
 class PythonWidgetHighlighter(PygmentsHighlighter):
-    """ A PygmentsHighlighter that can be turned on and off and that ignores
-        prompts.
+    """A PygmentsHighlighter that can be turned on and off and that ignores
+    prompts.
     """
 
     def __init__(self, python_widget):
@@ -531,8 +519,7 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         self.highlighting_on = False
 
     def highlightBlock(self, string):
-        """ Highlight a block of text. Reimplemented to highlight selectively.
-        """
+        """Highlight a block of text. Reimplemented to highlight selectively."""
         if not self.highlighting_on:
             return
 
@@ -551,23 +538,21 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         # Don't highlight the part of the string that contains the prompt.
         if string.startswith(prompt):
             self._current_offset = len(prompt)
-            string = string[len(prompt):]
+            string = string[len(prompt) :]
         else:
             self._current_offset = 0
 
         super().highlightBlock(string)
 
     def rehighlightBlock(self, block):
-        """ Reimplemented to temporarily enable highlighting if disabled.
-        """
+        """Reimplemented to temporarily enable highlighting if disabled."""
         old = self.highlighting_on
         self.highlighting_on = True
         super().rehighlightBlock(block)
         self.highlighting_on = old
 
     def setFormat(self, start, count, format):
-        """ Reimplemented to highlight selectively.
-        """
+        """Reimplemented to highlight selectively."""
         start += self._current_offset
         super().setFormat(start, count, format)
 
@@ -578,16 +563,15 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
 
 
 class PyfacePythonWidget(PythonWidget):
-    """ A PythonWidget customized to support the IPythonShell interface.
-    """
+    """A PythonWidget customized to support the IPythonShell interface."""
 
     # --------------------------------------------------------------------------
     # 'object' interface
     # --------------------------------------------------------------------------
 
     def __init__(self, pyface_widget, *args, **kw):
-        """ Reimplemented to store a reference to the Pyface widget which
-            contains this control.
+        """Reimplemented to store a reference to the Pyface widget which
+        contains this control.
         """
         self._pyface_widget = pyface_widget
 
@@ -598,8 +582,7 @@ class PyfacePythonWidget(PythonWidget):
     # ---------------------------------------------------------------------------
 
     def keyPressEvent(self, event):
-        """ Reimplemented to generate Pyface key press events.
-        """
+        """Reimplemented to generate Pyface key press events."""
         # Pyface doesn't seem to be Str aware.  Only keep the key code if it
         # corresponds to a single Latin1 character.
         kstr = event.text()
@@ -625,7 +608,7 @@ class PyfacePythonWidget(PythonWidget):
 
 
 class _DropEventEmitter(QtCore.QObject):
-    """ Handle object drops on widget. """
+    """Handle object drops on widget."""
 
     signal = QtCore.Signal(object)
 
@@ -637,7 +620,7 @@ class _DropEventEmitter(QtCore.QObject):
         widget.installEventFilter(self)
 
     def eventFilter(self, source, event):
-        """ Handle drop events on widget. """
+        """Handle drop events on widget."""
         typ = event.type()
         if typ == QtCore.QEvent.DragEnter:
             if hasattr(event.mimeData(), "instance"):

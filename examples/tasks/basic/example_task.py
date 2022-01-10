@@ -21,8 +21,7 @@ from example_panes import PythonEditorPane, PythonScriptBrowserPane
 
 
 class ExampleTask(Task):
-    """ A simple task for editing Python code.
-    """
+    """A simple task for editing Python code."""
 
     # Task interface -------------------------------------------------------
 
@@ -65,19 +64,16 @@ class ExampleTask(Task):
         return TaskLayout(left=PaneItem("example.python_script_browser_pane"))
 
     def activated(self):
-        """ Overriden to set the window's title.
-        """
+        """Overriden to set the window's title."""
         filename = self.window.central_pane.editor.path
         self.window.title = filename if filename else "Untitled"
 
     def create_central_pane(self):
-        """ Create the central pane: the script editor.
-        """
+        """Create the central pane: the script editor."""
         return PythonEditorPane()
 
     def create_dock_panes(self):
-        """ Create the file browser and connect to its double click event.
-        """
+        """Create the file browser and connect to its double click event."""
         browser = PythonScriptBrowserPane()
         handler = lambda _: self._open_file(browser.selected_file)
         browser.observe(handler, "activated")
@@ -88,15 +84,14 @@ class ExampleTask(Task):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Shows a dialog to open a file.
-        """
+        """Shows a dialog to open a file."""
         dialog = FileDialog(parent=self.window.control, wildcard="*.py")
         if dialog.open() == OK:
             self._open_file(dialog.path)
 
     def save(self):
-        """ Attempts to save the current file, prompting for a path if
-            necessary. Returns whether the file was saved.
+        """Attempts to save the current file, prompting for a path if
+        necessary. Returns whether the file was saved.
         """
         editor = self.window.central_pane.editor
         try:
@@ -118,15 +113,14 @@ class ExampleTask(Task):
     # ------------------------------------------------------------------------
 
     def _open_file(self, filename):
-        """ Opens the file at the specified path in the editor.
-        """
+        """Opens the file at the specified path in the editor."""
         if self._prompt_for_save():
             self.window.central_pane.editor.path = filename
             self.activated()
 
     def _prompt_for_save(self):
-        """ Prompts the user to save if necessary. Returns whether the dialog
-            was cancelled.
+        """Prompts the user to save if necessary. Returns whether the dialog
+        was cancelled.
         """
         if self.window.central_pane.editor.dirty:
             message = (
@@ -150,8 +144,7 @@ class ExampleTask(Task):
 
     @observe("window:closing")
     def _prompt_on_close(self, event):
-        """ Prompt the user to save when exiting.
-        """
+        """Prompt the user to save when exiting."""
         window = event.new
         if not self._prompt_for_save():
             window.veto = True

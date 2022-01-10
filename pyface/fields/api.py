@@ -43,5 +43,7 @@ from .spin_field import SpinField
 from .text_field import TextField
 from .time_field import TimeField
 from .toggle_field import (
-    CheckBoxField, RadioButtonField, ToggleButtonField,
+    CheckBoxField,
+    RadioButtonField,
+    ToggleButtonField,
 )

@@ -15,7 +15,7 @@ from .label_provider import LabelProvider
 
 
 class TableLabelProvider(LabelProvider):
-    """ Base class for all table label providers.
+    """Base class for all table label providers.
 
     By default an item has no icon, and 'str' is used to generate its label.
 
@@ -26,11 +26,11 @@ class TableLabelProvider(LabelProvider):
     # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element, column_index=0):
-        """ Returns the filename of the label image for an element. """
+        """Returns the filename of the label image for an element."""
 
         return None
 
     def get_text(self, viewer, element, column_index=0):
-        """ Returns the label text for an element. """
+        """Returns the label text for an element."""
 
         return "%s column %d" % (str(element), column_index)

@@ -11,12 +11,12 @@ from traits.api import Interface
 
 
 class IDropHandler(Interface):
-    """ Interface for a drop event handler, which provides API to check if the
+    """Interface for a drop event handler, which provides API to check if the
     drop can be handled or not, and then handle it if possible.
     """
 
     def can_handle_drop(self, event, target):
-        """ Whether or not a drag event can be handled
+        """Whether or not a drag event can be handled
 
         This is used to give feedback to the user about whether a drop is
         possible via the shape of the cursor or similar indicators.
@@ -36,7 +36,7 @@ class IDropHandler(Interface):
         """
 
     def handle_drop(self, event, target):
-        """ Performs drop action when drop event occurs on target widget.
+        """Performs drop action when drop event occurs on target widget.
 
         Parameters
         ----------

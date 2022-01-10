@@ -15,7 +15,7 @@ from .content_provider import ContentProvider
 
 
 class TreeContentProvider(ContentProvider):
-    """ Abstract base class for tree content providers.
+    """Abstract base class for tree content providers.
 
     Tree content providers are used by (surprise, surprise) tree viewers!
 
@@ -26,7 +26,7 @@ class TreeContentProvider(ContentProvider):
     # ------------------------------------------------------------------------
 
     def get_elements(self, element):
-        """ Returns a list of the elements to display in a viewer.
+        """Returns a list of the elements to display in a viewer.
 
         Returns a list of elements to display in a viewer when its (ie. the
         viewer's) input is set to the given element.
@@ -42,7 +42,7 @@ class TreeContentProvider(ContentProvider):
     # ------------------------------------------------------------------------
 
     def get_parent(self, element):
-        """ Returns the parent of an element.
+        """Returns the parent of an element.
 
         Returns None if the element either has no parent (ie. it is the root of
         the tree), or if the parent cannot be computed.
@@ -52,11 +52,11 @@ class TreeContentProvider(ContentProvider):
         return None
 
     def get_children(self, element):
-        """ Returns the children of an element. """
+        """Returns the children of an element."""
 
         raise NotImplementedError()
 
     def has_children(self, element):
-        """ Returns True iff the element has children, otherwise False. """
+        """Returns True iff the element has children, otherwise False."""
 
         raise NotImplementedError()

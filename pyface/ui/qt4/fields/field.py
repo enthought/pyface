@@ -19,7 +19,7 @@ from pyface.ui.qt4.layout_widget import LayoutWidget
 
 @provides(IField)
 class Field(MField, LayoutWidget):
-    """ The Qt-specific implementation of the field class
+    """The Qt-specific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.
     """

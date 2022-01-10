@@ -28,7 +28,7 @@ from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
 
 class IEditor(IWorkbenchPart):
-    """ The interface of a workbench editor. """
+    """The interface of a workbench editor."""
 
     # The optional command stack.
     command_stack = Instance("pyface.undo.api.ICommandStack")
@@ -53,7 +53,7 @@ class IEditor(IWorkbenchPart):
     # Methods -------------------------------------------------------------#
 
     def close(self):
-        """ Close the editor.
+        """Close the editor.
 
         This method is not currently called by the framework itself as the user
         is normally in control of the editor lifecycle. Call this if you want
@@ -64,7 +64,7 @@ class IEditor(IWorkbenchPart):
 
 @provides(IEditor)
 class MEditor(MWorkbenchPart):
-    """ Mixin containing common code for toolkit-specific implementations. """
+    """Mixin containing common code for toolkit-specific implementations."""
 
     # 'IEditor' interface -------------------------------------------------#
 
@@ -99,7 +99,7 @@ class MEditor(MWorkbenchPart):
     # ------------------------------------------------------------------------
 
     def __str__(self):
-        """ Return an informal string representation of the object. """
+        """Return an informal string representation of the object."""
 
         return "Editor(%s)" % self.id
 
@@ -108,7 +108,7 @@ class MEditor(MWorkbenchPart):
     # ------------------------------------------------------------------------
 
     def _id_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # If no Id is specified then use a random uuid
         # this gaurantees (barring *really* unusual cases) that there are no
@@ -120,7 +120,7 @@ class MEditor(MWorkbenchPart):
     # ------------------------------------------------------------------------
 
     def close(self):
-        """ Close the editor. """
+        """Close the editor."""
 
         if self.control is not None:
             self.closing = event = Vetoable()
@@ -134,7 +134,7 @@ class MEditor(MWorkbenchPart):
     # Initializers ---------------------------------------------------------
 
     def _command_stack_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # We make sure the undo package is entirely optional.
         try:

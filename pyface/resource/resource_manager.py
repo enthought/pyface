@@ -37,7 +37,7 @@ from pyface.resource.resource_reference import ImageReference
 
 
 class ResourceManager(HasTraits):
-    """ The default resource manager.
+    """The default resource manager.
 
     A resource manager locates and loads application resources such as images
     and sounds etc.
@@ -60,7 +60,7 @@ class ResourceManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def locate_image(self, image_name, path, size=None):
-        """ Locates an image.
+        """Locates an image.
 
         Parameters
         ----------
@@ -98,7 +98,7 @@ class ResourceManager(HasTraits):
         return self._locate_image(image_name, resource_path, size)
 
     def load_image(self, image_name, path, size=None):
-        """ Loads an image. """
+        """Loads an image."""
 
         reference = self.locate_image(image_name, path, size)
         if reference is not None:
@@ -114,7 +114,7 @@ class ResourceManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _locate_image(self, image_name, resource_path, size):
-        """ Attempts to locate an image resource.
+        """Attempts to locate an image resource.
 
         If the image is found, an image resource reference is returned.
         If the image is NOT found None is returned.
@@ -156,9 +156,7 @@ class ResourceManager(HasTraits):
                 except OSError:
                     continue
                 else:
-                    return ImageReference(
-                        self.resource_factory, data=data
-                    )
+                    return ImageReference(self.resource_factory, data=data)
 
             # Is there anything resembling the image name in the directory?
             for path in subdirs:
@@ -241,7 +239,7 @@ class ResourceManager(HasTraits):
         return None
 
     def _get_resource_path(self, object):
-        """ Returns the resource path for an object. """
+        """Returns the resource path for an object."""
 
         if hasattr(object, "resource_path"):
             resource_path = object.resource_path
@@ -252,7 +250,7 @@ class ResourceManager(HasTraits):
         return resource_path
 
     def _get_default_resource_path(self, object):
-        """ Returns the default resource path for an object. """
+        """Returns the default resource path for an object."""
 
         resource_path = []
         for klass in inspect.getmro(object.__class__):
@@ -269,7 +267,7 @@ class ResourceManager(HasTraits):
 
 
 def _get_package_data(module, rel_path):
-    """ Return package data in bytes for the given module and resource path.
+    """Return package data in bytes for the given module and resource path.
 
     Parameters
     ----------
@@ -293,20 +291,20 @@ def _get_package_data(module, rel_path):
         file cannot be read.
     """
 
-    if (module.__spec__ is None
-            or module.__spec__.submodule_search_locations is None):
+    if (
+        module.__spec__ is None
+        or module.__spec__.submodule_search_locations is None
+    ):
         module_dir_path = os.path.dirname(module.__file__)
         path = os.path.join(module_dir_path, *rel_path.split("/"))
         with open(path, "rb") as fp:
             return fp.read()
 
-    return (
-        files(module).joinpath(rel_path).read_bytes()
-    )
+    return files(module).joinpath(rel_path).read_bytes()
 
 
 def _find_resource_data(module, subdirs, filenames):
-    """ For the given module, search directories and names, find a matching
+    """For the given module, search directories and names, find a matching
     resource file and return its content as bytes.
 
     Parameters
@@ -340,6 +338,4 @@ def _find_resource_data(module, subdirs, filenames):
                 return _get_package_data(module, searchpath)
             except OSError:
                 pass
-    raise OSError(
-        "Unable to load data for the given module and search paths."
-    )
+    raise OSError("Unable to load data for the given module and search paths.")

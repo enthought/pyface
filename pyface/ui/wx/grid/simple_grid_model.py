@@ -23,7 +23,7 @@ from .grid_model import GridColumn, GridModel, GridRow
 
 
 class SimpleGridModel(GridModel):
-    """ A SimpleGridModel simply builds a table from a 2-dimensional
+    """A SimpleGridModel simply builds a table from a 2-dimensional
     list/array containing the data. Optionally users can pass in specifications
     for rows and columns. By default these are built off the data itself,
     with row/column labels as the index + 1."""
@@ -42,7 +42,7 @@ class SimpleGridModel(GridModel):
     # ------------------------------------------------------------------------
 
     def get_column_count(self):
-        """ Return the number of columns for this table. """
+        """Return the number of columns for this table."""
 
         if self.columns is not None:
             # if we have an explicit declaration then use it
@@ -55,8 +55,8 @@ class SimpleGridModel(GridModel):
         return count
 
     def get_column_name(self, index):
-        """ Return the name of the column specified by the
-        (zero-based) index. """
+        """Return the name of the column specified by the
+        (zero-based) index."""
 
         if self.columns is not None:
             # if we have an explicit declaration then use it
@@ -71,8 +71,8 @@ class SimpleGridModel(GridModel):
         return name
 
     def get_cols_drag_value(self, cols):
-        """ Return the value to use when the specified columns are dragged or
-        copied and pasted. cols is a list of column indexes. """
+        """Return the value to use when the specified columns are dragged or
+        copied and pasted. cols is a list of column indexes."""
 
         # if there is only one column in cols, then we return a 1-dimensional
         # list
@@ -88,8 +88,8 @@ class SimpleGridModel(GridModel):
         return value
 
     def is_column_read_only(self, index):
-        """ Return True if the column specified by the zero-based index
-        is read-only. """
+        """Return True if the column specified by the zero-based index
+        is read-only."""
 
         # if there is no declaration then assume the column is not
         # read only
@@ -103,7 +103,7 @@ class SimpleGridModel(GridModel):
         return read_only
 
     def get_row_count(self):
-        """ Return the number of rows for this table. """
+        """Return the number of rows for this table."""
 
         if self.rows is not None:
             # if we have an explicit declaration then use it
@@ -115,8 +115,8 @@ class SimpleGridModel(GridModel):
         return count
 
     def get_row_name(self, index):
-        """ Return the name of the row specified by the
-        (zero-based) index. """
+        """Return the name of the row specified by the
+        (zero-based) index."""
 
         if self.rows is not None:
             # if we have an explicit declaration then use it
@@ -131,8 +131,8 @@ class SimpleGridModel(GridModel):
         return name
 
     def get_rows_drag_value(self, rows):
-        """ Return the value to use when the specified rows are dragged or
-        copied and pasted. rows is a list of row indexes. """
+        """Return the value to use when the specified rows are dragged or
+        copied and pasted. rows is a list of row indexes."""
 
         # if there is only one row in rows, then we return a 1-dimensional
         # list
@@ -148,8 +148,8 @@ class SimpleGridModel(GridModel):
         return value
 
     def is_row_read_only(self, index):
-        """ Return True if the row specified by the zero-based index
-        is read-only. """
+        """Return True if the row specified by the zero-based index
+        is read-only."""
 
         # if there is no declaration then assume the row is not
         # read only
@@ -164,7 +164,7 @@ class SimpleGridModel(GridModel):
         return read_only
 
     def get_value(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
 
         try:
             return self.data[row][col]
@@ -175,7 +175,7 @@ class SimpleGridModel(GridModel):
         return ""
 
     def is_cell_empty(self, row, col):
-        """ Returns True if the cell at (row, col) has a None value,
+        """Returns True if the cell at (row, col) has a None value,
         False otherwise."""
 
         if row >= self.get_row_count() or col >= self.get_column_count():
@@ -191,7 +191,7 @@ class SimpleGridModel(GridModel):
         return empty
 
     def get_cell_context_menu(self, row, col):
-        """ Return a MenuManager object that will generate the appropriate
+        """Return a MenuManager object that will generate the appropriate
         context menu for this cell."""
 
         context_menu = MenuManager(
@@ -201,18 +201,18 @@ class SimpleGridModel(GridModel):
         return context_menu
 
     def is_cell_editable(self, row, col):
-        """ Returns True if the cell at (row, col) is editable,
-        False otherwise. """
+        """Returns True if the cell at (row, col) is editable,
+        False otherwise."""
         return True
 
     # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
     # ------------------------------------------------------------------------
     def _set_value(self, row, col, value):
-        """ Sets the value of the cell at (row, col) to value.
+        """Sets the value of the cell at (row, col) to value.
 
         Raises a ValueError if the value is vetoed or the cell at
-        (row, col) does not exist. """
+        (row, col) does not exist."""
         new_rows = 0
         try:
             self.data[row][col] = value
@@ -225,7 +225,7 @@ class SimpleGridModel(GridModel):
         return new_rows
 
     def _delete_rows(self, pos, num_rows):
-        """ Removes rows pos through pos + num_rows from the model. """
+        """Removes rows pos through pos + num_rows from the model."""
 
         if pos + num_rows >= self.get_row_count():
             num_rows = self.get_rows_count() - pos
@@ -239,7 +239,7 @@ class SimpleGridModel(GridModel):
     # ------------------------------------------------------------------------
 
     def __get_data_column(self, col):
-        """ Return a 1-d list of data from the column indexed by col. """
+        """Return a 1-d list of data from the column indexed by col."""
 
         row_count = self.get_row_count()
 
@@ -253,7 +253,7 @@ class SimpleGridModel(GridModel):
         return coldata
 
     def __get_data_row(self, row):
-        """ Return a 1-d list of data from the row indexed by row. """
+        """Return a 1-d list of data from the row indexed by row."""
 
         col_count = self.get_column_count()
 

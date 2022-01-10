@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class TraitsUIView(View):
-    """ A view whose content is provided by a traits UI. """
+    """A view whose content is provided by a traits UI."""
 
     # 'TraitsUIView' interface ---------------------------------------------
 
@@ -48,14 +48,14 @@ class TraitsUIView(View):
     # Trait initializers ---------------------------------------------------
 
     def _name_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         return str(self.obj)
 
     # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
-        """ Creates the toolkit-specific control that represents the editor.
+        """Creates the toolkit-specific control that represents the editor.
 
         'parent' is the toolkit-specific control that is the editor's parent.
 
@@ -68,7 +68,7 @@ class TraitsUIView(View):
         return self.ui.control
 
     def destroy_control(self):
-        """ Destroys the toolkit-specific control that represents the editor.
+        """Destroys the toolkit-specific control that represents the editor.
 
         Overridden to call 'dispose' on the traits UI.
 
@@ -92,14 +92,14 @@ class TraitsUIView(View):
     # Trait initializers ---------------------------------------------------
 
     def _obj_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         return self
 
     # Methods -------------------------------------------------------------#
 
     def create_ui(self, parent):
-        """ Creates the traits UI that represents the editor.
+        """Creates the traits UI that represents the editor.
 
         By default it calls 'edit_traits' on the view's 'model'. If you
         want more control over the creation of the traits UI then override!

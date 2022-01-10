@@ -1,4 +1,3 @@
-
 # (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
@@ -15,7 +14,7 @@ import contextlib
 
 @contextlib.contextmanager
 def optional_import(dependency_name, msg, logger):
-    """ Context manager for capturing ImportError for a particular optional
+    """Context manager for capturing ImportError for a particular optional
     dependency. If such an error occurs, it will be silenced and a debug
     message will be logged.
 

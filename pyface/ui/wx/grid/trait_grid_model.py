@@ -38,7 +38,7 @@ from .trait_grid_cell_adapter import TraitGridCellAdapter
 
 # The classes below are part of the table specification.
 class TraitGridColumn(GridColumn):
-    """ Structure for holding column specifications in a TraitGridModel. """
+    """Structure for holding column specifications in a TraitGridModel."""
 
     # The trait name for this column. This takes precedence over method
     name = Union(None, Str)
@@ -62,7 +62,7 @@ class TraitGridColumn(GridColumn):
 
 
 class TraitGridSelection(HasTraits):
-    """ Structure for holding specification information. """
+    """Structure for holding specification information."""
 
     # The selected object
     obj = Instance(HasTraits)
@@ -73,7 +73,7 @@ class TraitGridSelection(HasTraits):
 
 # The meat.
 class TraitGridModel(GridModel):
-    """ A TraitGridModel builds a grid from a list of traits objects. Each row
+    """A TraitGridModel builds a grid from a list of traits objects. Each row
     represents on object, each column one trait from those objects. All the
     objects must be of the same type. Optionally a user may pass in a list of
     trait names defining which traits will be shown in the columns and in
@@ -100,7 +100,7 @@ class TraitGridModel(GridModel):
     # 'object' interface.
     # ------------------------------------------------------------------------
     def __init__(self, **traits):
-        """ Create a TraitGridModel object. """
+        """Create a TraitGridModel object."""
 
         # Base class constructor
         super().__init__(**traits)
@@ -144,13 +144,13 @@ class TraitGridModel(GridModel):
     # ------------------------------------------------------------------------
 
     def get_column_count(self):
-        """ Return the number of columns for this table. """
+        """Return the number of columns for this table."""
 
         return len(self._auto_columns)
 
     def get_column_name(self, index):
-        """ Return the label of the column specified by the
-        (zero-based) index. """
+        """Return the label of the column specified by the
+        (zero-based) index."""
 
         try:
             name = col = self._auto_columns[index]
@@ -165,8 +165,8 @@ class TraitGridModel(GridModel):
         return name
 
     def get_column_size(self, index):
-        """ Return the size in pixels of the column indexed by col.
-            A value of -1 or None means use the default. """
+        """Return the size in pixels of the column indexed by col.
+        A value of -1 or None means use the default."""
 
         size = -1
         try:
@@ -179,8 +179,8 @@ class TraitGridModel(GridModel):
         return size
 
     def get_cols_drag_value(self, cols):
-        """ Return the value to use when the specified columns are dragged or
-        copied and pasted. cols is a list of column indexes. """
+        """Return the value to use when the specified columns are dragged or
+        copied and pasted. cols is a list of column indexes."""
 
         # iterate over every column, building a list of the values in that
         # column
@@ -191,9 +191,9 @@ class TraitGridModel(GridModel):
         return value
 
     def get_cols_selection_value(self, cols):
-        """ Returns a list of TraitGridSelection objects containing the
+        """Returns a list of TraitGridSelection objects containing the
         object corresponding to the grid rows and the traits corresponding
-        to the specified columns. """
+        to the specified columns."""
 
         values = []
         for obj in self.data:
@@ -207,7 +207,7 @@ class TraitGridModel(GridModel):
         return values
 
     def sort_by_column(self, col, reverse=False):
-        """ Sort model data by the column indexed by col. """
+        """Sort model data by the column indexed by col."""
 
         # first check to see if we allow sorts by column
         if not self.allow_column_sort:
@@ -238,13 +238,13 @@ class TraitGridModel(GridModel):
         self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
     def is_column_read_only(self, index):
-        """ Return True if the column specified by the zero-based index
-        is read-only. """
+        """Return True if the column specified by the zero-based index
+        is read-only."""
 
         return self.__get_column_readonly(index)
 
     def get_row_count(self):
-        """ Return the number of rows for this table. """
+        """Return the number of rows for this table."""
 
         if self.data is not None:
             count = len(self.data)
@@ -254,8 +254,8 @@ class TraitGridModel(GridModel):
         return count
 
     def get_row_name(self, index):
-        """ Return the name of the row specified by the
-        (zero-based) index. """
+        """Return the name of the row specified by the
+        (zero-based) index."""
 
         if self.row_name_trait is not None:
             try:
@@ -271,10 +271,10 @@ class TraitGridModel(GridModel):
         return name
 
     def get_rows_drag_value(self, rows):
-        """ Return the value to use when the specified rows are dragged or
+        """Return the value to use when the specified rows are dragged or
         copied and pasted. rows is a list of row indexes. If there is only
         one row listed, return the corresponding trait object. If more than
-        one row is listed then return a list of objects. """
+        one row is listed then return a list of objects."""
 
         # return a list of objects
         value = []
@@ -291,8 +291,8 @@ class TraitGridModel(GridModel):
         return value
 
     def get_rows_selection_value(self, rows):
-        """ Returns a list of TraitGridSelection objects containing the
-        object corresponding to the selected rows. """
+        """Returns a list of TraitGridSelection objects containing the
+        object corresponding to the selected rows."""
 
         values = []
         for row_index in rows:
@@ -301,13 +301,13 @@ class TraitGridModel(GridModel):
         return values
 
     def is_row_read_only(self, index):
-        """ Return True if the row specified by the zero-based index
-        is read-only. """
+        """Return True if the row specified by the zero-based index
+        is read-only."""
 
         return False
 
     def get_cell_editor(self, row, col):
-        """ Return the editor for the specified cell. """
+        """Return the editor for the specified cell."""
 
         # print 'TraitGridModel.get_cell_editor row: ', row, ' col: ', col
 
@@ -322,8 +322,8 @@ class TraitGridModel(GridModel):
         return TraitGridCellAdapter(factory, obj, trait_name, "")
 
     def get_cell_drag_value(self, row, col):
-        """ Return the value to use when the specified cell is dragged or
-        copied and pasted. """
+        """Return the value to use when the specified cell is dragged or
+        copied and pasted."""
 
         # find the name of the column indexed by col
         # note that this code is the same as the get_value code but without
@@ -336,8 +336,8 @@ class TraitGridModel(GridModel):
         return value
 
     def get_cell_selection_value(self, row, col):
-        """ Returns a TraitGridSelection object specifying the data stored
-        in the table at (row, col). """
+        """Returns a TraitGridSelection object specifying the data stored
+        in the table at (row, col)."""
 
         obj = self.data[row]
         trait_name = self.__get_column_name(col)
@@ -345,12 +345,12 @@ class TraitGridModel(GridModel):
         return TraitGridSelection(obj=obj, trait_name=trait_name)
 
     def resolve_selection(self, selection_list):
-        """ Returns a list of (row, col) grid-cell coordinates that
+        """Returns a list of (row, col) grid-cell coordinates that
         correspond to the objects in objlist. For each coordinate, if the
         row is -1 it indicates that the entire column is selected. Likewise
         coordinates with a column of -1 indicate an entire row that is
         selected. For the TraitGridModel, the objects in objlist must
-        be TraitGridSelection objects. """
+        be TraitGridSelection objects."""
 
         cells = []
         for selection in selection_list:
@@ -370,14 +370,14 @@ class TraitGridModel(GridModel):
         return cells
 
     def get_type(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
 
         typename = self.__get_column_typename(col)
 
         return typename
 
     def get_value(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
 
         value = self.get_cell_drag_value(row, col)
         formats = self.__get_column_formats(col)
@@ -401,7 +401,7 @@ class TraitGridModel(GridModel):
         return value
 
     def is_cell_empty(self, row, col):
-        """ Returns True if the cell at (row, col) has a None value,
+        """Returns True if the cell at (row, col) has a None value,
         False otherwise."""
 
         value = self.get_value(row, col)
@@ -409,16 +409,16 @@ class TraitGridModel(GridModel):
         return value is None
 
     def is_cell_editable(self, row, col):
-        """ Returns True if the cell at (row, col) is editable,
-        False otherwise. """
+        """Returns True if the cell at (row, col) is editable,
+        False otherwise."""
         return not self.is_column_read_only(col)
 
     # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
     # ------------------------------------------------------------------------
     def _insert_rows(self, pos, num_rows):
-        """ Inserts num_rows at pos and fires an event iff a factory method
-        for new rows is defined. Otherwise returns 0. """
+        """Inserts num_rows at pos and fires an event iff a factory method
+        for new rows is defined. Otherwise returns 0."""
 
         count = 0
         if self.row_factory is not None:
@@ -432,7 +432,7 @@ class TraitGridModel(GridModel):
         return count
 
     def _delete_rows(self, pos, num_rows):
-        """ Removes rows pos through pos + num_rows from the model. """
+        """Removes rows pos through pos + num_rows from the model."""
 
         if pos + num_rows >= self.get_row_count():
             num_rows = self.get_rows_count() - pos
@@ -440,10 +440,10 @@ class TraitGridModel(GridModel):
         return self._delete_rows_from_model(pos, num_rows)
 
     def _set_value(self, row, col, value):
-        """ Sets the value of the cell at (row, col) to value.
+        """Sets the value of the cell at (row, col) to value.
 
         Raises a ValueError if the value is vetoed or the cell at
-        (row, col) does not exist. """
+        (row, col) does not exist."""
 
         # print 'TraitGridModel._set_value: new: ', value
 
@@ -473,16 +473,16 @@ class TraitGridModel(GridModel):
     # protected interface.
     # ------------------------------------------------------------------------
     def _get_row(self, index):
-        """ Return the object that corresponds to the row at index. Override
-        this to handle very large data sets. """
+        """Return the object that corresponds to the row at index. Override
+        this to handle very large data sets."""
 
         return self.data[index]
 
     def _get_data_from_row(self, row, column):
-        """ Retrieve the data specified by column for this row. Attribute
+        """Retrieve the data specified by column for this row. Attribute
         can be either a member of the row object, or a no-argument method
         on that object. Override this method to provide alternative ways
-        of accessing the data in the object. """
+        of accessing the data in the object."""
 
         value = None
 
@@ -505,10 +505,10 @@ class TraitGridModel(GridModel):
             return str(value)  # value
 
     def _set_data_on_row(self, row, column, value):
-        """ Retrieve the data specified by column for this row. Attribute
+        """Retrieve the data specified by column for this row. Attribute
         can be either a member of the row object, or a no-argument method
         on that object. Override this method to provide alternative ways
-        of accessing the data in the object. """
+        of accessing the data in the object."""
 
         success = False
 
@@ -542,16 +542,16 @@ class TraitGridModel(GridModel):
         return success
 
     def _insert_rows_into_model(self, pos, new_data):
-        """ Insert the given new rows into the model. Override this method
-        to handle very large data sets. """
+        """Insert the given new rows into the model. Override this method
+        to handle very large data sets."""
 
         for data in new_data:
             self.data.insert(pos, data)
             pos += 1
 
     def _delete_rows_from_model(self, pos, num_rows):
-        """ Delete the specified rows from the model. Override this method
-        to handle very large data sets. """
+        """Delete the specified rows from the model. Override this method
+        to handle very large data sets."""
         del self.data[pos, pos + num_rows]
 
         return num_rows
@@ -561,36 +561,36 @@ class TraitGridModel(GridModel):
     # ------------------------------------------------------------------------
 
     def _on_row_name_trait_changed(self, event):
-        """ Force the grid to refresh when any underlying trait changes. """
+        """Force the grid to refresh when any underlying trait changes."""
         self.fire_content_changed()
 
     def _on_columns_changed(self, event):
-        """ Force the grid to refresh when any underlying trait changes. """
+        """Force the grid to refresh when any underlying trait changes."""
         self.__manage_column_listeners(event.old, remove=True)
         self.__manage_column_listeners(self.columns)
         self._auto_columns = self.columns
         self.fire_structure_changed()
 
     def _on_columns_items_changed(self, event):
-        """ Force the grid to refresh when any underlying trait changes. """
+        """Force the grid to refresh when any underlying trait changes."""
 
         self.__manage_column_listeners(event.removed, remove=True)
         self.__manage_column_listeners(event.added)
         self.fire_structure_changed()
 
     def _on_contained_trait_changed(self, event):
-        """ Force the grid to refresh when any underlying trait changes. """
+        """Force the grid to refresh when any underlying trait changes."""
         self.fire_content_changed()
 
     def _on_data_changed(self, event):
-        """ Force the grid to refresh when the underlying list changes. """
+        """Force the grid to refresh when the underlying list changes."""
 
         self.__manage_data_listeners(event.old, remove=True)
         self.__manage_data_listeners(self.data)
         self.fire_structure_changed()
 
     def _on_data_items_changed(self, event):
-        """ Force the grid to refresh when the underlying list changes. """
+        """Force the grid to refresh when the underlying list changes."""
 
         # if an item was removed then remove that item's listener
         self.__manage_data_listeners(event.removed, remove=True)
@@ -605,7 +605,7 @@ class TraitGridModel(GridModel):
     # ------------------------------------------------------------------------
 
     def __get_data_column(self, col):
-        """ Return a 1-d list of data from the column indexed by col. """
+        """Return a 1-d list of data from the column indexed by col."""
 
         row_count = self.get_row_count()
 
@@ -688,7 +688,7 @@ class TraitGridModel(GridModel):
                 item.observe(
                     self._on_contained_trait_changed,
                     match(lambda name, trait: True),
-                    remove=remove
+                    remove=remove,
                 )
 
     def __manage_column_listeners(self, collist, remove=False):

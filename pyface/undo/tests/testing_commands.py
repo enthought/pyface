@@ -13,7 +13,7 @@ from pyface.undo.api import AbstractCommand
 
 
 class SimpleCommand(AbstractCommand):
-    """ Simplest command possible operating on an integer. """
+    """Simplest command possible operating on an integer."""
 
     name = "Increment by 1"
 

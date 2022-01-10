@@ -20,7 +20,7 @@ from pyface.color import channels_to_ints, ints_to_channels
 
 
 def toolkit_color_to_rgba(color):
-    """ Convert a hex tuple to an RGBA tuple.
+    """Convert a hex tuple to an RGBA tuple.
 
     Parameters
     ----------
@@ -36,7 +36,7 @@ def toolkit_color_to_rgba(color):
 
 
 def rgba_to_toolkit_color(rgba):
-    """ Convert an RGBA tuple to a hex tuple.
+    """Convert an RGBA tuple to a hex tuple.
 
     Parameters
     ----------

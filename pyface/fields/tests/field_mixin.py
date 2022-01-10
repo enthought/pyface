@@ -13,5 +13,6 @@ from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
 
 
 class FieldMixin(LayoutWidgetMixin):
-    """ Mixin which provides standard methods for all fields. """
+    """Mixin which provides standard methods for all fields."""
+
     pass

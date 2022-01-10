@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 @provides(ITaskPane)
 class TaskPane(MTaskPane):
-    """ The toolkit-specific implementation of a TaskPane.
+    """The toolkit-specific implementation of a TaskPane.
 
     See the ITaskPane interface for API documentation.
     """
@@ -32,14 +32,13 @@ class TaskPane(MTaskPane):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            pane.
+        """Create and set the toolkit-specific control that represents the
+        pane.
         """
         self.control = wx.Panel(parent)
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
@@ -49,7 +48,6 @@ class TaskPane(MTaskPane):
             self.control = None
 
     def set_focus(self):
-        """ Gives focus to the control that represents the pane.
-        """
+        """Gives focus to the control that represents the pane."""
         if self.control is not None:
             self.control.SetFocus()

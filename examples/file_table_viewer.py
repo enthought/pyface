@@ -23,14 +23,14 @@ from traits.api import Instance, Str
 
 
 class FileTableContentProvider(TableContentProvider):
-    """ A table content provider for local file systems. """
+    """A table content provider for local file systems."""
 
     # ------------------------------------------------------------------------
     # 'TableContentProvider' interface.
     # ------------------------------------------------------------------------
 
     def get_elements(self, element):
-        """ Returns the label for an element. """
+        """Returns the label for an element."""
 
         if isdir(element):
             elements = [
@@ -44,7 +44,7 @@ class FileTableContentProvider(TableContentProvider):
 
 
 class FileTableLabelProvider(TableLabelProvider):
-    """ A table label provider for local file systems. """
+    """A table label provider for local file systems."""
 
     # The icon used to represent 'folder' elements.
     FOLDER = ImageResource("closed_folder")
@@ -57,7 +57,7 @@ class FileTableLabelProvider(TableLabelProvider):
     # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element, column_index=0):
-        """ Returns the filename of the label image for an element. """
+        """Returns the filename of the label image for an element."""
 
         if isdir(element):
             image = self.FOLDER
@@ -68,7 +68,7 @@ class FileTableLabelProvider(TableLabelProvider):
         return image
 
     def get_text(self, viewer, element, column_index=0):
-        """ Returns the label text for an element. """
+        """Returns the label text for an element."""
 
         details = stat(element)
 
@@ -86,14 +86,14 @@ class FileTableLabelProvider(TableLabelProvider):
 
 
 class FileTableColumnProvider(TableColumnProvider):
-    """ A table column provider for local file systems. """
+    """A table column provider for local file systems."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self):
-        """ Creates a new column provider. """
+        """Creates a new column provider."""
 
         # Column labels.
         self._column_labels = ["Name", "Size", "Date Modified"]
@@ -108,12 +108,12 @@ class FileTableColumnProvider(TableColumnProvider):
     # ------------------------------------------------------------------------
 
     def get_label(self, viewer, column_index):
-        """ Returns the label for a column. """
+        """Returns the label for a column."""
 
         return self._column_labels[column_index]
 
     def get_alignment(self, viewer, column_index):
-        """ Returns the alignment of the column header and cells.
+        """Returns the alignment of the column header and cells.
 
         Returns, 'left', 'right', 'centre' or 'center' ('left' by default).
 
@@ -129,7 +129,7 @@ class FileTableColumnProvider(TableColumnProvider):
 
 
 class FileTableViewer(TableViewer):
-    """ A table viewer for local file systems. """
+    """A table viewer for local file systems."""
 
     # 'TableViewer' interface ----------------------------------------------
 

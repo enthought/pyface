@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class IGUI(Interface):
-    """ The interface of a pyface GUI. """
+    """The interface of a pyface GUI."""
 
     # 'GUI' interface -----------------------------------------------------#
 
@@ -45,7 +45,7 @@ class IGUI(Interface):
     # ------------------------------------------------------------------------
 
     def __init__(self, splash_screen=None):
-        """ Initialise a new GUI.
+        """Initialise a new GUI.
 
         Parameters
         ----------
@@ -60,7 +60,7 @@ class IGUI(Interface):
 
     @staticmethod
     def allow_interrupt():
-        """ Override SIGINT to prevent swallowing KeyboardInterrupt
+        """Override SIGINT to prevent swallowing KeyboardInterrupt
 
         Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
@@ -72,7 +72,7 @@ class IGUI(Interface):
 
     @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
-        """ Call a callable after a specific delay in the main GUI thread.
+        """Call a callable after a specific delay in the main GUI thread.
 
         Parameters
         ----------
@@ -86,7 +86,7 @@ class IGUI(Interface):
 
     @classmethod
     def invoke_later(cls, callable, *args, **kw):
-        """ Call a callable in the main GUI thread.
+        """Call a callable in the main GUI thread.
 
         Parameters
         ----------
@@ -98,7 +98,7 @@ class IGUI(Interface):
 
     @classmethod
     def set_trait_after(cls, millisecs, obj, trait_name, new):
-        """ Sets a trait after a specific delay in the main GUI thread.
+        """Sets a trait after a specific delay in the main GUI thread.
 
         Parameters
         ----------
@@ -114,7 +114,7 @@ class IGUI(Interface):
 
     @classmethod
     def set_trait_later(cls, obj, trait_name, new):
-        """ Sets a trait in the main GUI thread.
+        """Sets a trait in the main GUI thread.
 
         Parameters
         ----------
@@ -128,7 +128,7 @@ class IGUI(Interface):
 
     @staticmethod
     def process_events(allow_user_events=True):
-        """ Process any pending GUI events.
+        """Process any pending GUI events.
 
         Parameters
         ----------
@@ -153,14 +153,14 @@ class IGUI(Interface):
     # ------------------------------------------------------------------------
 
     def start_event_loop(self):
-        """ Start the GUI event loop. """
+        """Start the GUI event loop."""
 
     def stop_event_loop(self):
-        """ Stop the GUI event loop. """
+        """Stop the GUI event loop."""
 
 
 class MGUI(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IGUI interface.
 
     Implements: _default_state_location()
@@ -168,7 +168,7 @@ class MGUI(HasTraits):
 
     @staticmethod
     def allow_interrupt():
-        """ Override SIGINT to prevent swallowing KeyboardInterrupt
+        """Override SIGINT to prevent swallowing KeyboardInterrupt
 
         Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
@@ -182,7 +182,7 @@ class MGUI(HasTraits):
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     def _default_state_location(self):
-        """ Return the default state location. """
+        """Return the default state location."""
 
         state_location = os.path.join(
             ETSConfig.application_home, "pyface", ETSConfig.toolkit

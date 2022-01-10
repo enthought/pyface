@@ -16,7 +16,7 @@ from pyface.workbench.i_view import MView
 
 
 class View(MView):
-    """ The toolkit specific implementation of a View.
+    """The toolkit specific implementation of a View.
 
     See the IView interface for the API documentation.
 
@@ -27,7 +27,7 @@ class View(MView):
     # ------------------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the part. """
+        """Create the toolkit-specific control that represents the part."""
 
         from pyface.qt import QtGui
 
@@ -41,7 +41,7 @@ class View(MView):
         return control
 
     def destroy_control(self):
-        """ Destroy the toolkit-specific control that represents the part. """
+        """Destroy the toolkit-specific control that represents the part."""
 
         if self.control is not None:
             self.control.hide()
@@ -49,7 +49,7 @@ class View(MView):
             self.control = None
 
     def set_focus(self):
-        """ Set the focus to the appropriate control in the part. """
+        """Set the focus to the appropriate control in the part."""
 
         if self.control is not None:
             self.control.setFocus()

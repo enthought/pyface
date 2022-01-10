@@ -50,7 +50,7 @@ _VIEW_AREA_MAP = {
 
 
 class WorkbenchWindowLayout(MWorkbenchWindowLayout):
-    """ The Qt4 implementation of the workbench window layout interface.
+    """The Qt4 implementation of the workbench window layout interface.
 
     See the 'IWorkbenchWindowLayout' interface for the API documentation.
 
@@ -314,7 +314,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     # ------------------------------------------------------------------------
 
     def _qt4_editor_focus(self, new):
-        """ Handle an editor getting the focus. """
+        """Handle an editor getting the focus."""
 
         for editor in self.window.editors:
             control = editor.control
@@ -323,7 +323,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             )
 
     def _qt4_editor_title_changed(self, control, title):
-        """ Handle the title being changed """
+        """Handle the title being changed"""
         for editor in self.window.editors:
             if editor.control == control:
                 editor.name = str(title)
@@ -346,14 +346,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     @observe("window:active_editor")
     def _qt4_active_editor_changed(self, event):
-        """ Handle change of active editor """
+        """Handle change of active editor"""
         # Reset tab title to foreground color
         editor = event.new
         if editor is not None:
             self._qt4_editor_area.setTabTextColor(editor.control)
 
     def _qt4_view_focus_changed(self, old, new):
-        """ Handle the change of focus for a view. """
+        """Handle the change of focus for a view."""
 
         focus_part = None
 
@@ -377,7 +377,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                     break
 
     def _qt4_new_window_request(self, pos, control):
-        """ Handle a tab tear-out request from the splitter widget. """
+        """Handle a tab tear-out request from the splitter widget."""
 
         editor = self._qt4_remove_editor_with_control(control)
         kind = self.window.editor_manager.get_editor_kind(editor)
@@ -392,7 +392,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         editor.window = window
 
     def _qt4_tab_close_request(self, control):
-        """ Handle a tabCloseRequest from the splitter widget. """
+        """Handle a tabCloseRequest from the splitter widget."""
 
         for editor in self.window.editors:
             if editor.control == control:
@@ -400,7 +400,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 break
 
     def _qt4_tab_window_changed(self, control):
-        """ Handle a tab drag to a different WorkbenchWindow. """
+        """Handle a tab drag to a different WorkbenchWindow."""
 
         editor = self._qt4_remove_editor_with_control(control)
         kind = self.window.editor_manager.get_editor_kind(editor)
@@ -417,8 +417,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 break
 
     def _qt4_remove_editor_with_control(self, control):
-        """ Finds the editor associated with 'control' and removes it. Returns
-            the editor, or None if no editor was found.
+        """Finds the editor associated with 'control' and removes it. Returns
+        the editor, or None if no editor was found.
         """
         for editor in self.window.editors:
             if editor.control == control:
@@ -433,7 +433,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 return editor
 
     def _qt4_get_editor_control(self, editor):
-        """ Create the editor control if it hasn't already been done. """
+        """Create the editor control if it hasn't already been done."""
 
         if editor.control is None:
             self.editor_opening = editor
@@ -460,7 +460,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         return editor.control
 
     def _qt4_add_view(self, view, position, relative_to, size):
-        """ Add a view. """
+        """Add a view."""
 
         # If no specific position is specified then use the view's default
         # position.
@@ -511,7 +511,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 rel_dw.show()
 
     def _qt4_create_view_dock_widget(self, view, size=(-1, -1)):
-        """ Create a dock widget that wraps a view. """
+        """Create a dock widget that wraps a view."""
 
         # See if it has already been created.
         try:
@@ -553,7 +553,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         return dw
 
     def _qt4_delete_view_dock_widget(self, view):
-        """ Delete a view's dock widget. """
+        """Delete a view's dock widget."""
 
         dw = view._qt4_dock
 
@@ -568,7 +568,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         dw.deleteLater()
 
     def _qt4_handle_dock_visibility(self, checked):
-        """ Handle the visibility of a dock window changing. """
+        """Handle the visibility of a dock window changing."""
 
         # Find the dock window by its toggle action.
         for v in self.window.views:
@@ -584,7 +584,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 v.visible = checked
 
     def _qt4_monitor(self, control):
-        """ Install an event filter for a view or editor control to keep an eye
+        """Install an event filter for a view or editor control to keep an eye
         on certain events.
         """
 
@@ -598,7 +598,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
 
 class _Monitor(QtCore.QObject):
-    """ This class monitors a view or editor control. """
+    """This class monitors a view or editor control."""
 
     def __init__(self, layout):
         QtCore.QObject.__init__(self, layout.window.control)
@@ -619,12 +619,12 @@ class _Monitor(QtCore.QObject):
 
 
 class _ViewContainer(QtGui.QMainWindow):
-    """ This class is a container for a view that allows an initial size
+    """This class is a container for a view that allows an initial size
     (specified as a tuple) to be set.
     """
 
     def __init__(self, size, main_window):
-        """ Initialise the object. """
+        """Initialise the object."""
 
         QtGui.QMainWindow.__init__(self)
 
@@ -633,7 +633,7 @@ class _ViewContainer(QtGui.QMainWindow):
         self._main_window = main_window
 
     def sizeHint(self):
-        """ Reimplemented to return the initial size or the view's current
+        """Reimplemented to return the initial size or the view's current
         size.
         """
 
@@ -658,7 +658,7 @@ class _ViewContainer(QtGui.QMainWindow):
         return sh
 
     def showEvent(self, e):
-        """ Reimplemented to use the view's current size once shown. """
+        """Reimplemented to use the view's current size once shown."""
 
         self._width = self._height = -1
 

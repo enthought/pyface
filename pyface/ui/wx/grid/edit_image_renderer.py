@@ -22,7 +22,7 @@ class EditImageRenderer(GridCellImageRenderer):
         super().__init__(self, **kw)
 
     def get_image_for_cell(self, grid, row, col):
-        """ returns the image resource for the table_edit bitmap """
+        """returns the image resource for the table_edit bitmap"""
 
         # show the icon if the obj does not have an editable trait
         # or if the editable trait is True

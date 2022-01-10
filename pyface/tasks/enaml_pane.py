@@ -14,7 +14,7 @@ from traits.api import HasTraits, Instance
 
 
 class EnamlPane(HasTraits):
-    """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
+    """Base class defining common code for EnamlTaskPane and EnamlEditor."""
 
     # ------------------------------------------------------------------------
     # 'EnamlPane' interface
@@ -24,7 +24,7 @@ class EnamlPane(HasTraits):
     component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
 
     def create_component(self):
-        """ Return an Enaml component defining the contents of the pane.
+        """Return an Enaml component defining the contents of the pane.
 
         Returns
         -------
@@ -37,7 +37,7 @@ class EnamlPane(HasTraits):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create the toolkit-specific control that represents the editor. """
+        """Create the toolkit-specific control that represents the editor."""
 
         from enaml.widgets.constraints_widget import ProxyConstraintsWidget
 
@@ -68,8 +68,7 @@ class EnamlPane(HasTraits):
             self.component.proxy.request_relayout()
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the editor.
-        """
+        """Destroy the toolkit-specific control that represents the editor."""
 
         control = self.control
         if control is not None:

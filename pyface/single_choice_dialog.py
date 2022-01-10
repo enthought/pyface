@@ -21,7 +21,7 @@ SingleChoiceDialog = toolkit_object("single_choice_dialog:SingleChoiceDialog")
 
 # Convenience functions.
 def choose_one(parent, message, choices, title="Choose", cancel=True):
-    """ Convenience method to show an information message dialog.
+    """Convenience method to show an information message dialog.
 
     Parameters
     ----------

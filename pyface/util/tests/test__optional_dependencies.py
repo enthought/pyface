@@ -16,18 +16,19 @@ from pyface.util._optional_dependencies import optional_import
 
 
 class TestOptionalImport(unittest.TestCase):
-    """ Test optional import context manager """
+    """Test optional import context manager"""
 
     def test_optional_import(self):
         # Test excusing dependency and the logging behaviour
         logger = logging.getLogger(self.id())
         with self.assertLogs(logger, level="DEBUG") as log_context:
             with optional_import(
-                    "random_missing_lib", "fail to import", logger):
+                "random_missing_lib", "fail to import", logger
+            ):
                 # assume this library is not importable.
-                import random_missing_lib   # noqa: F401
+                import random_missing_lib  # noqa: F401
 
-        log, = log_context.output
+        (log,) = log_context.output
         self.assertIn("fail to import", log)
 
     def test_optional_import_reraise(self):
@@ -35,4 +36,4 @@ class TestOptionalImport(unittest.TestCase):
         logger = logging.getLogger(self.id())
         with self.assertRaises(ImportError):
             with optional_import("some_random_lib", "", logger):
-                import some_random_missing_lib   # noqa: F401
+                import some_random_missing_lib  # noqa: F401

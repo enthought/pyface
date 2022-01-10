@@ -18,7 +18,7 @@ from traitsui.menu import Action  # fixme: Non-api import!
 
 
 class Category(HasTraits):
-    """ A view category. """
+    """A view category."""
 
     # The name of the category.
     name = Str()
@@ -28,7 +28,7 @@ class Category(HasTraits):
 
 
 class WorkbenchWindowTreeNode(TreeNode):
-    """ A tree node for workbench windows that displays the window's views.
+    """A tree node for workbench windows that displays the window's views.
 
     The views are grouped by their category.
 
@@ -44,7 +44,7 @@ class WorkbenchWindowTreeNode(TreeNode):
     # ------------------------------------------------------------------------
 
     def get_children(self, object):
-        """ Get the object's children. """
+        """Get the object's children."""
 
         # Collate the window's views into categories.
         categories_by_name = self._get_categories_by_name(object)
@@ -59,7 +59,7 @@ class WorkbenchWindowTreeNode(TreeNode):
     # ------------------------------------------------------------------------
 
     def _get_categories_by_name(self, window):
-        """ Return a dictionary containing all categories keyed by name. """
+        """Return a dictionary containing all categories keyed by name."""
 
         categories_by_name = {}
         for view in window.views:
@@ -74,7 +74,7 @@ class WorkbenchWindowTreeNode(TreeNode):
 
 
 class IViewTreeNode(TreeNode):
-    """ A tree node for objects that implement the 'IView' interface.
+    """A tree node for objects that implement the 'IView' interface.
 
     This node does *not* recognise objects that can be *adapted* to the 'IView'
     interface, only those that actually implement it. If we wanted to allow
@@ -87,9 +87,7 @@ class IViewTreeNode(TreeNode):
     """
 
     def is_node_for(self, obj):
-        """ Returns whether this is the node that handles a specified object.
-
-        """
+        """Returns whether this is the node that handles a specified object."""
 
         # By checking for 'is obj' here, we are *not* allowing adaptation (if
         # we were allowing adaptation it would be 'is not None'). See the class
@@ -97,7 +95,7 @@ class IViewTreeNode(TreeNode):
         return IView(obj, Undefined) is obj
 
     def get_icon(self, obj, is_expanded):
-        """ Returns the icon for a specified object. """
+        """Returns the icon for a specified object."""
 
         if obj.image is not None:
             icon = obj.image
@@ -111,7 +109,7 @@ class IViewTreeNode(TreeNode):
 
 
 class ViewChooser(HasTraits):
-    """ Allow the user to choose a view.
+    """Allow the user to choose a view.
 
     This implementation shows views in a tree grouped by category.
 
@@ -184,7 +182,7 @@ class ViewChooser(HasTraits):
     # ------------------------------------------------------------------------
 
     def _selected_changed(self, old, new):
-        """ Static trait change handler. """
+        """Static trait change handler."""
 
         # If the assignment fails then the selected object does *not* implement
         # the 'IView' interface.

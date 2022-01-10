@@ -15,14 +15,15 @@ from pyface.ui.qt4.data_view.data_wrapper import DataWrapper
 
 
 class TestDataWrapper(TestCase):
-
     def test_get_mimedata(self):
         toolkit_data = QMimeData()
         toolkit_data.setData('text/plain', b'hello world')
 
         data_wrapper = DataWrapper(toolkit_data=toolkit_data)
         self.assertEqual(data_wrapper.mimetypes(), {'text/plain'})
-        self.assertEqual(data_wrapper.get_mimedata('text/plain'), b'hello world')
+        self.assertEqual(
+            data_wrapper.get_mimedata('text/plain'), b'hello world'
+        )
 
     def test_set_mimedata(self):
         data_wrapper = DataWrapper()
@@ -31,6 +32,5 @@ class TestDataWrapper(TestCase):
 
         self.assertEqual(set(toolkit_data.formats()), {'text/plain'})
         self.assertEqual(
-            toolkit_data.data('text/plain').data(),
-            b'hello world'
+            toolkit_data.data('text/plain').data(), b'hello world'
         )

@@ -21,7 +21,7 @@ from pyface.i_image_resource import IImageResource, MImageResource
 
 @provides(IImageResource)
 class ImageResource(MImageResource, HasTraits):
-    """ The 'null' toolkit specific implementation of an ImageResource.  See the
+    """The 'null' toolkit specific implementation of an ImageResource.  See the
     IImageResource interface for the API documentation.
     """
 

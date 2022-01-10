@@ -15,8 +15,7 @@ from pyface.tasks.dock_pane import DockPane
 
 
 class TraitsDockPane(DockPane):
-    """ A DockPane that displays a Traits UI View.
-    """
+    """A DockPane that displays a Traits UI View."""
 
     # TraitsDockPane interface ---------------------------------------------
 
@@ -32,8 +31,7 @@ class TraitsDockPane(DockPane):
     # ------------------------------------------------------------------------
 
     def trait_context(self):
-        """ Use the model object for the Traits UI context, if appropriate.
-        """
+        """Use the model object for the Traits UI context, if appropriate."""
         if self.model:
             return {"object": self.model, "pane": self}
         return super().trait_context()
@@ -43,8 +41,7 @@ class TraitsDockPane(DockPane):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         # Destroy the Traits-generated control inside the dock control.
         self.ui.dispose()
         self.ui = None
@@ -57,7 +54,6 @@ class TraitsDockPane(DockPane):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Create and return the toolkit-specific contents of the dock pane.
-        """
+        """Create and return the toolkit-specific contents of the dock pane."""
         self.ui = self.edit_traits(kind="subpanel", parent=parent)
         return self.ui.control

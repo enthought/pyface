@@ -21,7 +21,7 @@ from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 @provides(IWizardPage)
 class WizardPage(MWizardPage, HasTraits):
-    """ The toolkit specific implementation of a WizardPage.
+    """The toolkit specific implementation of a WizardPage.
 
     See the IWizardPage interface for the API documentation.
 
@@ -48,7 +48,7 @@ class WizardPage(MWizardPage, HasTraits):
     # ------------------------------------------------------------------------
 
     def create_page(self, parent):
-        """ Creates the wizard page. """
+        """Creates the wizard page."""
 
         # FIXME: implement support for the size trait.
 
@@ -77,7 +77,7 @@ class WizardPage(MWizardPage, HasTraits):
     # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
-        """ Creates the actual page content. """
+        """Creates the actual page content."""
 
         # Dummy implementation - override!
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)

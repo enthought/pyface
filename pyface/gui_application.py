@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 def default_window_factory(application, **kwargs):
-    """ The default window factory returns an application window.
+    """The default window factory returns an application window.
 
     This is almost never the right thing, but allows users to get off the
     ground with the base class.
@@ -55,7 +55,7 @@ def default_window_factory(application, **kwargs):
 
 
 class GUIApplication(Application):
-    """ A basic Pyface GUI application. """
+    """A basic Pyface GUI application."""
 
     # 'GUIApplication' traits -------------------------------------------------
 
@@ -104,7 +104,7 @@ class GUIApplication(Application):
     # Window lifecycle methods -----------------------------------------------
 
     def create_window(self, **kwargs):
-        """ Create a new application window.
+        """Create a new application window.
 
         By default uses the :py:attr:`window_factory` to do this.  Subclasses
         can override if they want to do something different or additional.
@@ -131,7 +131,7 @@ class GUIApplication(Application):
         return window
 
     def add_window(self, window):
-        """ Add a new window to the windows we are tracking. """
+        """Add a new window to the windows we are tracking."""
 
         # Keep a handle on all windows created so that non-active windows don't
         # get garbage collected
@@ -145,7 +145,7 @@ class GUIApplication(Application):
     # Action handlers --------------------------------------------------------
 
     def do_about(self):
-        """ Display the about dialog, if it exists. """
+        """Display the about dialog, if it exists."""
         if self.about_dialog is not None:
             self.about_dialog.open()
 
@@ -154,7 +154,7 @@ class GUIApplication(Application):
     # -------------------------------------------------------------------------
 
     def start(self):
-        """ Start the application, setting up things that are required
+        """Start the application, setting up things that are required
 
         Subclasses should open at least one ApplicationWindow or subclass in
         their start method, and should call the superclass start() method
@@ -178,7 +178,7 @@ class GUIApplication(Application):
     # -------------------------------------------------------------------------
 
     def _create_windows(self):
-        """ Create the initial windows to display.
+        """Create the initial windows to display.
 
         By default calls :py:meth:`create_window` once. Subclasses can
         override this method.
@@ -191,7 +191,7 @@ class GUIApplication(Application):
     # -------------------------------------------------------------------------
 
     def _run(self):
-        """ Actual implementation of running the application: starting the GUI
+        """Actual implementation of running the application: starting the GUI
         event loop.
         """
         # Fire a notification that the app is running.  This is guaranteed to
@@ -209,7 +209,7 @@ class GUIApplication(Application):
     # Destruction methods -----------------------------------------------------
 
     def _can_exit(self):
-        """ Check with each window to see if it can be closed
+        """Check with each window to see if it can be closed
 
         The fires closing events for each window, and returns False if any
         listener vetos.
@@ -225,20 +225,20 @@ class GUIApplication(Application):
             return True
 
     def _prepare_exit(self):
-        """ Close each window """
+        """Close each window"""
         # ensure copy of list, as we modify original list while closing
         for window in list(reversed(self.windows)):
             window.destroy()
             window.closed = window
 
     def _exit(self):
-        """ Shut down the event loop """
+        """Shut down the event loop"""
         self.gui.stop_event_loop()
 
     # Trait default handlers ------------------------------------------------
 
     def _window_factory_default(self):
-        """ Default to ApplicationWindow
+        """Default to ApplicationWindow
 
         This is almost never the right thing, but allows users to get off the
         ground with the base class.
@@ -248,7 +248,7 @@ class GUIApplication(Application):
         return lambda application, **kwargs: ApplicationWindow(**kwargs)
 
     def _splash_screen_default(self):
-        """ Default SplashScreen """
+        """Default SplashScreen"""
         from pyface.splash_screen import SplashScreen
 
         dialog = SplashScreen()
@@ -257,7 +257,7 @@ class GUIApplication(Application):
         return dialog
 
     def _about_dialog_default(self):
-        """ Default AboutDialog """
+        """Default AboutDialog"""
         from html import escape
 
         from pyface.about_dialog import AboutDialog
@@ -282,22 +282,19 @@ class GUIApplication(Application):
 
     @observe("windows:items:activated")
     def _on_activate_window(self, event):
-        """ Listener that tracks currently active window.
-        """
+        """Listener that tracks currently active window."""
         window = event.object
         if window in self.windows:
             self.active_window = window
 
     @observe("windows:items:deactivated")
     def _on_deactivate_window(self, event):
-        """ Listener that tracks currently active window.
-        """
+        """Listener that tracks currently active window."""
         self.active_window = None
 
     @observe("windows:items:closed")
     def _on_window_closed(self, event):
-        """ Listener that ensures window handles are released when closed.
-        """
+        """Listener that ensures window handles are released when closed."""
         window = event.object
         if window in self.windows:
             self.windows.remove(window)

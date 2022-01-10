@@ -12,12 +12,12 @@ import unittest
 
 from pyface.toolkit import toolkit
 
-is_wx = (toolkit.toolkit == "wx")
+is_wx = toolkit.toolkit == "wx"
 
 
 class TestModalDialogTester(unittest.TestCase):
-
     @unittest.skipIf(is_wx, "wx is not supported")
     def test_import(self):
         from pyface.util.modal_dialog_tester import ModalDialogTester
+
         self.assertNotEqual(ModalDialogTester.__name__, "Unimplemented")

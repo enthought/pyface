@@ -14,15 +14,13 @@
 from traits.api import provides
 
 from pyface.fields.i_toggle_field import IToggleField, MToggleField
-from pyface.qt.QtGui import (
-    QCheckBox, QIcon, QPushButton, QRadioButton
-)
+from pyface.qt.QtGui import QCheckBox, QIcon, QPushButton, QRadioButton
 from .field import Field
 
 
 @provides(IToggleField)
 class ToggleField(MToggleField, Field):
-    """ The Qt-specific implementation of the toggle field class """
+    """The Qt-specific implementation of the toggle field class"""
 
     # ------------------------------------------------------------------------
     # Private interface
@@ -31,30 +29,30 @@ class ToggleField(MToggleField, Field):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return self.control.isChecked()
 
     def _get_control_text(self):
-        """ Toolkit specific method to get the control's text. """
+        """Toolkit specific method to get the control's text."""
         return self.control.text()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         return self.control.setChecked(value)
 
     def _set_control_text(self, text):
-        """ Toolkit specific method to set the control's text. """
+        """Toolkit specific method to set the control's text."""
         return self.control.setText(text)
 
     def _set_control_icon(self, icon):
-        """ Toolkit specific method to set the control's icon. """
+        """Toolkit specific method to set the control's icon."""
         if icon is not None:
             self.control.setIcon(icon.create_icon())
         else:
             self.control.setIcon(QIcon())
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.toggled.disconnect(self._update_value)
         else:
@@ -62,31 +60,31 @@ class ToggleField(MToggleField, Field):
 
 
 class CheckBoxField(ToggleField):
-    """ The Qt-specific implementation of the checkbox class """
+    """The Qt-specific implementation of the checkbox class"""
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = QCheckBox(parent)
         return control
 
 
 class RadioButtonField(ToggleField):
-    """ The Qt-specific implementation of the radio button class
+    """The Qt-specific implementation of the radio button class
 
     This is intended to be used in groups, and shouldn't be used by itself.
     """
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = QRadioButton(parent)
         return control
 
 
 class ToggleButtonField(ToggleField):
-    """ The Qt-specific implementation of the toggle button class """
+    """The Qt-specific implementation of the toggle button class"""
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = QPushButton(parent)
         control.setCheckable(True)
         return control

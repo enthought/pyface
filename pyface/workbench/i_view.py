@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class IView(IWorkbenchPart, IPerspectiveItem):
-    """ The interface for workbench views. """
+    """The interface for workbench views."""
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
@@ -49,24 +49,18 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # ------------------------------------------------------------------------
 
     def activate(self):
-        """ Activate the view.
-
-        """
+        """Activate the view."""
 
     def hide(self):
-        """ Hide the view.
-
-        """
+        """Hide the view."""
 
     def show(self):
-        """ Show the view.
-
-        """
+        """Show the view."""
 
 
 @provides(IView)
 class MView(MWorkbenchPart, PerspectiveItem):
-    """ Mixin containing common code for toolkit-specific implementations. """
+    """Mixin containing common code for toolkit-specific implementations."""
 
     # 'IView' interface ----------------------------------------------------
 
@@ -90,7 +84,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # ------------------------------------------------------------------------
 
     def _id_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         id = "%s.%s" % (type(self).__module__, type(self).__name__)
         logger.warning("view %s has no Id - using <%s>" % (self, id))
@@ -99,7 +93,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         return id
 
     def _name_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         name = camel_case_to_words(type(self).__name__)
         logger.warning("view %s has no name - using <%s>" % (self, name))
@@ -111,19 +105,17 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # ------------------------------------------------------------------------
 
     def activate(self):
-        """ Activate the view.
-
-        """
+        """Activate the view."""
 
         self.window.activate_view(self)
 
     def hide(self):
-        """ Hide the view. """
+        """Hide the view."""
 
         self.window.hide_view(self)
 
     def show(self):
-        """ Show the view. """
+        """Show the view."""
 
         self.window.show_view(self)
 

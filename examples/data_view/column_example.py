@@ -16,19 +16,35 @@ from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.data_view.api import (
-    DataViewWidget, IDataViewWidget, table_format, csv_format
+    DataViewWidget,
+    IDataViewWidget,
+    table_format,
+    csv_format,
 )
 from pyface.data_view.exporters.api import RowExporter
 from pyface.data_view.value_types.api import (
-    BoolValue, EnumValue, ColorValue, IntValue, TextValue, no_value
+    BoolValue,
+    EnumValue,
+    ColorValue,
+    IntValue,
+    TextValue,
+    no_value,
 )
 from pyface.ui_traits import PyfaceColor
 
 from column_data_model import (
-    AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
+    AbstractRowInfo,
+    ColumnDataModel,
+    HasTraitsRowInfo,
 )
 from example_data import (
-    any_name, family_name, favorite_color, age, street, city, country
+    any_name,
+    family_name,
+    favorite_color,
+    age,
+    street,
+    city,
+    country,
 )
 
 logger = logging.getLogger(__name__)
@@ -113,7 +129,7 @@ row_info = HasTraitsRowInfo(
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     data = List(Instance(Person))
 
@@ -122,7 +138,7 @@ class MainWindow(ApplicationWindow):
     data_view = Instance(IDataViewWidget)
 
     def _create_contents(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        """Creates the left hand side or top depending on the style."""
 
         self.data_view = DataViewWidget(
             parent=parent,
@@ -141,7 +157,7 @@ class MainWindow(ApplicationWindow):
                     format=csv_format,
                     column_headers=True,
                 ),
-            ]
+            ],
         )
         self.data_view._create()
         return self.data_view.control

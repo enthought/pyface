@@ -24,7 +24,6 @@ from ..font_parser import (
 
 
 class TestSimpleParser(TestCase):
-
     def test_empty(self):
         properties = simple_parser("")
         self.assertEqual(
@@ -42,7 +41,8 @@ class TestSimpleParser(TestCase):
 
     def test_typical(self):
         properties = simple_parser(
-            "10 pt bold condensed italic underline Helvetica sans-serif")
+            "10 pt bold condensed italic underline Helvetica sans-serif"
+        )
         self.assertEqual(
             properties,
             {
@@ -178,8 +178,7 @@ class TestSimpleParser(TestCase):
     def test_decorations(self):
         # get powerset iterator of DECORATIONS
         all_decorations = chain.from_iterable(
-            combinations(DECORATIONS, n)
-            for n in range(len(DECORATIONS) + 1)
+            combinations(DECORATIONS, n) for n in range(len(DECORATIONS) + 1)
         )
         for decorations in all_decorations:
             with self.subTest(decorations=decorations):

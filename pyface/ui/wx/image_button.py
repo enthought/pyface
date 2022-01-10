@@ -37,8 +37,8 @@ DisabledTextColor = wx.Colour(128, 128, 128)
 
 
 class ImageButton(LayoutWidget):
-    """ An image and text-based control that can be used as a normal, radio or
-        toolbar button.
+    """An image and text-based control that can be used as a normal, radio or
+    toolbar button.
     """
 
     # Pens used to draw the 'selection' marker:
@@ -85,8 +85,7 @@ class ImageButton(LayoutWidget):
     # ---------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
-        """ Creates a new image control.
-        """
+        """Creates a new image control."""
         create = traits.pop("create", True)
 
         super().__init__(parent=parent, **traits)
@@ -172,8 +171,7 @@ class ImageButton(LayoutWidget):
     # ---------------------------------------------------------------------------
 
     def _selected_changed(self, selected):
-        """ Handles the 'selected' trait being changed.
-        """
+        """Handles the 'selected' trait being changed."""
         if selected and (self.style == "radio"):
             for control in self.control.GetParent().GetChildren():
                 owner = getattr(control, "_owner", None)
@@ -190,27 +188,27 @@ class ImageButton(LayoutWidget):
     # -- wx event handlers ----------------------------------------------------------
 
     def _on_enter_window(self, event):
-        """ Called when the mouse enters the widget. """
+        """Called when the mouse enters the widget."""
 
         if self.style != "button":
             self._mouse_over = True
             self.control.Refresh()
 
     def _on_leave_window(self, event):
-        """ Called when the mouse leaves the widget. """
+        """Called when the mouse leaves the widget."""
 
         if self._mouse_over:
             self._mouse_over = False
             self.control.Refresh()
 
     def _on_left_down(self, event):
-        """ Called when the left mouse button goes down on the widget. """
+        """Called when the left mouse button goes down on the widget."""
         self._button_down = True
         self.control.CaptureMouse()
         self.control.Refresh()
 
     def _on_left_up(self, event):
-        """ Called when the left mouse button goes up on the widget. """
+        """Called when the left mouse button goes up on the widget."""
         control = self.control
         control.ReleaseMouse()
         self._button_down = False
@@ -226,8 +224,7 @@ class ImageButton(LayoutWidget):
                 self.clicked = True
 
     def _on_paint(self, event):
-        """ Called when the widget needs repainting.
-        """
+        """Called when the widget needs repainting."""
         wdc = wx.PaintDC(self.control)
         wdx, wdy = self.control.GetClientSize().Get()
         ox = (wdx - self._dx) / 2

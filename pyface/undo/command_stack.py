@@ -42,7 +42,7 @@ from .i_undo_manager import IUndoManager
 
 
 class _StackEntry(HasTraits):
-    """ The _StackEntry class is a single entry on a command stack. """
+    """The _StackEntry class is a single entry on a command stack."""
 
     #### '_StackEntry' interface ##############################################
 
@@ -57,7 +57,7 @@ class _StackEntry(HasTraits):
 
 
 class _MacroCommand(AbstractCommand):
-    """ The _MacroCommand class is an internal command that handles macros. """
+    """The _MacroCommand class is an internal command that handles macros."""
 
     #### '_MacroCommand' interface ############################################
 
@@ -69,13 +69,13 @@ class _MacroCommand(AbstractCommand):
     ###########################################################################
 
     def do(self):
-        """ Invoke the command. """
+        """Invoke the command."""
 
         # This is a dummy.
         return None
 
     def merge(self, other):
-        """ Try and merge a command. """
+        """Try and merge a command."""
 
         if len(self.macro_commands) == 0:
             merged = False
@@ -85,7 +85,7 @@ class _MacroCommand(AbstractCommand):
         return merged
 
     def redo(self):
-        """ Redo the sub-commands. """
+        """Redo the sub-commands."""
 
         for cmd in self.macro_commands:
             cmd.redo()
@@ -94,7 +94,7 @@ class _MacroCommand(AbstractCommand):
         return None
 
     def undo(self):
-        """ Undo the sub-commands. """
+        """Undo the sub-commands."""
 
         for cmd in self.macro_commands:
             cmd.undo()
@@ -168,7 +168,7 @@ class CommandStack(HasTraits):
         self.undo_manager.stack_updated = self
 
     def end_macro(self):
-        """ This ends a macro. """
+        """This ends a macro."""
 
         try:
             self._macro_stack.pop()
@@ -204,7 +204,7 @@ class CommandStack(HasTraits):
             if len(self._macro_stack) == 0:
                 # If not in macro mode, remove everything after the current
                 # command from the stack.
-                del self._stack[self._index+1:]
+                del self._stack[self._index + 1 :]
             self.undo_manager.stack_updated = self
             return result
 
@@ -213,7 +213,7 @@ class CommandStack(HasTraits):
             # Remove everything on the stack after the last command that was
             # done.
             self._index += 1
-            del self._stack[self._index:]
+            del self._stack[self._index :]
 
             # Create a new stack entry and add it to the stack.
             entry = _StackEntry(
@@ -279,7 +279,7 @@ class CommandStack(HasTraits):
     ###########################################################################
 
     def _redo_one(self):
-        """ Redo the command at the current index and return the result. """
+        """Redo the command at the current index and return the result."""
 
         self._index += 1
         entry = self._stack[self._index]
@@ -287,7 +287,7 @@ class CommandStack(HasTraits):
         return entry.command.redo()
 
     def _undo_one(self):
-        """ Undo the command at the current index. """
+        """Undo the command at the current index."""
 
         entry = self._stack[self._index]
         self._index -= 1
@@ -295,7 +295,7 @@ class CommandStack(HasTraits):
         entry.command.undo()
 
     def _get_clean(self):
-        """ Get the clean state of the stack. """
+        """Get the clean state of the stack."""
 
         if self._index >= 0:
             clean = self._stack[self._index].clean
@@ -305,13 +305,13 @@ class CommandStack(HasTraits):
         return clean
 
     def _set_clean(self, clean):
-        """ Set the clean state of the stack. """
+        """Set the clean state of the stack."""
 
         if self._index >= 0:
             self._stack[self._index].clean = clean
 
     def _get_redo_name(self):
-        """ Get the name of the redo command, if any. """
+        """Get the name of the redo command, if any."""
 
         redo_name = ""
 
@@ -323,7 +323,7 @@ class CommandStack(HasTraits):
         return redo_name
 
     def _get_undo_name(self):
-        """ Get the name of the undo command, if any. """
+        """Get the name of the undo command, if any."""
 
         undo_name = ""
 

@@ -19,7 +19,7 @@ from .layout_widget import LayoutWidget
 
 @provides(ILayeredPanel)
 class LayeredPanel(MLayeredPanel, LayoutWidget):
-    """ A Layered panel.
+    """A Layered panel.
 
     A layered panel contains one or more named layers, with only one layer
     visible at any one time (think of a 'tab' control minus the tabs!).  Each
@@ -36,7 +36,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def add_layer(self, name, layer):
-        """ Adds a layer with the specified name.
+        """Adds a layer with the specified name.
 
         All layers are hidden when they are added.  Use 'show_layer' to make a
         layer visible.
@@ -46,7 +46,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
         return layer
 
     def show_layer(self, name):
-        """ Shows the layer with the specified name. """
+        """Shows the layer with the specified name."""
         layer = self._layers[name]
         layer_index = self.control.indexOf(layer)
         self.control.setCurrentIndex(layer_index)
@@ -59,7 +59,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         control = QStackedWidget(parent)
         return control

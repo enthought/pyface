@@ -22,7 +22,7 @@ from .layout_widget import LayoutWidget
 
 @provides(ILayeredPanel)
 class LayeredPanel(MLayeredPanel, LayoutWidget):
-    """ A Layered panel.
+    """A Layered panel.
 
     A layered panel contains one or more named layers, with only one layer
     visible at any one time (think of a 'tab' control minus the tabs!).  Each
@@ -43,7 +43,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def add_layer(self, name, layer):
-        """ Adds a layer with the specified name.
+        """Adds a layer with the specified name.
 
         All layers are hidden when they are added.  Use 'show_layer' to make a
         layer visible.
@@ -92,7 +92,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
         return layer
 
     def show_layer(self, name):
-        """ Shows the layer with the specified name. """
+        """Shows the layer with the specified name."""
 
         # Hide the current layer (if one is displayed).
         if self.current_layer is not None:
@@ -108,7 +108,7 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         panel = ScrolledPanel(parent, -1, style=self.STYLE)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -119,14 +119,14 @@ class LayeredPanel(MLayeredPanel, LayoutWidget):
         return panel
 
     def _hide_layer(self, layer):
-        """ Hides the specified layer. """
+        """Hides the specified layer."""
 
         sizer = self.control.GetSizer()
         sizer.Show(layer, False)
         sizer.Layout()
 
     def _show_layer(self, name, layer):
-        """ Shows the specified layer. """
+        """Shows the specified layer."""
 
         sizer = self.control.GetSizer()
         sizer.Show(layer, True)

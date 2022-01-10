@@ -18,7 +18,7 @@ from pyface.window import Window
 
 
 class WidgetMixin(UnittestTools):
-    """ Mixin which provides standard methods for all widgets. """
+    """Mixin which provides standard methods for all widgets."""
 
     def setUp(self):
         self.gui = GUI()
@@ -64,7 +64,9 @@ class WidgetMixin(UnittestTools):
 
     def test_widget_tooltip_cleanup(self):
         widget = self._create_widget()
-        with patch.object(widget, '_tooltip_updated', return_value=None) as updated:
+        with patch.object(
+            widget, '_tooltip_updated', return_value=None
+        ) as updated:
             widget._create()
             try:
                 widget.show(True)
@@ -81,13 +83,17 @@ class WidgetMixin(UnittestTools):
 
     def test_widget_menu(self):
         self._create_widget_control()
-        self.widget.context_menu = MenuManager(Action(name="Test"), name="Test")
+        self.widget.context_menu = MenuManager(
+            Action(name="Test"), name="Test"
+        )
 
         self.gui.process_events()
 
     def test_widget_context_menu_cleanup(self):
         widget = self._create_widget()
-        with patch.object(widget, '_context_menu_updated', return_value=None) as updated:
+        with patch.object(
+            widget, '_context_menu_updated', return_value=None
+        ) as updated:
             widget._create()
             try:
                 widget.show(True)

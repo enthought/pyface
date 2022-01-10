@@ -76,7 +76,7 @@ class ICommandStack(Interface):
         """
 
     def end_macro(self):
-        """ This ends a macro. """
+        """This ends a macro."""
 
     def push(self, command):
         """This executes a command and saves it on the command stack so that

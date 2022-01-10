@@ -21,8 +21,14 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from pyface.image_resource import ImageResource
 from pyface.ui_traits import Border, Margin
 from ..image import (
-    FastZipFile, ImageLibrary, ImageVolume, ImageVolumeInfo, ZipFileReference,
-    join_image_name, split_image_name, time_stamp_for,
+    FastZipFile,
+    ImageLibrary,
+    ImageVolume,
+    ImageVolumeInfo,
+    ZipFileReference,
+    join_image_name,
+    split_image_name,
+    time_stamp_for,
 )
 
 
@@ -32,7 +38,6 @@ TEST_IMAGES_DIR = files('pyface.tests') / "images"
 
 
 class TestJoinImageName(unittest.TestCase):
-
     def test_simple(self):
         image_name = join_image_name("icons", "red_ball.jpg")
 
@@ -50,7 +55,6 @@ class TestJoinImageName(unittest.TestCase):
 
 
 class TestSplitImageName(unittest.TestCase):
-
     def test_simple(self):
         volume_name, file_name = split_image_name("@icons:red_ball.jpg")
 
@@ -86,7 +90,6 @@ class TestSplitImageName(unittest.TestCase):
 
 
 class TestFastZipFile(unittest.TestCase):
-
     def test_read_icons_red_ball(self):
         zf = FastZipFile(path=ICONS_FILE)
 
@@ -139,7 +142,6 @@ class TestFastZipFile(unittest.TestCase):
 
 
 class TestImageVolume(unittest.TestCase):
-
     def test_init_empty(self):
         volume = ImageVolume()
 
@@ -211,7 +213,9 @@ class TestImageVolume(unittest.TestCase):
             self.assertTrue(result)
 
             filenames = {file.name for file in path.iterdir()}
-            self.assertEqual(filenames, {"image_volume.py", "image_info.py", "license.txt"})
+            self.assertEqual(
+                filenames, {"image_volume.py", "image_info.py", "license.txt"}
+            )
 
             # test that new file is readable
             time_stamp = time_stamp_for(stat(path).st_mtime)
@@ -245,7 +249,10 @@ class TestImageVolume(unittest.TestCase):
             self.assertTrue(result)
 
             with closing(FastZipFile(path=path)) as zf:
-                self.assertEqual(set(zf.namelist()), {"image_volume.py", "image_info.py", "license.txt"})
+                self.assertEqual(
+                    set(zf.namelist()),
+                    {"image_volume.py", "image_info.py", "license.txt"},
+                )
 
             # test that new file is readable
             with closing(FastZipFile(path=path)) as zf:
@@ -294,14 +301,24 @@ class TestImageVolume(unittest.TestCase):
             self.assertIsInstance(image.content, Margin)
             self.assertIsInstance(image.label, Margin)
             self.assertEqual(image.alignment, "default")
-            self.assertEqual(image.copyright, 'No copyright information specified.')
+            self.assertEqual(
+                image.copyright, 'No copyright information specified.'
+            )
 
             result = volume.save()
 
             self.assertTrue(result)
 
             filenames = {file.name for file in path.iterdir()}
-            self.assertEqual(filenames, {"core.png", "image_volume.py", "image_info.py", "license.txt"})
+            self.assertEqual(
+                filenames,
+                {
+                    "core.png",
+                    "image_volume.py",
+                    "image_info.py",
+                    "license.txt",
+                },
+            )
 
             # test that new file is readable
             time_stamp = time_stamp_for(stat(path).st_mtime)
@@ -335,7 +352,9 @@ class TestImageVolume(unittest.TestCase):
             self.assertIsInstance(image.content, Margin)
             self.assertIsInstance(image.label, Margin)
             self.assertEqual(image.alignment, "default")
-            self.assertEqual(image.copyright, 'No copyright information specified.')
+            self.assertEqual(
+                image.copyright, 'No copyright information specified.'
+            )
 
             # do one more save to smoke-test other code paths
             volume_2.save()
@@ -369,14 +388,24 @@ class TestImageVolume(unittest.TestCase):
                 self.assertIsInstance(image.content, Margin)
                 self.assertIsInstance(image.label, Margin)
                 self.assertEqual(image.alignment, "default")
-                self.assertEqual(image.copyright, 'No copyright information specified.')
+                self.assertEqual(
+                    image.copyright, 'No copyright information specified.'
+                )
 
                 result = volume.save()
 
             self.assertTrue(result)
 
             with closing(FastZipFile(path=path)) as zf:
-                self.assertEqual(set(zf.namelist()), {"core.png", "image_volume.py", "image_info.py", "license.txt"})
+                self.assertEqual(
+                    set(zf.namelist()),
+                    {
+                        "core.png",
+                        "image_volume.py",
+                        "image_info.py",
+                        "license.txt",
+                    },
+                )
 
             # test that new file is readable
             with closing(FastZipFile(path=path)) as zf:
@@ -411,7 +440,9 @@ class TestImageVolume(unittest.TestCase):
                 self.assertIsInstance(image.content, Margin)
                 self.assertIsInstance(image.label, Margin)
                 self.assertEqual(image.alignment, "default")
-                self.assertEqual(image.copyright, 'No copyright information specified.')
+                self.assertEqual(
+                    image.copyright, 'No copyright information specified.'
+                )
 
                 # do one more save to smoke-test other code paths
                 volume_2.save()
@@ -488,7 +519,7 @@ class TestImageVolume(unittest.TestCase):
             info=[
                 ImageVolumeInfo(image_names=["@test:one", "@test:two"]),
                 ImageVolumeInfo(image_names=["@test:three", "@test:two"]),
-            ]
+            ],
         )
 
         volume_info = volume.volume_info("@test:two")

@@ -17,7 +17,7 @@ from .user_perspective_action import UserPerspectiveAction
 
 
 class DeleteUserPerspectiveAction(UserPerspectiveAction):
-    """ An action that deletes a user perspective. """
+    """An action that deletes a user perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -32,7 +32,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         window = event.window
         manager = window.workbench.user_perspective_manager
@@ -68,7 +68,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     # ------------------------------------------------------------------------
 
     def _get_next_perspective(self, window):
-        """ Return the first perspective that is not the active one! """
+        """Return the first perspective that is not the active one!"""
 
         if window.active_perspective is window.perspectives[0]:
             index = 1

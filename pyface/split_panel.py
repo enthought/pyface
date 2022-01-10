@@ -17,14 +17,14 @@ from pyface.widget import Widget
 
 
 class SplitPanel(Widget, SplitWidget):
-    """ A panel that is split in two either horizontally or vertically. """
+    """A panel that is split in two either horizontally or vertically."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, parent=None, **traits):
-        """ Creates a new panel. """
+        """Creates a new panel."""
 
         create = traits.pop("create", True)
 
@@ -42,5 +42,5 @@ class SplitPanel(Widget, SplitWidget):
             )
 
     def _create_control(self, parent):
-        """ Create the toolkit control """
+        """Create the toolkit control"""
         return self._create_splitter(parent)

@@ -20,7 +20,7 @@ from pyface.action.action_manager_item import ActionManagerItem
 
 
 class MenuManager(ActionManager, ActionManagerItem):
-    """ A menu manager realizes itself in a menu control.
+    """A menu manager realizes itself in a menu control.
 
     This could be a sub-menu or a context (popup) menu.
     """
@@ -36,7 +36,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
-        """ Creates a menu representation of the manager. """
+        """Creates a menu representation of the manager."""
 
         # If a controller is required it can either be set as a trait on the
         # menu manager (the trait is part of the 'ActionManager' API), or
@@ -52,9 +52,9 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu. """
+        """Adds the item to a menu."""
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
-        """ Adds the item to a tool bar. """
+        """Adds the item to a tool bar."""
 
         raise ValueError("Cannot add a menu manager to a toolbar.")

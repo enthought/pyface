@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 @provides(IPerspective)
 class Perspective(HasTraits):
-    """ The default perspective. """
+    """The default perspective."""
 
     # The ID of the default perspective.
     DEFAULT_ID = "pyface.workbench.default"
@@ -61,7 +61,7 @@ class Perspective(HasTraits):
     # ------------------------------------------------------------------------
 
     def __str__(self):
-        """ Return an informal string representation of the object. """
+        """Return an informal string representation of the object."""
 
         return "Perspective(%s)" % self.id
 
@@ -72,7 +72,7 @@ class Perspective(HasTraits):
     # Initializers ---------------------------------------------------------
 
     def _id_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         # If no Id is specified then use the name.
         return self.name
@@ -80,7 +80,7 @@ class Perspective(HasTraits):
     # Methods -------------------------------------------------------------#
 
     def create(self, window):
-        """ Create the perspective in a workbench window.
+        """Create the perspective in a workbench window.
 
         For most cases you should just be able to set the 'contents' trait to
         lay out views as required. However, you can override this method if
@@ -105,7 +105,7 @@ class Perspective(HasTraits):
         window.reset_views()
 
     def show(self, window):
-        """ Called when the perspective is shown in a workbench window.
+        """Called when the perspective is shown in a workbench window.
 
         The default implementation does nothing, but you can override this
         method if you want to do something whenever the perspective is
@@ -120,7 +120,7 @@ class Perspective(HasTraits):
     # ------------------------------------------------------------------------
 
     def _add_contents(self, window, contents):
-        """ Adds the specified contents. """
+        """Adds the specified contents."""
 
         # If we are adding specific contents then we ignore any default view
         # visibility.
@@ -134,7 +134,7 @@ class Perspective(HasTraits):
             self._add_perspective_item(window, item)
 
     def _add_perspective_item(self, window, item):
-        """ Adds a perspective item to a window. """
+        """Adds a perspective item to a window."""
 
         # If no 'relative_to' is specified then the view is positioned
         # relative to the editor area.
@@ -167,14 +167,14 @@ class Perspective(HasTraits):
             logger.error("missing view for perspective item <%s>" % item.id)
 
     def _add_all(self, window):
-        """ Adds *all* of the window's views defined in the window. """
+        """Adds *all* of the window's views defined in the window."""
 
         for view in window.views:
             if view.visible:
                 self._add_view(window, view)
 
     def _add_view(self, window, view):
-        """ Adds a view to a window. """
+        """Adds a view to a window."""
 
         # If no 'relative_to' is specified then the view is positioned
         # relative to the editor area.

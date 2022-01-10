@@ -19,7 +19,7 @@ ColorDialog = toolkit_object("color_dialog:ColorDialog")
 
 
 def get_color(parent, color, show_alpha=False):
-    """ Convenience function that displays a color dialog.
+    """Convenience function that displays a color dialog.
 
     Parameters
     ----------

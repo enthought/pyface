@@ -17,13 +17,14 @@ from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import IntValue, TextValue
 from pyface.data_view.data_models.data_accessors import (
-    AttributeDataAccessor, IndexDataAccessor, KeyDataAccessor
+    AttributeDataAccessor,
+    IndexDataAccessor,
+    KeyDataAccessor,
 )
 from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
 
 
 class DataItem:
-
     def __init__(self, a, b, c):
         self.a = a
         self.b = b
@@ -31,12 +32,9 @@ class DataItem:
 
 
 class TestRowTableDataModel(UnittestTools, unittest.TestCase):
-
     def setUp(self):
         super().setUp()
-        self.data = [
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ]
+        self.data = [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
         self.model = RowTableDataModel(
             data=self.data,
             row_header_data=AttributeDataAccessor(
@@ -51,8 +49,8 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 AttributeDataAccessor(
                     attr='c',
                     value_type=TextValue(),
-                )
-            ]
+                ),
+            ],
         )
         self.values_changed_event = None
         self.structure_changed_event = None
@@ -61,9 +59,11 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
 
     def tearDown(self):
         self.model.observe(
-            self.model_values_changed, 'values_changed', remove=True)
+            self.model_values_changed, 'values_changed', remove=True
+        )
         self.model.observe(
-            self.model_structure_changed, 'structure_changed', remove=True)
+            self.model_structure_changed, 'structure_changed', remove=True
+        )
         self.values_changed_event = None
         self.structure_changed_event = None
         super().tearDown()
@@ -115,10 +115,7 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     self.assertEqual(result, row[0])
                 else:
                     attr = self.model.column_data[column[0]].attr
-                    self.assertEqual(
-                        result,
-                        getattr(self.data[row[0]], attr)
-                    )
+                    self.assertEqual(result, getattr(self.data[row[0]], attr))
 
     def test_set_value(self):
         for row, column in self.model.iter_items():
@@ -136,7 +133,7 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     self.assertEqual(self.data[row[0]].a, value)
                     self.assertEqual(
                         self.values_changed_event.new,
-                        (row, column, row, column)
+                        (row, column, row, column),
                     )
                 else:
                     value = 6.0 * row[-1] + 2 * column[0]
@@ -149,7 +146,7 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     )
                     self.assertEqual(
                         self.values_changed_event.new,
-                        (row, column, row, column)
+                        (row, column, row, column),
                     )
 
     def test_get_value_type(self):
@@ -184,38 +181,38 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
     def test_data_updated(self):
         with self.assertTraitChanges(self.model, "structure_changed"):
             self.model.data = [
-                DataItem(a=i+1, b=20*(i+1), c=str(i)) for i in range(10)
+                DataItem(a=i + 1, b=20 * (i + 1), c=str(i)) for i in range(10)
             ]
         self.assertTrue(self.structure_changed_event.new)
 
     def test_data_items_updated_item_added(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "structure_changed"):
             self.model.data += [DataItem(a=100, b=200, c="a string")]
         self.assertTrue(self.structure_changed_event.new)
 
     def test_data_items_updated_item_replaced(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data[1] = DataItem(a=100, b=200, c="a string")
         self.assertEqual(self.values_changed_event.new, ((1,), (), (1,), ()))
 
     def test_data_items_updated_item_replaced_negative(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data[-2] = DataItem(a=100, b=200, c="a string")
         self.assertEqual(self.values_changed_event.new, ((8,), (), (8,), ()))
 
     def test_data_items_updated_items_replaced(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data[1:3] = [
                 DataItem(a=100, b=200, c="a string"),
@@ -224,9 +221,9 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
         self.assertEqual(self.values_changed_event.new, ((1,), (), (2,), ()))
 
     def test_data_items_updated_slice_replaced(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data[1:4:2] = [
                 DataItem(a=100, b=200, c="a string"),
@@ -235,9 +232,9 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
         self.assertEqual(self.values_changed_event.new, ((1,), (), (3,), ()))
 
     def test_data_items_updated_reverse_slice_replaced(self):
-        self.model.data = TraitList([
-            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
-        ])
+        self.model.data = TraitList(
+            [DataItem(a=i, b=10 * i, c=str(i)) for i in range(10)]
+        )
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.data[3:1:-1] = [
                 DataItem(a=100, b=200, c="a string"),
@@ -248,26 +245,23 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
     def test_row_header_data_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.row_header_data = AttributeDataAccessor(attr='b')
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (), (), ())
-        )
+        self.assertEqual(self.values_changed_event.new, ((), (), (), ()))
 
     def test_row_header_data_values_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
-            self.model.row_header_data.updated = (self.model.row_header_data, 'value')
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (), (9,), ())
-        )
+            self.model.row_header_data.updated = (
+                self.model.row_header_data,
+                'value',
+            )
+        self.assertEqual(self.values_changed_event.new, ((0,), (), (9,), ()))
 
     def test_row_header_data_title_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
-            self.model.row_header_data.updated = (self.model.row_header_data, 'title')
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (), (), ())
-        )
+            self.model.row_header_data.updated = (
+                self.model.row_header_data,
+                'title',
+            )
+        self.assertEqual(self.values_changed_event.new, ((), (), (), ()))
 
     def test_no_data_row_header_data_update(self):
         model = RowTableDataModel(
@@ -283,8 +277,8 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 AttributeDataAccessor(
                     attr='c',
                     value_type=TextValue(),
-                )
-            ]
+                ),
+            ],
         )
 
         # check that updating accessors is safe with empty data
@@ -312,10 +306,12 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
 
     def test_column_data_value_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
-            self.model.column_data[0].updated = (self.model.column_data[0], 'value')
+            self.model.column_data[0].updated = (
+                self.model.column_data[0],
+                'value',
+            )
         self.assertEqual(
-            self.values_changed_event.new,
-            ((0,), (0,), (9,), (0,))
+            self.values_changed_event.new, ((0,), (0,), (9,), (0,))
         )
 
     def test_no_data_column_data_update(self):
@@ -332,8 +328,8 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 AttributeDataAccessor(
                     attr='c',
                     value_type=TextValue(),
-                )
-            ]
+                ),
+            ],
         )
 
         with self.assertTraitDoesNotChange(model, 'values_changed'):
@@ -341,16 +337,14 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
 
     def test_column_data_title_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
-            self.model.column_data[0].updated = (self.model.column_data[0], 'title')
-        self.assertEqual(
-            self.values_changed_event.new,
-            ((), (0,), (), (0,))
-        )
+            self.model.column_data[0].updated = (
+                self.model.column_data[0],
+                'title',
+            )
+        self.assertEqual(self.values_changed_event.new, ((), (0,), (), (0,)))
 
     def test_list_tuple_data(self):
-        data = [
-            (i, 10*i, str(i)) for i in range(10)
-        ]
+        data = [(i, 10 * i, str(i)) for i in range(10)]
         model = RowTableDataModel(
             data=data,
             row_header_data=IndexDataAccessor(
@@ -365,8 +359,8 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 IndexDataAccessor(
                     index=2,
                     value_type=TextValue(),
-                )
-            ]
+                ),
+            ],
         )
 
         for row, column in model.iter_items():
@@ -381,15 +375,10 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     self.assertEqual(result, row[0])
                 else:
                     index = model.column_data[column[0]].index
-                    self.assertEqual(
-                        result,
-                        data[row[0]][index]
-                    )
+                    self.assertEqual(result, data[row[0]][index])
 
     def test_list_dict_data(self):
-        data = [
-            {'a': i, 'b': 10*i, 'c': str(i)} for i in range(10)
-        ]
+        data = [{'a': i, 'b': 10 * i, 'c': str(i)} for i in range(10)]
         model = RowTableDataModel(
             data=data,
             row_header_data=KeyDataAccessor(
@@ -404,8 +393,8 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 KeyDataAccessor(
                     key='c',
                     value_type=TextValue(),
-                )
-            ]
+                ),
+            ],
         )
 
         for row, column in model.iter_items():
@@ -420,7 +409,4 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     self.assertEqual(result, data[row[0]]['a'])
                 else:
                     key = model.column_data[column[0]].key
-                    self.assertEqual(
-                        result,
-                        data[row[0]][key]
-                    )
+                    self.assertEqual(result, data[row[0]][key])

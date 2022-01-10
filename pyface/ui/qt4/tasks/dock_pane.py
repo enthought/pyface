@@ -33,7 +33,7 @@ INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
 @provides(IDockPane)
 class DockPane(TaskPane, MDockPane):
-    """ The toolkit-specific implementation of a DockPane.
+    """The toolkit-specific implementation of a DockPane.
 
     See the IDockPane interface for API documentation.
     """
@@ -51,8 +51,7 @@ class DockPane(TaskPane, MDockPane):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the dock widget that contains the pane contents.
-        """
+        """Create and set the dock widget that contains the pane contents."""
         self.control = control = QtGui.QDockWidget(parent)
 
         # Set the widget's object name. This important for QMainWindow state
@@ -94,8 +93,7 @@ class DockPane(TaskPane, MDockPane):
         control.hide()
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         if self.control is not None:
             control = self.control
             control.dockLocationChanged.disconnect(self._receive_dock_area)
@@ -105,8 +103,7 @@ class DockPane(TaskPane, MDockPane):
         super().destroy()
 
     def set_focus(self):
-        """ Gives focus to the control that represents the pane.
-        """
+        """Gives focus to the control that represents the pane."""
         if self.control is not None:
             set_focus(self.control.widget())
 
@@ -115,8 +112,7 @@ class DockPane(TaskPane, MDockPane):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Create and return the toolkit-specific contents of the dock pane.
-        """
+        """Create and return the toolkit-specific contents of the dock pane."""
         return QtGui.QWidget(parent)
 
     # ------------------------------------------------------------------------
@@ -125,8 +121,8 @@ class DockPane(TaskPane, MDockPane):
 
     @contextmanager
     def _signal_context(self):
-        """ Defines a context appropriate for Qt signal callbacks. Necessary to
-            prevent feedback between Traits and Qt event handlers.
+        """Defines a context appropriate for Qt signal callbacks. Necessary to
+        prevent feedback between Traits and Qt event handlers.
         """
         original = self._receiving
         self._receiving = True

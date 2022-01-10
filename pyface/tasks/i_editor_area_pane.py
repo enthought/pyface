@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class IEditorAreaPane(ITaskPane):
-    """ A central pane that contains tabbed editors.
+    """A central pane that contains tabbed editors.
 
     There are currently two implementations of this interface in Tasks.
     EditorAreaPane provides a simple, tabbed editor area. AdvancedEditorAreaPane
@@ -66,15 +66,13 @@ class IEditorAreaPane(ITaskPane):
     # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
-        """ Activates the specified editor in the pane.
-        """
+        """Activates the specified editor in the pane."""
 
     def add_editor(self, editor):
-        """ Adds an editor to the pane.
-        """
+        """Adds an editor to the pane."""
 
     def create_editor(self, obj, factory=None):
-        """ Creates an editor for an object.
+        """Creates an editor for an object.
 
         If a factory is specified, it will be used instead of the editor factory
         registry. Otherwise, this method will return None if a suitable factory
@@ -84,7 +82,7 @@ class IEditorAreaPane(ITaskPane):
         """
 
     def edit(self, obj, factory=None, use_existing=True):
-        """ Edit an object.
+        """Edit an object.
 
         This is a convenience method that creates and adds an editor for the
         specified object. If 'use_existing' is set and the object is already
@@ -95,19 +93,19 @@ class IEditorAreaPane(ITaskPane):
         """
 
     def get_editor(self, obj):
-        """ Returns the editor for an object.
+        """Returns the editor for an object.
 
         Returns None if the object is not being edited.
         """
 
     def get_factory(self, obj):
-        """ Returns an editor factory suitable for editing an object.
+        """Returns an editor factory suitable for editing an object.
 
         Returns None if there is no such editor factory.
         """
 
     def register_factory(self, factory, filter):
-        """ Registers a factory for creating editors.
+        """Registers a factory for creating editors.
 
         The 'factory' parameter is a callabe of form:
             callable(editor_area=editor_area, obj=obj) -> IEditor
@@ -126,12 +124,10 @@ class IEditorAreaPane(ITaskPane):
         """
 
     def remove_editor(self, editor):
-        """ Removes an editor from the pane.
-        """
+        """Removes an editor from the pane."""
 
     def unregister_factory(self, factory):
-        """ Unregisters a factory for creating editors.
-        """
+        """Unregisters a factory for creating editors."""
 
 
 class MEditorAreaPane(HasTraits):
@@ -153,8 +149,7 @@ class MEditorAreaPane(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_editor(self, obj, factory=None):
-        """ Creates an editor for an object.
-        """
+        """Creates an editor for an object."""
         if factory is None:
             factory = self.get_factory(obj)
 
@@ -164,8 +159,7 @@ class MEditorAreaPane(HasTraits):
         return None
 
     def edit(self, obj, factory=None, use_existing=True):
-        """ Edit an object.
-        """
+        """Edit an object."""
         if use_existing:
             # Is the object already being edited in the window?
             editor = self.get_editor(obj)
@@ -185,16 +179,14 @@ class MEditorAreaPane(HasTraits):
         return editor
 
     def get_editor(self, obj):
-        """ Returns the editor for an object.
-        """
+        """Returns the editor for an object."""
         for editor in self.editors:
             if editor.obj == obj:
                 return editor
         return None
 
     def get_factory(self, obj):
-        """ Returns an editor factory suitable for editing an object.
-        """
+        """Returns an editor factory suitable for editing an object."""
         for factory, filters in self._factory_map.items():
             for filter_ in filters:
                 # FIXME: We should swallow exceptions, but silently?
@@ -206,12 +198,10 @@ class MEditorAreaPane(HasTraits):
         return None
 
     def register_factory(self, factory, filter):
-        """ Registers a factory for creating editors.
-        """
+        """Registers a factory for creating editors."""
         self._factory_map.setdefault(factory, []).append(filter)
 
     def unregister_factory(self, factory):
-        """ Unregisters a factory for creating editors.
-        """
+        """Unregisters a factory for creating editors."""
         if factory in self._factory_map:
             del self._factory_map[factory]

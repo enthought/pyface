@@ -39,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class MainWindowLayout(HasTraits):
-    """ A class for applying declarative layouts to a QMainWindow.
-    """
+    """A class for applying declarative layouts to a QMainWindow."""
 
     # 'MainWindowLayout' interface -----------------------------------------
 
@@ -52,15 +51,13 @@ class MainWindowLayout(HasTraits):
     # ------------------------------------------------------------------------
 
     def get_layout(self, layout, include_sizes=True):
-        """ Get the layout by adding sublayouts to the specified DockLayout.
-        """
+        """Get the layout by adding sublayouts to the specified DockLayout."""
         for name, q_dock_area in AREA_MAP.items():
             sublayout = self.get_layout_for_area(q_dock_area, include_sizes)
             setattr(layout, name, sublayout)
 
     def get_layout_for_area(self, q_dock_area, include_sizes=True):
-        """ Gets a LayoutItem for the specified dock area.
-        """
+        """Gets a LayoutItem for the specified dock area."""
         # Build the initial set of leaf-level items.
         items = set()
         rects = {}
@@ -137,8 +134,7 @@ class MainWindowLayout(HasTraits):
         return None
 
     def set_layout(self, layout):
-        """ Applies a DockLayout to the window.
-        """
+        """Applies a DockLayout to the window."""
         # Remove all existing dock widgets.
         for child in self.control.children():
             if isinstance(child, QtGui.QDockWidget):
@@ -161,8 +157,7 @@ class MainWindowLayout(HasTraits):
     def set_layout_for_area(
         self, layout, q_dock_area, _toplevel_added=False, _toplevel_call=True
     ):
-        """ Applies a LayoutItem to the specified dock area.
-        """
+        """Applies a LayoutItem to the specified dock area."""
         # If we try to do the layout bottom-up, Qt will become confused. In
         # order to do it top-down, we have know which dock widget is
         # "effectively" top level, requiring us to reach down to the leaves of
@@ -238,13 +233,11 @@ class MainWindowLayout(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
-        """ Returns the QDockWidget associated with a PaneItem.
-        """
+        """Returns the QDockWidget associated with a PaneItem."""
         raise NotImplementedError()
 
     def _get_pane(self, dock_widget):
-        """ Returns a PaneItem for a QDockWidget.
-        """
+        """Returns a PaneItem for a QDockWidget."""
         raise NotImplementedError()
 
     # ------------------------------------------------------------------------
@@ -252,7 +245,7 @@ class MainWindowLayout(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_division_orientation(self, one, two, splitter=False):
-        """ Returns whether there is a division between two visible QWidgets.
+        """Returns whether there is a division between two visible QWidgets.
 
         Divided in context means that the widgets are adjacent and aligned along
         the direction of the adjaceny.
@@ -281,7 +274,7 @@ class MainWindowLayout(HasTraits):
         return 0
 
     def _get_tab_bar(self, dock_widget):
-        """ Returns the tab bar associated with the given QDockWidget, or None
+        """Returns the tab bar associated with the given QDockWidget, or None
         if there is no tab bar.
         """
         dock_geometry = dock_widget.geometry()
@@ -293,8 +286,7 @@ class MainWindowLayout(HasTraits):
         return None
 
     def _prepare_pane(self, dock_widget, include_sizes=True):
-        """ Returns a sized PaneItem for a QDockWidget.
-        """
+        """Returns a sized PaneItem for a QDockWidget."""
         pane = self._get_pane(dock_widget)
         if include_sizes:
             pane.width = dock_widget.widget().width()
@@ -302,8 +294,7 @@ class MainWindowLayout(HasTraits):
         return pane
 
     def _prepare_toplevel_for_item(self, layout):
-        """ Returns a sized toplevel QDockWidget for a LayoutItem.
-        """
+        """Returns a sized toplevel QDockWidget for a LayoutItem."""
         if isinstance(layout, PaneItem):
             dock_widget = self._get_dock_widget(layout)
             if dock_widget is None:
@@ -317,7 +308,9 @@ class MainWindowLayout(HasTraits):
                     if layout.height > 0:
                         dock_widget.widget().setFixedHeight(layout.height)
                 else:
-                    sizeHint = lambda: QtCore.QSize(layout.width, layout.height)
+                    sizeHint = lambda: QtCore.QSize(
+                        layout.width, layout.height
+                    )
                     dock_widget.widget().sizeHint = sizeHint
             return dock_widget
 
@@ -328,8 +321,7 @@ class MainWindowLayout(HasTraits):
             raise MainWindowLayoutError("Leaves of layout must be PaneItems")
 
     def _reset_fixed_sizes(self):
-        """ Clears any fixed sizes assined to QDockWidgets.
-        """
+        """Clears any fixed sizes assined to QDockWidgets."""
         if self.control is None:
             return
         QWIDGETSIZE_MAX = (1 << 24) - 1  # Not exposed by Qt bindings.
@@ -344,7 +336,7 @@ class MainWindowLayout(HasTraits):
 
 
 class MainWindowLayoutError(ValueError):
-    """ Exception raised when a malformed LayoutItem is passed to the
+    """Exception raised when a malformed LayoutItem is passed to the
     MainWindowLayout.
     """
 

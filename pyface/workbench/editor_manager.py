@@ -22,7 +22,7 @@ from .traits_ui_editor import TraitsUIEditor
 
 @provides(IEditorManager)
 class EditorManager(HasTraits):
-    """ The default editor manager. """
+    """The default editor manager."""
 
     # 'IEditorManager' interface -------------------------------------------
 
@@ -34,7 +34,7 @@ class EditorManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Constructor. """
+        """Constructor."""
 
         super().__init__(**traits)
 
@@ -48,12 +48,12 @@ class EditorManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def add_editor(self, editor, kind):
-        """ Registers an existing editor. """
+        """Registers an existing editor."""
 
         self._editor_to_kind_map[editor] = kind
 
     def create_editor(self, window, obj, kind):
-        """ Create an editor for an object. """
+        """Create an editor for an object."""
 
         editor = TraitsUIEditor(window=window, obj=obj)
 
@@ -62,7 +62,7 @@ class EditorManager(HasTraits):
         return editor
 
     def get_editor(self, window, obj, kind):
-        """ Get the editor that is currently editing an object. """
+        """Get the editor that is currently editing an object."""
 
         for editor in window.editors:
             if self._is_editing(editor, obj, kind):
@@ -73,12 +73,12 @@ class EditorManager(HasTraits):
         return editor
 
     def get_editor_kind(self, editor):
-        """ Return the 'kind' associated with 'editor'. """
+        """Return the 'kind' associated with 'editor'."""
 
         return self._editor_to_kind_map[editor]
 
     def get_editor_memento(self, editor):
-        """ Return the state of an editor suitable for pickling etc.
+        """Return the state of an editor suitable for pickling etc.
 
         By default we don't save the state of editors.
         """
@@ -86,7 +86,7 @@ class EditorManager(HasTraits):
         return None
 
     def set_editor_memento(self, memento):
-        """ Restore the state of an editor from a memento.
+        """Restore the state of an editor from a memento.
 
         By default we don't try to restore the state of editors.
         """
@@ -98,6 +98,6 @@ class EditorManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _is_editing(self, editor, obj, kind):
-        """ Return True if the editor is editing the object. """
+        """Return True if the editor is editing the object."""
 
         return editor.obj == obj

@@ -26,7 +26,7 @@ from python_editor_task import PythonEditorTask
 
 
 def main():
-    """ Main entrypoint for the application. """
+    """Main entrypoint for the application."""
 
     app = TasksApplication(
         id="example_python_editor_application",
@@ -54,7 +54,7 @@ def main():
 
     # set up callback to open files once app is up and running
     def open_files(event):
-        """ Open files once app is active. """
+        """Open files once app is active."""
         for path in namespace.files:
             app.active_task.create_editor(path)
 

@@ -38,7 +38,10 @@ else:
     from .array_data_model import ArrayDataModel  # noqa: F401
 
 from .data_accessors import (  # noqa: F401
-    AbstractDataAccessor, AttributeDataAccessor, ConstantDataAccessor,
-    IndexDataAccessor, KeyDataAccessor
+    AbstractDataAccessor,
+    AttributeDataAccessor,
+    ConstantDataAccessor,
+    IndexDataAccessor,
+    KeyDataAccessor,
 )
 from .row_table_data_model import RowTableDataModel  # noqa: F401

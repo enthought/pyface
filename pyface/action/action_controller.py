@@ -14,14 +14,14 @@ from traits.api import HasTraits
 
 
 class ActionController(HasTraits):
-    """ The default action controller for menus, menu bars and tool bars. """
+    """The default action controller for menus, menu bars and tool bars."""
 
     # ------------------------------------------------------------------------
     # 'ActionController' interface.
     # ------------------------------------------------------------------------
 
     def perform(self, action, event):
-        """ Control an action invocation.
+        """Control an action invocation.
 
         Parameters
         ----------
@@ -38,7 +38,7 @@ class ActionController(HasTraits):
         return action.perform(event)
 
     def can_add_to_menu(self, action):
-        """ Can add an action to a menu
+        """Can add an action to a menu
 
         Parameters
         ----------
@@ -53,7 +53,7 @@ class ActionController(HasTraits):
         return True
 
     def add_to_menu(self, action):
-        """ Called when an action is added to the a menu/menubar.
+        """Called when an action is added to the a menu/menubar.
 
         Parameters
         ----------
@@ -63,7 +63,7 @@ class ActionController(HasTraits):
         pass
 
     def can_add_to_toolbar(self, action):
-        """ Returns True if the action can be added to a toolbar.
+        """Returns True if the action can be added to a toolbar.
 
         Parameters
         ----------
@@ -78,7 +78,7 @@ class ActionController(HasTraits):
         return True
 
     def add_to_toolbar(self, action):
-        """ Called when an action is added to the a toolbar.
+        """Called when an action is added to the a toolbar.
 
         Parameters
         ----------

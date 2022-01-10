@@ -16,7 +16,7 @@ from pyface.qt import QtCore
 
 
 def set_focus(control):
-    """ Assign keyboard focus to the given control.
+    """Assign keyboard focus to the given control.
 
     Ideally, we would just call ``setFocus()`` on the control and let Qt do the
     right thing. Unfortunately, this method is implemented in the most naive

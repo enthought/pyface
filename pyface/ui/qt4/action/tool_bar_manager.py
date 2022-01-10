@@ -25,7 +25,7 @@ from pyface.action.action_manager import ActionManager
 
 
 class ToolBarManager(ActionManager):
-    """ A tool bar manager realizes itself in errr, a tool bar control. """
+    """A tool bar manager realizes itself in errr, a tool bar control."""
 
     # 'ToolBarManager' interface -------------------------------------------
 
@@ -63,7 +63,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
-        """ Creates a new tool bar manager. """
+        """Creates a new tool bar manager."""
 
         # Base class constructor.
         super().__init__(*args, **traits)
@@ -79,7 +79,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
-        """ Creates a tool bar. """
+        """Creates a tool bar."""
 
         # If a controller is required it can either be set as a trait on the
         # tool bar manager (the trait is part of the 'ActionManager' API), or
@@ -128,7 +128,7 @@ class ToolBarManager(ActionManager):
     # ------------------------------------------------------------------------
 
     def _qt4_add_tools(self, parent, tool_bar, controller):
-        """ Adds tools for all items in the list of groups. """
+        """Adds tools for all items in the list of groups."""
 
         previous_non_empty_group = None
         for group in self.groups:
@@ -153,19 +153,19 @@ class ToolBarManager(ActionManager):
                     )
 
     def _separator_visibility_method(self, separator):
-        """ Method to return closure to set visibility of group separators. """
+        """Method to return closure to set visibility of group separators."""
         return lambda event: separator.setVisible(event.new)
 
 
 class _ToolBar(QtGui.QToolBar):
-    """ The toolkit-specific tool bar implementation. """
+    """The toolkit-specific tool bar implementation."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent):
-        """ Constructor. """
+        """Constructor."""
 
         QtGui.QToolBar.__init__(self, parent)
 
@@ -205,12 +205,12 @@ class _ToolBar(QtGui.QToolBar):
     # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.setEnabled(event.new)
 
     def _on_tool_bar_manager_visible_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.setVisible(event.new)
 

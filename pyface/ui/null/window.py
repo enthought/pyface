@@ -20,7 +20,7 @@ from .widget import Widget
 
 @provides(IWindow)
 class Window(MWindow, Widget):
-    """ The toolkit specific implementation of a Window.  See the IWindow
+    """The toolkit specific implementation of a Window.  See the IWindow
     interface for the API documentation.
     """
 
@@ -68,12 +68,12 @@ class Window(MWindow, Widget):
     # ------------------------------------------------------------------------
 
     def _get_position(self):
-        """ Property getter for position. """
+        """Property getter for position."""
 
         return self._position
 
     def _set_position(self, position):
-        """ Property setter for position. """
+        """Property setter for position."""
 
         old = self._position
         self._position = position
@@ -81,12 +81,12 @@ class Window(MWindow, Widget):
         self.trait_property_changed("position", old, position)
 
     def _get_size(self):
-        """ Property getter for size. """
+        """Property getter for size."""
 
         return self._size
 
     def _set_size(self, size):
-        """ Property setter for size. """
+        """Property setter for size."""
 
         old = self._size
         self._size = size

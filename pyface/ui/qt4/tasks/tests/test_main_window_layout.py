@@ -27,7 +27,7 @@ GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 
 
 def create_dummy_dock_widget(parent):
-    """ Create a dummy QDockWidget with a dummy child widget for test.
+    """Create a dummy QDockWidget with a dummy child widget for test.
 
     Parameters
     ----------
@@ -46,10 +46,10 @@ def create_dummy_dock_widget(parent):
 @unittest.skipIf(
     toolkit_object.toolkit != "qt4",
     "This test targets Qt specific MainWindowLayout. "
-    "Current toolkit is not Qt."
+    "Current toolkit is not Qt.",
 )
 class TestMainWindowLayout(unittest.TestCase, GuiTestAssistant):
-    """ Test Qt specific MainWindowLayout.
+    """Test Qt specific MainWindowLayout.
 
     Note that MainWindowLayout does not have a toolkit-agnostic interface
     in the ``pyface.tasks`` package. Therefore this test is Qt-only.
@@ -82,12 +82,11 @@ class TestMainWindowLayout(unittest.TestCase, GuiTestAssistant):
         # for a meaningful test.
         expected_width = self.window.size[0] // 2
         window_layout = MainWindowLayout(control=self.window.control)
-        dock_layout = TaskLayout(
-            left=PaneItem(width=expected_width)
-        )
+        dock_layout = TaskLayout(left=PaneItem(width=expected_width))
         dock_widget = create_dummy_dock_widget(parent=self.window.control)
         patch_get_dock_widget = mock.patch.object(
-            MainWindowLayout, "_get_dock_widget",
+            MainWindowLayout,
+            "_get_dock_widget",
             return_value=dock_widget,
         )
 
@@ -109,12 +108,11 @@ class TestMainWindowLayout(unittest.TestCase, GuiTestAssistant):
         # for a meaningful test.
         expected_height = self.window.size[1] // 2
         window_layout = MainWindowLayout(control=self.window.control)
-        dock_layout = TaskLayout(
-            bottom=PaneItem(height=expected_height)
-        )
+        dock_layout = TaskLayout(bottom=PaneItem(height=expected_height))
         dock_widget = create_dummy_dock_widget(parent=self.window.control)
         patch_get_dock_widget = mock.patch.object(
-            MainWindowLayout, "_get_dock_widget",
+            MainWindowLayout,
+            "_get_dock_widget",
             return_value=dock_widget,
         )
 

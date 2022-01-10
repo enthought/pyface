@@ -26,7 +26,6 @@ no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestColorDialog(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.dialog = ColorDialog(color="rebeccapurple")
@@ -73,13 +72,10 @@ class TestColorDialog(unittest.TestCase, GuiTestAssistant):
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestGetColor(unittest.TestCase, GuiTestAssistant):
-
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_close(self):
         # test that cancel works as expected
-        tester = ModalDialogTester(
-            lambda: get_color(None, "rebeccapurple")
-        )
+        tester = ModalDialogTester(lambda: get_color(None, "rebeccapurple"))
         tester.open_and_run(when_opened=lambda x: x.close(accept=False))
 
         self.assertEqual(tester.result, None)

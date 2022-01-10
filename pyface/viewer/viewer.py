@@ -15,7 +15,7 @@ from pyface.layout_widget import LayoutWidget
 
 
 class Viewer(LayoutWidget):
-    """ Abstract base class for all viewers.
+    """Abstract base class for all viewers.
 
     A viewer is a model-based adapter on some underlying toolkit-specific
     widget.

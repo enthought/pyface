@@ -20,10 +20,10 @@ from .grid_model import GridModel
 
 
 class InvertedGridModel(GridModel):
-    """ An adapter model that inverts all of its row/column targets. Use
+    """An adapter model that inverts all of its row/column targets. Use
     this class with the CompositeGridModel to make models with different
     orientations match, or use it to visually flip the data without modifying
-    the underlying model's sense of row and column. """
+    the underlying model's sense of row and column."""
 
     model = Instance(GridModel, ())
 

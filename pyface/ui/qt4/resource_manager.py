@@ -19,14 +19,14 @@ from pyface.resource.api import ResourceFactory
 
 
 class PyfaceResourceFactory(ResourceFactory):
-    """ The implementation of a shared resource manager. """
+    """The implementation of a shared resource manager."""
 
     # ------------------------------------------------------------------------
     # 'ResourceFactory' interface.
     # ------------------------------------------------------------------------
 
     def image_from_file(self, filename):
-        """ Creates an image from the data in the specified filename. """
+        """Creates an image from the data in the specified filename."""
 
         # Although QPixmap can load SVG directly, it does not respect the
         # default size, so we use a QSvgRenderer to get the default size.
@@ -43,7 +43,7 @@ class PyfaceResourceFactory(ResourceFactory):
         return pixmap
 
     def image_from_data(self, data, filename=None):
-        """ Creates an image from the specified data. """
+        """Creates an image from the specified data."""
 
         image = QtGui.QPixmap()
         image.loadFromData(data)

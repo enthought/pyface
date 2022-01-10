@@ -22,14 +22,14 @@ from .field import Field
 
 @provides(ITimeField)
 class TimeField(MTimeField, Field):
-    """ The Qt-specific implementation of the time field class """
+    """The Qt-specific implementation of the time field class"""
 
     # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         control = QTimeEdit(parent)
         return control
@@ -39,15 +39,15 @@ class TimeField(MTimeField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         return qtime_to_pytime(self.control.time())
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         self.control.setTime(pytime_to_qtime(value))
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.timeChanged.disconnect(self._update_value)
         else:

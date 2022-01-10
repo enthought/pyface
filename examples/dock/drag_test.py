@@ -101,8 +101,7 @@ class AView(HasPrivateTraits):
 
 
 def create_dock_window(parent, editor):
-    """ Creates a window for editing a workflow canvas.
-    """
+    """Creates a window for editing a workflow canvas."""
     try:
         main = DockWindow(parent).control
         view_uis = [AView().edit_traits(parent=main) for i in range(6)]

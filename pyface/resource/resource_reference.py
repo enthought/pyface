@@ -18,7 +18,7 @@ from pyface.resource.resource_factory import ResourceFactory
 
 
 class ResourceReference(HasTraits):
-    """ Abstract base class for resource references.
+    """Abstract base class for resource references.
 
     Resource references are returned from calls to 'locate_reference' on the
     resource manager.
@@ -33,13 +33,13 @@ class ResourceReference(HasTraits):
     # ------------------------------------------------------------------------
 
     def load(self):
-        """ Loads the resource. """
+        """Loads the resource."""
 
         raise NotImplementedError()
 
 
 class ImageReference(ResourceReference):
-    """ A reference to an image resource. """
+    """A reference to an image resource."""
 
     # Iff the image was found in a file then this is the name of that file.
     filename = Any  # ReadOnly
@@ -49,7 +49,7 @@ class ImageReference(ResourceReference):
     data = Any  # ReadOnly
 
     def __init__(self, resource_factory, filename=None, data=None):
-        """ Creates a new image reference. """
+        """Creates a new image reference."""
 
         self.resource_factory = resource_factory
         self.filename = filename
@@ -62,7 +62,7 @@ class ImageReference(ResourceReference):
     # ------------------------------------------------------------------------
 
     def load(self):
-        """ Loads the resource. """
+        """Loads the resource."""
 
         if self.filename is not None:
             image = self.resource_factory.image_from_file(self.filename)

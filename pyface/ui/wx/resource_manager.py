@@ -25,21 +25,21 @@ from pyface.resource.api import ResourceFactory
 
 
 class PyfaceResourceFactory(ResourceFactory):
-    """ The implementation of a shared resource manager. """
+    """The implementation of a shared resource manager."""
 
     # ------------------------------------------------------------------------
     # 'ResourceFactory' toolkit interface.
     # ------------------------------------------------------------------------
 
     def image_from_file(self, filename):
-        """ Creates an image from the data in the specified filename. """
+        """Creates an image from the data in the specified filename."""
 
         # N.B 'wx.BITMAP_TYPE_ANY' tells wxPython to attempt to autodetect the
         # --- image format.
         return wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
     def image_from_data(self, data, filename=None):
-        """ Creates an image from the specified data. """
+        """Creates an image from the specified data."""
         return wx.Image(BytesIO(data))
 
         handle = None

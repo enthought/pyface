@@ -23,7 +23,7 @@ from .dialog import Dialog, _RESULT_MAP
 
 @provides(ISingleChoiceDialog)
 class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
-    """ A dialog that allows the user to chose a single item from a list.
+    """A dialog that allows the user to chose a single item from a list.
 
     Note that due to limitations of the QInputDialog class, the cancel trait
     is ignored, and the list of displayed strings must be unique.
@@ -54,7 +54,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """Creates the window contents."""
         # In this case, Qt does it all for us in 'QInputDialog'
         pass
 
@@ -73,7 +73,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        """ Closes the window. """
+        """Closes the window."""
 
         # Get the chosen object.
         if self.control is not None and self.return_code != CANCEL:
@@ -95,7 +95,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the window. """
+        """Create the toolkit-specific control that represents the window."""
         dialog = QtGui.QInputDialog(parent)
 
         dialog.setOption(QtGui.QInputDialog.UseListViewForComboBoxItems, True)

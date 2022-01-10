@@ -14,10 +14,14 @@ from traits.api import Callable, Enum, Instance, observe, provides
 
 from pyface.qt.QtCore import QAbstractItemModel
 from pyface.qt.QtGui import (
-    QAbstractItemView, QItemSelection, QItemSelectionModel, QTreeView
+    QAbstractItemView,
+    QItemSelection,
+    QItemSelectionModel,
+    QTreeView,
 )
 from pyface.data_view.i_data_view_widget import (
-    IDataViewWidget, MDataViewWidget
+    IDataViewWidget,
+    MDataViewWidget,
 )
 from pyface.ui.qt4.layout_widget import LayoutWidget
 from .data_view_item_model import DataViewItemModel
@@ -45,7 +49,7 @@ pyface_selection_modes = {
 
 
 class DataViewTreeView(QTreeView):
-    """ QTreeView subclass that handles drag and drop via DropHandlers. """
+    """QTreeView subclass that handles drag and drop via DropHandlers."""
 
     _widget = None
 
@@ -89,7 +93,7 @@ class DataViewTreeView(QTreeView):
 
 @provides(IDataViewWidget)
 class DataViewWidget(MDataViewWidget, LayoutWidget):
-    """ The Qt implementation of the DataViewWidget. """
+    """The Qt implementation of the DataViewWidget."""
 
     #: Factory for the underlying Qt control, to facilitate replacement
     control_factory = Callable(DataViewTreeView)
@@ -117,7 +121,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_item_model(self):
-        """ Create the DataViewItemModel which wraps the data model. """
+        """Create the DataViewItemModel which wraps the data model."""
         self._item_model = DataViewItemModel(
             self.data_model,
             self.selection_type,
@@ -125,36 +129,36 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         )
 
     def _get_control_header_visible(self):
-        """ Method to get the control's header visibility. """
+        """Method to get the control's header visibility."""
         return not self.control.isHeaderHidden()
 
     def _set_control_header_visible(self, header_visible):
-        """ Method to set the control's header visibility. """
+        """Method to set the control's header visibility."""
         self.control.setHeaderHidden(not header_visible)
 
     def _get_control_selection_type(self):
-        """ Toolkit specific method to get the selection type. """
+        """Toolkit specific method to get the selection type."""
         qt_selection_type = self.control.selectionBehavior()
         return pyface_selection_types[qt_selection_type]
 
     def _set_control_selection_type(self, selection_type):
-        """ Toolkit specific method to change the selection type. """
+        """Toolkit specific method to change the selection type."""
         qt_selection_type = qt_selection_types[selection_type]
         self.control.setSelectionBehavior(qt_selection_type)
         self._item_model.selectionType = selection_type
 
     def _get_control_selection_mode(self):
-        """ Toolkit specific method to get the selection mode. """
+        """Toolkit specific method to get the selection mode."""
         qt_selection_mode = self.control.selectionMode()
         return pyface_selection_modes[qt_selection_mode]
 
     def _set_control_selection_mode(self, selection_mode):
-        """ Toolkit specific method to change the selection mode. """
+        """Toolkit specific method to change the selection mode."""
         qt_selection_mode = qt_selection_modes[selection_mode]
         self.control.setSelectionMode(qt_selection_mode)
 
     def _get_control_selection(self):
-        """ Toolkit specific method to get the selection. """
+        """Toolkit specific method to get the selection."""
         indices = self.control.selectedIndexes()
         if self.selection_type == 'row':
             return self._item_model._extract_rows(indices)
@@ -164,7 +168,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
             return self._item_model._extract_indices(indices)
 
     def _set_control_selection(self, selection):
-        """ Toolkit specific method to change the selection. """
+        """Toolkit specific method to change the selection."""
         selection_model = self.control.selectionModel()
         select_flags = QItemSelectionModel.Select
         qt_selection = QItemSelection()
@@ -177,8 +181,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         elif self.selection_type == 'column':
             select_flags |= QItemSelectionModel.Columns
             for row, column in selection:
-                index = self._item_model._to_model_index(
-                    row + (0,), column)
+                index = self._item_model._to_model_index(row + (0,), column)
                 qt_selection.select(index, index)
         else:
             for row, column in selection:
@@ -205,7 +208,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the DataViewWidget's toolkit control. """
+        """Create the DataViewWidget's toolkit control."""
         self._create_item_model()
 
         control = self.control_factory(parent)
@@ -219,8 +222,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         return control
 
     def destroy(self):
-        """ Perform any actions required to destroy the control.
-        """
+        """Perform any actions required to destroy the control."""
         if self.control is not None:
             self.control.setModel(None)
 

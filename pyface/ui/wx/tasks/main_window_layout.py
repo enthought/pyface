@@ -33,23 +33,20 @@ logger = logging.getLogger(__name__)
 
 
 class MainWindowLayout(HasTraits):
-    """ A class for applying declarative layouts to an AUI managed window.
-    """
+    """A class for applying declarative layouts to an AUI managed window."""
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.
     # ------------------------------------------------------------------------
 
     def get_layout(self, layout, window):
-        """ Get the layout by adding sublayouts to the specified DockLayout.
-        """
+        """Get the layout by adding sublayouts to the specified DockLayout."""
         logger.debug("get_layout: %s" % layout)
         layout.perspective = window._aui_manager.SavePerspective()
         logger.debug("get_layout: saving perspective %s" % layout.perspective)
 
     def set_layout(self, layout, window):
-        """ Applies a DockLayout to the window.
-        """
+        """Applies a DockLayout to the window."""
         logger.debug("set_layout: %s" % layout)
 
         if hasattr(layout, "perspective"):
@@ -96,8 +93,7 @@ class MainWindowLayout(HasTraits):
             dock_pane.validate_traits_from_pane_info()
 
     def set_layout_for_area(self, layout, direction, row=None, pos=None):
-        """ Applies a LayoutItem to the specified dock area.
-        """
+        """Applies a LayoutItem to the specified dock area."""
         # AUI doesn't have full, arbitrary row/col positions, nor infinitely
         # splittable areas.  Top and bottom docks are only splittable
         # vertically, and within each vertical split each can be split
@@ -163,18 +159,15 @@ class MainWindowLayout(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
-        """ Returns the QDockWidget associated with a PaneItem.
-        """
+        """Returns the QDockWidget associated with a PaneItem."""
         raise NotImplementedError()
 
     def _get_pane(self, dock_widget):
-        """ Returns a PaneItem for a QDockWidget.
-        """
+        """Returns a PaneItem for a QDockWidget."""
         raise NotImplementedError()
 
     def _get_dock_pane(self, pane):
-        """ Returns the DockPane associated with a PaneItem.
-        """
+        """Returns the DockPane associated with a PaneItem."""
         for dock_pane in self.state.dock_panes:
             if dock_pane.id == pane.id:
                 return dock_pane
@@ -182,7 +175,7 @@ class MainWindowLayout(HasTraits):
 
 
 class MainWindowLayoutError(ValueError):
-    """ Exception raised when a malformed LayoutItem is passed to the
+    """Exception raised when a malformed LayoutItem is passed to the
     MainWindowLayout.
     """
 

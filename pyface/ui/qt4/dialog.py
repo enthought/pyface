@@ -16,7 +16,15 @@ from pyface.qt import QtCore, QtGui
 
 
 from traits.api import (
-    Any, Bool, Callable, Enum, Int, List, provides, Str, Tuple
+    Any,
+    Bool,
+    Callable,
+    Enum,
+    Int,
+    List,
+    provides,
+    Str,
+    Tuple,
 )
 
 from pyface.i_dialog import IDialog, MDialog
@@ -37,7 +45,7 @@ _RESULT_MAP = {
 
 @provides(IDialog)
 class Dialog(MDialog, Window):
-    """ The toolkit specific implementation of a Dialog.  See the IDialog
+    """The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
 
@@ -189,7 +197,7 @@ class Dialog(MDialog, Window):
     # ------------------------------------------------------------------------
 
     def _finished_fired(self, result):
-        """ Called when the dialog is closed (and nonmodal). """
+        """Called when the dialog is closed (and nonmodal)."""
 
         self.return_code = _RESULT_MAP[result]
         self.close()

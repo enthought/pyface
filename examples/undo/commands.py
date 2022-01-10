@@ -32,7 +32,7 @@ from model import Label
 
 
 class LabelIncrementSizeCommand(AbstractCommand):
-    """ The LabelIncrementSizeCommand class is a command that increases the
+    """The LabelIncrementSizeCommand class is a command that increases the
     size of a label's text.  This command will merge multiple increments
     togther.
     """
@@ -75,7 +75,7 @@ class LabelIncrementSizeCommand(AbstractCommand):
 
 
 class LabelDecrementSizeCommand(AbstractCommand):
-    """ The LabelDecrementSizeCommand class is a command that decreases the
+    """The LabelDecrementSizeCommand class is a command that decreases the
     size of a label's text.  This command will merge multiple decrements
     togther.
     """
@@ -118,7 +118,7 @@ class LabelDecrementSizeCommand(AbstractCommand):
 
 
 class LabelNormalFontCommand(AbstractCommand):
-    """ The LabelNormalFontCommand class is a command that sets a normal font
+    """The LabelNormalFontCommand class is a command that sets a normal font
     for a label's text.
     """
 
@@ -150,7 +150,7 @@ class LabelNormalFontCommand(AbstractCommand):
 
 
 class LabelBoldFontCommand(AbstractCommand):
-    """ The LabelNormalFontCommand class is a command that sets a bold font for
+    """The LabelNormalFontCommand class is a command that sets a bold font for
     a label's text.
     """
 
@@ -182,7 +182,7 @@ class LabelBoldFontCommand(AbstractCommand):
 
 
 class LabelItalicFontCommand(AbstractCommand):
-    """ The LabelNormalFontCommand class is a command that sets an italic font
+    """The LabelNormalFontCommand class is a command that sets an italic font
     for a label's text.
     """
 

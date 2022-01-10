@@ -16,7 +16,7 @@ from traits.api import Any, HasTraits, Int, List
 
 # Classes for event traits.
 class NodeEvent(HasTraits):
-    """ The event fired by the tree models/node monitors etc. """
+    """The event fired by the tree models/node monitors etc."""
 
     # The node that has changed.
     node = Any()

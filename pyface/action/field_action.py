@@ -16,7 +16,7 @@ from .action_event import ActionEvent
 
 
 class FieldAction(Action):
-    """ A widget action containing an IField
+    """A widget action containing an IField
 
     When the value in the field is changed, the `on_perform` method is called
     with the new value as the argument.
@@ -32,7 +32,7 @@ class FieldAction(Action):
     field_defaults = Dict(Str, Any)
 
     def create_control(self, parent):
-        """ Called when creating a "widget" style action.
+        """Called when creating a "widget" style action.
 
         This constructs an IField-based control directly and binds changes to
         the value to the `value_updated` method.
@@ -54,7 +54,7 @@ class FieldAction(Action):
         return field.control
 
     def value_updated(self, event):
-        """ Handle changes to the field value by calling perform.
+        """Handle changes to the field value by calling perform.
 
         The event passed to `perform` has the `value` as an attribute.
         """
@@ -63,7 +63,7 @@ class FieldAction(Action):
         self.perform(action_event)
 
     def perform(self, event):
-        """ Performs the action.
+        """Performs the action.
 
         This dispacthes to the on_perform method with the new value passed
         as an argument.

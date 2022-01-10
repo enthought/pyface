@@ -17,7 +17,7 @@ import wx
 
 @provides(IEditor)
 class Editor(MEditor):
-    """ The toolkit-specific implementation of a Editor.
+    """The toolkit-specific implementation of a Editor.
 
     See the IEditor interface for API documentation.
     """
@@ -31,14 +31,13 @@ class Editor(MEditor):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            pane.
+        """Create and set the toolkit-specific control that represents the
+        pane.
         """
         self.control = wx.Window(parent, name="Editor")
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         if self.control is not None:
             self.control.Destroy()
             self.control = None

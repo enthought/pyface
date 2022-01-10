@@ -92,7 +92,7 @@ class GUI(MGUI, HasTraits):
     # ------------------------------------------------------------------------
 
     def start_event_loop(self):
-        """ Start the GUI event loop. """
+        """Start the GUI event loop."""
 
         if self._splash_screen is not None:
             self._splash_screen.close()
@@ -117,7 +117,7 @@ class GUI(MGUI, HasTraits):
         self.started = False
 
     def stop_event_loop(self):
-        """ Stop the GUI event loop. """
+        """Stop the GUI event loop."""
 
         logger.debug("---------- stopping GUI event loop ----------")
         wx.GetApp().ExitMainLoop()
@@ -127,12 +127,12 @@ class GUI(MGUI, HasTraits):
     # ------------------------------------------------------------------------
 
     def _state_location_default(self):
-        """ The default state location handler. """
+        """The default state location handler."""
 
         return self._default_state_location()
 
     def _busy_changed(self, new):
-        """ The busy trait change handler. """
+        """The busy trait change handler."""
 
         if new:
             self._wx_cursor = wx.BusyCursor()

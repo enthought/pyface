@@ -24,7 +24,7 @@ IS_WINDOWS = platform.system() == "Windows"
 
 
 class GUIApplicationAction(ListeningAction):
-    """ Abstract base class for GUI Application actions. """
+    """Abstract base class for GUI Application actions."""
 
     # 'ListeningAction' interface --------------------------------------------
 
@@ -49,7 +49,7 @@ class GUIApplicationAction(ListeningAction):
 
 
 class ActiveWindowAction(GUIApplicationAction):
-    """ Abstract base class for application active window actions. """
+    """Abstract base class for application active window actions."""
 
     # 'ListeningAction' interface --------------------------------------------
 
@@ -66,7 +66,7 @@ class ActiveWindowAction(GUIApplicationAction):
 
 
 class CreateWindowAction(GUIApplicationAction):
-    """ A standard 'New Window' menu action. """
+    """A standard 'New Window' menu action."""
 
     name = "New Window"
     accelerator = "Ctrl+N"
@@ -77,7 +77,7 @@ class CreateWindowAction(GUIApplicationAction):
 
 
 class ExitAction(GUIApplicationAction):
-    """ A standard 'Quit' or 'Exit' menu action. """
+    """A standard 'Quit' or 'Exit' menu action."""
 
     accelerator = "Alt+F4" if IS_WINDOWS else "Ctrl+Q"
     method = "exit"
@@ -87,7 +87,7 @@ class ExitAction(GUIApplicationAction):
 
 
 class AboutAction(GUIApplicationAction):
-    """ A standard 'About' dialog menu action. """
+    """A standard 'About' dialog menu action."""
 
     method = "do_about"
 
@@ -96,7 +96,7 @@ class AboutAction(GUIApplicationAction):
 
 
 class CloseActiveWindowAction(ActiveWindowAction):
-    """ A standard 'Close window' menu action at the application level.
+    """A standard 'Close window' menu action at the application level.
 
     This method closes the active window of the application.
     """

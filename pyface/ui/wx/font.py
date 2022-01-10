@@ -19,7 +19,7 @@ them.
 import wx
 
 # font weight and size features changed in wxPython 4.1/wxWidgets 3.1
-wx_python_4_1 = (wx.VERSION >= (4, 1))
+wx_python_4_1 = wx.VERSION >= (4, 1)
 
 
 wx_family_to_generic_family = {
@@ -102,7 +102,7 @@ wx_style_to_style = {value: key for key, value in style_to_wx_style.items()}
 
 
 def font_to_toolkit_font(font):
-    """ Convert a Pyface font to a wx.font Font.
+    """Convert a Pyface font to a wx.font Font.
 
     Wx fonts have no notion of stretch values or small-caps or overline
     variants, so these are ignored when converting.
@@ -126,7 +126,7 @@ def font_to_toolkit_font(font):
         default_family = wx.FONTFAMILY_DEFAULT
     weight = weight_to_wx_weight[font.weight_]
     style = style_to_wx_style[font.style]
-    underline = ('underline' in font.decorations)
+    underline = 'underline' in font.decorations
 
     # get a default font candidate
     wx_font = wx.Font(size, default_family, style, weight, underline)
@@ -134,8 +134,7 @@ def font_to_toolkit_font(font):
         # don't try to match generic family
         if face in generic_family_to_wx_family:
             break
-        wx_font = wx.Font(
-            size, default_family, style, weight, underline, face)
+        wx_font = wx.Font(size, default_family, style, weight, underline, face)
         # we have a match, so stop
         if wx_font.GetFaceName().lower() == face.lower():
             break
@@ -145,7 +144,7 @@ def font_to_toolkit_font(font):
 
 
 def toolkit_font_to_properties(toolkit_font):
-    """ Convert a Wx Font to a dictionary of font properties.
+    """Convert a Wx Font to a dictionary of font properties.
 
     Parameters
     ----------

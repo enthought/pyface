@@ -17,7 +17,14 @@ from pyface.qt import QtCore, QtGui
 
 
 from traits.api import (
-    Bool, Event, File, Instance, observe, Property, provides, Str
+    Bool,
+    Event,
+    File,
+    Instance,
+    observe,
+    Property,
+    provides,
+    Str,
 )
 from pyface.tasks.api import Editor
 
@@ -28,7 +35,7 @@ from pyface.key_pressed_event import KeyPressedEvent
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
-    """ The toolkit specific implementation of a PythonEditor.  See the
+    """The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
 
@@ -66,8 +73,7 @@ class PythonEditor(Editor):
         self.control = self._create_control(parent)
 
     def load(self, path=None):
-        """ Loads the contents of the editor.
-        """
+        """Loads the contents of the editor."""
         if path is None:
             path = self.path
 
@@ -83,8 +89,7 @@ class PythonEditor(Editor):
         self.dirty = False
 
     def save(self, path=None):
-        """ Saves the contents of the editor.
-        """
+        """Saves the contents of the editor."""
         if path is None:
             path = self.path
 
@@ -95,8 +100,7 @@ class PythonEditor(Editor):
         self.dirty = False
 
     def select_line(self, lineno):
-        """ Selects the specified line.
-        """
+        """Selects the specified line."""
         self.control.code.set_line_column(lineno, 0)
         self.control.code.moveCursor(
             QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
@@ -124,8 +128,7 @@ class PythonEditor(Editor):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Creates the toolkit-specific control for the widget.
-        """
+        """Creates the toolkit-specific control for the widget."""
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
         self.control = control = AdvancedCodeWidget(parent)
@@ -146,20 +149,19 @@ class PythonEditor(Editor):
         return control
 
     def _on_dirty_changed(self, dirty):
-        """ Called whenever a change is made to the dirty state of the
-            document.
+        """Called whenever a change is made to the dirty state of the
+        document.
         """
         self.dirty = dirty
 
     def _on_text_changed(self):
-        """ Called whenever a change is made to the text of the document.
-        """
+        """Called whenever a change is made to the text of the document."""
         self.changed = True
 
 
 class PythonEditorEventFilter(QtCore.QObject):
-    """ A thin wrapper around the advanced code widget to handle the key_pressed
-        Event.
+    """A thin wrapper around the advanced code widget to handle the key_pressed
+    Event.
     """
 
     def __init__(self, editor, parent):
@@ -167,8 +169,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         self.__editor = editor
 
     def eventFilter(self, obj, event):
-        """ Reimplemented to trap key presses.
-        """
+        """Reimplemented to trap key presses."""
         if (
             self.__editor.control
             and obj == self.__editor.control

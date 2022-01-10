@@ -20,7 +20,7 @@ from .i_wizard_page import IWizardPage
 
 
 class IWizard(IDialog):
-    """ The interface for all pyface wizards. """
+    """The interface for all pyface wizards."""
 
     # 'IWizard' interface -------------------------------------------------#
 
@@ -44,14 +44,14 @@ class IWizard(IDialog):
     # ------------------------------------------------------------------------
 
     def next(self):
-        """ Advance to the next page in the wizard. """
+        """Advance to the next page in the wizard."""
 
     def previous(self):
-        """ Return to the previous page in the wizard. """
+        """Return to the previous page in the wizard."""
 
 
 class MWizard(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IWizard interface.
 
     Implements: next(), previous()
@@ -64,13 +64,13 @@ class MWizard(HasTraits):
     # ------------------------------------------------------------------------
 
     def next(self):
-        """ Advance to the next page in the wizard. """
+        """Advance to the next page in the wizard."""
 
         page = self.controller.get_next_page(self.controller.current_page)
         self._show_page(page)
 
     def previous(self):
-        """ Return to the previous page in the wizard. """
+        """Return to the previous page in the wizard."""
 
         page = self.controller.get_previous_page(self.controller.current_page)
         self._show_page(page)
@@ -82,7 +82,7 @@ class MWizard(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """Creates the window contents."""
 
         # This creates the dialog and button areas.
         super()._create_contents(parent)
@@ -100,7 +100,7 @@ class MWizard(HasTraits):
     # ------------------------------------------------------------------------
 
     def _show_page(self, page):
-        """ Show the specified page. """
+        """Show the specified page."""
 
         # Set the current page in the controller.
         #
@@ -110,7 +110,7 @@ class MWizard(HasTraits):
         self.controller.current_page = page
 
     def _update(self, event):
-        """ Enables/disables buttons depending on the state of the wizard. """
+        """Enables/disables buttons depending on the state of the wizard."""
 
         pass
 
@@ -119,7 +119,7 @@ class MWizard(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_controller(self, controller):
-        """ Initializes the wizard controller. """
+        """Initializes the wizard controller."""
 
         controller.observe(self._update, "complete")
 
@@ -130,7 +130,7 @@ class MWizard(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _on_current_page_changed(self, event):
-        """ Called when the current page is changed. """
+        """Called when the current page is changed."""
 
         if event.old is not None:
             event.old.observe(self._update, "complete", remove=True)
@@ -141,7 +141,7 @@ class MWizard(HasTraits):
         self._update(event=None)
 
     def _on_closed_changed(self):
-        """ Called when the wizard is closed. """
+        """Called when the wizard is closed."""
 
         self.controller.dispose_pages()
 

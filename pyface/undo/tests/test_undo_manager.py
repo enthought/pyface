@@ -17,7 +17,6 @@ from pyface.undo.tests.testing_commands import SimpleCommand
 
 
 class TestUndoManager(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.stack_a = CommandStack()
         self.stack_b = CommandStack()
@@ -36,7 +35,8 @@ class TestUndoManager(unittest.TestCase, UnittestTools):
         self.stack_a.push(self.command)
         self.assertEqual(self.stack_a._index, 0)
         with self.assertTraitChanges(
-                self.undo_manager, 'stack_updated', count=1):
+            self.undo_manager, 'stack_updated', count=1
+        ):
             self.undo_manager.undo()
         self.assertEqual(self.stack_a._index, -1)
 
@@ -46,7 +46,8 @@ class TestUndoManager(unittest.TestCase, UnittestTools):
         self.undo_manager.undo()
         self.assertEqual(self.stack_a._index, -1)
         with self.assertTraitChanges(
-                self.undo_manager, 'stack_updated', count=1):
+            self.undo_manager, 'stack_updated', count=1
+        ):
             self.undo_manager.redo()
         self.assertEqual(self.stack_a._index, 0)
 

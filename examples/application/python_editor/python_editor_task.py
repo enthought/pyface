@@ -64,13 +64,13 @@ PYTHON_DOCS = "https://docs.python.org/{}.{}".format(*sys.version_info[:2])
 
 
 class OpenURLAction(Action):
-    """ An action that opens a web page in the system's default browser. """
+    """An action that opens a web page in the system's default browser."""
 
     #: The URL to open.
     url = Str()
 
     def perform(self, event=None):
-        """ Open a URL in a web browser. """
+        """Open a URL in a web browser."""
         try:
             webbrowser.open(self.url)
         except webbrowser.Error as exc:
@@ -78,8 +78,7 @@ class OpenURLAction(Action):
 
 
 class PythonEditorTask(Task):
-    """ A simple task for editing Python code.
-    """
+    """A simple task for editing Python code."""
 
     # 'Task' traits -----------------------------------------------------------
 
@@ -209,7 +208,7 @@ class PythonEditorTask(Task):
     # -------------------------------------------------------------------------
 
     def create_editor(self, path=""):
-        """ Create a new editor in the editor pane.
+        """Create a new editor in the editor pane.
 
         Parameters
         ----------
@@ -226,27 +225,24 @@ class PythonEditorTask(Task):
             self.active_editor.load()
 
     def close_editor(self):
-        """ Close the active editor, or if no editors, close the Task window.
-        """
+        """Close the active editor, or if no editors, close the Task window."""
         if self.editor_area.active_editor is not None:
             self.editor_area.remove_editor(self.editor_area.active_editor)
         else:
             self.window.close()
 
     def new(self):
-        """ Open a new empty window
-        """
+        """Open a new empty window"""
         self.create_editor()
 
     def open(self):
-        """ Shows a dialog to open a Python file.
-        """
+        """Shows a dialog to open a Python file."""
         dialog = FileDialog(parent=self.window.control, wildcard="*.py")
         if dialog.open() == OK:
             self.create_editor(dialog.path)
 
     def save(self):
-        """ Save the current file.
+        """Save the current file.
 
         If needed, this code prompts for a path.
 
@@ -275,21 +271,18 @@ class PythonEditorTask(Task):
     # -------------------------------------------------------------------------
 
     def _default_layout_default(self):
-        """ The default layout with the browser pane on the left.
-        """
+        """The default layout with the browser pane on the left."""
         return TaskLayout(
             left=PaneItem("example.python_browser_pane", width=200)
         )
 
     def create_central_pane(self):
-        """ Create the central pane: the script editor.
-        """
+        """Create the central pane: the script editor."""
         self.editor_area = EditorAreaPane()
         return self.editor_area
 
     def create_dock_panes(self):
-        """ Create the file browser and connect to its double click event.
-        """
+        """Create the file browser and connect to its double click event."""
         browser = PythonBrowserPane()
 
         def handler(event):
@@ -305,8 +298,8 @@ class PythonEditorTask(Task):
     # -------------------------------------------------------------------------
 
     def _prompt_for_save(self):
-        """ Prompts the user to save if necessary. Returns whether the dialog
-            was cancelled.
+        """Prompts the user to save if necessary. Returns whether the dialog
+        was cancelled.
         """
         dirty_editors = {
             editor.name: editor
@@ -336,16 +329,14 @@ class PythonEditorTask(Task):
 
     @observe("window:closing")
     def _prompt_on_close(self, event):
-        """ Prompt the user to save when exiting.
-        """
+        """Prompt the user to save when exiting."""
         close = self._prompt_for_save()
         window = event.new
         window.veto = not close
 
     @observe("active_editor.name")
     def _change_title(self, event):
-        """ Update the window title when the active editor changes.
-        """
+        """Update the window title when the active editor changes."""
         if self.window.active_task == self:
             if self.active_editor is not None:
                 self.window.title = self.active_editor.name

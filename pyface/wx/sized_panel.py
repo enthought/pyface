@@ -15,10 +15,10 @@ import wx
 
 
 class SizedPanel(wx.Panel):
-    """ A panel sized by a sizer. """
+    """A panel sized by a sizer."""
 
     def __init__(self, parent, wxid, sizer, **kw):
-        """ Creates a new sized panel. """
+        """Creates a new sized panel."""
 
         # Base-class constructor.
         wx.Panel.__init__(self, parent, wxid, **kw)
@@ -38,12 +38,12 @@ class SizedPanel(wx.Panel):
     # ------------------------------------------------------------------------
 
     def Fit(self):
-        """ Resizes the panel to match the sizer's minimal size. """
+        """Resizes the panel to match the sizer's minimal size."""
 
         self.sizer.Fit(self)
 
     def Layout(self):
-        """ Lays out the sizer without changing the panel geometry. """
+        """Lays out the sizer without changing the panel geometry."""
 
         self.sizer.Layout()
 

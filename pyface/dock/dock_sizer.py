@@ -167,8 +167,7 @@ DockStyle = Enum("horizontal", "vertical", "tab", "fixed")
 
 
 def add_feature(feature_class):
-    """ Adds a new DockWindowFeature class to the list of available features.
-    """
+    """Adds a new DockWindowFeature class to the list of available features."""
     global features
 
     result = feature_class not in features
@@ -188,8 +187,7 @@ def add_feature(feature_class):
 
 
 def set_standard_font(dc):
-    """ Sets the standard font to use for a specified device context.
-    """
+    """Sets the standard font to use for a specified device context."""
     global standard_font
 
     if standard_font is None:
@@ -206,8 +204,7 @@ def set_standard_font(dc):
 
 
 def clear_window(window):
-    """ Clears a window to the standard background color.
-    """
+    """Clears a window to the standard background color."""
     bg_color = SystemMetrics().dialog_background_color
     bg_color = wx.Colour(
         int(bg_color[0] * 255), int(bg_color[1] * 255), int(bg_color[2] * 255)
@@ -226,8 +223,7 @@ def clear_window(window):
 
 
 def get_dc(window):
-    """ Gets a temporary device context for a specified window to draw in.
-    """
+    """Gets a temporary device context for a specified window to draw in."""
     if is_mac:
         dc = wx.ClientDC(window)
         x, y = window.GetPosition().Get()
@@ -272,14 +268,13 @@ class DockImages(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Initializes the object.
-        """
+        """Initializes the object."""
         super().__init__(**traits)
 
         self._lazy_init_done = False
 
     def init(self):
-        """ Initializes the parts of the object that depend on the toolkit
+        """Initializes the parts of the object that depend on the toolkit
         selection.
         """
 
@@ -335,8 +330,7 @@ class DockImages(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def get_splitter_image(self, state):
-        """ Returns the splitter image to use for a specified splitter state.
-        """
+        """Returns the splitter image to use for a specified splitter state."""
         return self._splitter_images[state]
 
     # ---------------------------------------------------------------------------
@@ -344,8 +338,7 @@ class DockImages(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def get_feature_image(self, state, is_tab=True):
-        """ Returns the feature image to use for a specified feature state.
-        """
+        """Returns the feature image to use for a specified feature state."""
         if is_tab:
             return self._feature_images[state]
 
@@ -537,8 +530,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def is_at(self, x, y, bounds=None):
-        """ Returns whether or not the item is at a specified window position.
-        """
+        """Returns whether or not the item is at a specified window position."""
         if bounds is None:
             bounds = self.bounds
         bx, by, bdx, bdy = bounds
@@ -549,8 +541,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def is_in(self, event, x, y, dx, dy):
-        """ Returns whether or not an event is within a specified bounds.
-        """
+        """Returns whether or not an event is within a specified bounds."""
         return (x <= event.GetX() < (x + dx)) and (
             y <= event.GetY() < (y + dy)
         )
@@ -560,8 +551,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def set_drag_bounds(self, x, y, dx, dy):
-        """ Sets the control's drag bounds.
-        """
+        """Sets the control's drag bounds."""
         bx, by, bdx, bdy = self.bounds
         if (bx + bdx - x) > 0:
             self.drag_bounds = (x, y, min(x + dx, bx + bdx) - x, dy)
@@ -573,8 +563,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def get_cursor(self, event):
-        """ Gets the cursor to use when the mouse is over the item.
-        """
+        """Gets the cursor to use when the mouse is over the item."""
         if self._is_tab and (not self._is_in_close(event)):
             return wx.CURSOR_ARROW
 
@@ -585,8 +574,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def dock_info_at(self, x, y, tdx, is_control):
-        """ Gets the DockInfo object for a specified window position.
-        """
+        """Gets the DockInfo object for a specified window position."""
         if self.is_at(x, y, self.drag_bounds):
             x, y, dx, dy = self.drag_bounds
             control = self
@@ -620,8 +608,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def begin_draw(self, dc, ox=0, oy=0):
-        """ Prepares for drawing into a device context.
-        """
+        """Prepares for drawing into a device context."""
         self._save_clip = dc.GetClippingRect()
         x, y, dx, dy = self.bounds
         dc.SetClippingRegion(x + ox, y + oy, dx, dy)
@@ -631,8 +618,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def end_draw(self, dc):
-        """ Terminates drawing into a device context.
-        """
+        """Terminates drawing into a device context."""
         dc.DestroyClippingRegion()
         if self._save_clip != no_clip:
             dc.SetClippingRegion(*self._save_clip)
@@ -643,8 +629,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def mouse_down(self, event):
-        """ Handles the left mouse button being pressed.
-        """
+        """Handles the left mouse button being pressed."""
         self._xy = (event.GetX(), event.GetY())
         self._closing = self._is_in_close(event)
         self._dragging = False
@@ -654,8 +639,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def mouse_up(self, event):
-        """ Handles the left mouse button being released.
-        """
+        """Handles the left mouse button being released."""
         # Handle the user closing a control:
         if self._closing:
             if self._is_in_close(event):
@@ -708,8 +692,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def mouse_move(self, event):
-        """ Handles the mouse moving while the left mouse button is pressed.
-        """
+        """Handles the mouse moving while the left mouse button is pressed."""
         # Exit if control is 'fixed' or a 'close' is pending:
         if self._closing or self.locked or (self.style == "fixed"):
             return
@@ -792,8 +775,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def hover_enter(self, event):
-        """ Handles the mouse hovering over the item.
-        """
+        """Handles the mouse hovering over the item."""
         if self._is_tab and (self.tab_state != TabActive):
             self._redraw_tab(TabHover)
 
@@ -802,8 +784,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def hover_exit(self, event):
-        """ Handles the mouse exiting from hovering over the item.
-        """
+        """Handles the mouse exiting from hovering over the item."""
         if self._is_tab and (self.tab_state != TabActive):
             self._redraw_tab(TabInactive)
 
@@ -812,8 +793,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def mark_bounds(self, begin):
-        """ Marks/Unmarks the bounds of the bounding DockWindow.
-        """
+        """Marks/Unmarks the bounds of the bounding DockWindow."""
         window = self.control.GetParent()
         if begin:
             dc, x, y = get_dc(window)
@@ -839,8 +819,7 @@ class DockItem(HasPrivateTraits):
                 window.Refresh()
 
     def get_bg_color(self):
-        """ Gets the background color
-        """
+        """Gets the background color"""
         color = SystemMetrics().dialog_background_color
         return wx.Colour(
             int(color[0] * 255), int(color[1] * 255), int(color[2] * 255)
@@ -851,8 +830,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def fill_bg_color(self, dc, x, y, dx, dy):
-        """ Fills a specified region with the control's background color.
-        """
+        """Fills a specified region with the control's background color."""
         dc.SetPen(wx.TRANSPARENT_PEN)
 
         dc.SetBrush(wx.Brush(self.get_bg_color()))
@@ -965,8 +943,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def draw_fixed(self, dc):
-        """ Draws a fixed drag bar.
-        """
+        """Draws a fixed drag bar."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -974,8 +951,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def draw_horizontal(self, dc):
-        """ Draws a horizontal drag bar.
-        """
+        """Draws a horizontal drag bar."""
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
 
@@ -991,8 +967,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def draw_vertical(self, dc):
-        """ Draws a vertical drag bar.
-        """
+        """Draws a vertical drag bar."""
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
 
@@ -1194,8 +1169,8 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def pre_drag_all(self, object):
-        """ Prepare all DockControls in the associated DockWindow for being
-            dragged over.
+        """Prepare all DockControls in the associated DockWindow for being
+        dragged over.
         """
         for control in self.dock_controls:
             control.pre_drag(object)
@@ -1203,8 +1178,7 @@ class DockItem(HasPrivateTraits):
         self.pre_drag(object)
 
     def pre_drag(self, object, tag=0):
-        """ Prepare this DockControl for being dragged over.
-        """
+        """Prepare this DockControl for being dragged over."""
         if (
             self.visible
             and (self.feature_mode != FEATURE_NONE)
@@ -1239,16 +1213,15 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def post_drag_all(self):
-        """ Restore all DockControls in the associated DockWindow after a drag
-            operation is completed.
+        """Restore all DockControls in the associated DockWindow after a drag
+        operation is completed.
         """
         for control in self.dock_controls:
             control.post_drag()
         self.post_drag()
 
     def post_drag(self, tag=0):
-        """ Restore this DockControl after a drag operation is completed.
-        """
+        """Restore this DockControl after a drag operation is completed."""
         if (
             (self._feature_mode is None)
             or (tag == 0)
@@ -1297,8 +1270,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def draw(self, dc):
-        """ Draws the contents of the splitter.
-        """
+        """Draws the contents of the splitter."""
         if (self._live_drag is False) and (self._first_bounds is not None):
             x, y, dx, dy = self._first_bounds
         else:
@@ -1344,8 +1316,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_cursor(self, event):
-        """ Gets the cursor to use when the mouse is over the splitter bar.
-        """
+        """Gets the cursor to use when the mouse is over the splitter bar."""
         if (self._hot_spot is None) or self.is_in(event, *self._hot_spot):
             return wx.CURSOR_ARROW
 
@@ -1359,8 +1330,8 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_structure(self):
-        """ Returns a copy of the splitter 'structure', minus the actual
-            content.
+        """Returns a copy of the splitter 'structure', minus the actual
+        content.
         """
         return self.clone_traits(["_last_bounds"])
 
@@ -1369,8 +1340,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def mouse_down(self, event):
-        """ Handles the left mouse button being pressed.
-        """
+        """Handles the left mouse button being pressed."""
         self._live_drag = event.ControlDown()
         self._click_pending = (self._hot_spot is not None) and self.is_in(
             event, *self._hot_spot
@@ -1387,8 +1357,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def mouse_up(self, event):
-        """ Handles the left mouse button being released.
-        """
+        """Handles the left mouse button being released."""
         if self._click_pending:
             hx, hy, hdx, hdy = self._hot_spot
             if not self.is_in(event, hx, hy, hdx, hdy):
@@ -1415,8 +1384,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def mouse_move(self, event):
-        """ Handles the mouse moving while the left mouse button is pressed.
-        """
+        """Handles the mouse moving while the left mouse button is pressed."""
         if not self._click_pending:
             if self._first_bounds is not None:
                 x, y, dx, dy = self._first_bounds
@@ -1442,11 +1410,11 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def collapse(self, forward):
-        """ Move the splitter has far as possible in one direction. 'forward'
-            is a boolean: True=right/down, False=left/up.
+        """Move the splitter has far as possible in one direction. 'forward'
+        is a boolean: True=right/down, False=left/up.
 
-            If the splitter is already collapsed, restores it to its previous
-            position.
+        If the splitter is already collapsed, restores it to its previous
+        position.
         """
 
         is_horizontal = self.style == "horizontal"
@@ -1490,8 +1458,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def hover_enter(self, event):
-        """ Handles the mouse hovering over the item.
-        """
+        """Handles the mouse hovering over the item."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -1499,8 +1466,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def hover_exit(self, event):
-        """ Handles the mouse exiting from hovering over the item.
-        """
+        """Handles the mouse exiting from hovering over the item."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -1508,8 +1474,7 @@ class DockSplitter(DockItem):
     # ---------------------------------------------------------------------------
 
     def _draw_bounds(self, event, bounds=None):
-        """ Draws the splitter bar in a new position while it is being dragged.
-        """
+        """Draws the splitter bar in a new position while it is being dragged."""
         # Set up the drawing environment:
         window = event.GetEventObject()
         dc, x0, y0 = get_dc(window)
@@ -1693,8 +1658,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def calc_min(self, use_size=False):
-        """ Calculates the minimum size of the control.
-        """
+        """Calculates the minimum size of the control."""
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
@@ -1714,8 +1678,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def recalc_sizes(self, x, y, dx, dy):
-        """ Layout the contents of the region based on the specified bounds.
-        """
+        """Layout the contents of the region based on the specified bounds."""
         self.width = dx = max(0, dx)
         self.height = dy = max(0, dy)
         self.bounds = (x, y, dx, dy)
@@ -1739,8 +1702,8 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def check_features(self):
-        """ Checks to make sure that all applicable DockWindowFeatures have been
-            applied.
+        """Checks to make sure that all applicable DockWindowFeatures have been
+        applied.
         """
         global features
 
@@ -1774,8 +1737,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def set_visibility(self, visible):
-        """ Sets the visibility of the control.
-        """
+        """Sets the visibility of the control."""
         if self.control is not None:
             self.control.Show(visible)
 
@@ -1784,8 +1746,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_controls(self, visible_only=True):
-        """ Returns all DockControl objects contained in the control.
-        """
+        """Returns all DockControl objects contained in the control."""
         if visible_only and (not self.visible):
             return []
 
@@ -1796,8 +1757,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_image(self):
-        """ Gets the image (if any) associated with the control.
-        """
+        """Gets the image (if any) associated with the control."""
         if self._image is None:
             if self.image is not None:
                 self._image = self.image.create_image().ConvertToBitmap()
@@ -1809,8 +1769,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def show(self, visible=True, layout=True):
-        """ Hides or shows the control.
-        """
+        """Hides or shows the control."""
         if visible != self.visible:
             self.visible = visible
             self._layout(layout)
@@ -1821,8 +1780,8 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def activate(self, layout=True):
-        """ Activates a control (i.e. makes it the active page within its
-            containing notebook).
+        """Activates a control (i.e. makes it the active page within its
+        containing notebook).
         """
         if self.parent is not None:
             self.parent.activate(self, layout)
@@ -1832,8 +1791,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def close(self, layout=True, force=False):
-        """ Closes the control.
-        """
+        """Closes the control."""
         control = self.control
         if control is not None:
             window = control.GetParent()
@@ -1874,8 +1832,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def object_at(self, x, y):
-        """ Returns the object at a specified window position.
-        """
+        """Returns the object at a specified window position."""
         return None
 
     # ---------------------------------------------------------------------------
@@ -1883,8 +1840,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_structure(self):
-        """ Returns a copy of the control 'structure', minus the actual content.
-        """
+        """Returns a copy of the control 'structure', minus the actual content."""
         return self.clone_traits(
             [
                 "id",
@@ -1906,8 +1862,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def toggle_lock(self):
-        """ Toggles the 'lock' status of the control.
-        """
+        """Toggles the 'lock' status of the control."""
         self.locked = not self.locked
 
     # ---------------------------------------------------------------------------
@@ -1915,8 +1870,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def dump(self, indent):
-        """ Prints the contents of the control.
-        """
+        """Prints the contents of the control."""
         print(
             (
                 "%sControl( %08X, name = %s, id = %s,\n%s"
@@ -1947,8 +1901,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def draw(self, dc):
-        """ Draws the contents of the control.
-        """
+        """Draws the contents of the control."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -1956,8 +1909,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def set_name(self, name, layout=True):
-        """ Sets a new name for the control.
-        """
+        """Sets a new name for the control."""
         if name != self.name:
             self.name = name
             self._layout(layout)
@@ -1967,8 +1919,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def reset_tab(self):
-        """ Resets the state of the tab.
-        """
+        """Resets the state of the tab."""
         self.reset_features()
         self._layout()
 
@@ -1977,8 +1928,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def reset_features(self):
-        """ Resets all currently defined features.
-        """
+        """Resets all currently defined features."""
         for feature in self.features:
             feature.dispose()
 
@@ -1990,8 +1940,7 @@ class DockControl(DockItem):
     # ---------------------------------------------------------------------------
 
     def _layout(self, layout=True):
-        """ Forces the containing DockWindow to be laid out.
-        """
+        """Forces the containing DockWindow to be laid out."""
         if layout and (self.control is not None):
             do_later(self.control.GetParent().owner.update_layout)
 
@@ -2001,8 +1950,8 @@ class DockControl(DockItem):
 
     @observe('activated')
     def _activate_dockable_tab(self, event):
-        """ Notifies the active dockable that the control's tab is being
-            activated.
+        """Notifies the active dockable that the control's tab is being
+        activated.
         """
         if self.dockable is not None:
             self.dockable.dockable_tab_activated(self, True)
@@ -2013,8 +1962,7 @@ class DockControl(DockItem):
 
     @observe("feature_changed")
     def _feature_changed_updated(self, event):
-        """ Handles the 'feature_changed' trait being changed
-        """
+        """Handles the 'feature_changed' trait being changed"""
         self.set_feature_mode()
 
     # ---------------------------------------------------------------------------
@@ -2023,8 +1971,7 @@ class DockControl(DockItem):
 
     @observe("control")
     def _control_updated(self, event):
-        """ Handles the 'control' trait being changed.
-        """
+        """Handles the 'control' trait being changed."""
         old, new = event.old, event.new
         self._tab_width = None
 
@@ -2041,8 +1988,7 @@ class DockControl(DockItem):
 
     @observe("name")
     def _name_updated(self, event):
-        """ Handles the 'name' trait being changed.
-        """
+        """Handles the 'name' trait being changed."""
         self._tab_width = self._tab_name = None
 
     # ---------------------------------------------------------------------------
@@ -2051,8 +1997,7 @@ class DockControl(DockItem):
 
     @observe("style")
     def _style_updated(self, event):
-        """ Handles the 'style' trait being changed.
-        """
+        """Handles the 'style' trait being changed."""
         if self.parent is not None:
             self.parent._is_notebook = None
 
@@ -2062,8 +2007,7 @@ class DockControl(DockItem):
 
     @observe("image")
     def _image_updated(self, event):
-        """ Handles the 'image' trait being changed.
-        """
+        """Handles the 'image' trait being changed."""
         self._image = None
 
     # ---------------------------------------------------------------------------
@@ -2072,8 +2016,7 @@ class DockControl(DockItem):
 
     @observe("visible")
     def _visible_updated(self, event):
-        """ Handles the 'visible' trait being changed.
-        """
+        """Handles the 'visible' trait being changed."""
         if self.parent is not None:
             self.parent.show_hide(self)
 
@@ -2083,8 +2026,7 @@ class DockControl(DockItem):
 
     @observe("dockable")
     def _dockable_updated(self, event):
-        """ Handles the 'dockable' trait being changed.
-        """
+        """Handles the 'dockable' trait being changed."""
         dockable = event.new
         if dockable is not None:
             dockable.dockable_bind(self)
@@ -2256,8 +2198,7 @@ class DockGroup(DockItem):
 
     @observe("initialized")
     def _initialized_updated(self, event):
-        """ Handles 'initialized' being changed.
-        """
+        """Handles 'initialized' being changed."""
         for item in self.contents:
             if isinstance(item, DockGroup):
                 item.initialized = self.initialized
@@ -2267,8 +2208,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def show(self, visible=True, layout=True):
-        """ Hides or shows the contents of the group.
-        """
+        """Hides or shows the contents of the group."""
         for item in self.contents:
             item.show(visible, False)
 
@@ -2282,8 +2222,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def replace_control(self, old, new):
-        """ Replaces a specified DockControl by another.
-        """
+        """Replaces a specified DockControl by another."""
         for i, item in enumerate(self.contents):
             if isinstance(item, DockControl):
                 if item is old:
@@ -2301,8 +2240,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_controls(self, visible_only=True):
-        """ Returns all DockControl objects contained in the group.
-        """
+        """Returns all DockControl objects contained in the group."""
         if visible_only:
             contents = self.visible_contents
         else:
@@ -2319,8 +2257,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_image(self):
-        """ Gets the image (if any) associated with the group.
-        """
+        """Gets the image (if any) associated with the group."""
         if len(self.contents) == 0:
             return None
         return self.contents[0].get_image()
@@ -2330,8 +2267,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def get_cursor(self, event):
-        """ Gets the cursor to use when the mouse is over the item.
-        """
+        """Gets the cursor to use when the mouse is over the item."""
         return wx.CURSOR_ARROW
 
     # ---------------------------------------------------------------------------
@@ -2339,8 +2275,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def toggle_lock(self):
-        """ Toggles the 'lock' status of every control in the group.
-        """
+        """Toggles the 'lock' status of every control in the group."""
         for item in self.contents:
             item.toggle_lock()
 
@@ -2349,8 +2284,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     def close(self, layout=True, force=False):
-        """ Closes the control.
-        """
+        """Closes the control."""
         window = self.control.control.GetParent()
 
         for item in self.contents[:]:
@@ -2395,8 +2329,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def calc_min(self, use_size=False):
-        """ Calculates the minimum size of the region.
-        """
+        """Calculates the minimum size of the region."""
         tab_dx = tdx = tdy = 0
         contents = self.visible_contents
         theme = self.theme
@@ -2439,8 +2372,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def recalc_sizes(self, x, y, dx, dy):
-        """ Layout the contents of the region based on the specified bounds.
-        """
+        """Layout the contents of the region based on the specified bounds."""
         self.width = dx = max(0, dx)
         self.height = dy = max(0, dy)
         self.bounds = (x, y, dx, dy)
@@ -2540,8 +2472,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def add(self, control, before=None, after=None, activate=True):
-        """ Adds a new control before a specified control.
-        """
+        """Adds a new control before a specified control."""
         contents = self.contents
         if control.parent is self:
             contents.remove(control)
@@ -2561,15 +2492,14 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def remove(self, item):
-        """ Removes a specified item.
-        """
+        """Removes a specified item."""
         contents = self.contents
         i = contents.index(item)
 
         if isinstance(item, DockGroup) and (len(item.contents) == 1):
             item = item.contents[0]
             if isinstance(item, DockRegion):
-                contents[i:i + 1] = item.contents[:]
+                contents[i : i + 1] = item.contents[:]
             else:
                 contents[i] = item
         else:
@@ -2601,8 +2531,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def get_structure(self):
-        """ Returns a copy of the region 'structure', minus the actual content.
-        """
+        """Returns a copy of the region 'structure', minus the actual content."""
         return self.clone_traits(["active", "width", "height"]).trait_set(
             contents=[item.get_structure() for item in self.contents]
         )
@@ -2612,8 +2541,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def toggle_lock(self):
-        """ Toggles the 'lock' status of every control in the group.
-        """
+        """Toggles the 'lock' status of every control in the group."""
         super().toggle_lock()
         self._is_notebook = None
 
@@ -2622,8 +2550,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def draw(self, dc):
-        """ Draws the contents of the region.
-        """
+        """Draws the contents of the region."""
         if self._visible is not False:
             self.begin_draw(dc)
 
@@ -2702,8 +2629,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def object_at(self, x, y):
-        """ Returns the object at a specified window position.
-        """
+        """Returns the object at a specified window position."""
         if (self._visible is not False) and self.is_at(x, y):
             if self.is_notebook and (self.tab_scroll_index >= 0):
                 cx, cy, cdx, cdy = self._tab_clip_bounds
@@ -2734,8 +2660,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def dock_info_at(self, x, y, tdx, is_control):
-        """ Gets the DockInfo object for a specified window position.
-        """
+        """Gets the DockInfo object for a specified window position."""
         # Check to see if the point is in our drag bar:
         info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
@@ -2801,8 +2726,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def tab_clicked(self, control):
-        """ Handles a contained notebook tab being clicked.
-        """
+        """Handles a contained notebook tab being clicked."""
         # Find the page that was clicked and mark it as active:
         i = self.contents.index(control)
         if i != self.active:
@@ -2823,8 +2747,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def scroll(self, type, left_tab=0):
-        """ Handles the user clicking an active scroll button.
-        """
+        """Handles the user clicking an active scroll button."""
         if type == SCROLL_LEFT:
             left_tab = min(self.left_tab + 1, self.max_tab)
         elif type == SCROLL_RIGHT:
@@ -2863,8 +2786,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def mouse_down(self, event):
-        """ Handles the left mouse button being pressed.
-        """
+        """Handles the left mouse button being pressed."""
         self._scroll = self._get_scroll_button(event)
 
     # ---------------------------------------------------------------------------
@@ -2872,8 +2794,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def mouse_up(self, event):
-        """ Handles the left mouse button being released.
-        """
+        """Handles the left mouse button being released."""
         if (self._scroll is not None) and (
             self._scroll == self._get_scroll_button(event)
         ):
@@ -2886,8 +2807,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def mouse_move(self, event):
-        """ Handles the mouse moving while the left mouse button is pressed.
-        """
+        """Handles the mouse moving while the left mouse button is pressed."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -2895,8 +2815,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def set_visibility(self, visible):
-        """ Sets the visibility of the region.
-        """
+        """Sets the visibility of the region."""
         self._visible = visible
         active = self.active
         for i, item in enumerate(self.contents):
@@ -2907,8 +2826,8 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def activate(self, control, layout=True):
-        """ Activates a specified control (i.e. makes it the current notebook
-            tab).
+        """Activates a specified control (i.e. makes it the current notebook
+        tab).
         """
         if control.visible and self.is_notebook:
             active = self.contents.index(control)
@@ -2930,8 +2849,8 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def make_active_tab_visible(self):
-        """ Makes sure the active control's tab is completely visible (if
-            possible).
+        """Makes sure the active control's tab is completely visible (if
+        possible).
         """
         active = self.active
         if active < self.left_tab:
@@ -2946,8 +2865,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def show_hide(self, control):
-        """ Handles a contained DockControl item being hidden or shown.
-        """
+        """Handles a contained DockControl item being hidden or shown."""
         i = self.contents.index(control)
         if i == self.active:
             self._update_active()
@@ -2960,8 +2878,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def dump(self, indent):
-        """ Prints the contents of the region.
-        """
+        """Prints the contents of the region."""
         print(
             "%sRegion( %08X, active = %s, width = %d, height = %d )"
             % (" " * indent, id(self), self.active, self.width, self.height)
@@ -2974,8 +2891,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def _get_scroll_button(self, event):
-        """ Returns which scroll button (if any) the pointer is currently over.
-        """
+        """Returns which scroll button (if any) the pointer is currently over."""
         x, y, dx, dy = self._tab_clip_bounds
         if self.is_in(
             event,
@@ -2996,8 +2912,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def _update_active(self, active=None):
-        """ Updates the currently active page after a change.
-        """
+        """Updates the currently active page after a change."""
         if active is None:
             active = self.active
 
@@ -3047,8 +2962,7 @@ class DockRegion(DockGroup):
 
     @observe("contents")
     def _contents_updated(self, event):
-        """ Handles the 'contents' trait being changed.
-        """
+        """Handles the 'contents' trait being changed."""
         self._is_notebook = None
         for item in self.contents:
             item.parent = self
@@ -3057,8 +2971,7 @@ class DockRegion(DockGroup):
 
     @observe("contents:items")
     def _contents_items_updated(self, event):
-        """ Handles the 'contents' trait being changed.
-        """
+        """Handles the 'contents' trait being changed."""
         self._is_notebook = None
         for item in event.added:
             item.parent = self
@@ -3070,8 +2983,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def _set_visibility(self):
-        """ Set the proper visiblity for all contained controls.
-        """
+        """Set the proper visiblity for all contained controls."""
         active = self.active
         for i, item in enumerate(self.contents):
             item.set_visibility(i == active)
@@ -3103,8 +3015,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     def _draw_notebook(self, dc):
-        """ Draws the notebook body.
-        """
+        """Draws the notebook body."""
         theme = self.theme
         tab_height = theme.tab_active.image_slice.dy
         x, y, dx, dy = self.bounds
@@ -3176,8 +3087,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def calc_min(self, use_size=False):
-        """ Calculates the minimum size of the section.
-        """
+        """Calculates the minimum size of the section."""
         tdx = tdy = 0
         contents = self.visible_contents
         n = len(contents)
@@ -3223,8 +3133,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def initial_recalc_sizes(self, x, y, dx, dy):
-        """ Layout the contents of the section based on the specified bounds.
-        """
+        """Layout the contents of the section based on the specified bounds."""
         self.width = dx = max(0, dx)
         self.height = dy = max(0, dy)
         self.bounds = (x, y, dx, dy)
@@ -3338,8 +3247,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def recalc_sizes(self, x, y, dx, dy):
-        """ Layout the contents of the section based on the specified bounds.
-        """
+        """Layout the contents of the section based on the specified bounds."""
         # Check if we need to perform initial layout
         if not self.initialized:
             self.initial_recalc_sizes(x, y, dx, dy)
@@ -3457,8 +3365,8 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def recalc_sizes_fixed(self, x, y, dx, dy):
-        """ Layout the contents of the section based on the specified bounds
-            using the minimum requested size for each item.
+        """Layout the contents of the section based on the specified bounds
+        using the minimum requested size for each item.
         """
         self.splitters = []
 
@@ -3499,8 +3407,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def draw(self, dc):
-        """ Draws the contents of the section.
-        """
+        """Draws the contents of the section."""
         if self._visible is not False:
             contents = self.visible_contents
             x, y, dx, dy = self.bounds
@@ -3519,8 +3426,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def object_at(self, x, y, force=False):
-        """ Returns the object at a specified window position.
-        """
+        """Returns the object at a specified window position."""
         if self._visible is not False:
             for item in self.splitters:
                 if item.is_at(x, y):
@@ -3541,8 +3447,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def dock_info_at(self, x, y, tdx, is_control, force=False):
-        """ Gets the DockInfo object for a specified window position.
-        """
+        """Gets the DockInfo object for a specified window position."""
         # Check to see if the point is in our drag bar:
         info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
@@ -3603,8 +3508,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def add(self, control, region, kind):
-        """ Adds a control to the section at the edge of the region specified.
-        """
+        """Adds a control to the section at the edge of the region specified."""
         contents = self.contents
         new_region = control
         if not isinstance(control, DockRegion):
@@ -3648,8 +3552,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def remove(self, item):
-        """ Removes a specified region or section from the section.
-        """
+        """Removes a specified region or section from the section."""
         contents = self.contents
         if isinstance(item, DockGroup) and (len(item.contents) == 1):
             contents[contents.index(item)] = item.contents[0]
@@ -3667,8 +3570,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def set_visibility(self, visible):
-        """ Sets the visibility of the group.
-        """
+        """Sets the visibility of the group."""
         self._visible = visible
         for item in self.contents:
             item.set_visibility(visible)
@@ -3678,8 +3580,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def get_structure(self):
-        """ Returns a copy of the section 'structure', minus the actual content.
-        """
+        """Returns a copy of the section 'structure', minus the actual content."""
         return self.clone_traits(["is_row", "width", "height"]).trait_set(
             contents=[item.get_structure() for item in self.contents],
             splitters=[item.get_structure() for item in self.splitters],
@@ -3690,8 +3591,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def get_splitter_bounds(self, splitter):
-        """ Gets the maximum bounds that a splitter bar is allowed to be dragged.
-        """
+        """Gets the maximum bounds that a splitter bar is allowed to be dragged."""
         x, y, dx, dy = splitter.bounds
         i = self.splitters.index(splitter)
         contents = self.visible_contents
@@ -3713,8 +3613,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def update_splitter(self, splitter, window):
-        """ Updates the affected regions when a splitter bar is released.
-        """
+        """Updates the affected regions when a splitter bar is released."""
         x, y, dx, dy = splitter.bounds
         i = self.splitters.index(splitter)
         contents = self.visible_contents
@@ -3753,8 +3652,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def dump(self, indent=0):
-        """ Prints the contents of the section.
-        """
+        """Prints the contents of the section."""
         print(
             "%sSection( %08X, is_row = %s, width = %d, height = %d )"
             % (" " * indent, id(self), self.is_row, self.width, self.height)
@@ -3767,8 +3665,7 @@ class DockSection(DockGroup):
     # ---------------------------------------------------------------------------
 
     def _set_visibility(self):
-        """ Sets the correct visiblity for all contained items.
-        """
+        """Sets the correct visiblity for all contained items."""
         for item in self.contents:
             item.set_visibility(item.visible)
 
@@ -3778,8 +3675,7 @@ class DockSection(DockGroup):
 
     @observe("contents")
     def _contents_updated(self, event):
-        """ Handles the 'contents' trait being changed.
-        """
+        """Handles the 'contents' trait being changed."""
         for item in self.contents:
             item.parent = self
         self.calc_min(True)
@@ -3787,8 +3683,7 @@ class DockSection(DockGroup):
 
     @observe("contents:items")
     def _contents_items_updated(self, event):
-        """ Handles the 'contents' trait being changed.
-        """
+        """Handles the 'contents' trait being changed."""
         for item in event.added:
             item.parent = self
         self.calc_min(True)
@@ -3800,15 +3695,13 @@ class DockSection(DockGroup):
 
     @observe("splitters")
     def _splitters_updated(self, event):
-        """ Handles the 'splitters' trait being changed.
-        """
+        """Handles the 'splitters' trait being changed."""
         for item in self.splitters:
             item.parent = self
 
     @observe("splitters:items")
     def _splitters_items_updated(self, event):
-        """ Handles the 'splitters' trait being changed.
-        """
+        """Handles the 'splitters' trait being changed."""
         for item in event.added:
             item.parent = self
 
@@ -3853,8 +3746,7 @@ class DockInfo(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def draw(self, window, bitmap=None):
-        """ Draws the DockInfo on the display.
-        """
+        """Draws the DockInfo on the display."""
         if DOCK_TOP <= self.kind <= DOCK_TABADD:
             if bitmap is None:
                 bitmap = self._bitmap
@@ -3892,8 +3784,7 @@ class DockInfo(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def dock(self, control, window):
-        """ Docks the specified control.
-        """
+        """Docks the specified control."""
         the_control = control
         kind = self.kind
         if kind < DOCK_NONE:
@@ -3974,8 +3865,7 @@ class SetStructureHandler(object):
     # ---------------------------------------------------------------------------
 
     def resolve_id(self, id):
-        """ Resolves an unresolved DockControl id.
-        """
+        """Resolves an unresolved DockControl id."""
         return None
 
     # ---------------------------------------------------------------------------
@@ -3983,8 +3873,7 @@ class SetStructureHandler(object):
     # ---------------------------------------------------------------------------
 
     def resolve_extras(self, structure, extras):
-        """ Resolves extra, unused DockControls not referenced by the structure.
-        """
+        """Resolves extra, unused DockControls not referenced by the structure."""
         for dock_control in extras:
             if dock_control.control is not None:
                 dock_control.control.Show(False)
@@ -4028,8 +3917,8 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def RecalcSizes(self):
-        """ Layout the contents of the sizer based on the sizer's current size
-            and position.
+        """Layout the contents of the sizer based on the sizer's current size
+        and position.
         """
         if self._contents is None:
             return
@@ -4043,8 +3932,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def GetContents(self):
-        """ Returns the current sizer contents.
-        """
+        """Returns the current sizer contents."""
         return self._contents
 
     # ---------------------------------------------------------------------------
@@ -4052,8 +3940,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def SetContents(self, contents):
-        """ Initializes the layout of a DockWindow from a content list.
-        """
+        """Initializes the layout of a DockWindow from a content list."""
         if isinstance(contents, DockGroup):
             self._contents = contents
         elif isinstance(contents, tuple):
@@ -4110,10 +3997,10 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def GetStructure(self):
-        """ Returns a copy of the layout 'structure', minus the actual content
-            (i.e. controls, splitters, bounds). This method is intended for use
-            in persisting the current user layout, so that it can be restored in
-            a future session.
+        """Returns a copy of the layout 'structure', minus the actual content
+        (i.e. controls, splitters, bounds). This method is intended for use
+        in persisting the current user layout, so that it can be restored in
+        a future session.
         """
         if self._contents is not None:
             return self._contents.get_structure()
@@ -4127,9 +4014,9 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def SetStructure(self, window, structure, handler=None):
-        """ Takes a previously saved 'GetStructure' result and applies it to the
-            contents of the sizer in order to restore a previous layout using a
-            new set of controls.
+        """Takes a previously saved 'GetStructure' result and applies it to the
+        contents of the sizer in order to restore a previous layout using a
+        new set of controls.
         """
         section = self._contents
         if (section is None) or (not isinstance(structure, DockGroup)):
@@ -4207,8 +4094,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def ResetStructure(self, window):
-        """ Restores the previously saved structure (if any).
-        """
+        """Restores the previously saved structure (if any)."""
         if self._structure is not None:
             self.SetStructure(window, self._structure)
 
@@ -4217,8 +4103,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def ToggleLock(self):
-        """ Toggles the current 'lock' setting of the contents.
-        """
+        """Toggles the current 'lock' setting of the contents."""
         if self._contents is not None:
             self._contents.toggle_lock()
 
@@ -4227,8 +4112,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def Draw(self, window):
-        """ Draws the contents of the sizer.
-        """
+        """Draws the contents of the sizer."""
         if self._contents is not None:
             self._contents.draw(set_standard_font(wx.PaintDC(window)))
         else:
@@ -4239,8 +4123,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def ObjectAt(self, x, y, force=False):
-        """ Returns the object at a specified window position.
-        """
+        """Returns the object at a specified window position."""
         if self._contents is not None:
             return self._contents.object_at(x, y, force)
 
@@ -4251,8 +4134,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def DockInfoAt(self, x, y, size, is_control):
-        """ Gets a DockInfo object at a specified x, y position.
-        """
+        """Gets a DockInfo object at a specified x, y position."""
         if self._contents is not None:
             return self._contents.dock_info_at(x, y, size, is_control, True)
 
@@ -4263,8 +4145,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def MinMax(self, window, dock_control):
-        """ Minimizes/Maximizes a specified DockControl.
-        """
+        """Minimizes/Maximizes a specified DockControl."""
         if self._max_structure is None:
             self._max_structure = self.GetStructure()
             for control in self.GetContents().get_controls():
@@ -4277,8 +4158,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def Reset(self, window):
-        """ Resets the DockSizer to a known state.
-        """
+        """Resets the DockSizer to a known state."""
         if self._max_structure is not None:
             self.SetStructure(window, self._max_structure)
             self._max_structure = None
@@ -4288,14 +4168,12 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def IsMaximizable(self):
-        """ Returns whether the sizer can be maximized now.
-        """
+        """Returns whether the sizer can be maximized now."""
         return self._max_structure is None
 
 
 def top_level_window_for(control):
-    """ Returns the top-level window for a specified control.
-    """
+    """Returns the top-level window for a specified control."""
     parent = control.GetParent()
     while parent is not None:
         control = parent

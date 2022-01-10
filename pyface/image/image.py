@@ -143,15 +143,13 @@ ImageInfoTemplate = """    ImageInfo(
 
 
 def read_file(file_name):
-    """ Returns the contents of the specified *file_name*.
-    """
+    """Returns the contents of the specified *file_name*."""
     with open(file_name, "rb") as fh:
         return fh.read()
 
 
 def write_file(file_name, data):
-    """ Writes the specified data to the specified file.
-    """
+    """Writes the specified data to the specified file."""
     if isinstance(data, str):
         data = data.encode('utf8')
     with open(file_name, "wb") as fh:
@@ -159,8 +157,8 @@ def write_file(file_name, data):
 
 
 def get_python_value(source, name):
-    """ Returns the value of a Python symbol loaded from a specified source
-        code string.
+    """Returns the value of a Python symbol loaded from a specified source
+    code string.
     """
     temp = {}
     exec(source.replace(b"\r", b""), globals(), temp)
@@ -168,26 +166,25 @@ def get_python_value(source, name):
 
 
 def time_stamp_for(time):
-    """ Returns a specified time as a text string.
-    """
+    """Returns a specified time as a text string."""
     return datetime.datetime.utcfromtimestamp(time).strftime("%Y%m%d%H%M%S")
 
 
 def add_object_prefix(dict, object, prefix):
-    """ Adds all traits from a specified object to a dictionary with a specified
-        name prefix.
+    """Adds all traits from a specified object to a dictionary with a specified
+    name prefix.
     """
     for name, value in object.trait_get().items():
         dict[prefix + name] = value
 
 
 def split_image_name(image_name):
-    """ Splits a specified **image_name** into its constituent volume and file
-        names and returns a tuple of the form: ( volume_name, file_name ).
+    """Splits a specified **image_name** into its constituent volume and file
+    names and returns a tuple of the form: ( volume_name, file_name ).
     """
     col = image_name.find(":")
     volume_name = image_name[1:col]
-    file_name = image_name[col + 1:]
+    file_name = image_name[col + 1 :]
     if file_name.find(".") < 0:
         file_name += ".png"
 
@@ -195,8 +192,8 @@ def split_image_name(image_name):
 
 
 def join_image_name(volume_name, file_name):
-    """ Joins a specified **volume_name** and **file_name** into an image name,
-        and return the resulting image name.
+    """Joins a specified **volume_name** and **file_name** into an image name,
+    and return the resulting image name.
     """
     root, ext = splitext(file_name)
     if (ext == ".png") and (root.find(".") < 0):
@@ -206,8 +203,8 @@ def join_image_name(volume_name, file_name):
 
 
 class FastZipFile(HasPrivateTraits):
-    """ Provides fast access to zip files by keeping the underlying zip file
-        open across multiple uses.
+    """Provides fast access to zip files by keeping the underlying zip file
+    open across multiple uses.
     """
 
     #: The path to the zip file:
@@ -225,8 +222,7 @@ class FastZipFile(HasPrivateTraits):
     # -- Public Methods ---------------------------------------------------------
 
     def namelist(self):
-        """ Returns the names of all files in the top-level zip file directory.
-        """
+        """Returns the names of all files in the top-level zip file directory."""
         self.access.acquire()
         try:
             return self.zf.namelist()
@@ -234,8 +230,8 @@ class FastZipFile(HasPrivateTraits):
             self.access.release()
 
     def read(self, file_name):
-        """ Returns the contents of the specified **file_name** from the zip
-            file.
+        """Returns the contents of the specified **file_name** from the zip
+        file.
         """
         self.access.acquire()
         try:
@@ -244,8 +240,8 @@ class FastZipFile(HasPrivateTraits):
             self.access.release()
 
     def close(self):
-        """ Temporarily closes the zip file (usually while the zip file is being
-            replaced by a different version).
+        """Temporarily closes the zip file (usually while the zip file is being
+        replaced by a different version).
         """
         self.access.acquire()
         try:
@@ -277,8 +273,8 @@ class FastZipFile(HasPrivateTraits):
     # -- Private Methods --------------------------------------------------------
 
     def _process(self):
-        """ Waits until the zip file has not been accessed for a while, then
-            closes the file and exits.
+        """Waits until the zip file has not been accessed for a while, then
+        closes the file and exits.
         """
         while True:
             time.sleep(1)
@@ -301,8 +297,8 @@ class FastZipFile(HasPrivateTraits):
 
 
 class ImageInfo(HasPrivateTraits):
-    """ Defines a class that contains information about a specific Traits UI
-        image.
+    """Defines a class that contains information about a specific Traits UI
+    image.
     """
 
     #: The volume this image belongs to:
@@ -414,8 +410,7 @@ class ImageInfo(HasPrivateTraits):
     # -- Private Methods --------------------------------------------------------
 
     def _volume_info(self, name):
-        """ Returns the VolumeInfo object that applies to this image.
-        """
+        """Returns the VolumeInfo object that applies to this image."""
         info = self.volume.volume_info(self.image_name)
         if info is not None:
             return getattr(info, name, "Unknown")
@@ -482,8 +477,7 @@ class ImageVolumeInfo(HasPrivateTraits):
     # -- Public Methods ---------------------------------------------------------
 
     def clone(self):
-        """ Returns a copy of the ImageVolumeInfo object.
-        """
+        """Returns a copy of the ImageVolumeInfo object."""
         return self.clone(["description", "copyright", "license"])
 
 
@@ -543,8 +537,8 @@ class ImageVolume(HasPrivateTraits):
     # -- Public Methods ---------------------------------------------------------
 
     def update(self):
-        """ Updates the contents of the image volume from the underlying
-            image store, and saves the results.
+        """Updates the contents of the image volume from the underlying
+        image store, and saves the results.
         """
         # Unlink all our current images:
         for image in self.images:
@@ -557,8 +551,8 @@ class ImageVolume(HasPrivateTraits):
         self.save()
 
     def save(self):
-        """ Saves the contents of the image volume using the current contents
-            of the **ImageVolume**.
+        """Saves the contents of the image volume using the current contents
+        of the **ImageVolume**.
         """
         path = self.path
 
@@ -664,8 +658,7 @@ class ImageVolume(HasPrivateTraits):
         return True
 
     def image_resource(self, image_name):
-        """ Returns the ImageResource object for the specified **image_name**.
-        """
+        """Returns the ImageResource object for the specified **image_name**."""
         # Get the name of the image file:
         volume_name, file_name = split_image_name(image_name)
 
@@ -703,8 +696,8 @@ class ImageVolume(HasPrivateTraits):
         return resource
 
     def image_data(self, image_name):
-        """ Returns the image data (i.e. file contents) for the specified image
-            name.
+        """Returns the image data (i.e. file contents) for the specified image
+        name.
         """
         volume_name, file_name = split_image_name(image_name)
 
@@ -714,8 +707,8 @@ class ImageVolume(HasPrivateTraits):
             return read_file(join(self.path, file_name))
 
     def volume_info(self, image_name):
-        """ Returns the ImageVolumeInfo object that corresponds to the
-            image specified by **image_name**.
+        """Returns the ImageVolumeInfo object that corresponds to the
+        image specified by **image_name**.
         """
         for info in self.info:
             if (len(info.image_names) == 0) or (
@@ -766,8 +759,7 @@ class ImageVolume(HasPrivateTraits):
     # -- Private Methods --------------------------------------------------------
 
     def _load_image_info(self):
-        """ Returns the list of ImageInfo objects for the images in the volume.
-        """
+        """Returns the list of ImageInfo objects for the images in the volume."""
         # If there is no current path, then return a default list of images:
         if self.path == "":
             return []
@@ -859,9 +851,9 @@ class ImageVolume(HasPrivateTraits):
         return images
 
     def _check_cache(self, file_name):
-        """ Checks to see if the specified zip file name has been saved in the
-            image cache. If it has, it returns the fully-qualified cache file
-            name to use; otherwise it returns None.
+        """Checks to see if the specified zip file name has been saved in the
+        image cache. If it has, it returns the fully-qualified cache file
+        name to use; otherwise it returns None.
         """
         cache_file = join(image_cache_path, self.name, file_name)
         if exists(cache_file) and (
@@ -899,8 +891,7 @@ class ZipFileReference(ResourceReference):
     # -- ResourceReference Interface Implementation -----------------------------
 
     def load(self):
-        """ Loads the resource.
-        """
+        """Loads the resource."""
         # Check if the cache file has already been created:
         cache_file = self.cache_file
         if cache_file == "":
@@ -947,8 +938,7 @@ class ZipFileReference(ResourceReference):
 
 
 class ImageLibrary(HasPrivateTraits):
-    """ Manages Traits UI image libraries.
-    """
+    """Manages Traits UI image libraries."""
 
     #: The list of available image volumes in the library:
     volumes = List(ImageVolume)
@@ -968,8 +958,8 @@ class ImageLibrary(HasPrivateTraits):
     # -- Public methods ---------------------------------------------------------
 
     def image_info(self, image_name):
-        """ Returns the ImageInfo object corresponding to a specified
-            **image_name**.
+        """Returns the ImageInfo object corresponding to a specified
+        **image_name**.
         """
         volume = self.find_volume(image_name)
         if volume is not None:
@@ -978,8 +968,7 @@ class ImageLibrary(HasPrivateTraits):
         return None
 
     def image_resource(self, image_name):
-        """ Returns an ImageResource object for the specified image name.
-        """
+        """Returns an ImageResource object for the specified image name."""
         # If no volume was specified, use the standard volume:
         if image_name.find(":") < 0:
             image_name = "@images:%s" % image_name[1:]
@@ -995,8 +984,8 @@ class ImageLibrary(HasPrivateTraits):
         return None
 
     def find_volume(self, image_name):
-        """ Returns the ImageVolume object corresponding to the specified
-            **image_name** or None if the volume cannot be found.
+        """Returns the ImageVolume object corresponding to the specified
+        **image_name** or None if the volume cannot be found.
         """
         # Extract the volume name from the image name:
         volume_name, file_name = split_image_name(image_name)
@@ -1012,12 +1001,12 @@ class ImageLibrary(HasPrivateTraits):
         return catalog[volume_name]
 
     def add_volume(self, file_name=None):
-        """ If **file_name** is a file, it adds an image volume specified by
-            **file_name** to the image library. If **file_name** is a
-            directory, it adds all image libraries contained in the directory
-            to the image library. If **file_name** is omitted, all image
-            libraries located in the *images* directory contained in the same
-            directory as the caller are added.
+        """If **file_name** is a file, it adds an image volume specified by
+        **file_name** to the image library. If **file_name** is a
+        directory, it adds all image libraries contained in the directory
+        to the image library. If **file_name** is omitted, all image
+        libraries located in the *images* directory contained in the same
+        directory as the caller are added.
         """
         # If no file name was specified, derive a path from the caller's
         # source code location:
@@ -1057,12 +1046,12 @@ class ImageLibrary(HasPrivateTraits):
             )
 
     def add_path(self, volume_name, path=None):
-        """ Adds the directory specified by **path** as a *virtual* volume
-            called **volume_name**. All image files contained within path
-            define the contents of the volume. If **path** is None, the
-            *images* contained in the 'images' subdirectory of the same
-            directory as the caller are is used as the path for the *virtual*
-            volume..
+        """Adds the directory specified by **path** as a *virtual* volume
+        called **volume_name**. All image files contained within path
+        define the contents of the volume. If **path** is None, the
+        *images* contained in the 'images' subdirectory of the same
+        directory as the caller are is used as the path for the *virtual*
+        volume..
         """
         # Make sure we don't already have a volume with that name:
         if volume_name in self.catalog:
@@ -1105,9 +1094,9 @@ class ImageLibrary(HasPrivateTraits):
         self.volumes.append(volume)
 
     def extract(self, file_name, image_names):
-        """ Builds a new image volume called **file_name** from the list of
-            image names specified by **image_names**. Each image name should be
-            of the form: '@volume:name'.
+        """Builds a new image volume called **file_name** from the list of
+        image names specified by **image_names**. Each image name should be
+        of the form: '@volume:name'.
         """
         # Get the volume name and file extension:
         volume_name, ext = splitext(basename(file_name))
@@ -1264,8 +1253,7 @@ class ImageLibrary(HasPrivateTraits):
     # -- Private Methods --------------------------------------------------------
 
     def _get_images_list(self):
-        """ Returns the list of all library images.
-        """
+        """Returns the list of all library images."""
         # Merge the list of images from each volume:
         images = []
         for volume in self.volumes:
@@ -1278,8 +1266,8 @@ class ImageLibrary(HasPrivateTraits):
         return images
 
     def _add_path(self, path):
-        """ Returns a list of ImageVolume objects, one for each image library
-            located in the specified **path**.
+        """Returns a list of ImageVolume objects, one for each image library
+        located in the specified **path**.
         """
         result = []
 
@@ -1300,9 +1288,9 @@ class ImageLibrary(HasPrivateTraits):
         return result
 
     def _add_volume(self, path):
-        """ Returns an ImageVolume object for the image library specified by
-            **path**. If **path** does not specify a valid ImageVolume, None is
-            returned.
+        """Returns an ImageVolume object for the image library specified by
+        **path**. If **path** does not specify a valid ImageVolume, None is
+        returned.
         """
         path = abspath(path)
 
@@ -1355,8 +1343,8 @@ class ImageLibrary(HasPrivateTraits):
         return None
 
     def _add_aliases(self, volume):
-        """ Try to add all of the external volume references as aliases for
-            this volume.
+        """Try to add all of the external volume references as aliases for
+        this volume.
         """
         aliases = self.aliases
         volume_name = volume.name
@@ -1373,8 +1361,7 @@ class ImageLibrary(HasPrivateTraits):
             aliases[vname] = volume_name
 
     def _duplicate_volume(self, volume_name):
-        """ Raises a duplicate volume name error.
-        """
+        """Raises a duplicate volume name error."""
         raise TraitError(
             (
                 "Attempted to add an image volume called '%s' when "

@@ -28,7 +28,7 @@ from pyface.action.group import Group
 
 
 class MenuManager(ActionManager, ActionManagerItem):
-    """ A menu manager realizes itself in a menu control.
+    """A menu manager realizes itself in a menu control.
 
     This could be a sub-menu or a context (popup) menu.
     """
@@ -52,7 +52,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
-        """ Creates a menu representation of the manager. """
+        """Creates a menu representation of the manager."""
 
         # If a controller is required it can either be set as a trait on the
         # menu manager (the trait is part of the 'ActionManager' API), or
@@ -82,7 +82,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu. """
+        """Adds the item to a menu."""
 
         submenu = self.create_menu(parent, controller)
         submenu.menuAction().setText(self.name)
@@ -91,7 +91,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     def add_to_toolbar(
         self, parent, tool_bar, image_cache, controller, show_labels=True
     ):
-        """ Adds the item to a tool bar. """
+        """Adds the item to a tool bar."""
         menu = self.create_menu(parent, controller)
         if self.action:
             tool_action = _Tool(
@@ -112,14 +112,14 @@ class MenuManager(ActionManager, ActionManagerItem):
 
 
 class _Menu(QtGui.QMenu):
-    """ The toolkit-specific menu control. """
+    """The toolkit-specific menu control."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
-        """ Creates a new tree. """
+        """Creates a new tree."""
 
         # Base class constructor.
         QtGui.QMenu.__init__(self, parent)
@@ -155,7 +155,9 @@ class _Menu(QtGui.QMenu):
         self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
         self._manager.observe(self._on_visible_changed, "visible", remove=True)
         self._manager.observe(self._on_name_changed, "name", remove=True)
-        self._manager.observe(self._on_image_changed, "action:image", remove=True)
+        self._manager.observe(
+            self._on_image_changed, "action:image", remove=True
+        )
         # Removes event listeners from downstream menu items
         self.clear()
 
@@ -164,7 +166,7 @@ class _Menu(QtGui.QMenu):
     # ------------------------------------------------------------------------
 
     def clear(self):
-        """ Clears the items from the menu. """
+        """Clears the items from the menu."""
 
         for item in self.menu_items:
             item.dispose()
@@ -174,12 +176,12 @@ class _Menu(QtGui.QMenu):
         super().clear()
 
     def is_empty(self):
-        """ Is the menu empty? """
+        """Is the menu empty?"""
 
         return self.isEmpty()
 
     def refresh(self, event=None):
-        """ Ensures that the menu reflects the state of the manager. """
+        """Ensures that the menu reflects the state of the manager."""
 
         self.clear()
 
@@ -195,7 +197,7 @@ class _Menu(QtGui.QMenu):
         self.setEnabled(manager.enabled)
 
     def show(self, x=None, y=None):
-        """ Show the menu at the specified location. """
+        """Show the menu at the specified location."""
 
         if x is None or y is None:
             point = QtGui.QCursor.pos()
@@ -208,27 +210,27 @@ class _Menu(QtGui.QMenu):
     # ------------------------------------------------------------------------
 
     def _on_enabled_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.setEnabled(event.new)
 
     def _on_visible_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.menuAction().setVisible(event.new)
 
     def _on_name_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.menuAction().setText(event.new)
 
     def _on_image_changed(self, event):
-        """ Dynamic trait change handler. """
+        """Dynamic trait change handler."""
 
         self.menuAction().setIcon(event.new.create_icon())
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
-        """ Adds a group to a menu. """
+        """Adds a group to a menu."""
 
         if len(group.items) > 0:
             # Is a separator required?

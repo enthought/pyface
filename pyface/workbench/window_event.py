@@ -17,7 +17,7 @@ from .workbench_window import WorkbenchWindow
 
 
 class WindowEvent(HasTraits):
-    """ A window lifecycle event. """
+    """A window lifecycle event."""
 
     # 'WindowEvent' interface ---------------------------------------------#
 
@@ -26,6 +26,6 @@ class WindowEvent(HasTraits):
 
 
 class VetoableWindowEvent(WindowEvent, Vetoable):
-    """ A vetoable window lifecycle event. """
+    """A vetoable window lifecycle event."""
 
     pass

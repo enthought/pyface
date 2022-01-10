@@ -38,7 +38,7 @@ perf_counter = time.perf_counter
 
 
 class ITimer(Interface):
-    """ Interface for timer classes.
+    """Interface for timer classes.
 
     This is a base interface which doesn't specify any particular notification
     mechanism.
@@ -64,31 +64,29 @@ class ITimer(Interface):
 
     @classmethod
     def timer(cls, **traits):
-        """ Convenience method that creates and starts a timer.
-        """
+        """Convenience method that creates and starts a timer."""
         pass
 
     @classmethod
     def single_shot(cls, **traits):
-        """ Convenience method that creates and starts a single-shot timer.
-        """
+        """Convenience method that creates and starts a single-shot timer."""
         pass
 
     def start(self):
-        """ Start the timer. """
+        """Start the timer."""
         pass
 
     def stop(self):
-        """ Stop the timer. """
+        """Stop the timer."""
         pass
 
     def perform(self):
-        """ The method that will be called by the timer. """
+        """The method that will be called by the timer."""
         pass
 
 
 class IEventTimer(ITimer):
-    """ Interface for timers which fire a trait event periodically. """
+    """Interface for timers which fire a trait event periodically."""
 
     # IEventTimer interface --------------------------------------------------
 
@@ -97,7 +95,7 @@ class IEventTimer(ITimer):
 
 
 class ICallbackTimer(ITimer):
-    """ Interface for timers which call a callback periodically. """
+    """Interface for timers which call a callback periodically."""
 
     # ICallbackTimer interface -----------------------------------------------
 
@@ -113,7 +111,7 @@ class ICallbackTimer(ITimer):
 
 @provides(ITimer)
 class BaseTimer(ABCHasTraits):
-    """ Base class for timer classes.
+    """Base class for timer classes.
 
     This class has a class variable which tracks active timers to prevent
     failures caused by garbage collection.  A timer is added to this tracker
@@ -153,8 +151,7 @@ class BaseTimer(ABCHasTraits):
 
     @classmethod
     def timer(cls, **traits):
-        """ Convenience method that creates and starts a timer.
-        """
+        """Convenience method that creates and starts a timer."""
         timer = cls(**traits)
         timer.start()
         return timer
@@ -166,7 +163,7 @@ class BaseTimer(ABCHasTraits):
         return timer
 
     def start(self):
-        """ Start the timer. """
+        """Start the timer."""
         if not self._active:
             if self.repeat is not None:
                 self._active_timers.add(self)
@@ -176,14 +173,14 @@ class BaseTimer(ABCHasTraits):
             self._start()
 
     def stop(self):
-        """ Stop the timer. """
+        """Stop the timer."""
         if self._active:
             self._active_timers.discard(self)
             self._stop()
             self._active = False
 
     def perform(self):
-        """ Perform the callback.
+        """Perform the callback.
 
         The timer will stop if repeats is not None and less than 1, or if
         the `_perform` method raises StopIteration.
@@ -211,14 +208,14 @@ class BaseTimer(ABCHasTraits):
     # BaseTimer Protected methods
 
     def _start(self):
-        """ Start the toolkit timer.
+        """Start the toolkit timer.
 
         Subclasses should overrided this method.
         """
         raise NotImplementedError()
 
     def _stop(self):
-        """ Stop the toolkit timer.
+        """Stop the toolkit timer.
 
         Subclasses should overrided this method.
         """
@@ -226,7 +223,7 @@ class BaseTimer(ABCHasTraits):
 
     @abstractmethod
     def _perform(self):
-        """ perform the appropriate action.
+        """perform the appropriate action.
 
         Subclasses should overrided this method.
         """
@@ -250,7 +247,7 @@ class BaseTimer(ABCHasTraits):
 
 @provides(IEventTimer)
 class MEventTimer(HasTraits):
-    """ Mixin for event timer classes.
+    """Mixin for event timer classes.
 
     Other code can listen to the `timeout` event using standard traits
     listeners.
@@ -268,14 +265,13 @@ class MEventTimer(HasTraits):
     # ITimer Protected methods -----------------------------------------------
 
     def _perform(self):
-        """ Fire the event. """
+        """Fire the event."""
         self.timeout = True
 
 
 @provides(ITimer)
 class MCallbackTimer(HasTraits):
-    """ Mixin for callback timer classes.
-    """
+    """Mixin for callback timer classes."""
 
     # ICallbackTimer interface -----------------------------------------------
 
@@ -295,5 +291,5 @@ class MCallbackTimer(HasTraits):
     # ITimer Protected methods -----------------------------------------------
 
     def _perform(self):
-        """ Perform the callback. """
+        """Perform the callback."""
         self.callback(*self.args, **self.kwargs)

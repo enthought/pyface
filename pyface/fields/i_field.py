@@ -17,7 +17,7 @@ from pyface.i_layout_widget import ILayoutWidget
 
 
 class IField(ILayoutWidget):
-    """ The field interface.
+    """The field interface.
 
     A field is a widget that displays a value and (potentially) allows a user
     to interact with it.
@@ -28,7 +28,7 @@ class IField(ILayoutWidget):
 
 
 class MField(HasTraits):
-    """ The field mix-in. """
+    """The field mix-in."""
 
     #: The value held by the field.
     value = Any()
@@ -38,15 +38,13 @@ class MField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
+        """Set up toolkit-specific bindings for events"""
         super()._add_event_listeners()
         self.observe(self._value_updated, "value", dispatch="ui")
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        self.observe(
-            self._value_updated, "value", dispatch="ui", remove=True
-        )
+        """Remove toolkit-specific bindings for events"""
+        self.observe(self._value_updated, "value", dispatch="ui", remove=True)
         super()._remove_event_listeners()
 
     # ------------------------------------------------------------------------
@@ -54,7 +52,7 @@ class MField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _create(self):
-        """ Creates the toolkit specific control.
+        """Creates the toolkit specific control.
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
@@ -65,14 +63,14 @@ class MField(HasTraits):
         self.enable(self.enabled)
 
     def _update_value(self, value):
-        """ Handle a change to the value from user interaction
+        """Handle a change to the value from user interaction
 
         This is a method suitable for calling from a toolkit event handler.
         """
         self.value = self._get_control_value()
 
     def _get_control(self):
-        """ If control is not passed directly, get it from the trait. """
+        """If control is not passed directly, get it from the trait."""
         control = self.control
         if control is None:
             raise RuntimeError("Toolkit control does not exist.")
@@ -81,15 +79,15 @@ class MField(HasTraits):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         raise NotImplementedError()
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         raise NotImplementedError()
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------

@@ -18,7 +18,7 @@ from pyface.ui_traits import Image
 
 
 class IToggleField(IField):
-    """ The toggle field interface.
+    """The toggle field interface.
 
     This is for a toggle between two states, represented by a boolean value.
     """
@@ -34,7 +34,7 @@ class IToggleField(IField):
 
 
 class MToggleField(HasTraits):
-    """ The toggle field mixin class.
+    """The toggle field mixin class.
 
     This is for a toggle between two states, represented by a boolean value.
     """
@@ -58,7 +58,7 @@ class MToggleField(HasTraits):
         self._set_control_icon(self.icon)
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
+        """Set up toolkit-specific bindings for events"""
         super()._add_event_listeners()
         self.observe(self._text_updated, "text", dispatch="ui")
         self.observe(self._icon_updated, "icon", dispatch="ui")
@@ -66,7 +66,7 @@ class MToggleField(HasTraits):
             self._observe_control_value()
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
+        """Remove toolkit-specific bindings for events"""
         if self.control is not None:
             self._observe_control_value(remove=True)
         self.observe(self._text_updated, "text", dispatch="ui", remove=True)
@@ -76,15 +76,15 @@ class MToggleField(HasTraits):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_text(self):
-        """ Toolkit specific method to set the control's text. """
+        """Toolkit specific method to set the control's text."""
         raise NotImplementedError()
 
     def _set_control_text(self, text):
-        """ Toolkit specific method to set the control's text. """
+        """Toolkit specific method to set the control's text."""
         raise NotImplementedError()
 
     def _set_control_icon(self, icon):
-        """ Toolkit specific method to set the control's icon. """
+        """Toolkit specific method to set the control's icon."""
         raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------

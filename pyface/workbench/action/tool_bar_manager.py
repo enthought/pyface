@@ -18,7 +18,7 @@ from .action_controller import ActionController
 
 
 class ToolBarManager(pyface.ToolBarManager):
-    """ The tool bar manager for the Envisage workbench window. """
+    """The tool bar manager for the Envisage workbench window."""
 
     # 'ToolBarManager' interface -------------------------------------------
 
@@ -30,7 +30,7 @@ class ToolBarManager(pyface.ToolBarManager):
     # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None, **kwargs):
-        """ Creates a tool bar representation of the manager. """
+        """Creates a tool bar representation of the manager."""
 
         # The controller handles the invocation of every action.
         if controller is None:

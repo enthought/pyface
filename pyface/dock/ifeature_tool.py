@@ -27,8 +27,8 @@ class IFeatureTool(object):
     # ---------------------------------------------------------------------------
 
     def feature_can_drop_on(self, object):
-        """ Returns whether or not the object being dragged (i.e. self) can be
-            dropped on the specified target object.
+        """Returns whether or not the object being dragged (i.e. self) can be
+        dropped on the specified target object.
         """
         return False
 
@@ -38,8 +38,8 @@ class IFeatureTool(object):
     # ---------------------------------------------------------------------------
 
     def feature_can_drop_on_dock_control(self, dock_control):
-        """ Returns whether or not the object being dragged (i.e. self) can be
-            dropped on the specified target object's DockControl.
+        """Returns whether or not the object being dragged (i.e. self) can be
+        dropped on the specified target object's DockControl.
         """
         return False
 
@@ -49,8 +49,8 @@ class IFeatureTool(object):
     # ---------------------------------------------------------------------------
 
     def feature_dropped_on(self, object):
-        """ Allows the dragged object (i.e. self) to handle being dropped on the
-            specified target object.
+        """Allows the dragged object (i.e. self) to handle being dropped on the
+        specified target object.
         """
         return
 
@@ -60,7 +60,7 @@ class IFeatureTool(object):
     # ---------------------------------------------------------------------------
 
     def feature_dropped_on_dock_control(self, dock_control):
-        """ Allows the dragged object (i.e. self) to handle being dropped on the
-            specified target object's DockControl.
+        """Allows the dragged object (i.e. self) to handle being dropped on the
+        specified target object's DockControl.
         """
         return

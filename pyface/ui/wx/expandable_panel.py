@@ -23,7 +23,7 @@ from .layout_widget import LayoutWidget
 
 
 class ExpandablePanel(LayoutWidget):
-    """ An expandable panel. """
+    """An expandable panel."""
 
     # The default style.
     STYLE = wx.CLIP_CHILDREN
@@ -40,7 +40,7 @@ class ExpandablePanel(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent=None, **traits):
-        """ Creates a new LayeredPanel. """
+        """Creates a new LayeredPanel."""
 
         create = traits.pop("create", True)
 
@@ -56,12 +56,13 @@ class ExpandablePanel(LayoutWidget):
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
             )
+
     # ------------------------------------------------------------------------
     # 'Expandale' interface.
     # ------------------------------------------------------------------------
 
     def add_panel(self, name, layer):
-        """ Adds a layer with the specified name.
+        """Adds a layer with the specified name.
 
         All layers are hidden when they are added.  Use 'show_layer' to make a
         layer visible.
@@ -88,7 +89,7 @@ class ExpandablePanel(LayoutWidget):
         return layer
 
     def remove_panel(self, name):
-        """ Removes a layer and its header from the container."""
+        """Removes a layer and its header from the container."""
 
         if name not in self._layers:
             return
@@ -108,7 +109,7 @@ class ExpandablePanel(LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         panel = wx.Panel(parent, -1, style=self.STYLE)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -118,7 +119,7 @@ class ExpandablePanel(LayoutWidget):
         return panel
 
     def _create_header(self, parent, text):
-        """ Creates a panel header. """
+        """Creates a panel header."""
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
@@ -145,7 +146,7 @@ class ExpandablePanel(LayoutWidget):
     # event handlers ----------------------------------------------------
 
     def _on_button(self, event):
-        """ called when one of the expand/contract buttons is pressed. """
+        """called when one of the expand/contract buttons is pressed."""
 
         header = event.new
         name = header.title
@@ -161,7 +162,7 @@ class ExpandablePanel(LayoutWidget):
         self.control.SetSize((w, h))
 
     def _on_panel_closed(self, event):
-        """ Called when the close button is clicked in a header. """
+        """Called when the close button is clicked in a header."""
 
         header = event.new
         name = header.title

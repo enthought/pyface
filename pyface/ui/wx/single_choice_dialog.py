@@ -23,7 +23,7 @@ from .dialog import Dialog
 
 @provides(ISingleChoiceDialog)
 class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
-    """ A dialog that allows the user to chose a single item from a list. """
+    """A dialog that allows the user to chose a single item from a list."""
 
     # 'ISingleChoiceDialog' interface -------------------------------------#
 
@@ -47,7 +47,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """Creates the window contents."""
         # In this case, wx does it all for us in 'wx.SingleChoiceDialog'
         pass
 
@@ -56,7 +56,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        """ Closes the window. """
+        """Closes the window."""
 
         # Get the chosen object.
         if self.control is not None:
@@ -70,7 +70,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the window. """
+        """Create the toolkit-specific control that represents the window."""
 
         style = wx.DEFAULT_DIALOG_STYLE | wx.CLIP_CHILDREN | wx.OK
         if self.cancel:

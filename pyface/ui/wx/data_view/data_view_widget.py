@@ -13,17 +13,23 @@ import warnings
 
 import wx
 from wx.dataview import (
-    DataViewCtrl, DataViewEvent, DataViewItemArray,
+    DataViewCtrl,
+    DataViewEvent,
+    DataViewItemArray,
     DataViewModel as wxDataViewModel,
-    DATAVIEW_CELL_EDITABLE, DATAVIEW_CELL_ACTIVATABLE,
-    DV_MULTIPLE, DV_NO_HEADER, EVT_DATAVIEW_SELECTION_CHANGED,
-    wxEVT_DATAVIEW_SELECTION_CHANGED
+    DATAVIEW_CELL_EDITABLE,
+    DATAVIEW_CELL_ACTIVATABLE,
+    DV_MULTIPLE,
+    DV_NO_HEADER,
+    EVT_DATAVIEW_SELECTION_CHANGED,
+    wxEVT_DATAVIEW_SELECTION_CHANGED,
 )
 
 from traits.api import Enum, Instance, observe, provides
 
 from pyface.data_view.i_data_view_widget import (
-    IDataViewWidget, MDataViewWidget
+    IDataViewWidget,
+    MDataViewWidget,
 )
 from pyface.data_view.data_view_errors import DataViewGetError
 from pyface.ui.wx.layout_widget import LayoutWidget
@@ -35,9 +41,10 @@ logger = logging.getLogger(__name__)
 
 # XXX This file is scaffolding and may need to be rewritten
 
+
 @provides(IDataViewWidget)
 class DataViewWidget(MDataViewWidget, LayoutWidget):
-    """ The Wx implementation of the DataViewWidget. """
+    """The Wx implementation of the DataViewWidget."""
 
     #: What can be selected.
     selection_type = Enum("row")
@@ -56,25 +63,25 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_item_model(self):
-        """ Create the DataViewItemModel which wraps the data model. """
+        """Create the DataViewItemModel which wraps the data model."""
         self._item_model = DataViewModel(self.data_model)
 
     def _get_control_header_visible(self):
-        """ Method to get the control's header visibility. """
+        """Method to get the control's header visibility."""
         return not self.control.GetWindowStyleFlag() & DV_NO_HEADER
 
     def _set_control_header_visible(self, header_visible):
-        """ Method to set the control's header visibility. """
+        """Method to set the control's header visibility."""
         old_visible = self._get_control_header_visible()
         if header_visible != old_visible:
             self.control.ToggleWindowStyle(DV_NO_HEADER)
 
     def _get_control_selection_type(self):
-        """ Toolkit specific method to get the selection type. """
+        """Toolkit specific method to get the selection type."""
         return "row"
 
     def _set_control_selection_type(self, selection_type):
-        """ Toolkit specific method to change the selection type. """
+        """Toolkit specific method to change the selection type."""
         if selection_type != "row":
             warnings.warn(
                 "{!r} selection_type not supported in Wx".format(
@@ -84,14 +91,14 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
             )
 
     def _get_control_selection_mode(self):
-        """ Toolkit specific method to get the selection mode. """
+        """Toolkit specific method to get the selection mode."""
         if self.control.GetWindowStyleFlag() & DV_MULTIPLE:
             return "extended"
         else:
             return "single"
 
     def _set_control_selection_mode(self, selection_mode):
-        """ Toolkit specific method to change the selection mode. """
+        """Toolkit specific method to change the selection mode."""
         if selection_mode not in {'extended', 'single'}:
             warnings.warn(
                 "{!r} selection_mode not supported in Wx".format(
@@ -105,14 +112,14 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
             self.control.ToggleWindowStyle(DV_MULTIPLE)
 
     def _get_control_selection(self):
-        """ Toolkit specific method to get the selection. """
+        """Toolkit specific method to get the selection."""
         return [
             (self._item_model._to_row_index(item), ())
             for item in self.control.GetSelections()
         ]
 
     def _set_control_selection(self, selection):
-        """ Toolkit specific method to change the selection. """
+        """Toolkit specific method to change the selection."""
         wx_selection = DataViewItemArray()
         for row, column in selection:
             item = self._item_model._to_item(row)
@@ -136,7 +143,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
         wx.PostEvent(self.control, event)
 
     def _observe_control_selection(self, remove=False):
-        """ Toolkit specific method to watch for changes in the selection. """
+        """Toolkit specific method to watch for changes in the selection."""
         if remove:
             self.control.Unbind(
                 EVT_DATAVIEW_SELECTION_CHANGED,
@@ -153,7 +160,7 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the DataViewWidget's toolkit control. """
+        """Create the DataViewWidget's toolkit control."""
         self._create_item_model()
 
         control = DataViewCtrl(parent)
@@ -173,10 +180,12 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
             raise
         control.AppendTextColumn(text, 0, mode=DATAVIEW_CELL_ACTIVATABLE)
 
-        for column in range(self._item_model.GetColumnCount()-1):
+        for column in range(self._item_model.GetColumnCount() - 1):
             value_type = self._item_model.model.get_value_type([], [column])
             try:
-                text = value_type.get_text(self._item_model.model, [], [column])
+                text = value_type.get_text(
+                    self._item_model.model, [], [column]
+                )
             except DataViewGetError:
                 text = ''
             except Exception:
@@ -189,13 +198,13 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
 
             control.AppendTextColumn(
                 text,
-                column+1,
+                column + 1,
                 mode=DATAVIEW_CELL_EDITABLE,
             )
         return control
 
     def destroy(self):
-        """ Perform any actions required to destroy the control. """
+        """Perform any actions required to destroy the control."""
         super().destroy()
         # ensure that we release the reference to the item model
         self._item_model = None

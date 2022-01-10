@@ -42,7 +42,7 @@ PYTHON_DOCS = "https://docs.python.org/{}.{}".format(*sys.version_info[:2])
 
 
 class RunFileAction(WindowAction):
-    """ Action that calls the do_run_file method of a PythonShellWindow """
+    """Action that calls the do_run_file method of a PythonShellWindow"""
 
     name = "Run File..."
     accelerator = "Ctrl+R"
@@ -51,13 +51,13 @@ class RunFileAction(WindowAction):
 
 
 class OpenURLAction(Action):
-    """ An action that opens a web page in the system's default browser. """
+    """An action that opens a web page in the system's default browser."""
 
     #: The URL to open.
     url = Str()
 
     def perform(self, event=None):
-        """ Open a URL in a web browser. """
+        """Open a URL in a web browser."""
         try:
             webbrowser.open(self.url)
         except webbrowser.Error as exc:
@@ -65,7 +65,7 @@ class OpenURLAction(Action):
 
 
 class PythonShellWindow(ApplicationWindow):
-    """ An application window that displays a simple Python shell. """
+    """An application window that displays a simple Python shell."""
 
     #: The title of the window.
     title = "Python Shell"
@@ -77,14 +77,14 @@ class PythonShellWindow(ApplicationWindow):
     shell = Instance("pyface.i_python_shell.IPythonShell")
 
     def do_run_file(self):
-        """ Run a file selected by the user. """
+        """Run a file selected by the user."""
         dialog = FileDialog(wildcard=FileDialog.WILDCARD_PY)
         result = dialog.open()
         if result == OK:
             self.shell.execute_file(dialog.path)
 
     def _create_contents(self, parent):
-        """ Create the shell widget. """
+        """Create the shell widget."""
         self.shell = PythonShell(parent)
         return self.shell.control
 

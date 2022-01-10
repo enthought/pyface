@@ -113,7 +113,13 @@ class.
 
 """
 from traits.api import (
-    BaseCFloat, CList, CSet, Enum, HasStrictTraits, Map, Str,
+    BaseCFloat,
+    CList,
+    CSet,
+    Enum,
+    HasStrictTraits,
+    Map,
+    Str,
 )
 from traits.trait_type import NoDefaultSpecified
 
@@ -130,29 +136,31 @@ from traits.trait_type import NoDefaultSpecified
 #: - values used by Enable: https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L90-L105
 #: See also: https://gist.github.com/lukaszgrolik/5849599
 WEIGHTS = {str(i): i for i in range(100, 1001, 100)}
-WEIGHTS.update({
-    'thin': 100,
-    'hairline': 100,
-    'extra-light': 200,
-    'ultra-light': 200,
-    'ultralight': 200,
-    'light': 300,
-    'normal': 400,
-    'regular': 400,
-    'book': 400,
-    'medium': 500,
-    'roman': 500,
-    'semi-bold': 600,
-    'demi-bold': 600,
-    'demi': 600,
-    'bold': 700,
-    'extra-bold': 800,
-    'ultra-bold': 800,
-    'extra bold': 800,
-    'black': 900,
-    'heavy': 900,
-    'extra-heavy': 1000,
-})
+WEIGHTS.update(
+    {
+        'thin': 100,
+        'hairline': 100,
+        'extra-light': 200,
+        'ultra-light': 200,
+        'ultralight': 200,
+        'light': 300,
+        'normal': 400,
+        'regular': 400,
+        'book': 400,
+        'medium': 500,
+        'roman': 500,
+        'semi-bold': 600,
+        'demi-bold': 600,
+        'demi': 600,
+        'bold': 700,
+        'extra-bold': 800,
+        'ultra-bold': 800,
+        'extra bold': 800,
+        'black': 900,
+        'heavy': 900,
+        'extra-heavy': 1000,
+    }
+)
 
 #: Font stretch synonyms.
 #: These are alternate convenience names for font stretch/width values.
@@ -220,7 +228,7 @@ FontDecorations = CSet(Enum(DECORATIONS))
 
 
 class FontStretch(BaseCFloat):
-    """ Trait type for font stretches.
+    """Trait type for font stretches.
 
     The is a CFloat trait which holds floating point values between 50 and 200,
     inclusive.  In addition to values which can be converted to floats, this
@@ -268,7 +276,7 @@ class FontStretch(BaseCFloat):
 
 
 class FontSize(BaseCFloat):
-    """ Trait type for font sizes.
+    """Trait type for font sizes.
 
     The is a CFloat trait which also allows values which are keys of the
     size dictionary, and also ignores trailing 'pt' ot 'px' annotation in
@@ -284,9 +292,8 @@ class FontSize(BaseCFloat):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
-        if (
-            isinstance(value, str)
-            and (value.endswith('pt') or value.endswith('px'))
+        if isinstance(value, str) and (
+            value.endswith('pt') or value.endswith('px')
         ):
             value = value[:-2]
         value = SIZES.get(value, value)
@@ -339,7 +346,7 @@ class Font(HasStrictTraits):
 
     @classmethod
     def from_toolkit(cls, toolkit_font):
-        """ Create a Font from a toolkit font object.
+        """Create a Font from a toolkit font object.
 
         Parameters
         ----------
@@ -348,13 +355,15 @@ class Font(HasStrictTraits):
             within the limitations of the options supported by the class.
         """
         from pyface.toolkit import toolkit_object
+
         toolkit_font_to_properties = toolkit_object(
-            'font:toolkit_font_to_properties')
+            'font:toolkit_font_to_properties'
+        )
 
         return cls(**toolkit_font_to_properties(toolkit_font))
 
     def to_toolkit(self):
-        """ Create a toolkit font object from the Font instance.
+        """Create a toolkit font object from the Font instance.
 
         Returns
         -------
@@ -363,21 +372,22 @@ class Font(HasStrictTraits):
             closely as possible given the constraints of the toolkit.
         """
         from pyface.toolkit import toolkit_object
+
         font_to_toolkit_font = toolkit_object('font:font_to_toolkit_font')
 
         return font_to_toolkit_font(self)
 
     def __str__(self):
-        """ Produce a CSS2-style representation of the font. """
+        """Produce a CSS2-style representation of the font."""
         terms = []
         if self.style != 'normal':
             terms.append(self.style)
         terms.extend(
-            variant for variant in VARIANTS
-            if variant in self.variants
+            variant for variant in VARIANTS if variant in self.variants
         )
         terms.extend(
-            decoration for decoration in DECORATIONS
+            decoration
+            for decoration in DECORATIONS
             if decoration in self.decorations
         )
         if self.weight != 'normal':
@@ -400,7 +410,6 @@ class Font(HasStrictTraits):
     def __repr__(self):
         traits = self.trait_get(self.editable_traits())
         trait_args = ', '.join(
-            "{}={!r}".format(name, value)
-            for name, value in traits.items()
+            "{}={!r}".format(name, value) for name, value in traits.items()
         )
         return "{}({})".format(self.__class__.__name__, trait_args)

@@ -19,7 +19,7 @@ from pyface.ui.wx.layout_widget import LayoutWidget
 
 @provides(IField)
 class Field(MField, LayoutWidget):
-    """ The Wx-specific implementation of the field class
+    """The Wx-specific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.
     """

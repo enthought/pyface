@@ -12,7 +12,13 @@
 
 
 from traits.api import (
-    Bool, HasTraits, Instance, List, Property, provides, observe
+    Bool,
+    HasTraits,
+    Instance,
+    List,
+    Property,
+    provides,
+    observe,
 )
 
 
@@ -22,7 +28,7 @@ from .i_wizard_page import IWizardPage
 
 @provides(IWizardController)
 class WizardController(HasTraits):
-    """ A wizard controller that has a static list of pages. """
+    """A wizard controller that has a static list of pages."""
 
     # 'IWizardController' interface ----------------------------------------
 
@@ -45,7 +51,7 @@ class WizardController(HasTraits):
     # ------------------------------------------------------------------------
 
     def get_first_page(self):
-        """ Returns the first page. """
+        """Returns the first page."""
 
         if self._pages:
             return self._pages[0]
@@ -53,7 +59,7 @@ class WizardController(HasTraits):
         return None
 
     def get_next_page(self, page):
-        """ Returns the next page. """
+        """Returns the next page."""
 
         if page.last_page:
             pass
@@ -72,7 +78,7 @@ class WizardController(HasTraits):
         return None
 
     def get_previous_page(self, page):
-        """ Returns the previous page. """
+        """Returns the previous page."""
 
         for p in self._pages:
             next = self.get_next_page(p)
@@ -83,12 +89,12 @@ class WizardController(HasTraits):
         return None
 
     def is_first_page(self, page):
-        """ Is the page the first page? """
+        """Is the page the first page?"""
 
         return page is self._pages[0]
 
     def is_last_page(self, page):
-        """ Is the page the last page? """
+        """Is the page the last page?"""
 
         if page.last_page:
             return True
@@ -99,7 +105,7 @@ class WizardController(HasTraits):
         return page is self._pages[-1]
 
     def dispose_pages(self):
-        """ Dispose the wizard pages. """
+        """Dispose the wizard pages."""
 
         for page in self._pages:
             page.dispose_page()
@@ -111,12 +117,12 @@ class WizardController(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_pages(self):
-        """ Returns the pages in the wizard. """
+        """Returns the pages in the wizard."""
 
         return self._pages[:]
 
     def _set_pages(self, pages):
-        """ Sets the pages in the wizard. """
+        """Sets the pages in the wizard."""
 
         self._pages = pages
 
@@ -139,7 +145,7 @@ class WizardController(HasTraits):
     # ------------------------------------------------------------------------
 
     def _update(self):
-        """ Checks the completion status of the controller. """
+        """Checks the completion status of the controller."""
 
         # The entire wizard is complete when the last page is complete.
         if self.current_page is None:
@@ -157,12 +163,10 @@ class WizardController(HasTraits):
 
     @observe("current_page")
     def _reset_observers_on_current_page_and_update(self, event):
-        """ Called when the current page is changed. """
+        """Called when the current page is changed."""
         old, new = event.old, event.new
         if old is not None:
-            old.observe(
-                self._on_page_complete, "complete", remove=True
-            )
+            old.observe(self._on_page_complete, "complete", remove=True)
 
         if new is not None:
             new.observe(self._on_page_complete, "complete")
@@ -174,7 +178,7 @@ class WizardController(HasTraits):
     # Dynamic ----
 
     def _on_page_complete(self, event):
-        """ Called when the current page is complete. """
+        """Called when the current page is complete."""
 
         self._update()
 

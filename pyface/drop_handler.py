@@ -13,8 +13,7 @@ from traits.api import Callable, HasTraits, List, provides, Str
 
 @provides(IDropHandler)
 class BaseDropHandler(HasTraits):
-    """ Basic drop handler
-    """
+    """Basic drop handler"""
 
     # BaseDropHandler interface ---------------------------------------------
 
@@ -36,8 +35,7 @@ class BaseDropHandler(HasTraits):
 
 @provides(IDropHandler)
 class FileDropHandler(HasTraits):
-    """ Class to handle backward compatible file drop events
-    """
+    """Class to handle backward compatible file drop events"""
 
     # FileDropHandler interface ---------------------------------------------
 
@@ -50,7 +48,7 @@ class FileDropHandler(HasTraits):
     # IDropHandler interface ------------------------------------------------
 
     def can_handle_drop(self, event, target):
-        """ Does the drop event contails file data with matching extensions """
+        """Does the drop event contails file data with matching extensions"""
         if event.mimeData().hasUrls():
             for url in event.mimeData().urls():
                 file_path = url.toLocalFile()
@@ -59,6 +57,6 @@ class FileDropHandler(HasTraits):
         return False
 
     def handle_drop(self, event, target):
-        """ Open the file using the supplied callback """
+        """Open the file using the supplied callback"""
         for url in event.mimeData().urls():
             self.open_file(url.toLocalFile())

@@ -11,20 +11,27 @@
 from abc import abstractmethod
 
 from traits.api import (
-    ABCHasStrictTraits, Event, HasTraits, Instance,
-    List, Str, observe
+    ABCHasStrictTraits,
+    Event,
+    HasTraits,
+    Instance,
+    List,
+    Str,
+    observe,
 )
 from traits.trait_base import xgetattr, xsetattr
 
 from pyface.data_view.api import (
-    AbstractDataModel, AbstractValueType, DataViewSetError, TupleIndexManager
+    AbstractDataModel,
+    AbstractValueType,
+    DataViewSetError,
+    TupleIndexManager,
 )
 from pyface.data_view.value_types.api import TextValue
 
 
 class AbstractRowInfo(ABCHasStrictTraits):
-    """ Configuration for a data row in a ColumnDataModel.
-    """
+    """Configuration for a data row in a ColumnDataModel."""
 
     #: The text to display in the first column.
     title = Str()
@@ -90,8 +97,7 @@ class AbstractRowInfo(ABCHasStrictTraits):
 
 
 class HasTraitsRowInfo(AbstractRowInfo):
-    """ RowInfo that presents a named trait value.
-    """
+    """RowInfo that presents a named trait value."""
 
     #: The extended trait name of the trait holding the value.
     value = Str()
@@ -116,7 +122,7 @@ class HasTraitsRowInfo(AbstractRowInfo):
 
 
 class DictRowInfo(AbstractRowInfo):
-    """ RowInfo that presents an item in a dictionary.
+    """RowInfo that presents an item in a dictionary.
 
     The attribute ``value`` should reference a dictionary trait on a
     has traits object.
@@ -148,8 +154,7 @@ class DictRowInfo(AbstractRowInfo):
 
 
 class ColumnDataModel(AbstractDataModel):
-    """ A data model that presents a list of objects as columns.
-    """
+    """A data model that presents a list of objects as columns."""
 
     #: A list of objects to display in columns.
     data = List(Instance(HasTraits))
@@ -182,7 +187,7 @@ class ColumnDataModel(AbstractDataModel):
         return row_info.get_value(obj)
 
     def can_set_value(self, row, column):
-        """ Whether the value in the indicated row and column can be set.
+        """Whether the value in the indicated row and column can be set.
 
         This returns False for row headers, but True for all other values.
 

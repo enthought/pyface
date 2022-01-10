@@ -17,7 +17,7 @@ that code.
 
 
 def channels_to_ints(channels, maximum=255):
-    """ Convert an iterable of floating point channel values to integers.
+    """Convert an iterable of floating point channel values to integers.
 
     Values are rounded to the nearest integer, rather than truncated.
 
@@ -39,7 +39,7 @@ def channels_to_ints(channels, maximum=255):
 
 
 def ints_to_channels(values, maximum=255):
-    """ Convert an iterable of integers to floating point channel values.
+    """Convert an iterable of integers to floating point channel values.
 
     Parameters
     ----------
@@ -59,7 +59,7 @@ def ints_to_channels(values, maximum=255):
 
 
 def relative_luminance(rgb):
-    """ The relative luminance of the color.
+    """The relative luminance of the color.
 
     This value is the critical value when comparing colors for contrast when
     displayed next to each other, in particular for readability of text.
@@ -81,7 +81,7 @@ def relative_luminance(rgb):
     https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
     """
     gamma_corrected = [
-        x/12.92 if x <= 0.03928 else ((x + 0.055)/1.055)**2.4
+        x / 12.92 if x <= 0.03928 else ((x + 0.055) / 1.055) ** 2.4
         for x in rgb
     ]
     luminance = (
@@ -93,7 +93,7 @@ def relative_luminance(rgb):
 
 
 def is_dark(rgb):
-    """ Is the color dark to human perception?
+    """Is the color dark to human perception?
 
     A color is dark if white contasts better with it according to the WC3
     definition of contrast ratio.  This is allows GUI code to choose either

@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 
 
 class SetattrAction(WorkbenchAction):
-    """ An action that sets an attribute. """
+    """An action that sets an attribute."""
 
     # 'SetattrAction' interface --------------------------------------------
 
@@ -35,7 +35,7 @@ class SetattrAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def perform(self, event):
-        """ Performs the action. """
+        """Performs the action."""
 
         setattr(self.obj, self.attribute_name, self.value)
 

@@ -18,8 +18,9 @@ from pyface.data_view.i_data_wrapper import DataFormat, text_format
 
 # Scalar formats
 
+
 def to_json(data, default=None):
-    """ Serialize an object to a JSON bytestring.
+    """Serialize an object to a JSON bytestring.
 
     Parameters
     ----------
@@ -39,7 +40,7 @@ def to_json(data, default=None):
 
 
 def from_json(raw_data, object_hook=None):
-    """ Deserialize a JSON bytestring.
+    """Deserialize a JSON bytestring.
 
     Parameters
     ----------
@@ -69,8 +70,9 @@ json_format = DataFormat('application/json', to_json, from_json)
 
 # 1D formats
 
+
 def to_csv_row(data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Serialize a list to a single-row CSV bytestring.
+    """Serialize a list to a single-row CSV bytestring.
 
     Parameters
     ----------
@@ -96,7 +98,7 @@ def to_csv_row(data, delimiter=',', encoding='utf-8', **kwargs):
 
 
 def from_csv_row(raw_data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Deserialize the first row of a CSV bytestring as a list.
+    """Deserialize the first row of a CSV bytestring as a list.
 
     Any rows beyond the first are ignored.
 
@@ -122,7 +124,7 @@ def from_csv_row(raw_data, delimiter=',', encoding='utf-8', **kwargs):
 
 
 def to_csv_column(data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Serialize a list to a single-column CSV bytestring.
+    """Serialize a list to a single-column CSV bytestring.
 
     Parameters
     ----------
@@ -149,7 +151,7 @@ def to_csv_column(data, delimiter=',', encoding='utf-8', **kwargs):
 
 
 def from_csv_column(raw_data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Deserialize the first column of a CSV bytestring as a list.
+    """Deserialize the first column of a CSV bytestring as a list.
 
     Any columns beyond the first are ignored.
 
@@ -190,8 +192,9 @@ csv_column_format = DataFormat('text/csv', to_csv_column, from_csv_column)
 
 # 2D formats
 
+
 def to_csv(data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Serialize a list of lists to a CSV bytestring.
+    """Serialize a list of lists to a CSV bytestring.
 
     Parameters
     ----------
@@ -218,7 +221,7 @@ def to_csv(data, delimiter=',', encoding='utf-8', **kwargs):
 
 
 def from_csv(raw_data, delimiter=',', encoding='utf-8', **kwargs):
-    """ Deserialize a CSV bytestring.
+    """Deserialize a CSV bytestring.
 
     Parameters
     ----------
@@ -242,7 +245,7 @@ def from_csv(raw_data, delimiter=',', encoding='utf-8', **kwargs):
 
 
 def to_npy(data):
-    """ Serialize an array to a bytestring using .npy format.
+    """Serialize an array to a bytestring using .npy format.
 
     Parameters
     ----------
@@ -263,7 +266,7 @@ def to_npy(data):
 
 
 def from_npy(raw_data):
-    """ Deserialize a .npy-format bytestring.
+    """Deserialize a .npy-format bytestring.
 
     Parameters
     ----------

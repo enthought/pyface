@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
-    """ The toolkit-specific implementation of a EditorAreaPane.
+    """The toolkit-specific implementation of a EditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
@@ -49,8 +49,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            pane.
+        """Create and set the toolkit-specific control that represents the
+        pane.
         """
         logger.debug("editor pane parent: %s" % parent)
         # Create and configure the tab widget.
@@ -63,8 +63,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CLOSE, self._close_requested)
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         for editor in self.editors:
             self.remove_editor(editor)
 
@@ -75,14 +74,12 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
-        """ Activates the specified editor in the pane.
-        """
+        """Activates the specified editor in the pane."""
         index = self.control.GetPageIndex(editor.control)
         self.control.SetSelection(index)
 
     def add_editor(self, editor):
-        """ Adds an editor to the pane.
-        """
+        """Adds an editor to the pane."""
         editor.editor_area = self
         editor.create(self.control)
         self.control.AddPage(editor.control, self._get_label(editor))
@@ -100,8 +97,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             self.active_editor = editor
 
     def remove_editor(self, editor):
-        """ Removes an editor from the pane.
-        """
+        """Removes an editor from the pane."""
         self.editors.remove(editor)
         index = self.control.GetPageIndex(editor.control)
         logger.debug("Removing page %d" % index)
@@ -117,8 +113,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
-        """ Return a tab label for an editor.
-        """
+        """Return a tab label for an editor."""
         label = editor.name
         if editor.dirty:
             label = "*" + label
@@ -127,8 +122,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         return label
 
     def _get_editor_with_control(self, control):
-        """ Return the editor with the specified control.
-        """
+        """Return the editor with the specified control."""
         for editor in self.editors:
             if editor.control == control:
                 return editor

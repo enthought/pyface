@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class NodeManager(HasPrivateTraits):
-    """ The node manager looks after a collection of node types. """
+    """The node manager looks after a collection of node types."""
 
     # 'NodeManager' interface -----------------------------------------#
 
@@ -41,7 +41,7 @@ class NodeManager(HasPrivateTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new tree model. """
+        """Creates a new tree model."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -62,13 +62,13 @@ class NodeManager(HasPrivateTraits):
     # the manager's node types.  Should we make the 'node_types' list
     # available via the public API?
     def add_node_type(self, node_type):
-        """ Adds a new node type to the manager. """
+        """Adds a new node type to the manager."""
 
         node_type.node_manager = self
         self.node_types.append(node_type)
 
     def get_node_type(self, node):
-        """ Returns the node's type.
+        """Returns the node's type.
 
         Returns None if none of the manager's node types recognize the node.
 
@@ -101,7 +101,7 @@ class NodeManager(HasPrivateTraits):
         return node_type
 
     def get_key(self, node):
-        """ Generates a unique key for a node.
+        """Generates a unique key for a node.
 
         In this case,  'unique' means unqiue within the node manager.
 
@@ -124,7 +124,7 @@ class NodeManager(HasPrivateTraits):
 
     @observe("node_types")
     def _update_node_manager_on_new_node_types(self, event):
-        """ Called when the entire list of node types has been changed. """
+        """Called when the entire list of node types has been changed."""
         new = event.new
         for node_type in new:
             node_type.node_manager = self

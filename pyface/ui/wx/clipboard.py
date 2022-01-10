@@ -33,7 +33,7 @@ cb = wx.TheClipboard
 
 @contextmanager
 def _ensure_clipboard():
-    """ Ensure use of X11 clipboard rather than primary selection on X11.
+    """Ensure use of X11 clipboard rather than primary selection on X11.
 
     X11 allows pasting from either the clipboard or the primary selection.
     This context manager ensures that the clipboard is always used for Pyface,
@@ -54,7 +54,7 @@ def _ensure_clipboard():
 
 @contextmanager
 def _close_clipboard(flush=False):
-    """ Ensures clipboard is closed and (optionally) flushed.
+    """Ensures clipboard is closed and (optionally) flushed.
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def _close_clipboard(flush=False):
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
-    """ WxPython implementation of the IClipboard interface.
+    """WxPython implementation of the IClipboard interface.
 
     Python object data is transmitted as bytes consisting of the pickled class
     object followed by the corresponding pickled instance object.  This means
@@ -139,7 +139,9 @@ class Clipboard(BaseClipboard):
                                 # We may not be able to load the required class:
                                 result = loads(cdo.GetData())
                             except Exception:
-                                logger.exception("Cannot load data from clipboard.")
+                                logger.exception(
+                                    "Cannot load data from clipboard."
+                                )
         return result
 
     # ---------------------------------------------------------------------------

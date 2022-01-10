@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskWindow(ApplicationWindow):
-    """ The the top-level window to which tasks can be assigned.
+    """The the top-level window to which tasks can be assigned.
 
     A TaskWindow is responsible for creating and the managing the controls of
     its tasks.
@@ -88,8 +88,7 @@ class TaskWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Overridden to ensure that all task panes are cleanly destroyed.
-        """
+        """Overridden to ensure that all task panes are cleanly destroyed."""
         # Allow the TaskWindowBackend to clean up first.
         self._window_backend.destroy()
 
@@ -105,7 +104,7 @@ class TaskWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window.
+        """Opens the window.
 
         Overridden to make the 'opening' event vetoable and to activate a task
         if one has not already been activated. Returns whether the window was
@@ -131,8 +130,7 @@ class TaskWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Delegate to the TaskWindowBackend.
-        """
+        """Delegate to the TaskWindowBackend."""
         return self._window_backend.create_contents(parent)
 
     # ------------------------------------------------------------------------
@@ -140,8 +138,7 @@ class TaskWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def activate_task(self, task):
-        """ Activates a task that has already been added to the window.
-        """
+        """Activates a task that has already been added to the window."""
         state = self._get_state(task)
         if state and state != self._active_state:
             # Hide the panes of the currently active task, if necessary.
@@ -167,8 +164,7 @@ class TaskWindow(ApplicationWindow):
             )
 
     def add_task(self, task):
-        """ Adds a task to the window. The task is not activated.
-        """
+        """Adds a task to the window. The task is not activated."""
         if task.window is not None:
             logger.error(
                 "Cannot add task %r: task has already been added "
@@ -205,8 +201,8 @@ class TaskWindow(ApplicationWindow):
         state.tool_bar_managers = builder.create_tool_bar_managers()
 
     def remove_task(self, task):
-        """ Removes a task that has already been added to the window. All the
-            task's panes are destroyed.
+        """Removes a task that has already been added to the window. All the
+        task's panes are destroyed.
         """
         state = self._get_state(task)
         if state:
@@ -225,8 +221,8 @@ class TaskWindow(ApplicationWindow):
             )
 
     def focus_next_pane(self):
-        """ Shifts focus to the "next" pane, taking into account the active pane
-            and the pane geometry.
+        """Shifts focus to the "next" pane, taking into account the active pane
+        and the pane geometry.
         """
         if self._active_state:
             panes = self._get_pane_ring()
@@ -236,8 +232,8 @@ class TaskWindow(ApplicationWindow):
             panes[index].set_focus()
 
     def focus_previous_pane(self):
-        """ Shifts focus to the "previous" pane, taking into account the active
-            pane and the pane geometry.
+        """Shifts focus to the "previous" pane, taking into account the active
+        pane and the pane geometry.
         """
         if self._active_state:
             panes = self._get_pane_ring()
@@ -247,15 +243,14 @@ class TaskWindow(ApplicationWindow):
             panes[index].set_focus()
 
     def get_central_pane(self, task):
-        """ Returns the central pane for the specified task.
-        """
+        """Returns the central pane for the specified task."""
         state = self._get_state(task)
         return state.central_pane if state else None
 
     def get_dock_pane(self, id, task=None):
-        """ Returns the dock pane in the task with the specified ID, or
-            None if no such dock pane exists. If a task is not specified, the
-            active task is used.
+        """Returns the dock pane in the task with the specified ID, or
+        None if no such dock pane exists. If a task is not specified, the
+        active task is used.
         """
         if task is None:
             state = self._active_state
@@ -264,14 +259,13 @@ class TaskWindow(ApplicationWindow):
         return state.get_dock_pane(id) if state else None
 
     def get_dock_panes(self, task):
-        """ Returns the dock panes for the specified task.
-        """
+        """Returns the dock panes for the specified task."""
         state = self._get_state(task)
         return state.dock_panes[:] if state else []
 
     def get_task(self, id):
-        """ Returns the task with the specified ID, or None if no such task
-            exists.
+        """Returns the task with the specified ID, or None if no such task
+        exists.
         """
         state = self._get_state(id)
         return state.task if state else None
@@ -279,29 +273,27 @@ class TaskWindow(ApplicationWindow):
     # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
-        """ Returns a TaskLayout (for the active task) that reflects the state
-            of the window.
+        """Returns a TaskLayout (for the active task) that reflects the state
+        of the window.
         """
         if self._active_state:
             return self._window_backend.get_layout()
         return None
 
     def set_layout(self, layout):
-        """ Applies a TaskLayout (which should be suitable for the active task)
-            to the window.
+        """Applies a TaskLayout (which should be suitable for the active task)
+        to the window.
         """
         if self._active_state:
             self._window_backend.set_layout(layout)
 
     def reset_layout(self):
-        """ Restores the active task's default TaskLayout.
-        """
+        """Restores the active task's default TaskLayout."""
         if self.active_task:
             self.set_layout(self.active_task.default_layout)
 
     def get_window_layout(self):
-        """ Returns a TaskWindowLayout for the current state of the window.
-        """
+        """Returns a TaskWindowLayout for the current state of the window."""
         result = TaskWindowLayout(
             position=self.position, size=self.size, size_state=self.size_state
         )
@@ -316,8 +308,7 @@ class TaskWindow(ApplicationWindow):
         return result
 
     def set_window_layout(self, window_layout):
-        """ Applies a TaskWindowLayout to the window.
-        """
+        """Applies a TaskWindowLayout to the window."""
         # Set window size before laying it out.
         self.position = window_layout.position
         self.size = window_layout.size
@@ -351,8 +342,7 @@ class TaskWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _destroy_state(self, state):
-        """ Destroy all controls associated with a Task state.
-        """
+        """Destroy all controls associated with a Task state."""
         # Notify the task that it is about to be destroyed.
         state.task.prepare_destroy()
 
@@ -371,8 +361,7 @@ class TaskWindow(ApplicationWindow):
         state.task.window = None
 
     def _get_pane_ring(self):
-        """ Returns a list of visible panes ordered for focus switching.
-        """
+        """Returns a list of visible panes ordered for focus switching."""
         # Proceed clockwise through the dock areas.
         # TODO: Also take into account ordering within dock areas.
         panes = []
@@ -391,8 +380,8 @@ class TaskWindow(ApplicationWindow):
         return panes
 
     def _get_state(self, id_or_task):
-        """ Returns the TaskState that contains the specified Task, or None if
-            no such state exists.
+        """Returns the TaskState that contains the specified Task, or None if
+        no such state exists.
         """
         for state in self._states:
             if state.task == id_or_task or state.task.id == id_or_task:
@@ -443,8 +432,8 @@ class TaskWindow(ApplicationWindow):
 
 
 class TaskState(HasStrictTraits):
-    """ An object used internally by TaskWindow to maintain the state associated
-        with an attached Task.
+    """An object used internally by TaskWindow to maintain the state associated
+    with an attached Task.
     """
 
     task = Instance(Task)
@@ -458,8 +447,8 @@ class TaskState(HasStrictTraits):
     tool_bar_managers = List(ToolBarManager)
 
     def get_dock_pane(self, id):
-        """ Returns the dock pane with the specified id, or None if no such dock
-            pane exists.
+        """Returns the dock pane with the specified id, or None if no such dock
+        pane exists.
         """
         for pane in self.dock_panes:
             if pane.id == id:

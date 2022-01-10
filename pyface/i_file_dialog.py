@@ -21,8 +21,7 @@ from pyface.i_dialog import IDialog
 
 
 class IFileDialog(IDialog):
-    """ The interface for a dialog that allows the user to open/save files etc.
-    """
+    """The interface for a dialog that allows the user to open/save files etc."""
 
     # 'IFileDialog' interface ---------------------------------------------#
 
@@ -63,7 +62,7 @@ class IFileDialog(IDialog):
 
 
 class MFileDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IFileDialog interface.
 
     Implements: create_wildcard()
@@ -98,7 +97,7 @@ class MFileDialog(HasTraits):
 
     @classmethod
     def create_wildcard(cls, description, extension):
-        """ Creates a wildcard for a given extension.
+        """Creates a wildcard for a given extension.
 
         Parameters
         ----------

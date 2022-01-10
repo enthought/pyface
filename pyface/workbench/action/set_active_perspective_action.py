@@ -18,7 +18,7 @@ from .workbench_action import WorkbenchAction
 
 
 class SetActivePerspectiveAction(WorkbenchAction):
-    """ An action that sets the active perspective. """
+    """An action that sets the active perspective."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -44,12 +44,12 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the action. """
+        """Destroy the action."""
 
         self.window = None
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         self.window.active_perspective = self.perspective
 
@@ -61,7 +61,7 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
     @observe("perspective,window.active_perspective")
     def _refresh_checked(self, event):
-        """ Refresh the checked state of the action. """
+        """Refresh the checked state of the action."""
 
         self.checked = (
             self.perspective is not None

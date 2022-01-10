@@ -20,7 +20,7 @@ from pyface.i_widget import IWidget, MWidget
 
 @provides(IWidget)
 class Widget(MWidget, HasTraits):
-    """ The toolkit specific implementation of a Widget.  See the IWidget
+    """The toolkit specific implementation of a Widget.  See the IWidget
     interface for the API documentation.
     """
 
@@ -54,7 +54,7 @@ class Widget(MWidget, HasTraits):
     # ------------------------------------------------------------------------
 
     def show(self, visible):
-        """ Show or hide the widget.
+        """Show or hide the widget.
 
         Parameter
         ---------
@@ -66,7 +66,7 @@ class Widget(MWidget, HasTraits):
             self.control.setVisible(visible)
 
     def enable(self, enabled):
-        """ Enable or disable the widget.
+        """Enable or disable the widget.
 
         Parameter
         ---------
@@ -78,23 +78,19 @@ class Widget(MWidget, HasTraits):
             self.control.setEnabled(enabled)
 
     def focus(self):
-        """ Set the keyboard focus to this widget.
-        """
+        """Set the keyboard focus to this widget."""
         if self.control is not None:
             self.control.setFocus()
 
     def has_focus(self):
-        """ Does the widget currently have keyboard focus?
+        """Does the widget currently have keyboard focus?
 
         Returns
         -------
         focus_state : bool
             Whether or not the widget has keyboard focus.
         """
-        return (
-            self.control is not None
-            and self.control.hasFocus()
-        )
+        return self.control is not None and self.control.hasFocus()
 
     def destroy(self):
         if self.control is not None:
@@ -118,15 +114,15 @@ class Widget(MWidget, HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_control_tooltip(self):
-        """ Toolkit specific method to get the control's tooltip. """
+        """Toolkit specific method to get the control's tooltip."""
         return self.control.toolTip()
 
     def _set_control_tooltip(self, tooltip):
-        """ Toolkit specific method to set the control's tooltip. """
+        """Toolkit specific method to set the control's tooltip."""
         self.control.setToolTip(tooltip)
 
     def _observe_control_context_menu(self, remove=False):
-        """ Toolkit specific method to change the control menu observer. """
+        """Toolkit specific method to change the control menu observer."""
         if remove:
             self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
             self.control.customContextMenuRequested.disconnect(
@@ -139,7 +135,7 @@ class Widget(MWidget, HasTraits):
             self.control.setContextMenuPolicy(Qt.CustomContextMenu)
 
     def _handle_control_context_menu(self, pos):
-        """ Signal handler for displaying context menu. """
+        """Signal handler for displaying context menu."""
         if self.control is not None and self.context_menu is not None:
             menu = self.context_menu.create_menu(self.control)
             menu.show(pos.x(), pos.y())
@@ -159,7 +155,7 @@ class Widget(MWidget, HasTraits):
 
 
 class WidgetEventFilter(QtCore.QObject):
-    """ An internal class that watches for certain events on behalf of the
+    """An internal class that watches for certain events on behalf of the
     Widget instance.
 
     This filter watches for show and hide events to make sure that visible
@@ -168,12 +164,12 @@ class WidgetEventFilter(QtCore.QObject):
     """
 
     def __init__(self, widget):
-        """ Initialise the event filter. """
+        """Initialise the event filter."""
         QtCore.QObject.__init__(self)
         self._widget = widget
 
     def eventFilter(self, obj, event):
-        """ Adds any event listeners required by the window. """
+        """Adds any event listeners required by the window."""
         widget = self._widget
         # Sanity check.
         if obj is not widget.control:

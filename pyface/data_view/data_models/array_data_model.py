@@ -17,15 +17,12 @@ from traits.api import Array, HasRequiredTraits, Instance, observe
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.value_types.api import (
-    ConstantValue, IntValue, no_value
-)
+from pyface.data_view.value_types.api import ConstantValue, IntValue, no_value
 from pyface.data_view.index_manager import TupleIndexManager
 
 
 class _AtLeastTwoDArray(Array):
-    """ Trait type that holds an array that at least two dimensional.
-    """
+    """Trait type that holds an array that at least two dimensional."""
 
     def validate(self, object, name, value):
         value = super().validate(object, name, value)
@@ -37,7 +34,7 @@ class _AtLeastTwoDArray(Array):
 
 
 class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
-    """ A data model for an n-dim array.
+    """A data model for an n-dim array.
 
     This data model presents the data from a multidimensional array
     hierarchically by dimension.  The underlying array must be at least 2
@@ -91,7 +88,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     # Data structure methods
 
     def get_column_count(self):
-        """ How many columns in the data view model.
+        """How many columns in the data view model.
 
         The number of columns is the size of the last dimension of the array.
 
@@ -104,7 +101,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         return self.data.shape[-1]
 
     def can_have_children(self, row):
-        """ Whether or not a row can have child rows.
+        """Whether or not a row can have child rows.
 
         A row is a leaf row if the length of the index is one less than
         the dimension of the array: the final coordinate for the value will
@@ -125,7 +122,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         return False
 
     def get_row_count(self, row):
-        """ Whether or not the row currently has any child rows.
+        """Whether or not the row currently has any child rows.
 
         The number of rows in a non-leaf row is equal to the size of the
         next dimension.
@@ -147,7 +144,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     # Data value methods
 
     def get_value(self, row, column):
-        """ Return the Python value for the row and column.
+        """Return the Python value for the row and column.
 
         Parameters
         ----------
@@ -172,7 +169,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
             return self.data[index]
 
     def can_set_value(self, row, column):
-        """ Whether the value in the indicated row and column can be set.
+        """Whether the value in the indicated row and column can be set.
 
         This returns False for row and column headers, but True for all
         array values.
@@ -194,7 +191,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         return len(index) == self.data.ndim
 
     def set_value(self, row, column, value):
-        """ Return the Python value for the row and column.
+        """Return the Python value for the row and column.
 
         Parameters
         ----------
@@ -216,7 +213,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
             raise DataViewSetError()
 
     def get_value_type(self, row, column):
-        """ Return the value type of the given row and column.
+        """Return the value type of the given row and column.
 
         This method returns the value of ``column_header_type`` for column
         headers, the value of ``row_header_type`` for row headers, the value
@@ -251,43 +248,49 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
 
     @observe('data')
     def data_updated(self, event):
-        """ Handle the array being replaced with a new array. """
+        """Handle the array being replaced with a new array."""
         if event.new.shape == event.old.shape:
             if self.data.size > 0:
                 self.values_changed = (
-                    (0,), (0,),
-                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
+                    (0,),
+                    (0,),
+                    (event.old.shape[0] - 1,),
+                    (event.old.shape[-1] - 1,),
                 )
         else:
             self.structure_changed = True
 
     @observe('value_type.updated')
     def value_type_updated(self, event):
-        """ Handle the value type being updated. """
+        """Handle the value type being updated."""
         if self.data.size > 0:
             self.values_changed = (
-                (0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,)
+                (0,),
+                (0,),
+                (self.data.shape[0] - 1,),
+                (self.data.shape[-1] - 1,),
             )
 
     @observe('column_header_type.updated')
     def column_header_type_updated(self, event):
-        """ Handle the column header type being updated. """
+        """Handle the column header type being updated."""
         if self.data.shape[-1] > 0:
             self.values_changed = ((), (0,), (), (self.data.shape[-1] - 1,))
 
     @observe('row_header_type.updated')
     def value_header_type_updated(self, event):
-        """ Handle the value header type being updated. """
+        """Handle the value header type being updated."""
         if self.data.shape[0] > 0:
             self.values_changed = ((0,), (), (self.data.shape[0] - 1,), ())
 
     @observe('label_header_type.updated')
     def label_header_type_updated(self, event):
-        """ Handle the label header type being updated. """
+        """Handle the label header type being updated."""
         self.values_changed = ((), (), (), ())
 
     # default array value
 
     def _data_default(self):
         from numpy import zeros
+
         return zeros(shape=(0, 0))

@@ -18,7 +18,7 @@ from pyface.key_pressed_event import KeyPressedEvent
 
 
 class IPythonEditor(ILayoutWidget):
-    """ A widget for editing Python code. """
+    """A widget for editing Python code."""
 
     # 'IPythonEditor' interface --------------------------------------------
 
@@ -44,7 +44,7 @@ class IPythonEditor(ILayoutWidget):
     # ------------------------------------------------------------------------
 
     def load(self, path=None):
-        """ Loads the contents of the editor.
+        """Loads the contents of the editor.
 
         Parameters
         ----------
@@ -53,7 +53,7 @@ class IPythonEditor(ILayoutWidget):
         """
 
     def save(self, path=None):
-        """ Saves the contents of the editor.
+        """Saves the contents of the editor.
 
         Parameters
         ----------
@@ -63,12 +63,12 @@ class IPythonEditor(ILayoutWidget):
 
     # FIXME v3: This is very dependent on the underlying implementation.
     def set_style(self, n, fore, back):
-        """ Set the foreground and background colors for a particular style and
+        """Set the foreground and background colors for a particular style and
         set the font and size to default values.
         """
 
     def select_line(self, lineno):
-        """ Selects the specified line.
+        """Selects the specified line.
 
         Parameters
         ----------
@@ -78,14 +78,14 @@ class IPythonEditor(ILayoutWidget):
 
 
 class MPythonEditor(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IPythonEditor interface.
 
     Implements: _changed_path()
     """
 
     def _changed_path(self):
-        """ Called when the path to the file is changed. """
+        """Called when the path to the file is changed."""
 
         if self.control is not None:
             self.load()

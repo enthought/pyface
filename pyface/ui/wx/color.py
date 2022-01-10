@@ -20,7 +20,7 @@ from pyface.color import channels_to_ints, ints_to_channels
 
 
 def toolkit_color_to_rgba(wx_colour):
-    """ Convert a wx.Colour to an RGBA tuple.
+    """Convert a wx.Colour to an RGBA tuple.
 
     Parameters
     ----------
@@ -42,7 +42,7 @@ def toolkit_color_to_rgba(wx_colour):
 
 
 def rgba_to_toolkit_color(rgba):
-    """ Convert an RGBA tuple to a wx.Colour.
+    """Convert an RGBA tuple to a wx.Colour.
 
     Parameters
     ----------

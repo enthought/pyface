@@ -29,7 +29,7 @@ from .image_resource import ImageResource
 
 @provides(IConfirmationDialog)
 class ConfirmationDialog(MConfirmationDialog, Dialog):
-    """ The toolkit specific implementation of a ConfirmationDialog.  See the
+    """The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
 
@@ -134,11 +134,11 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     # wx event handlers ----------------------------------------------------
 
     def _on_yes(self, event):
-        """ Called when the 'Yes' button is pressed. """
+        """Called when the 'Yes' button is pressed."""
 
         self.control.EndModal(wx.ID_YES)
 
     def _on_no(self, event):
-        """ Called when the 'No' button is pressed. """
+        """Called when the 'No' button is pressed."""
 
         self.control.EndModal(wx.ID_NO)

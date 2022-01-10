@@ -15,7 +15,6 @@ from pyface.data_view.value_types.text_value import TextValue
 
 
 class TestTextValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value="test")

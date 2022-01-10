@@ -17,7 +17,7 @@ from pyface.action.api import StatusBarManager, ToolBarManager, Group
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     #: The initial size of the application window.
     size = (800, 600)
@@ -27,7 +27,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -67,7 +67,7 @@ class MainWindow(ApplicationWindow):
         self.status_bar_manager.message = "Example application window"
 
     def toggle(self):
-        """ Toggle the visibility of the exit action and of the first 3 groups
+        """Toggle the visibility of the exit action and of the first 3 groups
         in the first toolbar, which contain only exit actions.
         """
         visible = not self.exit_action.visible

@@ -15,8 +15,7 @@ from example_task import ExampleTask
 
 
 def main(argv):
-    """ A simple example of using Tasks.
-    """
+    """A simple example of using Tasks."""
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

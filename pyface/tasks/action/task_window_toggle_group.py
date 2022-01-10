@@ -14,8 +14,7 @@ from traits.api import Any, Instance, List, Property, Str, observe
 
 
 class TaskWindowToggleAction(Action):
-    """ An action for activating an application window.
-    """
+    """An action for activating an application window."""
 
     # 'Action' interface -----------------------------------------------------
 
@@ -57,8 +56,7 @@ class TaskWindowToggleAction(Action):
 
 
 class TaskWindowToggleGroup(Group):
-    """ A Group for toggling the activation state of an application's windows.
-    """
+    """A Group for toggling the activation state of an application's windows."""
 
     # 'Group' interface ------------------------------------------------------
 
@@ -81,8 +79,7 @@ class TaskWindowToggleGroup(Group):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        """ Called when the group is no longer required.
-        """
+        """Called when the group is no longer required."""
         super().destroy()
         if self.application:
             self.application.observe(

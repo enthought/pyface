@@ -32,7 +32,7 @@ class AspectRatio(IntEnum):
 
 
 def image_to_bitmap(image):
-    """ Convert a wx.Image to a wx.Bitmap.
+    """Convert a wx.Image to a wx.Bitmap.
 
     Parameters
     ----------
@@ -48,7 +48,7 @@ def image_to_bitmap(image):
 
 
 def bitmap_to_image(bitmap):
-    """ Convert a wx.Bitmap to a wx.Image.
+    """Convert a wx.Bitmap to a wx.Image.
 
     Parameters
     ----------
@@ -64,7 +64,7 @@ def bitmap_to_image(bitmap):
 
 
 def bitmap_to_icon(bitmap):
-    """ Convert a wx.Bitmap to a wx.Icon.
+    """Convert a wx.Bitmap to a wx.Icon.
 
     Parameters
     ----------
@@ -79,24 +79,26 @@ def bitmap_to_icon(bitmap):
     return wx.Icon(bitmap)
 
 
-def resize_image(image, size, aspect_ratio=AspectRatio.ignore,
-                 mode=ScaleMode.fast):
-    """ Resize a toolkit image to the given size. """
+def resize_image(
+    image, size, aspect_ratio=AspectRatio.ignore, mode=ScaleMode.fast
+):
+    """Resize a toolkit image to the given size."""
     image_size = image.GetSize()
     width, height = _get_size_for_aspect_ratio(image_size, size, aspect_ratio)
     return image.Scale(width, height, mode)
 
 
-def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
-                  mode=ScaleMode.fast):
-    """ Resize a toolkit bitmap to the given size. """
+def resize_bitmap(
+    bitmap, size, aspect_ratio=AspectRatio.ignore, mode=ScaleMode.fast
+):
+    """Resize a toolkit bitmap to the given size."""
     image = bitmap_to_image(bitmap)
     image = resize_image(image, size, aspect_ratio, mode)
     return image_to_bitmap(image)
 
 
 def image_to_array(image):
-    """ Convert a wx.Image to a numpy array.
+    """Convert a wx.Image to a numpy array.
 
     This copies the data returned from wx.
 
@@ -114,11 +116,15 @@ def image_to_array(image):
     import numpy as np
 
     width, height = image.GetSize()
-    rgb_data = np.array(image.GetData(), dtype='uint8').reshape(width, height, 3)
+    rgb_data = np.array(image.GetData(), dtype='uint8').reshape(
+        width, height, 3
+    )
     if image.HasAlpha():
-        alpha = np.array(image.GetAlpha(), dtype='uint8').reshape(width, height)
+        alpha = np.array(image.GetAlpha(), dtype='uint8').reshape(
+            width, height
+        )
     else:
-        alpha = np.full((width, height), 0xff, dtype='uint8')
+        alpha = np.full((width, height), 0xFF, dtype='uint8')
     array = np.empty(shape=(width, height, 4), dtype='uint8')
     array[:, :, :3] = rgb_data
     array[:, :, 3] = alpha
@@ -126,7 +132,7 @@ def image_to_array(image):
 
 
 def array_to_image(array):
-    """ Convert a numpy array to a wx.Image.
+    """Convert a numpy array to a wx.Image.
 
     This copies the data before passing it to wx.
 
@@ -166,9 +172,9 @@ def _get_size_for_aspect_ratio(image_size, size, aspect_ratio):
     image_width, image_height = image_size
     if aspect_ratio != AspectRatio.ignore:
         if aspect_ratio == AspectRatio.keep_constrain:
-            scale = min(width/image_width, height/image_height)
+            scale = min(width / image_width, height / image_height)
         else:
-            scale = max(width/image_width, height/image_height)
+            scale = max(width / image_width, height / image_height)
         width = int(round(scale * image_width))
         height = int(round(scale * image_height))
     return (width, height)

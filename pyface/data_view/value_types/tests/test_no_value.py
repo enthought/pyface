@@ -15,7 +15,6 @@ from pyface.data_view.value_types.no_value import NoValue
 
 
 class TestNoValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
 

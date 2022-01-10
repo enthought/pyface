@@ -12,7 +12,7 @@ from pyface.testing.widget_mixin import WidgetMixin
 
 
 class LayoutWidgetMixin(WidgetMixin):
-    """ Test mixin for classes which inherit LayoutWidget. """
+    """Test mixin for classes which inherit LayoutWidget."""
 
     def test_minimum_size(self):
         # create a widget with a minimum size

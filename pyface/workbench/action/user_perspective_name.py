@@ -21,7 +21,7 @@ NotEmptyString = String(minlen=1)
 
 
 class UserPerspectiveName(HasTraits):
-    """ Object with views for naming or renaming a user perspective. """
+    """Object with views for naming or renaming a user perspective."""
 
     # ------------------------------------------------------------------------
     # 'UserPerspectiveName' interface.

@@ -7,8 +7,7 @@ from pyface.tasks.api import Task, TaskWindow, EditorAreaPane
 
 
 class BlankTask(Task):
-    """ A task that does nothing
-    """
+    """A task that does nothing"""
 
     # Task interface -------------------------------------------------------
 
@@ -20,15 +19,13 @@ class BlankTask(Task):
     # ------------------------------------------------------------------------
 
     def create_central_pane(self):
-        """ Create the central pane: the script editor.
-        """
+        """Create the central pane: the script editor."""
         self.editor_area = EditorAreaPane()
         return self.editor_area
 
 
 def main(argv):
-    """ A simple example of using Tasks.
-    """
+    """A simple example of using Tasks."""
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

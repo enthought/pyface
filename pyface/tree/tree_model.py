@@ -18,7 +18,7 @@ from .node_event import NodeEvent
 
 
 class TreeModel(HasTraits):
-    """ Model for tree views. """
+    """Model for tree views."""
 
     # 'TreeModel' interface ------------------------------------------------
 
@@ -47,7 +47,7 @@ class TreeModel(HasTraits):
     # ------------------------------------------------------------------------
 
     def has_children(self, node):
-        """ Returns True if a node has children, otherwise False.
+        """Returns True if a node has children, otherwise False.
 
         This method is provided in case the model has an efficient way to
         determine whether or not a node has any children without having to
@@ -58,12 +58,12 @@ class TreeModel(HasTraits):
         raise NotImplementedError()
 
     def get_children(self, node):
-        """ Returns the children of a node. """
+        """Returns the children of a node."""
 
         raise NotImplementedError()
 
     def get_drag_value(self, node):
-        """ Get the value that is dragged for a node.
+        """Get the value that is dragged for a node.
 
         By default the drag value is the node itself.
 
@@ -72,17 +72,17 @@ class TreeModel(HasTraits):
         return node
 
     def can_drop(self, node, obj):
-        """ Returns True if a node allows an object to be dropped onto it. """
+        """Returns True if a node allows an object to be dropped onto it."""
 
         return False
 
     def drop(self, node, obj):
-        """ Drops an object onto a node. """
+        """Drops an object onto a node."""
 
         raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
-        """ Returns the label image for a node.
+        """Returns the label image for a node.
 
         Return None (the default) if no image is required.
 
@@ -91,7 +91,7 @@ class TreeModel(HasTraits):
         return None
 
     def get_key(self, node):
-        """ Generate a unique key for a node. """
+        """Generate a unique key for a node."""
 
         try:
             key = hash(node)
@@ -102,7 +102,7 @@ class TreeModel(HasTraits):
         return key
 
     def get_selection_value(self, node):
-        """ Get the value that is used when a node is selected.
+        """Get the value that is used when a node is selected.
 
         By default the selection value is the node itself.
 
@@ -111,7 +111,7 @@ class TreeModel(HasTraits):
         return node
 
     def get_text(self, node):
-        """ Returns the label text for a node.
+        """Returns the label text for a node.
 
         Return None if no text is required.  By default we return 'str(node)'.
 
@@ -120,27 +120,27 @@ class TreeModel(HasTraits):
         return str(node)
 
     def can_set_text(self, node, text):
-        """ Returns True if the node's label can be set. """
+        """Returns True if the node's label can be set."""
 
         return len(text.strip()) > 0
 
     def set_text(self, node, text):
-        """ Sets the label text for a node. """
+        """Sets the label text for a node."""
 
         pass
 
     def is_collapsible(self, node):
-        """ Returns True if the node is collapsible, otherwise False. """
+        """Returns True if the node is collapsible, otherwise False."""
 
         return True
 
     def is_draggable(self, node):
-        """ Returns True if the node is draggable, otherwise False. """
+        """Returns True if the node is draggable, otherwise False."""
 
         return True
 
     def is_editable(self, node):
-        """ Returns True if the node is editable, otherwise False.
+        """Returns True if the node is editable, otherwise False.
 
         If the node is editable, its text can be set via the UI.
 
@@ -149,44 +149,44 @@ class TreeModel(HasTraits):
         return False
 
     def is_expandable(self, node):
-        """ Returns True if the node is expandanble, otherwise False. """
+        """Returns True if the node is expandanble, otherwise False."""
 
         return True
 
     def add_listener(self, node):
-        """ Adds a listener for changes to a node. """
+        """Adds a listener for changes to a node."""
 
         pass
 
     def remove_listener(self, node):
-        """ Removes a listener for changes to a node. """
+        """Removes a listener for changes to a node."""
 
         pass
 
     def fire_nodes_changed(self, node, children):
-        """ Fires the nodes changed event. """
+        """Fires the nodes changed event."""
 
         self.nodes_changed = NodeEvent(node=node, children=children)
 
     def fire_nodes_inserted(self, node, children):
-        """ Fires the nodes inserted event. """
+        """Fires the nodes inserted event."""
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
     def fire_nodes_removed(self, node, children):
-        """ Fires the nodes removed event. """
+        """Fires the nodes removed event."""
 
         self.nodes_removed = NodeEvent(node=node, children=children)
 
     def fire_nodes_replaced(self, node, old_children, new_children):
-        """ Fires the nodes removed event. """
+        """Fires the nodes removed event."""
 
         self.nodes_replaced = NodeEvent(
             node=node, old_children=old_children, children=new_children
         )
 
     def fire_structure_changed(self, node):
-        """ Fires the structure changed event. """
+        """Fires the structure changed event."""
 
         self.structure_changed = NodeEvent(node=node)
 

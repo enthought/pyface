@@ -18,7 +18,7 @@ from pyface.i_dialog import IDialog
 
 
 class IMessageDialog(IDialog):
-    """ The interface for a dialog that displays a message. """
+    """The interface for a dialog that displays a message."""
 
     # 'IMessageDialog' interface -------------------------------------------
 
@@ -36,6 +36,6 @@ class IMessageDialog(IDialog):
 
 
 class MMessageDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IMessageDialog interface.
     """

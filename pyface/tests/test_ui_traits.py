@@ -125,7 +125,7 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
     def test_init_array_image(self):
         from pyface.array_image import ArrayImage
 
-        data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        data = np.full((32, 64, 4), 0xEE, dtype='uint8')
         image = ArrayImage(data)
         image_class = ImageClass(image=image)
 
@@ -174,7 +174,6 @@ class TestMargin(unittest.TestCase):
 
 
 class TestPyfaceColor(unittest.TestCase):
-
     def test_init(self):
         trait = PyfaceColor()
         self.assertEqual(trait.default_value, (Color, (), {}))
@@ -186,62 +185,57 @@ class TestPyfaceColor(unittest.TestCase):
     def test_init_name(self):
         trait = PyfaceColor("rebeccapurple")
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     def test_init_hex(self):
         trait = PyfaceColor("#663399ff")
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     def test_init_color(self):
         trait = PyfaceColor(Color(rgba=(0.4, 0.2, 0.6, 1.0)))
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     def test_init_tuple(self):
         trait = PyfaceColor((0.4, 0.2, 0.6, 1.0))
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     def test_init_list(self):
         trait = PyfaceColor([0.4, 0.2, 0.6, 1.0])
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     @requires_numpy
     def test_init_array(self):
         trait = PyfaceColor(np.array([0.4, 0.2, 0.6, 1.0]))
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     @requires_numpy
     def test_init_array_structured_dtype(self):
-        """ Test if "typical" RGBA structured array value works. """
+        """Test if "typical" RGBA structured array value works."""
         arr = np.array(
             [(0.4, 0.2, 0.6, 1.0)],
-            dtype=np.dtype([
-                ('red', float),
-                ('green', float),
-                ('blue', float),
-                ('alpha', float),
-            ]),
+            dtype=np.dtype(
+                [
+                    ('red', float),
+                    ('green', float),
+                    ('blue', float),
+                    ('alpha', float),
+                ]
+            ),
         )
         trait = PyfaceColor(arr[0])
         self.assertEqual(
-            trait.default_value,
-            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+            trait.default_value, (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
         )
 
     def test_init_invalid(self):
@@ -252,49 +246,37 @@ class TestPyfaceColor(unittest.TestCase):
         color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
         trait = PyfaceColor()
         validated = trait.validate(None, None, color)
-        self.assertIs(
-            validated, color
-        )
+        self.assertIs(validated, color)
 
     def test_validate_name(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
         trait = PyfaceColor()
         validated = trait.validate(None, None, "rebeccapurple")
-        self.assertEqual(
-            validated, color
-        )
+        self.assertEqual(validated, color)
 
     def test_validate_hex(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
         trait = PyfaceColor()
         validated = trait.validate(None, None, "#663399ff")
-        self.assertEqual(
-            validated, color
-        )
+        self.assertEqual(validated, color)
 
     def test_validate_tuple(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         trait = PyfaceColor()
         validated = trait.validate(None, None, (0.4, 0.2, 0.6, 0.8))
-        self.assertEqual(
-            validated, color
-        )
+        self.assertEqual(validated, color)
 
     def test_validate_list(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         trait = PyfaceColor()
         validated = trait.validate(None, None, [0.4, 0.2, 0.6, 0.8])
-        self.assertEqual(
-            validated, color
-        )
+        self.assertEqual(validated, color)
 
     def test_validate_rgb_list(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
         trait = PyfaceColor()
         validated = trait.validate(None, None, [0.4, 0.2, 0.6])
-        self.assertEqual(
-            validated, color
-        )
+        self.assertEqual(validated, color)
 
     def test_validate_bad_string(self):
         trait = PyfaceColor()
@@ -350,19 +332,20 @@ class TestPyfaceColor(unittest.TestCase):
         color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
         arr = np.array(
             [(0.4, 0.2, 0.6, 1.0)],
-            dtype=np.dtype([
-                ('red', float),
-                ('green', float),
-                ('blue', float),
-                ('alpha', float),
-            ]),
+            dtype=np.dtype(
+                [
+                    ('red', float),
+                    ('green', float),
+                    ('blue', float),
+                    ('alpha', float),
+                ]
+            ),
         )
         color_class = ColorClass(color=arr[0])
         self.assertEqual(color_class.color, color)
 
 
 class TestPyfaceFont(unittest.TestCase):
-
     def test_init(self):
         trait = PyfaceFont()
         self.assertEqual(trait.default_value, (Font, (), {}))
@@ -387,12 +370,13 @@ class TestPyfaceFont(unittest.TestCase):
                     'variants': set(),
                     'decorations': set(),
                 },
-            )
+            ),
         )
 
     def test_init_typical_string(self):
         trait = PyfaceFont(
-            "10 pt bold condensed italic underline Helvetica sans-serif")
+            "10 pt bold condensed italic underline Helvetica sans-serif"
+        )
         self.assertEqual(
             trait.default_value,
             (
@@ -407,7 +391,7 @@ class TestPyfaceFont(unittest.TestCase):
                     'variants': set(),
                     'decorations': {"underline"},
                 },
-            )
+            ),
         )
 
     def test_init_font(self):
@@ -435,7 +419,7 @@ class TestPyfaceFont(unittest.TestCase):
                     'variants': set(),
                     'decorations': {"underline"},
                 },
-            )
+            ),
         )
 
     def test_init_invalid(self):

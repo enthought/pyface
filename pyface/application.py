@@ -49,13 +49,13 @@ logger = logging.getLogger(__name__)
 
 
 class ApplicationException(Exception):
-    """ Exception subclass for Application-centric exceptions """
+    """Exception subclass for Application-centric exceptions"""
 
     pass
 
 
 class ApplicationExit(ApplicationException):
-    """ Exception which indicates application should try to exit.
+    """Exception which indicates application should try to exit.
 
     If no arguments, then assumed to be a normal exit, otherwise the arguments
     give information about the problem.
@@ -65,7 +65,7 @@ class ApplicationExit(ApplicationException):
 
 
 class ApplicationEvent(HasStrictTraits):
-    """ An event associated with an application """
+    """An event associated with an application"""
 
     #: The application that the event happened to.
     application = ReadOnly
@@ -75,7 +75,7 @@ class ApplicationEvent(HasStrictTraits):
 
 
 class Application(HasStrictTraits):
-    """ A base class for applications.
+    """A base class for applications.
 
     This class handles the basic lifecycle of an application and a few
     fundamental facilities.  It is suitable as a base for any application,
@@ -136,7 +136,7 @@ class Application(HasStrictTraits):
     # Application lifecycle methods ------------------------------------------
 
     def start(self):
-        """ Start the application, setting up things that are required
+        """Start the application, setting up things that are required
 
         Subclasses should call the superclass start() method before doing any
         work themselves.
@@ -144,7 +144,7 @@ class Application(HasStrictTraits):
         return True
 
     def stop(self):
-        """ Stop the application, cleanly releasing resources if possible.
+        """Stop the application, cleanly releasing resources if possible.
 
         Subclasses should call the superclass stop() method after doing any
         work themselves.
@@ -152,7 +152,7 @@ class Application(HasStrictTraits):
         return True
 
     def run(self):
-        """ Run the application.
+        """Run the application.
 
         Return
         ------
@@ -190,7 +190,7 @@ class Application(HasStrictTraits):
         return started and run and stopped
 
     def exit(self, force=False):
-        """ Exits the application.
+        """Exits the application.
 
         This method handles a request to shut down the application by the user,
         eg. from a menu.  If force is False, the application can potentially
@@ -224,7 +224,7 @@ class Application(HasStrictTraits):
     # Initialization utilities -----------------------------------------------
 
     def initialize_application_home(self):
-        """ Set up the home directory for the application
+        """Set up the home directory for the application
 
         This is where logs, preference files and other config files will be
         stored.
@@ -240,7 +240,7 @@ class Application(HasStrictTraits):
     # Main method -------------------------------------------------------------
 
     def _run(self):
-        """ Actual implementation of running the application
+        """Actual implementation of running the application
 
         This should be completely overriden by applications which want to
         actually do something.  Usually this method starts an event loop and
@@ -263,7 +263,7 @@ class Application(HasStrictTraits):
     # Destruction methods -----------------------------------------------------
 
     def _can_exit(self):
-        """ Is exit vetoed by anything?
+        """Is exit vetoed by anything?
 
         The default behaviour is to fire the :py:attr:`exiting` event and check
         to see if any listeners veto.  Subclasses may wish to override to
@@ -278,14 +278,14 @@ class Application(HasStrictTraits):
         return not event.veto
 
     def _prepare_exit(self):
-        """ Do any application-level state saving and clean-up
+        """Do any application-level state saving and clean-up
 
         Subclasses should override this method.
         """
         pass
 
     def _exit(self):
-        """ Shut down the application
+        """Shut down the application
 
         This is where application event loops and similar should be shut down.
         """
@@ -295,31 +295,31 @@ class Application(HasStrictTraits):
     # Traits defaults ---------------------------------------------------------
 
     def _id_default(self):
-        """ Use the application's directory as the id """
+        """Use the application's directory as the id"""
         from traits.etsconfig.api import ETSConfig
 
         return ETSConfig._get_application_dirname()
 
     def _home_default(self):
-        """ Default home comes from ETSConfig. """
+        """Default home comes from ETSConfig."""
         from traits.etsconfig.api import ETSConfig
 
         return os.path.join(ETSConfig.application_data, self.id)
 
     def _user_data_default(self):
-        """ Default user_data comes from ETSConfig. """
+        """Default user_data comes from ETSConfig."""
         from traits.etsconfig.api import ETSConfig
 
         return ETSConfig.user_data
 
     def _company_default(self):
-        """ Default company comes from ETSConfig. """
+        """Default company comes from ETSConfig."""
         from traits.etsconfig.api import ETSConfig
 
         return ETSConfig.company
 
     def _description_default(self):
-        """ Default description is the docstring of the application class. """
+        """Default description is the docstring of the application class."""
         from inspect import getdoc
 
         text = getdoc(self)

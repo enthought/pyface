@@ -37,7 +37,7 @@ class ToolPalette(Widget):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
-        """ Creates a new tool palette. """
+        """Creates a new tool palette."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -52,7 +52,7 @@ class ToolPalette(Widget):
     # ------------------------------------------------------------------------
 
     def add_tool(self, label, bmp, kind, tooltip, longtip):
-        """ Add a tool with the specified properties to the palette.
+        """Add a tool with the specified properties to the palette.
 
         Return an id that can be used to reference this tool in the future.
         """
@@ -60,7 +60,7 @@ class ToolPalette(Widget):
         return 1
 
     def toggle_tool(self, id, checked):
-        """ Toggle the tool identified by 'id' to the 'checked' state.
+        """Toggle the tool identified by 'id' to the 'checked' state.
 
         If the button is a toggle or radio button, the button will be checked
         if the 'checked' parameter is True; unchecked otherwise.  If the button
@@ -68,16 +68,16 @@ class ToolPalette(Widget):
         """
 
     def enable_tool(self, id, enabled):
-        """ Enable or disable the tool identified by 'id'. """
+        """Enable or disable the tool identified by 'id'."""
 
     def on_tool_event(self, id, callback):
-        """ Register a callback for events on the tool identified by 'id'. """
+        """Register a callback for events on the tool identified by 'id'."""
 
     def realize(self):
-        """ Realize the control so that it can be displayed. """
+        """Realize the control so that it can be displayed."""
 
     def get_tool_state(self, id):
-        """ Get the toggle state of the tool identified by 'id'. """
+        """Get the toggle state of the tool identified by 'id'."""
         state = 0
 
         return state

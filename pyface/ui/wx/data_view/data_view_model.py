@@ -11,7 +11,8 @@
 import logging
 
 from pyface.data_view.data_view_errors import (
-    DataViewGetError, DataViewSetError
+    DataViewGetError,
+    DataViewSetError,
 )
 from pyface.data_view.index_manager import Root
 from wx.dataview import DataViewItem, DataViewModel as wxDataViewModel
@@ -22,8 +23,9 @@ logger = logging.getLogger(__name__)
 
 # XXX This file is scaffolding and may need to be rewritten or expanded
 
+
 class DataViewModel(wxDataViewModel):
-    """ A wxDataViewModel that understands AbstractDataModels. """
+    """A wxDataViewModel that understands AbstractDataModels."""
 
     def __init__(self, model):
         super().__init__()
@@ -82,8 +84,8 @@ class DataViewModel(wxDataViewModel):
             for i, (top_row, bottom_row) in enumerate(zip(top, bottom)):
                 if top_row != bottom_row:
                     break
-            top = top[:i+1]
-            bottom = bottom[:i+1]
+            top = top[: i + 1]
+            bottom = bottom[: i + 1]
 
             if top == bottom and left == right:
                 # single value change
@@ -95,7 +97,7 @@ class DataViewModel(wxDataViewModel):
                 # multiple item change
                 items = [
                     self._to_item(top[:i] + [row])
-                    for row in range(top[i], bottom[i]+1)
+                    for row in range(top[i], bottom[i] + 1)
                 ]
                 self.ItemsChanged(items)
 

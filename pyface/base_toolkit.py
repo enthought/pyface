@@ -86,7 +86,7 @@ default_priorities = lambda plugin: TOOLKIT_PRIORITIES.get(plugin.name, 0)
 
 
 class Toolkit(HasTraits):
-    """ A basic toolkit implementation for use by specific toolkits.
+    """A basic toolkit implementation for use by specific toolkits.
 
     This implementation uses pathname mangling to find modules and objects in
     those modules.  If an object can't be found, the toolkit will return a
@@ -108,7 +108,7 @@ class Toolkit(HasTraits):
         )
 
     def __call__(self, name):
-        """ Return the toolkit specific object with the given name.
+        """Return the toolkit specific object with the given name.
 
         Parameters
         ----------
@@ -154,7 +154,7 @@ class Toolkit(HasTraits):
         toolkit = self.toolkit
 
         class Unimplemented(object):
-            """ An unimplemented toolkit object
+            """An unimplemented toolkit object
 
             This is returned if an object isn't implemented by the selected
             toolkit.  It raises an exception if it is ever instantiated.
@@ -168,7 +168,7 @@ class Toolkit(HasTraits):
 
 
 def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
-    """ Attempt to import an toolkit specified by an entry point.
+    """Attempt to import an toolkit specified by an entry point.
 
     Parameters
     ----------
@@ -230,7 +230,7 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
 
 
 def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
-    """ Find a toolkit that works.
+    """Find a toolkit that works.
 
     If ETSConfig is set, then attempt to find a matching toolkit.  Otherwise
     try every plugin for the entry_point until one works.  The ordering of the
@@ -267,12 +267,14 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
     all_entry_points = importlib_metadata.entry_points()
     if hasattr(all_entry_points, "select"):
         entry_points = [
-            plugin for plugin in all_entry_points.select(group=entry_point)
+            plugin
+            for plugin in all_entry_points.select(group=entry_point)
             if toolkits is None or plugin.name in toolkits
         ]
     else:
         entry_points = [
-            plugin for plugin in all_entry_points[entry_point]
+            plugin
+            for plugin in all_entry_points[entry_point]
             if toolkits is None or plugin.name in toolkits
         ]
 

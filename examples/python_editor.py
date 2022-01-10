@@ -25,14 +25,14 @@ from pyface.toolkit import toolkit_object
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -98,7 +98,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create the editor. """
+        """Create the editor."""
 
         self._editor = PythonEditor(parent)
 
@@ -109,7 +109,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def on_open_file(self):
-        """ Open a new file. """
+        """Open a new file."""
 
         if self.control:
             dlg = FileDialog(parent=self.control, wildcard="*.py")
@@ -118,7 +118,7 @@ class MainWindow(ApplicationWindow):
                 self._editor.path = dlg.path
 
     def on_save_file(self):
-        """ Save the file. """
+        """Save the file."""
 
         if self.control:
             try:

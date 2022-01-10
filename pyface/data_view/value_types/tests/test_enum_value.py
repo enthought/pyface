@@ -16,7 +16,6 @@ from pyface.data_view.value_types.enum_value import EnumValue
 
 
 class TestEnumValue(TestCase):
-
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1)

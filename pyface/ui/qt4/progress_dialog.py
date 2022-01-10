@@ -15,7 +15,15 @@ import time
 from pyface.qt import QtGui, QtCore
 
 from traits.api import (
-    Any, Bool, Callable, Instance, Int, List, Str, provides, Tuple
+    Any,
+    Bool,
+    Callable,
+    Instance,
+    Int,
+    List,
+    Str,
+    provides,
+    Tuple,
 )
 
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
@@ -24,9 +32,7 @@ from .window import Window
 
 @provides(IProgressDialog)
 class ProgressDialog(MProgressDialog, Window):
-    """ A simple progress dialog window which allows itself to be updated
-
-    """
+    """A simple progress dialog window which allows itself to be updated"""
 
     # FIXME: buttons are not set up correctly yet
 
@@ -95,12 +101,12 @@ class ProgressDialog(MProgressDialog, Window):
     # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window. """
+        """Opens the window."""
         super().open()
         self._start_time = time.time()
 
     def close(self):
-        """ Closes the window. """
+        """Closes the window."""
         self.progress_bar.destroy()
         self.progress_bar = None
 
@@ -122,7 +128,7 @@ class ProgressDialog(MProgressDialog, Window):
     # -------------------------------------------------------------------------
 
     def update(self, value):
-        """ Update the progress bar to the desired value
+        """Update the progress bar to the desired value
 
         If the value is >= the maximum and the progress bar is not contained
         in another panel the parent window will be closed.
@@ -183,7 +189,7 @@ class ProgressDialog(MProgressDialog, Window):
         control.setText(label)
 
     def _create_buttons(self, dialog, layout):
-        """ Creates the buttons. """
+        """Creates the buttons."""
 
         if not (self.can_cancel or self.can_ok):
             return

@@ -15,8 +15,16 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.version import version
 
 from pyface.data_view.data_formats import (
-    from_csv, from_csv_column, from_csv_row, from_npy, from_json,
-    to_csv, to_csv_column, to_csv_row, to_npy, to_json,
+    from_csv,
+    from_csv_column,
+    from_csv_row,
+    from_npy,
+    from_json,
+    to_csv,
+    to_csv_column,
+    to_csv_row,
+    to_npy,
+    to_json,
 )
 
 
@@ -37,7 +45,6 @@ class ExampleObject(HasTraits):
 
 
 class TestJSON(TestCase):
-
     def test_to_json(self):
         test_data = {'a': 1, 'b': 'two'}
 
@@ -54,7 +61,7 @@ class TestJSON(TestCase):
             raw_data,
             b'{"a":1,"b":"two","__traits_version__":"'
             + version.encode('utf-8')
-            + b'"}'
+            + b'"}',
         )
 
     def test_from_json(self):
@@ -80,7 +87,6 @@ class TestJSON(TestCase):
 
 
 class TestCSV(TestCase):
-
     def test_to_csv(self):
         test_data = [['one', 2], ['three,four', 5]]
 
@@ -210,7 +216,6 @@ class TestCSV(TestCase):
 
 @requires_numpy
 class TestNpy(TestCase):
-
     def test_to_npy(self):
         data = np.array([[1, 2, 3], [4, 5, 6]], dtype='uint8')
 
@@ -219,7 +224,7 @@ class TestNpy(TestCase):
         self.assertEqual(
             raw_data,
             b"\x93NUMPY\x01\x00v\x00{'descr': '|u1', 'fortran_order': False, 'shape': (2, 3), }                                                          \n"  # noqa: E501
-            + b"\x01\x02\x03\x04\x05\x06"
+            + b"\x01\x02\x03\x04\x05\x06",
         )
 
     def test_from_npy(self):
@@ -231,6 +236,5 @@ class TestNpy(TestCase):
         data = from_npy(raw_data)
 
         np.testing.assert_array_equal(
-            data,
-            np.array([[1, 2, 3], [4, 5, 6]], dtype='uint8')
+            data, np.array([[1, 2, 3], [4, 5, 6]], dtype='uint8')
         )

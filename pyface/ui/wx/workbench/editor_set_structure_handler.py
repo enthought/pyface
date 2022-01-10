@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class EditorSetStructureHandler(SetStructureHandler):
-    """ The handler used to restore editors.
+    """The handler used to restore editors.
 
     This is part of the 'dock window' API. It is used to resolve dock control
     Ids when setting the structure of a dock window.
@@ -35,7 +35,7 @@ class EditorSetStructureHandler(SetStructureHandler):
     # ------------------------------------------------------------------------
 
     def __init__(self, window_layout, editor_mementos):
-        """ Creates a new handler. """
+        """Creates a new handler."""
 
         self.window_layout = window_layout
         self.editor_mementos = editor_mementos
@@ -47,7 +47,7 @@ class EditorSetStructureHandler(SetStructureHandler):
     # ------------------------------------------------------------------------
 
     def resolve_id(self, id):
-        """ Resolves an unresolved dock control id. """
+        """Resolves an unresolved dock control id."""
 
         window_layout = self.window_layout
         window = window_layout.window
@@ -80,7 +80,7 @@ class EditorSetStructureHandler(SetStructureHandler):
     # ------------------------------------------------------------------------
 
     def _get_editor_memento(self, id):
-        """ Return the editor memento for the editor with the specified Id.
+        """Return the editor memento for the editor with the specified Id.
 
         Raises a 'ValueError' if no such memento exists.
 

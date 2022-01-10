@@ -24,7 +24,7 @@ from file_tree import FileTree
 
 
 class MainWindow(SplitApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'SplitApplicationWindow' interface -----------------------------------
 
@@ -39,7 +39,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
-        """ Creates the left hand side or top depending on the split. """
+        """Creates the left hand side or top depending on the split."""
 
         self._expandable = expandable = ExpandablePanel(parent, create=False)
         self._expandable.create()
@@ -51,7 +51,7 @@ class MainWindow(SplitApplicationWindow):
         return expandable.control
 
     def _create_rhs(self, parent):
-        """ Creates the right hand side or bottom depending on the split. """
+        """Creates the right hand side or bottom depending on the split."""
 
         widget = self._expandable
 
@@ -66,7 +66,7 @@ class MainWindow(SplitApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_content(self, parent):
-        """ Create some context for an expandable panel. """
+        """Create some context for an expandable panel."""
 
         tree = FileTree(parent, root=os.path.abspath(os.curdir))
 

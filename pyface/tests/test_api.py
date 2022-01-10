@@ -14,22 +14,22 @@ import unittest
 
 from traits.etsconfig.api import ETSConfig
 
-is_wx = (ETSConfig.toolkit == 'wx')
+is_wx = ETSConfig.toolkit == 'wx'
 is_qt = ETSConfig.toolkit.startswith('qt')
 
 
 class TestApi(unittest.TestCase):
-    """ Test importable items in any environment."""
+    """Test importable items in any environment."""
 
     def test_api_importable(self):
         # make sure api is importable with the most minimal
         # required dependencies, including in the absence of toolkit backends.
-        from pyface import api   # noqa: F401
+        from pyface import api  # noqa: F401
 
 
 @unittest.skipIf(not is_qt, "This test is for qt.")
 class TestApiQt(unittest.TestCase):
-    """ Test importable items in a Qt environment."""
+    """Test importable items in a Qt environment."""
 
     def test_importable_items_minimal(self):
         # Test items should be importable in a minimal Qt environment
@@ -37,7 +37,7 @@ class TestApiQt(unittest.TestCase):
         # will fail in an environment without pygments will fail, just as it
         # would if these items were imported directly from the corresponding
         # subpackages.
-        from pyface.api import (   # noqa: F401
+        from pyface.api import (  # noqa: F401
             AboutDialog,
             Alignment,
             Application,
@@ -96,11 +96,11 @@ class TestApiQt(unittest.TestCase):
         # If pygments is in the environment, PythonEditor and PythonShell
         # should be importable.
         try:
-            import pygments        # noqa: F401
+            import pygments  # noqa: F401
         except ImportError:
             raise self.skipTest("This test requires pygments.")
 
-        from pyface.api import (   # noqa: F401
+        from pyface.api import (  # noqa: F401
             PythonEditor,
             PythonShell,
         )
@@ -108,11 +108,11 @@ class TestApiQt(unittest.TestCase):
 
 @unittest.skipIf(not is_wx, "This test is for wx.")
 class TestApiWx(unittest.TestCase):
-    """ Test importable items in a wx environment."""
+    """Test importable items in a wx environment."""
 
     def test_importable_items(self):
         # These items should always be importable for wx environment
-        from pyface.api import (   # noqa: F401
+        from pyface.api import (  # noqa: F401
             AboutDialog,
             Alignment,
             Application,

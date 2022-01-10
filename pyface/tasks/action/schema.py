@@ -44,8 +44,7 @@ SubSchema = Union(
 
 
 class Schema(HasTraits):
-    """ The abstract base class for all Tasks action schemas.
-    """
+    """The abstract base class for all Tasks action schemas."""
 
     #: The schema's identifier (unique within its parent schema).
     id = Str()
@@ -58,20 +57,19 @@ class Schema(HasTraits):
     items = List(SubSchema)
 
     def __init__(self, *items, **traits):
-        """ Creates a new schema.
-        """
+        """Creates a new schema."""
         super().__init__(**traits)
         self.items.extend(items)
 
     def create(self, children):
-        """ Create the appropriate pyface.action instance with the specified
-            child items.
+        """Create the appropriate pyface.action instance with the specified
+        child items.
         """
         raise NotImplementedError()
 
 
 class ActionSchema(Schema):
-    """ Action schema for Pyface Actions.
+    """Action schema for Pyface Actions.
 
     An action schema cannot have children. It is used as an action factory
     to make sure a larger schema (e.g., a menu schema) can be used multiple
@@ -92,15 +90,14 @@ class ActionSchema(Schema):
         return []
 
     def create(self, children):
-        """ Create the appropriate Pyface Action instance. """
+        """Create the appropriate Pyface Action instance."""
 
         traits = dict(id=self.id)
         return self.action_factory(**traits)
 
 
 class GroupSchema(Schema):
-    """ A schema for a Pyface Group.
-    """
+    """A schema for a Pyface Group."""
 
     #: A factory for instantiating a pyface Group.
     group_factory = Callable(Group)
@@ -114,8 +111,7 @@ class GroupSchema(Schema):
 
 
 class MenuSchema(Schema):
-    """ A schema for a Pyface MenuManager.
-    """
+    """A schema for a Pyface MenuManager."""
 
     #: The menu's user visible name.
     name = Str()
@@ -137,8 +133,7 @@ class MenuSchema(Schema):
 
 
 class MenuBarSchema(Schema):
-    """ A schema for a Pyface MenuBarManager.
-    """
+    """A schema for a Pyface MenuBarManager."""
 
     #: Assign a default ID for menu bar schemas.
     id = "MenuBar"
@@ -152,8 +147,7 @@ class MenuBarSchema(Schema):
 
 
 class ToolBarSchema(Schema):
-    """ A schema for a Pyface ToolBarManager.
-    """
+    """A schema for a Pyface ToolBarManager."""
 
     #: Assign a default ID for tool bar schemas.
     id = "ToolBar"

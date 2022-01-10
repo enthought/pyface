@@ -5,7 +5,7 @@ from color_view import ColorView
 
 
 class GreenView(ColorView):
-    """ A view containing a green panel! """
+    """A view containing a green panel!"""
 
     # 'IView' interface ----------------------------------------------------
 

@@ -58,7 +58,7 @@ class CommandAction(Action):
         self.command_stack.push(self.command(data=self.data))
 
     def _name_default(self):
-        """ This gets the action name from the command. """
+        """This gets the action name from the command."""
 
         if self.command:
             name = self.command().name

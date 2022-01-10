@@ -25,7 +25,7 @@ from traits.api import (
 
 # The classes below are part of the table specification.
 class GridRow(HasTraits):
-    """ Structure for holding row/column specifications. """
+    """Structure for holding row/column specifications."""
 
     # Is the data in this column read-only?
     read_only = Bool(False)
@@ -40,13 +40,13 @@ GridColumn = GridRow
 
 
 class GridSortData(HasTraits):
-    """ An event that signals a sorting has taken place.
+    """An event that signals a sorting has taken place.
 
-        The index attribute should be set to the row or column
-        on which the data was sorted. An index of -1 indicates that
-        no sort has been applied (or a previous sort has been unapplied).
-        The reversed flag indicates that the sort has been done in reverse
-        order. """
+    The index attribute should be set to the row or column
+    on which the data was sorted. An index of -1 indicates that
+    no sort has been applied (or a previous sort has been unapplied).
+    The reversed flag indicates that the sort has been done in reverse
+    order."""
 
     index = Int(-1)
     reversed = Bool(False)
@@ -57,7 +57,7 @@ GridSortEvent = GridSortData
 
 
 class GridModel(HasPrivateTraits):
-    """ Model for grid views. """
+    """Model for grid views."""
 
     # 'GridModel' interface ------------------------------------------------
 
@@ -95,29 +95,29 @@ class GridModel(HasPrivateTraits):
     # ------------------------------------------------------------------------
 
     def get_column_count(self):
-        """ Return the number of columns for this table. """
+        """Return the number of columns for this table."""
         raise NotImplementedError()
 
     def get_column_name(self, index):
-        """ Return the name of the column specified by the
-        (zero-based) index. """
+        """Return the name of the column specified by the
+        (zero-based) index."""
         raise NotImplementedError()
 
     def get_row_count(self):
-        """ Return the number of rows for this table. """
+        """Return the number of rows for this table."""
         raise NotImplementedError()
 
     def get_row_name(self, index):
-        """ Return the name of the row specified by the
-        (zero-based) index. """
+        """Return the name of the row specified by the
+        (zero-based) index."""
         raise NotImplementedError()
 
     def get_value(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
         raise NotImplementedError()
 
     def is_cell_empty(self, row, col):
-        """ Returns True if the cell at (row, col) has a None value,
+        """Returns True if the cell at (row, col) has a None value,
         False otherwise."""
         raise NotImplementedError()
 
@@ -126,14 +126,14 @@ class GridModel(HasPrivateTraits):
     # ------------------------------------------------------------------------
 
     def get_cols_drag_value(self, cols):
-        """ Return the value to use when the specified columns are dragged or
-        copied and pasted. cols is a list of column indexes. """
+        """Return the value to use when the specified columns are dragged or
+        copied and pasted. cols is a list of column indexes."""
         pass
 
     def get_cols_selection_value(self, cols):
-        """ Return the value to use when the specified cols are selected.
+        """Return the value to use when the specified cols are selected.
         This value should be enough to specify to other listeners what is
-        going on in the grid. rows is a list of row indexes. """
+        going on in the grid. rows is a list of row indexes."""
 
         cols_data = []
         row_count = self.get_row_count()
@@ -147,40 +147,40 @@ class GridModel(HasPrivateTraits):
         return cols_data
 
     def get_column_context_menu(self, col):
-        """ Return a MenuManager object that will generate the appropriate
+        """Return a MenuManager object that will generate the appropriate
         context menu for this column."""
 
         pass
 
     def get_column_size(self, col):
-        """ Return the size in pixels of the column indexed by col.
-            A value of -1 or None means use the default. """
+        """Return the size in pixels of the column indexed by col.
+        A value of -1 or None means use the default."""
 
         return None
 
     def sort_by_column(self, col, reverse=False):
-        """ Sort model data by the column indexed by col. The reverse flag
-        indicates that the sort should be done in reverse. """
+        """Sort model data by the column indexed by col. The reverse flag
+        indicates that the sort should be done in reverse."""
         pass
 
     def no_column_sort(self):
-        """ Turn off any column sorting of the model data. """
+        """Turn off any column sorting of the model data."""
         raise NotImplementedError()
 
     def is_column_read_only(self, index):
-        """ Return True if the column specified by the zero-based index
-        is read-only. """
+        """Return True if the column specified by the zero-based index
+        is read-only."""
         return False
 
     def get_rows_drag_value(self, rows):
-        """ Return the value to use when the specified rows are dragged or
-        copied and pasted. rows is a list of row indexes. """
+        """Return the value to use when the specified rows are dragged or
+        copied and pasted. rows is a list of row indexes."""
         pass
 
     def get_rows_selection_value(self, rows):
-        """ Return the value to use when the specified rows are selected.
+        """Return the value to use when the specified rows are selected.
         This value should be enough to specify to other listeners what is
-        going on in the grid. rows is a list of row indexes. """
+        going on in the grid. rows is a list of row indexes."""
 
         rows_data = []
         column_count = self.get_column_count()
@@ -194,60 +194,60 @@ class GridModel(HasPrivateTraits):
         return rows_data
 
     def get_row_context_menu(self, row):
-        """ Return a MenuManager object that will generate the appropriate
+        """Return a MenuManager object that will generate the appropriate
         context menu for this row."""
         pass
 
     def get_row_size(self, row):
-        """ Return the size in pixels of the row indexed by 'row'.
-            A value of -1 or None means use the default. """
+        """Return the size in pixels of the row indexed by 'row'.
+        A value of -1 or None means use the default."""
 
         return None
 
     def sort_by_row(self, row, reverse=False):
-        """ Sort model data by the data row indexed by row. The reverse flag
-        indicates that the sort should be done in reverse. """
+        """Sort model data by the data row indexed by row. The reverse flag
+        indicates that the sort should be done in reverse."""
         pass
 
     def no_row_sort(self):
-        """ Turn off any row sorting of the model data. """
+        """Turn off any row sorting of the model data."""
         raise NotImplementedError()
 
     def is_row_read_only(self, index):
-        """ Return True if the row specified by the zero-based index
-        is read-only. """
+        """Return True if the row specified by the zero-based index
+        is read-only."""
         return False
 
     def get_type(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
         raise NotImplementedError()
 
     def get_cell_drag_value(self, row, col):
-        """ Return the value to use when the specified cell is dragged or
-        copied and pasted. """
+        """Return the value to use when the specified cell is dragged or
+        copied and pasted."""
 
         # by default we just use the cell value
         return self.get_value(row, col)
 
     def get_cell_selection_value(self, row, col):
-        """ Return the value stored in the table at (row, col). """
+        """Return the value stored in the table at (row, col)."""
         pass
 
     def get_cell_editor(self, row, col):
-        """ Return the editor for the specified cell. """
+        """Return the editor for the specified cell."""
         return None
 
     def get_cell_renderer(self, row, col):
-        """ Return the renderer for the specified cell. """
+        """Return the renderer for the specified cell."""
         return None
 
     def resolve_selection(self, selection_list):
-        """ Returns a list of (row, col) grid-cell coordinates that
+        """Returns a list of (row, col) grid-cell coordinates that
         correspond to the objects in selection_list. For each coordinate, if
         the row is -1 it indicates that the entire column is selected. Likewise
         coordinates with a column of -1 indicate an entire row that is
         selected. Note that the objects in selection_list are
-        model-specific. """
+        model-specific."""
 
         return selection_list
 
@@ -256,18 +256,18 @@ class GridModel(HasPrivateTraits):
     # this is how the tree control does it, however, so we're duplicating
     # that here.
     def get_cell_context_menu(self, row, col):
-        """ Return a MenuManager object that will generate the appropriate
+        """Return a MenuManager object that will generate the appropriate
         context menu for this cell."""
 
         pass
 
     def is_valid_cell_value(self, row, col, value):
-        """ Tests whether value is valid for the cell at row, col. Returns
-            True if value is acceptable, False otherwise. """
+        """Tests whether value is valid for the cell at row, col. Returns
+        True if value is acceptable, False otherwise."""
         return False
 
     def set_value(self, row, col, value):
-        """ Sets the value of the cell at (row, col) to value.
+        """Sets the value of the cell at (row, col) to value.
 
         Raises a ValueError if the value is vetoed.
 
@@ -288,39 +288,39 @@ class GridModel(HasPrivateTraits):
         self.fire_content_changed()
 
     def is_cell_read_only(self, row, col):
-        """ Returns True if the cell at (row, col) is not editable,
-        False otherwise. """
+        """Returns True if the cell at (row, col) is not editable,
+        False otherwise."""
         return False
 
     def get_cell_bg_color(self, row, col):
-        """ Return a wxColour object specifying what the background color
-            of the specified cell should be. """
+        """Return a wxColour object specifying what the background color
+        of the specified cell should be."""
         return None
 
     def get_cell_text_color(self, row, col):
-        """ Return a wxColour object specifying what the text color
-            of the specified cell should be. """
+        """Return a wxColour object specifying what the text color
+        of the specified cell should be."""
         return None
 
     def get_cell_font(self, row, col):
-        """ Return a wxFont object specifying what the font
-            of the specified cell should be. """
+        """Return a wxFont object specifying what the font
+        of the specified cell should be."""
         return None
 
     def get_cell_halignment(self, row, col):
-        """ Return a string specifying what the horizontal alignment
-            of the specified cell should be.
+        """Return a string specifying what the horizontal alignment
+        of the specified cell should be.
 
-            Return 'left' for left alignment, 'right' for right alignment,
-            or 'center' for center alignment. """
+        Return 'left' for left alignment, 'right' for right alignment,
+        or 'center' for center alignment."""
         return None
 
     def get_cell_valignment(self, row, col):
-        """ Return a string specifying what the vertical alignment
-            of the specified cell should be.
+        """Return a string specifying what the vertical alignment
+        of the specified cell should be.
 
-            Return 'top' for top alignment, 'bottom' for bottom alignment,
-            or 'center' for center alignment. """
+        Return 'top' for top alignment, 'bottom' for bottom alignment,
+        or 'center' for center alignment."""
         return None
 
     # ------------------------------------------------------------------------
@@ -328,19 +328,19 @@ class GridModel(HasPrivateTraits):
     # ------------------------------------------------------------------------
 
     def fire_content_changed(self):
-        """ Fires the appearance changed event. """
+        """Fires the appearance changed event."""
 
         self.content_changed = "changed"
 
     def fire_structure_changed(self):
-        """ Fires the appearance changed event. """
+        """Fires the appearance changed event."""
 
         self.structure_changed = "changed"
 
     def delete_rows(self, pos, num_rows):
-        """ Removes rows pos through pos + num_rows from the model.
+        """Removes rows pos through pos + num_rows from the model.
         Subclasses should not override this method, but should override
-        _delete_rows instead. """
+        _delete_rows instead."""
 
         deleted = self._delete_rows(pos, num_rows)
 
@@ -350,9 +350,9 @@ class GridModel(HasPrivateTraits):
         return True
 
     def insert_rows(self, pos, num_rows):
-        """ Inserts rows at pos through pos + num_rows into the model.
+        """Inserts rows at pos through pos + num_rows into the model.
         Subclasses should not override this method, but should override
-        _insert_rows instead. """
+        _insert_rows instead."""
 
         inserted = self._insert_rows(pos, num_rows)
 
@@ -362,9 +362,9 @@ class GridModel(HasPrivateTraits):
         return True
 
     def delete_columns(self, pos, num_cols):
-        """ Removes columns pos through pos + num_cols from the model.
+        """Removes columns pos through pos + num_cols from the model.
         Subclasses should not override this method, but should override
-        _delete_columns instead. """
+        _delete_columns instead."""
 
         deleted = self._delete_columns(pos, num_cols)
 
@@ -374,9 +374,9 @@ class GridModel(HasPrivateTraits):
         return True
 
     def insert_columns(self, pos, num_cols):
-        """ Inserts columns at pos through pos + num_cols into the model.
+        """Inserts columns at pos through pos + num_cols into the model.
         Subclasses should not override this method, but should override
-        _insert_columns instead. """
+        _insert_columns instead."""
 
         inserted = self._insert_columns(pos, num_cols)
 
@@ -391,43 +391,43 @@ class GridModel(HasPrivateTraits):
     #                                    specific actions.
     # ------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
-        """ Implementation method for delete_rows. Should return the
-        number of rows that were deleted. """
+        """Implementation method for delete_rows. Should return the
+        number of rows that were deleted."""
 
         pass
 
     def _insert_rows(self, pos, num_rows):
-        """ Implementation method for insert_rows. Should return the
-        number of rows that were inserted. """
+        """Implementation method for insert_rows. Should return the
+        number of rows that were inserted."""
 
         pass
 
     def _delete_columns(self, pos, num_cols):
-        """ Implementation method for delete_cols. Should return the
-        number of columns that were deleted. """
+        """Implementation method for delete_cols. Should return the
+        number of columns that were deleted."""
 
         pass
 
     def _insert_columns(self, pos, num_cols):
-        """ Implementation method for insert_columns. Should return the
-        number of columns that were inserted. """
+        """Implementation method for insert_columns. Should return the
+        number of columns that were inserted."""
 
         pass
 
     def _set_value(self, row, col, value):
-        """ Implementation method for set_value. Should return the
-        number of rows or columns, if any, that were appended. """
+        """Implementation method for set_value. Should return the
+        number of rows or columns, if any, that were appended."""
 
         pass
 
     def _move_column(self, frm, to):
-        """ Moves a specified **frm** column to before the specified **to**
+        """Moves a specified **frm** column to before the specified **to**
         column. Returns **True** if successful; **False** otherwise.
         """
         return False
 
     def _move_row(self, frm, to):
-        """ Moves a specified **frm** row to before the specified **to** row.
+        """Moves a specified **frm** row to before the specified **to** row.
         Returns **True** if successful; **False** otherwise.
         """
         return False

@@ -25,8 +25,7 @@ from pyface.tasks.i_dock_pane import IDockPane
 
 
 class DockPaneToggleAction(Action):
-    """ An Action for toggling the visibility of a dock pane.
-    """
+    """An Action for toggling the visibility of a dock pane."""
 
     # 'DockPaneToggleAction' interface -------------------------------------
 
@@ -78,8 +77,7 @@ class DockPaneToggleAction(Action):
 
 
 class DockPaneToggleGroup(Group):
-    """ A Group for toggling the visibility of a task's dock panes.
-    """
+    """A Group for toggling the visibility of a task's dock panes."""
 
     # 'Group' interface ----------------------------------------------------
 
@@ -121,8 +119,7 @@ class DockPaneToggleGroup(Group):
 
     @observe("dock_panes.items")
     def _dock_panes_updated(self, event):
-        """Recreate the group items when dock panes have been added/removed.
-        """
+        """Recreate the group items when dock panes have been added/removed."""
 
         # Remove the previous group items.
         self.destroy()

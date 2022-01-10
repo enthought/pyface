@@ -17,7 +17,7 @@ from traitsui.api import View, Item
 
 
 class Person(HasTraits):
-    """ Model class representing a person """
+    """Model class representing a person"""
 
     #: the name of the person
     name = Str()
@@ -38,7 +38,7 @@ class Person(HasTraits):
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # 'IWindow' interface --------------------------------------------------
 
@@ -56,7 +56,7 @@ class MainWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create the editor. """
+        """Create the editor."""
         self._ui = self.person.edit_traits(kind="panel", parent=parent)
         return self._ui.control
 

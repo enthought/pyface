@@ -33,7 +33,7 @@ _STYLE_TO_KIND_MAP = {
 
 
 class _MenuItem(HasTraits):
-    """ A menu item representation of an action item. """
+    """A menu item representation of an action item."""
 
     # '_MenuItem' interface ------------------------------------------------
 
@@ -58,7 +58,7 @@ class _MenuItem(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
-        """ Creates a new menu item for an action item. """
+        """Creates a new menu item for an action item."""
 
         self.item = item
 
@@ -147,17 +147,17 @@ class _MenuItem(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
-        """ Called when our 'enabled' trait is changed. """
+        """Called when our 'enabled' trait is changed."""
 
         self.control.Enable(self.enabled and self.visible)
 
     def _visible_changed(self):
-        """ Called when our 'visible' trait is changed. """
+        """Called when our 'visible' trait is changed."""
 
         self.control.Enable(self.visible and self.enabled)
 
     def _checked_changed(self):
-        """ Called when our 'checked' trait is changed. """
+        """Called when our 'checked' trait is changed."""
 
         if self.item.action.style == "radio":
             # fixme: Not sure why this is even here, we had to guard it to
@@ -178,17 +178,17 @@ class _MenuItem(HasTraits):
         self.control.Check(self.checked)
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         self.control.Enable(action.enabled and action.visible)
 
     def _on_action_visible_changed(self, event):
-        """ Called when the visible trait is changed on an action. """
+        """Called when the visible trait is changed on an action."""
         action = event.object
         self.control.Enable(action.visible and action.enabled)
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if self.item.action.style == "radio":
             # fixme: Not sure why this is even here, we had to guard it to
@@ -212,7 +212,7 @@ class _MenuItem(HasTraits):
         self._skip_menu_event = False
 
     def _on_action_name_changed(self, event):
-        """ Called when the name trait is changed on an action. """
+        """Called when the name trait is changed on an action."""
         action = event.object
         label = action.name
         if len(action.accelerator) > 0:
@@ -220,7 +220,7 @@ class _MenuItem(HasTraits):
         self.control.SetText(label)
 
     def _on_action_image_changed(self, event):
-        """ Called when the name trait is changed on an action. """
+        """Called when the name trait is changed on an action."""
         action = event.object
         if self.control is not None:
             self.control.SetIcon(action.image.create_icon())
@@ -230,7 +230,7 @@ class _MenuItem(HasTraits):
     # wx event handlers ----------------------------------------------------
 
     def _on_menu(self, event):
-        """ Called when the menu item is clicked. """
+        """Called when the menu item is clicked."""
 
         # if the ugly flag is set, do not perform the menu event
         if self._skip_menu_event:
@@ -283,7 +283,7 @@ class _MenuItem(HasTraits):
 
 
 class _Tool(HasTraits):
-    """ A tool bar tool representation of an action item. """
+    """A tool bar tool representation of an action item."""
 
     # '_Tool' interface ----------------------------------------------------
 
@@ -310,7 +310,7 @@ class _Tool(HasTraits):
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
     ):
-        """ Creates a new tool bar tool for an action item. """
+        """Creates a new tool bar tool for an action item."""
 
         self.item = item
         self.tool_bar = tool_bar
@@ -409,7 +409,7 @@ class _Tool(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
-        """ Called when our 'enabled' trait is changed. """
+        """Called when our 'enabled' trait is changed."""
 
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.EnableTool(self.control_id, self.enabled)
@@ -419,7 +419,7 @@ class _Tool(HasTraits):
             )
 
     def _visible_changed(self):
-        """ Called when our 'visible' trait is changed. """
+        """Called when our 'visible' trait is changed."""
 
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.ShowTool(self.control_id, self.visible)
@@ -429,7 +429,7 @@ class _Tool(HasTraits):
             )
 
     def _checked_changed(self):
-        """ Called when our 'checked' trait is changed. """
+        """Called when our 'checked' trait is changed."""
 
         if self.item.action.style == "radio":
             # FIXME v3: Note that toolbar_checked() doesn't seem to exist, so
@@ -447,7 +447,7 @@ class _Tool(HasTraits):
         self.tool_bar.ToggleTool(self.control_id, self.checked)
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.EnableTool(self.control_id, action.enabled)
@@ -457,7 +457,7 @@ class _Tool(HasTraits):
             )
 
     def _on_action_visible_changed(self, event):
-        """ Called when the visible trait is changed on an action. """
+        """Called when the visible trait is changed on an action."""
         action = event.object
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.ShowTool(self.control_id, action.visible)
@@ -467,7 +467,7 @@ class _Tool(HasTraits):
             )
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
@@ -486,7 +486,7 @@ class _Tool(HasTraits):
     # wx event handlers ----------------------------------------------------
 
     def _on_tool(self, event):
-        """ Called when the tool bar tool is clicked. """
+        """Called when the tool bar tool is clicked."""
 
         action = self.item.action
         action_event = ActionEvent()
@@ -531,7 +531,7 @@ class _Tool(HasTraits):
 
 
 class _PaletteTool(HasTraits):
-    """ A tool palette representation of an action item. """
+    """A tool palette representation of an action item."""
 
     # '_PaletteTool' interface ---------------------------------------------
 
@@ -544,7 +544,7 @@ class _PaletteTool(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
-        """ Creates a new tool palette tool for an action item. """
+        """Creates a new tool palette tool for an action item."""
 
         self.item = item
         self.tool_palette = tool_palette
@@ -601,12 +601,12 @@ class _PaletteTool(HasTraits):
     # Trait event handlers -------------------------------------------------
 
     def _on_action_enabled_changed(self, event):
-        """ Called when the enabled trait is changed on an action. """
+        """Called when the enabled trait is changed on an action."""
         action = event.object
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
     def _on_action_checked_changed(self, event):
-        """ Called when the checked trait is changed on an action. """
+        """Called when the checked trait is changed on an action."""
         action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
@@ -625,7 +625,7 @@ class _PaletteTool(HasTraits):
     # Tool palette event handlers -----------------------------------------#
 
     def _on_tool(self, event):
-        """ Called when the tool palette button is clicked. """
+        """Called when the tool palette button is clicked."""
 
         action = self.item.action
         action_event = ActionEvent()

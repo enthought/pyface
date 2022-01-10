@@ -15,8 +15,7 @@ from pyface.i_image import IImage
 
 
 class IPILImage(IImage):
-    """ The interface for a image that wraps a PIL Image.
-    """
+    """The interface for a image that wraps a PIL Image."""
 
     # 'IPILImage' interface --------------------------------------------
 
@@ -25,8 +24,7 @@ class IPILImage(IImage):
 
 
 class MPILImage(HasStrictTraits):
-    """ The base implementation mixin for a image that wraps a PIL Image.
-    """
+    """The base implementation mixin for a image that wraps a PIL Image."""
 
     # 'IPILImage' interface --------------------------------------------
 
@@ -37,7 +35,7 @@ class MPILImage(HasStrictTraits):
         super().__init__(image=image, **traits)
 
     def create_bitmap(self, size=None):
-        """ Creates a bitmap image for this image.
+        """Creates a bitmap image for this image.
 
         Parameters
         ----------
@@ -52,10 +50,11 @@ class MPILImage(HasStrictTraits):
             size.
         """
         from pyface.util.image_helpers import image_to_bitmap
+
         return image_to_bitmap(self.create_image(size))
 
     def create_icon(self, size=None):
-        """ Creates an icon for this image.
+        """Creates an icon for this image.
 
         Parameters
         ----------
@@ -70,4 +69,5 @@ class MPILImage(HasStrictTraits):
             size as an icon.
         """
         from pyface.util.image_helpers import bitmap_to_icon
+
         return bitmap_to_icon(self.create_bitmap(size))

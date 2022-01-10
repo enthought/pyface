@@ -18,8 +18,7 @@ from pyface.tasks.task_window import TaskWindow
 
 
 class TaskToggleAction(Action):
-    """ An action for activating a task.
-    """
+    """An action for activating a task."""
 
     # 'Action' interface ---------------------------------------------------
 
@@ -75,8 +74,7 @@ class TaskToggleAction(Action):
 
 
 class TaskToggleGroup(Group):
-    """ A menu for changing the active task in a task window.
-    """
+    """A menu for changing the active task in a task window."""
 
     # 'ActionManager' interface --------------------------------------------
 

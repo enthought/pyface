@@ -23,20 +23,17 @@ class GutterWidget(QtGui.QWidget):
         return QtCore.QSize(self.min_width, 0)
 
     def paintEvent(self, event):
-        """ Paint the line numbers.
-        """
+        """Paint the line numbers."""
         painter = QtGui.QPainter(self)
         painter.fillRect(event.rect(), QtCore.Qt.lightGray)
 
     def wheelEvent(self, event):
-        """ Delegate mouse wheel events to parent for seamless scrolling.
-        """
+        """Delegate mouse wheel events to parent for seamless scrolling."""
         self.parent().wheelEvent(event)
 
 
 class StatusGutterWidget(GutterWidget):
-    """ Draws status markers
-    """
+    """Draws status markers"""
 
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
@@ -49,8 +46,7 @@ class StatusGutterWidget(GutterWidget):
         return QtCore.QSize(10, 0)
 
     def paintEvent(self, event):
-        """ Paint the line numbers.
-        """
+        """Paint the line numbers."""
         painter = QtGui.QPainter(self)
         painter.fillRect(event.rect(), self.background_color)
 
@@ -78,8 +74,7 @@ class StatusGutterWidget(GutterWidget):
 
 
 class LineNumberWidget(GutterWidget):
-    """ Draw line numbers.
-    """
+    """Draw line numbers."""
 
     min_char_width = 4
 
@@ -101,7 +96,7 @@ class LineNumberWidget(GutterWidget):
         if QtCore.__version_info__ >= (5, 11):
             width = max(
                 self.fontMetrics().horizontalAdvance("0" * ndigits) + 3,
-                self.min_width
+                self.min_width,
             )
         else:
             width = max(
@@ -113,8 +108,7 @@ class LineNumberWidget(GutterWidget):
         return QtCore.QSize(self.digits_width(), 0)
 
     def paintEvent(self, event):
-        """ Paint the line numbers.
-        """
+        """Paint the line numbers."""
         painter = QtGui.QPainter(self)
         painter.setFont(self.font)
         painter.fillRect(event.rect(), self.background_color)

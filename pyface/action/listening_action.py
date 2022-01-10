@@ -23,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ListeningAction(Action):
-    """ An Action that listens and makes a callback to an object.
-    """
+    """An Action that listens and makes a callback to an object."""
 
     # ListeningAction interface ----------------------------------------------
 
@@ -49,7 +48,7 @@ class ListeningAction(Action):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        """ Called when the action is no longer required.
+        """Called when the action is no longer required.
 
         Removes all the task listeners.
         """
@@ -65,7 +64,7 @@ class ListeningAction(Action):
                 )
 
     def perform(self, event=None):
-        """ Call the appropriate function.
+        """Call the appropriate function.
 
         This looks for a method to call based on the extended method name
         stored in the :py:attr:`method` trait.  If the method is empty, then
@@ -83,7 +82,7 @@ class ListeningAction(Action):
     # -------------------------------------------------------------------------
 
     def _get_attr(self, obj, name, default=None):
-        """ Perform an extended look up of a dotted name. """
+        """Perform an extended look up of a dotted name."""
         try:
             for attr in name.split("."):
                 # Perform the access in the Trait name style: if the object is

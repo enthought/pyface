@@ -36,8 +36,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # 'TestCase' protocol -------------------------------------------------#
 
     def setUp(self):
-        """ Create some dummy actions to use while testing.
-        """
+        """Create some dummy actions to use while testing."""
         for i in range(1, 7):
             action_id = "action%i" % i
             setattr(
@@ -47,8 +46,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # 'ActionManagerBuilderTestCase' protocol -----------------------------#
 
     def assertActionElementsEqual(self, first, second):
-        """ Checks that two action managers are (logically) equivalent.
-        """
+        """Checks that two action managers are (logically) equivalent."""
         children1 = children2 = []
         self.assertEqual(type(first), type(second))
         self.assertEqual(first.id, second.id)
@@ -72,8 +70,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # Tests ----------------------------------------------------------------
 
     def test_simple_menu_bar(self):
-        """ Does constructing a simple menu with no additions work?
-        """
+        """Does constructing a simple menu with no additions work?"""
         schema = MenuBarSchema(
             MenuSchema(self.action1, self.action2, id="File", name="&File"),
             MenuSchema(self.action3, self.action4, id="Edit", name="&Edit"),
@@ -90,8 +87,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # Tests about schema additions -----------------------------------------
 
     def test_additions_menu_bar(self):
-        """ Does constructing a menu with a few additions work?
-        """
+        """Does constructing a menu with a few additions work?"""
         schema = MenuBarSchema(
             MenuSchema(
                 GroupSchema(self.action1, self.action2, id="FileGroup"),
@@ -134,7 +130,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         self.assertActionElementsEqual(actual, desired)
 
     def test_extra_menu(self):
-        """ Test contributing a whole new menu to the menu bar. """
+        """Test contributing a whole new menu to the menu bar."""
 
         # Initial menu.
         schema = MenuBarSchema(
@@ -175,7 +171,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # Tests about merging schemas -----------------------------------------#
 
     def test_merging_redundant_items(self):
-        """ Menus and groups with matching path are merged together. """
+        """Menus and groups with matching path are merged together."""
 
         # Initial menu.
         schema = MenuBarSchema(
@@ -220,8 +216,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         self.assertActionElementsEqual(actual, desired)
 
     def test_unwanted_merge(self):
-        """ Test that we don't have automatic merges due to forgetting to set
-        a schema ID. """
+        """Test that we don't have automatic merges due to forgetting to set
+        a schema ID."""
 
         # Initial menu.
         schema = MenuBarSchema(
@@ -267,7 +263,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         self.assertActionElementsEqual(actual, desired)
 
     def test_merging_items_with_same_id_but_different_class(self):
-        """ Schemas with the same path but different types (menus, groups)
+        """Schemas with the same path but different types (menus, groups)
         are not merged together.
 
         Having a group and a menu with the same path is of course bad practice,
@@ -307,8 +303,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         self.assertActionElementsEqual(actual, desired)
 
     def test_merging_redundant_items_that_are_not_schemas(self):
-        """ Items that are not schemas cannot be merged, but we should
-        not crash, either. """
+        """Items that are not schemas cannot be merged, but we should
+        not crash, either."""
 
         # Initial menu.
         schema = MenuBarSchema(
@@ -345,8 +341,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     # Tests about ordering -------------------------------------------------
 
     def test_absolute_ordering(self):
-        """ Does specifying absolute_position work?
-        """
+        """Does specifying absolute_position work?"""
         schema = MenuBarSchema(
             MenuSchema(
                 GroupSchema(self.action1, self.action2, id="FileGroup"),
@@ -391,8 +386,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         self.assertActionElementsEqual(actual, desired)
 
     def test_absolute_and_before_after(self):
-        """ Does specifying absolute_position along with before, after work?
-        """
+        """Does specifying absolute_position along with before, after work?"""
         schema = MenuBarSchema(
             MenuSchema(
                 GroupSchema(self.action1, self.action2, id="FileGroup"),

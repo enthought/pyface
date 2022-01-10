@@ -12,7 +12,15 @@
 
 
 from traits.api import (
-    Bool, Constant, Event, HasTraits, Instance, List, observe, Property, Str
+    Bool,
+    Constant,
+    Event,
+    HasTraits,
+    Instance,
+    List,
+    observe,
+    Property,
+    Str,
 )
 
 from pyface.action.action_controller import ActionController
@@ -20,7 +28,7 @@ from pyface.action.group import Group
 
 
 class ActionManager(HasTraits):
-    """ Abstract base class for all action managers.
+    """Abstract base class for all action managers.
 
     An action manager contains a list of groups, with each group containing a
     list of items.
@@ -68,7 +76,7 @@ class ActionManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
-        """ Creates a new action manager.
+        """Creates a new action manager.
 
         Parameters
         ----------
@@ -138,7 +146,7 @@ class ActionManager(HasTraits):
     # Methods -------------------------------------------------------------#
 
     def append(self, item):
-        """ Append an item to the manager.
+        """Append an item to the manager.
 
         Parameters
         ----------
@@ -165,7 +173,7 @@ class ActionManager(HasTraits):
         return group
 
     def destroy(self):
-        """ Called when the manager is no longer required.
+        """Called when the manager is no longer required.
 
         By default this method simply calls 'destroy' on all of the manager's
         groups.
@@ -174,7 +182,7 @@ class ActionManager(HasTraits):
             group.destroy()
 
     def insert(self, index, item):
-        """ Insert an item into the manager at the specified index.
+        """Insert an item into the manager at the specified index.
 
         Parameters
         ----------
@@ -204,7 +212,7 @@ class ActionManager(HasTraits):
         return group
 
     def find_group(self, id):
-        """ Find a group with a specified Id.
+        """Find a group with a specified Id.
 
         Parameters
         ----------
@@ -223,7 +231,7 @@ class ActionManager(HasTraits):
             return None
 
     def find_item(self, path):
-        """ Find an item using a path.
+        """Find an item using a path.
 
         Parameters
         ----------
@@ -250,7 +258,7 @@ class ActionManager(HasTraits):
         return item
 
     def walk(self, fn):
-        """ Walk the manager applying a function at every item.
+        """Walk the manager applying a function at every item.
 
         The components are walked in pre-order.
 
@@ -266,7 +274,7 @@ class ActionManager(HasTraits):
             self.walk_group(group, fn)
 
     def walk_group(self, group, fn):
-        """ Walk a group applying a function at every item.
+        """Walk a group applying a function at every item.
 
         The components are walked in pre-order.
 
@@ -284,7 +292,7 @@ class ActionManager(HasTraits):
                 self.walk_item(item, fn)
 
     def walk_item(self, item, fn):
-        """ Walk an item (may be a sub-menu manager remember!).
+        """Walk an item (may be a sub-menu manager remember!).
 
         The components are walked in pre-order.
 
@@ -303,7 +311,7 @@ class ActionManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_default_group(self):
-        """ Returns the manager's default group.
+        """Returns the manager's default group.
 
         This will create this group if it doesn't already exist.
 
@@ -320,7 +328,7 @@ class ActionManager(HasTraits):
         return group
 
     def _prepare_item(self, item):
-        """ Prepare an item to be added to this ActionManager.
+        """Prepare an item to be added to this ActionManager.
 
         Parameters
         ----------
@@ -345,7 +353,7 @@ class ActionManager(HasTraits):
         return item
 
     def _find_item(self, id):
-        """ Find an item with a spcified Id.
+        """Find an item with a spcified Id.
 
         Parameters
         ----------
@@ -370,7 +378,7 @@ class ActionManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def dump(self, indent=""):
-        """ Render a manager! """
+        """Render a manager!"""
         print(indent, "Manager", self.id)
         indent += "  "
 
@@ -378,7 +386,7 @@ class ActionManager(HasTraits):
             self.render_group(group, indent)
 
     def render_group(self, group, indent=""):
-        """ Render a group! """
+        """Render a group!"""
         print(indent, "Group", group.id)
         indent += "    "
 
@@ -391,7 +399,7 @@ class ActionManager(HasTraits):
                 self.render_item(item, indent)
 
     def render_item(self, item, indent=""):
-        """ Render an item! """
+        """Render an item!"""
 
         if hasattr(item, "groups"):
             item.dump(indent)

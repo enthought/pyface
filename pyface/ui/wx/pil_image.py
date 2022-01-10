@@ -18,15 +18,14 @@ from pyface.ui.wx.util.image_helpers import resize_image
 
 @provides(IPILImage)
 class PILImage(MPILImage):
-    """ The toolkit specific implementation of a PILImage.
-    """
+    """The toolkit specific implementation of a PILImage."""
 
     # ------------------------------------------------------------------------
     # 'IImage' interface.
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a Wx image for this image.
+        """Creates a Wx image for this image.
 
         Parameters
         ----------

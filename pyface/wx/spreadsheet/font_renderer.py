@@ -14,8 +14,7 @@ from .default_renderer import DefaultRenderer
 
 
 class FontRenderer(DefaultRenderer):
-    """Render data in the specified color and font and fontsize.
-    """
+    """Render data in the specified color and font and fontsize."""
 
     def DrawForeground(self, grid, attr, dc, rect, row, col, isSelected):
         text = grid.model.GetValue(row, col)
@@ -72,8 +71,8 @@ class FontRenderer(DefaultRenderer):
 
 
 class FontRendererFactory88(object):
-    """ I don't grok why this Factory (which I copied from the wx demo)
-        was ever necessary? """
+    """I don't grok why this Factory (which I copied from the wx demo)
+    was ever necessary?"""
 
     def __init__(self, color, font, fontsize):
         """

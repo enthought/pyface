@@ -25,7 +25,7 @@ from .index_manager import AbstractIndexManager
 
 
 class AbstractDataModel(ABCHasStrictTraits):
-    """ Abstract base class for Pyface data models.
+    """Abstract base class for Pyface data models.
 
     The data model API is intended to provide a common API for hierarchical
     and tabular data.  This class is concerned with the structure, type and
@@ -87,7 +87,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def get_column_count(self):
-        """ How many columns in the data view model.
+        """How many columns in the data view model.
 
         Returns
         -------
@@ -99,7 +99,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def can_have_children(self, row):
-        """ Whether or not a row can have child rows.
+        """Whether or not a row can have child rows.
 
         The root row should always return True.
 
@@ -117,7 +117,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def get_row_count(self, row):
-        """ How many child rows the row currently has.
+        """How many child rows the row currently has.
 
         Parameters
         ----------
@@ -135,7 +135,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value(self, row, column):
-        """ Return the Python value for the row and column.
+        """Return the Python value for the row and column.
 
         The values for column headers are returned by calling this method with
         row equal to ().  The values for row headers are returned by calling
@@ -163,7 +163,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def can_set_value(self, row, column):
-        """ Whether the value in the indicated row and column can be set.
+        """Whether the value in the indicated row and column can be set.
 
         The default method assumes the data is read-only and always
         returns False.
@@ -187,7 +187,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         return False
 
     def set_value(self, row, column, value):
-        """ Set the Python value for the row and column.
+        """Set the Python value for the row and column.
 
         The default method assumes the data is read-only and always
         returns False.
@@ -214,7 +214,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value_type(self, row, column):
-        """ Return the value type of the given row and column.
+        """Return the value type of the given row and column.
 
         The value type for column headers are returned by calling this method
         with row equal to ().  The value types for row headers are returned
@@ -238,7 +238,7 @@ class AbstractDataModel(ABCHasStrictTraits):
     # Convenience methods
 
     def is_row_valid(self, row):
-        """ Return whether or not the given row index refers to a valid row.
+        """Return whether or not the given row index refers to a valid row.
 
         A row index is valid if every value in the tuple is between 0 and the
         number of child rows of the parent.
@@ -262,7 +262,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         return True
 
     def is_column_valid(self, column):
-        """ Return whether or not the given column index refers to a valid column.
+        """Return whether or not the given column index refers to a valid column.
 
         A column index is valid if it is the root, or the value is between 0 and
         the number of columns in the model.
@@ -283,7 +283,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         return len(column) == 0
 
     def iter_rows(self, start_row=()):
-        """ Iterator that yields rows in preorder.
+        """Iterator that yields rows in preorder.
 
         Parameters
         ----------
@@ -303,7 +303,7 @@ class AbstractDataModel(ABCHasStrictTraits):
                 yield from self.iter_rows(start_row + (row,))
 
     def iter_items(self, start_row=()):
-        """ Iterator that yields rows and columns in preorder.
+        """Iterator that yields rows and columns in preorder.
 
         This yields pairs of row, column for all rows in preorder
         and and all column indices for all rows, including ().

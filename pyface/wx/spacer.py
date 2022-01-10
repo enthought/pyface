@@ -21,10 +21,10 @@ import wx
 
 
 class Spacer(wx.Panel):
-    """ A panel used as a spacer. """
+    """A panel used as a spacer."""
 
     def __init__(self, parent, id, **kw):
-        """ Creates a spacer. """
+        """Creates a spacer."""
 
         # Base-class constructor.
         wx.Panel.__init__(self, parent, id, **kw)
@@ -39,7 +39,7 @@ class Spacer(wx.Panel):
     # ------------------------------------------------------------------------
 
     def _create_widget(self):
-        """ Create the widget! """
+        """Create the widget!"""
 
         # self.SetBackgroundColour("brown")
 

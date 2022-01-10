@@ -21,14 +21,14 @@ from .field import Field
 
 @provides(IComboField)
 class ComboField(MComboField, Field):
-    """ The Wx-specific implementation of the combo field class """
+    """The Wx-specific implementation of the combo field class"""
 
     # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
         control = wx.Choice(parent, -1)
         return control
 
@@ -37,8 +37,7 @@ class ComboField(MComboField, Field):
     # ------------------------------------------------------------------------
 
     def _update_value(self, event):
-        """ Handle a change to the value from user interaction
-        """
+        """Handle a change to the value from user interaction"""
         # do normal focus event stuff
         if isinstance(event, wx.FocusEvent):
             event.Skip()
@@ -48,7 +47,7 @@ class ComboField(MComboField, Field):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
+        """Toolkit specific method to get the control's value."""
         index = self.control.GetSelection()
         if index != -1:
             return self.values[index]
@@ -56,7 +55,7 @@ class ComboField(MComboField, Field):
             raise IndexError("no value selected")
 
     def _get_control_text(self):
-        """ Toolkit specific method to get the control's text content. """
+        """Toolkit specific method to get the control's text content."""
         index = self.control.GetSelection()
         if index != -1:
             return self.control.GetString(index)
@@ -64,7 +63,7 @@ class ComboField(MComboField, Field):
             raise IndexError("no value selected")
 
     def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
+        """Toolkit specific method to set the control's value."""
         index = self.values.index(value)
         self.control.SetSelection(index)
         event = wx.CommandEvent(wx.EVT_CHOICE.typeId, self.control.GetId())
@@ -72,21 +71,21 @@ class ComboField(MComboField, Field):
         wx.PostEvent(self.control.GetEventHandler(), event)
 
     def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+        """Toolkit specific method to change the control value observer."""
         if remove:
             self.control.Unbind(wx.EVT_CHOICE, handler=self._update_value)
         else:
             self.control.Bind(wx.EVT_CHOICE, self._update_value)
 
     def _get_control_text_values(self):
-        """ Toolkit specific method to get the control's text values. """
+        """Toolkit specific method to get the control's text values."""
         values = []
         for i in range(self.control.GetCount()):
             values.append(self.control.GetString(i))
         return values
 
     def _set_control_values(self, values):
-        """ Toolkit specific method to set the control's values. """
+        """Toolkit specific method to set the control's values."""
         current_value = self.value
         self.control.Clear()
         for i, value in enumerate(values):

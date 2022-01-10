@@ -18,7 +18,11 @@ from traits.api import Array, Instance, observe
 
 from pyface.api import ApplicationWindow, GUI
 from pyface.data_view.api import (
-    DataViewWidget, IDataViewWidget, table_format, csv_format, npy_format
+    DataViewWidget,
+    IDataViewWidget,
+    table_format,
+    csv_format,
+    npy_format,
 )
 from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.exporters.api import RowExporter
@@ -30,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     data = Array()
 
@@ -43,7 +47,7 @@ class MainWindow(ApplicationWindow):
             logger.exception()
 
     def _create_contents(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        """Creates the left hand side or top depending on the style."""
 
         self.data_view = DataViewWidget(
             parent=parent,
@@ -74,7 +78,7 @@ class MainWindow(ApplicationWindow):
             self.data_view.data_model.data = self.data
 
     def _data_default(self):
-        return np.random.uniform(size=(10000, 10, 10))*1000000
+        return np.random.uniform(size=(10000, 10, 10)) * 1000000
 
 
 # Application entry point.

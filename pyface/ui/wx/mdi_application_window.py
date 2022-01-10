@@ -31,7 +31,7 @@ except ImportError:
 
 
 class MDIApplicationWindow(ApplicationWindow):
-    """ An MDI top-level application window.
+    """An MDI top-level application window.
 
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
@@ -60,7 +60,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def create_child_window(self, title=None, is_mdi=True, float=True):
-        """ Create a child window. """
+        """Create a child window."""
         if title is None:
             title = self.title
 
@@ -78,7 +78,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
-        """ Create the contents of the MDI window. """
+        """Create the contents of the MDI window."""
 
         # Create the 'trim' widgets (menu, tool and status bars etc).
         self._create_trim_widgets(self.control)
@@ -109,7 +109,7 @@ class MDIApplicationWindow(ApplicationWindow):
         return contents
 
     def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the window. """
+        """Create the toolkit-specific control that represents the window."""
 
         control = wx.MDIParentFrame(
             parent,
@@ -127,7 +127,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # ------------------------------------------------------------------------
 
     def _tile_background_image(self, dc, width, height):
-        """ Tiles the background image. """
+        """Tiles the background image."""
 
         w = self._bmp.GetWidth()
         h = self._bmp.GetHeight()
@@ -142,7 +142,7 @@ class MDIApplicationWindow(ApplicationWindow):
             x = x + w
 
     def _scale_background_image(self, dc, width, height):
-        """ Scales the background image. """
+        """Scales the background image."""
 
         # Scale the image (if necessary).
         image = self._image
@@ -158,13 +158,13 @@ class MDIApplicationWindow(ApplicationWindow):
     ## wx event handlers ---------------------------------------------------
 
     def _on_size(self, event):
-        """ Called when the frame is resized. """
+        """Called when the frame is resized."""
 
         wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
         event.Skip()
 
     def _on_erase_background(self, event):
-        """ Called when the background of the MDI client window is erased. """
+        """Called when the background of the MDI client window is erased."""
 
         # fixme: Close order...
         if self.control is None:

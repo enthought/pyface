@@ -18,14 +18,14 @@ from pygments.token import Comment
 
 
 def get_tokens_unprocessed(self, text, stack=("root",)):
-    """ Split ``text`` into (tokentype, text) pairs.
+    """Split ``text`` into (tokentype, text) pairs.
 
-        Monkeypatched to store the final stack on the object itself.
+    Monkeypatched to store the final stack on the object itself.
 
-        The `text` parameter that gets passed is only the current line, so to
-        highlight things like multiline strings correctly, we need to retrieve
-        the state from the previous line (this is done in PygmentsHighlighter,
-        below), and use it to continue processing the current line.
+    The `text` parameter that gets passed is only the current line, so to
+    highlight things like multiline strings correctly, we need to retrieve
+    the state from the previous line (this is done in PygmentsHighlighter,
+    below), and use it to continue processing the current line.
     """
     pos = 0
     tokendefs = self._tokens
@@ -92,8 +92,8 @@ RegexLexer.get_tokens_unprocessed = get_tokens_unprocessed
 
 
 def replace_pattern(tokens, new_pattern):
-    """ Given a RegexLexer token dictionary 'tokens', replace all patterns that
-        match the token specified in 'new_pattern' with 'new_pattern'.
+    """Given a RegexLexer token dictionary 'tokens', replace all patterns that
+    match the token specified in 'new_pattern' with 'new_pattern'.
     """
     for state in tokens.values():
         for index, pattern in enumerate(state):
@@ -116,8 +116,7 @@ CppLexer.tokens["comment"] = comment_state
 
 
 class BlockUserData(QtGui.QTextBlockUserData):
-    """ Storage for the user data associated with each line.
-    """
+    """Storage for the user data associated with each line."""
 
     syntax_stack = ("root",)
 
@@ -135,7 +134,7 @@ class BlockUserData(QtGui.QTextBlockUserData):
 
 
 class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
-    """ Syntax highlighter that uses Pygments for parsing. """
+    """Syntax highlighter that uses Pygments for parsing."""
 
     def __init__(self, parent, lexer=None):
         super().__init__(parent)
@@ -151,8 +150,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         self._formats = {}
 
     def highlightBlock(self, qstring):
-        """ Highlight a block of text.
-        """
+        """Highlight a block of text."""
         qstring = str(qstring)
         prev_data = self.previous_block_data()
 
@@ -182,13 +180,11 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
             del self._lexer._saved_state_stack
 
     def previous_block_data(self):
-        """ Convenience method for returning the previous block's user data.
-        """
+        """Convenience method for returning the previous block's user data."""
         return self.currentBlock().previous().userData()
 
     def _get_format(self, token):
-        """ Returns a QTextCharFormat for token or None.
-        """
+        """Returns a QTextCharFormat for token or None."""
         if token in self._formats:
             return self._formats[token]
         result = None
@@ -227,8 +223,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         return result
 
     def _get_brush(self, color):
-        """ Returns a brush for the color.
-        """
+        """Returns a brush for the color."""
         result = self._brushes.get(color)
         if result is None:
             qcolor = self._get_color(color)

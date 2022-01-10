@@ -29,7 +29,7 @@ from pyface.wizard.i_wizard_page import IWizardPage
 
 @provides(IWizard)
 class Wizard(MWizard, Dialog):
-    """ The base class for all pyface wizards.
+    """The base class for all pyface wizards.
 
     See the IWizard interface for the API documentation.
 
@@ -112,7 +112,7 @@ class Wizard(MWizard, Dialog):
     # ------------------------------------------------------------------------
 
     def _help_requested(self):
-        """ Called when the 'Help' button is pressed. """
+        """Called when the 'Help' button is pressed."""
 
         # FIXME: Hook into a help system.
         print("Show help for", self.help_id)
@@ -120,12 +120,12 @@ class Wizard(MWizard, Dialog):
     # Trait handlers -------------------------------------------------------
 
     def _get_pages(self):
-        """ The pages getter. """
+        """The pages getter."""
 
         return self.controller.pages
 
     def _set_pages(self, pages):
-        """ The pages setter. """
+        """The pages setter."""
 
         # Remove pages from the old list that appear in the new list.  The old
         # list will now contain pages that are no longer in the wizard.
@@ -151,7 +151,7 @@ class Wizard(MWizard, Dialog):
         self.controller.pages = pages
 
     def _controller_default(self):
-        """ Provide a default controller. """
+        """Provide a default controller."""
 
         from pyface.wizard.wizard_controller import WizardController
 
@@ -159,11 +159,11 @@ class Wizard(MWizard, Dialog):
 
 
 class _Wizard(QtGui.QWizard):
-    """ A QWizard sub-class that hooks into the controller to determine the
-    next page to show. """
+    """A QWizard sub-class that hooks into the controller to determine the
+    next page to show."""
 
     def __init__(self, parent, pyface_wizard):
-        """ Initialise the object. """
+        """Initialise the object."""
 
         QtGui.QWizard.__init__(self, parent)
 
@@ -174,7 +174,7 @@ class _Wizard(QtGui.QWizard):
         self.currentIdChanged.connect(self._update_controller)
 
     def addWizardPage(self, page):
-        """ Add a page that provides IWizardPage. """
+        """Add a page that provides IWizardPage."""
 
         # We must pass a parent otherwise TraitsUI does the wrong thing.
         qpage = page.create_page(self)
@@ -183,7 +183,7 @@ class _Wizard(QtGui.QWizard):
         self._ids[id] = page
 
     def setStartWizardPage(self):
-        """ Set the first page. """
+        """Set the first page."""
 
         page = self._controller.get_first_page()
         id = self._page_to_id(page)
@@ -192,7 +192,7 @@ class _Wizard(QtGui.QWizard):
             self.setStartId(id)
 
     def nextId(self):
-        """ Reimplemented to return the id of the next page to display. """
+        """Reimplemented to return the id of the next page to display."""
 
         if self.currentId() < 0:
             return self._page_to_id(self._controller.get_first_page())
@@ -202,13 +202,13 @@ class _Wizard(QtGui.QWizard):
         return self._page_to_id(next)
 
     def _update_controller(self, id):
-        """ Called when the current page has changed. """
+        """Called when the current page has changed."""
 
         # Keep the controller in sync with the wizard.
         self._controller.current_page = self._ids.get(id)
 
     def _page_to_id(self, page):
-        """ Return the id of the given page. """
+        """Return the id of the given page."""
 
         if page is None:
             id = -1

@@ -16,10 +16,10 @@ from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
 
 class Pager(wxScrolledPanel):
-    """ A pager contains a set of pages, but only shows one at a time. """
+    """A pager contains a set of pages, but only shows one at a time."""
 
     def __init__(self, parent, wxid, **kw):
-        """ Creates a new pager. """
+        """Creates a new pager."""
 
         # Base-class constructor.
         wxScrolledPanel.__init__(self, parent, wxid, **kw)
@@ -41,7 +41,7 @@ class Pager(wxScrolledPanel):
     # ------------------------------------------------------------------------
 
     def add_page(self, name, page):
-        """ Adds a page with the specified name. """
+        """Adds a page with the specified name."""
 
         self._pages[name] = page
 
@@ -59,7 +59,7 @@ class Pager(wxScrolledPanel):
         return page
 
     def show_page(self, name):
-        """ Shows the page with the specified name. """
+        """Shows the page with the specified name."""
 
         # Hide the current page (if one is displayed).
         if self._current_page is not None:
@@ -78,20 +78,20 @@ class Pager(wxScrolledPanel):
     # ------------------------------------------------------------------------
 
     def _create_widget(self):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         self._sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
 
     def _hide_page(self, page):
-        """ Hides the specified page. """
+        """Hides the specified page."""
 
         page.Show(False)
         self._sizer.Remove(page)
 
     def _show_page(self, page):
-        """ Shows the specified page. """
+        """Shows the specified page."""
 
         page.Show(True)
         self._sizer.Add(page, 1, wx.EXPAND)

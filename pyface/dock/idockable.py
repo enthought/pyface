@@ -27,8 +27,8 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_should_close(self):
-        """ Should the current DockControl be closed before creating the new
-            one.
+        """Should the current DockControl be closed before creating the new
+        one.
         """
         return True
 
@@ -38,8 +38,7 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_close(self, dock_control, force):
-        """ Returns whether or not it is OK to close the control.
-        """
+        """Returns whether or not it is OK to close the control."""
         return False
 
     # ---------------------------------------------------------------------------
@@ -47,8 +46,7 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_get_control(self, parent):
-        """ Gets a control that can be docked into a DockWindow.
-        """
+        """Gets a control that can be docked into a DockWindow."""
         raise NotImplementedError(
             "The 'IDockable.dockable_get_control' method must be overridden"
         )
@@ -58,8 +56,7 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_init_dockcontrol(self, dock_control):
-        """ Allows the object to override the default DockControl settings.
-        """
+        """Allows the object to override the default DockControl settings."""
         pass
 
     # ---------------------------------------------------------------------------
@@ -67,8 +64,7 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_menu(self, dock_control, event):
-        """ Returns the right-click popup menu for a DockControl (if any).
-        """
+        """Returns the right-click popup menu for a DockControl (if any)."""
         return None
 
     # ---------------------------------------------------------------------------
@@ -78,9 +74,9 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_dclick(self, dock_control, event):
-        """ Handles the user double-clicking on the DockControl.
-            A result of False indicates the event was not handled; all other
-            results indicate that the event was handled successfully.
+        """Handles the user double-clicking on the DockControl.
+        A result of False indicates the event was not handled; all other
+        results indicate that the event was handled successfully.
         """
         return False
 
@@ -89,12 +85,12 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_tab_activated(self, dock_control, activated):
-        """ Handles a notebook tab being activated or deactivated.
+        """Handles a notebook tab being activated or deactivated.
 
-            'dock_control' is the control being activated or deactivated.
+        'dock_control' is the control being activated or deactivated.
 
-            If 'activated' is True, the control is being activated; otherwise
-            the control is being deactivated.
+        If 'activated' is True, the control is being activated; otherwise
+        the control is being deactivated.
         """
         pass
 
@@ -103,6 +99,5 @@ class IDockable(object):
     # ---------------------------------------------------------------------------
 
     def dockable_bind(self, dock_control):
-        """ Handles the dockable being bound to a specified DockControl.
-        """
+        """Handles the dockable being bound to a specified DockControl."""
         pass

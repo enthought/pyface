@@ -15,7 +15,7 @@ from traits.api import Event, HasStrictTraits
 
 
 class ExampleObject(HasStrictTraits):
-    """ Test class; target for test_event_loop_until_traits_change. """
+    """Test class; target for test_event_loop_until_traits_change."""
 
     spam = Event()
     eggs = Event()

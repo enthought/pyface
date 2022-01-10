@@ -16,7 +16,7 @@ from ..task_layout import LayoutContainer
 
 
 class LayoutItemsTestCase(unittest.TestCase):
-    """ Testing that the layout types play nice with each other.
+    """Testing that the layout types play nice with each other.
 
     This is a regression test for issue #87
     (https://github.com/enthought/pyface/issues/87)

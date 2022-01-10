@@ -16,7 +16,7 @@ from traitsui.api import View as TraitsView
 
 
 class DebugViewModel(HasTraits):
-    """ The model for the debug view! """
+    """The model for the debug view!"""
 
     # 'Model' interface ----------------------------------------------------
 
@@ -32,14 +32,14 @@ class DebugViewModel(HasTraits):
 
     @observe("window.active_editor,window.active_part,window.active_view")
     def refresh(self, event):
-        """ Refresh the model. """
+        """Refresh the model."""
 
         self.active_editor = self._get_id(self.window.active_editor)
         self.active_part = self._get_id(self.window.active_part)
         self.active_view = self._get_id(self.window.active_view)
 
     def _window_changed(self):
-        """ Window changed! """
+        """Window changed!"""
 
         self.refresh()
 
@@ -50,7 +50,7 @@ class DebugViewModel(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_id(self, obj):
-        """ Return the Id of an object. """
+        """Return the Id of an object."""
 
         if obj is None:
             id = "None"
@@ -62,7 +62,7 @@ class DebugViewModel(HasTraits):
 
 
 class DebugView(View):
-    """ A view containing a main walter canvas. """
+    """A view containing a main walter canvas."""
 
     # 'IWorkbenchPart' interface -------------------------------------------
 
@@ -79,7 +79,7 @@ class DebugView(View):
     # ------------------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Creates the toolkit-specific control that represents the view.
+        """Creates the toolkit-specific control that represents the view.
 
         'parent' is the toolkit-specific control that is the view's parent.
 

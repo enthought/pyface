@@ -32,12 +32,17 @@ from pyface.undo.action.api import CommandAction, RedoAction, UndoAction
 
 # Local imports.
 from example_editor_manager import ExampleEditorManager
-from commands import LabelIncrementSizeCommand, LabelDecrementSizeCommand, \
-    LabelNormalFontCommand, LabelBoldFontCommand, LabelItalicFontCommand
+from commands import (
+    LabelIncrementSizeCommand,
+    LabelDecrementSizeCommand,
+    LabelNormalFontCommand,
+    LabelBoldFontCommand,
+    LabelItalicFontCommand,
+)
 
 
 class ExampleUndoWindow(WorkbenchWindow):
-    """ The ExampleUndoWindow class is a workbench window that contains example
+    """The ExampleUndoWindow class is a workbench window that contains example
     editors that demonstrate the use of the undo framework.
     """
 
@@ -62,12 +67,12 @@ class ExampleUndoWindow(WorkbenchWindow):
     #### Trait initialisers ###################################################
 
     def __file_menu_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return MenuManager(self._exit_action, name="&File")
 
     def __undo_menu_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
         undo_manager = self.workbench.undo_manager
 
         undo_action = UndoAction(undo_manager=undo_manager)
@@ -76,49 +81,54 @@ class ExampleUndoWindow(WorkbenchWindow):
         return MenuManager(undo_action, redo_action, name="&Undo")
 
     def __label_menu_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
-        size_group = Group(CommandAction(command=LabelIncrementSizeCommand),
-                           CommandAction(command=LabelDecrementSizeCommand))
+        size_group = Group(
+            CommandAction(command=LabelIncrementSizeCommand),
+            CommandAction(command=LabelDecrementSizeCommand),
+        )
 
-        normal = CommandAction(id='normal', command=LabelNormalFontCommand,
-                               style='radio', checked=True)
-        bold = CommandAction(id='bold', command=LabelBoldFontCommand,
-                             style='radio')
-        italic = CommandAction(id='italic', command=LabelItalicFontCommand,
-                               style='radio')
+        normal = CommandAction(
+            id='normal',
+            command=LabelNormalFontCommand,
+            style='radio',
+            checked=True,
+        )
+        bold = CommandAction(
+            id='bold', command=LabelBoldFontCommand, style='radio'
+        )
+        italic = CommandAction(
+            id='italic', command=LabelItalicFontCommand, style='radio'
+        )
 
         style_group = Group(normal, bold, italic, id='style')
 
         return MenuManager(size_group, style_group, name="&Label")
 
     def __exit_action_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return Action(name="E&xit", on_perform=self.workbench.exit)
 
     def _editor_manager_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return ExampleEditorManager()
 
     def _menu_bar_manager_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return MenuBarManager(
-            self._file_menu,
-            self._label_menu,
-            self._undo_menu,
-            window=self
+            self._file_menu, self._label_menu, self._undo_menu, window=self
         )
 
     def _tool_bar_manager_default(self):
-        """ Trait initialiser. """
+        """Trait initialiser."""
 
         return ToolBarManager(self._exit_action, show_tool_names=False)
 
     def _active_editor_changed(self, old, new):
-        """ Trait handler. """
+        """Trait handler."""
 
         # Tell the undo manager about the new command stack.
         if old is not None:
@@ -145,6 +155,6 @@ class ExampleUndoWindow(WorkbenchWindow):
                     # first switch to another editor doesn't update the menus
                     # (though subsequent ones do).
                     if grp.id == 'style':
-                        action.checked = (action.data.style == action.id)
+                        action.checked = action.data.style == action.id
                 else:
                     action.enabled = False

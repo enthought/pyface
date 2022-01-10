@@ -13,13 +13,18 @@ import sys
 
 
 from traits.api import (
-    Enum, HasStrictTraits, Int, Instance, List, Str, Union,
+    Enum,
+    HasStrictTraits,
+    Int,
+    Instance,
+    List,
+    Str,
+    Union,
 )
 
 
 class LayoutItem(HasStrictTraits):
-    """ The base class for all Task-related layout objects.
-    """
+    """The base class for all Task-related layout objects."""
 
     def __repr__(self):
         return self.pformat()
@@ -31,20 +36,17 @@ class LayoutItem(HasStrictTraits):
         return []
 
     def pformat(self, indent=0, multiline=False):
-        """ Pretty-format the layout item. Returns a string.
-        """
+        """Pretty-format the layout item. Returns a string."""
         stream = StringIO()
         self.pstream(stream, indent, multiline)
         return stream.getvalue()
 
     def pprint(self, indent=0, multiline=False):
-        """ Pretty-prints the layout item.
-        """
+        """Pretty-prints the layout item."""
         self.pstream(sys.stdout, indent, multiline)
 
     def pstream(self, stream, indent=0, multiline=False):
-        """ Pretty-formats the layout item to a stream.
-        """
+        """Pretty-formats the layout item to a stream."""
         call = self.__class__.__name__ + "("
         indent += len(call)
         stream.write(call)
@@ -79,8 +81,7 @@ class LayoutItem(HasStrictTraits):
 
 
 class LayoutContainer(LayoutItem):
-    """ The base class for all layout items that contain other layout items.
-    """
+    """The base class for all layout items that contain other layout items."""
 
     items = List(pretty_skip=True)
 
@@ -105,8 +106,7 @@ class LayoutContainer(LayoutItem):
 
 
 class PaneItem(LayoutItem):
-    """ A pane in a Task layout.
-    """
+    """A pane in a Task layout."""
 
     #: The ID of the item. If the item refers to a TaskPane, this is the ID of
     #: that TaskPane.
@@ -129,8 +129,7 @@ class PaneItem(LayoutItem):
 
 
 class Tabbed(LayoutContainer):
-    """ A tab area in a Task layout.
-    """
+    """A tab area in a Task layout."""
 
     #: A tabbed layout can only contain PaneItems as sub-items. Splitters and
     #: other Tabbed layouts are not allowed.
@@ -142,8 +141,7 @@ class Tabbed(LayoutContainer):
 
 
 class Splitter(LayoutContainer):
-    """ A split area in a Task layout.
-    """
+    """A split area in a Task layout."""
 
     #: The orientation of the splitter.
     orientation = Enum("horizontal", "vertical")
@@ -161,22 +159,19 @@ class Splitter(LayoutContainer):
 
 
 class HSplitter(Splitter):
-    """ A convenience class for horizontal splitters.
-    """
+    """A convenience class for horizontal splitters."""
 
     orientation = Str("horizontal")
 
 
 class VSplitter(Splitter):
-    """ A convenience class for vertical splitters.
-    """
+    """A convenience class for vertical splitters."""
 
     orientation = Str("vertical")
 
 
 class DockLayout(LayoutItem):
-    """ The layout for a main window's dock area.
-    """
+    """The layout for a main window's dock area."""
 
     # The layouts for the task's dock panes.
     left = Union(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
@@ -194,8 +189,7 @@ class DockLayout(LayoutItem):
 
 
 class TaskLayout(DockLayout):
-    """ The layout for a Task.
-    """
+    """The layout for a Task."""
 
     #: The ID of the task for which this is a layout.
     id = Str()

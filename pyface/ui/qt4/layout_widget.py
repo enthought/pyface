@@ -23,11 +23,12 @@ QWIDGETSIZE_MAX = getattr(QtGui, "QWIDGETSIZE_MAX", 1 << 24 - 1)
 
 
 class SizePolicies(Enum):
-    """ Qt values for size policies
+    """Qt values for size policies
 
     Note that Qt has additional values that are not mapped to Pyface size
     policies.
     """
+
     fixed = QtGui.QSizePolicy.Fixed
     preferred = QtGui.QSizePolicy.Preferred
     expand = QtGui.QSizePolicy.Expanding
@@ -35,13 +36,10 @@ class SizePolicies(Enum):
 
 @provides(ILayoutWidget)
 class LayoutWidget(MLayoutWidget, Widget):
-    """ A widget which can participate as part of a layout. """
+    """A widget which can participate as part of a layout."""
 
     def _set_control_minimum_size(self, size):
-        size = tuple(
-            x if x != DEFAULT_SIZE else 0
-            for x in size
-        )
+        size = tuple(x if x != DEFAULT_SIZE else 0 for x in size)
         self.control.setMinimumSize(*size)
 
     def _get_control_minimum_size(self):
@@ -49,10 +47,7 @@ class LayoutWidget(MLayoutWidget, Widget):
         return (size.width(), size.height())
 
     def _set_control_maximum_size(self, size):
-        size = tuple(
-            x if x != DEFAULT_SIZE else QWIDGETSIZE_MAX
-            for x in size
-        )
+        size = tuple(x if x != DEFAULT_SIZE else QWIDGETSIZE_MAX for x in size)
         self.control.setMaximumSize(*size)
 
     def _get_control_maximum_size(self):
@@ -60,15 +55,14 @@ class LayoutWidget(MLayoutWidget, Widget):
         return (size.width(), size.height())
 
     def _set_control_stretch(self, stretch):
-        """ Set the stretch factor of the control.
-        """
+        """Set the stretch factor of the control."""
         new_size_policy = _clone_size_policy(self.control.sizePolicy())
         new_size_policy.setHorizontalStretch(stretch[0])
         new_size_policy.setVerticalStretch(stretch[1])
         self.control.setSizePolicy(new_size_policy)
 
     def _get_control_stretch(self):
-        """ Get the stretch factor of the control.
+        """Get the stretch factor of the control.
 
         This method is only used for testing.
         """
@@ -94,40 +88,28 @@ class LayoutWidget(MLayoutWidget, Widget):
         size_policy = self.control.sizePolicy()
         if self.size_policy[0] != "default":
             horizontal_policy = SizePolicies(
-                size_policy.horizontalPolicy()).name
+                size_policy.horizontalPolicy()
+            ).name
         else:
             horizontal_policy = "default"
         if self.size_policy[1] != "default":
-            vertical_policy = SizePolicies(
-                size_policy.verticalPolicy()).name
+            vertical_policy = SizePolicies(size_policy.verticalPolicy()).name
         else:
             vertical_policy = "default"
         return (horizontal_policy, vertical_policy)
 
 
 def _clone_size_policy(size_policy):
-    """ Clone the state of an existing QSizePolicy object
+    """Clone the state of an existing QSizePolicy object
 
     This is required because there is no standard Qt copy or clone
     method.
     """
     new_size_policy = QtGui.QSizePolicy()
-    new_size_policy.setHorizontalPolicy(
-        size_policy.horizontalPolicy()
-    )
-    new_size_policy.setVerticalPolicy(
-        size_policy.verticalPolicy()
-    )
-    new_size_policy.setHorizontalStretch(
-        size_policy.horizontalStretch()
-    )
-    new_size_policy.setVerticalStretch(
-        size_policy.verticalStretch()
-    )
-    new_size_policy.setHeightForWidth(
-        size_policy.hasHeightForWidth()
-    )
-    new_size_policy.setWidthForHeight(
-        size_policy.hasWidthForHeight()
-    )
+    new_size_policy.setHorizontalPolicy(size_policy.horizontalPolicy())
+    new_size_policy.setVerticalPolicy(size_policy.verticalPolicy())
+    new_size_policy.setHorizontalStretch(size_policy.horizontalStretch())
+    new_size_policy.setVerticalStretch(size_policy.verticalStretch())
+    new_size_policy.setHeightForWidth(size_policy.hasHeightForWidth())
+    new_size_policy.setWidthForHeight(size_policy.hasWidthForHeight())
     return new_size_policy

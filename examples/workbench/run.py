@@ -18,7 +18,7 @@ logger.setLevel(logging.DEBUG)
 
 
 def main(argv):
-    """ A simple example of using the workbench. """
+    """A simple example of using the workbench."""
 
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()

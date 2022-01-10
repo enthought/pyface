@@ -36,7 +36,7 @@ class RedoAction(AbstractCommandStackAction):
     ###########################################################################
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         self.undo_manager.redo()
 
@@ -45,7 +45,7 @@ class RedoAction(AbstractCommandStackAction):
     ###########################################################################
 
     def _update_action(self):
-        """ Update the state of the action. """
+        """Update the state of the action."""
 
         name = self.undo_manager.redo_name
 

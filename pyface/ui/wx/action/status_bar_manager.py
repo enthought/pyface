@@ -20,7 +20,7 @@ from traits.api import Any, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
-    """ A status bar manager realizes itself in a status bar control. """
+    """A status bar manager realizes itself in a status bar control."""
 
     # The message displayed in the first field of the status bar.
     message = Property
@@ -36,7 +36,7 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_status_bar(self, parent):
-        """ Creates a status bar. """
+        """Creates a status bar."""
 
         if self.status_bar is None:
             self.status_bar = wx.StatusBar(parent)
@@ -51,7 +51,7 @@ class StatusBarManager(HasTraits):
         return self.status_bar
 
     def remove_status_bar(self, parent):
-        """ Removes a status bar. """
+        """Removes a status bar."""
 
         if self.status_bar is not None:
             self.status_bar.Destroy()
@@ -63,7 +63,7 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_message(self):
-        """ Property getter. """
+        """Property getter."""
 
         if len(self.messages) > 0:
             message = self.messages[0]
@@ -74,7 +74,7 @@ class StatusBarManager(HasTraits):
         return message
 
     def _set_message(self, value):
-        """ Property setter. """
+        """Property setter."""
 
         if len(self.messages) > 0:
             old = self.messages[0]
@@ -93,14 +93,14 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _messages_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
 
         if self.status_bar is not None:
             for i in range(len(self.messages)):
                 self.status_bar.SetStatusText(self.messages[i], i)
 
     def _messages_items_changed(self):
-        """ Sets the text displayed on the status bar. """
+        """Sets the text displayed on the status bar."""
 
         if self.status_bar is not None:
             for i in range(len(self.messages)):

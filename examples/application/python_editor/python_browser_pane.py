@@ -7,8 +7,7 @@ from traitsui.api import View, Item, FileEditor
 
 
 class PythonBrowserPane(TraitsDockPane):
-    """ A simple Python file browser pane.
-    """
+    """A simple Python file browser pane."""
 
     # FileBrowserPane interface ----------------------------------------------
 

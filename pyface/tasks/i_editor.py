@@ -24,8 +24,7 @@ from traits.api import (
 
 
 class IEditor(Interface):
-    """ The base interface for all panes (central and dock) in a Task.
-    """
+    """The base interface for all panes (central and dock) in a Task."""
 
     #: The editor's user-visible name.
     name = Str()
@@ -62,22 +61,19 @@ class IEditor(Interface):
     # ------------------------------------------------------------------------
 
     def close(self):
-        """ Close the editor.
-        """
+        """Close the editor."""
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            editor.
+        """Create and set the toolkit-specific control that represents the
+        editor.
         """
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the editor.
-        """
+        """Destroy the toolkit-specific control that represents the editor."""
 
 
 class MEditor(HasTraits):
-    """ Mixin containing common code for toolkit-specific implementations.
-    """
+    """Mixin containing common code for toolkit-specific implementations."""
 
     # 'IEditor' interface -------------------------------------------------#
 
@@ -99,8 +95,7 @@ class MEditor(HasTraits):
     # ------------------------------------------------------------------------
 
     def close(self):
-        """ Close the editor.
-        """
+        """Close the editor."""
         if self.control is not None:
             self.closing = event = Vetoable()
             if not event.veto:

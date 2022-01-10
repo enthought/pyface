@@ -72,4 +72,4 @@ class ICommand(Interface):
         """
 
     def undo(self):
-        """ This is called by the command stack to undo the command. """
+        """This is called by the command stack to undo the command."""

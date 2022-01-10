@@ -18,10 +18,10 @@ from pyface.viewer.api import ViewerFilter
 
 
 class AllowOnlyFolders(ViewerFilter):
-    """ A viewer filter that allows only folders (not files). """
+    """A viewer filter that allows only folders (not files)."""
 
     def select(self, viewer, parent, element):
-        """ Returns True if the element is 'allowed' (ie. NOT filtered).
+        """Returns True if the element is 'allowed' (ie. NOT filtered).
 
         'viewer'  is the viewer that we are filtering elements for.
         'parent'  is the parent element.

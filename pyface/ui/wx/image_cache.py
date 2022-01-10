@@ -24,7 +24,7 @@ from pyface.i_image_cache import IImageCache, MImageCache
 
 @provides(IImageCache)
 class ImageCache(MImageCache, HasTraits):
-    """ The toolkit specific implementation of an ImageCache.  See the
+    """The toolkit specific implementation of an ImageCache.  See the
     IImageCache interface for the API documentation.
     """
 

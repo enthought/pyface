@@ -17,7 +17,6 @@ from .field_mixin import FieldMixin
 
 
 class TestTimeField(FieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return TimeField(
             parent=self.parent.control,

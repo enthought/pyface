@@ -16,7 +16,8 @@ from pyface.qt.QtGui import QColor
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_view_errors import (
-    DataViewGetError, DataViewSetError
+    DataViewGetError,
+    DataViewSetError,
 )
 from pyface.data_view.index_manager import Root
 from .data_wrapper import DataWrapper
@@ -40,7 +41,7 @@ get_check_state_map = {
 
 
 class DataViewItemModel(QAbstractItemModel):
-    """ A QAbstractItemModel that understands AbstractDataModels. """
+    """A QAbstractItemModel that understands AbstractDataModels."""
 
     def __init__(self, model, selection_type, exporters, parent=None):
         super().__init__(parent)
@@ -84,8 +85,8 @@ class DataViewItemModel(QAbstractItemModel):
             for i, (top_row, bottom_row) in enumerate(zip(top, bottom)):
                 if top_row != bottom_row:
                     break
-            top = top[:i+1]
-            bottom = bottom[:i+1]
+            top = top[: i + 1]
+            bottom = bottom[: i + 1]
 
             top_left = self._to_model_index(top, left)
             bottom_right = self._to_model_index(bottom, right)
@@ -152,10 +153,9 @@ class DataViewItemModel(QAbstractItemModel):
             if value_type:
                 if value_type.has_editor_value(self.model, row, column):
                     flags |= Qt.ItemIsEditable
-                if (
-                    value_type.has_check_state(self.model, row, column)
-                    and self.model.can_set_value(row, column)
-                ):
+                if value_type.has_check_state(
+                    self.model, row, column
+                ) and self.model.can_set_value(row, column):
                     flags |= Qt.ItemIsUserCheckable
         except DataViewGetError:
             # expected error, ignore

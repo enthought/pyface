@@ -16,7 +16,6 @@ from pyface.color import Color
 
 
 class TestColor(UnittestTools, TestCase):
-
     def assert_tuple_almost_equal(self, tuple_1, tuple_2):
         self.assertEqual(len(tuple_1), len(tuple_2))
 

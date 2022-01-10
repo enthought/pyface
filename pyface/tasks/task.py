@@ -18,7 +18,7 @@ from pyface.tasks.task_layout import TaskLayout
 
 
 class Task(HasTraits):
-    """ A collection of pane, menu, tool bar, and status bar factories.
+    """A collection of pane, menu, tool bar, and status bar factories.
 
     The central class in the Tasks plugin, a Task is responsible for
     describing a set of user interface elements, as well as mediating between
@@ -63,17 +63,15 @@ class Task(HasTraits):
     # ------------------------------------------------------------------------
 
     def activated(self):
-        """ Called after the task has been activated in a TaskWindow.
-        """
+        """Called after the task has been activated in a TaskWindow."""
         pass
 
     def create_central_pane(self):
-        """ Create and return the central pane, which must implement ITaskPane.
-        """
+        """Create and return the central pane, which must implement ITaskPane."""
         raise NotImplementedError()
 
     def create_dock_panes(self):
-        """ Create and return the task's dock panes (IDockPane instances).
+        """Create and return the task's dock panes (IDockPane instances).
 
         This method is called *after* create_central_pane() when the task is
         added to a TaskWindow.
@@ -81,7 +79,7 @@ class Task(HasTraits):
         return []
 
     def initialized(self):
-        """ Called when the task is about to be activated in a TaskWindow for
+        """Called when the task is about to be activated in a TaskWindow for
         the first time.
 
         Override this method to perform any initialization that requires the
@@ -91,7 +89,7 @@ class Task(HasTraits):
         pass
 
     def prepare_destroy(self):
-        """ Called when the task is about to be removed from its TaskWindow.
+        """Called when the task is about to be removed from its TaskWindow.
 
         Override this method to perform any cleanup before the task's controls
         are destroyed.

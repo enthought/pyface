@@ -26,7 +26,7 @@ from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 @provides(IWizardPage)
 class WizardPage(MWizardPage, HasTraits):
-    """ The toolkit specific implementation of a WizardPage.
+    """The toolkit specific implementation of a WizardPage.
 
     See the IWizardPage interface for the API documentation.
 
@@ -53,7 +53,7 @@ class WizardPage(MWizardPage, HasTraits):
     # ------------------------------------------------------------------------
 
     def create_page(self, parent):
-        """ Creates the wizard page. """
+        """Creates the wizard page."""
 
         content = self._create_page_content(parent)
 
@@ -93,7 +93,7 @@ class WizardPage(MWizardPage, HasTraits):
     # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
-        """ Creates the actual page content. """
+        """Creates the actual page content."""
 
         # Dummy implementation - override!
         control = QtGui.QWidget(parent)
@@ -107,11 +107,11 @@ class WizardPage(MWizardPage, HasTraits):
 
 
 class _WizardPage(QtGui.QWizardPage):
-    """ A QWizardPage sub-class that hooks into the IWizardPage's 'complete'
-    trait. """
+    """A QWizardPage sub-class that hooks into the IWizardPage's 'complete'
+    trait."""
 
     def __init__(self, page):
-        """ Initialise the object. """
+        """Initialise the object."""
 
         QtGui.QWizardPage.__init__(self)
 
@@ -121,23 +121,23 @@ class _WizardPage(QtGui.QWizardPage):
         self._page = page
 
     def initializePage(self):
-        """ Reimplemented to call the IWizard's 'next'. """
+        """Reimplemented to call the IWizard's 'next'."""
 
         if self.pyface_wizard is not None:
             self.pyface_wizard.next()
 
     def cleanupPage(self):
-        """ Reimplemented to call the IWizard's 'previous'. """
+        """Reimplemented to call the IWizard's 'previous'."""
 
         if self.pyface_wizard is not None:
             self.pyface_wizard.previous()
 
     def isComplete(self):
-        """ Reimplemented to return the state of the 'complete' trait. """
+        """Reimplemented to return the state of the 'complete' trait."""
 
         return self._page.complete
 
     def _on_complete_changed(self, event):
-        """ The trait handler for when the page's completion state changes. """
+        """The trait handler for when the page's completion state changes."""
 
         self.completeChanged.emit()

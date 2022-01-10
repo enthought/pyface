@@ -15,7 +15,7 @@ from traits.api import Bool, HasTraits, Interface, Str, Tuple
 
 
 class IWizardPage(Interface):
-    """ The interface for a page in a wizard. """
+    """The interface for a page in a wizard."""
 
     # 'IWizardPage' interface ---------------------------------------------#
 
@@ -46,10 +46,10 @@ class IWizardPage(Interface):
     # ------------------------------------------------------------------------
 
     def create_page(self, parent):
-        """ Creates the wizard page. """
+        """Creates the wizard page."""
 
     def dispose_page(self):
-        """ Disposes the wizard page.
+        """Disposes the wizard page.
 
         Subclasses are expected to override this method if they need to
         dispose of the contents of a page.
@@ -60,11 +60,11 @@ class IWizardPage(Interface):
     # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
-        """ Creates the actual page content. """
+        """Creates the actual page content."""
 
 
 class MWizardPage(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IWizardPage interface.
 
     Implements: dispose_page()
@@ -75,7 +75,7 @@ class MWizardPage(HasTraits):
     # ------------------------------------------------------------------------
 
     def dispose_page(self):
-        """ Disposes the wizard page.
+        """Disposes the wizard page.
 
         Subclasses are expected to override this method if they need to
         dispose of the contents of a page.

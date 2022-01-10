@@ -15,7 +15,7 @@ from pyface.timer.timer import CallbackTimer, Timer
 
 
 class DoLaterTimer(Timer):
-    """ Performs a callback once at a later time.
+    """Performs a callback once at a later time.
 
     This is not used by the `do_later` functions and is only provided for
     backwards compatibility of the API.
@@ -30,7 +30,7 @@ class DoLaterTimer(Timer):
 
 
 def do_later(callable, *args, **kwargs):
-    """ Does something 50 milliseconds from now.
+    """Does something 50 milliseconds from now.
 
     Parameters
     ----------
@@ -45,7 +45,7 @@ def do_later(callable, *args, **kwargs):
 
 
 def do_after(interval, callable, *args, **kwargs):
-    """ Does something after some specified time interval.
+    """Does something after some specified time interval.
 
     Parameters
     ----------

@@ -15,7 +15,7 @@ from traits.api import HasTraits, Int, Interface, Tuple
 
 
 class ISystemMetrics(Interface):
-    """ The interface to system metrics (screen width and height etc). """
+    """The interface to system metrics (screen width and height etc)."""
 
     # 'ISystemMetrics' interface -------------------------------------------
 
@@ -32,6 +32,6 @@ class ISystemMetrics(Interface):
 
 
 class MSystemMetrics(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the ISystemMetrics interface.
     """

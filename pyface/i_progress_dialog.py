@@ -19,8 +19,7 @@ from pyface.i_dialog import IDialog
 
 
 class IProgressDialog(IDialog):
-    """ A simple progress dialog window which allows itself to be updated
-    """
+    """A simple progress dialog window which allows itself to be updated"""
 
     # 'IProgressDialog' interface ---------------------------------#
 
@@ -53,7 +52,7 @@ class IProgressDialog(IDialog):
     # ------------------------------------------------------------------------
 
     def update(self, value):
-        """ Update the progress bar to the desired value
+        """Update the progress bar to the desired value
 
         If the value is >= the maximum and the progress bar is not contained
         in another panel the parent window will be closed.
@@ -65,7 +64,7 @@ class IProgressDialog(IDialog):
         """
 
     def change_message(self, message):
-        """ Change the displayed message in the progress dialog
+        """Change the displayed message in the progress dialog
 
         Parameters
         ----------
@@ -76,7 +75,7 @@ class IProgressDialog(IDialog):
 
 
 class MProgressDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IProgressDialog interface.
 
     Implements: update()
@@ -91,7 +90,7 @@ class MProgressDialog(HasTraits):
     # ------------------------------------------------------------------------
 
     def open(self):
-        """ Open the dialog """
+        """Open the dialog"""
         if self.max < self.min:
             msg = "Dialog min ({}) is greater than dialog max ({})."
             raise AttributeError(msg.format(self.min, self.max))
@@ -103,7 +102,7 @@ class MProgressDialog(HasTraits):
     # ------------------------------------------------------------------------
 
     def update(self, value):
-        """ Update the progress bar to the desired value
+        """Update the progress bar to the desired value
 
         If the value is >= the maximum and the progress bar is not contained
         in another panel the parent window will be closed.
@@ -121,7 +120,7 @@ class MProgressDialog(HasTraits):
             self.close()
 
     def change_message(self, message):
-        """ Change the displayed message in the progress dialog
+        """Change the displayed message in the progress dialog
 
         Parameters
         ----------

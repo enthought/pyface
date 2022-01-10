@@ -20,7 +20,7 @@ from .workbench_window import WorkbenchWindow
 
 
 class IWorkbench(Interface):
-    """ The workbench interface. """
+    """The workbench interface."""
 
     # 'IWorkbench' interface -----------------------------------------------
 
@@ -80,13 +80,13 @@ class IWorkbench(Interface):
     # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
-        """ Factory method that creates a new workbench window. """
+        """Factory method that creates a new workbench window."""
 
     def edit(self, obj, kind=None, use_existing=True):
-        """ Edit an object in the active workbench window. """
+        """Edit an object in the active workbench window."""
 
     def exit(self):
-        """ Exit the workbench.
+        """Exit the workbench.
 
         This closes all open workbench windows.
 
@@ -97,14 +97,14 @@ class IWorkbench(Interface):
         """
 
     def get_editor(self, obj, kind=None):
-        """ Return the editor that is editing an object.
+        """Return the editor that is editing an object.
 
         Returns None if no such editor exists.
 
         """
 
     def get_editor_by_id(self, id):
-        """ Return the editor with the specified Id.
+        """Return the editor with the specified Id.
 
         Returns None if no such editor exists.
 

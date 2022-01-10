@@ -42,7 +42,7 @@ from python_shell_window import (
 
 
 def create_python_shell_window(application, **kwargs):
-    """ Factory method for constructing application window instances. """
+    """Factory method for constructing application window instances."""
     window = PythonShellWindow(**kwargs)
 
     # Override the window's menubar with an enhanced one.
@@ -82,7 +82,7 @@ def create_python_shell_window(application, **kwargs):
 
 
 def main():
-    """ GUI application entrypoint. """
+    """GUI application entrypoint."""
     app = GUIApplication(
         id="example_python_shell_application",
         name="Python Shell",

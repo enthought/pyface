@@ -15,10 +15,10 @@ import wx
 
 
 class Divider(wx.StaticLine):
-    """ A thin visual divider. """
+    """A thin visual divider."""
 
     def __init__(self, parent, id, **kw):
-        """ Creates a divider. """
+        """Creates a divider."""
 
         # Base-class constructor.
         wx.StaticLine.__init__(self, parent, id, style=wx.LI_HORIZONTAL, **kw)
@@ -33,7 +33,7 @@ class Divider(wx.StaticLine):
     # ------------------------------------------------------------------------
 
     def _create_widget(self):
-        """ Creates the widget. """
+        """Creates the widget."""
 
         self.SetSize((1, 1))
 

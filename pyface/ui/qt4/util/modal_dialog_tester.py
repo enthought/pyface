@@ -26,7 +26,7 @@ BUTTON_TEXT = {OK: "OK", CANCEL: "Cancel", YES: "Yes", NO: "No"}
 
 
 class ModalDialogTester(object):
-    """ Test helper for code that open a traits ui or QDialog window.
+    """Test helper for code that open a traits ui or QDialog window.
 
     Usage
     -----
@@ -68,21 +68,17 @@ class ModalDialogTester(object):
 
     @property
     def result(self):
-        """ The return value of the provided function.
-
-        """
+        """The return value of the provided function."""
         return self._result
 
     @result.setter
     def result(self, value):
-        """ Setter methods for the result attribute.
-
-        """
+        """Setter methods for the result attribute."""
         self._assigned = True
         self._result = value
 
     def open_and_run(self, when_opened, *args, **kwargs):
-        """ Execute the function to open the dialog and run ``when_opened``.
+        """Execute the function to open the dialog and run ``when_opened``.
 
         Parameters
         ----------
@@ -110,7 +106,7 @@ class ModalDialogTester(object):
         condition_timer = QtCore.QTimer()
 
         def handler():
-            """ Run the when_opened as soon as the dialog has opened. """
+            """Run the when_opened as soon as the dialog has opened."""
             if self.dialog_opened():
                 self._gui.invoke_later(when_opened, self)
                 self.dialog_was_opened = True
@@ -138,7 +134,7 @@ class ModalDialogTester(object):
             self.assert_no_errors_collected()
 
     def open_and_wait(self, when_opened, *args, **kwargs):
-        """ Execute the function to open the dialog and wait to be closed.
+        """Execute the function to open the dialog and wait to be closed.
 
         Parameters
         ----------
@@ -166,7 +162,7 @@ class ModalDialogTester(object):
         condition_timer = QtCore.QTimer()
 
         def handler():
-            """ Run the when_opened as soon as the dialog has opened. """
+            """Run the when_opened as soon as the dialog has opened."""
             if self.dialog_opened():
                 self._dialog_widget = self.get_dialog_widget()
                 self._gui.invoke_later(when_opened, self)
@@ -207,7 +203,7 @@ class ModalDialogTester(object):
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
-        """ Execute the function that will cause a dialog to be opened.
+        """Execute the function that will cause a dialog to be opened.
 
         Parameters
         ----------
@@ -222,9 +218,7 @@ class ModalDialogTester(object):
             self.result = self.function(*args, **kwargs)
 
     def close(self, accept=False):
-        """ Close the dialog by accepting or rejecting.
-
-        """
+        """Close the dialog by accepting or rejecting."""
         with self.capture_error():
             widget = self.get_dialog_widget()
             if accept:
@@ -234,7 +228,7 @@ class ModalDialogTester(object):
 
     @contextlib.contextmanager
     def capture_error(self):
-        """ Capture exceptions, to be used while running inside an event loop.
+        """Capture exceptions, to be used while running inside an event loop.
 
         When errors and failures take place through an invoke later command
         they might not be caught by the unittest machinery. This context
@@ -251,9 +245,7 @@ class ModalDialogTester(object):
             )
 
     def assert_no_errors_collected(self):
-        """ Assert that the tester has not collected any errors.
-
-        """
+        """Assert that the tester has not collected any errors."""
         if len(self._event_loop_error) > 0:
             msg = "The following error(s) were detected:\n\n{0}"
             tracebacks = []
@@ -265,7 +257,7 @@ class ModalDialogTester(object):
             raise type_(msg.format("\n\n".join(tracebacks)))
 
     def click_widget(self, text, type_=QtGui.QPushButton):
-        """ Execute click on the widget of `type_` with `text`.
+        """Execute click on the widget of `type_` with `text`.
 
         This strips '&' chars from the string, since usage varies from platform
         to platform.
@@ -289,9 +281,7 @@ class ModalDialogTester(object):
         self.click_widget(text)
 
     def value_assigned(self):
-        """ A value was assigned to the result attribute.
-
-        """
+        """A value was assigned to the result attribute."""
         result = self._assigned
         if result:
             # process any pending events so that we have a clean
@@ -300,9 +290,7 @@ class ModalDialogTester(object):
         return result
 
     def dialog_opened(self):
-        """ Check that the dialog has opened.
-
-        """
+        """Check that the dialog has opened."""
         dialog = self.get_dialog_widget()
         if dialog is None:
             return False
@@ -315,17 +303,13 @@ class ModalDialogTester(object):
             return dialog.isVisible()
 
     def get_dialog_widget(self):
-        """ Get a reference to the active modal QDialog widget.
-
-        """
+        """Get a reference to the active modal QDialog widget."""
         # It might make sense to also check for active window and active popup
         # window if this Tester is used for non-modal windows.
         return self._qt_app.activeModalWidget()
 
     def has_widget(self, text=None, type_=QtGui.QPushButton):
-        """ Return true if there is a widget of `type_` with `text`.
-
-        """
+        """Return true if there is a widget of `type_` with `text`."""
         if text is None:
             test = None
         else:
@@ -333,9 +317,7 @@ class ModalDialogTester(object):
         return self.find_qt_widget(type_=type_, test=test) is not None
 
     def find_qt_widget(self, type_=QtGui.QPushButton, test=None):
-        """ Return the widget of `type_` for which `test` returns true.
-
-        """
+        """Return the widget of `type_` for which `test` returns true."""
         if test is None:
             test = lambda x: True
         window = self.get_dialog_widget()

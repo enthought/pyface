@@ -34,7 +34,7 @@ class AspectRatio(Enum):
 
 
 def image_to_bitmap(image):
-    """ Convert a QImage to a QPixmap.
+    """Convert a QImage to a QPixmap.
     Parameters
     ----------
     image : QImage
@@ -49,7 +49,7 @@ def image_to_bitmap(image):
 
 
 def bitmap_to_image(bitmap):
-    """ Convert a QPixmap to a QImage.
+    """Convert a QPixmap to a QImage.
     Parameters
     ----------
     bitmap : QPixmap
@@ -64,7 +64,7 @@ def bitmap_to_image(bitmap):
 
 
 def bitmap_to_icon(bitmap):
-    """ Convert a QPixmap to a QIcon.
+    """Convert a QPixmap to a QIcon.
     Parameters
     ----------
     bitmap : QPixmap
@@ -78,20 +78,22 @@ def bitmap_to_icon(bitmap):
     return QIcon(bitmap)
 
 
-def resize_image(image, size, aspect_ratio=AspectRatio.ignore,
-                 mode=ScaleMode.fast):
-    """ Resize a toolkit image to the given size. """
+def resize_image(
+    image, size, aspect_ratio=AspectRatio.ignore, mode=ScaleMode.fast
+):
+    """Resize a toolkit image to the given size."""
     return image.scaled(*size, aspect_ratio.value, mode.value)
 
 
-def resize_bitmap(bitmap, size, aspect_ratio=AspectRatio.ignore,
-                  mode=ScaleMode.fast):
-    """ Resize a toolkit bitmap to the given size. """
+def resize_bitmap(
+    bitmap, size, aspect_ratio=AspectRatio.ignore, mode=ScaleMode.fast
+):
+    """Resize a toolkit bitmap to the given size."""
     return bitmap.scaled(*size, aspect_ratio.value, mode.value)
 
 
 def image_to_array(image):
-    """ Convert a QImage to a numpy array.
+    """Convert a QImage to a numpy array.
 
     This copies the data returned from Qt.
 
@@ -119,14 +121,12 @@ def image_to_array(image):
         # comes in as BGRA, but want RGBA
         array = array[:, :, [2, 1, 0, 3]]
     else:
-        raise ValueError(
-            "Unsupported QImage format {}".format(image.format())
-        )
+        raise ValueError("Unsupported QImage format {}".format(image.format()))
     return array
 
 
 def array_to_image(array):
-    """ Convert a numpy array to a QImage.
+    """Convert a numpy array to a QImage.
 
     This copies the data before passing it to Qt.
 
@@ -151,7 +151,7 @@ def array_to_image(array):
     data = np.empty((height, width, 4), dtype='uint8')
     if channels == 3:
         data[:, :, [2, 1, 0]] = array
-        data[:, :, 3] = 0xff
+        data[:, :, 3] = 0xFF
     elif channels == 4:
         data[:, :, [2, 1, 0, 3]] = array
     else:
@@ -160,12 +160,14 @@ def array_to_image(array):
     bytes_per_line = 4 * width
 
     if channels == 3:
-        image = QImage(data.data, width, height, bytes_per_line,
-                       QImage.Format_RGB32)
+        image = QImage(
+            data.data, width, height, bytes_per_line, QImage.Format_RGB32
+        )
 
     elif channels == 4:
-        image = QImage(data.data, width, height, bytes_per_line,
-                       QImage.Format_ARGB32)
+        image = QImage(
+            data.data, width, height, bytes_per_line, QImage.Format_ARGB32
+        )
     image._numpy_data = data
     return image
 

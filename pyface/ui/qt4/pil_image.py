@@ -16,15 +16,14 @@ from pyface.ui.qt4.util.image_helpers import resize_image
 
 @provides(IPILImage)
 class PILImage(MPILImage):
-    """ The toolkit specific implementation of a PILImage.
-    """
+    """The toolkit specific implementation of a PILImage."""
 
     # ------------------------------------------------------------------------
     # 'IImage' interface.
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a Qt image for this image.
+        """Creates a Qt image for this image.
 
         Parameters
         ----------
@@ -39,6 +38,7 @@ class PILImage(MPILImage):
             size.
         """
         from PIL.ImageQt import ImageQt
+
         image = ImageQt(self.image)
         if size is not None:
             return resize_image(image, size)

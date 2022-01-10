@@ -15,14 +15,14 @@ from traits.api import HasTraits, Interface
 
 
 class IImageCache(Interface):
-    """ The interface for an image cache. """
+    """The interface for an image cache."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, width, height):
-        """ Creates a new image cache for images of the given size.
+        """Creates a new image cache for images of the given size.
 
         Parameters
         ----------
@@ -37,7 +37,7 @@ class IImageCache(Interface):
     # ------------------------------------------------------------------------
 
     def get_image(self, filename):
-        """ Returns the scaled image specified.
+        """Returns the scaled image specified.
 
         Parameters
         ----------
@@ -55,7 +55,7 @@ class IImageCache(Interface):
     # specific so, strictly speaking, the conversion to a bitmap should be done
     # wherever the toolkit actually needs it.
     def get_bitmap(self, filename):
-        """ Returns the scaled image specified as a bitmap.
+        """Returns the scaled image specified as a bitmap.
 
         Parameters
         ----------
@@ -71,6 +71,6 @@ class IImageCache(Interface):
 
 
 class MImageCache(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IImageCache interface.
     """

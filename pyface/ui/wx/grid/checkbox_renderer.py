@@ -28,7 +28,7 @@ class CheckboxRenderer(GridCellRenderer):
             self.renderer = CheckboxImageRenderer()
 
     def on_left_click(self, grid, row, col):
-        """ Toggles the value. """
+        """Toggles the value."""
 
         value = grid.model.get_cell_drag_value(row, col)
 

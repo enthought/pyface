@@ -22,8 +22,7 @@ from .dialog import Dialog
 
 @provides(IColorDialog)
 class ColorDialog(Dialog):
-    """ A dialog that allows the user to choose a color.
-    """
+    """A dialog that allows the user to choose a color."""
 
     # 'IColorDialog' interface ----------------------------------------------
 

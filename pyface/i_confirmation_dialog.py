@@ -20,7 +20,7 @@ from pyface.ui_traits import Image
 
 
 class IConfirmationDialog(IDialog):
-    """ The interface for a dialog that prompts the user for confirmation. """
+    """The interface for a dialog that prompts the user for confirmation."""
 
     # 'IConfirmationDialog' interface -------------------------------------#
 
@@ -51,6 +51,6 @@ class IConfirmationDialog(IDialog):
 
 
 class MConfirmationDialog(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """

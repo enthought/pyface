@@ -41,8 +41,7 @@ IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split(".")))
 
 
 class IPythonController(WxController):
-    """ An WxController for IPython version >= 0.9. Adds a few extras.
-    """
+    """An WxController for IPython version >= 0.9. Adds a few extras."""
 
     def __init__(self, *args, **kwargs):
         WxController.__init__(self, *args, **kwargs)
@@ -55,8 +54,7 @@ class IPythonController(WxController):
 
 
 class IPython010Controller(IPythonController):
-    """ A WxController hacked/patched specifically for the 0.10 branch.
-    """
+    """A WxController hacked/patched specifically for the 0.10 branch."""
 
     def execute_command(self, command, hidden=False):
         # XXX: Overriden to fix bug where executing a hidden command still
@@ -67,8 +65,7 @@ class IPython010Controller(IPythonController):
 
 
 class IPython09Controller(IPythonController):
-    """ A WxController hacked/patched specifically for the 0.9 branch.
-    """
+    """A WxController hacked/patched specifically for the 0.9 branch."""
 
     # In the parent class, this is a property that expects the
     # container to be a frame, thus it fails when modified.
@@ -87,8 +84,7 @@ class IPython09Controller(IPythonController):
     _banner = None
 
     def _get_banner(self):
-        """ Returns the IPython banner.
-        """
+        """Returns the IPython banner."""
         if self._banner is None:
             # 'ipython0' gets set in the __init__ method of the base class.
             if hasattr(self, "ipython0"):
@@ -129,12 +125,12 @@ class IPython09Controller(IPythonController):
                 if func.__doc__ is None:
                     func.__doc__ = ""
             except AttributeError:
-                """ Avoid "attribute '__doc__' of 'instancemethod'
-                    objects is not writable".
+                """Avoid "attribute '__doc__' of 'instancemethod'
+                objects is not writable".
                 """
 
     def complete(self, line):
-        """ Returns a list of possible completions for line.
+        """Returns a list of possible completions for line.
         Overridden from the base class implementation to fix bugs in retrieving
         the completion text from line.
 
@@ -146,7 +142,7 @@ class IPython09Controller(IPythonController):
         return new_line, completions
 
     def is_complete(self, string):
-        """ Check if a string forms a complete, executable set of
+        """Check if a string forms a complete, executable set of
         commands.
 
         For the line-oriented frontend, multi-line code is not executed
@@ -191,8 +187,8 @@ class IPython09Controller(IPythonController):
             return is_complete
 
     def execute_command(self, command, hidden=False):
-        """ Execute a command, not only in the model, but also in the
-            view.
+        """Execute a command, not only in the model, but also in the
+        view.
         """
         # XXX: This needs to be moved to the IPython codebase.
         if hidden:
@@ -230,8 +226,7 @@ class IPython09Controller(IPythonController):
             return True
 
     def clear_screen(self):
-        """ Empty completely the widget.
-        """
+        """Empty completely the widget."""
         self.ClearAll()
         self.new_prompt(
             self.input_prompt_template.substitute(
@@ -250,10 +245,10 @@ class IPython09Controller(IPythonController):
         return "." * len(promptstr) + ":"
 
     def _popup_completion(self, create=False):
-        """ Updates the popup completion menu if it exists. If create is
-            true, open the menu.
-            Overridden from the base class implementation to filter out
-            delimiters from the input buffer.
+        """Updates the popup completion menu if it exists. If create is
+        true, open the menu.
+        Overridden from the base class implementation to filter out
+        delimiters from the input buffer.
         """
 
         # FIXME: The implementation in the base class (wx_frontend.py in
@@ -270,9 +265,7 @@ class IPython09Controller(IPythonController):
             print("_popup_completion", self.input_buffer, file=sys.__stdout__)
 
         line = self.input_buffer
-        if create or (
-            self.AutoCompActive() and line and not line[-1] == "."
-        ):
+        if create or (self.AutoCompActive() and line and not line[-1] == "."):
             suggestion, completions = self.complete(line)
             if completions:
                 offset = len(self._get_completion_text(line))
@@ -281,7 +274,7 @@ class IPython09Controller(IPythonController):
                     print(completions, file=sys.__stdout__)
 
     def _get_completion_text(self, line):
-        """ Returns the text to be completed by breaking the line at specified
+        """Returns the text to be completed by breaking the line at specified
         delimiters.
         """
         # Break at: spaces, '=', all parentheses (except if balanced).
@@ -295,11 +288,11 @@ class IPython09Controller(IPythonController):
         return text
 
     def _on_enter(self):
-        """ Called when the return key is pressed in a line editing
-            buffer.
-            Overridden from the base class implementation (in
-            IPython/frontend/linefrontendbase.py) to include a continuation
-            prompt.
+        """Called when the return key is pressed in a line editing
+        buffer.
+        Overridden from the base class implementation (in
+        IPython/frontend/linefrontendbase.py) to include a continuation
+        prompt.
         """
         current_buffer = self.input_buffer
         cleaned_buffer = self.prefilter_input(
@@ -323,7 +316,7 @@ class IPython09Controller(IPythonController):
 
 @provides(IPythonShell)
 class IPythonWidget(Widget):
-    """ The toolkit specific implementation of a PythonShell.  See the
+    """The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
@@ -344,7 +337,7 @@ class IPythonWidget(Widget):
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
     def __init__(self, parent, **traits):
-        """ Creates a new pager. """
+        """Creates a new pager."""
 
         warnings.warn(
             "the Wx IPython widget us deprecated and will be removed in a "
@@ -400,7 +393,7 @@ class IPythonWidget(Widget):
     # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
-        """ Called when a drop occurs on the shell. """
+        """Called when a drop occurs on the shell."""
 
         # If this is a file, we'll just print the file name
         if isinstance(obj, EnthoughtFile):
@@ -443,7 +436,7 @@ class IPythonWidget(Widget):
         return wx.DragCopy
 
     def on_drag_over(self, x, y, obj, default_drag_result):
-        """ Always returns wx.DragCopy to indicate we will be doing a copy."""
+        """Always returns wx.DragCopy to indicate we will be doing a copy."""
 
         return wx.DragCopy
 
@@ -452,7 +445,7 @@ class IPythonWidget(Widget):
     # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         self.key_pressed = KeyPressedEvent(
             alt_down=event.AltDown() == 1,

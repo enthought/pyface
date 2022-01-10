@@ -14,8 +14,7 @@ from .editable_value import EditableValue
 
 
 class TextValue(EditableValue):
-    """ Editable value that presents a string value.
-    """
+    """Editable value that presents a string value."""
 
     #: A function that converts the value to a string for display.
     format = Callable(str, update_value_type=True)
@@ -24,7 +23,7 @@ class TextValue(EditableValue):
     unformat = Callable(str)
 
     def get_text(self, model, row, column):
-        """ Get the display text from the underlying value.
+        """Get the display text from the underlying value.
 
         Parameters
         ----------
@@ -43,7 +42,7 @@ class TextValue(EditableValue):
         return self.format(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
-        """ Set the text of the underlying value.
+        """Set the text of the underlying value.
 
         Parameters
         ----------

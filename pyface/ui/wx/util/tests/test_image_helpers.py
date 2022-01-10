@@ -13,16 +13,22 @@ import wx
 
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from ..image_helpers import (
-    bitmap_to_icon, bitmap_to_image, image_to_array, image_to_bitmap,
-    array_to_image, AspectRatio, ScaleMode, resize_image, resize_bitmap,
+    bitmap_to_icon,
+    bitmap_to_image,
+    image_to_array,
+    image_to_bitmap,
+    array_to_image,
+    AspectRatio,
+    ScaleMode,
+    resize_image,
+    resize_bitmap,
 )
 
 
 class TestImageHelpers(unittest.TestCase):
-
     def test_image_to_bitmap(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         wxbitmap = image_to_bitmap(wximage)
 
@@ -30,7 +36,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_bitmap_to_image(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
         wximage = bitmap_to_image(wxbitmap)
@@ -39,7 +45,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_bitmap_to_icon(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
         wximage = bitmap_to_icon(wxbitmap)
@@ -48,7 +54,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_image(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         wximage = resize_image(wximage, (128, 128))
 
@@ -58,7 +64,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_image_smooth(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         wximage = resize_image(wximage, (128, 128), mode=ScaleMode.smooth)
 
@@ -68,7 +74,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_image_constrain(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         wximage = resize_image(wximage, (128, 128), AspectRatio.keep_constrain)
 
@@ -78,7 +84,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_image_expand(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         wximage = resize_image(wximage, (128, 128), AspectRatio.keep_expand)
 
@@ -88,7 +94,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_bitmap(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
         wxbitmap = resize_bitmap(wxbitmap, (128, 128))
@@ -99,7 +105,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_bitmap_smooth(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
         wxbitmap = resize_bitmap(wxbitmap, (128, 128), mode=ScaleMode.smooth)
@@ -110,10 +116,12 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_bitmap_constrain(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
-        wxbitmap = resize_bitmap(wxbitmap, (128, 128), AspectRatio.keep_constrain)
+        wxbitmap = resize_bitmap(
+            wxbitmap, (128, 128), AspectRatio.keep_constrain
+        )
 
         self.assertIsInstance(wxbitmap, wx.Bitmap)
         self.assertEqual(wxbitmap.GetWidth(), 64)
@@ -121,7 +129,7 @@ class TestImageHelpers(unittest.TestCase):
 
     def test_resize_bitmap_expand(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wxbitmap = wximage.ConvertToBitmap()
 
         wxbitmap = resize_bitmap(wxbitmap, (128, 128), AspectRatio.keep_expand)
@@ -133,25 +141,24 @@ class TestImageHelpers(unittest.TestCase):
 
 @requires_numpy
 class TestArrayImageHelpers(unittest.TestCase):
-
     def test_image_to_array_rgb(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
 
         array = image_to_array(wximage)
 
         self.assertEqual(array.shape, (32, 64, 4))
         self.assertEqual(array.dtype, np.dtype('uint8'))
-        self.assertTrue(np.all(array[:, :, 3] == 0xff))
+        self.assertTrue(np.all(array[:, :, 3] == 0xFF))
         self.assertTrue(np.all(array[:, :, 0] == 0x44))
         self.assertTrue(np.all(array[:, :, 1] == 0x88))
-        self.assertTrue(np.all(array[:, :, 2] == 0xcc))
+        self.assertTrue(np.all(array[:, :, 2] == 0xCC))
 
     def test_image_to_array_rgba(self):
         wximage = wx.Image(32, 64)
-        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xcc)
+        wximage.SetRGB(wx.Rect(0, 0, 32, 64), 0x44, 0x88, 0xCC)
         wximage.InitAlpha()
-        wximage.SetAlpha(np.full((32*64,), 0xee, dtype='uint8'))
+        wximage.SetAlpha(np.full((32 * 64,), 0xEE, dtype='uint8'))
 
         array = image_to_array(wximage)
 
@@ -159,14 +166,14 @@ class TestArrayImageHelpers(unittest.TestCase):
         self.assertEqual(array.dtype, np.dtype('uint8'))
         self.assertTrue(np.all(array[:, :, 0] == 0x44))
         self.assertTrue(np.all(array[:, :, 1] == 0x88))
-        self.assertTrue(np.all(array[:, :, 2] == 0xcc))
-        self.assertTrue(np.all(array[:, :, 3] == 0xee))
+        self.assertTrue(np.all(array[:, :, 2] == 0xCC))
+        self.assertTrue(np.all(array[:, :, 3] == 0xEE))
 
     def test_array_to_image_rgb(self):
         array = np.empty((64, 32, 3), dtype='uint8')
         array[:, :, 0] = 0x44
         array[:, :, 1] = 0x88
-        array[:, :, 2] = 0xcc
+        array[:, :, 2] = 0xCC
 
         wximage = array_to_image(array)
 
@@ -178,8 +185,8 @@ class TestArrayImageHelpers(unittest.TestCase):
         array = np.empty((64, 32, 4), dtype='uint8')
         array[:, :, 0] = 0x44
         array[:, :, 1] = 0x88
-        array[:, :, 2] = 0xcc
-        array[:, :, 3] = 0xee
+        array[:, :, 2] = 0xCC
+        array[:, :, 3] = 0xEE
 
         wximage = array_to_image(array)
 

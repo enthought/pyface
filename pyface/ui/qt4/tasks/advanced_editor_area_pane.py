@@ -15,7 +15,14 @@ from pyface.qt import QtCore, QtGui, is_pyside, is_qt6
 
 
 from traits.api import (
-    Any, Callable, DelegatesTo, Instance, List, observe, provides, Tuple
+    Any,
+    Callable,
+    DelegatesTo,
+    Instance,
+    List,
+    observe,
+    provides,
+    Tuple,
 )
 
 
@@ -33,7 +40,7 @@ from .util import set_focus
 
 @provides(IAdvancedEditorAreaPane)
 class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
-    """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
+    """The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
@@ -52,8 +59,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            pane.
+        """Create and set the toolkit-specific control that represents the
+        pane.
         """
         self.control = EditorAreaWidget(self, parent)
         self._filter = EditorAreaDropFilter(self)
@@ -101,8 +108,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             mapper.setMapping(shortcut, i - 1)
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         self.control.removeEventFilter(self._filter)
         self.control._remove_event_listeners()
         self._filter = None
@@ -124,8 +130,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
-        """ Activates the specified editor in the pane.
-        """
+        """Activates the specified editor in the pane."""
         editor_widget = editor.control.parent()
         editor_widget.setVisible(True)
         editor_widget.raise_()
@@ -133,16 +138,14 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         self.active_editor = editor
 
     def add_editor(self, editor):
-        """ Adds an editor to the pane.
-        """
+        """Adds an editor to the pane."""
         editor.editor_area = self
         editor_widget = EditorWidget(editor, self.control)
         self.control.add_editor_widget(editor_widget)
         self.editors.append(editor)
 
     def remove_editor(self, editor):
-        """ Removes an editor from the pane.
-        """
+        """Removes an editor from the pane."""
         editor_widget = editor.control.parent()
         self.editors.remove(editor)
         self.control.remove_editor_widget(editor_widget)
@@ -155,15 +158,13 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def get_layout(self):
-        """ Returns a LayoutItem that reflects the current state of the editors.
-        """
+        """Returns a LayoutItem that reflects the current state of the editors."""
         return self._main_window_layout.get_layout_for_area(
             QtCore.Qt.LeftDockWidgetArea
         )
 
     def set_layout(self, layout):
-        """ Applies a LayoutItem to the editors in the pane.
-        """
+        """Applies a LayoutItem to the editors in the pane."""
         if layout is not None:
             self._main_window_layout.set_layout_for_area(
                 layout, QtCore.Qt.LeftDockWidgetArea
@@ -174,15 +175,13 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def _activate_tab(self, index):
-        """ Activates the tab with the specified index, if there is one.
-        """
+        """Activates the tab with the specified index, if there is one."""
         widgets = self.control.get_dock_widgets_ordered()
         if index < len(widgets):
             self.activate_editor(widgets[index].editor)
 
     def _next_tab(self):
-        """ Activate the tab after the currently active tab.
-        """
+        """Activate the tab after the currently active tab."""
         if self.active_editor:
             widgets = self.control.get_dock_widgets_ordered()
             index = widgets.index(self.active_editor.control.parent()) + 1
@@ -190,8 +189,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 self.activate_editor(widgets[index].editor)
 
     def _previous_tab(self):
-        """ Activate the tab before the currently active tab.
-        """
+        """Activate the tab before the currently active tab."""
         if self.active_editor:
             widgets = self.control.get_dock_widgets_ordered()
             index = widgets.index(self.active_editor.control.parent()) - 1
@@ -199,8 +197,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 self.activate_editor(widgets[index].editor)
 
     def _get_label(self, editor):
-        """ Return a tab label for an editor.
-        """
+        """Return a tab label for an editor."""
         label = editor.name
         if editor.dirty:
             label = "*" + label
@@ -230,7 +227,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
 
 class EditorAreaMainWindowLayout(MainWindowLayout):
-    """ A MainWindowLayout for implementing AdvancedEditorAreaPane.
+    """A MainWindowLayout for implementing AdvancedEditorAreaPane.
 
     Used for getting and setting layouts for the pane.
     """
@@ -248,8 +245,7 @@ class EditorAreaMainWindowLayout(MainWindowLayout):
     # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
-        """ Returns the QDockWidget associated with a PaneItem.
-        """
+        """Returns the QDockWidget associated with a PaneItem."""
         try:
             editor = self.editor_area.editors[pane.id]
             return editor.control.parent()
@@ -257,8 +253,7 @@ class EditorAreaMainWindowLayout(MainWindowLayout):
             return None
 
     def _get_pane(self, dock_widget):
-        """ Returns a PaneItem for a QDockWidget.
-        """
+        """Returns a PaneItem for a QDockWidget."""
         for i, editor in enumerate(self.editor_area.editors):
             if editor.control == dock_widget.widget():
                 return PaneItem(id=i)
@@ -266,8 +261,7 @@ class EditorAreaMainWindowLayout(MainWindowLayout):
 
 
 class EditorAreaWidget(QtGui.QMainWindow):
-    """ An auxillary widget for implementing AdvancedEditorAreaPane.
-    """
+    """An auxillary widget for implementing AdvancedEditorAreaPane."""
 
     # ------------------------------------------------------------------------
     # 'EditorAreaWidget' interface.
@@ -287,7 +281,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 break
 
         # Monitor focus changes so we can set the active editor.
-        QtGui.QApplication.instance().focusChanged.connect(self._update_active_editor)
+        QtGui.QApplication.instance().focusChanged.connect(
+            self._update_active_editor
+        )
 
         # Configure the QMainWindow.
         # FIXME: Currently animation is not supported.
@@ -301,13 +297,12 @@ class EditorAreaWidget(QtGui.QMainWindow):
         )
 
     def _remove_event_listeners(self):
-        """ Disconnects focusChanged signal of the application """
+        """Disconnects focusChanged signal of the application"""
         app = QtGui.QApplication.instance()
         app.focusChanged.disconnect(self._update_active_editor)
 
     def add_editor_widget(self, editor_widget):
-        """ Adds a dock widget to the editor area.
-        """
+        """Adds a dock widget to the editor area."""
         editor_widget.installEventFilter(self)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, editor_widget)
 
@@ -327,8 +322,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         self.editor_area.activate_editor(editor_widget.editor)
 
     def destroy_editor_widget(self, editor_widget):
-        """ Destroys a dock widget in the editor area.
-        """
+        """Destroys a dock widget in the editor area."""
         editor_widget.hide()
         editor_widget.removeEventFilter(self)
         editor_widget._remove_event_listeners()
@@ -336,8 +330,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         self.removeDockWidget(editor_widget)
 
     def get_dock_widgets(self):
-        """ Gets all visible dock widgets.
-        """
+        """Gets all visible dock widgets."""
         return [
             child
             for child in self.children()
@@ -345,7 +338,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         ]
 
     def get_dock_widgets_for_bar(self, tab_bar):
-        """ Get the dock widgets, in order, attached to given tab bar.
+        """Get the dock widgets, in order, attached to given tab bar.
 
         Because QMainWindow locks this info down, we have resorted to a hack.
         """
@@ -360,8 +353,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return []
 
     def get_dock_widgets_ordered(self, visible_only=False):
-        """ Gets all dock widgets in left-to-right, top-to-bottom order.
-        """
+        """Gets all dock widgets in left-to-right, top-to-bottom order."""
         children = []
         for child in self.children():
             if (
@@ -389,8 +381,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return widgets
 
     def remove_editor_widget(self, editor_widget):
-        """ Removes a dock widget from the editor area.
-        """
+        """Removes a dock widget from the editor area."""
         # Get the tabs in this editor's dock area before removing it.
         tabified = self.tabifiedDockWidgets(editor_widget)
         if tabified:
@@ -424,16 +415,14 @@ class EditorAreaWidget(QtGui.QMainWindow):
             editor_area.editors[0].control.parent().set_title_bar(False)
 
     def reset_drag(self):
-        """ Clear out all drag state.
-        """
+        """Clear out all drag state."""
         self._drag_widget = None
         self._hover_widget = None
         self._tear_handled = False
         self._tear_widgets = []
 
     def set_hover_widget(self, widget):
-        """ Set the dock widget being 'hovered over' during a drag.
-        """
+        """Set the dock widget being 'hovered over' during a drag."""
         old_widget = self._hover_widget
         self._hover_widget = widget
 
@@ -456,8 +445,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # ------------------------------------------------------------------------
 
     def childEvent(self, event):
-        """ Reimplemented to gain access to the tab bars as they are created.
-        """
+        """Reimplemented to gain access to the tab bars as they are created."""
         super().childEvent(event)
         if event.polished():
             child = event.child()
@@ -477,8 +465,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 # child.setMovable(True)
 
     def eventFilter(self, obj, event):
-        """ Reimplemented to dispatch to sub-handlers.
-        """
+        """Reimplemented to dispatch to sub-handlers."""
         if isinstance(obj, QtGui.QDockWidget):
             return self._filter_dock_widget(obj, event)
 
@@ -491,8 +478,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return False
 
     def _filter_dock_widget(self, widget, event):
-        """ Support hover widget state tracking.
-        """
+        """Support hover widget state tracking."""
         if self._drag_widget and event.type() == QtCore.QEvent.Resize:
             if widget.geometry() == self._rubber_band.geometry():
                 self.set_hover_widget(widget)
@@ -514,8 +500,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return False
 
     def _filter_rubber_band(self, rubber_band, event):
-        """ Support hover widget state tracking.
-        """
+        """Support hover widget state tracking."""
         if self._drag_widget and event.type() in (
             QtCore.QEvent.Resize,
             QtCore.QEvent.Move,
@@ -525,8 +510,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return False
 
     def _filter_tab_bar(self, tab_bar, event):
-        """ Support 'tearing off' a tab.
-        """
+        """Support 'tearing off' a tab."""
         if event.type() == QtCore.QEvent.MouseMove:
             if tab_bar.rect().contains(event.pos()):
                 self.reset_drag()
@@ -572,8 +556,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         return False
 
     def focusInEvent(self, event):
-        """ Assign focus to the active editor, if possible.
-        """
+        """Assign focus to the active editor, if possible."""
         active_editor = self.editor_area.active_editor
         if active_editor:
             set_focus(active_editor.control)
@@ -583,8 +566,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     # ------------------------------------------------------------------------
 
     def _update_active_editor(self, old, new):
-        """ Handle an application-level focus change.
-        """
+        """Handle an application-level focus change."""
         if new is not None:
             for editor in self.editor_area.editors:
                 control = editor.control
@@ -596,23 +578,20 @@ class EditorAreaWidget(QtGui.QMainWindow):
                     self.editor_area.active_editor = None
 
     def _update_editor_in_focus(self, index):
-        """ Handle a tab selection.
-        """
+        """Handle a tab selection."""
         widgets = self.get_dock_widgets_for_bar(self.sender())
         if index < len(widgets):
             editor_widget = widgets[index]
             editor_widget.editor.control.setFocus()
 
     def _tab_close_requested(self, index):
-        """ Handle a tab close request.
-        """
+        """Handle a tab close request."""
         editor_widget = self.get_dock_widgets_for_bar(self.sender())[index]
         editor_widget.editor.close()
 
 
 class EditorWidget(QtGui.QDockWidget):
-    """ An auxillary widget for implementing AdvancedEditorAreaPane.
-    """
+    """An auxillary widget for implementing AdvancedEditorAreaPane."""
 
     def __init__(self, editor, parent=None):
         super().__init__(parent)
@@ -675,8 +654,7 @@ class EditorWidget(QtGui.QDockWidget):
 
 
 class EditorTitleBarWidget(QtGui.QTabBar):
-    """ An auxillary widget for implementing AdvancedEditorAreaPane.
-    """
+    """An auxillary widget for implementing AdvancedEditorAreaPane."""
 
     def __init__(self, editor_widget):
         super().__init__(editor_widget)

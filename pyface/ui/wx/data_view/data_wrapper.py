@@ -17,7 +17,7 @@ from pyface.data_view.i_data_wrapper import IDataWrapper, MDataWrapper
 
 @provides(IDataWrapper)
 class DataWrapper(MDataWrapper):
-    """ WxPython implementaton of IDataWrapper.
+    """WxPython implementaton of IDataWrapper.
 
     This wraps a DataObjectComposite which is assumed to contain a collection
     of CustomDataObjects that store data associated by mimetype.  Any other
@@ -32,7 +32,7 @@ class DataWrapper(MDataWrapper):
     )
 
     def mimetypes(self):
-        """ Return a set of mimetypes holding data.
+        """Return a set of mimetypes holding data.
 
         Returns
         -------
@@ -46,7 +46,7 @@ class DataWrapper(MDataWrapper):
         }
 
     def get_mimedata(self, mimetype):
-        """ Get raw data for the given media type.
+        """Get raw data for the given media type.
 
         Parameters
         ----------
@@ -66,7 +66,7 @@ class DataWrapper(MDataWrapper):
         return None
 
     def set_mimedata(self, mimetype, raw_data):
-        """ Set raw data for the given media type.
+        """Set raw data for the given media type.
 
         Parameters
         ----------

@@ -19,7 +19,6 @@ from pyface.image_resource import ImageResource
 
 
 class TestConstantValue(UnittestTools, TestCase):
-
     def setUp(self):
         self.model = Mock()
 
@@ -43,8 +42,7 @@ class TestConstantValue(UnittestTools, TestCase):
     def test_get_text(self):
         value_type = ConstantValue(text="something")
         self.assertEqual(
-            value_type.get_text(self.model, [0], [0]),
-            "something"
+            value_type.get_text(self.model, [0], [0]), "something"
         )
 
     def test_text_changed(self):
@@ -69,7 +67,7 @@ class TestConstantValue(UnittestTools, TestCase):
         value_type = ConstantValue(color='rebeccapurple')
         self.assertEqual(
             value_type.get_color(self.model, [0], [0]),
-            Color(rgba=(0.4, 0.2, 0.6, 1.0))
+            Color(rgba=(0.4, 0.2, 0.6, 1.0)),
         )
 
     def test_get_color_changed(self):
@@ -78,7 +76,7 @@ class TestConstantValue(UnittestTools, TestCase):
             value_type.color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         self.assertEqual(
             value_type.get_color(self.model, [0], [0]),
-            Color(rgba=(0.4, 0.2, 0.6, 0.8))
+            Color(rgba=(0.4, 0.2, 0.6, 0.8)),
         )
 
     def test_get_color_rgba_changed(self):
@@ -87,7 +85,7 @@ class TestConstantValue(UnittestTools, TestCase):
             value_type.color.rgba = (0.4, 0.2, 0.6, 0.8)
         self.assertEqual(
             value_type.get_color(self.model, [0], [0]),
-            Color(rgba=(0.4, 0.2, 0.6, 0.8))
+            Color(rgba=(0.4, 0.2, 0.6, 0.8)),
         )
 
     def test_has_image(self):
@@ -101,10 +99,7 @@ class TestConstantValue(UnittestTools, TestCase):
     def test_get_image(self):
         image = ImageResource("question")
         value_type = ConstantValue(image=image)
-        self.assertEqual(
-            value_type.get_image(self.model, [0], [0]),
-            image
-        )
+        self.assertEqual(value_type.get_image(self.model, [0], [0]), image)
 
     def test_get_image_none(self):
         value_type = ConstantValue()
@@ -129,8 +124,7 @@ class TestConstantValue(UnittestTools, TestCase):
     def test_get_tooltip(self):
         value_type = ConstantValue(tooltip="something")
         self.assertEqual(
-            value_type.get_tooltip(self.model, [0], [0]),
-            "something"
+            value_type.get_tooltip(self.model, [0], [0]), "something"
         )
 
     def test_tooltip_changed(self):

@@ -28,8 +28,7 @@ logger = logging.getLogger()
 
 
 class PythonShellPane(TaskPane):
-    """ A Tasks Pane containing a Pyface PythonShell
-    """
+    """A Tasks Pane containing a Pyface PythonShell"""
 
     id = "pyface.tasks.contrib.python_shell.pane"
     name = "Python Shell"
@@ -40,7 +39,7 @@ class PythonShellPane(TaskPane):
     commands = List(Str)
 
     def create(self, parent):
-        """ Create the python shell task pane
+        """Create the python shell task pane
 
         This wraps the standard pyface PythonShell
         """
@@ -62,8 +61,7 @@ class PythonShellPane(TaskPane):
         logger.debug("PythonShellPane: created")
 
     def destroy(self):
-        """ Destroy the python shell task pane
-        """
+        """Destroy the python shell task pane"""
         logger.debug("PythonShellPane: destroying python shell pane")
         self.editor.destroy()
         self.control = self.editor = None
@@ -101,8 +99,7 @@ class PythonShellTask(Task):
     )
 
     def create_central_pane(self):
-        """ Create a view pane with a Python shell
-        """
+        """Create a view pane with a Python shell"""
         logger.debug("Creating Python shell pane in central pane")
         self.pane = PythonShellPane(
             bindings=self.bindings, commands=self.commands
@@ -112,8 +109,7 @@ class PythonShellTask(Task):
     # PythonShellTask API
 
     def open(self):
-        """ Shows a dialog to open a file.
-        """
+        """Shows a dialog to open a file."""
         logger.debug("PythonShellTask: opening file")
         dialog = FileDialog(parent=self.window.control, wildcard="*.py")
         if dialog.open() == OK:
@@ -122,7 +118,6 @@ class PythonShellTask(Task):
     # Private API
 
     def _open_file(self, path):
-        """ Execute the selected file in the editor's interpreter
-        """
+        """Execute the selected file in the editor's interpreter"""
         logger.debug('PythonShellTask: executing file "%s"' % path)
         self.pane.editor.execute_file(path)

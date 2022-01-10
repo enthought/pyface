@@ -14,7 +14,7 @@ from pyface.data_view.api import AbstractDataModel, TupleIndexManager
 
 
 class IndexDataModel(AbstractDataModel):
-    """ A data model that displays the indices of the cell. """
+    """A data model that displays the indices of the cell."""
 
     index_manager = Instance(TupleIndexManager, ())
 
@@ -46,12 +46,12 @@ if __name__ == '__main__':
     from pyface.data_view.value_types.api import TextValue
 
     class MainWindow(ApplicationWindow):
-        """ The main application window. """
+        """The main application window."""
 
         data_view = Instance(IDataViewWidget)
 
         def _create_contents(self, parent):
-            """ Creates the left hand side or top depending on the style. """
+            """Creates the left hand side or top depending on the style."""
 
             self.data_view = DataViewWidget(
                 parent=parent,

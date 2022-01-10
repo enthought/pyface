@@ -35,7 +35,7 @@ class CheckState(IntEnum):
 
 
 class AbstractValueType(ABCHasStrictTraits):
-    """ A value type converts raw data into data channels.
+    """A value type converts raw data into data channels.
 
     The data channels are editor value, text, color, image, and description.
     The data channels are used by other parts of the code to produce the actual
@@ -56,7 +56,7 @@ class AbstractValueType(ABCHasStrictTraits):
     updated = Event
 
     def has_editor_value(self, model, row, column):
-        """ Return whether or not the value can be edited.
+        """Return whether or not the value can be edited.
 
         The default implementation is that cells that can be set are
         editable.
@@ -78,7 +78,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return model.can_set_value(row, column)
 
     def get_editor_value(self, model, row, column):
-        """ Return a value suitable for editing.
+        """Return a value suitable for editing.
 
         The default implementation is to return the underlying data value
         directly from the data model.
@@ -100,7 +100,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return model.get_value(row, column)
 
     def set_editor_value(self, model, row, column, value):
-        """ Set a value that is returned from editing.
+        """Set a value that is returned from editing.
 
         The default implementation is to set the value directly from the
         data model.  Returns True if successful, False if it fails.
@@ -124,7 +124,7 @@ class AbstractValueType(ABCHasStrictTraits):
         model.set_value(row, column, value)
 
     def has_text(self, model, row, column):
-        """ Whether or not the value has a textual representation.
+        """Whether or not the value has a textual representation.
 
         The default implementation returns True if ``get_text``
         returns a non-empty value.
@@ -146,7 +146,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return self.get_text(model, row, column) != ""
 
     def get_text(self, model, row, column):
-        """ The textual representation of the underlying value.
+        """The textual representation of the underlying value.
 
         The default implementation calls str() on the underlying value.
 
@@ -167,7 +167,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return str(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
-        """ Set the text of the underlying value.
+        """Set the text of the underlying value.
 
         This is provided primarily for backends which may not permit
         non-text editing of values, in which case this provides an
@@ -193,7 +193,7 @@ class AbstractValueType(ABCHasStrictTraits):
         raise DataViewSetError("Cannot set value.")
 
     def has_color(self, model, row, column):
-        """ Whether or not the value has color data.
+        """Whether or not the value has color data.
 
         Parameters
         ----------
@@ -213,7 +213,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return False
 
     def get_color(self, model, row, column):
-        """ Get data-associated colour values for the given item.
+        """Get data-associated colour values for the given item.
 
         The default implementation returns white.
 
@@ -234,7 +234,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return Color(rgba=(1.0, 1.0, 1.0, 1.0))
 
     def has_image(self, model, row, column):
-        """ Whether or not the value has an image associated with it.
+        """Whether or not the value has an image associated with it.
 
         The default implementation returns True if ``get_image``
         returns a non-None value.
@@ -256,7 +256,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return False
 
     def get_image(self, model, row, column):
-        """ An image associated with the underlying value.
+        """An image associated with the underlying value.
 
         The default implementation returns None.
 
@@ -275,10 +275,11 @@ class AbstractValueType(ABCHasStrictTraits):
             The image associated with the underlying value.
         """
         from pyface.image_resource import ImageResource
+
         return ImageResource("image_not_found")
 
     def has_check_state(self, model, row, column):
-        """ Whether or not the value has checked state.
+        """Whether or not the value has checked state.
 
         The default implementation returns False.
 
@@ -299,7 +300,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return False
 
     def get_check_state(self, model, row, column):
-        """ The state of the item check box.
+        """The state of the item check box.
 
         The default implementation returns "checked" if the value is
         truthy, or "unchecked" if the value is falsey.
@@ -325,7 +326,7 @@ class AbstractValueType(ABCHasStrictTraits):
         )
 
     def set_check_state(self, model, row, column, check_state):
-        """ Set the checked state of the underlying value.
+        """Set the checked state of the underlying value.
 
         The default implementation does not allow setting the checked state.
 
@@ -348,7 +349,7 @@ class AbstractValueType(ABCHasStrictTraits):
         raise DataViewSetError("Cannot set check state.")
 
     def has_tooltip(self, model, row, column):
-        """ Whether or not the value has a tooltip.
+        """Whether or not the value has a tooltip.
 
         The default implementation returns True if ``get_tooltip``
         returns a non-empty value.
@@ -370,7 +371,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return self.get_tooltip(model, row, column) != ""
 
     def get_tooltip(self, model, row, column):
-        """ The tooltip for the underlying value.
+        """The tooltip for the underlying value.
 
         The default implementation returns an empty string.
 
@@ -381,5 +382,5 @@ class AbstractValueType(ABCHasStrictTraits):
 
     @observe('+update_value_type')
     def update_value_type(self, event=None):
-        """ Fire update event when marked traits change. """
+        """Fire update event when marked traits change."""
         self.updated = True

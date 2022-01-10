@@ -15,4 +15,6 @@ if qt_api == "pyqt":
 else:
     import warnings
 
-    warnings.warn(DeprecationWarning("QtScript is not supported in PyQt5/PySide2"))
+    warnings.warn(
+        DeprecationWarning("QtScript is not supported in PyQt5/PySide2")
+    )

@@ -18,7 +18,13 @@ from abc import abstractmethod
 from collections.abc import Hashable, MutableMapping, MutableSequence
 
 from traits.api import (
-    ABCHasStrictTraits, Any, Event, Instance, Int, Str, observe
+    ABCHasStrictTraits,
+    Any,
+    Event,
+    Instance,
+    Int,
+    Str,
+    observe,
 )
 from traits.trait_base import xgetattr, xsetattr
 
@@ -28,8 +34,7 @@ from pyface.data_view.value_types.api import TextValue
 
 
 class AbstractDataAccessor(ABCHasStrictTraits):
-    """ Accessor that gets and sets data on an object.
-    """
+    """Accessor that gets and sets data on an object."""
 
     #: A human-readable label for the accessor.
     title = Str()
@@ -48,7 +53,7 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value(self, obj):
-        """ Return a value for the provided object.
+        """Return a value for the provided object.
 
         Parameters
         ----------
@@ -63,7 +68,7 @@ class AbstractDataAccessor(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def can_set_value(self, obj):
-        """ Return whether the value can be set on the provided object.
+        """Return whether the value can be set on the provided object.
 
         Parameters
         ----------
@@ -78,7 +83,7 @@ class AbstractDataAccessor(ABCHasStrictTraits):
         return False
 
     def set_value(self, obj, value):
-        """ Set the value on the provided object.
+        """Set the value on the provided object.
 
         Parameters
         ----------
@@ -108,14 +113,13 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
 
 class ConstantDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that returns a constant value.
-    """
+    """DataAccessor that returns a constant value."""
 
     #: The value to return.
     value = Any()
 
     def get_value(self, obj):
-        """ Return the value ignoring the provided object.
+        """Return the value ignoring the provided object.
 
         Parameters
         ----------
@@ -135,7 +139,7 @@ class ConstantDataAccessor(AbstractDataAccessor):
 
 
 class AttributeDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that presents an extended attribute on an object.
+    """DataAccessor that presents an extended attribute on an object.
 
     This is suitable for use with Python objects, including HasTraits
     classes.
@@ -145,7 +149,7 @@ class AttributeDataAccessor(AbstractDataAccessor):
     attr = Str()
 
     def get_value(self, obj):
-        """ Return the attribute value for the provided object.
+        """Return the attribute value for the provided object.
 
         Parameters
         ----------
@@ -160,7 +164,7 @@ class AttributeDataAccessor(AbstractDataAccessor):
         return xgetattr(obj, self.attr)
 
     def can_set_value(self, obj):
-        """ Return whether the value can be set on the provided object.
+        """Return whether the value can be set on the provided object.
 
         Parameters
         ----------
@@ -193,7 +197,7 @@ class AttributeDataAccessor(AbstractDataAccessor):
 
 
 class IndexDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that presents an index on a sequence object.
+    """DataAccessor that presents an index on a sequence object.
 
     This is suitable for use with a sequence.
     """
@@ -202,7 +206,7 @@ class IndexDataAccessor(AbstractDataAccessor):
     index = Int()
 
     def get_value(self, obj):
-        """ Return the indexed value for the provided object.
+        """Return the indexed value for the provided object.
 
         Parameters
         ----------
@@ -217,7 +221,7 @@ class IndexDataAccessor(AbstractDataAccessor):
         return obj[self.index]
 
     def can_set_value(self, obj):
-        """ Return whether the value can be set on the provided object.
+        """Return whether the value can be set on the provided object.
 
         Parameters
         ----------
@@ -232,7 +236,7 @@ class IndexDataAccessor(AbstractDataAccessor):
         return isinstance(obj, MutableSequence) and 0 <= self.index < len(obj)
 
     def set_value(self, obj, value):
-        """ Set the value on the provided object.
+        """Set the value on the provided object.
 
         Parameters
         ----------
@@ -262,7 +266,7 @@ class IndexDataAccessor(AbstractDataAccessor):
 
 
 class KeyDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that presents an item on a mapping object.
+    """DataAccessor that presents an item on a mapping object.
 
     This is suitable for use with a mapping, such as a dictionary.
     """
@@ -271,7 +275,7 @@ class KeyDataAccessor(AbstractDataAccessor):
     key = Instance(Hashable)
 
     def get_value(self, obj):
-        """ Return the key's value for the provided object.
+        """Return the key's value for the provided object.
 
         Parameters
         ----------
@@ -286,7 +290,7 @@ class KeyDataAccessor(AbstractDataAccessor):
         return obj[self.key]
 
     def can_set_value(self, obj):
-        """ Set the value on the provided object.
+        """Set the value on the provided object.
 
         Parameters
         ----------
@@ -303,7 +307,7 @@ class KeyDataAccessor(AbstractDataAccessor):
         return isinstance(obj, MutableMapping)
 
     def set_value(self, obj, value):
-        """ Set the value on the provided object.
+        """Set the value on the provided object.
 
         Parameters
         ----------

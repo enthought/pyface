@@ -20,14 +20,14 @@ from pyface.action.api import ToolPaletteManager
 
 
 class MainWindow(ApplicationWindow):
-    """ The main application window. """
+    """The main application window."""
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
-        """ Creates a new application window. """
+        """Creates a new application window."""
 
         # Base class constructor.
         super().__init__(**traits)
@@ -42,7 +42,7 @@ class MainWindow(ApplicationWindow):
         return
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """Creates the window contents."""
 
         actions = []
         for i in range(25):

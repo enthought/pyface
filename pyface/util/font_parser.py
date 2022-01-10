@@ -10,17 +10,41 @@
 
 
 GENERIC_FAMILIES = {
-    'default', 'fantasy', 'decorative', 'serif', 'roman', 'cursive', 'script',
-    'sans-serif', 'swiss', 'monospace', 'modern', 'typewriter', 'teletype'
+    'default',
+    'fantasy',
+    'decorative',
+    'serif',
+    'roman',
+    'cursive',
+    'script',
+    'sans-serif',
+    'swiss',
+    'monospace',
+    'modern',
+    'typewriter',
+    'teletype',
 }
 WEIGHTS = {
-    'thin', 'extra-light', 'light', 'regular', 'medium', 'demi-bold',
-    'bold', 'extra-bold', 'heavy', 'extra-heavy'
+    'thin',
+    'extra-light',
+    'light',
+    'regular',
+    'medium',
+    'demi-bold',
+    'bold',
+    'extra-bold',
+    'heavy',
+    'extra-heavy',
 }
 STRETCHES = {
-    'ultra-condensed', 'extra-condensed', 'condensed',
-    'semi-condensed', 'semi-expanded', 'expanded', 'extra-expanded',
-    'ultra-expanded'
+    'ultra-condensed',
+    'extra-condensed',
+    'condensed',
+    'semi-condensed',
+    'semi-expanded',
+    'expanded',
+    'extra-expanded',
+    'ultra-expanded',
 }
 STYLES = {'italic', 'oblique'}
 VARIANTS = {'small-caps'}
@@ -30,6 +54,7 @@ NOISE = {'pt', 'point', 'px', 'family'}
 
 class FontParseError(ValueError):
     """An exception raised when font parsing fails."""
+
     pass
 
 

@@ -21,7 +21,7 @@ from traits.api import Instance
 
 
 class FileTreeModel(TreeModel):
-    """ A tree model for local file systems. """
+    """A tree model for local file systems."""
 
     # The image used to represent folders that are NOT expanded.
     CLOSED_FOLDER = ImageResource("closed_folder")
@@ -37,12 +37,12 @@ class FileTreeModel(TreeModel):
     # ------------------------------------------------------------------------
 
     def get_children(self, node):
-        """ Returns the children of a node. """
+        """Returns the children of a node."""
 
         return [join(node, filename) for filename in listdir(node)]
 
     def has_children(self, node):
-        """ Returns True if a node has children, otherwise False. """
+        """Returns True if a node has children, otherwise False."""
 
         if isdir(node):
             has_children = len(listdir(node)) > 0
@@ -53,7 +53,7 @@ class FileTreeModel(TreeModel):
         return has_children
 
     def get_image(self, node, selected, expanded):
-        """ Returns the label image for a node. """
+        """Returns the label image for a node."""
 
         if isdir(node):
             if expanded:
@@ -68,13 +68,13 @@ class FileTreeModel(TreeModel):
         return image
 
     def get_text(self, node):
-        """ Returns the label text for a node. """
+        """Returns the label text for a node."""
 
         return basename(node)
 
 
 class FileTree(Tree):
-    """ A file system tree. """
+    """A file system tree."""
 
     # 'Tree' interface -----------------------------------------------------
 

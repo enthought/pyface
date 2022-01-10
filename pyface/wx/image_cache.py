@@ -15,10 +15,10 @@ import wx
 
 
 class ImageCache(object):
-    """ An image cache. """
+    """An image cache."""
 
     def __init__(self, width, height):
-        """ Creates a new image cache. """
+        """Creates a new image cache."""
 
         self._width = width
         self._height = height
@@ -33,7 +33,7 @@ class ImageCache(object):
     # ------------------------------------------------------------------------
 
     def get_image(self, filename):
-        """ Returns the specified image (currently as a bitmap). """
+        """Returns the specified image (currently as a bitmap)."""
 
         # Try the cache first.
         bmp = self._images.get(filename)
@@ -60,7 +60,7 @@ class ImageCache(object):
     # ------------------------------------------------------------------------
 
     def _scale(self, image):
-        """ Scales the specified image (if necessary). """
+        """Scales the specified image (if necessary)."""
 
         if (
             image.GetWidth() != self._width

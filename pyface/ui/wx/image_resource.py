@@ -28,7 +28,7 @@ from pyface.i_image_resource import IImageResource, MImageResource
 
 @provides(IImageResource)
 class ImageResource(MImageResource, HasTraits):
-    """ The toolkit specific implementation of an ImageResource.  See the
+    """The toolkit specific implementation of an ImageResource.  See the
     IImageResource interface for the API documentation.
     """
 
@@ -69,7 +69,7 @@ class ImageResource(MImageResource, HasTraits):
         return icon
 
     def image_size(cls, image):
-        """ Get the size of a toolkit image
+        """Get the size of a toolkit image
 
         Parameters
         ----------

@@ -24,7 +24,6 @@ trivial_format = DataFormat(
 
 
 class TestItemExporter(TestCase):
-
     def setUp(self):
         self.value_type = Mock()
         self.value_type.has_text = Mock(return_value=True)

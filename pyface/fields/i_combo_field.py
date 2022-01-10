@@ -17,7 +17,7 @@ from pyface.fields.i_field import IField
 
 
 class IComboField(IField):
-    """ The combo field interface.
+    """The combo field interface.
 
     This is for comboboxes holding a list of values.
     """
@@ -67,7 +67,7 @@ class MComboField(HasTraits):
         self._set_control_value(self.value)
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
+        """Set up toolkit-specific bindings for events"""
         super()._add_event_listeners()
         self.observe(
             self._values_updated, "values.items,formatter", dispatch="ui"
@@ -76,7 +76,7 @@ class MComboField(HasTraits):
             self._observe_control_value()
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
+        """Remove toolkit-specific bindings for events"""
         if self.control is not None:
             self._observe_control_value(remove=True)
         self.observe(
@@ -90,11 +90,11 @@ class MComboField(HasTraits):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_text_values(self):
-        """ Toolkit specific method to get the control's text values. """
+        """Toolkit specific method to get the control's text values."""
         raise NotImplementedError()
 
     def _set_control_values(self, values):
-        """ Toolkit specific method to set the control's values. """
+        """Toolkit specific method to set the control's values."""
         raise NotImplementedError()
 
     # Trait change handlers --------------------------------------------------

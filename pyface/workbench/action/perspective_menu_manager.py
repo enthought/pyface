@@ -24,7 +24,7 @@ from .set_active_perspective_action import SetActivePerspectiveAction
 
 
 class PerspectiveMenuManager(MenuManager):
-    """ The default perspective menu for a workbench window. """
+    """The default perspective menu for a workbench window."""
 
     # 'ActionManager' interface --------------------------------------------
 
@@ -49,7 +49,7 @@ class PerspectiveMenuManager(MenuManager):
     # ------------------------------------------------------------------------
 
     def _groups_default(self):
-        """ Trait initializer. """
+        """Trait initializer."""
 
         groups = [
             # Create a group containing the actions that switch to specific
@@ -70,7 +70,7 @@ class PerspectiveMenuManager(MenuManager):
 
     @observe("window.perspectives.items")
     def rebuild(self, event):
-        """ Rebuild the menu.
+        """Rebuild the menu.
 
         This is called when user perspectives have been added or removed.
 
@@ -95,7 +95,7 @@ class PerspectiveMenuManager(MenuManager):
     # ------------------------------------------------------------------------
 
     def _create_perspective_group(self, window):
-        """ Create the actions that switch to specific perspectives. """
+        """Create the actions that switch to specific perspectives."""
 
         # fixme: Not sure if alphabetic sorting is appropriate in all cases,
         # but it will do for now!
@@ -115,7 +115,7 @@ class PerspectiveMenuManager(MenuManager):
         return group
 
     def _create_user_perspective_group(self, window):
-        """ Create the user perspective create/save/rename/delete actions. """
+        """Create the user perspective create/save/rename/delete actions."""
 
         group = Group(
             NewUserPerspectiveAction(window=window),
@@ -127,7 +127,7 @@ class PerspectiveMenuManager(MenuManager):
         return group
 
     def _create_reset_perspective_group(self, window):
-        """ Create the reset perspective actions. """
+        """Create the reset perspective actions."""
 
         group = Group(
             ResetActivePerspectiveAction(window=window),

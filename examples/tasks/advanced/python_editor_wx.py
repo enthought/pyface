@@ -18,7 +18,14 @@ import wx.stc
 
 
 from traits.api import (
-    Bool, Event, File, Instance, observe, Property, provides, Str
+    Bool,
+    Event,
+    File,
+    Instance,
+    observe,
+    Property,
+    provides,
+    Str,
 )
 from pyface.tasks.api import Editor
 from pyface.wx.python_stc import PythonSTC, faces
@@ -30,7 +37,7 @@ from pyface.key_pressed_event import KeyPressedEvent
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
-    """ The toolkit specific implementation of a StyledTextEditor.  See the
+    """The toolkit specific implementation of a StyledTextEditor.  See the
     IStyledTextEditor interface for the API documentation.
     """
 
@@ -68,8 +75,7 @@ class PythonEditor(Editor):
         self.control = self._create_control(parent)
 
     def load(self, path=None):
-        """ Loads the contents of the editor.
-        """
+        """Loads the contents of the editor."""
         if path is None:
             path = self.path
 
@@ -85,8 +91,7 @@ class PythonEditor(Editor):
         self.dirty = False
 
     def save(self, path=None):
-        """ Saves the contents of the editor.
-        """
+        """Saves the contents of the editor."""
         if path is None:
             path = self.path
 
@@ -96,8 +101,7 @@ class PythonEditor(Editor):
         self.dirty = False
 
     def select_line(self, lineno):
-        """ Selects the specified line.
-        """
+        """Selects the specified line."""
         start = self.control.PositionFromLine(lineno)
         end = self.control.GetLineEndPosition(lineno)
 
@@ -135,7 +139,7 @@ class PythonEditor(Editor):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        """ Creates the toolkit-specific control for the widget. """
+        """Creates the toolkit-specific control for the widget."""
 
         # Base-class constructor.
         self.control = stc = PythonSTC(parent, -1)
@@ -250,7 +254,7 @@ class PythonEditor(Editor):
     # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         self.dirty = True
         self.changed = True
@@ -261,7 +265,7 @@ class PythonEditor(Editor):
         return
 
     def _on_char(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         self.key_pressed = KeyPressedEvent(
             alt_down=event.altDown,

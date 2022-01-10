@@ -19,7 +19,7 @@ from pyface.ui_traits import Image
 
 
 class IHeadingText(Interface):
-    """ A widget which shows heading text in a panel. """
+    """A widget which shows heading text in a panel."""
 
     # 'IHeadingText' interface ---------------------------------------------
 
@@ -34,7 +34,7 @@ class IHeadingText(Interface):
 
 
 class MHeadingText(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """
 
@@ -47,7 +47,7 @@ class MHeadingText(HasTraits):
     text = Str("Default")
 
     def __init__(self, parent=None, **traits):
-        """ Creates the heading text. """
+        """Creates the heading text."""
 
         if "image" in traits:
             warnings.warn(
@@ -76,7 +76,7 @@ class MHeadingText(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_control(self):
-        """ Perform any toolkit-specific initialization for the control. """
+        """Perform any toolkit-specific initialization for the control."""
         super()._initialize_control()
         self._set_control_text(self.text)
 
@@ -93,7 +93,7 @@ class MHeadingText(HasTraits):
     # ------------------------------------------------------------------------
 
     def _set_control_text(self, text):
-        """ Set the text on the control.
+        """Set the text on the control.
 
         Parameters
         ----------
@@ -103,7 +103,7 @@ class MHeadingText(HasTraits):
         raise NotImplementedError()
 
     def _get_control_text(self):
-        """ Get the text on the control.
+        """Get the text on the control.
 
         Returns
         ----------

@@ -27,14 +27,14 @@ from .abstract_command_stack_action import AbstractCommandStackAction
 
 
 class UndoAction(AbstractCommandStackAction):
-    """ An action that undos the last command of the active command stack. """
+    """An action that undos the last command of the active command stack."""
 
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
 
     def perform(self, event):
-        """ Perform the action. """
+        """Perform the action."""
 
         self.undo_manager.undo()
 
@@ -43,7 +43,7 @@ class UndoAction(AbstractCommandStackAction):
     ###########################################################################
 
     def _update_action(self):
-        """ Update the state of the action. """
+        """Update the state of the action."""
 
         name = self.undo_manager.undo_name
 

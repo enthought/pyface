@@ -88,8 +88,7 @@ class VirtualModel(PyGridTableBase):
     # Accessors for the Enthought data model (a dict of dicts)
     # -------------------------------------------------------------------------------
     def get_data_source(self):
-        """ The data structure we provide the data in.
-        """
+        """The data structure we provide the data in."""
         return self._data
 
     def set_data_source(self, source):
@@ -196,8 +195,7 @@ class VirtualModel(PyGridTableBase):
     # ------------------------------------------------------------------------------
 
     def AppendRow(self, row):
-        """ Append a tupe containing (name, data)
-        """
+        """Append a tupe containing (name, data)"""
         name, data = row
         print("Appending ", name)
         self._data.append(row)

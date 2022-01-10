@@ -19,7 +19,7 @@ from .tree_model import TreeModel
 
 
 class NodeTreeModel(TreeModel):
-    """ The model for a tree control with extensible node types. """
+    """The model for a tree control with extensible node types."""
 
     # 'NodeTreeModel' interface --------------------------------------------
 
@@ -36,7 +36,7 @@ class NodeTreeModel(TreeModel):
     # ------------------------------------------------------------------------
 
     def has_children(self, node):
-        """ Returns True if a node has children, otherwise False.
+        """Returns True if a node has children, otherwise False.
 
         This method is provided in case the model has an efficient way to
         determine whether or not a node has any children without having to
@@ -56,7 +56,7 @@ class NodeTreeModel(TreeModel):
         return has_children
 
     def get_children(self, node):
-        """ Returns the children of a node. """
+        """Returns the children of a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -73,7 +73,7 @@ class NodeTreeModel(TreeModel):
         return children
 
     def get_default_action(self, node):
-        """ Returns the default action for a node. """
+        """Returns the default action for a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -81,7 +81,7 @@ class NodeTreeModel(TreeModel):
         return node_type.get_default_action(node)
 
     def get_drag_value(self, node):
-        """ Get the value that is dragged for a node.
+        """Get the value that is dragged for a node.
 
         By default the drag value is the node itself.
 
@@ -93,7 +93,7 @@ class NodeTreeModel(TreeModel):
         return node_type.get_drag_value(node)
 
     def can_drop(self, node, data):
-        """ Returns True if a node allows an object to be dropped onto it. """
+        """Returns True if a node allows an object to be dropped onto it."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -101,7 +101,7 @@ class NodeTreeModel(TreeModel):
         return node_type.can_drop(node, data)
 
     def drop(self, node, data):
-        """ Drops an object onto a node. """
+        """Drops an object onto a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -109,7 +109,7 @@ class NodeTreeModel(TreeModel):
         node_type.drop(node, data)
 
     def get_image(self, node, selected, expanded):
-        """ Returns the label image for a node.
+        """Returns the label image for a node.
 
         Return None (the default) if no image is required.
 
@@ -121,12 +121,12 @@ class NodeTreeModel(TreeModel):
         return node_type.get_image(node, selected, expanded)
 
     def get_key(self, node):
-        """ Generate a unique key for a node. """
+        """Generate a unique key for a node."""
 
         return self.node_manager.get_key(node)
 
     def get_selection_value(self, node):
-        """ Get the value that is used when a node is selected.
+        """Get the value that is used when a node is selected.
 
         By default the selection value is the node itself.
 
@@ -138,7 +138,7 @@ class NodeTreeModel(TreeModel):
         return node_type.get_selection_value(node)
 
     def get_text(self, node):
-        """ Returns the label text for a node.
+        """Returns the label text for a node.
 
         Return None if no text is required.  By default we return 'str(node)'.
 
@@ -150,7 +150,7 @@ class NodeTreeModel(TreeModel):
         return node_type.get_text(node)
 
     def can_set_text(self, node, text):
-        """ Returns True if the node's label can be set. """
+        """Returns True if the node's label can be set."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -158,7 +158,7 @@ class NodeTreeModel(TreeModel):
         return node_type.can_set_text(node, text)
 
     def set_text(self, node, text):
-        """ Sets the label text for a node. """
+        """Sets the label text for a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -166,7 +166,7 @@ class NodeTreeModel(TreeModel):
         return node_type.set_text(node, text)
 
     def is_collapsible(self, node):
-        """ Returns True if the node is collapsible, otherwise False. """
+        """Returns True if the node is collapsible, otherwise False."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -174,7 +174,7 @@ class NodeTreeModel(TreeModel):
         return node_type.is_collapsible(node)
 
     def is_draggable(self, node):
-        """ Returns True if the node is draggable, otherwise False. """
+        """Returns True if the node is draggable, otherwise False."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -182,7 +182,7 @@ class NodeTreeModel(TreeModel):
         return node_type.is_draggable(node)
 
     def is_editable(self, node):
-        """ Returns True if the node is editable, otherwise False.
+        """Returns True if the node is editable, otherwise False.
 
         If the node is editable, its text can be set via the UI.
 
@@ -194,7 +194,7 @@ class NodeTreeModel(TreeModel):
         return node_type.is_editable(node)
 
     def is_expandable(self, node):
-        """ Returns True if the node is expandanble, otherwise False. """
+        """Returns True if the node is expandanble, otherwise False."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -202,7 +202,7 @@ class NodeTreeModel(TreeModel):
         return node_type.is_expandable(node)
 
     def add_listener(self, node):
-        """ Adds a listener for changes to a node. """
+        """Adds a listener for changes to a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -214,7 +214,7 @@ class NodeTreeModel(TreeModel):
             self._monitors[self.node_manager.get_key(node)] = monitor
 
     def remove_listener(self, node):
-        """ Removes a listener for changes to a node. """
+        """Removes a listener for changes to a node."""
 
         key = self.node_manager.get_key(node)
 
@@ -230,7 +230,7 @@ class NodeTreeModel(TreeModel):
     # ------------------------------------------------------------------------
 
     def get_context_menu(self, node):
-        """ Returns the context menu for a node. """
+        """Returns the context menu for a node."""
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
@@ -242,7 +242,7 @@ class NodeTreeModel(TreeModel):
     # ------------------------------------------------------------------------
 
     def _start_monitor(self, monitor):
-        """ Starts a monitor. """
+        """Starts a monitor."""
 
         monitor.observe(self._on_nodes_changed, "nodes_changed")
 
@@ -257,7 +257,7 @@ class NodeTreeModel(TreeModel):
         monitor.start()
 
     def _stop_monitor(self, monitor):
-        """ Stops a monitor. """
+        """Stops a monitor."""
 
         monitor.observe(self._on_nodes_changed, "nodes_changed", remove=True)
 
@@ -297,27 +297,27 @@ class NodeTreeModel(TreeModel):
     # Dynamic ----
 
     def _on_nodes_changed(self, event):
-        """ Called when nodes have changed. """
+        """Called when nodes have changed."""
 
         self.nodes_changed = event.new
 
     def _on_nodes_inserted(self, event):
-        """ Called when nodes have been inserted. """
+        """Called when nodes have been inserted."""
 
         self.nodes_inserted = event.new
 
     def _on_nodes_removed(self, event):
-        """ Called when nodes have been removed. """
+        """Called when nodes have been removed."""
 
         self.nodes_removed = event.new
 
     def _on_nodes_replaced(self, event):
-        """ Called when nodes have been replaced. """
+        """Called when nodes have been replaced."""
 
         self.nodes_replaced = event.new
 
     def _on_structure_changed(self, event):
-        """ Called when the structure of a node has changed drastically. """
+        """Called when the structure of a node has changed drastically."""
 
         self.structure_changed = event.new
 

@@ -28,7 +28,6 @@ IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class TestPILImage(unittest.TestCase):
-
     def setUp(self):
         self.pil_image = Image.open(IMAGE_PATH)
 

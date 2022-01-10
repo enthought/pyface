@@ -34,21 +34,23 @@ def filter_tests(test_suite, exclusion_pattern):
 
 
 def has_traitsui():
-    """ Is traitsui installed and sufficiently recent? """
+    """Is traitsui installed and sufficiently recent?"""
     try:
         import traitsui  # noqa: F401
     except ImportError:
         return False
     from pyface.toolkit import toolkit
+
     if toolkit.toolkit.startswith("qt"):
         from pyface.qt import is_qt6
+
         if is_qt6:
             return Version(traitsui.__version__) >= Version("7.4")
     return True
 
 
 def skip_if_no_traitsui(test):
-    """ Decorator that skips test if traitsui not available """
+    """Decorator that skips test if traitsui not available"""
 
     @wraps(test)
     def new_test(self):
@@ -61,7 +63,7 @@ def skip_if_no_traitsui(test):
 
 
 def is_traits_version_ge(version):
-    """ Return true if the traits version is greater than or equal to the
+    """Return true if the traits version is greater than or equal to the
     required value.
 
     Parameters

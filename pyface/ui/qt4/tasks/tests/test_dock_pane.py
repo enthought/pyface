@@ -12,8 +12,14 @@ import unittest
 
 from pyface.qt import QtCore
 from pyface.tasks.api import (
-    DockPane, EditorAreaPane, PaneItem, Task, TaskFactory, TaskLayout,
-    TasksApplication)
+    DockPane,
+    EditorAreaPane,
+    PaneItem,
+    Task,
+    TaskFactory,
+    TaskLayout,
+    TasksApplication,
+)
 
 
 class MyDockPane(DockPane):
@@ -50,7 +56,6 @@ class MyApplication(TasksApplication):
 
 
 class TestDockPane(unittest.TestCase):
-
     @unittest.skipUnless(sys.platform == "darwin", "only applicable to macOS")
     def test_dock_windows_visible_on_macos(self):
         # Regression test for enthought/pyface#427: check that dock panes
@@ -64,7 +69,8 @@ class TestDockPane(unittest.TestCase):
             for window in app.windows:
                 for dock_pane in window.dock_panes:
                     attr = dock_pane.control.testAttribute(
-                        QtCore.Qt.WA_MacAlwaysShowToolWindow)
+                        QtCore.Qt.WA_MacAlwaysShowToolWindow
+                    )
                     tool_attributes.append(attr)
 
             app.exit()

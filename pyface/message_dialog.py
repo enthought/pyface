@@ -25,9 +25,9 @@ def information(
     title="Information",
     detail="",
     informative="",
-    text_format="auto"
+    text_format="auto",
 ):
-    """ Convenience method to show an information message dialog.
+    """Convenience method to show an information message dialog.
 
     Parameters
     ----------
@@ -65,9 +65,9 @@ def warning(
     title="Warning",
     detail="",
     informative="",
-    text_format="auto"
+    text_format="auto",
 ):
-    """ Convenience function to show a warning message dialog.
+    """Convenience function to show a warning message dialog.
 
     Parameters
     ----------
@@ -105,9 +105,9 @@ def error(
     title="Error",
     detail="",
     informative="",
-    text_format="auto"
+    text_format="auto",
 ):
-    """ Convenience function to show an error message dialog.
+    """Convenience function to show an error message dialog.
 
     Parameters
     ----------

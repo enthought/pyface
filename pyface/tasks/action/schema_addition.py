@@ -12,8 +12,7 @@ from traits.api import Callable, HasTraits, Str, Enum
 
 
 class SchemaAddition(HasTraits):
-    """ An addition to an existing menu bar or tool bar schema.
-    """
+    """An addition to an existing menu bar or tool bar schema."""
 
     #: The schema addition's identifier. This optional, but if left
     #: unspecified, other schema additions will be unable to refer to this one.

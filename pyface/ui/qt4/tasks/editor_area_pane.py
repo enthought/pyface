@@ -28,10 +28,11 @@ from .util import set_focus
 
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
-    """ The toolkit-specific implementation of a EditorAreaPane.
+    """The toolkit-specific implementation of a EditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
+
     # Private interface ---------------------------------------------------#
 
     #: A list of connected Qt signals to be removed before destruction.
@@ -44,8 +45,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def create(self, parent):
-        """ Create and set the toolkit-specific control that represents the
-            pane.
+        """Create and set the toolkit-specific control that represents the
+        pane.
         """
         # Create and configure the tab widget.
         self.control = control = EditorAreaWidget(self, parent)
@@ -104,8 +105,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             mapper.setMapping(shortcut, i - 1)
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane.
-        """
+        """Destroy the toolkit-specific control that represents the pane."""
         self.control.removeEventFilter(self._filter)
         self._filter = None
 
@@ -123,13 +123,11 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
-        """ Activates the specified editor in the pane.
-        """
+        """Activates the specified editor in the pane."""
         self.control.setCurrentWidget(editor.control)
 
     def add_editor(self, editor):
-        """ Adds an editor to the pane.
-        """
+        """Adds an editor to the pane."""
         editor.editor_area = self
         editor.create(self.control)
         index = self.control.addTab(editor.control, self._get_label(editor))
@@ -143,8 +141,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             self.active_editor = editor
 
     def remove_editor(self, editor):
-        """ Removes an editor from the pane.
-        """
+        """Removes an editor from the pane."""
         self.editors.remove(editor)
         self.control.removeTab(self.control.indexOf(editor.control))
         editor.destroy()
@@ -158,29 +155,25 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
-        """ Return a tab label for an editor.
-        """
+        """Return a tab label for an editor."""
         label = editor.name
         if editor.dirty:
             label = "*" + label
         return label
 
     def _get_editor_with_control(self, control):
-        """ Return the editor with the specified control.
-        """
+        """Return the editor with the specified control."""
         for editor in self.editors:
             if editor.control == control:
                 return editor
         return None
 
     def _next_tab(self):
-        """ Activate the tab after the currently active tab.
-        """
+        """Activate the tab after the currently active tab."""
         self.control.setCurrentIndex(self.control.currentIndex() + 1)
 
     def _previous_tab(self):
-        """ Activate the tab before the currently active tab.
-        """
+        """Activate the tab before the currently active tab."""
         self.control.setCurrentIndex(self.control.currentIndex() - 1)
 
     # Trait change handlers ------------------------------------------------
@@ -225,8 +218,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
 
 class EditorAreaWidget(QtGui.QTabWidget):
-    """ An auxillary widget for implementing AdvancedEditorAreaPane.
-    """
+    """An auxillary widget for implementing AdvancedEditorAreaPane."""
 
     def __init__(self, editor_area, parent=None):
         super().__init__(parent)
@@ -242,24 +234,21 @@ class EditorAreaWidget(QtGui.QTabWidget):
         self.setUsesScrollButtons(True)
 
     def focusInEvent(self, event):
-        """ Assign focus to the active editor, if possible.
-        """
+        """Assign focus to the active editor, if possible."""
         active_editor = self.editor_area.active_editor
         if active_editor:
             set_focus(active_editor.control)
 
 
 class EditorAreaDropFilter(QtCore.QObject):
-    """ Implements drag and drop support.
-    """
+    """Implements drag and drop support."""
 
     def __init__(self, editor_area):
         super().__init__()
         self.editor_area = editor_area
 
     def eventFilter(self, object, event):
-        """ Handle drag and drop events with MIME type 'text/uri-list'.
-        """
+        """Handle drag and drop events with MIME type 'text/uri-list'."""
         if event.type() in (QtCore.QEvent.DragEnter, QtCore.QEvent.Drop):
             # Build list of accepted files.
             extensions = tuple(self.editor_area.file_drop_extensions)

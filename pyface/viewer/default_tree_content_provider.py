@@ -16,24 +16,24 @@ from .tree_item import TreeItem
 
 
 class DefaultTreeContentProvider(TreeContentProvider):
-    """ The default tree content provider. """
+    """The default tree content provider."""
 
     # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
     # ------------------------------------------------------------------------
 
     def get_parent(self, item):
-        """ Returns the parent of an item. """
+        """Returns the parent of an item."""
 
         return item.parent
 
     def get_children(self, item):
-        """ Returns the children of an item. """
+        """Returns the children of an item."""
 
         return item.children
 
     def has_children(self, item):
-        """ True iff the item has children. """
+        """True iff the item has children."""
 
         return item.has_children
 
@@ -42,26 +42,26 @@ class DefaultTreeContentProvider(TreeContentProvider):
     # ------------------------------------------------------------------------
 
     def append(self, parent, child):
-        """ Appends 'child' to the 'parent' item. """
+        """Appends 'child' to the 'parent' item."""
 
         return self.insert(parent, len(parent.children), child)
 
     def insert_before(self, parent, before, child):
-        """ Inserts 'child' into 'parent' item before 'before'. """
+        """Inserts 'child' into 'parent' item before 'before'."""
 
         index, child = parent.insert_before(before, child)
 
         return (index, child)
 
     def insert(self, parent, index, child):
-        """ Inserts 'child' into the 'parent' item at 'index'. """
+        """Inserts 'child' into the 'parent' item at 'index'."""
 
         parent.insert(index, child)
 
         return child
 
     def remove(self, parent, child):
-        """ Removes 'child' from the 'parent' item. """
+        """Removes 'child' from the 'parent' item."""
 
         parent.remove(child)
 
@@ -72,6 +72,6 @@ class DefaultTreeContentProvider(TreeContentProvider):
     # ------------------------------------------------------------------------
 
     def _create_item(self, **kw):
-        """ Creates a new item. """
+        """Creates a new item."""
 
         return TreeItem(**kw)

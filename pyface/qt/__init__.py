@@ -50,8 +50,7 @@ if qt_api is None:
 # otherwise check QT_API value is valid
 elif qt_api not in api_names:
     msg = (
-        "Invalid Qt API %r, valid values are: "
-        + ', '.join(api_names)
+        "Invalid Qt API %r, valid values are: " + ', '.join(api_names)
     ) % qt_api
     raise RuntimeError(msg)
 

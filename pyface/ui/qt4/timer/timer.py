@@ -16,7 +16,7 @@ from pyface.timer.i_timer import BaseTimer
 
 
 class PyfaceTimer(BaseTimer):
-    """ Abstract base class for Qt toolkit timers. """
+    """Abstract base class for Qt toolkit timers."""
 
     #: The QTimer for the PyfaceTimer.
     _timer = Instance(QTimer, (), allow_none=False)

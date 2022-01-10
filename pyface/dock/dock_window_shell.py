@@ -121,8 +121,7 @@ class DockWindowShell(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def add_control(self, dock_control):
-        """ Adds a new DockControl to the shell window.
-        """
+        """Adds a new DockControl to the shell window."""
         dw = self._dock_window.control
         dockable = dock_control.dockable
 
@@ -181,8 +180,7 @@ class DockWindowShell(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def _on_close(self, event):
-        """ Handles the user attempting to close the window.
-        """
+        """Handles the user attempting to close the window."""
         window = self._dock_window.control
         section = window.GetSizer().GetContents()
         n = len(section.contents)

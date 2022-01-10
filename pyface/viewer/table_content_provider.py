@@ -15,7 +15,7 @@ from .content_provider import ContentProvider
 
 
 class TableContentProvider(ContentProvider):
-    """ Abstract base class for table content providers.
+    """Abstract base class for table content providers.
 
     Table content providers are used by (surprise, surprise) table viewers!
 

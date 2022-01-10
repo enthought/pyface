@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskActionManagerBuilder(HasTraits):
-    """ Builds menu bars and tool bars from menu bar and tool bar schema, along
+    """Builds menu bars and tool bars from menu bar and tool bar schema, along
     with any additions provided by the task.
     """
 
@@ -41,8 +41,7 @@ class TaskActionManagerBuilder(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_action_manager(self, schema):
-        """ Create a manager for the given schema using the task's additions.
-        """
+        """Create a manager for the given schema using the task's additions."""
         additions_map = defaultdict(list)
         for addition in self.task.extra_actions:
             if addition.path:
@@ -53,16 +52,16 @@ class TaskActionManagerBuilder(HasTraits):
         return manager
 
     def create_menu_bar_manager(self):
-        """ Create a menu bar manager from the task's menu bar schema and
-            additions.
+        """Create a menu bar manager from the task's menu bar schema and
+        additions.
         """
         if self.task.menu_bar:
             return self.create_action_manager(self.task.menu_bar)
         return None
 
     def create_tool_bar_managers(self):
-        """ Create tool bar managers from the tasks's tool bar schemas and
-            additions.
+        """Create tool bar managers from the tasks's tool bar schemas and
+        additions.
         """
         schemas = self.task.tool_bars[:]
         for addition in self.task.extra_actions:
@@ -82,7 +81,7 @@ class TaskActionManagerBuilder(HasTraits):
         ]
 
     def prepare_item(self, item, path):
-        """ Called immediately after a concrete Pyface item has been created
+        """Called immediately after a concrete Pyface item has been created
         (or, in the case of items that are not produced from schemas,
         immediately before they are processed).
 
@@ -117,7 +116,7 @@ class TaskActionManagerBuilder(HasTraits):
         return schemas
 
     def _group_items_by_id(self, items):
-        """ Group a list of action items by their ID.
+        """Group a list of action items by their ID.
 
         Action items are Schemas and Groups, MenuManagers, etc.
 
@@ -139,7 +138,7 @@ class TaskActionManagerBuilder(HasTraits):
         return id_to_items, ordered_items_ids
 
     def _group_items_by_class(self, items):
-        """ Group a list of action items by their class.
+        """Group a list of action items by their class.
 
         Action items are Schemas and Groups, MenuManagers, etc.
 
@@ -161,7 +160,7 @@ class TaskActionManagerBuilder(HasTraits):
         return class_to_items, ordered_items_class
 
     def _unpack_schema_additions(self, items):
-        """ Unpack additions, since they may themselves be schemas. """
+        """Unpack additions, since they may themselves be schemas."""
 
         unpacked_items = []
 
@@ -174,7 +173,7 @@ class TaskActionManagerBuilder(HasTraits):
         return unpacked_items
 
     def _merge_items_with_same_path(self, id_to_items, ordered_items_ids):
-        """ Merge items with the same path if possible.
+        """Merge items with the same path if possible.
 
         Items must be subclasses of `Schema` and they must be instances of
         the same class to be merged.
@@ -214,7 +213,7 @@ class TaskActionManagerBuilder(HasTraits):
         return merged_items
 
     def _preprocess_schemas(self, schema, additions, path):
-        """ Sort and merge a schema and a set of schema additions. """
+        """Sort and merge a schema and a set of schema additions."""
 
         # Determine the order of the items at this path.
         if additions[path]:
@@ -237,7 +236,7 @@ class TaskActionManagerBuilder(HasTraits):
         return merged_items
 
     def _create_action_manager_recurse(self, schema, additions, path=""):
-        """ Recursively create a manager for the given schema and additions map.
+        """Recursively create a manager for the given schema and additions map.
 
         Items with the same path are merged together in a single entry if
         possible (i.e., if they have the same class).

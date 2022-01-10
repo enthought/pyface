@@ -16,7 +16,7 @@ from traits.api import Instance
 
 
 class ActionController(ActionController):
-    """ The action controller for workbench menu and tool bars.
+    """The action controller for workbench menu and tool bars.
 
     The controller is used to 'hook' the invocation of every action on the menu
     and tool bars. This is done so that additional (and workbench specific)
@@ -35,7 +35,7 @@ class ActionController(ActionController):
     # ------------------------------------------------------------------------
 
     def perform(self, action, event):
-        """ Control an action invocation. """
+        """Control an action invocation."""
 
         # Add a reference to the window and the application to the event.
         event.window = self.window

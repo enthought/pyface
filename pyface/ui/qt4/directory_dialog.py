@@ -24,7 +24,7 @@ from .dialog import Dialog
 
 @provides(IDirectoryDialog)
 class DirectoryDialog(MDirectoryDialog, Dialog):
-    """ The toolkit specific implementation of a DirectoryDialog.  See the
+    """The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
 

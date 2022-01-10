@@ -24,7 +24,7 @@ from traits.api import Str
 
 
 class HelloApplication(Application):
-    """ Simple application example that greets a location. """
+    """Simple application example that greets a location."""
 
     # 'HelloApplication' traits -----------------------------------------------
 
@@ -45,7 +45,7 @@ class HelloApplication(Application):
 
 
 def main():
-    """ Hello application entrypoint. """
+    """Hello application entrypoint."""
     app = HelloApplication()
 
     parser = argparse.ArgumentParser(description=app.description)

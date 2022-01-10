@@ -15,7 +15,7 @@ from pyface.tasks.dock_pane import DockPane
 
 
 class EnamlDockPane(DockPane):
-    """ Create a Dock pane for Enaml Components. """
+    """Create a Dock pane for Enaml Components."""
 
     # ------------------------------------------------------------------------
     # 'EnamlDockPane' interface
@@ -25,7 +25,7 @@ class EnamlDockPane(DockPane):
     component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
 
     def create_component(self):
-        """ Return an Enaml component defining the contents of the DockPane.
+        """Return an Enaml component defining the contents of the DockPane.
 
         Returns
         -------
@@ -38,7 +38,7 @@ class EnamlDockPane(DockPane):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Return the toolkit-specific control that represents the pane. """
+        """Return the toolkit-specific control that represents the pane."""
 
         self.component = self.create_component()
 
@@ -59,7 +59,7 @@ class EnamlDockPane(DockPane):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the toolkit-specific control that represents the pane. """
+        """Destroy the toolkit-specific control that represents the pane."""
 
         control = self.control
         if control is not None:

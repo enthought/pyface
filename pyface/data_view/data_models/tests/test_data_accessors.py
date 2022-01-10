@@ -25,13 +25,11 @@ from pyface.data_view.data_models.data_accessors import (
 
 
 class AttributeDummy:
-
     def __init__(self, attr_value):
         self.attr_value = attr_value
 
 
 class DataAccessorMixin(UnittestTools):
-
     def accessor_observer(self, event):
         self.accessor_event = event
 
@@ -73,7 +71,6 @@ class DataAccessorMixin(UnittestTools):
 
 
 class TestConstantDataAccessor(unittest.TestCase, DataAccessorMixin):
-
     def create_accessor(self):
         return ConstantDataAccessor(
             title='Test',
@@ -129,7 +126,6 @@ class TestConstantDataAccessor(unittest.TestCase, DataAccessorMixin):
 
 
 class TestAttributeDataAccessor(unittest.TestCase, DataAccessorMixin):
-
     def create_accessor(self):
         return AttributeDataAccessor(
             attr='attr_value',
@@ -234,7 +230,6 @@ class TestAttributeDataAccessor(unittest.TestCase, DataAccessorMixin):
 
 
 class TestIndexDataAccessor(unittest.TestCase, DataAccessorMixin):
-
     def create_accessor(self):
         return IndexDataAccessor(
             index=1,
@@ -321,7 +316,6 @@ class TestIndexDataAccessor(unittest.TestCase, DataAccessorMixin):
 
 
 class TestKeyDataAccessor(unittest.TestCase, DataAccessorMixin):
-
     def create_accessor(self):
         return KeyDataAccessor(
             key='one',

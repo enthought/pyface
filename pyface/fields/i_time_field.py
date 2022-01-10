@@ -18,7 +18,7 @@ from pyface.fields.i_field import IField
 
 
 class ITimeField(IField):
-    """ The time field interface.
+    """The time field interface.
 
     This is for a field that edits a datetime.time value.
     """
@@ -28,7 +28,7 @@ class ITimeField(IField):
 
 
 class MTimeField(HasTraits):
-    """ Mixin class for TimeField implementations """
+    """Mixin class for TimeField implementations"""
 
     #: The current value of the time field
     value = Time()
@@ -42,13 +42,13 @@ class MTimeField(HasTraits):
         self._set_control_value(self.value)
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
+        """Set up toolkit-specific bindings for events"""
         super(MTimeField, self)._add_event_listeners()
         if self.control is not None:
             self._observe_control_value()
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
+        """Remove toolkit-specific bindings for events"""
         if self.control is not None:
             self._observe_control_value(remove=True)
         super(MTimeField, self)._remove_event_listeners()

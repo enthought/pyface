@@ -17,8 +17,7 @@ from pyface.i_dialog import IDialog
 
 
 class IColorDialog(IDialog):
-    """ The interface for a dialog that allows the user to choose a color.
-    """
+    """The interface for a dialog that allows the user to choose a color."""
 
     # 'IColorDialog' interface ---------------------------------------------#
 

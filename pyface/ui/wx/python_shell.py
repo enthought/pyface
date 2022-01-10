@@ -37,7 +37,7 @@ from .layout_widget import LayoutWidget
 
 @provides(IPythonShell)
 class PythonShell(MPythonShell, LayoutWidget):
-    """ The toolkit specific implementation of a PythonShell.  See the
+    """The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
@@ -54,7 +54,7 @@ class PythonShell(MPythonShell, LayoutWidget):
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
     def __init__(self, parent=None, **traits):
-        """ Creates a new pager. """
+        """Creates a new pager."""
 
         create = traits.pop("create", True)
 
@@ -140,7 +140,7 @@ class PythonShell(MPythonShell, LayoutWidget):
         self.interpreter().locals.update(prog_ns)
 
     def get_history(self):
-        """ Return the current command history and index.
+        """Return the current command history and index.
 
         Returns
         -------
@@ -152,7 +152,7 @@ class PythonShell(MPythonShell, LayoutWidget):
         return self.control.history, self.control.historyIndex
 
     def set_history(self, history, history_index):
-        """ Replace the current command history and index with new ones.
+        """Replace the current command history and index with new ones.
 
         Parameters
         ----------
@@ -189,7 +189,7 @@ class PythonShell(MPythonShell, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
-        """ Called when a drop occurs on the shell. """
+        """Called when a drop occurs on the shell."""
 
         # If we can't create a valid Python identifier for the name of an
         # object we use this instead.
@@ -219,7 +219,7 @@ class PythonShell(MPythonShell, LayoutWidget):
         return wx.DragCopy
 
     def on_drag_over(self, x, y, obj, default_drag_result):
-        """ Always returns wx.DragCopy to indicate we will be doing a copy."""
+        """Always returns wx.DragCopy to indicate we will be doing a copy."""
         return wx.DragCopy
 
     # ------------------------------------------------------------------------
@@ -227,7 +227,7 @@ class PythonShell(MPythonShell, LayoutWidget):
     # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
-        """ Called whenever a change is made to the text of the document. """
+        """Called whenever a change is made to the text of the document."""
 
         # This was originally in the python_shell plugin, but is toolkit
         # specific.
@@ -265,7 +265,7 @@ class PyShell(PyShellBase):
         locals=None,
         InterpClass=None,
         *args,
-        **kwds
+        **kwds,
     ):
         self.handlers = []
 
@@ -283,12 +283,12 @@ class PyShell(PyShellBase):
             locals,
             InterpClass,
             *args,
-            **kwds
+            **kwds,
         )
 
     def hidden_push(self, command):
-        """ Send a command to the interpreter for execution without adding
-            output to the display.
+        """Send a command to the interpreter for execution without adding
+        output to the display.
         """
         wx.BeginBusyCursor()
         try:
@@ -323,8 +323,7 @@ class PyShell(PyShellBase):
 
 
 class _NullIO(object):
-    """ A portable /dev/null for use with PythonShell.execute_file.
-    """
+    """A portable /dev/null for use with PythonShell.execute_file."""
 
     def tell(self):
         return 0

@@ -23,9 +23,9 @@ from ..widget import Widget
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
-is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
-is_linux = (sys.platform == "linux")
-is_mac = (sys.platform == "darwin")
+is_qt = toolkit_object.toolkit in {"qt4", "qt"}
+is_linux = sys.platform == "linux"
+is_mac = sys.platform == "darwin"
 
 
 class ConcreteWidget(Widget):
@@ -54,7 +54,7 @@ class MainWindow(ApplicationWindow):
     widget = Instance(ConcreteWidget)
 
     def _create_contents(self, parent):
-        """ Create and return the window's contents.
+        """Create and return the window's contents.
         Parameters
         ----------
         parent : toolkit control
@@ -339,6 +339,5 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
 
 class TestWidgetCommon(WidgetMixin, unittest.TestCase):
-
     def _create_widget(self):
         return ConcreteWidget(parent=self.parent.control, tooltip='Dummy')

@@ -15,7 +15,7 @@ import wx
 
 
 def new_font_like(font, **kw):
-    """ Creates a new font, like another one, only different.  Maybe. """
+    """Creates a new font, like another one, only different.  Maybe."""
 
     point_size = kw.get("point_size", font.GetPointSize())
     family = kw.get("family", font.GetFamily())

@@ -19,7 +19,7 @@ from pyface.resource.resource_path import resource_module, resource_path
 
 
 class IImageResource(IImage):
-    """ The interface for an image resource.
+    """The interface for an image resource.
 
     An image resource describes the location of an image and provides a way
     to create a toolkit-specific image on demand.
@@ -39,7 +39,7 @@ class IImageResource(IImage):
 
     @classmethod
     def image_size(cls, image):
-        """ Get the size of a toolkit image
+        """Get the size of a toolkit image
 
         Parameters
         ----------
@@ -54,7 +54,7 @@ class IImageResource(IImage):
 
 
 class MImageResource(HasTraits):
-    """ The mixin class that contains common code for toolkit specific
+    """The mixin class that contains common code for toolkit specific
     implementations of the IImageResource interface.
 
     Implements: __init__(), create_image()
@@ -87,7 +87,7 @@ class MImageResource(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a toolkit-specific image for this resource.
+        """Creates a toolkit-specific image for this resource.
 
         Parameters
         ----------
@@ -115,7 +115,7 @@ class MImageResource(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_ref(self, size=None):
-        """ Return the resource manager reference to the image.
+        """Return the resource manager reference to the image.
 
         Parameters
         ----------
@@ -137,7 +137,7 @@ class MImageResource(HasTraits):
         return self._ref
 
     def _get_image_not_found_image(self):
-        """ Returns the 'image not found' image.
+        """Returns the 'image not found' image.
 
         Returns
         -------
@@ -157,7 +157,7 @@ class MImageResource(HasTraits):
 
     @classmethod
     def _get_image_not_found(cls):
-        """ Returns the 'image not found' image resource.
+        """Returns the 'image not found' image resource.
 
         Returns
         -------

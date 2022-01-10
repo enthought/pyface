@@ -25,8 +25,7 @@ wx_version = tuple(int(x) for x in wx.__version__.split('.')[:3])
 
 @provides(IColorDialog)
 class ColorDialog(Dialog):
-    """ A dialog for selecting colors.
-    """
+    """A dialog for selecting colors."""
 
     # 'IColorDialog' interface ----------------------------------------------
 

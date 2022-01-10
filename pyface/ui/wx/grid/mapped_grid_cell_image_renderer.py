@@ -16,7 +16,7 @@ from .grid_cell_image_renderer import GridCellImageRenderer
 
 
 class MappedGridCellImageRenderer(GridCellImageRenderer):
-    """ Maps data values to image and text. """
+    """Maps data values to image and text."""
 
     def __init__(self, image_map=None, text_map=None):
 

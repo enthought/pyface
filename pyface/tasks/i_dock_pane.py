@@ -15,7 +15,7 @@ from pyface.tasks.i_task_pane import ITaskPane
 
 
 class IDockPane(ITaskPane):
-    """ A pane that is useful but unessential for a task.
+    """A pane that is useful but unessential for a task.
 
     Dock panes are arranged around the central pane in dock areas, and can, in
     general, be moved, resized, and hidden by the user.
@@ -50,21 +50,17 @@ class IDockPane(ITaskPane):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        """ Create and return the toolkit-specific contents of the dock pane.
-        """
+        """Create and return the toolkit-specific contents of the dock pane."""
 
     def hide(self):
-        """ Convenience method to hide the dock pane.
-        """
+        """Convenience method to hide the dock pane."""
 
     def show(self):
-        """ Convenience method to show the dock pane.
-        """
+        """Convenience method to show the dock pane."""
 
 
 class MDockPane(HasTraits):
-    """ Mixin containing common code for toolkit-specific implementations.
-    """
+    """Mixin containing common code for toolkit-specific implementations."""
 
     # 'IDockPane' interface ------------------------------------------------
 
@@ -83,11 +79,9 @@ class MDockPane(HasTraits):
     # ------------------------------------------------------------------------
 
     def hide(self):
-        """ Convenience method to hide the dock pane.
-        """
+        """Convenience method to hide the dock pane."""
         self.visible = False
 
     def show(self):
-        """ Convenience method to show the dock pane.
-        """
+        """Convenience method to show the dock pane."""
         self.visible = True

@@ -16,23 +16,23 @@ from traits.api import HasTraits
 
 # fixme: in JFace this extends from 'DialogPage' which we don't have yet!
 class PreferencePage(HasTraits):
-    """ Abstract base class for all preference pages. """
+    """Abstract base class for all preference pages."""
 
     # ------------------------------------------------------------------------
     # 'PreferencePage' interface.
     # ------------------------------------------------------------------------
 
     def create_control(self, parent):
-        """ Creates the toolkit-specific control for the page. """
+        """Creates the toolkit-specific control for the page."""
 
         raise NotImplementedError()
 
     def restore_defaults(self):
-        """ Restore the default preferences. """
+        """Restore the default preferences."""
 
         pass
 
     def show_help_topic(self):
-        """ Show the help topic for this preference page."""
+        """Show the help topic for this preference page."""
 
         pass

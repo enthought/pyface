@@ -21,7 +21,7 @@ from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 @provides(ISplitWidget)
 class SplitWidget(MSplitWidget):
-    """ The toolkit specific implementation of a SplitWidget.  See the
+    """The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
 
@@ -30,7 +30,7 @@ class SplitWidget(MSplitWidget):
     # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """Create the toolkit-specific control that represents the widget."""
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         splitter = wx.SplitterWindow(parent, -1, style=wx.CLIP_CHILDREN)
@@ -69,7 +69,7 @@ class SplitWidget(MSplitWidget):
         return splitter
 
     def _create_lhs(self, parent):
-        """ Creates the left hand/top panel depending on the direction. """
+        """Creates the left hand/top panel depending on the direction."""
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
@@ -85,7 +85,7 @@ class SplitWidget(MSplitWidget):
         return lhs
 
     def _create_rhs(self, parent):
-        """ Creates the right hand/bottom panel depending on the direction. """
+        """Creates the right hand/bottom panel depending on the direction."""
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
@@ -107,7 +107,7 @@ class SplitWidget(MSplitWidget):
     # wx event handlers ----------------------------------------------------
 
     def _on_size(self, event):
-        """ Called when the frame is resized. """
+        """Called when the frame is resized."""
 
         splitter = event.GetEventObject()
         width, height = splitter.GetSize().Get()

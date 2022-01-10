@@ -15,10 +15,10 @@ from traits.api import HasTraits
 
 
 class GridRow(HasTraits):
-    """ A description of a row in a grid. """
+    """A description of a row in a grid."""
 
     def __init__(self, row_data):
-        """ Create a new row. """
+        """Create a new row."""
 
         self.__dict__.update(row_data)
 
