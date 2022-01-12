@@ -12,24 +12,6 @@
 
 API for the ``pyface.tasks.action`` subpackage.
 
-ActionSchemas and aliases
--------------------------
-
-- :class:`~.ActionSchema`
-- :class:`~.GroupSchema`
-- :class:`~.MenuSchema`
-- :class:`~.MenuBarSchema`
-- :class:`~.ToolBarSchema`
-- :attr:`~.SGroup`
-- :attr:`~.SMenu`
-- :attr:`~.SMenuBar`
-- :attr:`~.SToolBar`
-
-Schema Addition
----------------
-
-- :class:`~.SchemaAddition`
-
 Tasks-specific Action Controller
 --------------------------------
 
@@ -57,6 +39,30 @@ Useful Tasks Actions and Groups
 - :class:`~.TaskToggleGroup`
 - :class:`~.TaskWindowToggleGroup`
 - :class:`~.CreateTaskWindowAction`
+
+ActionSchemas and aliases
+-------------------------
+
+Import of these objects from pyface.tasks.actions.api is deprecated and will
+be removed in a future Pyface release.  Instead use pyface.action.schema.api.
+
+- :class:`~.ActionSchema`
+- :class:`~.GroupSchema`
+- :class:`~.MenuSchema`
+- :class:`~.MenuBarSchema`
+- :class:`~.ToolBarSchema`
+- :attr:`~.SGroup`
+- :attr:`~.SMenu`
+- :attr:`~.SMenuBar`
+- :attr:`~.SToolBar`
+
+Schema Addition
+---------------
+
+Import of this object from pyface.tasks.actions.api is deprecated and will
+be removed in a future Pyface release.  Instead use pyface.action.schema.api.
+
+- :class:`~.SchemaAddition`
 
 """
 

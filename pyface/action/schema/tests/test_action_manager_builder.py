@@ -26,10 +26,9 @@ from pyface.tasks.action.api import (
     MenuBarSchema,
     SchemaAddition,
 )
-from pyface.tasks.action.task_action_manager_builder import (
-    TaskActionManagerBuilder,
+from ..action_manager_builder import (
+    ActionManagerBuilder,
 )
-from pyface.tasks.api import Task
 
 
 class ActionManagerBuilderTestCase(unittest.TestCase):
@@ -91,8 +90,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             MenuSchema(self.action1, self.action2, id="File", name="&File"),
             MenuSchema(self.action3, self.action4, id="Edit", name="&Edit"),
         )
-        builder = TaskActionManagerBuilder(task=Task(menu_bar=schema))
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder()
+        actual = builder.create_action_manager(schema)
         desired = MenuBarManager(
             MenuManager(self.action1, self.action2, id="File", name="&File"),
             MenuManager(self.action3, self.action4, id="Edit", name="&Edit"),
@@ -111,7 +110,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 id="File",
             )
         )
-        extras = [
+        additions = [
             SchemaAddition(
                 factory=lambda: self.action3,
                 before="action1",
@@ -126,10 +125,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 factory=lambda: self.action5, path="MenuBar/File/FileGroup"
             ),
         ]
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extras)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
         desired = MenuBarManager(
             MenuManager(
                 Group(
@@ -161,7 +158,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             GroupSchema(self.action2, id="BarGroup"), id="DummyActionsMenu"
         )
 
-        extra_actions = [
+        additions = [
             SchemaAddition(
                 path="MenuBar",
                 factory=lambda: extra_menu,
@@ -170,10 +167,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         ]
 
         # Build the final menu.
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extra_actions)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
 
         desired = MenuBarManager(
             MenuManager(Group(self.action1, id="FileGroup"), id="FileMenu"),
@@ -206,7 +201,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             id="FileMenu",
         )
 
-        extra_actions = [
+        additions = [
             SchemaAddition(
                 path="MenuBar",
                 factory=lambda: extra_menu,
@@ -215,10 +210,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         ]
 
         # Build the final menu.
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extra_actions)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
 
         # Note that we expect the name of the menu to be inherited from
         # the menu in the menu bar schema that is defined first.
@@ -235,6 +228,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     def test_unwanted_merge(self):
         """ Test that we don't have automatic merges due to forgetting to set
         a schema ID. """
+
         with self.unique_id_context_manager():
             # Initial menu.
             schema = MenuBarSchema(
@@ -248,7 +242,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 GroupSchema(self.action2, id="FileGroup"), name="File 2"
             )
 
-            extra_actions = [
+            additions = [
                 SchemaAddition(
                     path="MenuBar",
                     factory=lambda: extra_menu,
@@ -257,10 +251,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             ]
 
             # Build the final menu.
-            builder = TaskActionManagerBuilder(
-                task=Task(menu_bar=schema, extra_actions=extra_actions)
-            )
-            actual = builder.create_menu_bar_manager()
+            builder = ActionManagerBuilder(additions=additions)
+            actual = builder.create_action_manager(schema)
 
             # Note that we expect the name of the menu to be inherited from
             # the menu in the menu bar schema that is defined first.
@@ -298,7 +290,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         # Contributed menus.
         extra_group = GroupSchema(self.action2, id="FileSchema")
 
-        extra_actions = [
+        additions = [
             SchemaAddition(
                 path="MenuBar",
                 factory=(lambda: extra_group),
@@ -307,10 +299,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         ]
 
         # Build the final menu.
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extra_actions)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
 
         desired = MenuBarManager(
             MenuManager(Group(self.action1, id="FileGroup"), id="FileSchema"),
@@ -334,7 +324,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             GroupSchema(self.action2, id="FileGroup"), id="FileMenu"
         )
 
-        extra_actions = [
+        additions = [
             SchemaAddition(
                 path="MenuBar",
                 factory=lambda: extra_menu,
@@ -343,10 +333,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         ]
 
         # Build the final menu.
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extra_actions)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
 
         desired = MenuBarManager(
             MenuManager(Group(self.action1, id="FileGroup"), id="FileMenu"),
@@ -366,7 +354,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 id="File",
             )
         )
-        extras = [
+        additions = [
             SchemaAddition(
                 factory=lambda: self.action3,
                 absolute_position="last",
@@ -383,10 +371,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 path="MenuBar/File/FileGroup",
             ),
         ]
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extras)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
         desired = MenuBarManager(
             MenuManager(
                 Group(
@@ -412,7 +398,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 id="File",
             )
         )
-        extras = [
+        additions = [
             SchemaAddition(
                 factory=lambda: self.action3,
                 id="action3",
@@ -437,10 +423,8 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 path="MenuBar/File/FileGroup",
             ),
         ]
-        builder = TaskActionManagerBuilder(
-            task=Task(menu_bar=schema, extra_actions=extras)
-        )
-        actual = builder.create_menu_bar_manager()
+        builder = ActionManagerBuilder(additions=additions)
+        actual = builder.create_action_manager(schema)
         desired = MenuBarManager(
             MenuManager(
                 Group(
