@@ -19,8 +19,6 @@ from collections import defaultdict
 
 from traits.api import HasTraits, Instance, List
 
-from pyface.action.action_controller import ActionController
-from pyface.action.action_manager import ActionManager
 from .schema import Schema
 from .schema_addition import SchemaAddition
 from ._topological_sort import before_after_sort
@@ -31,7 +29,7 @@ class ActionManagerBuilder(HasTraits):
     """
 
     #: Any schema additions to apply to the schema being built.
-    controller = Instance(ActionController)
+    controller = Instance("pyface.action.action_controller.ActionController")
 
     #: Schema additions to apply to all managers built by this builder.
     #: Any additions which do not match part of the supplied schema will be
@@ -247,6 +245,7 @@ class ActionManagerBuilder(HasTraits):
         names etc. are inherited from the first item.
 
         """
+        from pyface.action.action_manager import ActionManager
 
         # Compute the new action path.
         if path:
