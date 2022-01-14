@@ -86,7 +86,7 @@ class TasksApplication(GUIApplication):
 
     #: Hook to add global schema additions to tasks/windows
     extra_actions = List(
-        Instance("pyface.tasks.action.schema_addition.SchemaAddition")
+        Instance("pyface.action.schema.schema_addition.SchemaAddition")
     )
 
     #: Hook to add global dock pane additions to tasks/windows
