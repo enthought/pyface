@@ -305,5 +305,11 @@ class GUIApplication(Application):
 
     @observe('icon', post_init=True)
     def _icon_updated(self, event):
-        if self.icon is not None:
-            self.gui.set_application_icon(self.icon)
+        print('--------------------------> here', event, self.gui)
+        if self.gui and event.new is not None:
+            self.gui.set_application_icon(event.new)
+
+    @observe('name', post_init=True)
+    def _name_updated(self, event):
+        if self.gui and event.new:
+            self.gui.set_application_name(event.new)
