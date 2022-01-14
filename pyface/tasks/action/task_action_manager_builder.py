@@ -8,18 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-import logging
-
 from traits.api import Instance, List, Property
 
 from pyface.action.schema.action_manager_builder import ActionManagerBuilder
-from pyface.action.schema.schema import ToolBarSchema
 from pyface.action.schema.schema_addition import SchemaAddition
 from pyface.tasks.task import Task
-
-
-# Logging.
-logger = logging.getLogger(__name__)
 
 
 class TaskActionManagerBuilder(ActionManagerBuilder):
