@@ -47,7 +47,7 @@ SubSchema = Union(
 
 
 class Schema(HasTraits):
-    """ The abstract base class for all Tasks action schemas.
+    """ The abstract base class for all action schemas.
     """
 
     #: The schema's identifier (unique within its parent schema).
