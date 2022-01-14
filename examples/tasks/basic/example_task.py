@@ -1,11 +1,14 @@
-from pyface.tasks.api import Task, TaskLayout, PaneItem
-from pyface.tasks.action.api import (
-    DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
-    TaskAction,
-)
+# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     ConfirmationDialog,
     FileDialog,
@@ -14,6 +17,8 @@ from pyface.api import (
     OK,
     CANCEL,
 )
+from pyface.tasks.api import Task, TaskLayout, PaneItem
+from pyface.tasks.action.api import DockPaneToggleGroup, TaskAction
 from traits.api import observe
 
 

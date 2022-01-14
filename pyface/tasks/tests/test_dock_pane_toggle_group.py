@@ -11,12 +11,8 @@
 import unittest
 
 
-from pyface.tasks.action.api import (
-    SMenu,
-    SMenuBar,
-    SGroup,
-    DockPaneToggleGroup,
-)
+from pyface.action.schema.api import SMenu, SMenuBar, SGroup
+from pyface.tasks.action.api import DockPaneToggleGroup
 from pyface.tasks.api import DockPane, Task, TaskPane, TaskWindow
 from pyface.gui import GUI
 from traits.api import List

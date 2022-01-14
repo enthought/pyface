@@ -32,6 +32,7 @@ from pyface.api import (
     error,
 )
 from pyface.action.api import Action, StatusBarManager
+from pyface.action.schema.api import SGroup, SMenu, SMenuBar, SToolBar
 from pyface.tasks.api import (
     EditorAreaPane,
     IEditor,
@@ -43,10 +44,6 @@ from pyface.tasks.api import (
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
     EditorAction,
-    SGroup,
-    SMenu,
-    SMenuBar,
-    SToolBar,
     TaskAction,
 )
 from traits.api import (

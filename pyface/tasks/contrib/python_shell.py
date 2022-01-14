@@ -20,8 +20,9 @@ import logging
 
 from traits.api import Str, List, Dict, Instance
 from pyface.api import PythonShell, FileDialog, OK
+from pyface.action.schema.api import SMenu, SMenuBar
 from pyface.tasks.api import Task, TaskPane
-from pyface.tasks.action.api import SMenuBar, SMenu, TaskAction
+from pyface.tasks.action.api import TaskAction
 
 # set up logging
 logger = logging.getLogger()
