@@ -121,6 +121,16 @@ class GUI(MGUI, HasTraits):
         logger.debug("---------- stopping GUI event loop ----------")
         self.application.ExitMainLoop()
 
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+        """
+        icon = image.create_icon()
+        dock_icon = wx.adv.TaskBarIcon(wx.TBI_DOCK)
+        dock_icon.setIcon(icon)
+
     # ------------------------------------------------------------------------
     # Trait handlers.
     # ------------------------------------------------------------------------

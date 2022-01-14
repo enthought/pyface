@@ -46,7 +46,11 @@ class GUI(MGUI, HasTraits):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, splash_screen=None):
+    def __init__(self, splash_screen=None, icon=None):
+        # Change the application icon, if any
+        if icon is None:
+            self.set_application_icon(icon)
+
         # Display the (optional) splash screen.
         self._splash_screen = splash_screen
 
@@ -109,6 +113,15 @@ class GUI(MGUI, HasTraits):
     def stop_event_loop(self):
         logger.debug("---------- stopping GUI event loop ----------")
         self.application.quit()
+
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+        """
+        icon = image.create_icon()
+        self.application.setWindowIcon(icon)
 
     # ------------------------------------------------------------------------
     # Trait handlers.

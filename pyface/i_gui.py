@@ -161,6 +161,13 @@ class IGUI(Interface):
     def stop_event_loop(self):
         """ Stop the GUI event loop. """
 
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+        """
+
 
 class MGUI(HasTraits):
     """ The mixin class that contains common code for toolkit specific
