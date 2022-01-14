@@ -16,14 +16,11 @@
 import logging
 import sys
 
-
 import wx
 
+from traits.api import Bool, HasTraits, Property, provides, Str
 
-from traits.api import Bool, HasTraits, provides, Str
-from pyface.util.guisupport import start_event_loop_wx
-
-
+from pyface.util.guisupport import get_app_wx, start_event_loop_wx
 from pyface.i_gui import IGUI, MGUI
 
 
@@ -35,6 +32,8 @@ logger = logging.getLogger(__name__)
 class GUI(MGUI, HasTraits):
 
     # 'GUI' interface -----------------------------------------------------#
+
+    application = Property()
 
     busy = Bool(False)
 
@@ -120,7 +119,7 @@ class GUI(MGUI, HasTraits):
         """ Stop the GUI event loop. """
 
         logger.debug("---------- stopping GUI event loop ----------")
-        wx.GetApp().ExitMainLoop()
+        self.application.ExitMainLoop()
 
     # ------------------------------------------------------------------------
     # Trait handlers.
@@ -140,3 +139,6 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
+
+    def _get_application(self):
+        return get_app_wx()

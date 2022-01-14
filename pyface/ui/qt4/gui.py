@@ -13,16 +13,13 @@
 
 
 import logging
+import sys
 
+from traits.api import Bool, HasTraits, Property, observe, provides, Str
 
 from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Bool, HasTraits, observe, provides, Str
-from pyface.util.guisupport import start_event_loop_qt4
-
-
 from pyface.i_gui import IGUI, MGUI
+from pyface.util.guisupport import get_app_qt4, start_event_loop_qt4
 
 
 # Logging.
@@ -36,6 +33,8 @@ class GUI(MGUI, HasTraits):
     """
 
     # 'GUI' interface -----------------------------------------------------#
+
+    application = Property()
 
     busy = Bool(False)
 
@@ -109,7 +108,7 @@ class GUI(MGUI, HasTraits):
 
     def stop_event_loop(self):
         logger.debug("---------- stopping GUI event loop ----------")
-        QtGui.QApplication.quit()
+        self.application.quit()
 
     # ------------------------------------------------------------------------
     # Trait handlers.
@@ -128,6 +127,9 @@ class GUI(MGUI, HasTraits):
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
+
+    def _get_application(self):
+        return get_app_qt4(*sys.argv)
 
 
 class _FutureCall(QtCore.QObject):

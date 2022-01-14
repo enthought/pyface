@@ -16,7 +16,7 @@ import os
 
 
 from traits.etsconfig.api import ETSConfig
-from traits.api import Bool, HasTraits, Interface, Str
+from traits.api import Any, Bool, HasTraits, Interface, Str
 
 
 # Logging.
@@ -27,6 +27,9 @@ class IGUI(Interface):
     """ The interface of a pyface GUI. """
 
     # 'GUI' interface -----------------------------------------------------#
+
+    #: The toolkit application object.  This is typically read-only.
+    application = Any()
 
     #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
     #: displayed)?
