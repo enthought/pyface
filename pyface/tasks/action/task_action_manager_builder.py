@@ -53,7 +53,7 @@ class TaskActionManagerBuilder(ActionManagerBuilder):
             additions.
         """
         schemas = self.task.tool_bars[:]
-        for addition in self.task.extra_actions:
+        for addition in self.additions:
             if not addition.path:
                 schema = addition.factory()
                 if isinstance(schema, ToolBarSchema):

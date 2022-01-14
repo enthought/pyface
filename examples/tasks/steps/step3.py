@@ -3,6 +3,7 @@
 Create and delete task panes
 """
 
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -23,13 +24,7 @@ from pyface.tasks.api import (
     Editor,
     DockPane,
 )
-from pyface.tasks.action.api import (
-    DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
-    TaskAction,
-)
+from pyface.tasks.action.api import DockPaneToggleGroup, TaskAction
 from traits.api import Property, Instance
 
 

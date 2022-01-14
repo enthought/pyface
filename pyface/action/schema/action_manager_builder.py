@@ -28,7 +28,8 @@ class ActionManagerBuilder(HasTraits):
     """ Builds action managers from schemas, merging schema additions.
     """
 
-    #: Any schema additions to apply to the schema being built.
+    #: An ActionController to use with the action managers created by the
+    #: builder.  May be None.
     controller = Instance("pyface.action.action_controller.ActionController")
 
     #: Schema additions to apply to all managers built by this builder.

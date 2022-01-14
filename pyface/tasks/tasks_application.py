@@ -219,10 +219,9 @@ class TasksApplication(GUIApplication):
             CloseActiveWindowAction,
             ExitAction,
         )
+        from pyface.action.schema.api import SMenu, SchemaAddition
         from pyface.tasks.action.api import (
             CreateTaskWindowAction,
-            SchemaAddition,
-            SMenu,
             TaskWindowToggleGroup,
         )
 
