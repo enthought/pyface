@@ -46,10 +46,14 @@ class GUI(MGUI, HasTraits):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, splash_screen=None, icon=None):
+    def __init__(self, splash_screen=None, name="", icon=None):
         # Change the application icon, if any
-        if icon is None:
+        if icon is not None:
             self.set_application_icon(icon)
+
+        # Change the application name, if any
+        if name:
+            self.set_application_name(name)
 
         # Display the (optional) splash screen.
         self._splash_screen = splash_screen
@@ -120,8 +124,22 @@ class GUI(MGUI, HasTraits):
         This controls the icon displayed in system docks and similar locations
         within the operating system.
         """
-        icon = image.create_icon()
-        self.application.setWindowIcon(icon)
+        # ensure application exists before doing anything else
+        app = self.application
+        app.setWindowIcon(image.create_icon())
+
+    def set_application_name(self, name):
+        """ Set the application name at the toolkit level.
+
+        This sets the name displayed for the application in various places
+        in the OS.
+
+        Note
+        ----
+        This does not change the name of the application in the MacOS menu or
+        dock.
+        """
+        self.application.setApplicationDisplayName(name)
 
     # ------------------------------------------------------------------------
     # Trait handlers.

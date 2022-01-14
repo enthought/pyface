@@ -67,7 +67,8 @@ class GUIApplication(Application):
     #: The about dialog for the application.
     about_dialog = Instance(IDialog)
 
-    #: Icon for the application (used in window titlebars)
+    #: Icon for the application (used in window titlebars, docks, etc.)
+    #: This should be large (eg. 1024x1024 is standard on MacOS).
     icon = Image
 
     #: Logo of the application (used in splash screens and about dialogs)
@@ -166,7 +167,7 @@ class GUIApplication(Application):
         if ok:
             # create the GUI so that the splash screen comes up first thing
             if self.gui is Undefined:
-                self.gui = GUI(splash_screen=self.splash_screen)
+                self.gui = GUI(self.splash_screen, self.name, self.icon)
 
             # create the initial windows to show
             self._create_windows()
@@ -301,3 +302,8 @@ class GUIApplication(Application):
         window = event.object
         if window in self.windows:
             self.windows.remove(window)
+
+    @observe('icon', post_init=True)
+    def _icon_updated(self, event):
+        if self.icon is not None:
+            self.gui.set_application_icon(self.icon)
