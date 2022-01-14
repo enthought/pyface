@@ -140,7 +140,7 @@ class GUI(MGUI, HasTraits):
         This does not change the dock icon in MacOS.
         """
         # ensure app exists before doing anything else
-        app = self.application
+        self.application
         icon = image.create_icon()
         dock_icon = wx.adv.TaskBarIcon(wx.adv.TBI_DOCK)
         dock_icon.SetIcon(icon)
