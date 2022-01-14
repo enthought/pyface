@@ -52,18 +52,7 @@ class TaskActionManagerBuilder(ActionManagerBuilder):
         """ Create tool bar managers from the tasks's tool bar schemas and
             additions.
         """
-        schemas = self.task.tool_bars[:]
-        for addition in self.additions:
-            if not addition.path:
-                schema = addition.factory()
-                if isinstance(schema, ToolBarSchema):
-                    schemas.append(schema)
-                else:
-                    logger.error(
-                        "Invalid top-level schema addition: %r. Only "
-                        "ToolBar schemas can be path-less.",
-                        schema,
-                    )
+        schemas = self.task.tool_bars + self.get_additional_toolbar_schemas()
         return [
             self.create_action_manager(schema)
             for schema in self._get_ordered_schemas(schemas)

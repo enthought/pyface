@@ -15,13 +15,19 @@ and builds the concrete action manager and its groups and items, folding in
 schema additions.
 """
 
+import logging
+
 from collections import defaultdict
 
 from traits.api import HasTraits, Instance, List
 
-from .schema import Schema
+from .schema import Schema, ToolBarSchema
 from .schema_addition import SchemaAddition
 from ._topological_sort import before_after_sort
+
+
+# Logging.
+logger = logging.getLogger(__name__)
 
 
 class ActionManagerBuilder(HasTraits):
@@ -67,6 +73,32 @@ class ActionManagerBuilder(HasTraits):
         manager = self._create_action_manager_recurse(schema, additions_map)
         manager.controller = self.controller
         return manager
+
+    def get_additional_toolbar_schemas(self):
+        """ Get any top-level toolbars from additions.
+
+        Unlike menus, there is no base toolbar manager, so additions which
+        contribute new toolbars appear with no path.  It is up to the class
+        using the builder how it wants to handle these additional toolbars.
+
+        Returns
+        -------
+        schemas : list of ToolBarSchema
+            The additional toolbars specified in self.additions.
+        """
+        schemas = []
+        for addition in self.additions:
+            if not addition.path:
+                schema = addition.factory()
+                if isinstance(schema, ToolBarSchema):
+                    schemas.append(schema)
+                else:
+                    logger.error(
+                        "Invalid top-level schema addition: %r. Only "
+                        "ToolBar schemas can be path-less.",
+                        schema,
+                    )
+        return schemas
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
