@@ -20,7 +20,7 @@ from pyface.action.api import (
     MenuManager,
     MenuBarManager,
 )
-from pyface.tasks.action.api import (
+from pyface.action.schema.api import (
     GroupSchema,
     MenuSchema,
     MenuBarSchema,
