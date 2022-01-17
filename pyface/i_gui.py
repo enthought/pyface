@@ -168,6 +168,13 @@ class IGUI(Interface):
         within the operating system.
         """
 
+    def set_application_name(self, image):
+        """ Set the application name in the OS.
+
+        This controls the name displayed in system docks and similar locations
+        within the operating system.
+        """
+
 
 class MGUI(HasTraits):
     """ The mixin class that contains common code for toolkit specific
