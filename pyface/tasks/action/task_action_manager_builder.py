@@ -27,7 +27,7 @@ class TaskActionManagerBuilder(ActionManagerBuilder):
     task = Instance(Task)
 
     #: The schema additions provided by the Task.
-    additions = Property(List(SchemaAddition), depends_on='task.extra_actions')
+    additions = Property(List(SchemaAddition), observe='task.extra_actions')
 
     # ------------------------------------------------------------------------
     # 'TaskActionManagerBuilder' interface.
