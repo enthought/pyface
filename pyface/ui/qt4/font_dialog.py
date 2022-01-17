@@ -45,9 +45,6 @@ class FontDialog(Dialog):
     def close(self):
         if self.control.result() == QtGui.QDialog.Accepted:
             qfont = self.control.selectedFont()
-            print(qfont.family())
-            print(qfont.families())
-            print(qfont.defaultFamily())
             self.font = Font.from_toolkit(qfont)
         return super(FontDialog, self).close()
 
