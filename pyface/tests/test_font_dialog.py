@@ -85,13 +85,3 @@ class TestGetFont(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=lambda x: x.close(accept=False))
 
         self.assertEqual(tester.result, None)
-
-    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
-    def test_close_show_alpha(self):
-        # test that cancel works as expected
-        tester = ModalDialogTester(
-            lambda: get_font(None, "12 Helvetica sans-serif")
-        )
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
-
-        self.assertEqual(tester.result, None)
