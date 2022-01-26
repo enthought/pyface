@@ -218,7 +218,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
             )
         else:
             commands.append(
-                "{edm} run -e {environment} -- pip install pyside6'"
+                "{edm} run -e {environment} -- pip install pyside6"
             )
         commands.append(
             "{edm} run -e {environment} -- pip install pillow"
