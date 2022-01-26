@@ -4,6 +4,7 @@ Create and delete editors in the main notebook area.  Also adds menu and toolbar
 support
 """
 
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -25,9 +26,6 @@ from pyface.tasks.api import (
 )
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
     TaskAction,
 )
 from traits.api import Property, Instance

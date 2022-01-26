@@ -8,6 +8,7 @@ incorrect tying of the controls to SecondTask because the class attributes
 were shared between both classes.
 """
 
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -32,9 +33,6 @@ from pyface.tasks.api import (
 )
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
     TaskAction,
     TaskToggleGroup,
 )
