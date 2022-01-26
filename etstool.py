@@ -84,6 +84,7 @@ import click
 
 supported_combinations = {
     "3.6": {"pyqt5", "pyside2", "pyside6", "wx"},
+    "3.8": {"pyside6"},
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -211,11 +212,16 @@ def install(edm, runtime, toolkit, environment, editable, source):
             ]
         )
     elif toolkit == "pyside6":
-        commands.extend(
-            [
-                "{edm} run -e {environment} -- pip install pyside6",
-                "{edm} run -e {environment} -- pip install pillow",
-            ]
+        if sys.platform == 'darwin':
+            commands.append(
+                "{edm} run -e {environment} -- pip install pyside6<6.2.2'"
+            )
+        else:
+            commands.append(
+                "{edm} run -e {environment} -- pip install pyside6'"
+            )
+        commands.append(
+            "{edm} run -e {environment} -- pip install pillow"
         )
     elif toolkit == "wx":
         if sys.platform == "darwin":
