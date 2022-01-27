@@ -75,7 +75,6 @@ how to run commands within an EDM environment.
 from contextlib import contextmanager
 import glob
 import os
-from platform import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
@@ -188,7 +187,7 @@ dependencies = [
     Package("coverage"),
     Package("flake8"),
     Package("flake8-ets", {
-        ('3.6',): ('edm', "flake8-ets"),
+        ('3.6',): ('edm', "flake8_ets"),
         ('3.8',): ('pip', "flake8-ets"),
     }),
 ]
@@ -505,7 +504,6 @@ def docs(edm, runtime, toolkit, environment):
             else:
                 pip_packages.append(requirement)
 
-    packages = " ".join(doc_dependencies)
     ignore = " ".join(doc_ignore)
     commands = [
         "{edm} install -y -e {environment} " + " ".join(edm_packages),
