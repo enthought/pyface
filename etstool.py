@@ -72,13 +72,14 @@ how to run commands within an EDM environment.
 
 """
 
+from contextlib import contextmanager
 import glob
 import os
+from platform import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
 from tempfile import mkdtemp
-from contextlib import contextmanager
 
 import click
 
@@ -91,37 +92,142 @@ supported_combinations = {
 # The requirement is to be interpreted by EDM
 TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
 
-dependencies = {
-    "importlib_metadata",
-    "importlib_resources>=1.1.0",
-    "traits" + TRAITS_VERSION_REQUIRES,
-    "traitsui",
-    "numpy",
-    "pygments",
-    "coverage",
-    "flake8",
-    "flake8_ets",
-}
+GITHUB_REPO_TEMPLATE = "git+http://github.com/enthought/{0}#egg={0}"
+
+
+class Package:
+    """ Utility class representing a package.
+
+    Depending on the runtime and platform, a package which is needed may come
+    from a variety of different sources (edm, pip from PyPI, pip from GitHub,
+    etc.)
+
+    Attributes
+    ----------
+    name : str
+        A human readable name for the package.
+    sources : dict
+        Sources contains a dictionary mapping runtimes and platforms to the
+        source description for that runtime and platform.  The keys are
+        tuples which may be of the form:
+
+        - (runtime, platform) - the source is for this pair only
+        - (platform,) - use this source if the platform matches and there is no
+          specific (runtime, platform) source
+        - (runtime,) - use this source if the runtime matches and there is no
+          specific (runtime, platform) or (platform,) source
+        - () - use this source if no other matches
+
+        If there is no matching key, then this package is not needed on this
+        platform.
+
+        For convenience, the __init__ function converts sources values as
+        follows:
+
+        - None - use the name as the edm name of the package for everything
+          (equivalent to {(): ('edm', name)})
+        - a string - use this as the edm name of the package for everything
+          (equivalent to {(): ('edm', value)})
+        - a tuple - use this as the source for everything (equivalent to
+          {(): value})
+    """
+
+    def __init__(self, name, sources=None):
+        self.name = name
+        if sources is None:
+            sources = name
+        if isinstance(sources, str):
+            sources = ('edm', sources)
+        if isinstance(sources, tuple):
+            sources = {(): sources}
+        self.sources = sources
+
+    def get_source(self, runtime, platform):
+        """ Given a runtime and platform, find where to get the package.
+
+        Parameters
+        ----------
+        runtime : str
+            The runtime the package will be installed in.
+        platform : str
+            The platform name returned from sys.platform.
+
+        Returns
+        -------
+        source : (installer, requirement) tuple or None
+            This returns a tuple of installer name (currently "pip" or "edm:)
+            and the requirement string to use with the appropriate installer.
+            If None is returned, this package does not exist or is not needed
+            on this runtime/platform combination.
+        """
+        for key in [(runtime, platform), (platform,), (runtime,), ()]:
+            if key in self.sources:
+                return self.sources[key]
+        return None
+
+
+dependencies = [
+    Package('packaging'),
+    Package("importlib_metadata", {
+        ('3.6',): ('edm', "importlib_metadata"),
+    }),
+    Package("importlib_resources", {
+        ('3.6',): ('edm', "importlib_resources>=1.1.0"),
+    }),
+    Package("traits", ('edm', "traits" + TRAITS_VERSION_REQUIRES)),
+    Package("traitsui", {
+        ('3.6',): ('edm', "traitsui"),
+        ('3.8',): ('pip', GITHUB_REPO_TEMPLATE.format("traitsui")),
+    }),
+    Package("numpy"),
+    Package("pygments"),
+    Package("pillow", {
+        ('3.6',): ('edm', "pillow"),
+        ('3.8',): ('pip', "pillow"),
+    }),
+    Package("coverage"),
+    Package("flake8"),
+    Package("flake8-ets", {
+        ('3.6',): ('edm', "flake8-ets"),
+        ('3.8',): ('pip', "flake8-ets"),
+    }),
+]
 
 source_dependencies = {
-    "traits": "git+http://github.com/enthought/traits.git#egg=traits",
-    "traitsui": "git+http://github.com/enthought/traitsui.git#egg=traitsui",
+    "traits": GITHUB_REPO_TEMPLATE.format("traits"),
+    "traitsui": GITHUB_REPO_TEMPLATE.format("traitsui"),
 }
 
-extra_dependencies = {
-    # XXX once pyside2 is available in EDM, we will want it here
-    "pyside2": {"pillow"},
-    # XXX once pyside6 is available in EDM, we will want it here
-    "pyside6": set(),
-    "pyqt5": {"pyqt5", "pillow"},
-    # XXX once wxPython 4 is available in EDM, we will want it here
-    "wx": {"pillow"},
+toolkit_dependencies = {
+    "pyside2": [
+        Package("shiboken2", ('pip', 'pyside2')),
+        Package("pyside2", ('pip', 'pyside2')),
+    ],
+    "pyside6": [
+        Package("pyside6", {
+            ('3.6', 'darwin'): ('pip', 'pyside6<6.2.2'),
+            ('3.6',): ('pip', 'pyside6'),
+            ('3.8',): ('edm', 'pyside6'),
+        }),
+    ],
+    "pyqt5": [
+        Package("pyqt5", {
+            ('3.6',): ('edm', 'pyqt5'),
+            ('3.8',): ('pip', 'pyqt5'),
+        }),
+    ],
+    "wx": [
+        Package('wxpython', {
+            ('3.6', 'linux'): ('pip', "-f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"),
+            (): ('pip', 'wxpython'),
+        })
+    ],
     "null": set(),
 }
 
 doc_dependencies = {
-    "sphinx",
-    "enthought_sphinx_theme",
+    Package("sphinx"),
+    Package("enthought_sphinx_theme"),
 }
 
 doc_ignore = {
@@ -175,7 +281,18 @@ def install(edm, runtime, toolkit, environment, editable, source):
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
-    packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
+    platform = sys.platform
+
+    edm_packages = []
+    pip_packages = []
+    for package in dependencies + toolkit_dependencies.get(toolkit, []):
+        source = package.get_source(runtime, platform)
+        if source is not None:
+            installer, requirement = source
+            if installer == 'edm':
+                edm_packages.append(requirement)
+            else:
+                pip_packages.append(requirement)
 
     # Install local source
     install_pyface = (
@@ -196,47 +313,17 @@ def install(edm, runtime, toolkit, environment, editable, source):
             "edm environments create {environment} --force --version={runtime}"
         ]
 
+    commands.append(
+        "{edm} install -y -e {environment} " + " ".join(edm_packages)
+    )
     commands.extend([
-        "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
+        "{edm} run -e {environment} -- pip install " + requirement
+        for requirement in pip_packages
+    ])
+    commands.extend([
         "{edm} run -e {environment} -- python setup.py clean --all",
         install_pyface,
     ])
-
-    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
-    if toolkit == "pyside2":
-        commands.extend(
-            [
-                "{edm} run -e {environment} -- pip install shiboken2",
-                "{edm} run -e {environment} -- pip install pyside2",
-            ]
-        )
-    elif toolkit == "pyside6":
-        if sys.platform == 'darwin':
-            commands.append(
-                "{edm} run -e {environment} -- pip install pyside6<6.2.2'"
-            )
-        else:
-            commands.append(
-                "{edm} run -e {environment} -- pip install pyside6"
-            )
-        commands.append(
-            "{edm} run -e {environment} -- pip install pillow"
-        )
-    elif toolkit == "wx":
-        if sys.platform == "darwin":
-            commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"  # noqa: E501
-            )
-        elif sys.platform == "linux":
-            # XXX this is mainly for TravisCI workers; need a generic solution
-            commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"  # noqa: E501
-            )
-        else:
-            commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython"
-            )
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -405,11 +492,27 @@ def docs(edm, runtime, toolkit, environment):
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
+    platform = sys.platform
+
+    edm_packages = []
+    pip_packages = []
+    for package in doc_dependencies:
+        source = package.get_source(runtime, platform)
+        if source is not None:
+            installer, requirement = source
+            if installer == 'edm':
+                edm_packages.append(requirement)
+            else:
+                pip_packages.append(requirement)
+
     packages = " ".join(doc_dependencies)
     ignore = " ".join(doc_ignore)
     commands = [
-        "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",  # noqa: E501
+        "{edm} install -y -e {environment} " + " ".join(edm_packages),
+    ]
+    commands += [
+        "{edm} run -e {environment} -- pip install " + requirement
+        for requirement in pip_packages
     ]
     click.echo(
         "Installing documentation tools in  '{environment}'".format(
