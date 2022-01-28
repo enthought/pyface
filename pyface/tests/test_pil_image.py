@@ -10,6 +10,7 @@
 
 
 import os
+import logging
 import unittest
 
 # importlib.resources is new in Python 3.7, and importlib.resources.files is
@@ -20,13 +21,22 @@ try:
 except ImportError:
     from importlib_resources import files
 
-from PIL import Image
+from pyface.util._optional_dependencies import optional_import
 
-from ..pil_image import PILImage
+Image = None
+
+with optional_import(
+        "pillow",
+        msg="PILImage not available due to missing pillow.",
+        logger=logging.getLogger(__name__)):
+
+    from PIL import Image
+    from ..pil_image import PILImage
 
 IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
+@unittest.skipIf(Image is None, "Pillow not available")
 class TestPILImage(unittest.TestCase):
 
     def setUp(self):
