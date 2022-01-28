@@ -9,6 +9,7 @@
 #
 # Thanks for using Enthought open source!
 
+import weakref
 
 from pyface.qt import QtCore, QtGui
 
@@ -195,15 +196,17 @@ class WindowEventFilter(QtCore.QObject):
     def __init__(self, window):
         """ Initialise the event filter. """
         QtCore.QObject.__init__(self)
-        self._window = window
+        # use a weakref to fix finalization issues with circular references
+        # we don't want to be the last thing holding a reference to the window
+        self._window = weakref.ref(window)
 
     def eventFilter(self, obj, e):
         """ Adds any event listeners required by the window. """
 
-        window = self._window
+        window = self._window()
 
         # Sanity check.
-        if obj is not window.control:
+        if window is None or obj is not window.control:
             return False
 
         typ = e.type()
