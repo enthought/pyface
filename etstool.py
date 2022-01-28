@@ -180,10 +180,6 @@ dependencies = [
     }),
     Package("numpy"),
     Package("pygments"),
-    Package("pillow", {
-        ('3.6',): ('edm', "pillow"),
-        ('3.8',): ('pip', "pillow"),
-    }),
     Package("coverage"),
     Package("flake8"),
     Package("flake8-ets", {
@@ -201,6 +197,10 @@ toolkit_dependencies = {
     "pyside2": [
         Package("shiboken2", ('pip', 'pyside2')),
         Package("pyside2", ('pip', 'pyside2')),
+        Package("pillow", {
+            ('3.6',): ('edm', "pillow"),
+            ('3.8',): ('pip', "pillow"),
+        }),
     ],
     "pyside6": [
         Package("pyside6", {
@@ -208,11 +208,16 @@ toolkit_dependencies = {
             ('3.6',): ('pip', 'pyside6'),
             ('3.8',): ('edm', 'pyside6'),
         }),
+        Package("pillow", ('pip', "pillow")),
     ],
     "pyqt5": [
         Package("pyqt5", {
             ('3.6',): ('edm', 'pyqt5'),
             ('3.8',): ('pip', 'pyqt5'),
+        }),
+        Package("pillow", {
+            ('3.6',): ('edm', "pillow"),
+            ('3.8',): ('pip', "pillow"),
         }),
     ],
     "wx": [
@@ -220,7 +225,11 @@ toolkit_dependencies = {
             ('3.6', 'linux'): ('pip', "-f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"),
             ('darwin',): ('pip', "wxPython<4.1"),
             (): ('pip', 'wxpython'),
-        })
+        }),
+        Package("pillow", {
+            ('3.6',): ('edm', "pillow"),
+            ('3.8',): ('pip', "pillow"),
+        }),
     ],
     "null": set(),
 }
