@@ -17,7 +17,6 @@ from pyface.qt import QtCore, QtGui
 class GutterWidget(QtGui.QWidget):
 
     min_width = 5
-    background_color = QtGui.QColor(220, 220, 220)
 
     def sizeHint(self):
         return QtCore.QSize(self.min_width, 0)
@@ -26,7 +25,7 @@ class GutterWidget(QtGui.QWidget):
         """ Paint the line numbers.
         """
         painter = QtGui.QPainter(self)
-        painter.fillRect(event.rect(), QtCore.Qt.lightGray)
+        painter.fillRect(event.rect(), self.pallette().window())
 
     def wheelEvent(self, event):
         """ Delegate mouse wheel events to parent for seamless scrolling.
@@ -52,7 +51,7 @@ class StatusGutterWidget(GutterWidget):
         """ Paint the line numbers.
         """
         painter = QtGui.QPainter(self)
-        painter.fillRect(event.rect(), self.background_color)
+        painter.fillRect(event.rect(), self.palette().window())
 
         cw = self.parent()
 
@@ -117,7 +116,7 @@ class LineNumberWidget(GutterWidget):
         """
         painter = QtGui.QPainter(self)
         painter.setFont(self.font)
-        painter.fillRect(event.rect(), self.background_color)
+        painter.fillRect(event.rect(), self.palette().window())
 
         cw = self.parent()
         block = cw.firstVisibleBlock()
@@ -129,9 +128,9 @@ class LineNumberWidget(GutterWidget):
         )
         bottom = top + int(cw.blockBoundingRect(block).height())
 
+        painter.setBrush(self.palette().windowText())
         while block.isValid() and top <= event.rect().bottom():
             if block.isVisible() and bottom >= event.rect().top():
-                painter.setPen(QtCore.Qt.black)
                 painter.drawText(
                     0,
                     top,

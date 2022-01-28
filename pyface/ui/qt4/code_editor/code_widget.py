@@ -31,7 +31,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     focus_lost = QtCore.Signal()
 
     def __init__(
-        self, parent, should_highlight_current_line=True, font=None, lexer=None
+        self, parent, should_highlight_current_line=False, font=None, lexer=None
     ):
         super().__init__(parent)
 
@@ -58,7 +58,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.should_highlight_current_line = should_highlight_current_line
 
         # What that highlight color should be.
-        self.line_highlight_color = QtGui.QColor(QtCore.Qt.yellow).lighter(160)
+        self.line_highlight_color = self.palette().alternateBase()
 
         # Auto-indentation behavior
         self.auto_indent = True
