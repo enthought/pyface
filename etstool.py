@@ -218,6 +218,7 @@ toolkit_dependencies = {
     "wx": [
         Package('wxpython', {
             ('3.6', 'linux'): ('pip', "-f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"),
+            ('darwin',): ('pip', "wxPython<4.1"),
             (): ('pip', 'wxpython'),
         })
     ],
