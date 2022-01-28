@@ -25,7 +25,7 @@ class TestPyfaceQtImports(unittest.TestCase):
         import pyface.qt.QtMultimedia  # noqa: F401
         import pyface.qt.QtMultimediaWidgets  # noqa: F401
 
-    @unittest.skipIf(sys.version_info > (3, 6), "Web engine not supported yet")
+    @unittest.skipIf(sys.version_info > (3, 6), "WebKit is not available")
     def test_import_web_kit(self):
         import pyface.qt.QtWebKit  # noqa: F401
 
