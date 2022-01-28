@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+import sys
 import unittest
 import warnings
 
@@ -21,9 +22,12 @@ class TestPyfaceQtImports(unittest.TestCase):
         import pyface.qt.QtOpenGL  # noqa: F401
         import pyface.qt.QtSvg  # noqa: F401
         import pyface.qt.QtTest  # noqa: F401
-        import pyface.qt.QtWebKit  # noqa: F401
         import pyface.qt.QtMultimedia  # noqa: F401
         import pyface.qt.QtMultimediaWidgets  # noqa: F401
+
+    @unittest.skipIf(sys.version_info > (3, 6), "Web engine not supported yet")
+    def test_import_web_kit(self):
+        import pyface.qt.QtWebKit  # noqa: F401
 
     def test_import_QtScript(self):
         # QtScript is not supported on PyQt5/PySide2 and
