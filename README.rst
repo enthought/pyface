@@ -10,8 +10,8 @@ the details of displaying them.
 
 The following GUI backends are supported:
 
-- PyQt 4 and 5
-- PySide2
+- PySide2 (stable) and PySide6 (experimental)
+- PyQt5 (stable) and PyQt6 (in development)
 - wxPython 4 (experimental)
 
 Installation
@@ -24,6 +24,10 @@ To install with PySide2 dependencies::
 
     $ pip install pyface[pyside2]
 
+To install with PySide6 dependencies (experimental)::
+
+    $ pip install pyface[pyside6]
+
 To install with PyQt5 dependencies::
 
     $ pip install pyface[pyqt5]
@@ -31,6 +35,10 @@ To install with PyQt5 dependencies::
 To install with wxPython4 dependencies (experimental)::
 
     $ pip install pyface[wx]
+
+To pillow is an optional dependency for the PILImage class::
+
+    $ pip install pyface[pillow]
 
 To install with additional test dependencies::
 
@@ -48,24 +56,39 @@ Prerequisites
 
 Pyface depends on:
 
-* a GUI toolkit: one of PySide2, PyQt4, PyQt5 or WxPython
-
 * `Traits <https://github.com/enthought/traits>`_
+
+* a GUI toolkit as described above
 
 * Pygments for syntax highlighting in the Qt code editor widget.
 
-* some widgets may have additional optional dependencies.
+* some widgets may have additional optional dependencies such as NumPy or
+  Pillow.
 
 .. end_of_long_description
 
-Running the Test Suite
-----------------------
+Developing Pyface
+-----------------
 
-To run the test suite, you will need to install Git and
-`EDM <http://docs.enthought.com/edm/>`__ as well as have a Python environment
-which has install `Click <http://click.pocoo.org/>`__ available. You can then
-follow the instructions in ``etstool.py``.  In particular::
+The `etstool.py` script provides utilities to assist developers wanting to work
+on Pyface.  To use it, you will need to have the source checked out via Git,
+Enthought's `EDM <http://docs.enthought.com/edm/>`__ distribution manager, and
+a minimal environment containing at least the
+`Click <http://click.pocoo.org/>`__ library.
 
-    > python etstool.py test-all
+You can then follow the instructions in ``etstool.py``.  In particular:
 
-will run tests in all supported environments automatically.
+- use `etstool.py install` to create environments for particular toolkits and
+  runtimes
+- use `etstool.py shell` to activate those environments
+- use `etstool.py test` to run the tests in those environments
+- use `etstool.py flake8` to perform style checks
+- use `etstool.py docs` to build the documentation
+- use `etstool.py test-all` to run the tests across all supported toolkits
+
+License
+-------
+
+Pyface source code is licensed with a BSD-style license.  Some default images
+are licensed with other licenses. See the license files for further
+information.
