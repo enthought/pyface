@@ -33,7 +33,7 @@ class ComboField(MComboField, Field):
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
         control = QComboBox(parent)
-        control.setInsertPolicy(QComboBox.NoInsert)
+        control.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         control.setEditable(False)
         return control
 
@@ -60,7 +60,7 @@ class ComboField(MComboField, Field):
         """ Toolkit specific method to get the control's value. """
         index = self.control.currentIndex()
         if index != -1:
-            return self.control.itemData(index, Qt.DisplayRole)
+            return self.control.itemData(index, Qt.ItemDataRole.DisplayRole)
         else:
             raise IndexError("no value selected")
 

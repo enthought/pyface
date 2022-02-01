@@ -60,19 +60,19 @@ class StatusGutterWidget(GutterWidget):
         for line in self.info_lines:
             painter.fillRect(
                 QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.green,
+                QtCore.Qt.GlobalColor.green,
             )
 
         for line in self.warn_lines:
             painter.fillRect(
                 QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.yellow,
+                QtCore.Qt.GlobalColor.yellow,
             )
 
         for line in self.error_lines:
             painter.fillRect(
                 QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
-                QtCore.Qt.red,
+                QtCore.Qt.GlobalColor.red,
             )
 
 
@@ -136,7 +136,7 @@ class LineNumberWidget(GutterWidget):
                     top,
                     self.width() - 2,
                     self.fontMetrics().height(),
-                    QtCore.Qt.AlignRight,
+                    QtCore.Qt.AlignmentFlag.AlignRight,
                     str(blocknum + 1),
                 )
             block = block.next()

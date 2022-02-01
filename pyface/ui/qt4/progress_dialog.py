@@ -193,10 +193,10 @@ class ProgressDialog(MProgressDialog, Window):
 
         if self.can_cancel:
             buttons.addButton(
-                self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole
+                self.cancel_button_label, QtGui.QDialogButtonBox.ButtonRole.RejectRole
             )
         if self.can_ok:
-            buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Ok)
 
         # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
 
@@ -216,11 +216,11 @@ class ProgressDialog(MProgressDialog, Window):
     def _create_label(self, dialog, layout, text):
 
         dummy = QtGui.QLabel(text, dialog)
-        dummy.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+        dummy.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignLeft)
 
         label = QtGui.QLabel("unknown", dialog)
         label.setAlignment(
-            QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight
+            QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignRight
         )
 
         sub_layout = QtGui.QHBoxLayout()
@@ -245,7 +245,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_message(self, dialog, layout):
         label = QtGui.QLabel(self.message, dialog)
-        label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+        label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(label)
         self._message_control = label
 

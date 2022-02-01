@@ -27,17 +27,17 @@ from .data_view_item_model import DataViewItemModel
 logger = logging.getLogger(__name__)
 
 qt_selection_types = {
-    "row": QAbstractItemView.SelectRows,
-    "column": QAbstractItemView.SelectColumns,
-    "item": QAbstractItemView.SelectItems,
+    "row": QAbstractItemView.SelectionBehavior.SelectRows,
+    "column": QAbstractItemView.SelectionBehavior.SelectColumns,
+    "item": QAbstractItemView.SelectionBehavior.SelectItems,
 }
 pyface_selection_types = {
     value: key for key, value in qt_selection_types.items()
 }
 qt_selection_modes = {
-    "none": QAbstractItemView.NoSelection,
-    "single": QAbstractItemView.SingleSelection,
-    "extended": QAbstractItemView.ExtendedSelection,
+    "none": QAbstractItemView.SelectionMode.NoSelection,
+    "single": QAbstractItemView.SelectionMode.SingleSelection,
+    "extended": QAbstractItemView.SelectionMode.ExtendedSelection,
 }
 pyface_selection_modes = {
     value: key for key, value in qt_selection_modes.items()
@@ -166,16 +166,16 @@ class DataViewWidget(MDataViewWidget, LayoutWidget):
     def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
         selection_model = self.control.selectionModel()
-        select_flags = QItemSelectionModel.Select
+        select_flags = QItemSelectionModel.SelectionFlag.Select
         qt_selection = QItemSelection()
 
         if self.selection_type == 'row':
-            select_flags |= QItemSelectionModel.Rows
+            select_flags |= QItemSelectionModel.SelectionFlag.Rows
             for row, column in selection:
                 index = self._item_model._to_model_index(row, (0,))
                 qt_selection.select(index, index)
         elif self.selection_type == 'column':
-            select_flags |= QItemSelectionModel.Columns
+            select_flags |= QItemSelectionModel.SelectionFlag.Columns
             for row, column in selection:
                 index = self._item_model._to_model_index(
                     row + (0,), column)

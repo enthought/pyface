@@ -171,11 +171,11 @@ class Window(MWindow, Widget):
 
         if state == "maximized":
             control.setWindowState(
-                control.windowState() | QtCore.Qt.WindowMaximized
+                control.windowState() | QtCore.Qt.WindowState.WindowMaximized
             )
         elif state == "normal":
             control.setWindowState(
-                control.windowState() & ~QtCore.Qt.WindowMaximized
+                control.windowState() & ~QtCore.Qt.WindowState.WindowMaximized
             )
 
     def _title_changed(self, title):
@@ -211,7 +211,7 @@ class WindowEventFilter(QtCore.QObject):
 
         typ = e.type()
 
-        if typ == QtCore.QEvent.Close:
+        if typ == QtCore.QEvent.Type.Close:
             # Do not destroy the window during its event handler.
             GUI.invoke_later(window.close)
 
@@ -220,29 +220,29 @@ class WindowEventFilter(QtCore.QObject):
 
             return True
 
-        if typ == QtCore.QEvent.WindowActivate:
+        if typ == QtCore.QEvent.Type.WindowActivate:
             window.activated = window
 
-        elif typ == QtCore.QEvent.WindowDeactivate:
+        elif typ == QtCore.QEvent.Type.WindowDeactivate:
             window.deactivated = window
 
-        elif typ in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
+        elif typ in {QtCore.QEvent.Type.Show, QtCore.QEvent.Type.Hide}:
             window.visible = window.control.isVisible()
 
-        elif typ == QtCore.QEvent.Resize:
+        elif typ == QtCore.QEvent.Type.Resize:
             # Get the new size and set the shadow trait without performing
             # notification.
             size = e.size()
             window._size = (size.width(), size.height())
 
-        elif typ == QtCore.QEvent.Move:
+        elif typ == QtCore.QEvent.Type.Move:
             # Get the real position and set the trait without performing
             # notification. Don't use event.pos(), as this excludes the window
             # frame geometry.
             pos = window.control.pos()
             window._position = (pos.x(), pos.y())
 
-        elif typ == QtCore.QEvent.KeyPress:
+        elif typ == QtCore.QEvent.Type.KeyPress:
             # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = e.text()
@@ -254,23 +254,23 @@ class WindowEventFilter(QtCore.QObject):
             mods = e.modifiers()
             window.key_pressed = KeyPressedEvent(
                 alt_down=(
-                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                    (mods & QtCore.Qt.KeyboardModifier.AltModifier) == QtCore.Qt.KeyboardModifier.AltModifier
                 ),
                 control_down=(
-                    (mods & QtCore.Qt.ControlModifier)
-                    == QtCore.Qt.ControlModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ControlModifier)
+                    == QtCore.Qt.KeyboardModifier.ControlModifier
                 ),
                 shift_down=(
-                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ShiftModifier) == QtCore.Qt.KeyboardModifier.ShiftModifier
                 ),
                 key_code=kcode,
                 event=e,
             )
 
-        elif typ == QtCore.QEvent.WindowStateChange:
+        elif typ == QtCore.QEvent.Type.WindowStateChange:
             # set the size_state of the window.
             state = obj.windowState()
-            if state & QtCore.Qt.WindowMaximized:
+            if state & QtCore.Qt.WindowState.WindowMaximized:
                 window.size_state = "maximized"
             else:
                 window.size_state = "normal"

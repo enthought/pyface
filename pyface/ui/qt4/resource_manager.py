@@ -33,7 +33,7 @@ class PyfaceResourceFactory(ResourceFactory):
         if filename.endswith((".svg", ".SVG")):
             renderer = QtSvg.QSvgRenderer(filename)
             pixmap = QtGui.QPixmap(renderer.defaultSize())
-            pixmap.fill(QtCore.Qt.transparent)
+            pixmap.fill(QtCore.Qt.GlobalColor.transparent)
             painter = QtGui.QPainter(pixmap)
             renderer.render(painter)
 

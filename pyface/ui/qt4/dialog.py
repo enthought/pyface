@@ -26,12 +26,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted): OK,
-    int(QtGui.QDialog.Rejected): CANCEL,
-    int(QtGui.QMessageBox.Ok): OK,
-    int(QtGui.QMessageBox.Cancel): CANCEL,
-    int(QtGui.QMessageBox.Yes): YES,
-    int(QtGui.QMessageBox.No): NO,
+    int(QtGui.QDialog.DialogCode.Accepted): OK,
+    int(QtGui.QDialog.DialogCode.Rejected): CANCEL,
+    int(QtGui.QMessageBox.StandardButton.Ok): OK,
+    int(QtGui.QMessageBox.StandardButton.Cancel): CANCEL,
+    int(QtGui.QMessageBox.StandardButton.Yes): YES,
+    int(QtGui.QMessageBox.StandardButton.No): NO,
 }
 
 
@@ -78,10 +78,10 @@ class Dialog(MDialog, Window):
         # 'OK' button.
         if self.ok_label:
             btn = buttons.addButton(
-                self.ok_label, QtGui.QDialogButtonBox.AcceptRole
+                self.ok_label, QtGui.QDialogButtonBox.ButtonRole.AcceptRole
             )
         else:
-            btn = buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            btn = buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Ok)
 
         btn.setDefault(True)
         btn.clicked.connect(self.control.accept)
@@ -90,10 +90,10 @@ class Dialog(MDialog, Window):
         # 'Cancel' button.
         if self.cancel_label:
             btn = buttons.addButton(
-                self.cancel_label, QtGui.QDialogButtonBox.RejectRole
+                self.cancel_label, QtGui.QDialogButtonBox.ButtonRole.RejectRole
             )
         else:
-            btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
+            btn = buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Cancel)
 
         btn.clicked.connect(self.control.reject)
         self._connections_to_remove.append((btn.clicked, self.control.reject))
@@ -106,10 +106,10 @@ class Dialog(MDialog, Window):
         if len(self.help_id) > 0:
             if self.help_label:
                 buttons.addButton(
-                    self.help_label, QtGui.QDialogButtonBox.HelpRole
+                    self.help_label, QtGui.QDialogButtonBox.ButtonRole.HelpRole
                 )
             else:
-                buttons.addButton(QtGui.QDialogButtonBox.Help)
+                buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Help)
 
         return buttons
 
@@ -117,7 +117,7 @@ class Dialog(MDialog, Window):
         layout = QtGui.QVBoxLayout()
 
         if not self.resizeable:
-            layout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
+            layout.setSizeConstraint(QtGui.QLayout.SizeConstraint.SetFixedSize)
 
         layout.addWidget(self._create_dialog_area(parent))
         layout.addWidget(self._create_buttons(parent))
@@ -129,7 +129,7 @@ class Dialog(MDialog, Window):
         panel.setMinimumSize(QtCore.QSize(100, 200))
 
         palette = panel.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("red"))
+        palette.setColor(QtGui.QPalette.ColorRole.Window, QtGui.QColor("red"))
         panel.setPalette(palette)
         panel.setAutoFillBackground(True)
 
@@ -137,12 +137,12 @@ class Dialog(MDialog, Window):
 
     def _show_modal(self):
         dialog = self.control
-        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        dialog.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
 
         # Suppress the context-help button hint, which
         # results in a non-functional "?" button on Windows.
         dialog.setWindowFlags(
-            dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint
+            dialog.windowFlags() & ~QtCore.Qt.WindowType.WindowContextHelpButtonHint
         )
 
         retval = dialog.exec_()

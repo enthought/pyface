@@ -28,9 +28,9 @@ class SizePolicies(Enum):
     Note that Qt has additional values that are not mapped to Pyface size
     policies.
     """
-    fixed = QtGui.QSizePolicy.Fixed
-    preferred = QtGui.QSizePolicy.Preferred
-    expand = QtGui.QSizePolicy.Expanding
+    fixed = QtGui.QSizePolicy.Policy.Fixed
+    preferred = QtGui.QSizePolicy.Policy.Preferred
+    expand = QtGui.QSizePolicy.Policy.Expanding
 
 
 @provides(ILayoutWidget)

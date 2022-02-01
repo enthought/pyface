@@ -33,7 +33,7 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
 
         with self.create_dialog(dialog):
             escape_button = dialog.control.escapeButton()
-            ok_button = dialog.control.button(QtGui.QMessageBox.Ok)
+            ok_button = dialog.control.button(QtGui.QMessageBox.StandardButton.Ok)
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
@@ -51,7 +51,7 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
 
         with self.create_dialog(dialog):
             escape_button = dialog.control.escapeButton()
-            ok_button = dialog.control.button(QtGui.QMessageBox.Ok)
+            ok_button = dialog.control.button(QtGui.QMessageBox.StandardButton.Ok)
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
@@ -70,7 +70,7 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
 
         with self.create_dialog(dialog):
             text_format = dialog.control.textFormat()
-            self.assertEqual(text_format, QtCore.Qt.PlainText)
+            self.assertEqual(text_format, QtCore.Qt.TextFormat.PlainText)
 
     @contextlib.contextmanager
     def create_dialog(self, dialog):

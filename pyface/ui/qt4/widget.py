@@ -128,7 +128,7 @@ class Widget(MWidget, HasTraits):
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer. """
         if remove:
-            self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
+            self.control.setContextMenuPolicy(Qt.ContextMenuPolicy.DefaultContextMenu)
             self.control.customContextMenuRequested.disconnect(
                 self._handle_control_context_menu
             )
@@ -136,7 +136,7 @@ class Widget(MWidget, HasTraits):
             self.control.customContextMenuRequested.connect(
                 self._handle_control_context_menu
             )
-            self.control.setContextMenuPolicy(Qt.CustomContextMenu)
+            self.control.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
 
     def _handle_control_context_menu(self, pos):
         """ Signal handler for displaying context menu. """
@@ -181,7 +181,7 @@ class WidgetEventFilter(QtCore.QObject):
 
         event_type = event.type()
 
-        if event_type in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
+        if event_type in {QtCore.QEvent.Type.Show, QtCore.QEvent.Type.Hide}:
             widget.visible = not widget.control.isHidden()
 
         return False

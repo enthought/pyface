@@ -32,7 +32,7 @@ class HeadingText(MHeadingText, LayoutWidget):
         """ Create the toolkit-specific control that represents the widget. """
         control = QtGui.QLabel(parent)
         control.setSizePolicy(
-            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed
+            QtGui.QSizePolicy.Policy.Preferred, QtGui.QSizePolicy.Policy.Fixed
         )
         return control
 

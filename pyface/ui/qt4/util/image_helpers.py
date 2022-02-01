@@ -23,14 +23,14 @@ from pyface.qt.QtGui import QImage, QPixmap, QIcon
 
 
 class ScaleMode(Enum):
-    fast = Qt.FastTransformation
-    smooth = Qt.SmoothTransformation
+    fast = Qt.TransformationMode.FastTransformation
+    smooth = Qt.TransformationMode.SmoothTransformation
 
 
 class AspectRatio(Enum):
-    ignore = Qt.IgnoreAspectRatio
-    keep_constrain = Qt.KeepAspectRatio
-    keep_expand = Qt.KeepAspectRatioByExpanding
+    ignore = Qt.AspectRatioMode.IgnoreAspectRatio
+    keep_constrain = Qt.AspectRatioMode.KeepAspectRatio
+    keep_expand = Qt.AspectRatioMode.KeepAspectRatioByExpanding
 
 
 def image_to_bitmap(image):
@@ -115,7 +115,7 @@ def image_to_array(image):
         data = data.asarray(width * height * channels)
     array = np.array(data, dtype='uint8')
     array.shape = (height, width, channels)
-    if image.format() in {QImage.Format_RGB32, QImage.Format_ARGB32}:
+    if image.format() in {QImage.Format.Format_RGB32, QImage.Format.Format_ARGB32}:
         # comes in as BGRA, but want RGBA
         array = array[:, :, [2, 1, 0, 3]]
     else:
@@ -140,7 +140,7 @@ def array_to_image(array):
     ------
     image : QImage
         The QImage created from the data.  The pixel format is
-        QImage.Format_RGB32.
+        QImage.Format.Format_RGB32.
     """
     import numpy as np
 
@@ -161,11 +161,11 @@ def array_to_image(array):
 
     if channels == 3:
         image = QImage(data.data, width, height, bytes_per_line,
-                       QImage.Format_RGB32)
+                       QImage.Format.Format_RGB32)
 
     elif channels == 4:
         image = QImage(data.data, width, height, bytes_per_line,
-                       QImage.Format_ARGB32)
+                       QImage.Format.Format_ARGB32)
     image._numpy_data = data
     return image
 

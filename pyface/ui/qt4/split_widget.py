@@ -37,7 +37,7 @@ class SplitWidget(MSplitWidget):
 
         # Yes, this is correct.
         if self.direction == "horizontal":
-            splitter.setOrientation(QtCore.Qt.Vertical)
+            splitter.setOrientation(QtCore.Qt.Orientation.Vertical)
 
         # Only because the wx implementation does the same.
         splitter.setChildrenCollapsible(False)

@@ -235,7 +235,7 @@ class PythonWidget(HistoryConsoleWidget):
         self._buffer = StringIO()
 
         self._append_plain_text(text)
-        self._control.moveCursor(QtGui.QTextCursor.End)
+        self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
 
     def readline(self, prompt=None):
         """ Read and return one line of input from the user.
@@ -346,8 +346,8 @@ class PythonWidget(HistoryConsoleWidget):
         """ Reimplemented for smart backspace.
         """
         if (
-            event.key() == QtCore.Qt.Key_Backspace
-            and not event.modifiers() & QtCore.Qt.AltModifier
+            event.key() == QtCore.Qt.Key.Key_Backspace
+            and not event.modifiers() & QtCore.Qt.KeyboardModifier.AltModifier
         ):
             # Smart backspace: remove four characters in one backspace if:
             # 1) everything left of the cursor is whitespace
@@ -358,7 +358,7 @@ class PythonWidget(HistoryConsoleWidget):
                 text = self._get_input_buffer_cursor_line()[:col]
                 if text.endswith("    ") and not text.strip():
                     cursor.movePosition(
-                        QtGui.QTextCursor.Left, QtGui.QTextCursor.KeepAnchor, 4
+                        QtGui.QTextCursor.MoveOperation.Left, QtGui.QTextCursor.MoveMode.KeepAnchor, 4
                     )
                     cursor.removeSelectedText()
                     return True
@@ -413,7 +413,7 @@ class PythonWidget(HistoryConsoleWidget):
         """
         # Decide if it makes sense to show a call tip
         cursor = self._get_cursor()
-        cursor.movePosition(QtGui.QTextCursor.Left)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.Left)
         if cursor.document().characterAt(cursor.position()) != "(":
             return False
         context = self._get_context(cursor)
@@ -445,7 +445,7 @@ class PythonWidget(HistoryConsoleWidget):
                 if completions:
                     cursor = self._get_cursor()
                     cursor.movePosition(
-                        QtGui.QTextCursor.Left, n=len(context[-1])
+                        QtGui.QTextCursor.MoveOperation.Left, n=len(context[-1])
                     )
                     self._complete_with_items(cursor, completions)
 
@@ -465,7 +465,7 @@ class PythonWidget(HistoryConsoleWidget):
         if cursor is None:
             cursor = self._get_cursor()
         cursor.movePosition(
-            QtGui.QTextCursor.StartOfBlock, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.StartOfBlock, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         text = cursor.selection().toPlainText()
         return self._completion_lexer.get_context(text)
@@ -610,12 +610,12 @@ class PyfacePythonWidget(PythonWidget):
 
         mods = event.modifiers()
         self._pyface_widget.key_pressed = KeyPressedEvent(
-            alt_down=((mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
+            alt_down=((mods & QtCore.Qt.KeyboardModifier.AltModifier) == QtCore.Qt.KeyboardModifier.AltModifier),
             control_down=(
-                (mods & QtCore.Qt.ControlModifier) == QtCore.Qt.ControlModifier
+                (mods & QtCore.Qt.KeyboardModifier.ControlModifier) == QtCore.Qt.KeyboardModifier.ControlModifier
             ),
             shift_down=(
-                (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                (mods & QtCore.Qt.KeyboardModifier.ShiftModifier) == QtCore.Qt.KeyboardModifier.ShiftModifier
             ),
             key_code=kcode,
             event=event,
@@ -639,7 +639,7 @@ class _DropEventEmitter(QtCore.QObject):
     def eventFilter(self, source, event):
         """ Handle drop events on widget. """
         typ = event.type()
-        if typ == QtCore.QEvent.DragEnter:
+        if typ == QtCore.QEvent.Type.DragEnter:
             if hasattr(event.mimeData(), "instance"):
                 # It is pymimedata and has instance data
                 obj = event.mimeData().instance()
@@ -647,7 +647,7 @@ class _DropEventEmitter(QtCore.QObject):
                     event.accept()
                     return True
 
-        elif typ == QtCore.QEvent.Drop:
+        elif typ == QtCore.QEvent.Type.Drop:
             if hasattr(event.mimeData(), "instance"):
                 # It is pymimedata and has instance data
                 obj = event.mimeData().instance()

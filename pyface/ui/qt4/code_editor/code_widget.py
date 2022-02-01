@@ -80,17 +80,17 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.highlight_current_line()
 
         # Don't wrap text
-        self.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
+        self.setLineWrapMode(QtGui.QPlainTextEdit.LineWrapMode.NoWrap)
 
         # Key bindings
-        self.indent_key = QtGui.QKeySequence(QtCore.Qt.Key_Tab)
+        self.indent_key = QtGui.QKeySequence(QtCore.Qt.Key.Key_Tab)
         self.unindent_key = QtGui.QKeySequence(
-            QtCore.Qt.SHIFT + QtCore.Qt.Key_Backtab
+            QtCore.Qt.Modifier.SHIFT + QtCore.Qt.Key.Key_Backtab
         )
         self.comment_key = QtGui.QKeySequence(
-            QtCore.Qt.CTRL + QtCore.Qt.Key_Slash
+            QtCore.Qt.Modifier.CTRL + QtCore.Qt.Key.Key_Slash
         )
-        self.backspace_key = QtGui.QKeySequence(QtCore.Qt.Key_Backspace)
+        self.backspace_key = QtGui.QKeySequence(QtCore.Qt.Key.Key_Backspace)
 
     def _remove_event_listeners(self):
         self.blockCountChanged.disconnect(self.update_line_number_width)
@@ -184,7 +184,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             selection = QtGui.QTextEdit.ExtraSelection()
             selection.format.setBackground(self.line_highlight_color)
             selection.format.setProperty(
-                QtGui.QTextFormat.FullWidthSelection, True
+                QtGui.QTextFormat.Property.FullWidthSelection, True
             )
             selection.cursor = self.textCursor()
             selection.cursor.clearSelection()
@@ -325,18 +325,18 @@ class CodeWidget(QtGui.QPlainTextEdit):
             self._show_selected_blocks(sel_blocks)
 
     def line_comment(self, cursor, position):
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         cursor.movePosition(
-            QtGui.QTextCursor.Right, QtGui.QTextCursor.MoveAnchor, position
+            QtGui.QTextCursor.MoveOperation.Right, QtGui.QTextCursor.MoveMode.MoveAnchor, position
         )
         cursor.insertText(self.comment_character)
 
     def line_uncomment(self, cursor, position=0):
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         text = cursor.block().text()
         new_text = text[:position] + text[position + 1:]
         cursor.movePosition(
-            QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.EndOfBlock, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         cursor.removeSelectedText()
         cursor.insertText(new_text)
@@ -356,11 +356,11 @@ class CodeWidget(QtGui.QPlainTextEdit):
         if self.tabs_as_spaces:
             tab = "    "
 
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         if cursor.block().text().startswith(tab):
             new_text = cursor.block().text()[len(tab):]
             cursor.movePosition(
-                QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+                QtGui.QTextCursor.MoveOperation.EndOfBlock, QtGui.QTextCursor.MoveMode.KeepAnchor
             )
             cursor.removeSelectedText()
             cursor.insertText(new_text)
@@ -372,7 +372,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         """ Return the word under the cursor.
         """
         cursor = self.textCursor()
-        cursor.select(QtGui.QTextCursor.WordUnderCursor)
+        cursor.select(QtGui.QTextCursor.SelectionType.WordUnderCursor)
         return str(cursor.selectedText())
 
     # ------------------------------------------------------------------------
@@ -398,19 +398,19 @@ class CodeWidget(QtGui.QPlainTextEdit):
         # beginning of the document. Likewise, if the cursor is somewhere in the
         # last line, the "down" key causes it to go to the end.
         cursor = self.textCursor()
-        if key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Up)):
-            cursor.movePosition(QtGui.QTextCursor.StartOfLine)
+        if key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Up)):
+            cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfLine)
             if cursor.atStart():
                 self.setTextCursor(cursor)
                 event.accept()
-        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Down)):
-            cursor.movePosition(QtGui.QTextCursor.EndOfLine)
+        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Down)):
+            cursor.movePosition(QtGui.QTextCursor.MoveOperation.EndOfLine)
             if cursor.atEnd():
                 self.setTextCursor(cursor)
                 event.accept()
 
         elif self.auto_indent and key_sequence.matches(
-            QtGui.QKeySequence(QtCore.Qt.Key_Return)
+            QtGui.QKeySequence(QtCore.Qt.Key.Key_Return)
         ):
             event.accept()
             return self.autoindent_newline()
@@ -480,7 +480,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             width = font_metrics.width(" ") * 80
         width += self.line_number_widget.sizeHint().width()
         width += self.status_widget.sizeHint().width()
-        width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent, opt, self)
+        width += style.pixelMetric(QtGui.QStyle.PixelMetric.PM_ScrollBarExtent, opt, self)
         height = font_metrics.height() * 40
         return QtCore.QSize(width, height)
 
@@ -502,14 +502,14 @@ class CodeWidget(QtGui.QPlainTextEdit):
         cursor = self.textCursor()
         cursor.clearSelection()
         cursor.setPosition(selected_blocks[0].position())
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         cursor.movePosition(
-            QtGui.QTextCursor.NextBlock,
-            QtGui.QTextCursor.KeepAnchor,
+            QtGui.QTextCursor.MoveOperation.NextBlock,
+            QtGui.QTextCursor.MoveMode.KeepAnchor,
             len(selected_blocks),
         )
         cursor.movePosition(
-            QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.EndOfBlock, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
 
         self.setTextCursor(cursor)
@@ -524,10 +524,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
             end_pos = cursor.anchor()
 
         cursor.setPosition(start_pos)
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         blocks = [cursor.block()]
 
-        while cursor.movePosition(QtGui.QTextCursor.NextBlock):
+        while cursor.movePosition(QtGui.QTextCursor.MoveOperation.NextBlock):
             block = cursor.block()
             if block.position() < end_pos:
                 blocks.append(block)
@@ -684,11 +684,11 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
         flags = QtGui.QTextDocument.FindFlags(0)
         if self.active_find_widget.case_action.isChecked():
-            flags |= QtGui.QTextDocument.FindCaseSensitively
+            flags |= QtGui.QTextDocument.FindFlag.FindCaseSensitively
         if self.active_find_widget.word_action.isChecked():
-            flags |= QtGui.QTextDocument.FindWholeWords
+            flags |= QtGui.QTextDocument.FindFlag.FindWholeWords
         if direction == "backward":
-            flags |= QtGui.QTextDocument.FindBackward
+            flags |= QtGui.QTextDocument.FindFlag.FindBackward
 
         find_cursor = document.find(search_text, self.code.textCursor(), flags)
         if find_cursor.isNull() and wrap:
@@ -706,13 +706,13 @@ class AdvancedCodeWidget(QtGui.QWidget):
                 find_cursor.insertText(replace)
                 find_cursor.endEditBlock()
                 find_cursor.movePosition(
-                    QtGui.QTextCursor.Left,
-                    QtGui.QTextCursor.MoveAnchor,
+                    QtGui.QTextCursor.MoveOperation.Left,
+                    QtGui.QTextCursor.MoveMode.MoveAnchor,
                     len(replace),
                 )
                 find_cursor.movePosition(
-                    QtGui.QTextCursor.Right,
-                    QtGui.QTextCursor.KeepAnchor,
+                    QtGui.QTextCursor.MoveOperation.Right,
+                    QtGui.QTextCursor.MoveMode.KeepAnchor,
                     len(replace),
                 )
                 self.code.setTextCursor(find_cursor)
@@ -790,12 +790,12 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
     def keyPressEvent(self, event):
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
-        if key_sequence.matches(QtGui.QKeySequence.Find):
+        if key_sequence.matches(QtGui.QKeySequence.StandardKey.Find):
             self.enable_find()
-        elif key_sequence.matches(QtGui.QKeySequence.Replace):
+        elif key_sequence.matches(QtGui.QKeySequence.StandardKey.Replace):
             if not self.code.isReadOnly():
                 self.enable_replace()
-        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Escape)):
+        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Escape)):
             if self.active_find_widget:
                 self.find.hide()
                 self.replace.hide()

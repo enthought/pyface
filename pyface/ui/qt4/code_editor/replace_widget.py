@@ -38,7 +38,7 @@ class ReplaceWidget(FindWidget):
         layout.addLayout(form_layout)
 
         close_button = QtGui.QPushButton("Close")
-        layout.addWidget(close_button, 1, QtCore.Qt.AlignRight)
+        layout.addWidget(close_button, 1, QtCore.Qt.AlignmentFlag.AlignRight)
         close_button.clicked.connect(self.hide)
 
         self.setLayout(layout)

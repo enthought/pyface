@@ -43,7 +43,7 @@ class FontDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        if self.control.result() == QtGui.QDialog.Accepted:
+        if self.control.result() == QtGui.QDialog.DialogCode.Accepted:
             qfont = self.control.selectedFont()
             self.font = Font.from_toolkit(qfont)
         return super(FontDialog, self).close()

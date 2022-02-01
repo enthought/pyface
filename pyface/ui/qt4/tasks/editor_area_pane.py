@@ -235,7 +235,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
         # Configure the QTabWidget.
         self.setAcceptDrops(True)
         self.setDocumentMode(True)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setFocusProxy(None)
         self.setMovable(True)
         self.setTabsClosable(True)
@@ -260,7 +260,7 @@ class EditorAreaDropFilter(QtCore.QObject):
     def eventFilter(self, object, event):
         """ Handle drag and drop events with MIME type 'text/uri-list'.
         """
-        if event.type() in (QtCore.QEvent.DragEnter, QtCore.QEvent.Drop):
+        if event.type() in (QtCore.QEvent.Type.DragEnter, QtCore.QEvent.Type.Drop):
             # Build list of accepted files.
             extensions = tuple(self.editor_area.file_drop_extensions)
             file_paths = []
@@ -270,12 +270,12 @@ class EditorAreaDropFilter(QtCore.QObject):
                     file_paths.append(file_path)
 
             # Accept the event if we have at least one accepted file.
-            if event.type() == QtCore.QEvent.DragEnter:
+            if event.type() == QtCore.QEvent.Type.DragEnter:
                 if file_paths:
                     event.acceptProposedAction()
 
             # Dispatch the events.
-            elif event.type() == QtCore.QEvent.Drop:
+            elif event.type() == QtCore.QEvent.Type.Drop:
                 for file_path in file_paths:
                     self.editor_area.file_dropped = file_path
 

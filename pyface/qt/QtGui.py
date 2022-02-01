@@ -15,9 +15,9 @@ if qt_api == "pyqt":
 
     # forward-compatible font weights
     # see https://doc.qt.io/qt-5/qfont.html#Weight-enum
-    QFont.ExtraLight = 12
-    QFont.Medium = 57
-    QFont.ExtraBold = 81
+    QFont.Weight.ExtraLight = 12
+    QFont.Weight.Medium = 57
+    QFont.Weight.ExtraBold = 81
 
 elif qt_api == "pyqt5":
     from PyQt5.QtGui import *

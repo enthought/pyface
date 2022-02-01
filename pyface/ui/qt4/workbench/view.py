@@ -34,7 +34,7 @@ class View(MView):
         control = QtGui.QWidget(parent)
 
         palette = control.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("red"))
+        palette.setColor(QtGui.QPalette.ColorRole.Window, QtGui.QColor("red"))
         control.setPalette(palette)
         control.setAutoFillBackground(True)
 

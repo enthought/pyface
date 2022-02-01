@@ -138,7 +138,7 @@ class FileDialog(MFileDialog, Dialog):
             default_directory = QtCore.QDir.currentPath()
 
         dlg = QtGui.QFileDialog(parent, self.title, default_directory)
-        dlg.setViewMode(QtGui.QFileDialog.Detail)
+        dlg.setViewMode(QtGui.QFileDialog.ViewMode.Detail)
         dlg.selectFile(default_filename)
         dlg.setNameFilters(filters)
 
@@ -146,14 +146,14 @@ class FileDialog(MFileDialog, Dialog):
             dlg.selectNameFilter(filters[self.wildcard_index])
 
         if self.action == "open":
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
-            dlg.setFileMode(QtGui.QFileDialog.ExistingFile)
+            dlg.setAcceptMode(QtGui.QFileDialog.AcceptMode.AcceptOpen)
+            dlg.setFileMode(QtGui.QFileDialog.FileMode.ExistingFile)
         elif self.action == "open files":
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
-            dlg.setFileMode(QtGui.QFileDialog.ExistingFiles)
+            dlg.setAcceptMode(QtGui.QFileDialog.AcceptMode.AcceptOpen)
+            dlg.setFileMode(QtGui.QFileDialog.FileMode.ExistingFiles)
         else:
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptSave)
-            dlg.setFileMode(QtGui.QFileDialog.AnyFile)
+            dlg.setAcceptMode(QtGui.QFileDialog.AcceptMode.AcceptSave)
+            dlg.setFileMode(QtGui.QFileDialog.FileMode.AnyFile)
 
         return dlg
 

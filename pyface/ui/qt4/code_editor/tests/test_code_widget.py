@@ -65,9 +65,9 @@ class TestCodeWidget(unittest.TestCase):
         # On some platforms, Find/Replace do not have default keybindings
         FindKey = QtGui.QKeySequence("Ctrl+F")
         ReplaceKey = QtGui.QKeySequence("Ctrl+H")
-        patcher_find = mock.patch("pyface.qt.QtGui.QKeySequence.Find", FindKey)
+        patcher_find = mock.patch("pyface.qt.QtGui.QKeySequence.StandardKey.Find", FindKey)
         patcher_replace = mock.patch(
-            "pyface.qt.QtGui.QKeySequence.Replace", ReplaceKey
+            "pyface.qt.QtGui.QKeySequence.StandardKey.Replace", ReplaceKey
         )
         patcher_find.start()
         patcher_replace.start()
@@ -82,9 +82,9 @@ class TestCodeWidget(unittest.TestCase):
                 first_key = key_seq[0]
             except IndexError:
                 return False
-            key = QtCore.Qt.Key(first_key & ~QtCore.Qt.KeyboardModifierMask)
+            key = QtCore.Qt.Key(first_key & ~QtCore.Qt.KeyboardModifier.KeyboardModifierMask)
             modifier = QtCore.Qt.KeyboardModifier(
-                first_key & QtCore.Qt.KeyboardModifierMask
+                first_key & QtCore.Qt.KeyboardModifier.KeyboardModifierMask
             )
             QTest.keyClick(widget, key, modifier)
             return True

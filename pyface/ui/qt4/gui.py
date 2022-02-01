@@ -77,16 +77,16 @@ class GUI(MGUI, HasTraits):
     @staticmethod
     def process_events(allow_user_events=True):
         if allow_user_events:
-            events = QtCore.QEventLoop.AllEvents
+            events = QtCore.QEventLoop.ProcessEventsFlag.AllEvents
         else:
-            events = QtCore.QEventLoop.ExcludeUserInputEvents
+            events = QtCore.QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents
 
         QtCore.QCoreApplication.processEvents(events)
 
     @staticmethod
     def set_busy(busy=True):
         if busy:
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
 
@@ -125,7 +125,7 @@ class GUI(MGUI, HasTraits):
         """ The busy trait change handler. """
         new = event.new
         if new:
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtGui.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
 

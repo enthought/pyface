@@ -33,7 +33,7 @@ def set_focus(control):
        will only restrict itself to this widget's children if it is a Qt::Window
        or Qt::SubWindow, hence the hack below.
     """
-    if control.focusPolicy() != QtCore.Qt.NoFocus:
+    if control.focusPolicy() != QtCore.Qt.FocusPolicy.NoFocus:
         control.setFocus()
     else:
         widget = control.focusWidget()
@@ -41,7 +41,7 @@ def set_focus(control):
             widget.setFocus()
         else:
             flags = control.windowFlags()
-            control.setWindowFlags(flags | QtCore.Qt.SubWindow)
+            control.setWindowFlags(flags | QtCore.Qt.WindowType.SubWindow)
             try:
                 control.focusNextChild()
             finally:

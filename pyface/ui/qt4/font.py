@@ -20,60 +20,60 @@ from pyface.qt.QtGui import QFont
 
 
 qt_family_to_generic_family = {
-    QFont.AnyStyle: 'default',
-    QFont.System: 'default',
+    QFont.StyleHint.AnyStyle: 'default',
+    QFont.StyleHint.System: 'default',
     QFont.Decorative: 'fantasy',
     QFont.Serif: 'serif',
-    QFont.Cursive: 'cursive',
+    QFont.StyleHint.Cursive: 'cursive',
     QFont.SansSerif: 'sans-serif',
-    QFont.Monospace: 'monospace',
+    QFont.StyleHint.Monospace: 'monospace',
     QFont.TypeWriter: 'typewriter',
 }
 generic_family_to_qt_family = {
-    'default': QFont.System,
+    'default': QFont.StyleHint.System,
     'fantasy': QFont.Decorative,
     'decorative': QFont.Decorative,
     'serif': QFont.Serif,
     'roman': QFont.Serif,
-    'cursive': QFont.Cursive,
-    'script': QFont.Cursive,
+    'cursive': QFont.StyleHint.Cursive,
+    'script': QFont.StyleHint.Cursive,
     'sans-serif': QFont.SansSerif,
     'swiss': QFont.SansSerif,
-    'monospace': QFont.Monospace,
-    'modern': QFont.Monospace,
+    'monospace': QFont.StyleHint.Monospace,
+    'modern': QFont.StyleHint.Monospace,
     'typewriter': QFont.TypeWriter,
     'teletype': QFont.TypeWriter,
 }
 
 weight_to_qt_weight = {
-    100: QFont.Thin,
-    200: QFont.ExtraLight,
-    300: QFont.Light,
-    400: QFont.Normal,
-    500: QFont.Medium,
-    600: QFont.DemiBold,
-    700: QFont.Bold,
-    800: QFont.ExtraBold,
-    900: QFont.Black,
+    100: QFont.Weight.Thin,
+    200: QFont.Weight.ExtraLight,
+    300: QFont.Weight.Light,
+    400: QFont.Weight.Normal,
+    500: QFont.Weight.Medium,
+    600: QFont.Weight.DemiBold,
+    700: QFont.Weight.Bold,
+    800: QFont.Weight.ExtraBold,
+    900: QFont.Weight.Black,
     1000: 99,
 }
 qt_weight_to_weight = {
-    QFont.Thin: 'thin',
-    QFont.ExtraLight: 'extra-light',
-    QFont.Light: 'light',
-    QFont.Normal: 'normal',
-    QFont.Medium: 'medium',
-    QFont.DemiBold: 'demi-bold',
-    QFont.Bold: 'bold',
-    QFont.ExtraBold: 'extra-bold',
-    QFont.Black: 'black',
+    QFont.Weight.Thin: 'thin',
+    QFont.Weight.ExtraLight: 'extra-light',
+    QFont.Weight.Light: 'light',
+    QFont.Weight.Normal: 'normal',
+    QFont.Weight.Medium: 'medium',
+    QFont.Weight.DemiBold: 'demi-bold',
+    QFont.Weight.Bold: 'bold',
+    QFont.Weight.ExtraBold: 'extra-bold',
+    QFont.Weight.Black: 'black',
     99: 'extra-heavy',
 }
 
 style_to_qt_style = {
-    'normal': QFont.StyleNormal,
-    'oblique': QFont.StyleOblique,
-    'italic': QFont.StyleItalic,
+    'normal': QFont.Style.StyleNormal,
+    'oblique': QFont.Style.StyleOblique,
+    'italic': QFont.Style.StyleItalic,
 }
 qt_style_to_style = {value: key for key, value in style_to_qt_style.items()}
 
@@ -120,7 +120,7 @@ def font_to_toolkit_font(font):
     qt_font.setStrikeOut('strikethrough' in font.decorations)
     qt_font.setOverline('overline' in font.decorations)
     if 'small-caps' in font.variants:
-        qt_font.setCapitalization(QFont.SmallCaps)
+        qt_font.setCapitalization(QFont.Capitalization.SmallCaps)
     return qt_font
 
 
@@ -154,7 +154,7 @@ def toolkit_font_to_properties(toolkit_font):
         # stretch 0 means any stretch is allowed, we default to no stretch
         stretch = 100.0
     variants = set()
-    if toolkit_font.capitalization() == QFont.SmallCaps:
+    if toolkit_font.capitalization() == QFont.Capitalization.SmallCaps:
         variants.add('small-caps')
     decorations = set()
     if toolkit_font.underline():
