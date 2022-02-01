@@ -64,7 +64,7 @@ class TestDockPane(unittest.TestCase):
             for window in app.windows:
                 for dock_pane in window.dock_panes:
                     attr = dock_pane.control.testAttribute(
-                        QtCore.Qt.WA_MacAlwaysShowToolWindow)
+                        QtCore.Qt.WidgetAttribute.WA_MacAlwaysShowToolWindow)
                     tool_attributes.append(attr)
 
             app.exit()

@@ -245,14 +245,14 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                     id="split_hor",
                     name="Create new pane to the right",
                     on_perform=lambda: splitter.split(
-                        orientation=QtCore.Qt.Horizontal
+                        orientation=QtCore.Qt.Orientation.Horizontal
                     ),
                 ),
                 Action(
                     id="split_ver",
                     name="Create new pane below",
                     on_perform=lambda: splitter.split(
-                        orientation=QtCore.Qt.Vertical
+                        orientation=QtCore.Qt.Orientation.Vertical
                     ),
                 ),
                 id="split",
@@ -262,12 +262,12 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # add collapse action (only show for collapsible splitters)
         if splitter.is_collapsible():
             if splitter is splitter.parent().leftchild:
-                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Orientation.Horizontal:
                     text = "Merge with right pane"
                 else:
                     text = "Merge with bottom pane"
             else:
-                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Orientation.Horizontal:
                     text = "Merge with left pane"
                 else:
                     text = "Merge with top pane"
@@ -499,8 +499,8 @@ class EditorAreaWidget(QtGui.QSplitter):
         splitter.
         """
         ORIENTATION_MAP = {
-            QtCore.Qt.Horizontal: "horizontal",
-            QtCore.Qt.Vertical: "vertical",
+            QtCore.Qt.Orientation.Horizontal: "horizontal",
+            QtCore.Qt.Orientation.Vertical: "vertical",
         }
         # obtain layout based on children layouts
         if not self.is_leaf():
@@ -539,8 +539,8 @@ class EditorAreaWidget(QtGui.QSplitter):
         """ Applies the given LayoutItem to current splitter.
         """
         ORIENTATION_MAP = {
-            "horizontal": QtCore.Qt.Horizontal,
-            "vertical": QtCore.Qt.Vertical,
+            "horizontal": QtCore.Qt.Orientation.Horizontal,
+            "vertical": QtCore.Qt.Orientation.Vertical,
         }
         # if not a leaf splitter
         if isinstance(layout, Splitter):
@@ -651,7 +651,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         else:
             return False
 
-    def split(self, orientation=QtCore.Qt.Horizontal):
+    def split(self, orientation=QtCore.Qt.Orientation.Horizontal):
         """ Split the current splitter into two children splitters. The current
         splitter's tabwidget is moved to the left child while a new empty
         tabwidget is added to the right child.
@@ -767,7 +767,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # configure QTabWidget
         self.setTabBar(DraggableTabBar(editor_area=editor_area, parent=self))
         self.setDocumentMode(True)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setFocusProxy(None)
         self.setMovable(False)  # handling move events myself
         self.setTabsClosable(True)
@@ -775,7 +775,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # set drop and context menu policies
         self.setAcceptDrops(True)
-        self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
 
         # connecting signals
         self.tabCloseRequested.connect(self._close_requested)
@@ -819,7 +819,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         empty.
         """
         frame = QtGui.QFrame(parent=self)
-        frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        frame.setFrameShape(QtGui.QFrame.Shape.StyledPanel)
         layout = QtGui.QVBoxLayout(frame)
 
         # Add new file button and open file button only if the `callbacks` trait
@@ -838,7 +838,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # generate new file button
         newfile_btn = QtGui.QPushButton("Create a new file", parent=frame)
         newfile_btn.clicked.connect(new_file_action)
-        layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
+        layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         # generate label
         label = QtGui.QLabel(parent=frame)
@@ -847,7 +847,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                         or
                         </span>"""
         )
-        layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+        layout.addWidget(label, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         # generate open button
         open_btn = QtGui.QPushButton(
@@ -865,7 +865,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 open_file_action()
 
         open_btn.clicked.connect(_open)
-        layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
+        layout.addWidget(open_btn, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         # generate label
         label = QtGui.QLabel(parent=frame)
@@ -874,7 +874,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                         Tip: You can also drag and drop files/tabs here.
                         </span>"""
         )
-        layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+        layout.addWidget(label, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         layout.addStretch()
         frame.setLayout(layout)
@@ -960,7 +960,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 self.editor_area.active_tabwidget = self
-                self.setBackgroundRole(QtGui.QPalette.Highlight)
+                self.setBackgroundRole(QtGui.QPalette.ColorRole.Highlight)
                 event.acceptProposedAction()
                 return
 
@@ -972,14 +972,14 @@ class DraggableTabWidget(QtGui.QTabWidget):
         for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 handler.handle_drop(event, self)
-                self.setBackgroundRole(QtGui.QPalette.Window)
+                self.setBackgroundRole(QtGui.QPalette.ColorRole.Window)
                 event.acceptProposedAction()
                 break
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
         """
-        self.setBackgroundRole(QtGui.QPalette.Window)
+        self.setBackgroundRole(QtGui.QPalette.ColorRole.Window)
         return super().dragLeaveEvent(event)
 
 
@@ -990,11 +990,11 @@ class DraggableTabBar(QtGui.QTabBar):
     def __init__(self, editor_area, parent):
         super().__init__(parent)
         self.editor_area = editor_area
-        self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.DefaultContextMenu)
         self.drag_obj = None
 
     def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
+        if event.button() == QtCore.Qt.MouseButton.LeftButton:
             index = self.tabAt(event.pos())
             tabwidget = self.parent()
             if tabwidget.widget(index) and (
@@ -1012,7 +1012,7 @@ class DraggableTabBar(QtGui.QTabBar):
         # go into the drag logic only if a drag_obj is active
         if self.drag_obj:
             # is the left mouse button still pressed?
-            if not event.buttons() == QtCore.Qt.LeftButton:
+            if not event.buttons() == QtCore.Qt.MouseButton.LeftButton:
                 pass
             # has the mouse been dragged for sufficient distance?
             elif (
@@ -1067,12 +1067,12 @@ class TabDragObject(object):
         result_pixmap = QtGui.QPixmap(size)
         painter = QtGui.QStylePainter(result_pixmap, tabBar)
 
-        painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
-        painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
+        painter.fillRect(result_pixmap.rect(), QtCore.Qt.GlobalColor.lightGray)
+        painter.setCompositionMode(QtGui.QPainter.CompositionMode.CompositionMode_SourceOver)
 
         optTabBase = QtGui.QStyleOptionTabBarBase()
         optTabBase.initFrom(tabBar)
-        painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
+        painter.drawPrimitive(QtGui.QStyle.PrimitiveElement.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
         if is_qt4:  # grab wasn't introduced until Qt5

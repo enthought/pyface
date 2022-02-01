@@ -34,18 +34,18 @@ logger = logging.getLogger(__name__)
 
 # For mapping positions relative to the editor area.
 _EDIT_AREA_MAP = {
-    "left": QtCore.Qt.LeftDockWidgetArea,
-    "right": QtCore.Qt.RightDockWidgetArea,
-    "top": QtCore.Qt.TopDockWidgetArea,
-    "bottom": QtCore.Qt.BottomDockWidgetArea,
+    "left": QtCore.Qt.DockWidgetArea.LeftDockWidgetArea,
+    "right": QtCore.Qt.DockWidgetArea.RightDockWidgetArea,
+    "top": QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
+    "bottom": QtCore.Qt.DockWidgetArea.BottomDockWidgetArea,
 }
 
 # For mapping positions relative to another view.
 _VIEW_AREA_MAP = {
-    "left": (QtCore.Qt.Horizontal, True),
-    "right": (QtCore.Qt.Horizontal, False),
-    "top": (QtCore.Qt.Vertical, True),
-    "bottom": (QtCore.Qt.Vertical, False),
+    "left": (QtCore.Qt.Orientation.Horizontal, True),
+    "right": (QtCore.Qt.Orientation.Horizontal, False),
+    "top": (QtCore.Qt.Orientation.Vertical, True),
+    "bottom": (QtCore.Qt.Orientation.Vertical, False),
 }
 
 
@@ -341,7 +341,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         if not event.new and not editor == self.window.active_editor:
             self._qt4_editor_area.setTabTextColor(
-                editor.control, QtCore.Qt.red
+                editor.control, QtCore.Qt.GlobalColor.red
             )
 
     @observe("window:active_editor")

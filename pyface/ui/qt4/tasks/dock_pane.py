@@ -23,10 +23,10 @@ from .util import set_focus
 
 # Constants.
 AREA_MAP = {
-    "left": QtCore.Qt.LeftDockWidgetArea,
-    "right": QtCore.Qt.RightDockWidgetArea,
-    "top": QtCore.Qt.TopDockWidgetArea,
-    "bottom": QtCore.Qt.BottomDockWidgetArea,
+    "left": QtCore.Qt.DockWidgetArea.LeftDockWidgetArea,
+    "right": QtCore.Qt.DockWidgetArea.RightDockWidgetArea,
+    "top": QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
+    "bottom": QtCore.Qt.DockWidgetArea.BottomDockWidgetArea,
 }
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
@@ -62,7 +62,7 @@ class DockPane(TaskPane, MDockPane):
 
         # Ensure that undocked ("floating") windows are visible on macOS
         # when focus is switched, for consistency with Linux and Windows.
-        control.setAttribute(QtCore.Qt.WA_MacAlwaysShowToolWindow)
+        control.setAttribute(QtCore.Qt.WidgetAttribute.WA_MacAlwaysShowToolWindow)
 
         # Configure the dock widget according to the DockPane settings.
         self._set_dock_features(event=None)
@@ -157,13 +157,13 @@ class DockPane(TaskPane, MDockPane):
     @observe("closable,floatable,movable")
     def _set_dock_features(self, event):
         if self.control is not None:
-            features = QtGui.QDockWidget.NoDockWidgetFeatures
+            features = QtGui.QDockWidget.DockWidgetFeature.NoDockWidgetFeatures
             if self.closable:
-                features |= QtGui.QDockWidget.DockWidgetClosable
+                features |= QtGui.QDockWidget.DockWidgetFeature.DockWidgetClosable
             if self.floatable:
-                features |= QtGui.QDockWidget.DockWidgetFloatable
+                features |= QtGui.QDockWidget.DockWidgetFeature.DockWidgetFloatable
             if self.movable:
-                features |= QtGui.QDockWidget.DockWidgetMovable
+                features |= QtGui.QDockWidget.DockWidgetFeature.DockWidgetMovable
             self.control.setFeatures(features)
 
     @observe("name")

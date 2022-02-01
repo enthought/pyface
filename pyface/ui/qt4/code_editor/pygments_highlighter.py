@@ -203,24 +203,24 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
                 elif key == "bgcolor":
                     result.setBackground(self._get_brush(value))
                 elif key == "bold":
-                    result.setFontWeight(QtGui.QFont.Bold)
+                    result.setFontWeight(QtGui.QFont.Weight.Bold)
                 elif key == "italic":
                     result.setFontItalic(True)
                 elif key == "underline":
                     result.setUnderlineStyle(
-                        QtGui.QTextCharFormat.SingleUnderline
+                        QtGui.QTextCharFormat.UnderlineStyle.SingleUnderline
                     )
                 elif key == "sans":
                     result.setFontStyleHint(QtGui.QFont.SansSerif)
                 elif key == "roman":
-                    result.setFontStyleHint(QtGui.QFont.Times)
+                    result.setFontStyleHint(QtGui.QFont.StyleHint.Times)
                 elif key == "mono":
                     result.setFontStyleHint(QtGui.QFont.TypeWriter)
                 elif key == "border":
                     # Borders are normally used for errors. We can't do a border
                     # so instead we do a wavy underline
                     result.setUnderlineStyle(
-                        QtGui.QTextCharFormat.WaveUnderline
+                        QtGui.QTextCharFormat.UnderlineStyle.WaveUnderline
                     )
                     result.setUnderlineColor(self._get_color(value))
         self._formats[token] = result

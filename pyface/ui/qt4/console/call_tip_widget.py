@@ -28,28 +28,28 @@ class CallTipWidget(QtGui.QLabel):
             text edit widget.
         """
         assert isinstance(text_edit, (QtGui.QTextEdit, QtGui.QPlainTextEdit))
-        super().__init__(None, QtCore.Qt.ToolTip)
+        super().__init__(None, QtCore.Qt.WindowType.ToolTip)
 
         self._hide_timer = QtCore.QBasicTimer()
         self._text_edit = text_edit
 
         self.setFont(text_edit.document().defaultFont())
-        self.setForegroundRole(QtGui.QPalette.ToolTipText)
-        self.setBackgroundRole(QtGui.QPalette.ToolTipBase)
+        self.setForegroundRole(QtGui.QPalette.ColorRole.ToolTipText)
+        self.setBackgroundRole(QtGui.QPalette.ColorRole.ToolTipBase)
         self.setPalette(QtGui.QToolTip.palette())
 
-        self.setAlignment(QtCore.Qt.AlignLeft)
+        self.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeft)
         self.setIndent(1)
-        self.setFrameStyle(QtGui.QFrame.NoFrame)
+        self.setFrameStyle(QtGui.QFrame.Shape.NoFrame)
         self.setMargin(
             1
             + self.style().pixelMetric(
-                QtGui.QStyle.PM_ToolTipLabelFrameWidth, None, self
+                QtGui.QStyle.PixelMetric.PM_ToolTipLabelFrameWidth, None, self
             )
         )
         self.setWindowOpacity(
             self.style().styleHint(
-                QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None
+                QtGui.QStyle.StyleHint.SH_ToolTipLabel_Opacity, None, self, None
             )
             / 255.0
         )
@@ -61,21 +61,21 @@ class CallTipWidget(QtGui.QLabel):
         if obj == self._text_edit:
             etype = event.type()
 
-            if etype == QtCore.QEvent.KeyPress:
+            if etype == QtCore.QEvent.Type.KeyPress:
                 key = event.key()
-                if key in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return):
+                if key in (QtCore.Qt.Key.Key_Enter, QtCore.Qt.Key.Key_Return):
                     self.hide()
-                elif key == QtCore.Qt.Key_Escape:
+                elif key == QtCore.Qt.Key.Key_Escape:
                     self.hide()
                     return True
 
-            elif etype == QtCore.QEvent.FocusOut:
+            elif etype == QtCore.QEvent.Type.FocusOut:
                 self.hide()
 
-            elif etype == QtCore.QEvent.Enter:
+            elif etype == QtCore.QEvent.Type.Enter:
                 self._hide_timer.stop()
 
-            elif etype == QtCore.QEvent.Leave:
+            elif etype == QtCore.QEvent.Type.Leave:
                 self._leave_event_hide()
 
         return super().eventFilter(obj, event)
@@ -118,7 +118,7 @@ class CallTipWidget(QtGui.QLabel):
         painter = QtGui.QStylePainter(self)
         option = QtGui.QStyleOptionFrame()
         option.initFrom(self)
-        painter.drawPrimitive(QtGui.QStyle.PE_PanelTipLabel, option)
+        painter.drawPrimitive(QtGui.QStyle.PrimitiveElement.PE_PanelTipLabel, option)
         painter.end()
 
         super().paintEvent(event)

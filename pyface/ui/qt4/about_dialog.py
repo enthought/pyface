@@ -109,9 +109,9 @@ class AboutDialog(MAboutDialog, Dialog):
         buttons = QtGui.QDialogButtonBox()
 
         if self.ok_label:
-            buttons.addButton(self.ok_label, QtGui.QDialogButtonBox.AcceptRole)
+            buttons.addButton(self.ok_label, QtGui.QDialogButtonBox.ButtonRole.AcceptRole)
         else:
-            buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Ok)
 
         buttons.accepted.connect(parent.accept)
         self._connections_to_remove.append((buttons.accepted, parent.accept))

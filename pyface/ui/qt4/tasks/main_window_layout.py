@@ -30,8 +30,8 @@ from .dock_pane import AREA_MAP
 
 # Contants.
 ORIENTATION_MAP = {
-    "horizontal": QtCore.Qt.Horizontal,
-    "vertical": QtCore.Qt.Vertical,
+    "horizontal": QtCore.Qt.Orientation.Horizontal,
+    "vertical": QtCore.Qt.Orientation.Vertical,
 }
 
 # Logging.
@@ -107,12 +107,12 @@ class MainWindowLayout(HasTraits):
                 if item1 not in remove and item2 not in remove:
                     rect1, rect2 = rects[item1], rects[item2]
                     orient = self._get_division_orientation(rect1, rect2, True)
-                    if orient == QtCore.Qt.Horizontal:
+                    if orient == QtCore.Qt.Orientation.Horizontal:
                         if rect1.y() < rect2.y():
                             item = VSplitter(item1, item2)
                         else:
                             item = VSplitter(item2, item1)
-                    elif orient == QtCore.Qt.Vertical:
+                    elif orient == QtCore.Qt.Orientation.Vertical:
                         if rect1.x() < rect2.x():
                             item = HSplitter(item1, item2)
                         else:
@@ -260,7 +260,7 @@ class MainWindowLayout(HasTraits):
         united = one.united(two)
         if splitter:
             sep = self.control.style().pixelMetric(
-                QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self.control
+                QtGui.QStyle.PixelMetric.PM_DockWidgetSeparatorExtent, None, self.control
             )
             united.adjust(0, 0, -sep, -sep)
 
@@ -269,14 +269,14 @@ class MainWindowLayout(HasTraits):
             and one.width() == two.width()
             and united.height() == one.height() + two.height()
         ):
-            return QtCore.Qt.Horizontal
+            return QtCore.Qt.Orientation.Horizontal
 
         elif (
             one.y() == two.y()
             and one.height() == two.height()
             and united.width() == one.width() + two.width()
         ):
-            return QtCore.Qt.Vertical
+            return QtCore.Qt.Orientation.Vertical
 
         return 0
 

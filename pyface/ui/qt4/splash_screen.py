@@ -72,10 +72,10 @@ class SplashScreen(MSplashScreen, Window):
             control.setFont(self.text_font)
 
         if self.text_color is None:
-            text_color = QtCore.Qt.black
+            text_color = QtCore.Qt.GlobalColor.black
         else:
             # Until we get the type of this trait finalised (ie. when TraitsUI
             # supports PyQt) convert it explcitly to a colour.
             text_color = QtGui.QColor(self.text_color)
 
-        control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
+        control.showMessage(self.text, QtCore.Qt.AlignmentFlag.AlignLeft, text_color)

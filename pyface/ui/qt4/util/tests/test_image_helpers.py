@@ -24,7 +24,7 @@ from ..image_helpers import (
 class TestImageHelpers(unittest.TestCase):
 
     def test_image_to_bitmap(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         qpixmap = image_to_bitmap(qimage)
@@ -48,7 +48,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertIsInstance(qimage, QIcon)
 
     def test_resize_image(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         qimage = resize_image(qimage, (128, 128))
@@ -58,7 +58,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(qimage.height(), 128)
 
     def test_resize_image_smooth(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         qimage = resize_image(qimage, (128, 128), mode=ScaleMode.smooth)
@@ -68,7 +68,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(qimage.height(), 128)
 
     def test_resize_image_constrain(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         qimage = resize_image(qimage, (128, 128), AspectRatio.keep_constrain)
@@ -78,7 +78,7 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(qimage.height(), 128)
 
     def test_resize_image_expand(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         qimage = resize_image(qimage, (128, 128), AspectRatio.keep_expand)
@@ -132,7 +132,7 @@ class TestImageHelpers(unittest.TestCase):
 class TestArrayImageHelpers(unittest.TestCase):
 
     def test_image_to_array_rgb(self):
-        qimage = QImage(32, 64, QImage.Format_RGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         array = image_to_array(qimage)
@@ -145,7 +145,7 @@ class TestArrayImageHelpers(unittest.TestCase):
         self.assertTrue(np.all(array[:, :, 2] == 0xcc))
 
     def test_image_to_array_rgba(self):
-        qimage = QImage(32, 64, QImage.Format_ARGB32)
+        qimage = QImage(32, 64, QImage.Format.Format_ARGB32)
         qimage.fill(QColor(0x44, 0x88, 0xcc, 0xee))
 
         array = image_to_array(qimage)
@@ -158,7 +158,7 @@ class TestArrayImageHelpers(unittest.TestCase):
         self.assertTrue(np.all(array[:, :, 3] == 0xee))
 
     def test_image_to_array_bad(self):
-        qimage = QImage(32, 64, QImage.Format_RGB30)
+        qimage = QImage(32, 64, QImage.Format.Format_RGB30)
         qimage.fill(QColor(0x44, 0x88, 0xcc))
 
         with self.assertRaises(ValueError):
@@ -178,7 +178,7 @@ class TestArrayImageHelpers(unittest.TestCase):
 
         self.assertEqual(qimage.width(), 32)
         self.assertEqual(qimage.height(), 64)
-        self.assertEqual(qimage.format(), QImage.Format_RGB32)
+        self.assertEqual(qimage.format(), QImage.Format.Format_RGB32)
         self.assertTrue(all(
             qimage.pixel(i, j) == 0xff4488cc
             for i in range(32) for j in range(64)
@@ -199,7 +199,7 @@ class TestArrayImageHelpers(unittest.TestCase):
 
         self.assertEqual(qimage.width(), 32)
         self.assertEqual(qimage.height(), 64)
-        self.assertEqual(qimage.format(), QImage.Format_ARGB32)
+        self.assertEqual(qimage.format(), QImage.Format.Format_ARGB32)
         self.assertTrue(all(
             qimage.pixel(i, j) == 0xee4488cc
             for i in range(32) for j in range(64)

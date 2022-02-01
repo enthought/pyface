@@ -99,7 +99,7 @@ class WizardPage(MWizardPage, HasTraits):
         control = QtGui.QWidget(parent)
 
         palette = control.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("yellow"))
+        palette.setColor(QtGui.QPalette.ColorRole.Window, QtGui.QColor("yellow"))
         control.setPalette(palette)
         control.setAutoFillBackground(True)
 

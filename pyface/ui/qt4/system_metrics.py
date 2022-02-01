@@ -65,7 +65,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         color = (
             QtGui.QApplication.instance()
             .palette()
-            .color(QtGui.QPalette.Window)
+            .color(QtGui.QPalette.ColorRole.Window)
         )
 
         return (color.redF(), color.greenF(), color.blueF())

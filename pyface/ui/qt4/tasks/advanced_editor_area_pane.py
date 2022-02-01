@@ -158,7 +158,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Returns a LayoutItem that reflects the current state of the editors.
         """
         return self._main_window_layout.get_layout_for_area(
-            QtCore.Qt.LeftDockWidgetArea
+            QtCore.Qt.DockWidgetArea.LeftDockWidgetArea
         )
 
     def set_layout(self, layout):
@@ -166,7 +166,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         if layout is not None:
             self._main_window_layout.set_layout_for_area(
-                layout, QtCore.Qt.LeftDockWidgetArea
+                layout, QtCore.Qt.DockWidgetArea.LeftDockWidgetArea
             )
 
     # ------------------------------------------------------------------------
@@ -295,9 +295,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
         self.setAnimated(False)
         self.setDockNestingEnabled(True)
         self.setDocumentMode(True)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setTabPosition(
-            QtCore.Qt.AllDockWidgetAreas, QtGui.QTabWidget.North
+            QtCore.Qt.DockWidgetArea.AllDockWidgetAreas, QtGui.QTabWidget.TabPosition.North
         )
 
     def _remove_event_listeners(self):
@@ -309,7 +309,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """ Adds a dock widget to the editor area.
         """
         editor_widget.installEventFilter(self)
-        self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, editor_widget)
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.LeftDockWidgetArea, editor_widget)
 
         # Try to place the editor in a sensible spot.
         top_left = None
@@ -465,12 +465,12 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 # Use UniqueConnections since Qt recycles the tab bars.
                 child.installEventFilter(self)
                 child.currentChanged.connect(
-                    self._update_editor_in_focus, QtCore.Qt.UniqueConnection
+                    self._update_editor_in_focus, QtCore.Qt.ConnectionType.UniqueConnection
                 )
                 child.setTabsClosable(True)
                 child.setUsesScrollButtons(True)
                 child.tabCloseRequested.connect(
-                    self._tab_close_requested, QtCore.Qt.UniqueConnection
+                    self._tab_close_requested, QtCore.Qt.ConnectionType.UniqueConnection
                 )
                 # FIXME: We would like to have the tabs movable, but this
                 # confuses the QMainWindowLayout. For now, we disable this.
@@ -493,12 +493,12 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def _filter_dock_widget(self, widget, event):
         """ Support hover widget state tracking.
         """
-        if self._drag_widget and event.type() == QtCore.QEvent.Resize:
+        if self._drag_widget and event.type() == QtCore.QEvent.Type.Resize:
             if widget.geometry() == self._rubber_band.geometry():
                 self.set_hover_widget(widget)
 
         elif (
-            self._drag_widget == widget and event.type() == QtCore.QEvent.Move
+            self._drag_widget == widget and event.type() == QtCore.QEvent.Type.Move
         ):
             if len(self._tear_widgets) == 1 and not self._tear_handled:
                 widget = self._tear_widgets[0]
@@ -507,7 +507,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
 
         elif (
             self._drag_widget == widget
-            and event.type() == QtCore.QEvent.MouseButtonRelease
+            and event.type() == QtCore.QEvent.Type.MouseButtonRelease
         ):
             self.reset_drag()
 
@@ -517,8 +517,8 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """ Support hover widget state tracking.
         """
         if self._drag_widget and event.type() in (
-            QtCore.QEvent.Resize,
-            QtCore.QEvent.Move,
+            QtCore.QEvent.Type.Resize,
+            QtCore.QEvent.Type.Move,
         ):
             self.set_hover_widget(None)
 
@@ -527,7 +527,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def _filter_tab_bar(self, tab_bar, event):
         """ Support 'tearing off' a tab.
         """
-        if event.type() == QtCore.QEvent.MouseMove:
+        if event.type() == QtCore.QEvent.Type.MouseMove:
             if tab_bar.rect().contains(event.pos()):
                 self.reset_drag()
             else:
@@ -538,18 +538,18 @@ class EditorAreaWidget(QtGui.QMainWindow):
 
                     pos = QtCore.QPoint(0, 0)
                     press_event = QtGui.QMouseEvent(
-                        QtCore.QEvent.MouseButtonPress,
+                        QtCore.QEvent.Type.MouseButtonPress,
                         pos,
                         widget.mapToGlobal(pos),
-                        QtCore.Qt.LeftButton,
-                        QtCore.Qt.LeftButton,
+                        QtCore.Qt.MouseButton.LeftButton,
+                        QtCore.Qt.MouseButton.LeftButton,
                         event.modifiers(),
                     )
                     QtCore.QCoreApplication.sendEvent(widget, press_event)
                     return True
 
                 event = QtGui.QMouseEvent(
-                    QtCore.QEvent.MouseMove,
+                    QtCore.QEvent.Type.MouseMove,
                     event.pos(),
                     event.globalPos(),
                     event.button(),
@@ -559,7 +559,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 QtCore.QCoreApplication.sendEvent(self._drag_widget, event)
                 return True
 
-        elif event.type() == QtCore.QEvent.ToolTip:
+        elif event.type() == QtCore.QEvent.Type.ToolTip:
             # QDockAreaLayout forces the tooltips to be QDockWidget.windowTitle,
             # so we provide the tooltips manually.
             widgets = self.get_dock_widgets_for_bar(tab_bar)
@@ -618,10 +618,10 @@ class EditorWidget(QtGui.QDockWidget):
         super().__init__(parent)
         self.editor = editor
         self.editor.create(self)
-        self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
+        self.setAllowedAreas(QtCore.Qt.DockWidgetArea.LeftDockWidgetArea)
         self.setFeatures(
-            QtGui.QDockWidget.DockWidgetClosable
-            | QtGui.QDockWidget.DockWidgetMovable
+            QtGui.QDockWidget.DockWidgetFeature.DockWidgetClosable
+            | QtGui.QDockWidget.DockWidgetFeature.DockWidgetMovable
         )
         self.setWidget(editor.control)
         self.update_title()

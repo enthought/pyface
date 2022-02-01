@@ -69,13 +69,13 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     def _create_control(self, parent):
         dlg = QtGui.QFileDialog(parent, self.title, self.default_path)
 
-        dlg.setViewMode(QtGui.QFileDialog.Detail)
-        dlg.setFileMode(QtGui.QFileDialog.Directory)
+        dlg.setViewMode(QtGui.QFileDialog.ViewMode.Detail)
+        dlg.setFileMode(QtGui.QFileDialog.FileMode.Directory)
 
         if not self.new_directory:
-            dlg.setOptions(QtGui.QFileDialog.ReadOnly)
+            dlg.setOptions(QtGui.QFileDialog.Option.ReadOnly)
 
         if self.message:
-            dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)
+            dlg.setLabelText(QtGui.QFileDialog.DialogLabel.LookIn, self.message)
 
         return dlg

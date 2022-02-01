@@ -59,7 +59,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         pass
 
     def _show_modal(self):
-        self.control.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.control.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         retval = self.control.exec_()
         if self.control is None:
             # dialog window closed, treat as Cancel, nullify choice
@@ -98,7 +98,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         """ Create the toolkit-specific control that represents the window. """
         dialog = QtGui.QInputDialog(parent)
 
-        dialog.setOption(QtGui.QInputDialog.UseListViewForComboBoxItems, True)
+        dialog.setOption(QtGui.QInputDialog.InputDialogOption.UseListViewForComboBoxItems, True)
         dialog.setWindowTitle(self.title)
         dialog.setLabelText(self.message)
 

@@ -97,7 +97,7 @@ class _PyQt4LabelEditor(Editor):
         from pyface.qt import QtCore, QtGui
 
         w = QtGui.QLabel(parent)
-        w.setAlignment(QtCore.Qt.AlignCenter)
+        w.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
         self._set_text(w)
         self._set_size(w)

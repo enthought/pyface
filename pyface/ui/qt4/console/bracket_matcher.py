@@ -90,7 +90,7 @@ class BracketMatcher(QtCore.QObject):
         cursor = self._text_edit.textCursor()
         cursor.setPosition(position)
         cursor.movePosition(
-            QtGui.QTextCursor.NextCharacter, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.NextCharacter, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         selection.cursor = cursor
         selection.format = self.format

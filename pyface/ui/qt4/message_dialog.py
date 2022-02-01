@@ -24,15 +24,15 @@ from .dialog import Dialog
 
 # Map the ETS severity to the corresponding PyQt standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    "information": QtGui.QMessageBox.Information,
-    "warning": QtGui.QMessageBox.Warning,
-    "error": QtGui.QMessageBox.Critical,
+    "information": QtGui.QMessageBox.Icon.Information,
+    "warning": QtGui.QMessageBox.Icon.Warning,
+    "error": QtGui.QMessageBox.Icon.Critical,
 }
 
 _TEXT_FORMAT_MAP = {
-    "auto": QtCore.Qt.AutoText,
-    "plain": QtCore.Qt.PlainText,
-    "rich": QtCore.Qt.RichText,
+    "auto": QtCore.Qt.TextFormat.AutoText,
+    "plain": QtCore.Qt.TextFormat.PlainText,
+    "rich": QtCore.Qt.TextFormat.RichText,
 }
 
 
@@ -72,12 +72,12 @@ class MessageDialog(MMessageDialog, Dialog):
             _SEVERITY_TO_ICON_MAP[self.severity],
             self.title,
             self.message,
-            QtGui.QMessageBox.Ok,
+            QtGui.QMessageBox.StandardButton.Ok,
             parent,
         )
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
-        message_box.setEscapeButton(QtGui.QMessageBox.Ok)
+        message_box.setEscapeButton(QtGui.QMessageBox.StandardButton.Ok)
         message_box.setTextFormat(_TEXT_FORMAT_MAP[self.text_format])
 
         if self.size != (-1, -1):

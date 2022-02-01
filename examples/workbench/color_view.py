@@ -67,7 +67,7 @@ class ColorView(View):
         widget = QtGui.QWidget(parent)
 
         palette = widget.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor(color))
+        palette.setColor(QtGui.QPalette.ColorRole.Window, QtGui.QColor(color))
         widget.setPalette(palette)
         widget.setAutoFillBackground(True)
 

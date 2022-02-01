@@ -104,22 +104,22 @@ class ConsoleWidget(QtGui.QWidget):
 
     # When the control key is down, these keys are mapped.
     _ctrl_down_remap = {
-        QtCore.Qt.Key_B: QtCore.Qt.Key_Left,
-        QtCore.Qt.Key_F: QtCore.Qt.Key_Right,
-        QtCore.Qt.Key_A: QtCore.Qt.Key_Home,
-        QtCore.Qt.Key_P: QtCore.Qt.Key_Up,
-        QtCore.Qt.Key_N: QtCore.Qt.Key_Down,
-        QtCore.Qt.Key_D: QtCore.Qt.Key_Delete,
+        QtCore.Qt.Key.Key_B: QtCore.Qt.Key.Key_Left,
+        QtCore.Qt.Key.Key_F: QtCore.Qt.Key.Key_Right,
+        QtCore.Qt.Key.Key_A: QtCore.Qt.Key.Key_Home,
+        QtCore.Qt.Key.Key_P: QtCore.Qt.Key.Key_Up,
+        QtCore.Qt.Key.Key_N: QtCore.Qt.Key.Key_Down,
+        QtCore.Qt.Key.Key_D: QtCore.Qt.Key.Key_Delete,
     }
     if not sys.platform == "darwin":
         # On OS X, Ctrl-E already does the right thing, whereas End moves the
         # cursor to the bottom of the buffer.
-        _ctrl_down_remap[QtCore.Qt.Key_E] = QtCore.Qt.Key_End
+        _ctrl_down_remap[QtCore.Qt.Key.Key_E] = QtCore.Qt.Key.Key_End
 
     # The shortcuts defined by this widget. We need to keep track of these to
     # support 'override_shortcuts' above.
     _shortcuts = set(_ctrl_down_remap.keys()) | set(
-        [QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O, QtCore.Qt.Key_V]
+        [QtCore.Qt.Key.Key_C, QtCore.Qt.Key.Key_G, QtCore.Qt.Key.Key_O, QtCore.Qt.Key.Key_V]
     )
 
     # ---------------------------------------------------------------------------
@@ -150,9 +150,9 @@ class ConsoleWidget(QtGui.QWidget):
         if self.paging in ("hsplit", "vsplit"):
             self._splitter = QtGui.QSplitter()
             if self.paging == "hsplit":
-                self._splitter.setOrientation(QtCore.Qt.Horizontal)
+                self._splitter.setOrientation(QtCore.Qt.Orientation.Horizontal)
             else:
-                self._splitter.setOrientation(QtCore.Qt.Vertical)
+                self._splitter.setOrientation(QtCore.Qt.Orientation.Vertical)
             self._splitter.addWidget(self._control)
             layout.addWidget(self._splitter)
         else:
@@ -191,7 +191,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Configure actions.
         action = QtGui.QAction("Print", None)
         action.setEnabled(True)
-        printkey = QtGui.QKeySequence(QtGui.QKeySequence.Print)
+        printkey = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Print)
         if printkey.matches("Ctrl+P") and sys.platform != "darwin":
             # Only override the default if there is a collision.
             # Qt ctrl = cmd on OSX, so that the match gets a false positive.
@@ -204,7 +204,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         action = QtGui.QAction("Save as HTML/XML", None)
         action.setEnabled(self.can_export())
-        action.setShortcut(QtGui.QKeySequence.Save)
+        action.setShortcut(QtGui.QKeySequence.StandardKey.Save)
         action.triggered.connect(self.export)
         self._connections_to_remove.append((action.triggered, self.export))
         self.addAction(action)
@@ -212,7 +212,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         action = QtGui.QAction("Select All", None)
         action.setEnabled(True)
-        action.setShortcut(QtGui.QKeySequence.SelectAll)
+        action.setShortcut(QtGui.QKeySequence.StandardKey.SelectAll)
         action.triggered.connect(self.select_all)
         self._connections_to_remove.append((action.triggered, self.select_all))
         self.addAction(action)
@@ -223,7 +223,7 @@ class ConsoleWidget(QtGui.QWidget):
             text widgets.
         """
         etype = event.type()
-        if etype == QtCore.QEvent.KeyPress:
+        if etype == QtCore.QEvent.Type.KeyPress:
 
             # Re-map keys for all filtered widgets.
             key = event.key()
@@ -232,9 +232,9 @@ class ConsoleWidget(QtGui.QWidget):
                 and key in self._ctrl_down_remap
             ):
                 new_event = QtGui.QKeyEvent(
-                    QtCore.QEvent.KeyPress,
+                    QtCore.QEvent.Type.KeyPress,
                     self._ctrl_down_remap[key],
-                    QtCore.Qt.NoModifier,
+                    QtCore.Qt.KeyboardModifier.NoModifier,
                 )
                 QtGui.QApplication.sendEvent(obj, new_event)
                 return True
@@ -247,17 +247,17 @@ class ConsoleWidget(QtGui.QWidget):
 
         # Make middle-click paste safe.
         elif (
-            etype == QtCore.QEvent.MouseButtonRelease
-            and event.button() == QtCore.Qt.MiddleButton
+            etype == QtCore.QEvent.Type.MouseButtonRelease
+            and event.button() == QtCore.Qt.MouseButton.MiddleButton
             and obj == self._control.viewport()
         ):
             cursor = self._control.cursorForPosition(event.pos())
             self._control.setTextCursor(cursor)
-            self.paste(QtGui.QClipboard.Selection)
+            self.paste(QtGui.QClipboard.Mode.Selection)
             return True
 
         # Manually adjust the scrollbars *after* a resize event is dispatched.
-        elif etype == QtCore.QEvent.Resize and not self._filter_resize:
+        elif etype == QtCore.QEvent.Type.Resize and not self._filter_resize:
             self._filter_resize = True
             QtGui.QApplication.sendEvent(obj, event)
             self._adjust_scrollbars()
@@ -266,7 +266,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         # Override shortcuts for all filtered widgets.
         elif (
-            etype == QtCore.QEvent.ShortcutOverride
+            etype == QtCore.QEvent.Type.ShortcutOverride
             and self.override_shortcuts
             and self._control_key_down(event.modifiers())
             and event.key() in self._shortcuts
@@ -283,13 +283,13 @@ class ConsoleWidget(QtGui.QWidget):
         # but the alternative--trying to prevent Qt from using its hardwired
         # drag logic and writing our own--is worse.
         elif (
-            etype == QtCore.QEvent.DragEnter
+            etype == QtCore.QEvent.Type.DragEnter
             and obj == self._control.viewport()
             and event.source() == self._control.viewport()
         ):
             self._filter_drag = True
         elif (
-            etype == QtCore.QEvent.DragLeave
+            etype == QtCore.QEvent.Type.DragLeave
             and obj == self._control.viewport()
             and self._filter_drag
         ):
@@ -299,7 +299,7 @@ class ConsoleWidget(QtGui.QWidget):
             self._filter_drag = False
 
         # Ensure that drops are safe.
-        elif etype == QtCore.QEvent.Drop and obj == self._control.viewport():
+        elif etype == QtCore.QEvent.Type.Drop and obj == self._control.viewport():
             cursor = self._control.cursorForPosition(event.pos())
             if self._in_buffer(cursor.position()):
                 text = event.mimeData().text()
@@ -331,7 +331,7 @@ class ConsoleWidget(QtGui.QWidget):
             + self._control.document().documentMargin()
         ) * 2
         style = self.style()
-        splitwidth = style.pixelMetric(QtGui.QStyle.PM_SplitterWidth)
+        splitwidth = style.pixelMetric(QtGui.QStyle.PixelMetric.PM_SplitterWidth)
 
         # Note 1: Despite my best efforts to take the various margins into
         # account, the width is still coming out a bit too small, so we include
@@ -345,7 +345,7 @@ class ConsoleWidget(QtGui.QWidget):
             width = font_metrics.horizontalAdvance(" ") * 81 + margin
         else:
             width = font_metrics.width(" ") * 81 + margin
-        width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
+        width += style.pixelMetric(QtGui.QStyle.PixelMetric.PM_ScrollBarExtent)
         if self.paging == "hsplit":
             width = width * 2 + splitwidth
 
@@ -377,7 +377,7 @@ class ConsoleWidget(QtGui.QWidget):
     def can_paste(self):
         """ Returns whether text can be pasted from the clipboard.
         """
-        if self._control.textInteractionFlags() & QtCore.Qt.TextEditable:
+        if self._control.textInteractionFlags() & QtCore.Qt.TextInteractionFlag.TextEditable:
             return bool(QtGui.QApplication.clipboard().text())
         return False
 
@@ -505,7 +505,7 @@ class ConsoleWidget(QtGui.QWidget):
                 # Do not do this inside the edit block. It works as expected
                 # when using a QPlainTextEdit control, but does not have an
                 # effect when using a QTextEdit. I believe this is a Qt bug.
-                self._control.moveCursor(QtGui.QTextCursor.End)
+                self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
 
         return complete
 
@@ -518,7 +518,7 @@ class ConsoleWidget(QtGui.QWidget):
             return self._executing_input_buffer
 
         cursor = self._get_end_cursor()
-        cursor.setPosition(self._prompt_pos, QtGui.QTextCursor.KeepAnchor)
+        cursor.setPosition(self._prompt_pos, QtGui.QTextCursor.MoveMode.KeepAnchor)
         input_buffer = cursor.selection().toPlainText()
 
         # Strip out continuation prompts.
@@ -534,13 +534,13 @@ class ConsoleWidget(QtGui.QWidget):
         # Remove old text.
         cursor = self._get_end_cursor()
         cursor.beginEditBlock()
-        cursor.setPosition(self._prompt_pos, QtGui.QTextCursor.KeepAnchor)
+        cursor.setPosition(self._prompt_pos, QtGui.QTextCursor.MoveMode.KeepAnchor)
         cursor.removeSelectedText()
 
         # Insert new text with continuation prompts.
         self._insert_plain_text_into_buffer(self._get_prompt_cursor(), string)
         cursor.endEditBlock()
-        self._control.moveCursor(QtGui.QTextCursor.End)
+        self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
 
     input_buffer = property(_get_input_buffer, _set_input_buffer)
 
@@ -571,7 +571,7 @@ class ConsoleWidget(QtGui.QWidget):
 
     font = property(_get_font, _set_font)
 
-    def paste(self, mode=QtGui.QClipboard.Clipboard):
+    def paste(self, mode=QtGui.QClipboard.Mode.Clipboard):
         """ Paste the contents of the clipboard into the input region.
 
         Parameters:
@@ -582,7 +582,7 @@ class ConsoleWidget(QtGui.QWidget):
             used to access the selection clipboard in X11 and the Find buffer
             in Mac OS. By default, the regular clipboard is used.
         """
-        if self._control.textInteractionFlags() & QtCore.Qt.TextEditable:
+        if self._control.textInteractionFlags() & QtCore.Qt.TextInteractionFlag.TextEditable:
             # Make sure the paste is safe.
             self._keep_cursor_in_buffer()
             cursor = self._control.textCursor()
@@ -597,7 +597,7 @@ class ConsoleWidget(QtGui.QWidget):
         """
         if not printer:
             printer = QtGui.QPrinter()
-            if QtGui.QPrintDialog(printer).exec_() != QtGui.QDialog.Accepted:
+            if QtGui.QPrintDialog(printer).exec_() != QtGui.QDialog.DialogCode.Accepted:
                 return
         self._control.print_(printer)
 
@@ -605,7 +605,7 @@ class ConsoleWidget(QtGui.QWidget):
         """Export HTML/XML in various modes from one Dialog."""
         parent = parent or None  # sometimes parent is False
         dialog = QtGui.QFileDialog(parent, "Save Console as...")
-        dialog.setAcceptMode(QtGui.QFileDialog.AcceptSave)
+        dialog.setAcceptMode(QtGui.QFileDialog.AcceptMode.AcceptSave)
         filters = [
             "HTML with PNG figures (*.html *.htm)",
             "XHTML with inline SVG figures (*.xhtml *.xml)",
@@ -635,8 +635,8 @@ class ConsoleWidget(QtGui.QWidget):
                     self,
                     title,
                     msg,
-                    QtGui.QMessageBox.Ok,
-                    QtGui.QMessageBox.Ok,
+                    QtGui.QMessageBox.StandardButton.Ok,
+                    QtGui.QMessageBox.StandardButton.Ok,
                 )
         return None
 
@@ -678,10 +678,10 @@ class ConsoleWidget(QtGui.QWidget):
             ib.setShortcut("I")
             eb = QtGui.QPushButton("&External", self)
             eb.setShortcut("E")
-            box = QtGui.QMessageBox(QtGui.QMessageBox.Question, title, msg)
+            box = QtGui.QMessageBox(QtGui.QMessageBox.Icon.Question, title, msg)
             box.setInformativeText(info)
-            box.addButton(ib, QtGui.QMessageBox.NoRole)
-            box.addButton(eb, QtGui.QMessageBox.YesRole)
+            box.addButton(ib, QtGui.QMessageBox.ButtonRole.NoRole)
+            box.addButton(eb, QtGui.QMessageBox.ButtonRole.YesRole)
             box.setDefaultButton(ib)
             layout.setSpacing(0)
             layout.addWidget(box)
@@ -977,18 +977,18 @@ class ConsoleWidget(QtGui.QWidget):
         # Select and remove all text below the input buffer.
         cursor = self._get_prompt_cursor()
         prompt = self._continuation_prompt.lstrip()
-        while cursor.movePosition(QtGui.QTextCursor.NextBlock):
+        while cursor.movePosition(QtGui.QTextCursor.MoveOperation.NextBlock):
             temp_cursor = QtGui.QTextCursor(cursor)
-            temp_cursor.select(QtGui.QTextCursor.BlockUnderCursor)
+            temp_cursor.select(QtGui.QTextCursor.SelectionType.BlockUnderCursor)
             text = temp_cursor.selection().toPlainText().lstrip()
             if not text.startswith(prompt):
                 break
         else:
             # We've reached the end of the input buffer and no text follows.
             return
-        cursor.movePosition(QtGui.QTextCursor.Left)  # Grab the newline.
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.Left)  # Grab the newline.
         cursor.movePosition(
-            QtGui.QTextCursor.End, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.End, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         cursor.removeSelectedText()
 
@@ -1008,7 +1008,7 @@ class ConsoleWidget(QtGui.QWidget):
         if len(items) == 1:
             cursor.setPosition(
                 self._control.textCursor().position(),
-                QtGui.QTextCursor.KeepAnchor,
+                QtGui.QTextCursor.MoveMode.KeepAnchor,
             )
             cursor.insertText(items[0])
 
@@ -1016,7 +1016,7 @@ class ConsoleWidget(QtGui.QWidget):
             current_pos = self._control.textCursor().position()
             prefix = commonprefix(items)
             if prefix:
-                cursor.setPosition(current_pos, QtGui.QTextCursor.KeepAnchor)
+                cursor.setPosition(current_pos, QtGui.QTextCursor.MoveMode.KeepAnchor)
                 cursor.insertText(prefix)
                 current_pos = cursor.position()
 
@@ -1026,7 +1026,7 @@ class ConsoleWidget(QtGui.QWidget):
             cursor.endEditBlock()
 
             cursor.setPosition(current_pos)
-            self._control.moveCursor(QtGui.QTextCursor.End)
+            self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
             self._control.setTextCursor(cursor)
             self._text_completing_pos = current_pos
 
@@ -1037,15 +1037,15 @@ class ConsoleWidget(QtGui.QWidget):
 
         cut_action = menu.addAction("Cut", self.cut)
         cut_action.setEnabled(self.can_cut())
-        cut_action.setShortcut(QtGui.QKeySequence.Cut)
+        cut_action.setShortcut(QtGui.QKeySequence.StandardKey.Cut)
 
         copy_action = menu.addAction("Copy", self.copy)
         copy_action.setEnabled(self.can_copy())
-        copy_action.setShortcut(QtGui.QKeySequence.Copy)
+        copy_action.setShortcut(QtGui.QKeySequence.StandardKey.Copy)
 
         paste_action = menu.addAction("Paste", self.paste)
         paste_action.setEnabled(self.can_paste())
-        paste_action.setShortcut(QtGui.QKeySequence.Paste)
+        paste_action.setShortcut(QtGui.QKeySequence.StandardKey.Paste)
 
         menu.addSeparator()
         menu.addAction(self._select_all_action)
@@ -1069,10 +1069,10 @@ class ConsoleWidget(QtGui.QWidget):
         # Note that on Mac OS, ControlModifier corresponds to the Command key
         # while MetaModifier corresponds to the Control key.
         if sys.platform == "darwin":
-            down = include_command and (modifiers & QtCore.Qt.ControlModifier)
-            return bool(down) ^ bool(modifiers & QtCore.Qt.MetaModifier)
+            down = include_command and (modifiers & QtCore.Qt.KeyboardModifier.ControlModifier)
+            return bool(down) ^ bool(modifiers & QtCore.Qt.KeyboardModifier.MetaModifier)
         else:
-            return bool(modifiers & QtCore.Qt.ControlModifier)
+            return bool(modifiers & QtCore.Qt.KeyboardModifier.ControlModifier)
 
     def _create_control(self):
         """ Creates and connects the underlying text widget.
@@ -1125,10 +1125,10 @@ class ConsoleWidget(QtGui.QWidget):
         # not explicitly disconnected on destruction
 
         # Configure the control.
-        control.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        control.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         control.setReadOnly(True)
         control.setUndoRedoEnabled(False)
-        control.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        control.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         return control
 
     def _create_page_control(self):
@@ -1141,7 +1141,7 @@ class ConsoleWidget(QtGui.QWidget):
         control.installEventFilter(self)
         control.setReadOnly(True)
         control.setUndoRedoEnabled(False)
-        control.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        control.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         return control
 
     def _event_filter_console_keypress(self, event):
@@ -1153,26 +1153,26 @@ class ConsoleWidget(QtGui.QWidget):
         position = cursor.position()
         key = event.key()
         ctrl_down = self._control_key_down(event.modifiers())
-        alt_down = event.modifiers() & QtCore.Qt.AltModifier
-        shift_down = event.modifiers() & QtCore.Qt.ShiftModifier
+        alt_down = event.modifiers() & QtCore.Qt.KeyboardModifier.AltModifier
+        shift_down = event.modifiers() & QtCore.Qt.KeyboardModifier.ShiftModifier
 
         # Special sequences ----------------------------------------------
 
-        if event.matches(QtGui.QKeySequence.Copy):
+        if event.matches(QtGui.QKeySequence.StandardKey.Copy):
             self.copy()
             intercepted = True
 
-        elif event.matches(QtGui.QKeySequence.Cut):
+        elif event.matches(QtGui.QKeySequence.StandardKey.Cut):
             self.cut()
             intercepted = True
 
-        elif event.matches(QtGui.QKeySequence.Paste):
+        elif event.matches(QtGui.QKeySequence.StandardKey.Paste):
             self.paste()
             intercepted = True
 
         # Special modifier logic -----------------------------------------
 
-        elif key in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter):
+        elif key in (QtCore.Qt.Key.Key_Return, QtCore.Qt.Key.Key_Enter):
             intercepted = True
 
             # Special handling when tab completing in text mode.
@@ -1190,7 +1190,7 @@ class ConsoleWidget(QtGui.QWidget):
                 # line with a continuation prompt.
                 elif not self._executing:
                     cursor.movePosition(
-                        QtGui.QTextCursor.End, QtGui.QTextCursor.KeepAnchor
+                        QtGui.QTextCursor.MoveOperation.End, QtGui.QTextCursor.MoveMode.KeepAnchor
                     )
                     at_end = len(cursor.selectedText().strip()) == 0
                     single_line = (
@@ -1210,91 +1210,91 @@ class ConsoleWidget(QtGui.QWidget):
                         # Ensure that the whole input buffer is visible.
                         # FIXME: This will not be usable if the input buffer is
                         # taller than the console widget.
-                        self._control.moveCursor(QtGui.QTextCursor.End)
+                        self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
                         self._control.setTextCursor(cursor)
 
         # Control/Cmd modifier -------------------------------------------
 
         elif ctrl_down:
-            if key == QtCore.Qt.Key_G:
+            if key == QtCore.Qt.Key.Key_G:
                 self._keyboard_quit()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_K:
+            elif key == QtCore.Qt.Key.Key_K:
                 if self._in_buffer(position):
                     cursor.movePosition(
-                        QtGui.QTextCursor.EndOfLine,
-                        QtGui.QTextCursor.KeepAnchor,
+                        QtGui.QTextCursor.MoveOperation.EndOfLine,
+                        QtGui.QTextCursor.MoveMode.KeepAnchor,
                     )
                     if not cursor.hasSelection():
                         # Line deletion (remove continuation prompt)
                         cursor.movePosition(
-                            QtGui.QTextCursor.NextBlock,
-                            QtGui.QTextCursor.KeepAnchor,
+                            QtGui.QTextCursor.MoveOperation.NextBlock,
+                            QtGui.QTextCursor.MoveMode.KeepAnchor,
                         )
                         cursor.movePosition(
-                            QtGui.QTextCursor.Right,
-                            QtGui.QTextCursor.KeepAnchor,
+                            QtGui.QTextCursor.MoveOperation.Right,
+                            QtGui.QTextCursor.MoveMode.KeepAnchor,
                             len(self._continuation_prompt),
                         )
                     cursor.removeSelectedText()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_L:
+            elif key == QtCore.Qt.Key.Key_L:
                 self.prompt_to_top()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_O:
+            elif key == QtCore.Qt.Key.Key_O:
                 if self._page_control and self._page_control.isVisible():
                     self._page_control.setFocus()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Y:
+            elif key == QtCore.Qt.Key.Key_Y:
                 self.paste()
                 intercepted = True
 
-            elif key in (QtCore.Qt.Key_Backspace, QtCore.Qt.Key_Delete):
+            elif key in (QtCore.Qt.Key.Key_Backspace, QtCore.Qt.Key.Key_Delete):
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Plus:
+            elif key == QtCore.Qt.Key.Key_Plus:
                 self.change_font_size(1)
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Minus:
+            elif key == QtCore.Qt.Key.Key_Minus:
                 self.change_font_size(-1)
                 intercepted = True
 
         # Alt modifier ---------------------------------------------------
 
         elif alt_down:
-            if key == QtCore.Qt.Key_B:
+            if key == QtCore.Qt.Key.Key_B:
                 self._set_cursor(self._get_word_start_cursor(position))
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_F:
+            elif key == QtCore.Qt.Key.Key_F:
                 self._set_cursor(self._get_word_end_cursor(position))
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Backspace:
+            elif key == QtCore.Qt.Key.Key_Backspace:
                 cursor = self._get_word_start_cursor(position)
-                cursor.setPosition(position, QtGui.QTextCursor.KeepAnchor)
+                cursor.setPosition(position, QtGui.QTextCursor.MoveMode.KeepAnchor)
                 cursor.removeSelectedText()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_D:
+            elif key == QtCore.Qt.Key.Key_D:
                 cursor = self._get_word_end_cursor(position)
-                cursor.setPosition(position, QtGui.QTextCursor.KeepAnchor)
+                cursor.setPosition(position, QtGui.QTextCursor.MoveMode.KeepAnchor)
                 cursor.removeSelectedText()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Delete:
+            elif key == QtCore.Qt.Key.Key_Delete:
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Greater:
-                self._control.moveCursor(QtGui.QTextCursor.End)
+            elif key == QtCore.Qt.Key.Key_Greater:
+                self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Less:
+            elif key == QtCore.Qt.Key.Key_Less:
                 self._control.setTextCursor(self._get_prompt_cursor())
                 intercepted = True
 
@@ -1302,33 +1302,33 @@ class ConsoleWidget(QtGui.QWidget):
 
         else:
             if shift_down:
-                anchormode = QtGui.QTextCursor.KeepAnchor
+                anchormode = QtGui.QTextCursor.MoveMode.KeepAnchor
             else:
-                anchormode = QtGui.QTextCursor.MoveAnchor
+                anchormode = QtGui.QTextCursor.MoveMode.MoveAnchor
 
-            if key == QtCore.Qt.Key_Escape:
+            if key == QtCore.Qt.Key.Key_Escape:
                 self._keyboard_quit()
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Up:
+            elif key == QtCore.Qt.Key.Key_Up:
                 if self._reading or not self._up_pressed():
                     intercepted = True
                 else:
                     prompt_line = self._get_prompt_cursor().blockNumber()
                     intercepted = cursor.blockNumber() <= prompt_line
 
-            elif key == QtCore.Qt.Key_Down:
+            elif key == QtCore.Qt.Key.Key_Down:
                 if self._reading or not self._down_pressed():
                     intercepted = True
                 else:
                     end_line = self._get_end_cursor().blockNumber()
                     intercepted = cursor.blockNumber() == end_line
 
-            elif key == QtCore.Qt.Key_Tab:
+            elif key == QtCore.Qt.Key.Key_Tab:
                 if not self._reading:
                     intercepted = not self._tab_pressed()
 
-            elif key == QtCore.Qt.Key_Left:
+            elif key == QtCore.Qt.Key.Key_Left:
 
                 # Move to the previous line
                 line, col = cursor.blockNumber(), cursor.columnNumber()
@@ -1336,10 +1336,10 @@ class ConsoleWidget(QtGui.QWidget):
                     self._continuation_prompt
                 ):
                     self._control.moveCursor(
-                        QtGui.QTextCursor.PreviousBlock, mode=anchormode
+                        QtGui.QTextCursor.MoveOperation.PreviousBlock, mode=anchormode
                     )
                     self._control.moveCursor(
-                        QtGui.QTextCursor.EndOfBlock, mode=anchormode
+                        QtGui.QTextCursor.MoveOperation.EndOfBlock, mode=anchormode
                     )
                     intercepted = True
 
@@ -1347,38 +1347,38 @@ class ConsoleWidget(QtGui.QWidget):
                 else:
                     intercepted = not self._in_buffer(position - 1)
 
-            elif key == QtCore.Qt.Key_Right:
+            elif key == QtCore.Qt.Key.Key_Right:
                 original_block_number = cursor.blockNumber()
-                cursor.movePosition(QtGui.QTextCursor.Right, mode=anchormode)
+                cursor.movePosition(QtGui.QTextCursor.MoveOperation.Right, mode=anchormode)
                 if cursor.blockNumber() != original_block_number:
                     cursor.movePosition(
-                        QtGui.QTextCursor.Right,
+                        QtGui.QTextCursor.MoveOperation.Right,
                         n=len(self._continuation_prompt),
                         mode=anchormode,
                     )
                 self._set_cursor(cursor)
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Home:
+            elif key == QtCore.Qt.Key.Key_Home:
                 start_line = cursor.blockNumber()
                 if start_line == self._get_prompt_cursor().blockNumber():
                     start_pos = self._prompt_pos
                 else:
                     cursor.movePosition(
-                        QtGui.QTextCursor.StartOfBlock,
-                        QtGui.QTextCursor.KeepAnchor,
+                        QtGui.QTextCursor.MoveOperation.StartOfBlock,
+                        QtGui.QTextCursor.MoveMode.KeepAnchor,
                     )
                     start_pos = cursor.position()
                     start_pos += len(self._continuation_prompt)
                     cursor.setPosition(position)
                 if shift_down and self._in_buffer(position):
-                    cursor.setPosition(start_pos, QtGui.QTextCursor.KeepAnchor)
+                    cursor.setPosition(start_pos, QtGui.QTextCursor.MoveMode.KeepAnchor)
                 else:
                     cursor.setPosition(start_pos)
                 self._set_cursor(cursor)
                 intercepted = True
 
-            elif key == QtCore.Qt.Key_Backspace:
+            elif key == QtCore.Qt.Key.Key_Backspace:
 
                 # Line deletion (remove continuation prompt)
                 line, col = cursor.blockNumber(), cursor.columnNumber()
@@ -1389,8 +1389,8 @@ class ConsoleWidget(QtGui.QWidget):
                 ):
                     cursor.beginEditBlock()
                     cursor.movePosition(
-                        QtGui.QTextCursor.StartOfBlock,
-                        QtGui.QTextCursor.KeepAnchor,
+                        QtGui.QTextCursor.MoveOperation.StartOfBlock,
+                        QtGui.QTextCursor.MoveMode.KeepAnchor,
                     )
                     cursor.removeSelectedText()
                     cursor.deletePreviousChar()
@@ -1407,7 +1407,7 @@ class ConsoleWidget(QtGui.QWidget):
                             min(anchor, position)
                         )
 
-            elif key == QtCore.Qt.Key_Delete:
+            elif key == QtCore.Qt.Key.Key_Delete:
 
                 # Line deletion (remove continuation prompt)
                 if (
@@ -1417,12 +1417,12 @@ class ConsoleWidget(QtGui.QWidget):
                     and not cursor.hasSelection()
                 ):
                     cursor.movePosition(
-                        QtGui.QTextCursor.NextBlock,
-                        QtGui.QTextCursor.KeepAnchor,
+                        QtGui.QTextCursor.MoveOperation.NextBlock,
+                        QtGui.QTextCursor.MoveMode.KeepAnchor,
                     )
                     cursor.movePosition(
-                        QtGui.QTextCursor.Right,
-                        QtGui.QTextCursor.KeepAnchor,
+                        QtGui.QTextCursor.MoveOperation.Right,
+                        QtGui.QTextCursor.MoveMode.KeepAnchor,
                         len(self._continuation_prompt),
                     )
                     cursor.removeSelectedText()
@@ -1448,43 +1448,43 @@ class ConsoleWidget(QtGui.QWidget):
         """
         key = event.key()
         ctrl_down = self._control_key_down(event.modifiers())
-        alt_down = event.modifiers() & QtCore.Qt.AltModifier
+        alt_down = event.modifiers() & QtCore.Qt.KeyboardModifier.AltModifier
 
         if ctrl_down:
-            if key == QtCore.Qt.Key_O:
+            if key == QtCore.Qt.Key.Key_O:
                 self._control.setFocus()
                 return True
 
         elif alt_down:
-            if key == QtCore.Qt.Key_Greater:
-                self._page_control.moveCursor(QtGui.QTextCursor.End)
+            if key == QtCore.Qt.Key.Key_Greater:
+                self._page_control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
                 return True
 
-            elif key == QtCore.Qt.Key_Less:
-                self._page_control.moveCursor(QtGui.QTextCursor.Start)
+            elif key == QtCore.Qt.Key.Key_Less:
+                self._page_control.moveCursor(QtGui.QTextCursor.MoveOperation.Start)
                 return True
 
-        elif key in (QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape):
+        elif key in (QtCore.Qt.Key.Key_Q, QtCore.Qt.Key.Key_Escape):
             if self._splitter:
                 self._page_control.hide()
             else:
                 self.layout().setCurrentWidget(self._control)
             return True
 
-        elif key in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return):
+        elif key in (QtCore.Qt.Key.Key_Enter, QtCore.Qt.Key.Key_Return):
             new_event = QtGui.QKeyEvent(
-                QtCore.QEvent.KeyPress,
-                QtCore.Qt.Key_PageDown,
-                QtCore.Qt.NoModifier,
+                QtCore.QEvent.Type.KeyPress,
+                QtCore.Qt.Key.Key_PageDown,
+                QtCore.Qt.KeyboardModifier.NoModifier,
             )
             QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
 
-        elif key == QtCore.Qt.Key_Backspace:
+        elif key == QtCore.Qt.Key.Key_Backspace:
             new_event = QtGui.QKeyEvent(
-                QtCore.QEvent.KeyPress,
-                QtCore.Qt.Key_PageUp,
-                QtCore.Qt.NoModifier,
+                QtCore.QEvent.Type.KeyPress,
+                QtCore.Qt.Key.Key_PageUp,
+                QtCore.Qt.KeyboardModifier.NoModifier,
             )
             QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
@@ -1565,9 +1565,9 @@ class ConsoleWidget(QtGui.QWidget):
         """ Given a QTextBlock, return its unformatted text.
         """
         cursor = QtGui.QTextCursor(block)
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
         cursor.movePosition(
-            QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.EndOfBlock, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         return cursor.selection().toPlainText()
 
@@ -1580,7 +1580,7 @@ class ConsoleWidget(QtGui.QWidget):
         """ Convenience method that returns a cursor for the last character.
         """
         cursor = self._control.textCursor()
-        cursor.movePosition(QtGui.QTextCursor.End)
+        cursor.movePosition(QtGui.QTextCursor.MoveOperation.End)
         return cursor
 
     def _get_input_buffer_cursor_column(self):
@@ -1634,7 +1634,7 @@ class ConsoleWidget(QtGui.QWidget):
         """
         cursor = self._control.textCursor()
         cursor.setPosition(start)
-        cursor.setPosition(end, QtGui.QTextCursor.KeepAnchor)
+        cursor.setPosition(end, QtGui.QTextCursor.MoveMode.KeepAnchor)
         return cursor
 
     def _get_word_start_cursor(self, position):
@@ -1698,12 +1698,12 @@ class ConsoleWidget(QtGui.QWidget):
         # hacks around this behavior, which I consider to be a bug in Qt, by
         # (crudely) resetting the document's style state.
         cursor.movePosition(
-            QtGui.QTextCursor.Left, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.Left, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
         if cursor.selection().toPlainText() == " ":
             cursor.removeSelectedText()
         else:
-            cursor.movePosition(QtGui.QTextCursor.Right)
+            cursor.movePosition(QtGui.QTextCursor.MoveOperation.Right)
         cursor.insertText(" ", QtGui.QTextCharFormat())
         cursor.endEditBlock()
 
@@ -1717,7 +1717,7 @@ class ConsoleWidget(QtGui.QWidget):
         start = cursor.position()
         self._insert_html(cursor, html)
         end = cursor.position()
-        cursor.setPosition(start, QtGui.QTextCursor.KeepAnchor)
+        cursor.setPosition(start, QtGui.QTextCursor.MoveMode.KeepAnchor)
         text = cursor.selection().toPlainText()
 
         cursor.setPosition(end)
@@ -1763,7 +1763,7 @@ class ConsoleWidget(QtGui.QWidget):
         if line == prompt_line:
             return position >= self._prompt_pos
         elif line > prompt_line:
-            cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
+            cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfBlock)
             prompt_pos = cursor.position() + len(self._continuation_prompt)
             return position >= prompt_pos
         return False
@@ -1775,7 +1775,7 @@ class ConsoleWidget(QtGui.QWidget):
         moved = not self._in_buffer()
         if moved:
             cursor = self._control.textCursor()
-            cursor.movePosition(QtGui.QTextCursor.End)
+            cursor.movePosition(QtGui.QTextCursor.MoveOperation.End)
             self._control.setTextCursor(cursor)
         return moved
 
@@ -1810,7 +1810,7 @@ class ConsoleWidget(QtGui.QWidget):
                     self._insert_html(cursor, text)
                 else:
                     self._insert_plain_text(cursor, text)
-                self._page_control.moveCursor(QtGui.QTextCursor.Start)
+                self._page_control.moveCursor(QtGui.QTextCursor.MoveOperation.Start)
 
                 self._page_control.viewport().resize(self._control.size())
                 if self._splitter:
@@ -1839,7 +1839,7 @@ class ConsoleWidget(QtGui.QWidget):
         self._control.setUndoRedoEnabled(True)
 
         self._control.setReadOnly(False)
-        self._control.moveCursor(QtGui.QTextCursor.End)
+        self._control.moveCursor(QtGui.QTextCursor.MoveOperation.End)
         self._executing = False
         self._prompt_started_hook()
 
@@ -1943,7 +1943,7 @@ class ConsoleWidget(QtGui.QWidget):
             cursor = self._get_end_cursor()
             if cursor.position() > 0:
                 cursor.movePosition(
-                    QtGui.QTextCursor.Left, QtGui.QTextCursor.KeepAnchor
+                    QtGui.QTextCursor.MoveOperation.Left, QtGui.QTextCursor.MoveMode.KeepAnchor
                 )
                 if cursor.selection().toPlainText() != "\n":
                     self._append_plain_text("\n")

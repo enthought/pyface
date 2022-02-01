@@ -30,12 +30,12 @@ WHITE = QColor(255, 255, 255)
 BLACK = QColor(0, 0, 0)
 
 set_check_state_map = {
-    Qt.Checked: CheckState.CHECKED,
-    Qt.Unchecked: CheckState.UNCHECKED,
+    Qt.CheckState.Checked: CheckState.CHECKED,
+    Qt.CheckState.Unchecked: CheckState.UNCHECKED,
 }
 get_check_state_map = {
-    CheckState.CHECKED: Qt.Checked,
-    CheckState.UNCHECKED: Qt.Unchecked,
+    CheckState.CHECKED: Qt.CheckState.Checked,
+    CheckState.UNCHECKED: Qt.CheckState.Unchecked,
 }
 
 
@@ -75,7 +75,7 @@ class DataViewItemModel(QAbstractItemModel):
         top, left, bottom, right = event.new
         if top == () and bottom == ():
             # this is a column header change
-            self.headerDataChanged.emit(Qt.Horizontal, left[0], right[0])
+            self.headerDataChanged.emit(Qt.Orientation.Horizontal, left[0], right[0])
         elif left == () and right == ():
             # this is a row header change
             # XXX this is currently not supported and not needed
@@ -142,21 +142,21 @@ class DataViewItemModel(QAbstractItemModel):
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
         if row == () and column == ():
-            return Qt.ItemIsEnabled
+            return Qt.ItemFlag.ItemIsEnabled
 
-        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled
+        flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled
         if not is_qt4 and not self.model.can_have_children(row):
-            flags |= Qt.ItemNeverHasChildren
+            flags |= Qt.ItemFlag.ItemNeverHasChildren
 
         try:
             if value_type:
                 if value_type.has_editor_value(self.model, row, column):
-                    flags |= Qt.ItemIsEditable
+                    flags |= Qt.ItemFlag.ItemIsEditable
                 if (
                     value_type.has_check_state(self.model, row, column)
                     and self.model.can_set_value(row, column)
                 ):
-                    flags |= Qt.ItemIsUserCheckable
+                    flags |= Qt.ItemFlag.ItemIsUserCheckable
         except DataViewGetError:
             # expected error, ignore
             pass
@@ -171,7 +171,7 @@ class DataViewItemModel(QAbstractItemModel):
 
         return flags
 
-    def data(self, index, role=Qt.DisplayRole):
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
@@ -179,34 +179,34 @@ class DataViewItemModel(QAbstractItemModel):
             if not value_type:
                 return None
 
-            if role == Qt.DisplayRole:
+            if role == Qt.ItemDataRole.DisplayRole:
                 if value_type.has_text(self.model, row, column):
                     return value_type.get_text(self.model, row, column)
-            elif role == Qt.EditRole:
+            elif role == Qt.ItemDataRole.EditRole:
                 if value_type.has_editor_value(self.model, row, column):
                     return value_type.get_editor_value(self.model, row, column)
-            elif role == Qt.DecorationRole:
+            elif role == Qt.ItemDataRole.DecorationRole:
                 if value_type.has_image(self.model, row, column):
                     image = value_type.get_image(self.model, row, column)
                     if image is not None:
                         return image.create_image()
-            elif role == Qt.BackgroundRole:
+            elif role == Qt.ItemDataRole.BackgroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
                     if color is not None:
                         return color.to_toolkit()
-            elif role == Qt.ForegroundRole:
+            elif role == Qt.ItemDataRole.ForegroundRole:
                 if value_type.has_color(self.model, row, column):
                     color = value_type.get_color(self.model, row, column)
                     if color is not None and color.is_dark:
                         return WHITE
                     else:
                         return BLACK
-            elif role == Qt.CheckStateRole:
+            elif role == Qt.ItemDataRole.CheckStateRole:
                 if value_type.has_check_state(self.model, row, column):
                     value = value_type.get_check_state(self.model, row, column)
                     return get_check_state_map[value]
-            elif role == Qt.ToolTipRole:
+            elif role == Qt.ItemDataRole.ToolTipRole:
                 if value_type.has_tooltip(self.model, row, column):
                     return value_type.get_tooltip(self.model, row, column)
         except DataViewGetError:
@@ -223,7 +223,7 @@ class DataViewItemModel(QAbstractItemModel):
 
         return None
 
-    def setData(self, index, value, role=Qt.EditRole):
+    def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
@@ -231,13 +231,13 @@ class DataViewItemModel(QAbstractItemModel):
             return False
 
         try:
-            if role == Qt.EditRole:
+            if role == Qt.ItemDataRole.EditRole:
                 if value_type.has_editor_value(self.model, row, column):
                     value_type.set_editor_value(self.model, row, column, value)
-            elif role == Qt.DisplayRole:
+            elif role == Qt.ItemDataRole.DisplayRole:
                 if value_type.has_text(self.model, row, column):
                     value_type.set_text(self.model, row, column, value)
-            elif role == Qt.CheckStateRole:
+            elif role == Qt.ItemDataRole.CheckStateRole:
                 if value_type.has_check_state(self.model, row, column):
                     state = set_check_state_map[value]
                     value_type.set_check_state(self.model, row, column, state)
@@ -256,8 +256,8 @@ class DataViewItemModel(QAbstractItemModel):
         else:
             return True
 
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        if orientation == Qt.Horizontal:
+    def headerData(self, section, orientation, role=Qt.ItemDataRole.DisplayRole):
+        if orientation == Qt.Orientation.Horizontal:
             row = ()
             if section == 0:
                 column = ()
@@ -271,7 +271,7 @@ class DataViewItemModel(QAbstractItemModel):
         value_type = self.model.get_value_type(row, column)
 
         try:
-            if role == Qt.DisplayRole:
+            if role == Qt.ItemDataRole.DisplayRole:
                 if value_type.has_text(self.model, row, column):
                     return value_type.get_text(self.model, row, column)
         except DataViewGetError:

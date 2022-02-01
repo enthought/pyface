@@ -21,10 +21,10 @@ from .main_window_layout import MainWindowLayout
 
 # Constants.
 CORNER_MAP = {
-    "top_left": QtCore.Qt.TopLeftCorner,
-    "top_right": QtCore.Qt.TopRightCorner,
-    "bottom_left": QtCore.Qt.BottomLeftCorner,
-    "bottom_right": QtCore.Qt.BottomRightCorner,
+    "top_left": QtCore.Qt.Corner.TopLeftCorner,
+    "top_right": QtCore.Qt.Corner.TopRightCorner,
+    "bottom_left": QtCore.Qt.Corner.BottomLeftCorner,
+    "bottom_right": QtCore.Qt.Corner.BottomRightCorner,
 }
 
 

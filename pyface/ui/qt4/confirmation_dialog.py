@@ -55,7 +55,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     # keep track of the buttons so we can see what the user clicked.  It's
     # not correct nor sufficient to check the return result from QMessageBox.exec_().
     # (As of Qt 4.5.1, even clicking a button with the YesRole would lead to
-    # exec_() returning QDialog.Rejected.
+    # exec_() returning QDialog.DialogCode.Rejected.
     _button_result_map = Dict()
 
     # ------------------------------------------------------------------------
@@ -85,15 +85,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
             dlg.move(*self.position)
 
         if self.image is None:
-            dlg.setIcon(QtGui.QMessageBox.Warning)
+            dlg.setIcon(QtGui.QMessageBox.Icon.Warning)
         else:
             dlg.setIconPixmap(self.image.create_image())
 
         # The 'Yes' button.
         if self.yes_label:
-            btn = dlg.addButton(self.yes_label, QtGui.QMessageBox.YesRole)
+            btn = dlg.addButton(self.yes_label, QtGui.QMessageBox.ButtonRole.YesRole)
         else:
-            btn = dlg.addButton(QtGui.QMessageBox.Yes)
+            btn = dlg.addButton(QtGui.QMessageBox.StandardButton.Yes)
         self._button_result_map[btn] = YES
 
         if self.default == YES:
@@ -101,9 +101,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The 'No' button.
         if self.no_label:
-            btn = dlg.addButton(self.no_label, QtGui.QMessageBox.NoRole)
+            btn = dlg.addButton(self.no_label, QtGui.QMessageBox.ButtonRole.NoRole)
         else:
-            btn = dlg.addButton(QtGui.QMessageBox.No)
+            btn = dlg.addButton(QtGui.QMessageBox.StandardButton.No)
         self._button_result_map[btn] = NO
 
         if self.default == NO:
@@ -113,10 +113,10 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         if self.cancel:
             if self.cancel_label:
                 btn = dlg.addButton(
-                    self.cancel_label, QtGui.QMessageBox.RejectRole
+                    self.cancel_label, QtGui.QMessageBox.ButtonRole.RejectRole
                 )
             else:
-                btn = dlg.addButton(QtGui.QMessageBox.Cancel)
+                btn = dlg.addButton(QtGui.QMessageBox.StandardButton.Cancel)
 
             self._button_result_map[btn] = CANCEL
 
@@ -126,7 +126,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         return dlg
 
     def _show_modal(self):
-        self.control.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.control.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
         retval = self.control.exec_()
         if self.control is None:
             # dialog window closed

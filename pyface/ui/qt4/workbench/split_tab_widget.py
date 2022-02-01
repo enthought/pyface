@@ -281,7 +281,7 @@ class SplitTabWidget(QtGui.QSplitter):
 
                 while nfw is not fw:
                     if (
-                        nfw.focusPolicy() & QtCore.Qt.TabFocus
+                        nfw.focusPolicy() & QtCore.Qt.FocusPolicy.TabFocus
                         and nfw.focusProxy() is None
                         and nfw.isVisibleTo(w)
                         and nfw.isEnabled()
@@ -405,7 +405,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 position = QtCore.QPoint(*hs_geom[0:2])
                 window = tw.window()
                 self._rband = QtGui.QRubberBand(
-                    QtGui.QRubberBand.Rectangle, window
+                    QtGui.QRubberBand.Shape.Rectangle, window
                 )
                 self._rband.move(window.mapFromGlobal(position))
                 self._rband.resize(*hs_geom[2:4])
@@ -525,18 +525,18 @@ class SplitTabWidget(QtGui.QSplitter):
         should be put.
         """
 
-        if spl.orientation() == QtCore.Qt.Vertical:
+        if spl.orientation() == QtCore.Qt.Orientation.Vertical:
             if hs == self._HS_SOUTH:
                 idx += 1
         elif spl is self and spl.count() == 1:
             # The splitter is the root and only has one child so we can just
             # change its orientation.
-            spl.setOrientation(QtCore.Qt.Vertical)
+            spl.setOrientation(QtCore.Qt.Orientation.Vertical)
 
             if hs == self._HS_SOUTH:
                 idx = -1
         else:
-            new_spl = QtGui.QSplitter(QtCore.Qt.Vertical)
+            new_spl = QtGui.QSplitter(QtCore.Qt.Orientation.Vertical)
             new_spl.addWidget(spl.widget(idx))
             spl.insertWidget(idx, new_spl)
 
@@ -554,18 +554,18 @@ class SplitTabWidget(QtGui.QSplitter):
         should be put.
         """
 
-        if spl.orientation() == QtCore.Qt.Horizontal:
+        if spl.orientation() == QtCore.Qt.Orientation.Horizontal:
             if hs == self._HS_EAST:
                 idx += 1
         elif spl is self and spl.count() == 1:
             # The splitter is the root and only has one child so we can just
             # change its orientation.
-            spl.setOrientation(QtCore.Qt.Horizontal)
+            spl.setOrientation(QtCore.Qt.Orientation.Horizontal)
 
             if hs == self._HS_EAST:
                 idx = -1
         else:
-            new_spl = QtGui.QSplitter(QtCore.Qt.Horizontal)
+            new_spl = QtGui.QSplitter(QtCore.Qt.Orientation.Horizontal)
             new_spl.addWidget(spl.widget(idx))
             spl.insertWidget(idx, new_spl)
 
@@ -586,7 +586,7 @@ class SplitTabWidget(QtGui.QSplitter):
         icon = tab_w.tabIcon(tab)
         text = tab_w.tabText(tab)
         text_color = tab_w.tabBar().tabTextColor(tab)
-        button = tab_w.tabBar().tabButton(tab, QtGui.QTabBar.LeftSide)
+        button = tab_w.tabBar().tabButton(tab, QtGui.QTabBar.ButtonPosition.LeftSide)
         w = tab_w.widget(tab)
         tab_w.removeTab(tab)
 
@@ -694,8 +694,8 @@ class SplitTabWidget(QtGui.QSplitter):
         tpos = tw.mapFrom(split_widget, pos)
         tab_bar = tw.tabBar()
         top_bottom = tw.tabPosition() in (
-            QtGui.QTabWidget.North,
-            QtGui.QTabWidget.South,
+            QtGui.QTabWidget.TabPosition.North,
+            QtGui.QTabWidget.TabPosition.South,
         )
         for i in range(tw.count()):
             rect = tab_bar.tabRect(i)
@@ -805,17 +805,17 @@ class _TabWidget(QtGui.QTabWidget):
         movie = QtGui.QMovie(
             _TabWidget._spinner_data.absolute_path, parent=lbl
         )
-        movie.setCacheMode(QtGui.QMovie.CacheAll)
+        movie.setCacheMode(QtGui.QMovie.CacheMode.CacheAll)
         movie.setScaledSize(QtCore.QSize(16, 16))
         lbl.setMovie(movie)
         movie.start()
-        self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, lbl)
+        self.tabBar().setTabButton(index, QtGui.QTabBar.ButtonPosition.LeftSide, lbl)
 
     def hide_button(self, index):
-        curr = self.tabBar().tabButton(index, QtGui.QTabBar.LeftSide)
+        curr = self.tabBar().tabButton(index, QtGui.QTabBar.ButtonPosition.LeftSide)
         if curr:
             curr.close()
-            self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, None)
+            self.tabBar().setTabButton(index, QtGui.QTabBar.ButtonPosition.LeftSide, None)
 
     def active_icon(self):
         """ Return the QIcon to be used to indicate an active tab page. """
@@ -845,8 +845,8 @@ class _TabWidget(QtGui.QTabWidget):
 
             # Draw the circle.
             p.setBrush(rg)
-            p.setPen(QtCore.Qt.NoPen)
-            p.setRenderHint(QtGui.QPainter.Antialiasing)
+            p.setPen(QtCore.Qt.PenStyle.NoPen)
+            p.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
             p.drawEllipse(0, 0, width, height)
 
             p.end()
@@ -895,7 +895,7 @@ class _TabWidget(QtGui.QTabWidget):
 class _IndependentLineEdit(QtGui.QLineEdit):
     def keyPressEvent(self, e):
         QtGui.QLineEdit.keyPressEvent(self, e)
-        if e.key() == QtCore.Qt.Key_Escape:
+        if e.key() == QtCore.Qt.Key.Key_Escape:
             self.hide()
 
 
@@ -929,9 +929,9 @@ class _DragableTabBar(QtGui.QTabBar):
     def keyPressEvent(self, e):
         """ Reimplemented to handle traversal across different tab widgets. """
 
-        if e.key() == QtCore.Qt.Key_Left:
+        if e.key() == QtCore.Qt.Key.Key_Left:
             self._root._move_left(self.parent(), self.currentIndex())
-        elif e.key() == QtCore.Qt.Key_Right:
+        elif e.key() == QtCore.Qt.Key.Key_Right:
             self._root._move_right(self.parent(), self.currentIndex())
         else:
             e.ignore()
@@ -959,7 +959,7 @@ class _DragableTabBar(QtGui.QTabBar):
         self._root._set_current_tab(self.parent(), self.currentIndex())
         self._root._set_focus()
 
-        if e.button() != QtCore.Qt.LeftButton:
+        if e.button() != QtCore.Qt.MouseButton.LeftButton:
             return
 
         if self._drag_state is not None:
@@ -990,14 +990,14 @@ class _DragableTabBar(QtGui.QTabBar):
             # If the mouse has moved far enough that dragging has started then
             # tell the user.
             if self._drag_state.dragging:
-                QtGui.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
+                QtGui.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.OpenHandCursor)
 
     def mouseReleaseEvent(self, e):
         """ Reimplemented to handle mouse release events. """
 
         QtGui.QTabBar.mouseReleaseEvent(self, e)
 
-        if e.button() != QtCore.Qt.LeftButton:
+        if e.button() != QtCore.Qt.MouseButton.LeftButton:
             if e.button() == QtCore.Qt.MidddleButton:
                 self.tabCloseRequested.emit(self.tabAt(e.pos()))
             return
@@ -1027,7 +1027,7 @@ class _DragableTabBar(QtGui.QTabBar):
         idx = self.currentIndex()
         tab = QtGui.QStyleOptionTabV3()
         self.initStyleOption(tab, idx)
-        rect = self.style().subElementRect(QtGui.QStyle.SE_TabBarTabText, tab)
+        rect = self.style().subElementRect(QtGui.QStyle.SubElement.SE_TabBarTabText, tab)
         self._title_edit.setGeometry(rect.adjusted(0, 8, 0, -8))
 
 
@@ -1063,11 +1063,11 @@ class _DragState(object):
         if sys.platform == "darwin" and QtCore.QT_VERSION >= 0x40500:
             ctb.setDocumentMode(True)
 
-        ctb.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+        ctb.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         ctb.setWindowFlags(
-            QtCore.Qt.FramelessWindowHint
-            | QtCore.Qt.Tool
-            | QtCore.Qt.X11BypassWindowManagerHint
+            QtCore.Qt.WindowType.FramelessWindowHint
+            | QtCore.Qt.WindowType.Tool
+            | QtCore.Qt.WindowType.X11BypassWindowManagerHint
         )
         ctb.setWindowOpacity(0.5)
         ctb.setElideMode(otb.elideMode())

@@ -99,7 +99,7 @@ class PythonEditor(Editor):
         """
         self.control.code.set_line_column(lineno, 0)
         self.control.code.moveCursor(
-            QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.EndOfLine, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
 
     # ------------------------------------------------------------------------
@@ -172,7 +172,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         if (
             self.__editor.control
             and obj == self.__editor.control
-            and event.type() == QtCore.QEvent.FocusOut
+            and event.type() == QtCore.QEvent.Type.FocusOut
         ):
             # Hack for Traits UI compatibility.
             self.__editor.control.lostFocus.emit()
@@ -180,7 +180,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         elif (
             self.__editor.control
             and obj == self.__editor.control.code
-            and event.type() == QtCore.QEvent.KeyPress
+            and event.type() == QtCore.QEvent.Type.KeyPress
         ):
             # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
@@ -193,14 +193,14 @@ class PythonEditorEventFilter(QtCore.QObject):
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
                 alt_down=(
-                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                    (mods & QtCore.Qt.KeyboardModifier.AltModifier) == QtCore.Qt.KeyboardModifier.AltModifier
                 ),
                 control_down=(
-                    (mods & QtCore.Qt.ControlModifier)
-                    == QtCore.Qt.ControlModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ControlModifier)
+                    == QtCore.Qt.KeyboardModifier.ControlModifier
                 ),
                 shift_down=(
-                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ShiftModifier) == QtCore.Qt.KeyboardModifier.ShiftModifier
                 ),
                 key_code=kcode,
                 event=event,

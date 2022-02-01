@@ -19,10 +19,10 @@ from .field import Field
 
 
 ECHO_TO_QT_ECHO_MODE = {
-    "normal": QLineEdit.Normal,
-    "password": QLineEdit.Password,
-    "none": QLineEdit.NoEcho,
-    "when_editing": QLineEdit.PasswordEchoOnEdit,
+    "normal": QLineEdit.EchoMode.Normal,
+    "password": QLineEdit.EchoMode.Password,
+    "none": QLineEdit.EchoMode.NoEcho,
+    "when_editing": QLineEdit.EchoMode.PasswordEchoOnEdit,
 }
 QT_ECHO_MODE_TO_ECHO = {
     value: key for key, value in ECHO_TO_QT_ECHO_MODE.items()

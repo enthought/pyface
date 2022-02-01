@@ -95,12 +95,12 @@ class ToolBarManager(ActionManager):
         tool_bar.setWindowTitle(self.name)
 
         if self.show_tool_names:
-            tool_bar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+            tool_bar.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
         if self.orientation == "horizontal":
-            tool_bar.setOrientation(QtCore.Qt.Horizontal)
+            tool_bar.setOrientation(QtCore.Qt.Orientation.Horizontal)
         else:
-            tool_bar.setOrientation(QtCore.Qt.Vertical)
+            tool_bar.setOrientation(QtCore.Qt.Orientation.Vertical)
 
         # We would normally leave it to the current style to determine the icon
         # size.

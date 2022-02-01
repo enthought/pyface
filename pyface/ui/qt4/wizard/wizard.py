@@ -75,8 +75,8 @@ class Wizard(MWizard, Dialog):
     def _create_control(self, parent):
         control = _Wizard(parent, self)
         control.setOptions(
-            QtGui.QWizard.NoDefaultButton
-            | QtGui.QWizard.NoBackButtonOnStartPage
+            QtGui.QWizard.WizardOption.NoDefaultButton
+            | QtGui.QWizard.WizardOption.NoBackButtonOnStartPage
         )
         control.setModal(self.style == "modal")
         control.setWindowTitle(self.title)
@@ -91,10 +91,10 @@ class Wizard(MWizard, Dialog):
             control.resize(size)
 
         if not self.show_cancel:
-            control.setOption(QtGui.QWizard.NoCancelButton)
+            control.setOption(QtGui.QWizard.WizardOption.NoCancelButton)
 
         if self.help_id:
-            control.setOption(QtGui.QWizard.HaveHelpButton)
+            control.setOption(QtGui.QWizard.WizardOption.HaveHelpButton)
             control.helpRequested.connect(self._help_requested)
 
         # Add the initial pages.

@@ -93,7 +93,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         btn1 = tabwidget.widget(1)
 
         # perform
-        root.split(orientation=QtCore.Qt.Horizontal)
+        root.split(orientation=QtCore.Qt.Orientation.Horizontal)
 
         # test
         # do we get correct leftchild and rightchild?
@@ -282,7 +282,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertFalse(right.is_leaf())
 
         # right pane is vertical splitter?
-        self.assertEqual(right.orientation(), QtCore.Qt.Vertical)
+        self.assertEqual(right.orientation(), QtCore.Qt.Orientation.Vertical)
 
         # top pane of this vertical split is empty?
         right_top = right.leftchild
@@ -351,7 +351,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         editor_area_widget = editor_area.control
         with event_loop():
-            editor_area_widget.split(orientation=QtCore.Qt.Horizontal)
+            editor_area_widget.split(orientation=QtCore.Qt.Orientation.Horizontal)
 
         # Get the tabs.
         left_tab, right_tab = editor_area_widget.tabwidgets()
@@ -388,7 +388,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         editor_area_widget = editor_area.control
         with event_loop():
-            editor_area_widget.split(orientation=QtCore.Qt.Vertical)
+            editor_area_widget.split(orientation=QtCore.Qt.Orientation.Vertical)
 
         # Get the tabs.
         top_tab, bottom_tab = editor_area_widget.tabwidgets()
@@ -431,7 +431,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # reliably outside.
         pos = QtCore.QPoint(-1, -1)
         context_menu_event = QtGui.QContextMenuEvent(
-            QtGui.QContextMenuEvent.Mouse, pos
+            QtGui.QContextMenuEvent.Reason.Mouse, pos
         )
 
         global_pos = editor_area_widget.mapToGlobal(pos)
@@ -502,7 +502,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             editor_area.add_editor(left_editor)
         with event_loop():
-            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+            editor_area.control.split(orientation=QtCore.Qt.Orientation.Horizontal)
         with event_loop():
             editor_area.add_editor(right_editor)
 
@@ -541,7 +541,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             editor_area.add_editor(left_editor)
         with event_loop():
-            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+            editor_area.control.split(orientation=QtCore.Qt.Orientation.Horizontal)
         with event_loop():
             editor_area.add_editor(right_editor)
 
@@ -580,7 +580,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             editor_area.add_editor(left_editor)
         with event_loop():
-            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+            editor_area.control.split(orientation=QtCore.Qt.Orientation.Horizontal)
         with event_loop():
             editor_area.add_editor(right_editor)
 

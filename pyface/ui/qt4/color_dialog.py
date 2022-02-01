@@ -46,7 +46,7 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        if self.control.result() == QtGui.QDialog.Accepted:
+        if self.control.result() == QtGui.QDialog.DialogCode.Accepted:
             qcolor = self.control.selectedColor()
             self.color = Color.from_toolkit(qcolor)
         return super(ColorDialog, self).close()
@@ -59,5 +59,5 @@ class ColorDialog(Dialog):
         qcolor = self.color.to_toolkit()
         dialog = QtGui.QColorDialog(qcolor, parent)
         if self.show_alpha:
-            dialog.setOptions(QtGui.QColorDialog.ShowAlphaChannel)
+            dialog.setOptions(QtGui.QColorDialog.ColorDialogOption.ShowAlphaChannel)
         return dialog
