@@ -21,7 +21,7 @@ include:
   instance, then the toolkit object via the create() method).
 * creating Qt versions of some widgets, and filling in some gaps in widget
   types (particularly for Fields)
-* providing image classes that wrap PIL immages and NumPy arrays that allow
+* providing image classes that wrap PIL images and NumPy arrays that allow
   dynamic images and icons in addition to the resource-based versions.
 * providing a toolkit-independent Font class and corresponding trait that
   supports similar use-cases to the existing TraitsUI Font trait.
@@ -94,7 +94,7 @@ Fixes
 * Fix an issue with undocked dock panes not updating (#1044)
 * Remove uses of old trait constructors such as Either and Trait() (#728,
   #1041)
-* Fix SplieEditorAreaPane tab label and tooltip update bugs (#1038)
+* Fix SplitEditorAreaPane tab label and tooltip update bugs (#1038)
 * Fix broken local imports (#1034, #1036)
 * Fix active_task observer (#1026)
 * Fixes to make examples work (#988)
