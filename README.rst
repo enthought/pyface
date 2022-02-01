@@ -36,7 +36,7 @@ To install with wxPython4 dependencies (experimental)::
 
     $ pip install pyface[wx]
 
-To pillow is an optional dependency for the PILImage class::
+``pillow`` is an optional dependency for the PILImage class::
 
     $ pip install pyface[pillow]
 
@@ -84,7 +84,7 @@ You can then follow the instructions in ``etstool.py``.  In particular:
 - use `etstool.py test` to run the tests in those environments
 - use `etstool.py flake8` to perform style checks
 - use `etstool.py docs` to build the documentation
-- use `etstool.py test-all` to run the tests across all supported toolkits
+- use `etstool.py test-all` to run the tests across all supported runtimes and toolkits
 
 License
 -------
