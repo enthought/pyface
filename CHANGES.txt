@@ -91,6 +91,9 @@ Enhancements
 
 Fixes
 
+* Support for PyQt6-style enums (#1098)
+* Fix an issue with circular references in EventFilters (#1093)
+* Select colors from palettes for better dark mode support (#1089)
 * Fix an issue with undocked dock panes not updating (#1044)
 * Remove uses of old trait constructors such as Either and Trait() (#728,
   #1041)
@@ -109,6 +112,7 @@ Fixes
 
 Documentation
 
+* Update discussion of toolkit support (#1101)
 * Documentation for standard dialogs (#1053)
 * Improvments to GUITestAssistant documenation (#1047)
 * Clean up unused links (#1012)
@@ -118,7 +122,7 @@ Documentation
 
 Build, Tests and Continuous Integration
 
-* Ensure tests run cleanly in Python 3.8 and when some packages missing (#1080)
+* Ensure tests run cleanly in Python 3.8 and when some packages missing (#1090)
 * Flake8 style check in CI (#1073)
 * Use most recent EDM version (#1058)
 * Support MacOS Big Sur in CI (#1056)
