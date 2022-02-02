@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.data_view.exporters.api
    pyface.data_view.exporters.item_exporter

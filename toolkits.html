@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Toolkits &mdash; pyface 7.3 documentation</title>
+    <title>Toolkits &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
     <link rel="next" title="Widgets" href="widgets.html" >
     <link rel="prev" title="Overview" href="overview.html" > 
   </head>
@@ -49,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
 	 
     </ul>
               
@@ -93,7 +92,7 @@ backends in the core library—Qt, WxPython, and a null backend—but provides
 hooks for other projects to contribute toolkits and have them be discoverable.</p>
 <div class="section" id="toolkit-selection">
 <h2>Toolkit Selection<a class="headerlink" href="#toolkit-selection" title="Permalink to this headline">¶</a></h2>
-<p>Pyface uses Traits’ <code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code> to determine the current
+<p>Pyface uses Traits’ <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/traits.etsconfig.html#module-traits.etsconfig" title="(in traits v6.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code></a> to determine the current
 toolkit being used.  Applications can control which toolkit to use in two
 ways:</p>
 <ul>
@@ -101,7 +100,7 @@ ways:</p>
 desired toolkit.</p></li>
 <li><p>by importing <code class="xref py py-obj docutils literal notranslate"><span class="pre">ETSConfig</span></code> and setting its <code class="xref py py-attr docutils literal notranslate"><span class="pre">toolkit</span></code>
 attribute appropriately:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tratis.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tratis.etsconfig.api</span> <span class="kn">import</span> <span class="n">ETSConfig</span>
 <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="s1">&#39;qt4&#39;</span>
 </pre></div>
 </div>
@@ -130,7 +129,7 @@ has been selected can be found as <code class="xref py py-obj docutils literal n
 widget in the form of a relative module name and the object name, separated by
 a <code class="docutils literal notranslate"><span class="pre">':'</span></code>.  This is most often used when creating new widget types for Pyface.
 The API module for the new widget class typically looks something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="k">import</span> <span class="n">toolkit_object</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
 <span class="n">MyWidget</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s1">&#39;my_package.my_widget:MyWidget&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -141,7 +140,7 @@ concrete implementation in <code class="xref py py-mod docutils literal notransl
 while the <code class="docutils literal notranslate"><span class="pre">wx</span></code> backend will look for
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.ui.wx.my_package.my_widget</span></code>.</p>
 <p>If no matching object is found, the toolkit will return a special
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Undefined</span></code> class that will raise <a href="#id1"><span class="problematic" id="id2">:py:exception:`NotImplementedError`</span></a>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Undefined</span></code> class that will raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.10)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>
 when instantiated.</p>
 <p>The basic toolkit implementation provides two other features which may be of
 use.  It has a trait that gives the name of the toolkit, and it has a list of
@@ -215,7 +214,7 @@ a <a class="reference internal" href="api/pyface.base_toolkit.html#pyface.base_t
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -232,13 +231,13 @@ a <a class="reference internal" href="api/pyface.base_toolkit.html#pyface.base_t
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

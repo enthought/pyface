@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_python_shell module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.i_python_shell module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_single_choice_dialog module" href="pyface.i_single_choice_dialog.html" >
     <link rel="prev" title="pyface.i_python_editor module" href="pyface.i_python_editor.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,26 +88,26 @@
   <div class="section" id="module-pyface.i_python_shell">
 <span id="pyface-i-python-shell-module"></span><h1>pyface.i_python_shell module<a class="headerlink" href="#module-pyface.i_python_shell" title="Permalink to this headline">¶</a></h1>
 <p>The interface for an interactive Python shell.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.i_python_shell.IPythonShell">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_python_shell.</code><code class="sig-name descname">IPythonShell</code><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_widget.IWidget</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_python_shell.</span></code><code class="sig-name descname"><span class="pre">IPythonShell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.i_layout_widget.html#pyface.i_layout_widget.ILayoutWidget" title="pyface.i_layout_widget.ILayoutWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_layout_widget.ILayoutWidget</span></code></a></p>
 <p>The interface for an interactive Python shell.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.i_python_shell.IPythonShell.command_executed">
-<code class="sig-name descname">command_executed</code><em class="property"> = Event()</em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.command_executed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">command_executed</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.command_executed" title="Permalink to this definition">¶</a></dt>
 <dd><p>A command has been executed.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.i_python_shell.IPythonShell.key_pressed">
-<code class="sig-name descname">key_pressed</code><em class="property"> = Event(KeyPressedEvent)</em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.key_pressed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">key_pressed</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event(KeyPressedEvent)</span></em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.key_pressed" title="Permalink to this definition">¶</a></dt>
 <dd><p>A key has been pressed.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.interpreter">
-<code class="sig-name descname">interpreter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.interpreter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.interpreter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">interpreter</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.interpreter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.interpreter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the shell’s interpreter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -120,53 +119,53 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.bind">
-<code class="sig-name descname">bind</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.bind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.bind" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">bind</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.bind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Binds a name to a value in the interpreter’s namespace.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The python idetifier to bind the value to.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The python idetifier to bind the value to.</p></li>
 <li><p><strong>value</strong> (<em>any</em>) – The python object to be bound into the interpreter’s namespace.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.execute_command">
-<code class="sig-name descname">execute_command</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">hidden=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.execute_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_command" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">execute_command</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.execute_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a command in the interpreter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>command</strong> (<em>str</em>) – A Python command to execute.</p></li>
-<li><p><strong>hidden</strong> (<em>bool</em>) – If ‘hidden’ is True then nothing is shown in the shell - not even
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A Python command to execute.</p></li>
+<li><p><strong>hidden</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If ‘hidden’ is True then nothing is shown in the shell - not even
 a blank line.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.execute_file">
-<code class="sig-name descname">execute_file</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">hidden=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.execute_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">execute_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.execute_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a file in the interpeter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – The path to the Python file to execute.</p></li>
-<li><p><strong>hidden</strong> (<em>bool</em>) – If ‘hidden’ is True then nothing is shown in the shell - not even
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to the Python file to execute.</p></li>
+<li><p><strong>hidden</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If ‘hidden’ is True then nothing is shown in the shell - not even
 a blank line.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.get_history">
-<code class="sig-name descname">get_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.get_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.get_history" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_history</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.get_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.get_history" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the current command history and index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -179,15 +178,15 @@ a blank line.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.IPythonShell.set_history">
-<code class="sig-name descname">set_history</code><span class="sig-paren">(</span><em class="sig-param">history</em>, <em class="sig-param">history_index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.set_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.set_history" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_history</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#IPythonShell.set_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.set_history" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace the current command history and index with new ones.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>history</strong> (<em>list of str</em>) – The list of commands in the new history.</p></li>
-<li><p><strong>history_index</strong> (<em>int</em>) – The current item in the command history navigation.</p></li>
+<li><p><strong>history_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The current item in the command history navigation.</p></li>
 </ul>
 </dd>
 </dl>
@@ -195,21 +194,21 @@ a blank line.</p></li>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.i_python_shell.MPythonShell">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_python_shell.</code><code class="sig-name descname">MPythonShell</code><a class="reference internal" href="../_modules/pyface/i_python_shell.html#MPythonShell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.MPythonShell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_python_shell.</span></code><code class="sig-name descname"><span class="pre">MPythonShell</span></code><a class="reference internal" href="../_modules/pyface/i_python_shell.html#MPythonShell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.MPythonShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IPythonShell interface.</p>
 <p>Implements: bind(), _on_command_executed()</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.i_python_shell.MPythonShell.bind">
-<code class="sig-name descname">bind</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#MPythonShell.bind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_python_shell.MPythonShell.bind" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">bind</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_python_shell.html#MPythonShell.bind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_python_shell.MPythonShell.bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Binds a name to a value in the interpreter’s namespace.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The python idetifier to bind the value to.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The python idetifier to bind the value to.</p></li>
 <li><p><strong>value</strong> (<em>any</em>) – The python object to be bound into the interpreter’s namespace.</p></li>
 </ul>
 </dd>
@@ -249,7 +248,7 @@ implementations of the IPythonShell interface.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -266,13 +265,13 @@ implementations of the IPythonShell interface.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

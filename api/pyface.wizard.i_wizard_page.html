@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.wizard.i_wizard_page module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.wizard.i_wizard_page module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.wizard package" href="pyface.wizard.html" >
     <link rel="next" title="pyface.wizard.simple_wizard module" href="pyface.wizard.simple_wizard.html" >
     <link rel="prev" title="pyface.wizard.i_wizard_controller module" href="pyface.wizard.i_wizard_controller.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.wizard.html" accesskey="U">pyface.wizard package</a></li> 
@@ -90,20 +89,20 @@
   <div class="section" id="module-pyface.wizard.i_wizard_page">
 <span id="pyface-wizard-i-wizard-page-module"></span><h1>pyface.wizard.i_wizard_page module<a class="headerlink" href="#module-pyface.wizard.i_wizard_page" title="Permalink to this headline">¶</a></h1>
 <p>The interface for a page in a wizard.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.wizard.i_wizard_page.IWizardPage">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard_page.</code><code class="sig-name descname">IWizardPage</code><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.wizard.i_wizard_page.</span></code><code class="sig-name descname"><span class="pre">IWizardPage</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.Interface" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></a></p>
 <p>The interface for a page in a wizard.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.wizard.i_wizard_page.IWizardPage.create_page">
-<code class="sig-name descname">create_page</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage.create_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.create_page" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">create_page</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage.create_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.create_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the wizard page.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.wizard.i_wizard_page.IWizardPage.dispose_page">
-<code class="sig-name descname">dispose_page</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage.dispose_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">dispose_page</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#IWizardPage.dispose_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disposes the wizard page.</p>
 <p>Subclasses are expected to override this method if they need to
 dispose of the contents of a page.</p>
@@ -111,16 +110,16 @@ dispose of the contents of a page.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.wizard.i_wizard_page.MWizardPage">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.wizard.i_wizard_page.</code><code class="sig-name descname">MWizardPage</code><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#MWizardPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.wizard.i_wizard_page.</span></code><code class="sig-name descname"><span class="pre">MWizardPage</span></code><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#MWizardPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IWizardPage interface.</p>
 <p>Implements: dispose_page()</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.wizard.i_wizard_page.MWizardPage.dispose_page">
-<code class="sig-name descname">dispose_page</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#MWizardPage.dispose_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">dispose_page</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/wizard/i_wizard_page.html#MWizardPage.dispose_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disposes the wizard page.</p>
 <p>Subclasses are expected to override this method if they need to
 dispose of the contents of a page.</p>
@@ -159,7 +158,7 @@ dispose of the contents of a page.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -176,13 +175,13 @@ dispose of the contents of a page.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

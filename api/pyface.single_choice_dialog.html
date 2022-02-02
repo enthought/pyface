@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.single_choice_dialog module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.single_choice_dialog module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.sorter module" href="pyface.sorter.html" >
     <link rel="prev" title="pyface.resource_manager module" href="pyface.resource_manager.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,18 +88,18 @@
   <div class="section" id="module-pyface.single_choice_dialog">
 <span id="pyface-single-choice-dialog-module"></span><h1>pyface.single_choice_dialog module<a class="headerlink" href="#module-pyface.single_choice_dialog" title="Permalink to this headline">¶</a></h1>
 <p>A dialog that allows the user to chose a single item from a list.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.single_choice_dialog.choose_one">
-<code class="sig-prename descclassname">pyface.single_choice_dialog.</code><code class="sig-name descname">choose_one</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">choices</em>, <em class="sig-param">title='Choose'</em>, <em class="sig-param">cancel=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/single_choice_dialog.html#choose_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.single_choice_dialog.choose_one" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.single_choice_dialog.</span></code><code class="sig-name descname"><span class="pre">choose_one</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Choose'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/single_choice_dialog.html#choose_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.single_choice_dialog.choose_one" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
-<li><p><strong>choices</strong> (<em>list</em>) – List of objects to choose from.</p></li>
-<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
-<li><p><strong>cancel</strong> (<em>bool</em>) – Whether or not the dialog can be cancelled.</p></li>
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>choices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of objects to choose from.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>cancel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether or not the dialog can be cancelled.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -143,7 +142,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -160,13 +159,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

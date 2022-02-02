@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.task_action_manager_builder &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tasks.action.task_action_manager_builder &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../../../genindex.html" >
     <link rel="search" title="Search" href="../../../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../../index.html" >
     <link rel="up" title="Module code" href="../../../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.tasks.action.task_action_manager_builder</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -87,49 +86,30 @@
 <span class="c1">#</span>
 <span class="c1"># Thanks for using Enthought open source!</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span>
+
+<span class="kn">from</span> <span class="nn">pyface.action.schema.action_manager_builder</span> <span class="kn">import</span> <span class="n">ActionManagerBuilder</span>
+<span class="kn">from</span> <span class="nn">pyface.action.schema.schema_addition</span> <span class="kn">import</span> <span class="n">SchemaAddition</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.task</span> <span class="kn">import</span> <span class="n">Task</span>
 
 
-<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">ActionController</span><span class="p">,</span> <span class="n">ActionManager</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<div class="viewcode-block" id="TaskActionManagerBuilder"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_action_manager_builder.html#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder">[docs]</a><span class="k">class</span> <span class="nc">TaskActionManagerBuilder</span><span class="p">(</span><span class="n">ActionManagerBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; ActionManagerBuilder for Tasks.</span>
 
-
-<span class="kn">from</span> <span class="nn">pyface.tasks.task</span> <span class="k">import</span> <span class="n">Task</span>
-<span class="kn">from</span> <span class="nn">pyface.tasks.topological_sort</span> <span class="k">import</span> <span class="n">before_after_sort</span>
-<span class="kn">from</span> <span class="nn">pyface.tasks.action.schema</span> <span class="k">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ToolBarSchema</span>
-<span class="kn">from</span> <span class="nn">pyface.tasks.action.schema_addition</span> <span class="k">import</span> <span class="n">SchemaAddition</span>
-
-<span class="c1"># Logging.</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="TaskActionManagerBuilder"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_action_manager_builder.html#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder">[docs]</a><span class="k">class</span> <span class="nc">TaskActionManagerBuilder</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Builds menu bars and tool bars from menu bar and tool bar schema, along</span>
-<span class="sd">    with any additions provided by the task.</span>
+<span class="sd">    This provides some additional convenience methods for extracting schema</span>
+<span class="sd">    information from a task and using it to build menu bar and toolbar</span>
+<span class="sd">    managers directly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1">#: The controller to assign to the menubar and toolbars.</span>
-    <span class="n">controller</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ActionController</span><span class="p">)</span>
 
     <span class="c1">#: The Task to build menubars and toolbars for.</span>
     <span class="n">task</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
 
+    <span class="c1">#: The schema additions provided by the Task.</span>
+    <span class="n">additions</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">List</span><span class="p">(</span><span class="n">SchemaAddition</span><span class="p">),</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;task.extra_actions&#39;</span><span class="p">)</span>
+
     <span class="c1"># ------------------------------------------------------------------------</span>
     <span class="c1"># &#39;TaskActionManagerBuilder&#39; interface.</span>
     <span class="c1"># ------------------------------------------------------------------------</span>
-
-<div class="viewcode-block" id="TaskActionManagerBuilder.create_action_manager"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_action_manager_builder.html#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager">[docs]</a>    <span class="k">def</span> <span class="nf">create_action_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Create a manager for the given schema using the task&#39;s additions.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">additions_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">addition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">extra_actions</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">addition</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-                <span class="n">additions_map</span><span class="p">[</span><span class="n">addition</span><span class="o">.</span><span class="n">path</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">addition</span><span class="p">)</span>
-
-        <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_action_manager_recurse</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">additions_map</span><span class="p">)</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span>
-        <span class="k">return</span> <span class="n">manager</span></div>
 
 <div class="viewcode-block" id="TaskActionManagerBuilder.create_menu_bar_manager"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_action_manager_builder.html#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager">[docs]</a>    <span class="k">def</span> <span class="nf">create_menu_bar_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a menu bar manager from the task&#39;s menu bar schema and</span>
@@ -143,225 +123,31 @@
         <span class="sd">&quot;&quot;&quot; Create tool bar managers from the tasks&#39;s tool bar schemas and</span>
 <span class="sd">            additions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">schemas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">tool_bars</span><span class="p">[:]</span>
-        <span class="k">for</span> <span class="n">addition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">extra_actions</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">addition</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-                <span class="n">schema</span> <span class="o">=</span> <span class="n">addition</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">ToolBarSchema</span><span class="p">):</span>
-                    <span class="n">schemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                        <span class="s2">&quot;Invalid top-level schema addition: </span><span class="si">%r</span><span class="s2">. Only &quot;</span>
-                        <span class="s2">&quot;ToolBar schemas can be path-less.&quot;</span><span class="p">,</span>
-                        <span class="n">schema</span><span class="p">,</span>
-                    <span class="p">)</span>
+        <span class="n">schemas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">tool_bars</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_additional_toolbar_schemas</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_action_manager</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ordered_schemas</span><span class="p">(</span><span class="n">schemas</span><span class="p">)</span>
         <span class="p">]</span></div>
 
-<div class="viewcode-block" id="TaskActionManagerBuilder.prepare_item"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_action_manager_builder.html#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Called immediately after a concrete Pyface item has been created</span>
-<span class="sd">        (or, in the case of items that are not produced from schemas,</span>
-<span class="sd">        immediately before they are processed).</span>
-
-<span class="sd">        This hook can be used to perform last-minute transformations or</span>
-<span class="sd">        configuration. Returns a concrete Pyface item.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">item</span></div>
-
     <span class="c1"># ------------------------------------------------------------------------</span>
     <span class="c1"># Private interface.</span>
     <span class="c1"># ------------------------------------------------------------------------</span>
 
-    <span class="k">def</span> <span class="nf">_get_ordered_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemas</span><span class="p">):</span>
-        <span class="n">begin</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">middle</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schemas</span><span class="p">:</span>
-            <span class="n">absolute_position</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="s2">&quot;absolute_position&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">absolute_position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">middle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">absolute_position</span> <span class="o">==</span> <span class="s2">&quot;last&quot;</span><span class="p">:</span>
-                <span class="n">end</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">begin</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
-
-        <span class="n">schemas</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">before_after_sort</span><span class="p">(</span><span class="n">begin</span><span class="p">)</span>
-            <span class="o">+</span> <span class="n">before_after_sort</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span>
-            <span class="o">+</span> <span class="n">before_after_sort</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">schemas</span>
-
-    <span class="k">def</span> <span class="nf">_group_items_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Group a list of action items by their ID.</span>
-
-<span class="sd">        Action items are Schemas and Groups, MenuManagers, etc.</span>
-
-<span class="sd">        Return a dictionary {item_id: list_of_items}, and a list containing</span>
-<span class="sd">        all the ids ordered by their appearance in the `all_items` list. The</span>
-<span class="sd">        ordered IDs are used as a replacement for an ordered dictionary, to</span>
-<span class="sd">        keep compatibility with Python &lt;2.7 .</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">ordered_items_ids</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">id_to_items</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">id_to_items</span><span class="p">:</span>
-                <span class="n">ordered_items_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            <span class="n">id_to_items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">id_to_items</span><span class="p">,</span> <span class="n">ordered_items_ids</span>
-
-    <span class="k">def</span> <span class="nf">_group_items_by_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Group a list of action items by their class.</span>
-
-<span class="sd">        Action items are Schemas and Groups, MenuManagers, etc.</span>
-
-<span class="sd">        Return a dictionary {item_class: list_of_items}, and a list containing</span>
-<span class="sd">        all the classes ordered by their appearance in the `all_items` list.</span>
-<span class="sd">        The ordered classes are used as a replacement for an ordered</span>
-<span class="sd">        dictionary, to keep compatibility with Python &lt;2.7 .</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">ordered_items_class</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">class_to_items</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_to_items</span><span class="p">:</span>
-                <span class="n">ordered_items_class</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
-            <span class="n">class_to_items</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="vm">__class__</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">class_to_items</span><span class="p">,</span> <span class="n">ordered_items_class</span>
-
-    <span class="k">def</span> <span class="nf">_unpack_schema_additions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Unpack additions, since they may themselves be schemas. &quot;&quot;&quot;</span>
-
-        <span class="n">unpacked_items</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">SchemaAddition</span><span class="p">):</span>
-                <span class="n">unpacked_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">factory</span><span class="p">())</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">unpacked_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">unpacked_items</span>
-
-    <span class="k">def</span> <span class="nf">_merge_items_with_same_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_to_items</span><span class="p">,</span> <span class="n">ordered_items_ids</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Merge items with the same path if possible.</span>
-
-<span class="sd">        Items must be subclasses of `Schema` and they must be instances of</span>
-<span class="sd">        the same class to be merged.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">merged_items</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item_id</span> <span class="ow">in</span> <span class="n">ordered_items_ids</span><span class="p">:</span>
-            <span class="n">items_with_same_id</span> <span class="o">=</span> <span class="n">id_to_items</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span>
-
-            <span class="c1"># Group items by class.</span>
-            <span class="n">class_to_items</span><span class="p">,</span> <span class="n">ordered_items_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_items_by_class</span><span class="p">(</span>
-                <span class="n">items_with_same_id</span>
-            <span class="p">)</span>
-
-            <span class="k">for</span> <span class="n">items_class</span> <span class="ow">in</span> <span class="n">ordered_items_class</span><span class="p">:</span>
-                <span class="n">items_with_same_class</span> <span class="o">=</span> <span class="n">class_to_items</span><span class="p">[</span><span class="n">items_class</span><span class="p">]</span>
-
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items_with_same_class</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">merged_items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items_with_same_class</span><span class="p">)</span>
-
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># Only schemas can be merged.</span>
-                    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">items_class</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
-                        <span class="c1"># Merge into a single schema.</span>
-                        <span class="n">items_content</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-                            <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">items</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items_with_same_class</span><span class="p">),</span> <span class="p">[]</span>
-                        <span class="p">)</span>
-
-                        <span class="n">merged_item</span> <span class="o">=</span> <span class="n">items_with_same_class</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clone_traits</span><span class="p">()</span>
-                        <span class="n">merged_item</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">items_content</span>
-                        <span class="n">merged_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">merged_item</span><span class="p">)</span>
-
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">merged_items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items_with_same_class</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">merged_items</span>
-
-    <span class="k">def</span> <span class="nf">_preprocess_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">additions</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Sort and merge a schema and a set of schema additions. &quot;&quot;&quot;</span>
-
-        <span class="c1"># Determine the order of the items at this path.</span>
-        <span class="k">if</span> <span class="n">additions</span><span class="p">[</span><span class="n">path</span><span class="p">]:</span>
-            <span class="n">all_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ordered_schemas</span><span class="p">(</span>
-                <span class="n">schema</span><span class="o">.</span><span class="n">items</span> <span class="o">+</span> <span class="n">additions</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">all_items</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span>
-
-        <span class="n">unpacked_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unpack_schema_additions</span><span class="p">(</span><span class="n">all_items</span><span class="p">)</span>
-
-        <span class="n">id_to_items</span><span class="p">,</span> <span class="n">ordered_items_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_items_by_id</span><span class="p">(</span>
-            <span class="n">unpacked_items</span>
-        <span class="p">)</span>
-
-        <span class="n">merged_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_items_with_same_path</span><span class="p">(</span>
-            <span class="n">id_to_items</span><span class="p">,</span> <span class="n">ordered_items_ids</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">merged_items</span>
-
-    <span class="k">def</span> <span class="nf">_create_action_manager_recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">additions</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Recursively create a manager for the given schema and additions map.</span>
-
-<span class="sd">        Items with the same path are merged together in a single entry if</span>
-<span class="sd">        possible (i.e., if they have the same class).</span>
-
-<span class="sd">        When a list of items is merged, their children are added to a clone</span>
-<span class="sd">        of the first item in the list. As a consequence, traits like menu</span>
-<span class="sd">        names etc. are inherited from the first item.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Compute the new action path.</span>
-        <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">schema</span><span class="o">.</span><span class="n">id</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">id</span>
-
-        <span class="n">preprocessed_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_schemas</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">additions</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-
-        <span class="c1"># Create the actual children by calling factory items.</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">preprocessed_items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
-                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_action_manager_recurse</span><span class="p">(</span>
-                    <span class="n">item</span><span class="p">,</span> <span class="n">additions</span><span class="p">,</span> <span class="n">path</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ActionManager</span><span class="p">):</span>
-                <span class="c1"># Give even non-root action managers a reference to the</span>
-                <span class="c1"># controller so that custom Groups, MenuManagers, etc. can get</span>
-                <span class="c1"># access to their Tasks.</span>
-                <span class="n">item</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span>
-
-            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-        <span class="c1"># Finally, create the pyface.action instance for this schema.</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_item</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">children</span><span class="p">),</span> <span class="n">path</span><span class="p">)</span>
-
     <span class="c1"># Trait initializers ---------------------------------------------------</span>
 
     <span class="k">def</span> <span class="nf">_controller_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">.task_action_controller</span> <span class="k">import</span> <span class="n">TaskActionController</span>
+        <span class="kn">from</span> <span class="nn">.task_action_controller</span> <span class="kn">import</span> <span class="n">TaskActionController</span>
 
-        <span class="k">return</span> <span class="n">TaskActionController</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">TaskActionController</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+
+    <span class="c1"># Trait properties -----------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_additions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># keep synchronized to task&#39;s extra actions, since that may change</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">extra_actions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
 </pre></div>
 
           </div>
@@ -381,7 +167,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -398,13 +184,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

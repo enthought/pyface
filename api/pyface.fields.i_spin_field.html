@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.fields.i_spin_field module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.fields.i_spin_field module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.fields package" href="pyface.fields.html" >
     <link rel="next" title="pyface.fields.i_text_field module" href="pyface.fields.i_text_field.html" >
     <link rel="prev" title="pyface.fields.i_field module" href="pyface.fields.i_field.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.fields.html" accesskey="U">pyface.fields package</a></li> 
@@ -90,63 +89,63 @@
   <div class="section" id="module-pyface.fields.i_spin_field">
 <span id="pyface-fields-i-spin-field-module"></span><h1>pyface.fields.i_spin_field module<a class="headerlink" href="#module-pyface.fields.i_spin_field" title="Permalink to this headline">¶</a></h1>
 <p>The spin field interface.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.fields.i_spin_field.ISpinField">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.fields.i_spin_field.</code><code class="sig-name descname">ISpinField</code><a class="reference internal" href="../_modules/pyface/fields/i_spin_field.html#ISpinField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.fields.i_spin_field.</span></code><code class="sig-name descname"><span class="pre">ISpinField</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/fields/i_spin_field.html#ISpinField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.fields.i_field.html#pyface.fields.i_field.IField" title="pyface.fields.i_field.IField"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.fields.i_field.IField</span></code></a></p>
 <p>The spin field interface.</p>
 <p>This is for spinners holding integer values.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.ISpinField.value">
-<code class="sig-name descname">value</code><em class="property"> = Range(low=&quot;minimum&quot;, high=&quot;maximum&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">value</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Range(low=&quot;minimum&quot;,</span> <span class="pre">high=&quot;maximum&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current value of the spinner</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.ISpinField.bounds">
-<code class="sig-name descname">bounds</code><em class="property"> = Tuple(Int, Int)</em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.bounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">bounds</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple(Int,</span> <span class="pre">Int)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bounds of the spinner</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.ISpinField.minimum">
-<code class="sig-name descname">minimum</code><em class="property"> = Property(Int, observe=&quot;bounds&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.minimum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">minimum</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Int,</span> <span class="pre">observe=&quot;bounds&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.minimum" title="Permalink to this definition">¶</a></dt>
 <dd><p>The minimum value</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.ISpinField.maximum">
-<code class="sig-name descname">maximum</code><em class="property"> = Property(Int, observe=&quot;bounds&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.maximum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">maximum</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Int,</span> <span class="pre">observe=&quot;bounds&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.ISpinField.maximum" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum value</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.fields.i_spin_field.MSpinField">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.fields.i_spin_field.</code><code class="sig-name descname">MSpinField</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/fields/i_spin_field.html#MSpinField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-<dl class="attribute">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.fields.i_spin_field.</span></code><code class="sig-name descname"><span class="pre">MSpinField</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/fields/i_spin_field.html#MSpinField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.MSpinField.bounds">
-<code class="sig-name descname">bounds</code><em class="property"> = Tuple(Int, Int)</em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.bounds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">bounds</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple(Int,</span> <span class="pre">Int)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bounds for the spinner</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.MSpinField.minimum">
-<code class="sig-name descname">minimum</code><em class="property"> = Property(Int, observe=&quot;bounds&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.minimum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">minimum</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Int,</span> <span class="pre">observe=&quot;bounds&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.minimum" title="Permalink to this definition">¶</a></dt>
 <dd><p>The minimum value for the spinner</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.MSpinField.maximum">
-<code class="sig-name descname">maximum</code><em class="property"> = Property(Int, observe=&quot;bounds&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.maximum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">maximum</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Int,</span> <span class="pre">observe=&quot;bounds&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.maximum" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum value for the spinner</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.fields.i_spin_field.MSpinField.value">
-<code class="sig-name descname">value</code><em class="property"> = Range(low=&quot;minimum&quot;, high=&quot;maximum&quot;)</em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">value</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Range(low=&quot;minimum&quot;,</span> <span class="pre">high=&quot;maximum&quot;)</span></em><a class="headerlink" href="#pyface.fields.i_spin_field.MSpinField.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current value of the spinner</p>
 </dd></dl>
 
@@ -183,7 +182,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -200,13 +199,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

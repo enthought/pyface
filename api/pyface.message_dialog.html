@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.message_dialog module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.message_dialog module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.mimedata module" href="pyface.mimedata.html" >
     <link rel="prev" title="pyface.mdi_window_menu module" href="pyface.mdi_window_menu.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,55 +88,61 @@
   <div class="section" id="module-pyface.message_dialog">
 <span id="pyface-message-dialog-module"></span><h1>pyface.message_dialog module<a class="headerlink" href="#module-pyface.message_dialog" title="Permalink to this headline">¶</a></h1>
 <p>The implementation of a dialog that displays a message.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.message_dialog.information">
-<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Information'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.message_dialog.information" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.message_dialog.</span></code><code class="sig-name descname"><span class="pre">information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Information'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.message_dialog.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
-<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
-<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message (displayed when the user clicks
 “Show details”).</p></li>
-<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt backend.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.message_dialog.warning">
-<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.message_dialog.warning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.message_dialog.</span></code><code class="sig-name descname"><span class="pre">warning</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Warning'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.message_dialog.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to show a warning message dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
-<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
-<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message (displayed when the user clicks
 “Show details”).</p></li>
-<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt backend.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.message_dialog.error">
-<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Error'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.message_dialog.error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.message_dialog.</span></code><code class="sig-name descname"><span class="pre">error</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/message_dialog.html#error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.message_dialog.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to show an error message dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
-<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
-<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message (displayed when the user clicks
 “Show details”).</p></li>
-<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt backend.</p></li>
 </ul>
 </dd>
 </dl>
@@ -174,7 +179,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -191,13 +196,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

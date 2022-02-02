@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tree.node_manager module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tree.node_manager module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.tree package" href="pyface.tree.html" >
     <link rel="next" title="pyface.tree.node_monitor module" href="pyface.tree.node_monitor.html" >
     <link rel="prev" title="pyface.tree.node_event module" href="pyface.tree.node_event.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tree.html" accesskey="U">pyface.tree package</a></li> 
@@ -90,27 +89,27 @@
   <div class="section" id="module-pyface.tree.node_manager">
 <span id="pyface-tree-node-manager-module"></span><h1>pyface.tree.node_manager module<a class="headerlink" href="#module-pyface.tree.node_manager" title="Permalink to this headline">¶</a></h1>
 <p>The node manager looks after a collection of node types.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.tree.node_manager.NodeManager">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tree.node_manager.</code><code class="sig-name descname">NodeManager</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.tree.node_manager.</span></code><code class="sig-name descname"><span class="pre">NodeManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasPrivateTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></a></p>
 <p>The node manager looks after a collection of node types.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tree.node_manager.NodeManager.add_node_type">
-<code class="sig-name descname">add_node_type</code><span class="sig-paren">(</span><em class="sig-param">node_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.add_node_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.add_node_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_node_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.add_node_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.add_node_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new node type to the manager.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tree.node_manager.NodeManager.get_node_type">
-<code class="sig-name descname">get_node_type</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.get_node_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.get_node_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_node_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.get_node_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.get_node_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the node’s type.</p>
 <p>Returns None if none of the manager’s node types recognize the node.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tree.node_manager.NodeManager.get_key">
-<code class="sig-name descname">get_key</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.get_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.get_key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tree/node_manager.html#NodeManager.get_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tree.node_manager.NodeManager.get_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a unique key for a node.</p>
 <p>In this case,  ‘unique’ means unqiue within the node manager.</p>
 </dd></dl>
@@ -148,7 +147,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -165,13 +164,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

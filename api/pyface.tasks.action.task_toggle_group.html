@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.task_toggle_group module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tasks.action.task_toggle_group module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="next" title="pyface.tasks.action.task_window_toggle_group module" href="pyface.tasks.action.task_window_toggle_group.html" >
     <link rel="prev" title="pyface.tasks.action.task_action_manager_builder module" href="pyface.tasks.action.task_action_manager_builder.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -90,46 +89,46 @@
             
   <div class="section" id="module-pyface.tasks.action.task_toggle_group">
 <span id="pyface-tasks-action-task-toggle-group-module"></span><h1>pyface.tasks.action.task_toggle_group module<a class="headerlink" href="#module-pyface.tasks.action.task_toggle_group" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_toggle_group.</code><code class="sig-name descname">TaskToggleAction</code><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.tasks.action.task_toggle_group.</span></code><code class="sig-name descname"><span class="pre">TaskToggleAction</span></code><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.action.Action</span></code></a></p>
 <p>An action for activating a task.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.name">
-<code class="sig-name descname">name</code><em class="property"> = Property(Str, observe=&quot;task.name&quot;)</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Str,</span> <span class="pre">observe=&quot;task.name&quot;)</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The user-visible name of the action, matches the task name.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.style">
-<code class="sig-name descname">style</code><em class="property"> = &quot;toggle&quot;</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.style" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">style</span></code><em class="property"> <span class="pre">=</span> <span class="pre">&quot;toggle&quot;</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.style" title="Permalink to this definition">¶</a></dt>
 <dd><p>The action is a toggle menu item.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.tooltip">
-<code class="sig-name descname">tooltip</code><em class="property"> = Property(Str, observe=&quot;name&quot;)</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">tooltip</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Str,</span> <span class="pre">observe=&quot;name&quot;)</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>The tooltip to display for the menu item.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.task">
-<code class="sig-name descname">task</code><em class="property"> = Instance(Task)</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">task</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Instance(Task)</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.task" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Task with which the action is associated.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">destroy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction.destroy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the action is no longer required.</p>
 <p>By default this method does nothing, but this would be a great place to
 unhook trait listeners etc.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleAction.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the action.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -140,20 +139,20 @@ unhook trait listeners etc.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleGroup">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.task_toggle_group.</code><code class="sig-name descname">TaskToggleGroup</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.tasks.action.task_toggle_group.</span></code><code class="sig-name descname"><span class="pre">TaskToggleGroup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/action/task_toggle_group.html#TaskToggleGroup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.action.group.html#pyface.action.group.Group" title="pyface.action.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.group.Group</span></code></a></p>
 <p>A menu for changing the active task in a task window.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleGroup.manager">
-<code class="sig-name descname">manager</code><em class="property"> = Any()</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup.manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">manager</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Any()</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup.manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ActionManager to which the group belongs.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.action.task_toggle_group.TaskToggleGroup.window">
-<code class="sig-name descname">window</code><em class="property"> = Instance(TaskWindow)</em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup.window" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">window</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Instance(TaskWindow)</span></em><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup.window" title="Permalink to this definition">¶</a></dt>
 <dd><p>The window that contains the group.</p>
 </dd></dl>
 
@@ -190,7 +189,7 @@ unhook trait listeners etc.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -207,13 +206,13 @@ unhook trait listeners etc.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

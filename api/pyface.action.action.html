@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.action.action module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.action.action module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,16 +24,15 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.action package" href="pyface.action.html" >
     <link rel="next" title="pyface.action.action_controller module" href="pyface.action.action_controller.html" >
-    <link rel="prev" title="pyface.action package" href="pyface.action.html" > 
+    <link rel="prev" title="pyface.action.schema.schema_addition module" href="pyface.action.schema.schema_addition.html" > 
   </head>
   <body>
   <div class="container">
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
@@ -71,7 +70,7 @@
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.action.html" title="pyface.action package"
+        <a href="pyface.action.schema.schema_addition.html" title="pyface.action.schema.schema_addition module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -90,94 +89,94 @@
   <div class="section" id="module-pyface.action.action">
 <span id="pyface-action-action-module"></span><h1>pyface.action.action module<a class="headerlink" href="#module-pyface.action.action" title="Permalink to this headline">¶</a></h1>
 <p>The base class for all actions.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.action.action.Action">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action.</code><code class="sig-name descname">Action</code><a class="reference internal" href="../_modules/pyface/action/action.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.action.action.</span></code><code class="sig-name descname"><span class="pre">Action</span></code><a class="reference internal" href="../_modules/pyface/action/action.html#Action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The base class for all actions.</p>
 <p>An action is the non-UI side of a command which can be triggered by the end
 user.  Actions are typically associated with buttons, menu items and tool
 bar tools.</p>
 <p>When the user triggers the command via the UI, the action’s ‘perform’
 method is invoked to do the actual work.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.accelerator">
-<code class="sig-name descname">accelerator</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action.Action.accelerator" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">accelerator</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.action.action.Action.accelerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keyboard accelerator (by default the action has NO accelerator).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.checked">
-<code class="sig-name descname">checked</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.action.action.Action.checked" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">checked</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#pyface.action.action.Action.checked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the action checked?  This is only relevant if the action style is
 ‘radio’ or ‘toggle’.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.description">
-<code class="sig-name descname">description</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action.Action.description" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">description</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.action.action.Action.description" title="Permalink to this definition">¶</a></dt>
 <dd><p>A longer description of the action (used for context sensitive help etc).
 If no description is specified, the tooltip is used instead (and if there
 is no tooltip, then well, maybe you just hate your users ;^).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.enabled">
-<code class="sig-name descname">enabled</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.action.Action.enabled" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">enabled</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#pyface.action.action.Action.enabled" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the action enabled?</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.visible">
-<code class="sig-name descname">visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.action.action.Action.visible" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">visible</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool(True)</span></em><a class="headerlink" href="#pyface.action.action.Action.visible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the action visible?</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.id">
-<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action.Action.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">id</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.action.action.Action.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The action’s unique identifier (may be None).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.image">
-<code class="sig-name descname">image</code><em class="property"> = Image</em><a class="headerlink" href="#pyface.action.action.Action.image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">image</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Image</span></em><a class="headerlink" href="#pyface.action.action.Action.image" title="Permalink to this definition">¶</a></dt>
 <dd><p>The action’s image (displayed on tool bar tools etc).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.name">
-<code class="sig-name descname">name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action.Action.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.action.action.Action.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The action’s name (displayed on menus/tool bar tools etc).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.on_perform">
-<code class="sig-name descname">on_perform</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.action.action.Action.on_perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_perform</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Callable</span></em><a class="headerlink" href="#pyface.action.action.Action.on_perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>An (optional) callable that will be invoked when the action is performed.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.style">
-<code class="sig-name descname">style</code><em class="property"> = Enum(&quot;push&quot;, &quot;radio&quot;, &quot;toggle&quot;, &quot;widget&quot;)</em><a class="headerlink" href="#pyface.action.action.Action.style" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">style</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Enum(&quot;push&quot;,</span> <span class="pre">&quot;radio&quot;,</span> <span class="pre">&quot;toggle&quot;,</span> <span class="pre">&quot;widget&quot;)</span></em><a class="headerlink" href="#pyface.action.action.Action.style" title="Permalink to this definition">¶</a></dt>
 <dd><p>The action’s style.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.tooltip">
-<code class="sig-name descname">tooltip</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.action.action.Action.tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">tooltip</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.action.action.Action.tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>A short description of the action used for tooltip text etc.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.action.action.Action.control_factory">
-<code class="sig-name descname">control_factory</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.action.action.Action.control_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">control_factory</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Callable</span></em><a class="headerlink" href="#pyface.action.action.Action.control_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>An (optional) callable to create the toolkit control for widget style.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action.Action.create_control">
-<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.create_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">create_control</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.create_control"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action.Action.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when creating a “widget” style action.</p>
 <p>By default this will call whatever callable is supplied via the
 ‘control_factory’ trait which is a callable that should take the parent
@@ -199,17 +198,17 @@ other styles.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action.Action.destroy">
-<code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">destroy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.destroy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the action is no longer required.</p>
 <p>By default this method does nothing, but this would be a great place to
 unhook trait listeners etc.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action.Action.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the action.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -218,9 +217,9 @@ unhook trait listeners etc.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action.Action.factory">
-<em class="property">classmethod </em><code class="sig-name descname">factory</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action.Action.factory" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">factory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action.html#Action.factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action.Action.factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a factory for an action with the given arguments.</p>
 <p>This is particularly useful for passing context to Tasks schema
 additions.</p>
@@ -240,8 +239,8 @@ additions.</p>
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.action.html"
-                        title="previous chapter">pyface.action package</a></p>
+  <p class="topless"><a href="pyface.action.schema.schema_addition.html"
+                        title="previous chapter">pyface.action.schema.schema_addition module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.action.action_controller.html"
                         title="next chapter">pyface.action.action_controller module</a></p>
@@ -259,7 +258,7 @@ additions.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -276,13 +275,13 @@ additions.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

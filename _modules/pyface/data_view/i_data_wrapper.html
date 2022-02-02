@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.i_data_wrapper &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.i_data_wrapper &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../../genindex.html" >
     <link rel="search" title="Search" href="../../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
     <link rel="up" title="Module code" href="../../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.data_view.i_data_wrapper</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -87,14 +86,14 @@
 <span class="c1">#</span>
 <span class="c1"># Thanks for using Enthought open source!</span>
 
-<span class="kn">from</span> <span class="nn">codecs</span> <span class="k">import</span> <span class="n">decode</span><span class="p">,</span> <span class="n">encode</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Any</span> <span class="k">as</span> <span class="n">TAny</span><span class="p">,</span> <span class="n">Callable</span> <span class="k">as</span> <span class="n">TCallable</span><span class="p">,</span> <span class="n">NamedTuple</span>
+<span class="kn">from</span> <span class="nn">codecs</span> <span class="kn">import</span> <span class="n">decode</span><span class="p">,</span> <span class="n">encode</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span> <span class="k">as</span> <span class="n">TAny</span><span class="p">,</span> <span class="n">Callable</span> <span class="k">as</span> <span class="n">TCallable</span><span class="p">,</span> <span class="n">NamedTuple</span>
 
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Interface</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Interface</span>
 
 
-<div class="viewcode-block" id="DataFormat"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.DataFormat">[docs]</a><span class="k">class</span> <span class="nc">DataFormat</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<div class="viewcode-block" id="DataFormat"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat">[docs]</a><span class="k">class</span> <span class="nc">DataFormat</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Information about a mimetype and serializers.</span>
 
 <span class="sd">    Simple namedtuple-based class that stores the mimetype, serializer and</span>
@@ -113,7 +112,7 @@
     <span class="n">deserialize</span><span class="p">:</span> <span class="n">TCallable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">TAny</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="text_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.text_format">[docs]</a><span class="k">def</span> <span class="nf">text_format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;text/plain&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="text_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.text_format">[docs]</a><span class="k">def</span> <span class="nf">text_format</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;text/plain&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; DataFormat factory for text mimetypes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">DataFormat</span><span class="p">(</span>
@@ -123,7 +122,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IDataWrapper"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper">[docs]</a><span class="k">class</span> <span class="nc">IDataWrapper</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper">[docs]</a><span class="k">class</span> <span class="nc">IDataWrapper</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Wrapper around polymorphic toolkit data object containing mimedata.</span>
 
 <span class="sd">    To support clipboard and drag and drop operations, toolkits need a way</span>
@@ -135,7 +134,7 @@
     <span class="c1">#: The toolkit data object.</span>
     <span class="n">toolkit_data</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
 
-<div class="viewcode-block" id="IDataWrapper.mimetypes"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.mimetypes"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.mimetypes">[docs]</a>    <span class="k">def</span> <span class="nf">mimetypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Return a set of mimetypes holding data.</span>
 
 <span class="sd">        Returns</span>
@@ -146,7 +145,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="IDataWrapper.has_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.has_format">[docs]</a>    <span class="k">def</span> <span class="nf">has_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.has_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.has_format">[docs]</a>    <span class="k">def</span> <span class="nf">has_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Whether or not a particular format has available data.</span>
 
 <span class="sd">        Parameters</span>
@@ -162,7 +161,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="IDataWrapper.get_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.get_format">[docs]</a>    <span class="k">def</span> <span class="nf">get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.get_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.get_format">[docs]</a>    <span class="k">def</span> <span class="nf">get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; The decoded data associted with the format.</span>
 
 <span class="sd">        Parameters</span>
@@ -177,7 +176,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="IDataWrapper.set_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.set_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Encode and set data for the format.</span>
 
 <span class="sd">        Parameters</span>
@@ -189,7 +188,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="IDataWrapper.get_mimedata"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.get_mimedata">[docs]</a>    <span class="k">def</span> <span class="nf">get_mimedata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.get_mimedata"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.get_mimedata">[docs]</a>    <span class="k">def</span> <span class="nf">get_mimedata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get raw data for the given media type.</span>
 
 <span class="sd">        Parameters</span>
@@ -204,7 +203,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="IDataWrapper.set_mimedata"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.IDataWrapper.set_mimedata">[docs]</a>    <span class="k">def</span> <span class="nf">set_mimedata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">mimedata</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataWrapper.set_mimedata"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper.set_mimedata">[docs]</a>    <span class="k">def</span> <span class="nf">set_mimedata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">mimedata</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Set raw data for the given media type.</span>
 
 <span class="sd">        Parameters</span>
@@ -217,14 +216,14 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="MDataWrapper"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.MDataWrapper">[docs]</a><span class="k">class</span> <span class="nc">MDataWrapper</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+<div class="viewcode-block" id="MDataWrapper"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.MDataWrapper">[docs]</a><span class="k">class</span> <span class="nc">MDataWrapper</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Mixin class for DataWrappers.</span>
 
 <span class="sd">    This provides standard methods for using DataFormat objects, but not the</span>
 <span class="sd">    low-level communication with the underlying toolkit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MDataWrapper.has_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.MDataWrapper.has_format">[docs]</a>    <span class="k">def</span> <span class="nf">has_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+<div class="viewcode-block" id="MDataWrapper.has_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.MDataWrapper.has_format">[docs]</a>    <span class="k">def</span> <span class="nf">has_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Whether or not a particular format has available data.</span>
 
 <span class="sd">        Parameters</span>
@@ -240,7 +239,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">format</span><span class="o">.</span><span class="n">mimetype</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mimetypes</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MDataWrapper.get_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.MDataWrapper.get_format">[docs]</a>    <span class="k">def</span> <span class="nf">get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+<div class="viewcode-block" id="MDataWrapper.get_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.MDataWrapper.get_format">[docs]</a>    <span class="k">def</span> <span class="nf">get_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; The decoded data associted with the format.</span>
 
 <span class="sd">        Parameters</span>
@@ -255,7 +254,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">format</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_mimedata</span><span class="p">(</span><span class="nb">format</span><span class="o">.</span><span class="n">mimetype</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MDataWrapper.set_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.data_formats.MDataWrapper.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="MDataWrapper.set_format"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.MDataWrapper.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Encode and set data for the format.</span>
 
 <span class="sd">        Parameters</span>
@@ -285,7 +284,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -302,13 +301,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

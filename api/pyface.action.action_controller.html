@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.action.action_controller module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.action.action_controller module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.action package" href="pyface.action.html" >
     <link rel="next" title="pyface.action.action_event module" href="pyface.action.action_event.html" >
     <link rel="prev" title="pyface.action.action module" href="pyface.action.action.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
@@ -90,14 +89,14 @@
   <div class="section" id="module-pyface.action.action_controller">
 <span id="pyface-action-action-controller-module"></span><h1>pyface.action.action_controller module<a class="headerlink" href="#module-pyface.action.action_controller" title="Permalink to this headline">¶</a></h1>
 <p>The default action controller for menus, menu bars and tool bars.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.action.action_controller.ActionController">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action_controller.</code><code class="sig-name descname">ActionController</code><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.action.action_controller.</span></code><code class="sig-name descname"><span class="pre">ActionController</span></code><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The default action controller for menus, menu bars and tool bars.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action_controller.ActionController.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control an action invocation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -115,9 +114,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_menu">
-<code class="sig-name descname">can_add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.can_add_to_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">can_add_to_menu</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.can_add_to_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can add an action to a menu</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -127,14 +126,14 @@
 <dd class="field-even"><p><strong>can_add</strong> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the action can be added to a menu/menubar.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action_controller.ActionController.add_to_menu">
-<code class="sig-name descname">add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.add_to_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_to_menu</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.add_to_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a menu/menubar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -143,9 +142,9 @@
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_toolbar">
-<code class="sig-name descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.can_add_to_toolbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">can_add_to_toolbar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.can_add_to_toolbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the action can be added to a toolbar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -155,14 +154,14 @@
 <dd class="field-even"><p><strong>can_add</strong> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the action can be added to a toolbar.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.action.action_controller.ActionController.add_to_toolbar">
-<code class="sig-name descname">add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.add_to_toolbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_to_toolbar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/action_controller.html#ActionController.add_to_toolbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a toolbar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -204,7 +203,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -221,13 +220,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.i_data_view_widget &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.i_data_view_widget &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../../genindex.html" >
     <link rel="search" title="Search" href="../../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
     <link rel="up" title="Module code" href="../../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.data_view.i_data_view_widget</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -87,24 +86,24 @@
 <span class="c1">#</span>
 <span class="c1"># Thanks for using Enthought open source!</span>
 
-<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="p">(</span>
-    <span class="n">Bool</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span>
     <span class="n">TraitError</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">cached_property</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_model</span> <span class="k">import</span> <span class="n">AbstractDataModel</span>
-<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_exporter</span> <span class="k">import</span> <span class="n">AbstractDataExporter</span>
-<span class="kn">from</span> <span class="nn">pyface.i_drop_handler</span> <span class="k">import</span> <span class="n">IDropHandler</span>
-<span class="kn">from</span> <span class="nn">pyface.i_widget</span> <span class="k">import</span> <span class="n">IWidget</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_model</span> <span class="kn">import</span> <span class="n">AbstractDataModel</span>
+<span class="kn">from</span> <span class="nn">pyface.data_view.abstract_data_exporter</span> <span class="kn">import</span> <span class="n">AbstractDataExporter</span>
+<span class="kn">from</span> <span class="nn">pyface.i_drop_handler</span> <span class="kn">import</span> <span class="n">IDropHandler</span>
+<span class="kn">from</span> <span class="nn">pyface.i_layout_widget</span> <span class="kn">import</span> <span class="n">ILayoutWidget</span>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="IDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">IDataViewWidget</span><span class="p">(</span><span class="n">IWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="IDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">IDataViewWidget</span><span class="p">(</span><span class="n">ILayoutWidget</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Interface for data view widgets. &quot;&quot;&quot;</span>
 
     <span class="c1">#: The data model for the data view.</span>
@@ -135,7 +134,7 @@
     <span class="n">exporters</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">AbstractDataExporter</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="MDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.MDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">MDataViewWidget</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+<div class="viewcode-block" id="MDataViewWidget"><a class="viewcode-back" href="../../../api/pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.MDataViewWidget">[docs]</a><span class="k">class</span> <span class="nc">MDataViewWidget</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Mixin class for data view widgets. &quot;&quot;&quot;</span>
 
     <span class="c1"># IDataViewWidget Interface traits --------------------------------------</span>
@@ -307,9 +306,7 @@
 <span class="sd">        This method should create the control and assign it to the</span>
 <span class="sd">        :py:attr:``control`` trait.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_control</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_control</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_event_listeners</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visible</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">)</span>
@@ -318,6 +315,7 @@
         <span class="sd">&quot;&quot;&quot; Initializes the toolkit specific control.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initializing DataViewWidget&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_control</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_header_visible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_visible</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_mode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_control_selection_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_type</span><span class="p">)</span>
@@ -468,7 +466,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -485,13 +483,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

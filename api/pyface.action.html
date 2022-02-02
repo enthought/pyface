@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.action package &mdash; pyface 7.3 documentation</title>
+    <title>pyface.action package &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,15 +24,14 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
-    <link rel="next" title="pyface.action.action module" href="pyface.action.action.html" >
+    <link rel="next" title="pyface.action.schema package" href="pyface.action.schema.html" >
     <link rel="prev" title="pyface package" href="pyface.html" > 
   </head>
   <body>
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -66,7 +65,7 @@
            >modules</a>
       </li>
       <li class="active">
-        <a href="pyface.action.action.html" title="pyface.action.action module"
+        <a href="pyface.action.schema.html" title="pyface.action.schema package"
            accesskey="N">next</a>
       </li>
       <li class="active">
@@ -88,6 +87,27 @@
             
   <div class="section" id="module-pyface.action">
 <span id="pyface-action-package"></span><h1>pyface.action package<a class="headerlink" href="#module-pyface.action" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.action.schema.html">pyface.action.schema package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.action.schema.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyface.action.schema.action_manager_builder.html">pyface.action.schema.action_manager_builder module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.action.schema.api.html">pyface.action.schema.api module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.action.schema.api.html#schemas-and-aliases">Schemas and Aliases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.action.schema.api.html#builder-and-schema-additions">Builder and Schema Additions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.action.schema.schema.html">pyface.action.schema.schema module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.action.schema.schema_addition.html">pyface.action.schema.schema_addition module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -136,6 +156,7 @@
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">pyface.action package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
@@ -145,8 +166,8 @@
   <p class="topless"><a href="pyface.html"
                         title="previous chapter">pyface package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.action.action.html"
-                        title="next chapter">pyface.action.action module</a></p>
+  <p class="topless"><a href="pyface.action.schema.html"
+                        title="next chapter">pyface.action.schema package</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.action.rst.txt"
@@ -161,7 +182,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -178,13 +199,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

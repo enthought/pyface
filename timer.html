@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Timers &mdash; pyface 7.3 documentation</title>
+    <title>Timers &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
     <link rel="up" title="Submodules" href="submodules.html" >
     <link rel="next" title="Undo Framework" href="undo.html" >
     <link rel="prev" title="Fields" href="fields.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
     </ul>
@@ -115,10 +114,10 @@ milliseconds.</p>
 <span class="k">def</span> <span class="nf">report_time</span><span class="p">(</span><span class="n">time_started</span><span class="p">,</span> <span class="n">expected_delay</span><span class="o">=</span><span class="n">DEFAULT_DELTA</span><span class="p">):</span>
     <span class="n">time_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Time started: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_started</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Time now: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Expected delay: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expected_delay</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Actual delay:   {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span> <span class="o">-</span> <span class="n">time_started</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time started: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_started</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time now: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Expected delay: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expected_delay</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Actual delay:   </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_now</span> <span class="o">-</span> <span class="n">time_started</span><span class="p">))</span>
 
 <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
 <span class="n">delay</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -151,7 +150,7 @@ method.</p>
 <span class="k">class</span> <span class="nc">CustomTimer</span><span class="p">(</span><span class="n">PyfaceTimer</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">_perform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The time is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
 </pre></div>
 </div>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceTimer</span></code> and its subclasses provide a
@@ -215,7 +214,7 @@ trait, along with an optional tuple of
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">CallbackTimer</span>
 
 <span class="k">def</span> <span class="nf">print_time</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The time is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
 
 <span class="n">CallbackTimer</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="n">print_time</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
@@ -234,7 +233,7 @@ its <code class="xref py py-class docutils literal notranslate"><span class="pre
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.timer.api</span> <span class="kn">import</span> <span class="n">EventTimer</span>
 
 <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The time is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The time is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
 
 <span class="n">timer</span> <span class="o">=</span> <span class="n">EventTimer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">expire</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 <span class="n">timer</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">print_time</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span>
@@ -298,7 +297,7 @@ class for backwards compatability.  This class shouldn’t be used in new code.<
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -315,13 +314,13 @@ class for backwards compatability.  This class shouldn’t be used in new code.<
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

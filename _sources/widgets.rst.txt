@@ -62,6 +62,10 @@ the enabled state is accessible via the
 :attr:`~pyface.i_widget.IWidget.enabled` trait, or by calling
 :meth:`~pyface.i_widget.IWidget.enable`.
 
+Widgets also provide a trait :attr:`~pyface.i_widget.IWidget.tooltip` that
+provides a string to display to the user when they hover the mouse over the
+widget.  If the string is empty then there will be no tooltip displayed.
+
 IWidget Subclasses
 ==================
 
@@ -110,6 +114,14 @@ For custom dialogs, there are protected methods for creating the contents
 of the dialog and its buttons.  In most cases you will need to, at a minimum,
 override the :meth:`~pyface.i_dialog.IDialog._create_dialog_area` method to
 populate the widgets inside the main dialog.
+
+Pyface provides a number of standard dialog classes and convenience functions
+to access them.
+
+.. toctree::
+   :maxdepth: 2
+
+   standard_dialogs.rst
 
 IApplicationWindow
 ------------------

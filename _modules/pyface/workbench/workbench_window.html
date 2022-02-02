@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.workbench.workbench_window &mdash; pyface 7.3 documentation</title>
+    <title>pyface.workbench.workbench_window &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../../genindex.html" >
     <link rel="search" title="Search" href="../../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
     <link rel="up" title="Module code" href="../../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.workbench.workbench_window</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -92,20 +91,27 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 
 
-<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">GUI</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Constant</span><span class="p">,</span> <span class="n">Delegate</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span><span class="p">,</span> <span class="n">Undefined</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">observe</span><span class="p">,</span> <span class="n">provides</span>
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">GUI</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Constant</span><span class="p">,</span>
+    <span class="n">Delegate</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Undefined</span><span class="p">,</span>
+    <span class="n">Vetoable</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+<span class="p">)</span>
 
-
-<span class="kn">from</span> <span class="nn">.i_editor</span> <span class="k">import</span> <span class="n">IEditor</span>
-<span class="kn">from</span> <span class="nn">.i_editor_manager</span> <span class="k">import</span> <span class="n">IEditorManager</span>
-<span class="kn">from</span> <span class="nn">.i_perspective</span> <span class="k">import</span> <span class="n">IPerspective</span>
-<span class="kn">from</span> <span class="nn">.i_view</span> <span class="k">import</span> <span class="n">IView</span>
-<span class="kn">from</span> <span class="nn">.i_workbench_part</span> <span class="k">import</span> <span class="n">IWorkbenchPart</span>
-<span class="kn">from</span> <span class="nn">.perspective</span> <span class="k">import</span> <span class="n">Perspective</span>
-<span class="kn">from</span> <span class="nn">.workbench_window_layout</span> <span class="k">import</span> <span class="n">WorkbenchWindowLayout</span>
-<span class="kn">from</span> <span class="nn">.workbench_window_memento</span> <span class="k">import</span> <span class="n">WorkbenchWindowMemento</span>
+<span class="kn">from</span> <span class="nn">.i_editor</span> <span class="kn">import</span> <span class="n">IEditor</span>
+<span class="kn">from</span> <span class="nn">.i_editor_manager</span> <span class="kn">import</span> <span class="n">IEditorManager</span>
+<span class="kn">from</span> <span class="nn">.i_perspective</span> <span class="kn">import</span> <span class="n">IPerspective</span>
+<span class="kn">from</span> <span class="nn">.i_view</span> <span class="kn">import</span> <span class="n">IView</span>
+<span class="kn">from</span> <span class="nn">.i_workbench_part</span> <span class="kn">import</span> <span class="n">IWorkbenchPart</span>
+<span class="kn">from</span> <span class="nn">.perspective</span> <span class="kn">import</span> <span class="n">Perspective</span>
+<span class="kn">from</span> <span class="nn">.workbench_window_layout</span> <span class="kn">import</span> <span class="n">WorkbenchWindowLayout</span>
+<span class="kn">from</span> <span class="nn">.workbench_window_memento</span> <span class="kn">import</span> <span class="n">WorkbenchWindowMemento</span>
 
 
 <span class="c1"># Logging.</span>
@@ -329,7 +335,7 @@
     <span class="k">def</span> <span class="nf">_editor_manager_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Trait initializer. &quot;&quot;&quot;</span>
 
-        <span class="kn">from</span> <span class="nn">editor_manager</span> <span class="k">import</span> <span class="n">EditorManager</span>
+        <span class="kn">from</span> <span class="nn">.editor_manager</span> <span class="kn">import</span> <span class="n">EditorManager</span>
 
         <span class="k">return</span> <span class="n">EditorManager</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
@@ -370,7 +376,7 @@
 
         <span class="c1"># This case allows for views that are created and added dynamically</span>
         <span class="c1"># (i.e. they were not even known about when the window was created).</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">view</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">view</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WorkbenchWindow.close_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.workbench_window.html#pyface.workbench.workbench_window.WorkbenchWindow.close_editor">[docs]</a>    <span class="k">def</span> <span class="nf">close_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
@@ -997,7 +1003,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1014,13 +1020,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

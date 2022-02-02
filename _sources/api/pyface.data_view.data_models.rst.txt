@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.data_view.data_models.api
    pyface.data_view.data_models.array_data_model

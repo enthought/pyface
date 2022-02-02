@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.workbench.debug.debug_view module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.workbench.debug.debug_view module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.workbench.debug package" href="pyface.workbench.debug.html" >
     <link rel="next" title="pyface.workbench.api module" href="pyface.workbench.api.html" >
     <link rel="prev" title="pyface.workbench.debug.api module" href="pyface.workbench.debug.api.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.workbench.html" >pyface.workbench package</a></li>
@@ -91,27 +90,27 @@
   <div class="section" id="module-pyface.workbench.debug.debug_view">
 <span id="pyface-workbench-debug-debug-view-module"></span><h1>pyface.workbench.debug.debug_view module<a class="headerlink" href="#module-pyface.workbench.debug.debug_view" title="Permalink to this headline">¶</a></h1>
 <p>A view containing a main walter canvas.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.workbench.debug.debug_view.DebugViewModel">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.debug.debug_view.</code><code class="sig-name descname">DebugViewModel</code><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugViewModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.workbench.debug.debug_view.</span></code><code class="sig-name descname"><span class="pre">DebugViewModel</span></code><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugViewModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The model for the debug view!</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.workbench.debug.debug_view.DebugViewModel.refresh">
-<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugViewModel.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel.refresh" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">refresh</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugViewModel.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh the model.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.workbench.debug.debug_view.DebugView">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.debug.debug_view.</code><code class="sig-name descname">DebugView</code><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.workbench.debug.debug_view.</span></code><code class="sig-name descname"><span class="pre">DebugView</span></code><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.ui.qt4.workbench.view.View</span></code></p>
 <p>A view containing a main walter canvas.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.workbench.debug.debug_view.DebugView.create_control">
-<code class="sig-name descname">create_control</code><span class="sig-paren">(</span><em class="sig-param">parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugView.create_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">create_control</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/debug/debug_view.html#DebugView.create_control"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the toolkit-specific control that represents the view.</p>
 <p>‘parent’ is the toolkit-specific control that is the view’s parent.</p>
 </dd></dl>
@@ -149,7 +148,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -166,13 +165,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

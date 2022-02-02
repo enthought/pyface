@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.workbench.action.action_controller module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.workbench.action.action_controller module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.workbench.action package" href="pyface.workbench.action.html" >
     <link rel="next" title="pyface.workbench.action.api module" href="pyface.workbench.action.api.html" >
     <link rel="prev" title="pyface.workbench.action package" href="pyface.workbench.action.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.workbench.html" >pyface.workbench package</a></li>
@@ -91,18 +90,18 @@
   <div class="section" id="module-pyface.workbench.action.action_controller">
 <span id="pyface-workbench-action-action-controller-module"></span><h1>pyface.workbench.action.action_controller module<a class="headerlink" href="#module-pyface.workbench.action.action_controller" title="Permalink to this headline">¶</a></h1>
 <p>The action controller for workbench menu and tool bars.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.workbench.action.action_controller.ActionController">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.workbench.action.action_controller.</code><code class="sig-name descname">ActionController</code><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.workbench.action.action_controller.</span></code><code class="sig-name descname"><span class="pre">ActionController</span></code><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.action.action_controller.html#pyface.action.action_controller.ActionController" title="pyface.action.action_controller.ActionController"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.action.action_controller.ActionController</span></code></a></p>
 <p>The action controller for workbench menu and tool bars.</p>
 <p>The controller is used to ‘hook’ the invocation of every action on the menu
 and tool bars. This is done so that additional (and workbench specific)
 information can be added to action events. Currently, we attach a reference
 to the workbench window.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.workbench.action.action_controller.ActionController.perform">
-<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/action/action_controller.html#ActionController.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control an action invocation.</p>
 </dd></dl>
 
@@ -139,7 +138,7 @@ to the workbench window.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -156,13 +155,13 @@ to the workbench window.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

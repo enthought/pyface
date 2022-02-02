@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.exporters.row_exporter module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.exporters.row_exporter module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.exporters package" href="pyface.data_view.exporters.html" >
     <link rel="next" title="pyface.data_view.value_types package" href="pyface.data_view.value_types.html" >
     <link rel="prev" title="pyface.data_view.exporters.item_exporter module" href="pyface.data_view.exporters.item_exporter.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -90,9 +89,9 @@
             
   <div class="section" id="module-pyface.data_view.exporters.row_exporter">
 <span id="pyface-data-view-exporters-row-exporter-module"></span><h1>pyface.data_view.exporters.row_exporter module<a class="headerlink" href="#module-pyface.data_view.exporters.row_exporter" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.data_view.exporters.row_exporter.RowExporter">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.exporters.row_exporter.</code><code class="sig-name descname">RowExporter</code><a class="reference internal" href="../_modules/pyface/data_view/exporters/row_exporter.html#RowExporter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.exporters.row_exporter.</span></code><code class="sig-name descname"><span class="pre">RowExporter</span></code><a class="reference internal" href="../_modules/pyface/data_view/exporters/row_exporter.html#RowExporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter" title="pyface.data_view.abstract_data_exporter.AbstractDataExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.abstract_data_exporter.AbstractDataExporter</span></code></a></p>
 <p>Export a collection of rows from a data view as a list of lists.</p>
 <p>This is suitable for drag and drop or copying of the content of multiple
@@ -104,21 +103,21 @@ from the model.</p>
 <code class="docutils literal notranslate"><span class="pre">get_text()</span></code> method to extract the values, otherwise it will
 try to use the editor value if it exists, and failing that
 the raw value returned from the model.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.data_view.exporters.row_exporter.RowExporter.row_headers">
-<code class="sig-name descname">row_headers</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.row_headers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">row_headers</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool()</span></em><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.row_headers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not to include row headers.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.data_view.exporters.row_exporter.RowExporter.column_headers">
-<code class="sig-name descname">column_headers</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.column_headers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">column_headers</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool()</span></em><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.column_headers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not to include column headers.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.exporters.row_exporter.RowExporter.get_data">
-<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">indices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/exporters/row_exporter.html#RowExporter.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.get_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/exporters/row_exporter.html#RowExporter.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.exporters.row_exporter.RowExporter.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the data to be exported from the model and indices.</p>
 <p>This exports a list of data associated with each row in the
 indices.  Each row item is itself a list of values extracted
@@ -172,7 +171,7 @@ from the model.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -189,13 +188,13 @@ from the model.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

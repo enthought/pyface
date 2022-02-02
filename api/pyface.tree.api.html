@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tree.api module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tree.api module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.tree package" href="pyface.tree.html" >
     <link rel="next" title="pyface.tree.node_event module" href="pyface.tree.node_event.html" >
     <link rel="prev" title="pyface.tree package" href="pyface.tree.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tree.html" accesskey="U">pyface.tree package</a></li> 
@@ -89,6 +88,23 @@
             
   <div class="section" id="module-pyface.tree.api">
 <span id="pyface-tree-api-module"></span><h1>pyface.tree.api module<a class="headerlink" href="#module-pyface.tree.api" title="Permalink to this headline">¶</a></h1>
+<p>API for the <code class="docutils literal notranslate"><span class="pre">pyface.tree</span></code> subpackage.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.tree.node_event.html#pyface.tree.node_event.NodeEvent" title="pyface.tree.node_event.NodeEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeEvent</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor" title="pyface.tree.node_monitor.NodeMonitor"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeMonitor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.node_manager.html#pyface.tree.node_manager.NodeManager" title="pyface.tree.node_manager.NodeManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeManager</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree" title="pyface.tree.node_tree.NodeTree"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeTree</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.node_tree_model.html#pyface.tree.node_tree_model.NodeTreeModel" title="pyface.tree.node_tree_model.NodeTreeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeTreeModel</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.node_type.html#pyface.tree.node_type.NodeType" title="pyface.tree.node_type.NodeType"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeType</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.trait_dict_node_type.html#pyface.tree.trait_dict_node_type.TraitDictNodeType" title="pyface.tree.trait_dict_node_type.TraitDictNodeType"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitDictNodeType</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.trait_list_node_type.html#pyface.tree.trait_list_node_type.TraitListNodeType" title="pyface.tree.trait_list_node_type.TraitListNodeType"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitListNodeType</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.tree.tree_model.html#pyface.tree.tree_model.TreeModel" title="pyface.tree.tree_model.TreeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TreeModel</span></code></a></p></li>
+</ul>
+<p>Note that the following classes are only available in the Wx toolkit at the
+moment.</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tree</span></code>.</p></li>
+</ul>
 </div>
 
 
@@ -120,7 +136,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -137,13 +153,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

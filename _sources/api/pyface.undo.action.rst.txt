@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.undo.action.abstract_command_stack_action
    pyface.undo.action.api

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Pyface Applications &mdash; pyface 7.3 documentation</title>
+    <title>Pyface Applications &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,15 +24,14 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
     <link rel="next" title="Trait Types" href="traits.html" >
-    <link rel="prev" title="Widgets" href="widgets.html" > 
+    <link rel="prev" title="Standard Dialogs" href="standard_dialogs.html" > 
   </head>
   <body>
   <div class="container">
@@ -49,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
 	 
     </ul>
               
@@ -68,7 +67,7 @@
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="widgets.html" title="Widgets"
+        <a href="standard_dialogs.html" title="Standard Dialogs"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -129,14 +128,14 @@ has some traits for metadata about the application, primarily the
 human-readable application name, a description of the application, and a
 globally unique application id.  The application also has traits holding
 platform-dependent “home” and “user” directory paths, which by default are
-provided by <code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code> which give reasonable platform-dependent
+provided by <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/traits.etsconfig.html#module-traits.etsconfig" title="(in traits v6.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code></a> which give reasonable platform-dependent
 results.</p>
 <div class="section" id="application-example">
 <h3>Application Example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h3>
 <p>A simple command-line application might look something like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">from</span> <span class="nn">pyface.application</span> <span class="k">import</span> <span class="n">Application</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Str</span>
+<span class="kn">from</span> <span class="nn">pyface.application</span> <span class="kn">import</span> <span class="n">Application</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Str</span>
 
 <span class="k">class</span> <span class="nc">HelloApplication</span><span class="p">(</span><span class="n">Application</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Simple application subclass that greets a location. &quot;&quot;&quot;</span>
@@ -145,7 +144,7 @@ results.</p>
     <span class="n">location</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;world&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">HelloApplication</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_run</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_run</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -216,8 +215,8 @@ application has two parts: a
 responsible for creating the Python shell widget, and a window factory which
 is responsible for creating the windows and populating the menu bar.</p>
 <p>The application window subclass looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">PythonShell</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Instance</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">PythonShell</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Instance</span>
 
 <span class="k">class</span> <span class="nc">PythonShellWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; An application window that displays a simple Python shell. &quot;&quot;&quot;</span>
@@ -238,12 +237,12 @@ is responsible for creating the windows and populating the menu bar.</p>
 this class to work - it is a perfectly good stand-alone class that can
 potentially be re-used in many different contexts.</p>
 <p>While the GUI application window subclass looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">GUIApplication</span>
-<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">GUIApplication</span>
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AboutAction</span><span class="p">,</span> <span class="n">CloseWindowAction</span><span class="p">,</span> <span class="n">CreateWindowAction</span><span class="p">,</span> <span class="n">ExitAction</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span>
     <span class="n">MenuBarManager</span><span class="p">,</span> <span class="n">MenuManager</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">python_shell_window</span> <span class="k">import</span> <span class="n">PythonShellWindow</span>
+<span class="kn">from</span> <span class="nn">python_shell_window</span> <span class="kn">import</span> <span class="n">PythonShellWindow</span>
 
 <span class="k">def</span> <span class="nf">create_python_shell_window</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">window</span> <span class="o">=</span> <span class="n">PythonShellWindow</span><span class="p">()</span>
@@ -292,8 +291,8 @@ application-specific <code class="xref py py-class docutils literal notranslate"
 and <code class="xref py py-class docutils literal notranslate"><span class="pre">DockPane</span></code> via factories for creating
 the dock panes.</p>
 <p>A complete <a class="reference internal" href="api/pyface.tasks.tasks_application.html#pyface.tasks.tasks_application.TasksApplication" title="pyface.tasks.tasks_application.TasksApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">TasksApplication</span></code></a> can be as simple as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.tasks.api</span> <span class="k">import</span> <span class="n">TaskFactory</span><span class="p">,</span> <span class="n">TasksApplication</span>
-<span class="kn">from</span> <span class="nn">python_editor_task</span> <span class="k">import</span> <span class="n">PythonEditorTask</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.tasks.api</span> <span class="kn">import</span> <span class="n">TaskFactory</span><span class="p">,</span> <span class="n">TasksApplication</span>
+<span class="kn">from</span> <span class="nn">python_editor_task</span> <span class="kn">import</span> <span class="n">PythonEditorTask</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">TasksApplication</span><span class="p">(</span>
@@ -350,8 +349,8 @@ the dock panes.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="widgets.html"
-                        title="previous chapter">Widgets</a></p>
+  <p class="topless"><a href="standard_dialogs.html"
+                        title="previous chapter">Standard Dialogs</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="traits.html"
                         title="next chapter">Trait Types</a></p>
@@ -369,7 +368,7 @@ the dock panes.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -386,13 +385,13 @@ the dock panes.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

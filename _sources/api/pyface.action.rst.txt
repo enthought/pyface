@@ -6,10 +6,19 @@ pyface.action package
    :undoc-members:
    :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pyface.action.schema
+
 Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.action.action
    pyface.action.action_controller

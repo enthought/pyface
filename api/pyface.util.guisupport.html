@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.util.guisupport module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.util.guisupport module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,16 +24,15 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.util package" href="pyface.util.html" >
     <link rel="next" title="pyface.util.id_helper module" href="pyface.util.id_helper.html" >
-    <link rel="prev" title="pyface.util.color_parser module" href="pyface.util.color_parser.html" > 
+    <link rel="prev" title="pyface.util.gui_test_assistant module" href="pyface.util.gui_test_assistant.html" > 
   </head>
   <body>
   <div class="container">
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.util.html" accesskey="U">pyface.util package</a></li> 
@@ -71,7 +70,7 @@
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.util.color_parser.html" title="pyface.util.color_parser module"
+        <a href="pyface.util.gui_test_assistant.html" title="pyface.util.gui_test_assistant module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -141,39 +140,39 @@ attempt to defer these things to someone else if they themselves need it.</p></l
 to create custom application subclasses, you will likely have to modify this
 code for your own purposes. This code can be copied into your own project
 so you don’t have to depend on IPython.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.get_app_wx">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">get_app_wx</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#get_app_wx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">get_app_wx</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#get_app_wx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new wx app or return an exiting one.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.is_event_loop_running_wx">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">is_event_loop_running_wx</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#is_event_loop_running_wx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">is_event_loop_running_wx</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#is_event_loop_running_wx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the wx event loop running.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.start_event_loop_wx">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">start_event_loop_wx</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#start_event_loop_wx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">start_event_loop_wx</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#start_event_loop_wx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the wx event loop in a consistent manner.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.get_app_qt4">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">get_app_qt4</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#get_app_qt4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">get_app_qt4</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#get_app_qt4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new qt4 app or return an existing one.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.is_event_loop_running_qt4">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">is_event_loop_running_qt4</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#is_event_loop_running_qt4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">is_event_loop_running_qt4</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#is_event_loop_running_qt4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the qt4 event loop running.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.util.guisupport.start_event_loop_qt4">
-<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">start_event_loop_qt4</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#start_event_loop_qt4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.util.guisupport.</span></code><code class="sig-name descname"><span class="pre">start_event_loop_qt4</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/guisupport.html#start_event_loop_qt4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the qt4 event loop in a consistent manner.</p>
 </dd></dl>
 
@@ -189,8 +188,8 @@ so you don’t have to depend on IPython.</p>
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.util.color_parser.html"
-                        title="previous chapter">pyface.util.color_parser module</a></p>
+  <p class="topless"><a href="pyface.util.gui_test_assistant.html"
+                        title="previous chapter">pyface.util.gui_test_assistant module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.util.id_helper.html"
                         title="next chapter">pyface.util.id_helper module</a></p>
@@ -208,7 +207,7 @@ so you don’t have to depend on IPython.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -225,13 +224,13 @@ so you don’t have to depend on IPython.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

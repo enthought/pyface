@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.workbench.debug.api
    pyface.workbench.debug.debug_view

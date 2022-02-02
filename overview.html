@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Overview &mdash; pyface 7.3 documentation</title>
+    <title>Overview &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
     <link rel="next" title="Toolkits" href="toolkits.html" >
     <link rel="prev" title="Welcome to the Pyface Documentation!" href="index.html" > 
   </head>
@@ -49,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
 	 
     </ul>
               
@@ -128,7 +127,7 @@ as the <a class="reference internal" href="api/pyface.i_file_dialog.html#pyface.
 <p>Finally, the toolkit selected for use determines which backend class is
 actually used when a program is run, allowing a developer to write code like
 the following to generate a platform-independent file dialog:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">FileDialog</span><span class="p">,</span> <span class="n">OK</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">FileDialog</span><span class="p">,</span> <span class="n">OK</span>
 
 <span class="k">def</span> <span class="nf">open_python_file</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot; Ask the user for a Python file to open &quot;&quot;&quot;</span>
@@ -151,7 +150,7 @@ and use the <code class="xref py py-class docutils literal notranslate"><span cl
 mainloop.</p>
 <p>This example shows how to create an application window containing a simple text
 label:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">HeadingText</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span><span class="p">,</span> <span class="n">HeadingText</span>
 
 <span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The main application window. &quot;&quot;&quot;</span>
@@ -175,7 +174,7 @@ widgets instead.</p>
 <p>Having defined your main window class, you then need to create an instance of
 it, open it, and start the event loop.  We do this in a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function
 for our application:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">GUI</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">GUI</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="c1"># Create the GUI.</span>
@@ -210,7 +209,7 @@ method.</p>
 <p>The <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action.on_perform" title="pyface.action.action.Action.on_perform"><code class="xref py py-attr docutils literal notranslate"><span class="pre">on_perform</span></code></a> is a callable that should expect no parameters to
 be passed to it, so it should have all the context it needs to do what it
 needs.  At its simplest, the action might look something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">Action</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">Action</span>
 
 <span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
     <span class="nb">print</span> <span class="s1">&#39;Hello world!&#39;</span>
@@ -225,7 +224,7 @@ needs.  At its simplest, the action might look something like this:</p>
 </div>
 <p>The equivalent written as a subclass of <a class="reference internal" href="api/pyface.action.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">Action</span></code></a> would look like
 this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="k">import</span> <span class="n">Action</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">Action</span>
 
 <span class="k">class</span> <span class="nc">HelloAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
 
@@ -251,11 +250,11 @@ define a very simple Python editor application with menus:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The main application window. &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Creates a new application window. &quot;&quot;&quot;</span>
 
         <span class="c1"># Base class constructor.</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
 
         <span class="c1"># Add a menu bar.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">MenuBarManager</span><span class="p">(</span>
@@ -327,7 +326,7 @@ to embed in the toolbar.  At its simplest this is done by specifying the
 <a class="reference internal" href="api/pyface.fields.i_field.html#pyface.fields.i_field.IField" title="pyface.fields.i_field.IField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IField</span></code></a> class and a dictionary of parameters
 that specify the behaviour, and use this as the factory to create the
 embedded widget.  <a class="reference internal" href="api/pyface.action.field_action.html#pyface.action.field_action.FieldAction" title="pyface.action.field_action.FieldAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldAction</span></code></a> also overrides the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">perform</span></code> method to pass the new value of the field
+<a class="reference internal" href="api/pyface.action.field_action.html#pyface.action.field_action.FieldAction.perform" title="pyface.action.field_action.FieldAction.perform"><code class="xref py py-attr docutils literal notranslate"><span class="pre">perform</span></code></a> method to pass the new value of the field
 to the <code class="xref py py-class docutils literal notranslate"><span class="pre">on_perform</span></code> method.</p>
 <p>The second is the <a class="reference internal" href="api/pyface.action.traitsui_widget_action.html#pyface.action.traitsui_widget_action.TraitsUIWidgetAction" title="pyface.action.traitsui_widget_action.TraitsUIWidgetAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsUIWidgetAction</span></code></a>
 class which embeds an arbitrary TraitsUI in the toolbar.</p>
@@ -453,7 +452,7 @@ libraries which can produce a toolkit-specific control.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -470,13 +469,13 @@ libraries which can produce a toolkit-specific control.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

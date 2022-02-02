@@ -63,7 +63,7 @@ while the ``wx`` backend will look for
 :py:mod:`pyface.ui.wx.my_package.my_widget`.
 
 If no matching object is found, the toolkit will return a special
-:py:class:`Undefined` class that will raise :py:exception:`NotImplementedError`
+:py:class:`Undefined` class that will raise :py:exc:`NotImplementedError`
 when instantiated.
 
 The basic toolkit implementation provides two other features which may be of

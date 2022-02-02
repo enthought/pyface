@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface &mdash; pyface 7.3 documentation</title>
+    <title>pyface &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" > 
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" > 
   </head>
   <body>
   <div class="container">
@@ -47,7 +46,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	 
     </ul>
               
@@ -81,6 +80,7 @@
 <li class="toctree-l1"><a class="reference internal" href="pyface.html">pyface package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyface.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyface.action.html">pyface.action package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.action.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyface.action.html#submodules">Submodules</a></li>
 </ul>
 </li>
@@ -112,6 +112,10 @@
 <li class="toctree-l3"><a class="reference internal" href="pyface.tasks.html">pyface.tasks package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyface.tasks.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyface.tasks.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.testing.html">pyface.testing package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.testing.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.timer.html">pyface.timer package</a><ul>
@@ -148,9 +152,17 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pyface.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyface.about_dialog.html">pyface.about_dialog module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyface.api.html">pyface.api module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.api.html">pyface.api module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.api.html#dialogs">Dialogs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.api.html#constants">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.api.html#ui-traits">UI Traits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.api.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.api.html#wx-specific-classes">Wx-specific classes</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.application.html">pyface.application module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.application_window.html">pyface.application_window module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.array_image.html">pyface.array_image module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.base_toolkit.html">pyface.base_toolkit module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyface.base_toolkit.html#default-toolkit-loading-logic">Default toolkit loading logic</a></li>
 </ul>
@@ -158,6 +170,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyface.beep.html">pyface.beep module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.clipboard.html">pyface.clipboard module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.color.html">pyface.color module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.color_dialog.html">pyface.color_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.confirmation_dialog.html">pyface.confirmation_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.constant.html">pyface.constant module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.dialog.html">pyface.dialog module</a></li>
@@ -166,22 +179,35 @@
 <li class="toctree-l3"><a class="reference internal" href="pyface.expandable_panel.html">pyface.expandable_panel module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.file_dialog.html">pyface.file_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.filter.html">pyface.filter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.font.html">pyface.font module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyface.font.html#font-properties">Font Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyface.font.html#font-specificiation-class">Font Specificiation Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.font_dialog.html">pyface.font_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.gui.html">pyface.gui module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.gui_application.html">pyface.gui_application module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.heading_text.html">pyface.heading_text module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_about_dialog.html">pyface.i_about_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_application_window.html">pyface.i_application_window module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_clipboard.html">pyface.i_clipboard module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_color_dialog.html">pyface.i_color_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_confirmation_dialog.html">pyface.i_confirmation_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_dialog.html">pyface.i_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_directory_dialog.html">pyface.i_directory_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_drop_handler.html">pyface.i_drop_handler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_file_dialog.html">pyface.i_file_dialog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_font_dialog.html">pyface.i_font_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_gui.html">pyface.i_gui module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_heading_text.html">pyface.i_heading_text module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_image.html">pyface.i_image module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_image_cache.html">pyface.i_image_cache module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_image_resource.html">pyface.i_image_resource module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_layered_panel.html">pyface.i_layered_panel module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_layout_item.html">pyface.i_layout_item module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_layout_widget.html">pyface.i_layout_widget module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_message_dialog.html">pyface.i_message_dialog module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.i_pil_image.html">pyface.i_pil_image module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_progress_dialog.html">pyface.i_progress_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_python_editor.html">pyface.i_python_editor module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.i_python_shell.html">pyface.i_python_shell module</a></li>
@@ -197,6 +223,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyface.ipython_widget.html">pyface.ipython_widget module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.key_pressed_event.html">pyface.key_pressed_event module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.layered_panel.html">pyface.layered_panel module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.layout_widget.html">pyface.layout_widget module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.list_box.html">pyface.list_box module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.list_box_model.html">pyface.list_box_model module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.mdi_application_window.html">pyface.mdi_application_window module</a></li>
@@ -204,6 +231,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyface.message_dialog.html">pyface.message_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.mimedata.html">pyface.mimedata module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.multi_toolbar_window.html">pyface.multi_toolbar_window module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.pil_image.html">pyface.pil_image module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.progress_dialog.html">pyface.progress_dialog module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.python_editor.html">pyface.python_editor module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyface.python_shell.html">pyface.python_shell module</a></li>
@@ -252,7 +280,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -269,13 +297,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.task_window_layout module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tasks.task_window_layout module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.tasks_application module" href="pyface.tasks.tasks_application.html" >
     <link rel="prev" title="pyface.tasks.task_window_backend module" href="pyface.tasks.task_window_backend.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -89,59 +88,59 @@
             
   <div class="section" id="module-pyface.tasks.task_window_layout">
 <span id="pyface-tasks-task-window-layout-module"></span><h1>pyface.tasks.task_window_layout module<a class="headerlink" href="#module-pyface.tasks.task_window_layout" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.task_window_layout.</code><code class="sig-name descname">TaskWindowLayout</code><span class="sig-paren">(</span><em class="sig-param">*items</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.tasks.task_window_layout.</span></code><code class="sig-name descname"><span class="pre">TaskWindowLayout</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutContainer" title="pyface.tasks.task_layout.LayoutContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task_layout.LayoutContainer</span></code></a></p>
 <p>The layout of a TaskWindow.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.active_task">
-<code class="sig-name descname">active_task</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.active_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">active_task</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.active_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ID of the active task. If unspecified, the first task will be
 active.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.items">
-<code class="sig-name descname">items</code><em class="property"> = List(Either(Str, Instance(TaskLayout)), pretty_skip=True)</em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.items" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">items</span></code><em class="property"> <span class="pre">=</span> <span class="pre">List(Union(Str,</span> <span class="pre">Instance(TaskLayout)),</span> <span class="pre">pretty_skip=True)</span></em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.items" title="Permalink to this definition">¶</a></dt>
 <dd><p>The tasks contained in the window. If an ID is specified, the task will
 use its default layout. Otherwise, it will use the specified TaskLayout</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.position">
-<code class="sig-name descname">position</code><em class="property"> = Tuple(-1, -1)</em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">position</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple(-1,</span> <span class="pre">-1)</span></em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.position" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position of the window.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.size">
-<code class="sig-name descname">size</code><em class="property"> = Tuple(800, 600)</em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.size" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">size</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple(800,</span> <span class="pre">600)</span></em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>The size of the window.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.size_state">
-<code class="sig-name descname">size_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;maximized&quot;)</em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.size_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">size_state</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Enum(&quot;normal&quot;,</span> <span class="pre">&quot;maximized&quot;)</span></em><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.size_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the application is maximized.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.get_active_task">
-<code class="sig-name descname">get_active_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.get_active_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.get_active_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_active_task</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.get_active_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.get_active_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ID of the active task in the layout, or None if there is
 no active task.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.get_tasks">
-<code class="sig-name descname">get_tasks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.get_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.get_tasks" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_tasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.get_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.get_tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the IDs of the tasks in the layout.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.tasks.task_window_layout.TaskWindowLayout.is_equivalent_to">
-<code class="sig-name descname">is_equivalent_to</code><span class="sig-paren">(</span><em class="sig-param">layout</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.is_equivalent_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.is_equivalent_to" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_equivalent_to</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/tasks/task_window_layout.html#TaskWindowLayout.is_equivalent_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.tasks.task_window_layout.TaskWindowLayout.is_equivalent_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether two layouts are equivalent, i.e. whether they
 contain the same tasks.</p>
 </dd></dl>
@@ -179,7 +178,7 @@ contain the same tasks.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -196,13 +195,13 @@ contain the same tasks.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.data_models.api module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.data_models.api module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view.data_models package" href="pyface.data_view.data_models.html" >
     <link rel="next" title="pyface.data_view.data_models.array_data_model module" href="pyface.data_view.data_models.array_data_model.html" >
     <link rel="prev" title="pyface.data_view.data_models package" href="pyface.data_view.data_models.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" >pyface.data_view package</a></li>
@@ -90,6 +89,25 @@
             
   <div class="section" id="module-pyface.data_view.data_models.api">
 <span id="pyface-data-view-data-models-api-module"></span><h1>pyface.data_view.data_models.api module<a class="headerlink" href="#module-pyface.data_view.data_models.api" title="Permalink to this headline">¶</a></h1>
+<p>API for the <code class="docutils literal notranslate"><span class="pre">pyface.data_view.data_models</span></code> subpackage.</p>
+<div class="section" id="data-accessors">
+<h2>Data Accessors<a class="headerlink" href="#data-accessors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.data_models.data_accessors.html#pyface.data_view.data_models.data_accessors.AbstractDataAccessor" title="pyface.data_view.data_models.data_accessors.AbstractDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataAccessor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_models.data_accessors.html#pyface.data_view.data_models.data_accessors.AttributeDataAccessor" title="pyface.data_view.data_models.data_accessors.AttributeDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeDataAccessor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_models.data_accessors.html#pyface.data_view.data_models.data_accessors.ConstantDataAccessor" title="pyface.data_view.data_models.data_accessors.ConstantDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantDataAccessor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_models.data_accessors.html#pyface.data_view.data_models.data_accessors.IndexDataAccessor" title="pyface.data_view.data_models.data_accessors.IndexDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">IndexDataAccessor</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_models.data_accessors.html#pyface.data_view.data_models.data_accessors.KeyDataAccessor" title="pyface.data_view.data_models.data_accessors.KeyDataAccessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyDataAccessor</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="data-models">
+<h2>Data Models<a class="headerlink" href="#data-models" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.data_models.row_table_data_model.html#pyface.data_view.data_models.row_table_data_model.RowTableDataModel" title="pyface.data_view.data_models.row_table_data_model.RowTableDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RowTableDataModel</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_models.array_data_model.html#pyface.data_view.data_models.array_data_model.ArrayDataModel" title="pyface.data_view.data_models.array_data_model.ArrayDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataModel</span></code></a>. Note that this data model is only available if
+<code class="docutils literal notranslate"><span class="pre">numpy</span></code> is available in the environment.</p></li>
+</ul>
+</div>
 </div>
 
 
@@ -101,6 +119,15 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.data_view.data_models.api module</a><ul>
+<li><a class="reference internal" href="#data-accessors">Data Accessors</a></li>
+<li><a class="reference internal" href="#data-models">Data Models</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pyface.data_view.data_models.html"
                         title="previous chapter">pyface.data_view.data_models package</a></p>
@@ -121,7 +148,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -138,13 +165,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

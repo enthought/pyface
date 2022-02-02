@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_window &mdash; pyface 7.3 documentation</title>
+    <title>pyface.i_window &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../genindex.html" >
     <link rel="search" title="Search" href="../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
     <link rel="up" title="Module code" href="../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.i_window</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -92,12 +91,12 @@
 <span class="sd">&quot;&quot;&quot; The abstract interface for all pyface top-level windows. &quot;&quot;&quot;</span>
 
 
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span><span class="p">,</span> <span class="n">VetoableEvent</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span><span class="p">,</span> <span class="n">VetoableEvent</span>
 
 
-<span class="kn">from</span> <span class="nn">pyface.constant</span> <span class="k">import</span> <span class="n">NO</span>
-<span class="kn">from</span> <span class="nn">pyface.key_pressed_event</span> <span class="k">import</span> <span class="n">KeyPressedEvent</span>
-<span class="kn">from</span> <span class="nn">pyface.i_widget</span> <span class="k">import</span> <span class="n">IWidget</span>
+<span class="kn">from</span> <span class="nn">pyface.constant</span> <span class="kn">import</span> <span class="n">NO</span>
+<span class="kn">from</span> <span class="nn">pyface.key_pressed_event</span> <span class="kn">import</span> <span class="n">KeyPressedEvent</span>
+<span class="kn">from</span> <span class="nn">pyface.i_widget</span> <span class="kn">import</span> <span class="n">IWidget</span>
 
 
 <div class="viewcode-block" id="IWindow"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow">[docs]</a><span class="k">class</span> <span class="nc">IWindow</span><span class="p">(</span><span class="n">IWidget</span><span class="p">):</span>
@@ -199,7 +198,12 @@
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="IWindow.information"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.information">[docs]</a>    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show an information message dialog.</span>
 
@@ -213,10 +217,20 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="IWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="IWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show a warning message dialog.</span>
 
 <span class="sd">        Parameters</span>
@@ -229,10 +243,20 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="IWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="IWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show an error message dialog.</span>
 
 <span class="sd">        Parameters</span>
@@ -245,6 +269,9 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span></div></div>
 
@@ -328,12 +355,17 @@
 <span class="sd">        default : NO, YES or CANCEL</span>
 <span class="sd">            Which button should be the default button.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.confirmation_dialog</span> <span class="k">import</span> <span class="n">confirm</span>
+        <span class="kn">from</span> <span class="nn">.confirmation_dialog</span> <span class="kn">import</span> <span class="n">confirm</span>
 
         <span class="k">return</span> <span class="n">confirm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MWindow.information"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.information">[docs]</a>    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show an information message dialog.</span>
 
@@ -347,13 +379,26 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="k">import</span> <span class="n">information</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">information</span>
 
-        <span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">)</span></div>
+        <span class="n">information</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="MWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show a warning message dialog.</span>
 
 <span class="sd">        Parameters</span>
@@ -366,13 +411,26 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="k">import</span> <span class="n">warning</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">warning</span>
 
-        <span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">)</span></div>
+        <span class="n">warning</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="MWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="MWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Convenience method to show an error message dialog.</span>
 
 <span class="sd">        Parameters</span>
@@ -385,11 +443,15 @@
 <span class="sd">            Further details about the message.</span>
 <span class="sd">        informative : str</span>
 <span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="k">import</span> <span class="n">error</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">error</span>
 
-        <span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">)</span></div></div>
+        <span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -409,7 +471,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -426,13 +488,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

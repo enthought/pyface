@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.i_data_wrapper module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.i_data_wrapper module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
     <link rel="next" title="pyface.data_view.index_manager module" href="pyface.data_view.index_manager.html" >
     <link rel="prev" title="pyface.data_view.i_data_view_widget module" href="pyface.data_view.i_data_view_widget.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
@@ -89,59 +88,59 @@
             
   <div class="section" id="module-pyface.data_view.i_data_wrapper">
 <span id="pyface-data-view-i-data-wrapper-module"></span><h1>pyface.data_view.i_data_wrapper module<a class="headerlink" href="#module-pyface.data_view.i_data_wrapper" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.data_view.i_data_wrapper.DataFormat">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.i_data_wrapper.</code><code class="sig-name descname">DataFormat</code><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#DataFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.i_data_wrapper.</span></code><code class="sig-name descname"><span class="pre">DataFormat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mimetype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">serialize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deserialize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#DataFormat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <p>Information about a mimetype and serializers.</p>
 <p>Simple namedtuple-based class that stores the mimetype, serializer and
 deserializer together.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.DataFormat.mimetype">
-<em class="property">property </em><code class="sig-name descname">mimetype</code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.mimetype" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mimetype</span></code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.mimetype" title="Permalink to this definition">¶</a></dt>
 <dd><p>The mimetype of the data.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.DataFormat.serialize">
-<em class="property">property </em><code class="sig-name descname">serialize</code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.serialize" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">serialize</span></code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.serialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>A callable that serializes this format.  It should take an python
 object of a supported type, and return a bytestring.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.DataFormat.deserialize">
-<em class="property">property </em><code class="sig-name descname">deserialize</code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.deserialize" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">deserialize</span></code><a class="headerlink" href="#pyface.data_view.i_data_wrapper.DataFormat.deserialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>A callable that deserializes this format.  It should take a
 bytestring and return the extracted object.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="pyface.data_view.i_data_wrapper.text_format">
-<code class="sig-prename descclassname">pyface.data_view.i_data_wrapper.</code><code class="sig-name descname">text_format</code><span class="sig-paren">(</span><em class="sig-param">encoding='utf-8'</em>, <em class="sig-param">mimetype='text/plain'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#text_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.text_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.i_data_wrapper.</span></code><code class="sig-name descname"><span class="pre">text_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mimetype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text/plain'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#text_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.text_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>DataFormat factory for text mimetypes.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.i_data_wrapper.</code><code class="sig-name descname">IDataWrapper</code><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.i_data_wrapper.</span></code><code class="sig-name descname"><span class="pre">IDataWrapper</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.Interface" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></a></p>
 <p>Wrapper around polymorphic toolkit data object containing mimedata.</p>
 <p>To support clipboard and drag and drop operations, toolkits need a way
 of generically representing data in multiple formats.  This is a wrapper
 class that provides a toolkit independent intreface to these classes
 which allow the exchange of data, with types specified by MIME types.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.toolkit_data">
-<code class="sig-name descname">toolkit_data</code><em class="property"> = Any()</em><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.toolkit_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">toolkit_data</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Any()</span></em><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.toolkit_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>The toolkit data object.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.mimetypes">
-<code class="sig-name descname">mimetypes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.mimetypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.mimetypes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mimetypes</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.mimetypes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.mimetypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a set of mimetypes holding data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -154,9 +153,9 @@ object.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.has_format">
-<code class="sig-name descname">has_format</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.has_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.has_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.has_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.has_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a particular format has available data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -167,14 +166,14 @@ object.</p>
 underlying toolkit object.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.get_format">
-<code class="sig-name descname">get_format</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.get_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.get_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.get_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.get_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>The decoded data associted with the format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -189,9 +188,9 @@ underlying toolkit object.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.set_format">
-<code class="sig-name descname">set_format</code><span class="sig-paren">(</span><em class="sig-param">format</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.set_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.set_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.set_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.set_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Encode and set data for the format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -203,32 +202,32 @@ underlying toolkit object.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.get_mimedata">
-<code class="sig-name descname">get_mimedata</code><span class="sig-paren">(</span><em class="sig-param">mimetype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.get_mimedata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.get_mimedata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_mimedata</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mimetype</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.get_mimedata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.get_mimedata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get raw data for the given media type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mimetype</strong> (<em>str</em>) – The mime media type to be extracted.</p>
+<dd class="field-odd"><p><strong>mimetype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The mime media type to be extracted.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>mimedata</strong> – The mime media data as bytes.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bytes</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.IDataWrapper.set_mimedata">
-<code class="sig-name descname">set_mimedata</code><span class="sig-paren">(</span><em class="sig-param">mimetype</em>, <em class="sig-param">mimedata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.set_mimedata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.set_mimedata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_mimedata</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mimetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mimedata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#IDataWrapper.set_mimedata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.IDataWrapper.set_mimedata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set raw data for the given media type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mimetype</strong> (<em>str</em>) – The mime media type to be extracted.</p></li>
-<li><p><strong>mimedata</strong> (<em>bytes</em>) – The mime media data encoded as bytes..</p></li>
+<li><p><strong>mimetype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The mime media type to be extracted.</p></li>
+<li><p><strong>mimedata</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The mime media data encoded as bytes..</p></li>
 </ul>
 </dd>
 </dl>
@@ -236,16 +235,16 @@ underlying toolkit object.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.data_view.i_data_wrapper.MDataWrapper">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.data_view.i_data_wrapper.</code><code class="sig-name descname">MDataWrapper</code><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.i_data_wrapper.</span></code><code class="sig-name descname"><span class="pre">MDataWrapper</span></code><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasStrictTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></a></p>
 <p>Mixin class for DataWrappers.</p>
 <p>This provides standard methods for using DataFormat objects, but not the
 low-level communication with the underlying toolkit.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.MDataWrapper.has_format">
-<code class="sig-name descname">has_format</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.has_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.has_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.has_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.has_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a particular format has available data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -256,14 +255,14 @@ low-level communication with the underlying toolkit.</p>
 underlying toolkit object.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.MDataWrapper.get_format">
-<code class="sig-name descname">get_format</code><span class="sig-paren">(</span><em class="sig-param">format</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.get_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.get_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.get_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.get_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>The decoded data associted with the format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -278,9 +277,9 @@ underlying toolkit object.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.data_view.i_data_wrapper.MDataWrapper.set_format">
-<code class="sig-name descname">set_format</code><span class="sig-paren">(</span><em class="sig-param">format</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.set_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.set_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_format</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/i_data_wrapper.html#MDataWrapper.set_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.i_data_wrapper.MDataWrapper.set_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Encode and set data for the format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -325,7 +324,7 @@ underlying toolkit object.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -342,13 +341,13 @@ underlying toolkit object.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

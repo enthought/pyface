@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.api module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.api module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.application module" href="pyface.application.html" >
     <link rel="prev" title="pyface.about_dialog module" href="pyface.about_dialog.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -88,6 +87,96 @@
             
   <div class="section" id="module-pyface.api">
 <span id="pyface-api-module"></span><h1>pyface.api module<a class="headerlink" href="#module-pyface.api" title="Permalink to this headline">¶</a></h1>
+<p>API for the <code class="docutils literal notranslate"><span class="pre">pyface</span></code> package.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">clipboard</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Clipboard</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GUI</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.key_pressed_event.html#pyface.key_pressed_event.KeyPressedEvent" title="pyface.key_pressed_event.KeyPressedEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyPressedEvent</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SplashScreen</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.split_application_window.html#pyface.split_application_window.SplitApplicationWindow" title="pyface.split_application_window.SplitApplicationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitApplicationWindow</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.split_panel.html#pyface.split_panel.SplitPanel" title="pyface.split_panel.SplitPanel"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitPanel</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemMetrics</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></p></li>
+</ul>
+<div class="section" id="dialogs">
+<h2>Dialogs<a class="headerlink" href="#dialogs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AboutDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">confirm</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfirmationDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">FileDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">error</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">information</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">warning</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressDialog</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">choose_one</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleChoiceDialog</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.split_dialog.html#pyface.split_dialog.SplitDialog" title="pyface.split_dialog.SplitDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitDialog</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">OK</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CANCEL</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">YES</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">NO</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="ui-traits">
+<h2>UI Traits<a class="headerlink" href="#ui-traits" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.Alignment" title="pyface.ui_traits.Alignment"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Alignment</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.Border" title="pyface.ui_traits.Border"><code class="xref py py-class docutils literal notranslate"><span class="pre">Border</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.HasBorder" title="pyface.ui_traits.HasBorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasBorder</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.HasMargin" title="pyface.ui_traits.HasMargin"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasMargin</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.Image" title="pyface.ui_traits.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.ui_traits.html#pyface.ui_traits.Margin" title="pyface.ui_traits.Margin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Margin</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.array_image.html#pyface.array_image.ArrayImage" title="pyface.array_image.ArrayImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayImage</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.drop_handler.html#pyface.drop_handler.BaseDropHandler" title="pyface.drop_handler.BaseDropHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDropHandler</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">beep</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.drop_handler.html#pyface.drop_handler.FileDropHandler" title="pyface.drop_handler.FileDropHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileDropHandler</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.filter.html#pyface.filter.Filter" title="pyface.filter.Filter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HeadingText</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageCache</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LayeredPanel</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PILImage</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PythonEditor</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PythonShell</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.sorter.html#pyface.sorter.Sorter" title="pyface.sorter.Sorter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sorter</span></code></a></p></li>
+</ul>
+<p>Note that the <a class="reference internal" href="pyface.array_image.html#pyface.array_image.ArrayImage" title="pyface.array_image.ArrayImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayImage</span></code></a> is only available if the <code class="docutils literal notranslate"><span class="pre">numpy</span></code>
+package is available in the Python environment.</p>
+<p>Note that the <code class="xref py py-class docutils literal notranslate"><span class="pre">PILImage</span></code> is only available if the <code class="docutils literal notranslate"><span class="pre">pillow</span></code>
+package is available in the Python environment.</p>
+<p>Note that the <code class="xref py py-class docutils literal notranslate"><span class="pre">PythonEditor</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">PythonShell</span></code> classes are
+only available if the <code class="docutils literal notranslate"><span class="pre">pygments</span></code> package is available in the Python
+environment.</p>
+</div>
+<div class="section" id="wx-specific-classes">
+<h2>Wx-specific classes<a class="headerlink" href="#wx-specific-classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpandablePanel</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageWidget</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MDIApplicationWindow</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.mdi_window_menu.html#pyface.mdi_window_menu.MDIWindowMenu" title="pyface.mdi_window_menu.MDIWindowMenu"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDIWindowMenu</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiToolbarWindow</span></code></p></li>
+</ul>
+</div>
 </div>
 
 
@@ -99,6 +188,18 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.api module</a><ul>
+<li><a class="reference internal" href="#dialogs">Dialogs</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#ui-traits">UI Traits</a></li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+<li><a class="reference internal" href="#wx-specific-classes">Wx-specific classes</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pyface.about_dialog.html"
                         title="previous chapter">pyface.about_dialog module</a></p>
@@ -119,7 +220,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -136,13 +237,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

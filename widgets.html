@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Widgets &mdash; pyface 7.3 documentation</title>
+    <title>Widgets &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,14 +24,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="index.html" >
-    <link rel="next" title="Pyface Applications" href="applications.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="next" title="Standard Dialogs" href="standard_dialogs.html" >
     <link rel="prev" title="Toolkits" href="toolkits.html" > 
   </head>
   <body>
@@ -49,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
 	 
     </ul>
               
@@ -64,7 +63,7 @@
            >modules</a>
       </li>
       <li class="active">
-        <a href="applications.html" title="Pyface Applications"
+        <a href="standard_dialogs.html" title="Standard Dialogs"
            accesskey="N">next</a>
       </li>
       <li class="active">
@@ -134,6 +133,9 @@ trait, or by calling <a class="reference internal" href="api/pyface.i_widget.htm
 the enabled state is accessible via the
 <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.enabled" title="pyface.i_widget.IWidget.enabled"><code class="xref py py-attr docutils literal notranslate"><span class="pre">enabled</span></code></a> trait, or by calling
 <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.enable" title="pyface.i_widget.IWidget.enable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enable()</span></code></a>.</p>
+<p>Widgets also provide a trait <a class="reference internal" href="api/pyface.i_widget.html#pyface.i_widget.IWidget.tooltip" title="pyface.i_widget.IWidget.tooltip"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tooltip</span></code></a> that
+provides a string to display to the user when they hover the mouse over the
+widget.  If the string is empty then there will be no tooltip displayed.</p>
 </div>
 <div class="section" id="iwidget-subclasses">
 <h2>IWidget Subclasses<a class="headerlink" href="#iwidget-subclasses" title="Permalink to this headline">¶</a></h2>
@@ -176,6 +178,24 @@ dialog after the user is done.  Typical usage looks like:</p>
 of the dialog and its buttons.  In most cases you will need to, at a minimum,
 override the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_dialog_area()</span></code> method to
 populate the widgets inside the main dialog.</p>
+<p>Pyface provides a number of standard dialog classes and convenience functions
+to access them.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="standard_dialogs.html">Standard Dialogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#about-dialog">About Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#color-dialog">Color Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#confirmation-dialog">Confirmation Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#directory-dialog">Directory Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#file-dialog">File Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#font-dialog">Font Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#message-dialog">Message Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#progress-dialog">Progress Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard_dialogs.html#single-choice-dialog">Single-Choice Dialog</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="iapplicationwindow">
 <h3>IApplicationWindow<a class="headerlink" href="#iapplicationwindow" title="Permalink to this headline">¶</a></h3>
@@ -231,8 +251,8 @@ section on <a class="reference internal" href="fields.html#fields"><span class="
   <p class="topless"><a href="toolkits.html"
                         title="previous chapter">Toolkits</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="applications.html"
-                        title="next chapter">Pyface Applications</a></p>
+  <p class="topless"><a href="standard_dialogs.html"
+                        title="next chapter">Standard Dialogs</a></p>
   <h3>This Page</h3>
   <div>
     <a href="_sources/widgets.rst.txt"
@@ -247,7 +267,7 @@ section on <a class="reference internal" href="fields.html#fields"><span class="
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -264,13 +284,13 @@ section on <a class="reference internal" href="fields.html#fields"><span class="
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

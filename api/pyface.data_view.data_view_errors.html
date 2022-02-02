@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.data_view_errors module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.data_view_errors module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
     <link rel="next" title="pyface.data_view.data_view_widget module" href="pyface.data_view.data_view_widget.html" >
     <link rel="prev" title="pyface.data_view.data_formats module" href="pyface.data_view.data_formats.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
@@ -90,23 +89,23 @@
   <div class="section" id="module-pyface.data_view.data_view_errors">
 <span id="pyface-data-view-data-view-errors-module"></span><h1>pyface.data_view.data_view_errors module<a class="headerlink" href="#module-pyface.data_view.data_view_errors" title="Permalink to this headline">¶</a></h1>
 <p>Provide an Exception classes for the the DataView code.</p>
-<dl class="exception">
+<dl class="py exception">
 <dt id="pyface.data_view.data_view_errors.DataViewError">
-<em class="property">exception </em><code class="sig-prename descclassname">pyface.data_view.data_view_errors.</code><code class="sig-name descname">DataViewError</code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_view_errors.</span></code><code class="sig-name descname"><span class="pre">DataViewError</span></code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
 <p>The base exception class for DataView errors.</p>
 </dd></dl>
 
-<dl class="exception">
+<dl class="py exception">
 <dt id="pyface.data_view.data_view_errors.DataViewGetError">
-<em class="property">exception </em><code class="sig-prename descclassname">pyface.data_view.data_view_errors.</code><code class="sig-name descname">DataViewGetError</code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewGetError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewGetError" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_view_errors.</span></code><code class="sig-name descname"><span class="pre">DataViewGetError</span></code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewGetError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewGetError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_view_errors.DataViewError" title="pyface.data_view.data_view_errors.DataViewError"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_view_errors.DataViewError</span></code></a></p>
 <p>An exception raised when getting a value fails.</p>
 </dd></dl>
 
-<dl class="exception">
+<dl class="py exception">
 <dt id="pyface.data_view.data_view_errors.DataViewSetError">
-<em class="property">exception </em><code class="sig-prename descclassname">pyface.data_view.data_view_errors.</code><code class="sig-name descname">DataViewSetError</code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewSetError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewSetError" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_view_errors.</span></code><code class="sig-name descname"><span class="pre">DataViewSetError</span></code><a class="reference internal" href="../_modules/pyface/data_view/data_view_errors.html#DataViewSetError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_view_errors.DataViewSetError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyface.data_view.data_view_errors.DataViewError" title="pyface.data_view.data_view_errors.DataViewError"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.data_view.data_view_errors.DataViewError</span></code></a></p>
 <p>An exception raised when setting a value fails.</p>
 </dd></dl>
@@ -142,7 +141,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -159,13 +158,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

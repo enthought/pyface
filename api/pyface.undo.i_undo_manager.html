@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.undo.i_undo_manager module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.undo.i_undo_manager module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.undo package" href="pyface.undo.html" >
     <link rel="next" title="pyface.undo.undo_manager module" href="pyface.undo.undo_manager.html" >
     <link rel="prev" title="pyface.undo.i_command_stack module" href="pyface.undo.i_command_stack.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.undo.html" accesskey="U">pyface.undo package</a></li> 
@@ -89,70 +88,70 @@
             
   <div class="section" id="module-pyface.undo.i_undo_manager">
 <span id="pyface-undo-i-undo-manager-module"></span><h1>pyface.undo.i_undo_manager module<a class="headerlink" href="#module-pyface.undo.i_undo_manager" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.undo.i_undo_manager.IUndoManager">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.undo.i_undo_manager.</code><code class="sig-name descname">IUndoManager</code><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.undo.i_undo_manager.</span></code><code class="sig-name descname"><span class="pre">IUndoManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.Interface" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></a></p>
 <p>The undo manager interface.  An undo manager is responsible for one or
 more command stacks.  Typically an application would have a single undo
 manager.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.active_stack">
-<code class="sig-name descname">active_stack</code><em class="property"> = Instance(&quot;pyface.undo.api.ICommandStack&quot;)</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.active_stack" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">active_stack</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Instance(&quot;pyface.undo.api.ICommandStack&quot;)</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.active_stack" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the currently active command stack and may be None.  Typically it
 is set when some sort of editor becomes active.
 IUndoManager and ICommandStack depend on one another, hence we can’t
 directly import ICommandStack and use it here.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.active_stack_clean">
-<code class="sig-name descname">active_stack_clean</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.active_stack_clean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">active_stack_clean</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool()</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.active_stack_clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>This reflects the clean state of the currently active command stack.  It
 is intended to support a “document modified” indicator in the GUI.  It is
 maintained by the undo manager.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.redo_name">
-<code class="sig-name descname">redo_name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.redo_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">redo_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.redo_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the name of the command that can be redone.  It will be empty if
 there is no command that can be redone.  It is maintained by the undo
 manager.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.sequence_nr">
-<code class="sig-name descname">sequence_nr</code><em class="property"> = Int()</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.sequence_nr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">sequence_nr</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Int()</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.sequence_nr" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the sequence number of the next command to be performed.  It is
 incremented immediately before a command is invoked (by its ‘do()’
 method).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.stack_updated">
-<code class="sig-name descname">stack_updated</code><em class="property"> = Event(Instance(&quot;pyface.undo.api.ICommandStack&quot;))</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.stack_updated" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">stack_updated</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event(Instance(&quot;pyface.undo.api.ICommandStack&quot;))</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.stack_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>This event is fired when the index of a command stack changes.  Note that
 it may not be the active stack.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.undo_name">
-<code class="sig-name descname">undo_name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.undo_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">undo_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.undo_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the name of the command that can be undone.  It will be empty if
 there is no command that can be undone.  It is maintained by the undo
 manager.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.redo">
-<code class="sig-name descname">redo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager.redo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.redo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">redo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager.redo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.redo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redo the last undone command of the active command stack.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_undo_manager.IUndoManager.undo">
-<code class="sig-name descname">undo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager.undo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.undo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">undo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_undo_manager.html#IUndoManager.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_undo_manager.IUndoManager.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Undo the last command of the active command stack.</p>
 </dd></dl>
 
@@ -189,7 +188,7 @@ manager.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -206,13 +205,13 @@ manager.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_about_dialog module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.i_about_dialog module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_application_window module" href="pyface.i_application_window.html" >
     <link rel="prev" title="pyface.heading_text module" href="pyface.heading_text.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,35 +88,35 @@
   <div class="section" id="module-pyface.i_about_dialog">
 <span id="pyface-i-about-dialog-module"></span><h1>pyface.i_about_dialog module<a class="headerlink" href="#module-pyface.i_about_dialog" title="Permalink to this headline">¶</a></h1>
 <p>The interface for a simple ‘About’ dialog.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.i_about_dialog.IAboutDialog">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_about_dialog.</code><code class="sig-name descname">IAboutDialog</code><a class="reference internal" href="../_modules/pyface/i_about_dialog.html#IAboutDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_about_dialog.</span></code><code class="sig-name descname"><span class="pre">IAboutDialog</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_about_dialog.html#IAboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
 <p>The interface for a simple ‘About’ dialog.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.i_about_dialog.IAboutDialog.additions">
-<code class="sig-name descname">additions</code><em class="property"> = List(Str)</em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.additions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">additions</span></code><em class="property"> <span class="pre">=</span> <span class="pre">List(Str)</span></em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.additions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Additional strings to be added to the dialog.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.i_about_dialog.IAboutDialog.copyrights">
-<code class="sig-name descname">copyrights</code><em class="property"> = List(Str)</em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.copyrights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">copyrights</span></code><em class="property"> <span class="pre">=</span> <span class="pre">List(Str)</span></em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.copyrights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Additional copyright strings to be added above the standard ones.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.i_about_dialog.IAboutDialog.image">
-<code class="sig-name descname">image</code><em class="property"> = Instance(ImageResource, ImageResource(&quot;about&quot;))</em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">image</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Image()</span></em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.image" title="Permalink to this definition">¶</a></dt>
 <dd><p>The image displayed in the dialog.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.i_about_dialog.MAboutDialog">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.i_about_dialog.</code><code class="sig-name descname">MAboutDialog</code><a class="reference internal" href="../_modules/pyface/i_about_dialog.html#MAboutDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.i_about_dialog.MAboutDialog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_about_dialog.</span></code><code class="sig-name descname"><span class="pre">MAboutDialog</span></code><a class="reference internal" href="../_modules/pyface/i_about_dialog.html#MAboutDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_about_dialog.MAboutDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IAboutDialog interface.</p>
 </dd></dl>
@@ -153,7 +152,7 @@ implementations of the IAboutDialog interface.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -170,13 +169,13 @@ implementations of the IAboutDialog interface.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

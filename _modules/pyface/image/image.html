@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.image.image &mdash; pyface 7.3 documentation</title>
+    <title>pyface.image.image &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../../genindex.html" >
     <link rel="search" title="Search" href="../../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
     <link rel="up" title="Module code" href="../../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.image.image</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -92,7 +91,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">environ</span><span class="p">,</span>
     <span class="n">listdir</span><span class="p">,</span>
     <span class="n">remove</span><span class="p">,</span>
@@ -104,7 +103,7 @@
     <span class="n">W_OK</span><span class="p">,</span>
     <span class="n">X_OK</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">join</span><span class="p">,</span>
     <span class="n">isdir</span><span class="p">,</span>
     <span class="n">isfile</span><span class="p">,</span>
@@ -114,15 +113,15 @@
     <span class="n">basename</span><span class="p">,</span>
     <span class="n">exists</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">stat</span> <span class="k">import</span> <span class="n">ST_MTIME</span>
-<span class="kn">from</span> <span class="nn">platform</span> <span class="k">import</span> <span class="n">system</span>
-<span class="kn">from</span> <span class="nn">zipfile</span> <span class="k">import</span> <span class="n">is_zipfile</span><span class="p">,</span> <span class="n">ZipFile</span><span class="p">,</span> <span class="n">ZIP_DEFLATED</span>
+<span class="kn">from</span> <span class="nn">stat</span> <span class="kn">import</span> <span class="n">ST_MTIME</span>
+<span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">is_zipfile</span><span class="p">,</span> <span class="n">ZipFile</span><span class="p">,</span> <span class="n">ZIP_DEFLATED</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">_thread</span> <span class="k">import</span> <span class="n">allocate_lock</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">_thread</span> <span class="kn">import</span> <span class="n">allocate_lock</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">HasPrivateTraits</span><span class="p">,</span>
     <span class="n">Property</span><span class="p">,</span>
     <span class="n">Str</span><span class="p">,</span>
@@ -138,15 +137,15 @@
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">cached_property</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">traits.trait_base</span> <span class="k">import</span> <span class="n">get_resource_path</span><span class="p">,</span> <span class="n">traits_home</span>
+<span class="kn">from</span> <span class="nn">traits.trait_base</span> <span class="kn">import</span> <span class="n">get_resource_path</span><span class="p">,</span> <span class="n">traits_home</span>
 
-<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="k">import</span> <span class="n">ImageResource</span>
-<span class="kn">from</span> <span class="nn">pyface.resource_manager</span> <span class="k">import</span> <span class="n">resource_manager</span>
-<span class="kn">from</span> <span class="nn">pyface.resource.resource_reference</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ImageResource</span>
+<span class="kn">from</span> <span class="nn">pyface.resource_manager</span> <span class="kn">import</span> <span class="n">resource_manager</span>
+<span class="kn">from</span> <span class="nn">pyface.resource.resource_reference</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ImageReference</span><span class="p">,</span>
     <span class="n">ResourceReference</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">pyface.ui_traits</span> <span class="k">import</span> <span class="n">HasMargin</span><span class="p">,</span> <span class="n">HasBorder</span><span class="p">,</span> <span class="n">Alignment</span>
+<span class="kn">from</span> <span class="nn">pyface.ui_traits</span> <span class="kn">import</span> <span class="n">HasMargin</span><span class="p">,</span> <span class="n">HasBorder</span><span class="p">,</span> <span class="n">Alignment</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1">#  Constants:</span>
@@ -231,6 +230,8 @@
 <div class="viewcode-block" id="write_file"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.write_file">[docs]</a><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Writes the specified data to the specified file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
         <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
@@ -264,7 +265,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">col</span> <span class="o">=</span> <span class="n">image_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
     <span class="n">volume_name</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">col</span><span class="p">]</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
     <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">file_name</span> <span class="o">+=</span> <span class="s2">&quot;.png&quot;</span>
 
@@ -867,7 +868,7 @@
                     <span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;image_info.py&quot;</span><span class="p">),</span> <span class="s2">&quot;images&quot;</span>
                 <span class="p">)</span>
 
-            <span class="c1"># Check to see if our time stamp is up to data with the file:</span>
+            <span class="c1"># Check to see if our time stamp is up to date with the file:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">&lt;</span> <span class="n">time_stamp</span><span class="p">:</span>
 
                 <span class="c1"># If not, create an ImageInfo object for all image files</span>
@@ -1482,7 +1483,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -1499,13 +1500,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

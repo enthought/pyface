@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.action.schema_addition module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.tasks.action.schema_addition module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.action package" href="pyface.tasks.action.html" >
     <link rel="next" title="pyface.tasks.action.task_action module" href="pyface.tasks.action.task_action.html" >
     <link rel="prev" title="pyface.tasks.action.schema module" href="pyface.tasks.action.schema.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -90,74 +89,6 @@
             
   <div class="section" id="module-pyface.tasks.action.schema_addition">
 <span id="pyface-tasks-action-schema-addition-module"></span><h1>pyface.tasks.action.schema_addition module<a class="headerlink" href="#module-pyface.tasks.action.schema_addition" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.action.schema_addition.</code><code class="sig-name descname">SchemaAddition</code><a class="reference internal" href="../_modules/pyface/tasks/action/schema_addition.html#SchemaAddition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-<p>An addition to an existing menu bar or tool bar schema.</p>
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.id">
-<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The schema addition’s identifier. This optional, but if left
-unspecified, other schema additions will be unable to refer to this one.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.factory">
-<code class="sig-name descname">factory</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.factory" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>A callable to create the item. Should have the following signature:</dt><dd><dl class="simple">
-<dt>callable() -&gt; Action | ActionItem | Group | MenuManager |</dt><dd><p>GroupSchema | MenuSchema</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p>If the result is a schema, it will itself admit of extension by other
-additions. If not, the result will be fixed.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.path">
-<code class="sig-name descname">path</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>A forward-slash-separated path through the action hierarchy to the menu
-to add the action, group or menu to. For example:
-- To add an item to the menu bar: <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">&quot;MenuBar&quot;</span></code>
-- To add an item to the tool bar: <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">&quot;ToolBar&quot;</span></code>
-- To add an item to a sub-menu: <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">&quot;MenuBar/File/New&quot;</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.after">
-<code class="sig-name descname">after</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.after" title="Permalink to this definition">¶</a></dt>
-<dd><p>The item appears after the item with this ID.
-- for groups, this is the ID of another group.
-- for menus and actions, this is the ID of another menu or action.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.before">
-<code class="sig-name descname">before</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.before" title="Permalink to this definition">¶</a></dt>
-<dd><p>The action appears before the item with this ID.
-- for groups, this is the ID of another group.
-- for menus and actions, this is the ID of another menu or action.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.action.schema_addition.SchemaAddition.absolute_position">
-<code class="sig-name descname">absolute_position</code><em class="property"> = Enum(None, &quot;first&quot;, &quot;last&quot;)</em><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition.absolute_position" title="Permalink to this definition">¶</a></dt>
-<dd><p>The action appears at the absolute specified position first or last.
-This is useful for example to keep the File menu the first menu in a
-menubar, the help menu the last etc.
-If multiple actions in a schema have absolute_position ‘first’, they
-will appear in the same order specified; unless ‘before’ and ‘after’
-traits are set to sort these multiple items.
-This trait takes precedence over ‘after’ and ‘before’, and values of
-those traits that are not compatible with the  absolute_position are
-ignored.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
@@ -189,7 +120,7 @@ ignored.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -206,13 +137,13 @@ ignored.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -10,6 +10,7 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.data_view.data_models
    pyface.data_view.exporters
@@ -19,6 +20,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.data_view.abstract_data_exporter
    pyface.data_view.abstract_data_model

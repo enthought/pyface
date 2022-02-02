@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.undo.i_command_stack module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.undo.i_command_stack module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.undo package" href="pyface.undo.html" >
     <link rel="next" title="pyface.undo.i_undo_manager module" href="pyface.undo.i_undo_manager.html" >
     <link rel="prev" title="pyface.undo.i_command module" href="pyface.undo.i_command.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.undo.html" accesskey="U">pyface.undo package</a></li> 
@@ -89,47 +88,47 @@
             
   <div class="section" id="module-pyface.undo.i_command_stack">
 <span id="pyface-undo-i-command-stack-module"></span><h1>pyface.undo.i_command_stack module<a class="headerlink" href="#module-pyface.undo.i_command_stack" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pyface.undo.i_command_stack.ICommandStack">
-<em class="property">class </em><code class="sig-prename descclassname">pyface.undo.i_command_stack.</code><code class="sig-name descname">ICommandStack</code><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.undo.i_command_stack.</span></code><code class="sig-name descname"><span class="pre">ICommandStack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.Interface" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></a></p>
 <p>The command stack interface.  A command stack is responsible for
 managing the changes to a data model and recording those changes so that
 they can be undone or redone.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_command_stack.ICommandStack.clean">
-<code class="sig-name descname">clean</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.clean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">clean</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool()</span></em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the clean state of the stack.  Its value changes as commands are
 undone and redone.  It can also be explicity set to mark the current
 stack position as being clean (when the data is saved to disk for
 example).</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_command_stack.ICommandStack.redo_name">
-<code class="sig-name descname">redo_name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.redo_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">redo_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.redo_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the name of the command that can be redone.  It will be empty if
 there is no command that can be redone.  It is maintained by the undo
 stack.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_command_stack.ICommandStack.undo_manager">
-<code class="sig-name descname">undo_manager</code><em class="property"> = Instance(IUndoManager)</em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">undo_manager</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Instance(IUndoManager)</span></em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the undo manager that manages this stack.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pyface.undo.i_command_stack.ICommandStack.undo_name">
-<code class="sig-name descname">undo_name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">undo_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the name of the command that can be undone.  It will be empty if
 there is no command that can be undone.  It is maintained by the undo
 stack.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.begin_macro">
-<code class="sig-name descname">begin_macro</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.begin_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.begin_macro" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">begin_macro</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.begin_macro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.begin_macro" title="Permalink to this definition">¶</a></dt>
 <dd><p>This begins a macro by creating an empty command with the given
 ‘name’.  The commands passed to all subsequent calls to ‘push()’ will
 be contained in the macro until the next call to ‘end_macro()’.  Macros
@@ -138,23 +137,23 @@ redone) while a macro is being created (ie. while there is an
 outstanding ‘end_macro()’ call).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.clear">
-<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.clear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>This clears the stack, without undoing or redoing any commands, and
 leaves the stack in a clean state.  It is typically used when all
 changes to the data have been abandoned.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.end_macro">
-<code class="sig-name descname">end_macro</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.end_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.end_macro" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">end_macro</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.end_macro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.end_macro" title="Permalink to this definition">¶</a></dt>
 <dd><p>This ends a macro.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.push">
-<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.push" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">push</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.push"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.push" title="Permalink to this definition">¶</a></dt>
 <dd><p>This executes a command and saves it on the command stack so that
 it can be subsequently undone and redone.  ‘command’ is an instance
 that implements the ICommand interface.  Its ‘do()’ method is called
@@ -164,18 +163,18 @@ result so that it can recognise it as an argument to a subsequent
 command (which allows a script to properly save a result needed later).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.redo">
-<code class="sig-name descname">redo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.redo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.redo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">redo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_nr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.redo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.redo" title="Permalink to this definition">¶</a></dt>
 <dd><p>If ‘sequence_nr’ is 0 then the last command that was undone is
 redone and any result returned.  Otherwise commands are redone up to
 and including the given ‘sequence_nr’ and any result of the last of
 these is returned.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyface.undo.i_command_stack.ICommandStack.undo">
-<code class="sig-name descname">undo</code><span class="sig-paren">(</span><em class="sig-param">sequence_nr=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.undo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">undo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_nr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/undo/i_command_stack.html#ICommandStack.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.undo.i_command_stack.ICommandStack.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>If ‘sequence_nr’ is 0 then the last command is undone.  Otherwise
 commands are undone up to and including the given ‘sequence_nr’.</p>
 </dd></dl>
@@ -213,7 +212,7 @@ commands are undone up to and including the given ‘sequence_nr’.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -230,13 +229,13 @@ commands are undone up to and including the given ‘sequence_nr’.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

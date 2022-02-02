@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.ui_traits &mdash; pyface 7.3 documentation</title>
+    <title>pyface.ui_traits &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../../genindex.html" >
     <link rel="search" title="Search" href="../../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
     <link rel="up" title="Module code" href="../index.html" > 
   </head>
   <body>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
     </ul>
@@ -77,7 +76,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <h1>Source code for pyface.ui_traits</h1><div class="highlight"><pre>
-<span></span><span class="c1"># (C) Copyright 2005-2021 Enthought, Inc., Austin, TX</span>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
 <span class="c1"># All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># This software is provided without warranty under the terms of the BSD</span>
@@ -89,7 +88,7 @@
 
 
 <span class="sd">&quot;&quot;&quot; Defines common traits used within the pyface library. &quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -97,18 +96,22 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">np</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ABCHasStrictTraits</span><span class="p">,</span>
     <span class="n">DefaultValue</span><span class="p">,</span>
     <span class="n">Enum</span><span class="p">,</span>
     <span class="n">Range</span><span class="p">,</span>
     <span class="n">TraitError</span><span class="p">,</span>
+    <span class="n">TraitFactory</span><span class="p">,</span>
     <span class="n">TraitType</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">traits.trait_base</span> <span class="k">import</span> <span class="n">get_resource_path</span>
+<span class="kn">from</span> <span class="nn">traits.trait_base</span> <span class="kn">import</span> <span class="n">get_resource_path</span>
 
-<span class="kn">from</span> <span class="nn">pyface.color</span> <span class="k">import</span> <span class="n">Color</span>
-<span class="kn">from</span> <span class="nn">pyface.util.color_parser</span> <span class="k">import</span> <span class="n">ColorParseError</span>
+<span class="kn">from</span> <span class="nn">pyface.color</span> <span class="kn">import</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">pyface.font</span> <span class="kn">import</span> <span class="n">Font</span>
+<span class="kn">from</span> <span class="nn">pyface.i_image</span> <span class="kn">import</span> <span class="n">IImage</span>
+<span class="kn">from</span> <span class="nn">pyface.util.color_parser</span> <span class="kn">import</span> <span class="n">ColorParseError</span>
+<span class="kn">from</span> <span class="nn">pyface.util.font_parser</span> <span class="kn">import</span> <span class="n">simple_parser</span><span class="p">,</span> <span class="n">FontParseError</span>
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -117,7 +120,10 @@
 <span class="c1">#  Images</span>
 <span class="c1"># -------------------------------------------------------------------------------</span>
 
+<span class="c1"># cache of lookups from string to ImageResource instance</span>
 <span class="n">image_resource_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># cache of conversions of ImageResource instances to toolkit bitmaps</span>
 <span class="n">image_bitmap_cache</span> <span class="o">=</span> <span class="p">{}</span>
 
 
@@ -137,7 +143,7 @@
     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">is_pyface_image</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">.image.image</span> <span class="k">import</span> <span class="n">ImageLibrary</span>
+                <span class="kn">from</span> <span class="nn">.image.image</span> <span class="kn">import</span> <span class="n">ImageLibrary</span>
 
                 <span class="n">result</span> <span class="o">=</span> <span class="n">ImageLibrary</span><span class="o">.</span><span class="n">image_resource</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
@@ -145,7 +151,7 @@
                 <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">pyface.image_resource</span> <span class="k">import</span> <span class="n">ImageResource</span>
+            <span class="kn">from</span> <span class="nn">pyface.image_resource</span> <span class="kn">import</span> <span class="n">ImageResource</span>
 
             <span class="n">result</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">search_path</span><span class="o">=</span><span class="p">[</span><span class="n">search_path</span><span class="p">])</span>
 
@@ -154,50 +160,52 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="convert_bitmap"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.convert_bitmap">[docs]</a><span class="k">def</span> <span class="nf">convert_bitmap</span><span class="p">(</span><span class="n">image_resource</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_bitmap"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.convert_bitmap">[docs]</a><span class="k">def</span> <span class="nf">convert_bitmap</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Converts an ImageResource to a bitmap using a cache.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">bitmap</span> <span class="o">=</span> <span class="n">image_bitmap_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_resource</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">bitmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">image_resource</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="n">image_bitmap_cache</span><span class="p">[</span>
-            <span class="n">image_resource</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">image_resource</span><span class="o">.</span><span class="n">create_bitmap</span><span class="p">()</span>
+    <span class="kn">from</span> <span class="nn">pyface.i_image_resource</span> <span class="kn">import</span> <span class="n">IImageResource</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">IImageResource</span><span class="p">):</span>
+        <span class="c1"># don&#39;t try to cache non-ImageResource IImages as they may be</span>
+        <span class="c1"># dynamically changing</span>
+        <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">create_bitmap</span><span class="p">()</span>
+
+    <span class="n">bitmap</span> <span class="o">=</span> <span class="n">image_bitmap_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">bitmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">image_bitmap_cache</span><span class="p">[</span><span class="n">image</span><span class="p">]</span> <span class="o">=</span> <span class="n">bitmap</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">create_bitmap</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">bitmap</span></div>
 
 
 <div class="viewcode-block" id="Image"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.Image">[docs]</a><span class="k">class</span> <span class="nc">Image</span><span class="p">(</span><span class="n">TraitType</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Defines a trait whose value must be a ImageResource or a string</span>
-<span class="sd">        that can be converted to one.</span>
+    <span class="sd">&quot;&quot;&quot; Defines a trait whose value must be a IImage or a string</span>
+<span class="sd">        that can be converted to an IImageResource.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Define the default value for the trait:</span>
+    <span class="c1">#: Define the default value for the trait.</span>
     <span class="n">default_value</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="c1"># A description of the type of value this trait accepts:</span>
-    <span class="n">info_text</span> <span class="o">=</span> <span class="s2">&quot;an ImageResource or string that can be used to define one&quot;</span>
+    <span class="c1">#: A description of the type of value this trait accepts.</span>
+    <span class="n">info_text</span> <span class="o">=</span> <span class="s2">&quot;an IImage or string that can be used to define an ImageResource&quot;</span>  <span class="c1"># noqa: E501</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Creates an Image trait.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        value : string or ImageResource</span>
-<span class="sd">            The default value for the Image, either an ImageResource object,</span>
+<span class="sd">            The default value for the Image, either an IImage object,</span>
 <span class="sd">            or a string from which an ImageResource object can be derived.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Image</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">convert_image</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">convert_image</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Image.validate"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.Image.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Validates that a specified value is valid for this trait.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">pyface.i_image_resource</span> <span class="k">import</span> <span class="n">IImageResource</span>
-
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">new_value</span> <span class="o">=</span> <span class="n">convert_image</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">IImageResource</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">IImage</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">new_value</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
@@ -205,7 +213,7 @@
 <div class="viewcode-block" id="Image.create_editor"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.Image.create_editor">[docs]</a>    <span class="k">def</span> <span class="nf">create_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Returns the default UI editor for the trait.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">traitsui.editors.api</span> <span class="k">import</span> <span class="n">ImageEditor</span>
+        <span class="kn">from</span> <span class="nn">traitsui.editors.api</span> <span class="kn">import</span> <span class="n">ImageEditor</span>
 
         <span class="k">return</span> <span class="n">ImageEditor</span><span class="p">()</span></div></div>
 
@@ -216,13 +224,13 @@
 
 
 <div class="viewcode-block" id="PyfaceColor"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor">[docs]</a><span class="k">class</span> <span class="nc">PyfaceColor</span><span class="p">(</span><span class="n">TraitType</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; A Trait which casts strings and tuples to a PyfaceColor value.</span>
+    <span class="sd">&quot;&quot;&quot; A Trait which casts strings and tuples to a Pyface Color value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">#: The default value should be a tuple (factory, args, kwargs)</span>
     <span class="n">default_value_type</span> <span class="o">=</span> <span class="n">DefaultValue</span><span class="o">.</span><span class="n">callable_and_args</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">Color</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;rgba&#39;</span><span class="p">:</span> <span class="n">color</span><span class="o">.</span><span class="n">rgba</span><span class="p">})</span>
@@ -259,12 +267,65 @@
 
 
 <span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  Font</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="PyfaceFont"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.PyfaceFont">[docs]</a><span class="k">class</span> <span class="nc">PyfaceFont</span><span class="p">(</span><span class="n">TraitType</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A Trait which casts strings to a Pyface Font value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The default value should be a tuple (factory, args, kwargs)</span>
+    <span class="n">default_value_type</span> <span class="o">=</span> <span class="n">DefaultValue</span><span class="o">.</span><span class="n">callable_and_args</span>
+
+    <span class="c1">#: The parser to use when converting text to keyword args.  This should</span>
+    <span class="c1">#: accept a string and return a dictionary of Font class trait values (ie.</span>
+    <span class="c1">#: &quot;family&quot;, &quot;size&quot;, &quot;weight&quot;, etc.).</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">simple_parser</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">TraitError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;expected &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+                    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, but got </span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">Font</span><span class="p">,</span>
+                <span class="p">(),</span>
+                <span class="n">font</span><span class="o">.</span><span class="n">trait_get</span><span class="p">(</span><span class="n">transient</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">Font</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{})</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PyfaceFont.validate"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.PyfaceFont.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Font</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Font</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">FontParseError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PyfaceFont.info"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.PyfaceFont.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;a Pyface Font, or a string describing a Pyface Font&quot;</span>
+        <span class="p">)</span></div></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
 <span class="c1">#  Borders, Margins and Layout</span>
 <span class="c1"># -------------------------------------------------------------------------------</span>
 
 
 <div class="viewcode-block" id="BaseMB"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.BaseMB">[docs]</a><span class="k">class</span> <span class="nc">BaseMB</span><span class="p">(</span><span class="n">ABCHasStrictTraits</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Map posiitonal arguments to traits.</span>
 
 <span class="sd">        If one value is provided it is taken as the value for all sides.</span>
@@ -290,7 +351,7 @@
                 <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="n">left</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="n">right</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="n">top</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="n">bottom</span><span class="p">}</span>
             <span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">BaseMB</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Margin"><a class="viewcode-back" href="../../api/pyface.ui_traits.html#pyface.ui_traits.Margin">[docs]</a><span class="k">class</span> <span class="nc">Margin</span><span class="p">(</span><span class="n">BaseMB</span><span class="p">):</span>
@@ -375,7 +436,7 @@
                 <span class="n">dv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="n">dv</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">klass</span><span class="p">):</span>
-                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">HasMargin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_default_value</span><span class="p">()</span>
+                <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_value</span><span class="p">()</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">default_value_type</span> <span class="o">=</span> <span class="n">dvt</span> <span class="o">=</span> <span class="n">DefaultValue</span><span class="o">.</span><span class="n">callable_and_args</span>
             <span class="n">dv</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">klass</span><span class="p">,</span> <span class="p">(),</span> <span class="n">dv</span><span class="o">.</span><span class="n">trait_get</span><span class="p">())</span>
@@ -407,6 +468,47 @@
 
 <span class="c1">#: The alignment of text within a control.</span>
 <span class="n">Alignment</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+<span class="c1">#: Whether the orientation of a widget&#39;s contents is horizontal or vertical.</span>
+<span class="n">Orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  Legacy TraitsUI Color and Font Traits</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+<span class="k">def</span> <span class="nf">TraitsUIColor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns a trait whose value must be a GUI toolkit-specific color.</span>
+
+<span class="sd">    This is copied from the deprecated trait that is in traits.api.  It adds</span>
+<span class="sd">    a deferred dependency on TraitsUI.</span>
+
+<span class="sd">    This trait will be replaced by native Pyface color traits in Pyface 8.0.</span>
+<span class="sd">    New code should not use this trait.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">traitsui.toolkit_traits</span> <span class="kn">import</span> <span class="n">ColorTrait</span>
+
+    <span class="k">return</span> <span class="n">ColorTrait</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+
+<span class="n">TraitsUIColor</span> <span class="o">=</span> <span class="n">TraitFactory</span><span class="p">(</span><span class="n">TraitsUIColor</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">TraitsUIFont</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns a trait whose value must be a GUI toolkit-specific font.</span>
+
+<span class="sd">    This is copied from the deprecated trait that is in traits.api.  It adds</span>
+<span class="sd">    a deferred dependency on TraitsUI.</span>
+
+<span class="sd">    This trait will be replaced by native Pyface font traits in Pyface 8.0.</span>
+<span class="sd">    New code should not use this trait.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">traitsui.toolkit_traits</span> <span class="kn">import</span> <span class="n">FontTrait</span>
+
+    <span class="k">return</span> <span class="n">FontTrait</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+
+<span class="n">TraitsUIFont</span> <span class="o">=</span> <span class="n">TraitFactory</span><span class="p">(</span><span class="n">TraitsUIFont</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -426,7 +528,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -443,13 +545,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 01, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

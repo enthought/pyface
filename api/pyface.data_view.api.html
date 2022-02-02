@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.data_view.api module &mdash; pyface 7.3 documentation</title>
+    <title>pyface.data_view.api module &mdash; pyface 7.4 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,10 +13,10 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.3',
+        VERSION:     '7.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        LINK_SUFFIX: '',
+        LINK_SUFFIX: '.html',
         SOURCELINK_SUFFIX: '.txt',
         HAS_SOURCE:  true
       };
@@ -24,13 +24,12 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.3 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
     <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
     <link rel="next" title="pyface.data_view.data_formats module" href="pyface.data_view.data_formats.html" >
     <link rel="prev" title="pyface.data_view.abstract_value_type module" href="pyface.data_view.abstract_value_type.html" > 
@@ -50,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.3 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
@@ -89,6 +88,65 @@
             
   <div class="section" id="module-pyface.data_view.api">
 <span id="pyface-data-view-api-module"></span><h1>pyface.data_view.api module<a class="headerlink" href="#module-pyface.data_view.api" title="Permalink to this headline">¶</a></h1>
+<p>API for the <code class="docutils literal notranslate"><span class="pre">pyface.data_view</span></code> subpackage.
+Note that this public-facing API is provisional and may change in future
+minor releases until Pyface 8.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.abstract_data_exporter.html#pyface.data_view.abstract_data_exporter.AbstractDataExporter" title="pyface.data_view.abstract_data_exporter.AbstractDataExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataExporter</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.abstract_data_model.html#pyface.data_view.abstract_data_model.AbstractDataModel" title="pyface.data_view.abstract_data_model.AbstractDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataModel</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.abstract_value_type.html#pyface.data_view.abstract_value_type.AbstractValueType" title="pyface.data_view.abstract_value_type.AbstractValueType"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractValueType</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewWidget</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataWrapper</span></code></p></li>
+</ul>
+<div class="section" id="data-formats">
+<h2>Data Formats<a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.DataFormat" title="pyface.data_view.i_data_wrapper.DataFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFormat</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.text_format" title="pyface.data_view.i_data_wrapper.text_format"><code class="xref py py-func docutils literal notranslate"><span class="pre">text_format()</span></code></a></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">csv_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">csv_column_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">csv_row_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">html_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">npy_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">standard_text_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">table_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_column_format</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_row_format</span></code></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv" title="pyface.data_view.data_formats.from_csv"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_csv()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv_column" title="pyface.data_view.data_formats.from_csv_column"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_csv_column()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv_row" title="pyface.data_view.data_formats.from_csv_row"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_csv_row()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_json" title="pyface.data_view.data_formats.from_json"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_json()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_npy" title="pyface.data_view.data_formats.from_npy"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_npy()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv" title="pyface.data_view.data_formats.to_csv"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_csv()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv_column" title="pyface.data_view.data_formats.to_csv_column"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_csv_column()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv_row" title="pyface.data_view.data_formats.to_csv_row"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_csv_row()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_json" title="pyface.data_view.data_formats.to_json"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_json()</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_npy" title="pyface.data_view.data_formats.to_npy"><code class="xref py py-func docutils literal notranslate"><span class="pre">to_npy()</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="index-managers">
+<h2>Index Managers<a class="headerlink" href="#index-managers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.index_manager.html#pyface.data_view.index_manager.AbstractIndexManager" title="pyface.data_view.index_manager.AbstractIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractIndexManager</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.index_manager.html#pyface.data_view.index_manager.IntIndexManager" title="pyface.data_view.index_manager.IntIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntIndexManager</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.index_manager.html#pyface.data_view.index_manager.TupleIndexManager" title="pyface.data_view.index_manager.TupleIndexManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">TupleIndexManager</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewError" title="pyface.data_view.data_view_errors.DataViewError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewError</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewGetError" title="pyface.data_view.data_view_errors.DataViewGetError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewGetError</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.data_view_errors.html#pyface.data_view.data_view_errors.DataViewSetError" title="pyface.data_view.data_view_errors.DataViewSetError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataViewSetError</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="pyface.data_view.i_data_view_widget.html#pyface.data_view.i_data_view_widget.IDataViewWidget" title="pyface.data_view.i_data_view_widget.IDataViewWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataViewWidget</span></code></a></p></li>
+<li><p><a class="reference internal" href="pyface.data_view.i_data_wrapper.html#pyface.data_view.i_data_wrapper.IDataWrapper" title="pyface.data_view.i_data_wrapper.IDataWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDataWrapper</span></code></a></p></li>
+</ul>
+</div>
 </div>
 
 
@@ -100,6 +158,17 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.data_view.api module</a><ul>
+<li><a class="reference internal" href="#data-formats">Data Formats</a></li>
+<li><a class="reference internal" href="#index-managers">Index Managers</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#interfaces">Interfaces</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pyface.data_view.abstract_value_type.html"
                         title="previous chapter">pyface.data_view.abstract_value_type module</a></p>
@@ -120,7 +189,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
         </div>
@@ -137,13 +206,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2021, Enthought
+        &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Feb 22, 2021.
+      Last updated on Feb 02, 2022.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
       </li>
     </ul>
     </div>

@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pyface.tasks.action.api
    pyface.tasks.action.dock_pane_toggle_group
