@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.i_editor_area_pane &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.i_editor_area_pane</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Event</span><span class="p">,</span>
+    <span class="n">File</span><span class="p">,</span>
+    <span class="n">HasTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.tasks.i_editor</span> <span class="kn">import</span> <span class="n">IEditor</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.i_task_pane</span> <span class="kn">import</span> <span class="n">ITaskPane</span>
+
+<span class="c1"># Logger.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IEditorAreaPane"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane">[docs]</a><span class="k">class</span> <span class="nc">IEditorAreaPane</span><span class="p">(</span><span class="n">ITaskPane</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A central pane that contains tabbed editors.</span>
+
+<span class="sd">    There are currently two implementations of this interface in Tasks.</span>
+<span class="sd">    EditorAreaPane provides a simple, tabbed editor area. AdvancedEditorAreaPane</span>
+<span class="sd">    additionally permits arbitrary splitting of the editor area so that editors</span>
+<span class="sd">    can be displayed side-by-side.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IEditorAreaPane&#39; interface -----------------------------------------#</span>
+
+    <span class="c1">#: The currently active editor.</span>
+    <span class="n">active_editor</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1">#: The list of all the visible editors in the pane.</span>
+    <span class="n">editors</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1">#: A list of extensions for file types to accept via drag and drop.</span>
+    <span class="c1">#: Note: This functionality is provided because it is very common, but</span>
+    <span class="c1">#: drag and drop support is in general highly toolkit-specific. If more</span>
+    <span class="c1">#: sophisticated support is required, subclass an editor area</span>
+    <span class="c1">#: implementation.</span>
+    <span class="n">file_drop_extensions</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: A file with a supported extension was dropped into the editor area.</span>
+    <span class="n">file_dropped</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">File</span><span class="p">)</span>
+
+    <span class="c1">#: Whether to hide the tab bar when there is only a single editor.</span>
+    <span class="n">hide_tab_bar</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IEditorAreaPane&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IEditorAreaPane.activate_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.activate_editor">[docs]</a>    <span class="k">def</span> <span class="nf">activate_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activates the specified editor in the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.add_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.add_editor">[docs]</a>    <span class="k">def</span> <span class="nf">add_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds an editor to the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.create_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.create_editor">[docs]</a>    <span class="k">def</span> <span class="nf">create_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates an editor for an object.</span>
+
+<span class="sd">        If a factory is specified, it will be used instead of the editor factory</span>
+<span class="sd">        registry. Otherwise, this method will return None if a suitable factory</span>
+<span class="sd">        cannot be found in the registry.</span>
+
+<span class="sd">        Note that the editor is not added to the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.edit"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.edit">[docs]</a>    <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Edit an object.</span>
+
+<span class="sd">        This is a convenience method that creates and adds an editor for the</span>
+<span class="sd">        specified object. If &#39;use_existing&#39; is set and the object is already</span>
+<span class="sd">        being edited, then that editor will be activated and a new editor will</span>
+<span class="sd">        not be created.</span>
+
+<span class="sd">        Returns the (possibly new) editor for the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.get_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_editor">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the editor for an object.</span>
+
+<span class="sd">        Returns None if the object is not being edited.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.get_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_factory">[docs]</a>    <span class="k">def</span> <span class="nf">get_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns an editor factory suitable for editing an object.</span>
+
+<span class="sd">        Returns None if there is no such editor factory.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.register_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.register_factory">[docs]</a>    <span class="k">def</span> <span class="nf">register_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Registers a factory for creating editors.</span>
+
+<span class="sd">        The &#39;factory&#39; parameter is a callabe of form:</span>
+<span class="sd">            callable(editor_area=editor_area, obj=obj) -&gt; IEditor</span>
+
+<span class="sd">        Often, factory will be a class that provides the &#39;IEditor&#39; interface.</span>
+
+<span class="sd">        The &#39;filter&#39; parameter is a callable of form:</span>
+<span class="sd">            callable(obj) -&gt; bool</span>
+
+<span class="sd">        that indicates whether the editor factory is suitable for an object.</span>
+
+<span class="sd">        If multiple factories apply to a single object, it is undefined which</span>
+<span class="sd">        factory is used. On the other hand, multiple filters may be registered</span>
+<span class="sd">        for a single factory, in which case only one must apply for the factory</span>
+<span class="sd">        to be selected.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.remove_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.remove_editor">[docs]</a>    <span class="k">def</span> <span class="nf">remove_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Removes an editor from the pane.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IEditorAreaPane.unregister_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.IEditorAreaPane.unregister_factory">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Unregisters a factory for creating editors.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MEditorAreaPane"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane">[docs]</a><span class="k">class</span> <span class="nc">MEditorAreaPane</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+
+    <span class="c1"># &#39;IEditorAreaPane&#39; interface -----------------------------------------#</span>
+
+    <span class="n">active_editor</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+    <span class="n">editors</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+    <span class="n">file_drop_extensions</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+    <span class="n">file_dropped</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">File</span><span class="p">)</span>
+    <span class="n">hide_tab_bar</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Protected traits -----------------------------------------------------</span>
+
+    <span class="n">_factory_map</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">(</span><span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">(</span><span class="n">Callable</span><span class="p">))</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IEditorAreaPane&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MEditorAreaPane.create_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.create_editor">[docs]</a>    <span class="k">def</span> <span class="nf">create_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates an editor for an object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_factory</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">factory</span><span class="p">(</span><span class="n">editor_area</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MEditorAreaPane.edit"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.edit">[docs]</a>    <span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Edit an object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">use_existing</span><span class="p">:</span>
+            <span class="c1"># Is the object already being edited in the window?</span>
+            <span class="n">editor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_editor</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">editor</span>
+
+        <span class="c1"># If not, create an editor for it.</span>
+        <span class="n">editor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_editor</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot create editor for obj </span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activate_editor</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">editor</span></div>
+
+<div class="viewcode-block" id="MEditorAreaPane.get_editor"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_editor">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the editor for an object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">editor</span><span class="o">.</span><span class="n">obj</span> <span class="o">==</span> <span class="n">obj</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">editor</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MEditorAreaPane.get_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_factory">[docs]</a>    <span class="k">def</span> <span class="nf">get_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns an editor factory suitable for editing an object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">factory</span><span class="p">,</span> <span class="n">filters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factory_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">filter_</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">:</span>
+                <span class="c1"># FIXME: We should swallow exceptions, but silently?</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">filter_</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">factory</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MEditorAreaPane.register_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.register_factory">[docs]</a>    <span class="k">def</span> <span class="nf">register_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Registers a factory for creating editors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_factory_map</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">factory</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MEditorAreaPane.unregister_factory"><a class="viewcode-back" href="../../../api/pyface.tasks.i_editor_area_pane.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane.unregister_factory">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Unregisters a factory for creating editors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">factory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factory_map</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factory_map</span><span class="p">[</span><span class="n">factory</span><span class="p">]</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

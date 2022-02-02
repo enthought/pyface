@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.timer.i_timer module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.timer package" href="pyface.timer.html" >
+    <link rel="next" title="pyface.timer.timer module" href="pyface.timer.timer.html" >
+    <link rel="prev" title="pyface.timer.do_later module" href="pyface.timer.do_later.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.timer.html" accesskey="U">pyface.timer package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.timer.timer.html" title="pyface.timer.timer module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.timer.do_later.html" title="pyface.timer.do_later module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.timer.i_timer">
+<span id="pyface-timer-i-timer-module"></span><h1>pyface.timer.i_timer module<a class="headerlink" href="#module-pyface.timer.i_timer" title="Permalink to this headline">¶</a></h1>
+<p>Interfaces and base classes for cross-toolkit timers</p>
+<p>This module defines interfaces for toolkit event-loop based timers.  It also
+provides a base implementation that can be easily specialized for a particular
+back-end, and mixins that provide additional capabilities.</p>
+<dl class="py class">
+<dt id="pyface.timer.i_timer.ITimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">ITimer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.Interface" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></a></p>
+<p>Interface for timer classes.</p>
+<p>This is a base interface which doesn’t specify any particular notification
+mechanism.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ITimer.interval">
+<code class="sig-name descname"><span class="pre">interval</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Range(low=0.0)</span></em><a class="headerlink" href="#pyface.timer.i_timer.ITimer.interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interval at which to call the callback in seconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ITimer.repeat">
+<code class="sig-name descname"><span class="pre">repeat</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Union(None,</span> <span class="pre">Int)</span></em><a class="headerlink" href="#pyface.timer.i_timer.ITimer.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of times to repeat the callback, or None if no limit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ITimer.expire">
+<code class="sig-name descname"><span class="pre">expire</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Union(None,</span> <span class="pre">Float)</span></em><a class="headerlink" href="#pyface.timer.i_timer.ITimer.expire" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum length of time to run in seconds, or None if no limit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ITimer.active">
+<code class="sig-name descname"><span class="pre">active</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Bool()</span></em><a class="headerlink" href="#pyface.timer.i_timer.ITimer.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the timer is currently running.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.ITimer.timer">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">timer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer.timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method that creates and starts a timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.ITimer.single_shot">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">single_shot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer.single_shot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer.single_shot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method that creates and starts a single-shot timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.ITimer.start">
+<code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.ITimer.stop">
+<code class="sig-name descname"><span class="pre">stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.ITimer.perform">
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ITimer.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ITimer.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method that will be called by the timer.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.timer.i_timer.IEventTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">IEventTimer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#IEventTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.IEventTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.timer.i_timer.ITimer" title="pyface.timer.i_timer.ITimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.i_timer.ITimer</span></code></a></p>
+<p>Interface for timers which fire a trait event periodically.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.IEventTimer.timeout">
+<code class="sig-name descname"><span class="pre">timeout</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.timer.i_timer.IEventTimer.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>A traits Event to fire when the callback happens.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.timer.i_timer.ICallbackTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">ICallbackTimer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#ICallbackTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.ICallbackTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.timer.i_timer.ITimer" title="pyface.timer.i_timer.ITimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.i_timer.ITimer</span></code></a></p>
+<p>Interface for timers which call a callback periodically.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ICallbackTimer.callback">
+<code class="sig-name descname"><span class="pre">callback</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Callable</span></em><a class="headerlink" href="#pyface.timer.i_timer.ICallbackTimer.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The callback to make, or None if no callback.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ICallbackTimer.args">
+<code class="sig-name descname"><span class="pre">args</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple()</span></em><a class="headerlink" href="#pyface.timer.i_timer.ICallbackTimer.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Positional arguments to give the callback.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.ICallbackTimer.kwargs">
+<code class="sig-name descname"><span class="pre">kwargs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#pyface.timer.i_timer.ICallbackTimer.kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword arguments to give the callback.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.timer.i_timer.BaseTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">BaseTimer</span></code><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.ABCHasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.ABCHasTraits</span></code></a></p>
+<p>Base class for timer classes.</p>
+<p>This class has a class variable which tracks active timers to prevent
+failures caused by garbage collection.  A timer is added to this tracker
+when it is started if the repeat value is not None.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.BaseTimer.interval">
+<code class="sig-name descname"><span class="pre">interval</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Range(low=0.0,</span> <span class="pre">value=0.05)</span></em><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interval at which to call the callback in seconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.BaseTimer.repeat">
+<code class="sig-name descname"><span class="pre">repeat</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Union(None,</span> <span class="pre">Int)</span></em><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of times to repeat the callback, or None if no limit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.BaseTimer.expire">
+<code class="sig-name descname"><span class="pre">expire</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Union(None,</span> <span class="pre">Float)</span></em><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.expire" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum length of time to run in seconds, or None if no limit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.BaseTimer.active">
+<code class="sig-name descname"><span class="pre">active</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Property(Bool,</span> <span class="pre">observe=&quot;_active&quot;)</span></em><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property that controls the state of the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.BaseTimer.timer">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">timer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer.timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method that creates and starts a timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.BaseTimer.single_shot">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">single_shot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer.single_shot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.single_shot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.BaseTimer.start">
+<code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.BaseTimer.stop">
+<code class="sig-name descname"><span class="pre">stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.timer.i_timer.BaseTimer.perform">
+<code class="sig-name descname"><span class="pre">perform</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#BaseTimer.perform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.BaseTimer.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the callback.</p>
+<p>The timer will stop if repeats is not None and less than 1, or if
+the <cite>_perform</cite> method raises StopIteration.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.timer.i_timer.MEventTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">MEventTimer</span></code><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#MEventTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.MEventTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<p>Mixin for event timer classes.</p>
+<p>Other code can listen to the <cite>timeout</cite> event using standard traits
+listeners.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.MEventTimer.timeout">
+<code class="sig-name descname"><span class="pre">timeout</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.timer.i_timer.MEventTimer.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>A traits Event to fire when the callback happens.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.timer.i_timer.MCallbackTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.i_timer.</span></code><code class="sig-name descname"><span class="pre">MCallbackTimer</span></code><a class="reference internal" href="../_modules/pyface/timer/i_timer.html#MCallbackTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.i_timer.MCallbackTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<p>Mixin for callback timer classes.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.MCallbackTimer.callback">
+<code class="sig-name descname"><span class="pre">callback</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Callable</span></em><a class="headerlink" href="#pyface.timer.i_timer.MCallbackTimer.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The callback to make.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.MCallbackTimer.args">
+<code class="sig-name descname"><span class="pre">args</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple()</span></em><a class="headerlink" href="#pyface.timer.i_timer.MCallbackTimer.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Positional arguments to give the callback.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.timer.i_timer.MCallbackTimer.kwargs">
+<code class="sig-name descname"><span class="pre">kwargs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#pyface.timer.i_timer.MCallbackTimer.kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword arguments to give the callback.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.timer.do_later.html"
+                        title="previous chapter">pyface.timer.do_later module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.timer.timer.html"
+                        title="next chapter">pyface.timer.timer module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.timer.i_timer.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

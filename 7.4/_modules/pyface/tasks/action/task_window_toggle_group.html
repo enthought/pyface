@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.action.task_window_toggle_group &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.action.task_window_toggle_group</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">Action</span><span class="p">,</span> <span class="n">ActionItem</span><span class="p">,</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">observe</span>
+
+
+<div class="viewcode-block" id="TaskWindowToggleAction"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_window_toggle_group.html#pyface.tasks.action.task_window_toggle_group.TaskWindowToggleAction">[docs]</a><span class="k">class</span> <span class="nc">TaskWindowToggleAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An action for activating an application window.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;Action&#39; interface -----------------------------------------------------</span>
+
+    <span class="c1">#: The name of the action for the window.</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s2">&quot;window.title&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The action is a toggle action.</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;toggle&quot;</span>
+
+    <span class="c1"># &#39;TaskWindowToggleAction&#39; interface -------------------------------------</span>
+
+    <span class="c1">#: The window to use for this action.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_window.TaskWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Action&#39; interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TaskWindowToggleAction.perform"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_window_toggle_group.html#pyface.tasks.action.task_window_toggle_group.TaskWindowToggleAction.perform">[docs]</a>    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">title</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;window:activated&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_window_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;window:deactivated&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_window_deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="TaskWindowToggleGroup"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_window_toggle_group.html#pyface.tasks.action.task_window_toggle_group.TaskWindowToggleGroup">[docs]</a><span class="k">class</span> <span class="nc">TaskWindowToggleGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A Group for toggling the activation state of an application&#39;s windows.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;Group&#39; interface ------------------------------------------------------</span>
+
+    <span class="c1">#: The id of the action group.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;TaskWindowToggleGroup&quot;</span>
+
+    <span class="c1">#: The actions in the action group</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span>
+
+    <span class="c1"># &#39;TaskWindowToggleGroup&#39; interface --------------------------------------</span>
+
+    <span class="c1">#: The application that contains the group.</span>
+    <span class="n">application</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.tasks_application.TasksApplication&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The ActionManager to which the group belongs.</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Group&#39; interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TaskWindowToggleGroup.destroy"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.task_window_toggle_group.html#pyface.tasks.action.task_window_toggle_group.TaskWindowToggleGroup.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the group is no longer required.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">,</span> <span class="s2">&quot;windows.items&quot;</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">windows</span><span class="p">:</span>
+            <span class="n">active</span> <span class="o">=</span> <span class="n">window</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">active_window</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">TaskWindowToggleAction</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">checked</span><span class="o">=</span><span class="n">active</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ActionItem</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">def</span> <span class="nf">_rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># Clear out the old group, then build the new one.</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_items</span><span class="p">()</span>
+
+        <span class="c1"># Inform our manager that it needs to be rebuilt.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Trait initializers -----------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_items_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">,</span> <span class="s2">&quot;windows.items&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_items</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_manager_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
+            <span class="n">manager</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="n">manager</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

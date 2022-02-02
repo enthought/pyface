@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.image.image &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.image.image</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="c1">#  Date:   11/03/2007</span>
+
+<span class="sd">&quot;&quot;&quot; Defines the ImageLibrary object used to manage Pyface image libraries.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">environ</span><span class="p">,</span>
+    <span class="n">listdir</span><span class="p">,</span>
+    <span class="n">remove</span><span class="p">,</span>
+    <span class="n">stat</span><span class="p">,</span>
+    <span class="n">makedirs</span><span class="p">,</span>
+    <span class="n">rename</span><span class="p">,</span>
+    <span class="n">access</span><span class="p">,</span>
+    <span class="n">R_OK</span><span class="p">,</span>
+    <span class="n">W_OK</span><span class="p">,</span>
+    <span class="n">X_OK</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">join</span><span class="p">,</span>
+    <span class="n">isdir</span><span class="p">,</span>
+    <span class="n">isfile</span><span class="p">,</span>
+    <span class="n">splitext</span><span class="p">,</span>
+    <span class="n">abspath</span><span class="p">,</span>
+    <span class="n">dirname</span><span class="p">,</span>
+    <span class="n">basename</span><span class="p">,</span>
+    <span class="n">exists</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">stat</span> <span class="kn">import</span> <span class="n">ST_MTIME</span>
+<span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">is_zipfile</span><span class="p">,</span> <span class="n">ZipFile</span><span class="p">,</span> <span class="n">ZIP_DEFLATED</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">_thread</span> <span class="kn">import</span> <span class="n">allocate_lock</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">HasPrivateTraits</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+    <span class="n">Int</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">File</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">Undefined</span><span class="p">,</span>
+    <span class="n">TraitError</span><span class="p">,</span>
+    <span class="n">Float</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">cached_property</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">traits.trait_base</span> <span class="kn">import</span> <span class="n">get_resource_path</span><span class="p">,</span> <span class="n">traits_home</span>
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ImageResource</span>
+<span class="kn">from</span> <span class="nn">pyface.resource_manager</span> <span class="kn">import</span> <span class="n">resource_manager</span>
+<span class="kn">from</span> <span class="nn">pyface.resource.resource_reference</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ImageReference</span><span class="p">,</span>
+    <span class="n">ResourceReference</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyface.ui_traits</span> <span class="kn">import</span> <span class="n">HasMargin</span><span class="p">,</span> <span class="n">HasBorder</span><span class="p">,</span> <span class="n">Alignment</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1">#  Constants:</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="c1"># Standard image file extensions:</span>
+<span class="n">ImageFileExts</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.gif&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;jpeg&quot;</span><span class="p">)</span>
+
+<span class="c1"># The image_cache root directory:</span>
+<span class="n">image_cache_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">traits_home</span><span class="p">(),</span> <span class="s2">&quot;image_cache&quot;</span><span class="p">)</span>
+
+<span class="c1"># Names of files that should not be copied when ceating a new library copy:</span>
+<span class="n">dont_copy_list</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;image_volume.py&quot;</span><span class="p">,</span> <span class="s2">&quot;image_info.py&quot;</span><span class="p">,</span> <span class="s2">&quot;license.txt&quot;</span><span class="p">)</span>
+
+<span class="c1"># -- Code Generation Templates ----------------------------------------------</span>
+
+<span class="c1"># Template for creating an ImageVolumeInfo object:</span>
+<span class="n">ImageVolumeInfoCodeTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;        ImageVolumeInfo(</span>
+<span class="s2">            description=</span><span class="si">%(description)s</span><span class="s2">,</span>
+<span class="s2">            copyright=</span><span class="si">%(copyright)s</span><span class="s2">,</span>
+<span class="s2">            license=</span><span class="si">%(license)s</span><span class="s2">,</span>
+<span class="s2">            image_names=</span><span class="si">%(image_names)s</span><span class="s2"></span>
+<span class="s2">        )&quot;&quot;&quot;</span>
+
+<span class="c1"># Template for creating an ImageVolumeInfo license text:</span>
+<span class="n">ImageVolumeInfoTextTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Description:</span>
+<span class="s2">    </span><span class="si">%s</span><span class="s2"></span>
+
+<span class="s2">Copyright:</span>
+<span class="s2">    </span><span class="si">%s</span><span class="s2"></span>
+
+<span class="s2">License:</span>
+<span class="s2">    </span><span class="si">%s</span><span class="s2"></span>
+
+<span class="s2">Applicable Images:</span>
+<span class="si">%s</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Template for creating an ImageVolume object:</span>
+<span class="n">ImageVolumeTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;from pyface.image.image import ImageVolume, ImageVolumeInfo</span>
+
+<span class="s2">volume = ImageVolume(</span>
+<span class="s2">    category=</span><span class="si">%(category)s</span><span class="s2">,</span>
+<span class="s2">    keywords=</span><span class="si">%(keywords)s</span><span class="s2">,</span>
+<span class="s2">    aliases=</span><span class="si">%(aliases)s</span><span class="s2">,</span>
+<span class="s2">    time_stamp=</span><span class="si">%(time_stamp)s</span><span class="s2">,</span>
+<span class="s2">    info=[</span>
+<span class="si">%(info)s</span><span class="s2"></span>
+<span class="s2">    ]</span>
+<span class="s2">)&quot;&quot;&quot;</span>
+
+<span class="c1"># Template for creating an ImageVolume &#39;images&#39; list:</span>
+<span class="n">ImageVolumeImagesTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;from pyface.image.image import ImageInfo</span>
+<span class="s2">from pyface.ui_traits import Margin, Border</span>
+
+<span class="s2">images = [</span>
+<span class="si">%s</span><span class="s2"></span>
+<span class="s2">]&quot;&quot;&quot;</span>
+
+<span class="c1"># Template for creating an ImageInfo object:</span>
+<span class="n">ImageInfoTemplate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;    ImageInfo(</span>
+<span class="s2">        name=</span><span class="si">%(name)s</span><span class="s2">,</span>
+<span class="s2">        image_name=</span><span class="si">%(image_name)s</span><span class="s2">,</span>
+<span class="s2">        description=</span><span class="si">%(description)s</span><span class="s2">,</span>
+<span class="s2">        category=</span><span class="si">%(category)s</span><span class="s2">,</span>
+<span class="s2">        keywords=</span><span class="si">%(keywords)s</span><span class="s2">,</span>
+<span class="s2">        width=</span><span class="si">%(width)d</span><span class="s2">,</span>
+<span class="s2">        height=</span><span class="si">%(height)d</span><span class="s2">,</span>
+<span class="s2">        border=Border(</span><span class="si">%(bleft)d</span><span class="s2">, </span><span class="si">%(bright)d</span><span class="s2">, </span><span class="si">%(btop)d</span><span class="s2">, </span><span class="si">%(bbottom)d</span><span class="s2">),</span>
+<span class="s2">        content=Margin(</span><span class="si">%(cleft)d</span><span class="s2">, </span><span class="si">%(cright)d</span><span class="s2">, </span><span class="si">%(ctop)d</span><span class="s2">, </span><span class="si">%(cbottom)d</span><span class="s2">),</span>
+<span class="s2">        label=Margin(</span><span class="si">%(lleft)d</span><span class="s2">, </span><span class="si">%(lright)d</span><span class="s2">, </span><span class="si">%(ltop)d</span><span class="s2">, </span><span class="si">%(lbottom)d</span><span class="s2">),</span>
+<span class="s2">        alignment=</span><span class="si">%(alignment)s</span><span class="s2"></span>
+<span class="s2">    )&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="read_file"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.read_file">[docs]</a><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns the contents of the specified *file_name*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_file"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.write_file">[docs]</a><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Writes the specified data to the specified file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_python_value"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.get_python_value">[docs]</a><span class="k">def</span> <span class="nf">get_python_value</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns the value of a Python symbol loaded from a specified source</span>
+<span class="sd">        code string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">exec</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="nb">globals</span><span class="p">(),</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">temp</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="time_stamp_for"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.time_stamp_for">[docs]</a><span class="k">def</span> <span class="nf">time_stamp_for</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Returns a specified time as a text string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_object_prefix"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.add_object_prefix">[docs]</a><span class="k">def</span> <span class="nf">add_object_prefix</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Adds all traits from a specified object to a dictionary with a specified</span>
+<span class="sd">        name prefix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">object</span><span class="o">.</span><span class="n">trait_get</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">dict</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="split_image_name"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.split_image_name">[docs]</a><span class="k">def</span> <span class="nf">split_image_name</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Splits a specified **image_name** into its constituent volume and file</span>
+<span class="sd">        names and returns a tuple of the form: ( volume_name, file_name ).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">image_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">col</span><span class="p">]</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">image_name</span><span class="p">[</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">+=</span> <span class="s2">&quot;.png&quot;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="join_image_name"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.join_image_name">[docs]</a><span class="k">def</span> <span class="nf">join_image_name</span><span class="p">(</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Joins a specified **volume_name** and **file_name** into an image name,</span>
+<span class="sd">        and return the resulting image name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">root</span>
+
+    <span class="k">return</span> <span class="s2">&quot;@</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FastZipFile"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.FastZipFile">[docs]</a><span class="k">class</span> <span class="nc">FastZipFile</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Provides fast access to zip files by keeping the underlying zip file</span>
+<span class="sd">        open across multiple uses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The path to the zip file:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
+
+    <span class="c1">#: The open zip file object (if None, the file is closed):</span>
+    <span class="n">zf</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: The time stamp of when the zip file was most recently accessed:</span>
+    <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">()</span>
+
+    <span class="c1">#: The lock used to manage access to the &#39;zf&#39; trait between the two threads:</span>
+    <span class="n">access</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># -- Public Methods ---------------------------------------------------------</span>
+
+<div class="viewcode-block" id="FastZipFile.namelist"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.FastZipFile.namelist">[docs]</a>    <span class="k">def</span> <span class="nf">namelist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the names of all files in the top-level zip file directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FastZipFile.read"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.FastZipFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the contents of the specified **file_name** from the zip</span>
+<span class="sd">            file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FastZipFile.close"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.FastZipFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Temporarily closes the zip file (usually while the zip file is being</span>
+<span class="sd">            replaced by a different version).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+    <span class="c1"># -- Default Value Implementations ------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_access_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">allocate_lock</span><span class="p">()</span>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_zf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Restart the time-out:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="o">=</span> <span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_process</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span>
+
+    <span class="c1"># -- Private Methods --------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Waits until the zip file has not been accessed for a while, then</span>
+<span class="sd">            closes the file and exits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_zf</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="k">break</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  &#39;ImageInfo&#39; class:</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="ImageInfo"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageInfo">[docs]</a><span class="k">class</span> <span class="nc">ImageInfo</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Defines a class that contains information about a specific Traits UI</span>
+<span class="sd">        image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The volume this image belongs to:</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;ImageVolume&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The user friendly name of the image:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The full image name (e.g. &#39;@standard:floppy&#39;):</span>
+    <span class="n">image_name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: A description of the image:</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The category that the image belongs to:</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: A list of keywords used to describe/categorize the image:</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: The image width (in pixels):</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">Int</span><span class="p">()</span>
+
+    <span class="c1">#: The image height (in pixels):</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">Int</span><span class="p">()</span>
+
+    <span class="c1">#: The border inset:</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="n">HasBorder</span>
+
+    <span class="c1">#: The margin to use around the content:</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">HasMargin</span>
+
+    <span class="c1">#: The margin to use around the label:</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">HasMargin</span>
+
+    <span class="c1">#: The alignment to use for the label:</span>
+    <span class="n">alignment</span> <span class="o">=</span> <span class="n">Alignment</span>
+
+    <span class="c1">#: The copyright that applies to this image:</span>
+    <span class="n">copyright</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: The license that applies to this image:</span>
+    <span class="n">license</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: A read-only string containing the Python code needed to construct this</span>
+    <span class="c1">#: ImageInfo object:</span>
+    <span class="n">image_info_code</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1"># -- Default Value Implementations ------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_name_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">split_image_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_width_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">image_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">image_size</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">create_image</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">width</span>
+
+    <span class="k">def</span> <span class="nf">_height_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">image_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">image_size</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">create_image</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">height</span>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_image_info_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trait_get</span><span class="p">(</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;image_name&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;category&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;keywords&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;alignment&quot;</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trait_get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">))</span>
+        <span class="n">sides</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="s2">&quot;b&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">border</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sides</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;c&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sides</span>
+        <span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="s2">&quot;l&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sides</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ImageInfoTemplate</span> <span class="o">%</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_get_copyright</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume_info</span><span class="p">(</span><span class="s2">&quot;copyright&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_license</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume_info</span><span class="p">(</span><span class="s2">&quot;license&quot;</span><span class="p">)</span>
+
+    <span class="c1"># -- Private Methods --------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_volume_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the VolumeInfo object that applies to this image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">volume_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;Unknown&quot;</span></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  &#39;ImageVolumeInfo&#39; class:</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="ImageVolumeInfo"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolumeInfo">[docs]</a><span class="k">class</span> <span class="nc">ImageVolumeInfo</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+
+    <span class="c1">#: A general description of the images:</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;No volume description specified.&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The copyright that applies to the images:</span>
+    <span class="n">copyright</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;No copyright information specified.&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The license that applies to the images:</span>
+    <span class="n">license</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;No license information specified.&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The list of image names within the volume the information applies to.</span>
+    <span class="c1">#: Note that an empty list means that the information applies to all images</span>
+    <span class="c1">#: in the volume:</span>
+    <span class="n">image_names</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: A read-only string containing the Python code needed to construct this</span>
+    <span class="c1">#: ImageVolumeInfo object:</span>
+    <span class="n">image_volume_info_code</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: A read-only string containing the text describing the volume info:</span>
+    <span class="n">image_volume_info_text</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_image_volume_info_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;copyright&quot;</span><span class="p">,</span> <span class="s2">&quot;license&quot;</span><span class="p">,</span> <span class="s2">&quot;image_names&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ImageVolumeInfoCodeTemplate</span> <span class="o">%</span> <span class="n">data</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_image_volume_info_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    &quot;</span><span class="p">)</span>
+        <span class="n">license</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">license</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">image_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_names</span>
+        <span class="n">image_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">image_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;  - &quot;</span> <span class="o">+</span> <span class="n">image_name</span> <span class="k">for</span> <span class="n">image_name</span> <span class="ow">in</span> <span class="n">image_names</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">ImageVolumeInfoTextTemplate</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">description</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">copyright</span><span class="p">,</span>
+            <span class="n">license</span><span class="p">,</span>
+            <span class="n">images</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -- Public Methods ---------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ImageVolumeInfo.clone"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolumeInfo.clone">[docs]</a>    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a copy of the ImageVolumeInfo object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">([</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;copyright&quot;</span><span class="p">,</span> <span class="s2">&quot;license&quot;</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  &#39;ImageVolume&#39; class:</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="ImageVolume"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume">[docs]</a><span class="k">class</span> <span class="nc">ImageVolume</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+
+    <span class="c1">#: The canonical name of this volume:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The list of volume descriptors that apply to this volume:</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">ImageVolumeInfo</span><span class="p">)</span>
+
+    <span class="c1">#: The category that the volume belongs to:</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;General&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: A list of keywords used to describe the volume:</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: The list of aliases for this volume:</span>
+    <span class="n">aliases</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: The path of the file that defined this volume:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
+
+    <span class="c1">#: Is the path a zip file?</span>
+    <span class="n">is_zip_file</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#: The FastZipFile object used to access the underlying zip file:</span>
+    <span class="n">zip_file</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">FastZipFile</span><span class="p">)</span>
+
+    <span class="c1">#: The list of images available in the volume:</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">ImageInfo</span><span class="p">)</span>
+
+    <span class="c1">#: A dictionary mapping image names to ImageInfo objects:</span>
+    <span class="n">catalog</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">observe</span><span class="o">=</span><span class="s2">&quot;images&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The time stamp of when the image library was last modified:</span>
+    <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: A read-only string containing the Python code needed to construct this</span>
+    <span class="c1">#: ImageVolume object:</span>
+    <span class="n">image_volume_code</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: A read-only string containing the Python code needed to construct the</span>
+    <span class="c1">#: &#39;images&#39; list for this ImageVolume object:</span>
+    <span class="n">images_code</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1">#: A read-only string containing the text describing the contents of the</span>
+    <span class="c1">#: volume (description, copyright, license information, and the images they</span>
+    <span class="c1">#: apply to):</span>
+    <span class="n">license_text</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1"># -- Public Methods ---------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ImageVolume.update"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Updates the contents of the image volume from the underlying</span>
+<span class="sd">            image store, and saves the results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Unlink all our current images:</span>
+        <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">:</span>
+            <span class="n">image</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Make sure the images are up to date by deleting any current value:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_traits</span><span class="p">([</span><span class="s2">&quot;images&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Save the new image volume information:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ImageVolume.save"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Saves the contents of the image volume using the current contents</span>
+<span class="sd">            of the **ImageVolume**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_zip_file</span><span class="p">:</span>
+            <span class="c1"># Make sure the directory is writable:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">access</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">R_OK</span> <span class="o">|</span> <span class="n">W_OK</span> <span class="o">|</span> <span class="n">X_OK</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Make sure the directory and zip file are writable:</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="ow">not</span> <span class="n">access</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">R_OK</span> <span class="o">|</span> <span class="n">W_OK</span> <span class="o">|</span> <span class="n">X_OK</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">access</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">W_OK</span><span class="p">))</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Pre-compute the images code, because it can require a long time</span>
+        <span class="c1"># to load all of the images so that we can determine their size, and we</span>
+        <span class="c1"># don&#39;t want that time to interfere with the time stamp of the image</span>
+        <span class="c1"># volume:</span>
+        <span class="n">images_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images_code</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_zip_file</span><span class="p">:</span>
+            <span class="c1"># We need to time stamp when this volume info was generated, but</span>
+            <span class="c1"># it needs to be the same or newer then the time stamp of the file</span>
+            <span class="c1"># it is in. So we use the current time plus a &#39;fudge factor&#39; to</span>
+            <span class="c1"># allow for some slop in when the OS actually time stamps the file:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mf">5.0</span><span class="p">)</span>
+
+            <span class="c1"># Write the volume manifest source code to a file:</span>
+            <span class="n">write_file</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;image_volume.py&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_volume_code</span><span class="p">)</span>
+
+            <span class="c1"># Write the image info source code to a file:</span>
+            <span class="n">write_file</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;image_info.py&quot;</span><span class="p">),</span> <span class="n">images_code</span><span class="p">)</span>
+
+            <span class="c1"># Write a separate license file for human consumption:</span>
+            <span class="n">write_file</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;license.txt&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_text</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># Create a temporary name for the new .zip file:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.###&quot;</span>
+
+        <span class="c1"># Create the new zip file:</span>
+        <span class="n">new_zf</span> <span class="o">=</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Get the current zip file:</span>
+            <span class="n">cur_zf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span>
+
+            <span class="c1"># Copy all of the image files from the current zip file to the new</span>
+            <span class="c1"># zip file:</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cur_zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dont_copy_list</span><span class="p">:</span>
+                    <span class="n">new_zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cur_zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+            <span class="c1"># Temporarily close the current zip file while we replace it with</span>
+            <span class="c1"># the new version:</span>
+            <span class="n">cur_zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># We need to time stamp when this volume info was generated, but</span>
+            <span class="c1"># it needs to be the same or newer then the time stamp of the file</span>
+            <span class="c1"># it is in. So we use the current time plus a &#39;fudge factor&#39; to</span>
+            <span class="c1"># allow for some slop in when the OS actually time stamps the file:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mf">10.0</span><span class="p">)</span>
+
+            <span class="c1"># Write the volume manifest source code to the zip file:</span>
+            <span class="n">new_zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;image_volume.py&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_volume_code</span><span class="p">)</span>
+
+            <span class="c1"># Write the image info source code to the zip file:</span>
+            <span class="n">new_zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;image_info.py&quot;</span><span class="p">,</span> <span class="n">images_code</span><span class="p">)</span>
+
+            <span class="c1"># Write a separate license file for human consumption:</span>
+            <span class="n">new_zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;license.txt&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">license_text</span><span class="p">)</span>
+
+            <span class="c1"># Done creating the new zip file:</span>
+            <span class="n">new_zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">new_zf</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Rename the original file to a temporary name, so we can give the</span>
+            <span class="c1"># new file the original name. Note that unlocking the original zip</span>
+            <span class="c1"># file after the previous close sometimes seems to take a while,</span>
+            <span class="c1"># which is why we repeatedly try the rename until it either succeeds</span>
+            <span class="c1"># or takes so long that it must have failed for another reason:</span>
+            <span class="n">temp_name</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.$$$&quot;</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">rename</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">temp_name</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rename</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="n">temp_name</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">rename</span><span class="p">(</span><span class="n">temp_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_zf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="n">remove</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ImageVolume.image_resource"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume.image_resource">[docs]</a>    <span class="k">def</span> <span class="nf">image_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the ImageResource object for the specified **image_name**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the name of the image file:</span>
+        <span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">split_image_name</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_zip_file</span><span class="p">:</span>
+            <span class="c1"># See if we already have the image file cached in the file system:</span>
+            <span class="n">cache_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_cache</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cache_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># If not cached, then create a zip file reference:</span>
+                <span class="n">ref</span> <span class="o">=</span> <span class="n">ZipFileReference</span><span class="p">(</span>
+                    <span class="n">resource_factory</span><span class="o">=</span><span class="n">resource_manager</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span>
+                    <span class="n">zip_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="p">,</span>
+                    <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                    <span class="n">volume_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">file_name</span><span class="o">=</span><span class="n">file_name</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Otherwise, create a cache file reference:</span>
+                <span class="n">ref</span> <span class="o">=</span> <span class="n">ImageReference</span><span class="p">(</span>
+                    <span class="n">resource_manager</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">cache_file</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Otherwise, create a normal file reference:</span>
+            <span class="n">ref</span> <span class="o">=</span> <span class="n">ImageReference</span><span class="p">(</span>
+                <span class="n">resource_manager</span><span class="o">.</span><span class="n">resource_factory</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Create the ImageResource object using the reference (note that the</span>
+        <span class="c1"># ImageResource class will not allow us to specify the reference in the</span>
+        <span class="c1"># constructor):</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="n">resource</span><span class="o">.</span><span class="n">_ref</span> <span class="o">=</span> <span class="n">ref</span>
+
+        <span class="c1"># Return the ImageResource:</span>
+        <span class="k">return</span> <span class="n">resource</span></div>
+
+<div class="viewcode-block" id="ImageVolume.image_data"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume.image_data">[docs]</a>    <span class="k">def</span> <span class="nf">image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the image data (i.e. file contents) for the specified image</span>
+<span class="sd">            name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">split_image_name</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_zip_file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read_file</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ImageVolume.volume_info"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ImageVolume.volume_info">[docs]</a>    <span class="k">def</span> <span class="nf">volume_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the ImageVolumeInfo object that corresponds to the</span>
+<span class="sd">            image specified by **image_name**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">image_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">image_name</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">image_names</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="n">info</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Volume info for image name </span><span class="si">{}</span><span class="s2"> not found.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># -- Default Value Implementations ------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_info_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">ImageVolumeInfo</span><span class="p">()]</span>
+
+    <span class="k">def</span> <span class="nf">_images_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_image_info</span><span class="p">()</span>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">((</span><span class="n">image</span><span class="o">.</span><span class="n">image_name</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_image_volume_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trait_get</span><span class="p">(</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="s2">&quot;aliases&quot;</span><span class="p">,</span> <span class="s2">&quot;time_stamp&quot;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">image_volume_info_code</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ImageVolumeTemplate</span> <span class="o">%</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_get_images_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">image_info_code</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ImageVolumeImagesTemplate</span> <span class="o">%</span> <span class="n">images</span>
+
+    <span class="k">def</span> <span class="nf">_get_license_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">79</span><span class="p">))</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">image_volume_info_text</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -- Private Methods --------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_load_image_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the list of ImageInfo objects for the images in the volume.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If there is no current path, then return a default list of images:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">])</span>
+        <span class="n">volume_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">old_images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cur_images</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_zip_file</span><span class="p">:</span>
+            <span class="n">zf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span>
+
+            <span class="c1"># Get the names of all top-level entries in the zip file:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+
+            <span class="c1"># Check to see if there is an image info manifest file:</span>
+            <span class="k">if</span> <span class="s2">&quot;image_info.py&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="c1"># Load the manifest code and extract the images list:</span>
+                <span class="n">old_images</span> <span class="o">=</span> <span class="n">get_python_value</span><span class="p">(</span>
+                    <span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;image_info.py&quot;</span><span class="p">),</span> <span class="s2">&quot;images&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Check to see if our time stamp is up to date with the file:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">&lt;</span> <span class="n">time_stamp</span><span class="p">:</span>
+
+                <span class="c1"># If not, create an ImageInfo object for all image files</span>
+                <span class="c1"># contained in the .zip file:</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                    <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">ImageFileExts</span><span class="p">:</span>
+                        <span class="n">cur_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="n">ImageInfo</span><span class="p">(</span>
+                                <span class="n">name</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                                <span class="n">image_name</span><span class="o">=</span><span class="n">join_image_name</span><span class="p">(</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image_info_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;image_info.py&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">image_info_path</span><span class="p">):</span>
+                <span class="c1"># Load the manifest code and extract the images list:</span>
+                <span class="n">old_images</span> <span class="o">=</span> <span class="n">get_python_value</span><span class="p">(</span>
+                    <span class="n">read_file</span><span class="p">(</span><span class="n">image_info_path</span><span class="p">),</span> <span class="s2">&quot;images&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Check to see if our time stamp is up to data with the file:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">&lt;</span> <span class="n">time_stamp</span><span class="p">:</span>
+
+                <span class="c1"># If not, create an ImageInfo object for each image file</span>
+                <span class="c1"># contained in the path:</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">ImageFileExts</span><span class="p">:</span>
+                        <span class="n">cur_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="n">ImageInfo</span><span class="p">(</span>
+                                <span class="n">name</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                                <span class="n">image_name</span><span class="o">=</span><span class="n">join_image_name</span><span class="p">(</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+
+        <span class="c1"># Merge the old and current images into a single up to date list:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur_images</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">old_images</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cur_image_set</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="p">[(</span><span class="n">image</span><span class="o">.</span><span class="n">image_name</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">cur_images</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">old_image</span> <span class="ow">in</span> <span class="n">old_images</span><span class="p">:</span>
+                <span class="n">cur_image</span> <span class="o">=</span> <span class="n">cur_image_set</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">old_image</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cur_image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">cur_image_set</span><span class="p">[</span><span class="n">old_image</span><span class="o">.</span><span class="n">image_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_image</span>
+                    <span class="n">cur_image</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span>
+                    <span class="n">old_image</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">cur_image</span><span class="o">.</span><span class="n">width</span>
+                    <span class="n">old_image</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">cur_image</span><span class="o">.</span><span class="n">height</span>
+                    <span class="n">cur_image</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cur_image_set</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1"># Set the new time stamp of the volume:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">=</span> <span class="n">time_stamp</span>
+
+        <span class="c1"># Return the resulting sorted list as the default value:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="c1"># Make sure all images reference this volume:</span>
+        <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+            <span class="n">image</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">images</span>
+
+    <span class="k">def</span> <span class="nf">_check_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks to see if the specified zip file name has been saved in the</span>
+<span class="sd">            image cache. If it has, it returns the fully-qualified cache file</span>
+<span class="sd">            name to use; otherwise it returns None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cache_file</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">image_cache_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">cache_file</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">cache_file</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_stamp</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="n">cache_file</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  &#39;ZipFileReference&#39; class:</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="ZipFileReference"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ZipFileReference">[docs]</a><span class="k">class</span> <span class="nc">ZipFileReference</span><span class="p">(</span><span class="n">ResourceReference</span><span class="p">):</span>
+
+    <span class="c1">#: The zip file to read;</span>
+    <span class="n">zip_file</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">FastZipFile</span><span class="p">)</span>
+
+    <span class="c1">#: The volume name:</span>
+    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The file within the zip file:</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The name of the cached image file:</span>
+    <span class="n">cache_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
+
+    <span class="c1"># -- The &#39;ResourceReference&#39; API --------------------------------------------</span>
+
+    <span class="c1">#: The file name of the image (in this case, the cache file name):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">Property</span>
+
+    <span class="c1"># -- ResourceReference Interface Implementation -----------------------------</span>
+
+<div class="viewcode-block" id="ZipFileReference.load"><a class="viewcode-back" href="../../../api/pyface.image.image.html#pyface.image.image.ZipFileReference.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Loads the resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the cache file has already been created:</span>
+        <span class="n">cache_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_file</span>
+        <span class="k">if</span> <span class="n">cache_file</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="c1"># Extract the data from the zip file:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+
+            <span class="c1"># Try to create an image from the data, without writing it to a</span>
+            <span class="c1"># file first:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="o">.</span><span class="n">image_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Undefined</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">image</span>
+
+            <span class="c1"># Make sure the correct image cache directory exists:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">image_cache_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+                <span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+
+            <span class="c1"># Write the image data to the cache file:</span>
+            <span class="n">cache_file</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cache_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># Save the cache file name in case we are called again:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache_file</span> <span class="o">=</span> <span class="n">cache_file</span>
+
+            <span class="c1"># Release our reference to the zip file object:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zip_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Return the image data from the image cache file:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_factory</span><span class="o">.</span><span class="n">image_from_file</span><span class="p">(</span><span class="n">cache_file</span><span class="p">)</span></div>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_file</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_file</span></div>
+
+
+<span class="c1"># -------------------------------------------------------------------------------</span>
+<span class="c1">#  &#39;ImageLibrary&#39; class:</span>
+<span class="c1"># -------------------------------------------------------------------------------</span>
+
+
+<span class="k">class</span> <span class="nc">ImageLibrary</span><span class="p">(</span><span class="n">HasPrivateTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Manages Traits UI image libraries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The list of available image volumes in the library:</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">ImageVolume</span><span class="p">)</span>
+
+    <span class="c1">#: The volume dictionary (the keys are volume names, and the values are the</span>
+    <span class="c1">#: corresponding ImageVolume objects):</span>
+    <span class="n">catalog</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">ImageVolume</span><span class="p">)</span>
+
+    <span class="c1">#: The list of available images in the library:</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">List</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s2">&quot;volumes.items.images&quot;</span><span class="p">)</span>
+
+    <span class="c1"># -- Private Traits ---------------------------------------------------------</span>
+
+    <span class="c1">#: Mapping from a &#39;virtual&#39; library name to a &#39;real&#39; library name:</span>
+    <span class="n">aliases</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">()</span>
+
+    <span class="c1"># -- Public methods ---------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">image_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the ImageInfo object corresponding to a specified</span>
+<span class="sd">            **image_name**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_volume</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">volume</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">image_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns an ImageResource object for the specified image name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If no volume was specified, use the standard volume:</span>
+        <span class="k">if</span> <span class="n">image_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">image_name</span> <span class="o">=</span> <span class="s2">&quot;@images:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">image_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="c1"># Find the correct volume, possible resolving any aliases used:</span>
+        <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_volume</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="c1"># Find the image within the volume and return its ImageResource object:</span>
+        <span class="k">if</span> <span class="n">volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">volume</span><span class="o">.</span><span class="n">image_resource</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise, the volume was not found:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">find_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the ImageVolume object corresponding to the specified</span>
+<span class="sd">            **image_name** or None if the volume cannot be found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Extract the volume name from the image name:</span>
+        <span class="n">volume_name</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">split_image_name</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="c1"># Find the correct volume, possibly resolving any aliases used:</span>
+        <span class="n">catalog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span>
+        <span class="k">while</span> <span class="n">volume_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">catalog</span><span class="p">:</span>
+            <span class="n">volume_name</span> <span class="o">=</span> <span class="n">aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">volume_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">volume_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">catalog</span><span class="p">[</span><span class="n">volume_name</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">add_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; If **file_name** is a file, it adds an image volume specified by</span>
+<span class="sd">            **file_name** to the image library. If **file_name** is a</span>
+<span class="sd">            directory, it adds all image libraries contained in the directory</span>
+<span class="sd">            to the image library. If **file_name** is omitted, all image</span>
+<span class="sd">            libraries located in the *images* directory contained in the same</span>
+<span class="sd">            directory as the caller are added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If no file name was specified, derive a path from the caller&#39;s</span>
+        <span class="c1"># source code location:</span>
+        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">get_resource_path</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;images&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="c1"># Load an image volume from the specified file:</span>
+            <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_volume</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">volume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; is not a valid image volume.&quot;</span> <span class="o">%</span> <span class="n">file_name</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">volume</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_duplicate_volume</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">volume</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">isdir</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="c1"># Load all image volumes from the specified path:</span>
+            <span class="n">catalog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span>
+            <span class="n">volumes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_path</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">volumes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">volume</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">catalog</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_duplicate_volume</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+                <span class="n">catalog</span><span class="p">[</span><span class="n">volume</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">volumes</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Handle an unrecognized argument:</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                <span class="s2">&quot;The add method argument must be None or a file &quot;</span>
+                <span class="s2">&quot;or directory path, but &#39;</span><span class="si">%s</span><span class="s2">&#39; was specified.&quot;</span> <span class="o">%</span> <span class="n">file_name</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds the directory specified by **path** as a *virtual* volume</span>
+<span class="sd">            called **volume_name**. All image files contained within path</span>
+<span class="sd">            define the contents of the volume. If **path** is None, the</span>
+<span class="sd">            *images* contained in the &#39;images&#39; subdirectory of the same</span>
+<span class="sd">            directory as the caller are is used as the path for the *virtual*</span>
+<span class="sd">            volume..</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Make sure we don&#39;t already have a volume with that name:</span>
+        <span class="k">if</span> <span class="n">volume_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                <span class="p">(</span><span class="s2">&quot;The volume name &#39;</span><span class="si">%s</span><span class="s2">&#39; is already in the image &quot;</span> <span class="s2">&quot;library.&quot;</span><span class="p">)</span>
+                <span class="o">%</span> <span class="n">volume_name</span>
+            <span class="p">)</span>
+
+        <span class="c1"># If no path specified, derive one from the caller&#39;s source code</span>
+        <span class="c1"># location:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">get_resource_path</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;images&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Make sure that the specified path is a directory:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                <span class="s2">&quot;The image volume path &#39;</span><span class="si">%s</span><span class="s2">&#39; does not exist.&quot;</span> <span class="o">%</span> <span class="n">path</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Create the ImageVolume to describe the path&#39;s contents:</span>
+        <span class="n">image_volume_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;image_volume.py&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">image_volume_path</span><span class="p">):</span>
+            <span class="n">volume</span> <span class="o">=</span> <span class="n">get_python_value</span><span class="p">(</span><span class="n">read_file</span><span class="p">(</span><span class="n">image_volume_path</span><span class="p">),</span> <span class="s2">&quot;volume&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">volume</span> <span class="o">=</span> <span class="n">ImageVolume</span><span class="p">()</span>
+
+        <span class="c1"># Set up the rest of the volume information:</span>
+        <span class="n">volume</span><span class="o">.</span><span class="n">trait_set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">is_zip_file</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Try to bring the volume information up to date if necessary:</span>
+        <span class="k">if</span> <span class="n">volume</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">&lt;</span> <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">]):</span>
+            <span class="c1"># Note that the save could fail if the volume is read-only, but</span>
+            <span class="c1"># that&#39;s OK, because we&#39;re only trying to do the save in case</span>
+            <span class="c1"># a developer had added or deleted some image files, which would</span>
+            <span class="c1"># require write access to the volume:</span>
+            <span class="n">volume</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="c1"># Add the new volume to the library:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">volume_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">image_names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Builds a new image volume called **file_name** from the list of</span>
+<span class="sd">            image names specified by **image_names**. Each image name should be</span>
+<span class="sd">            of the form: &#39;@volume:name&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the volume name and file extension:</span>
+        <span class="n">volume_name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+
+        <span class="c1"># If no extension specified, add the &#39;.zip&#39; file extension:</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">+=</span> <span class="s2">&quot;.zip&quot;</span>
+
+        <span class="c1"># Create the ImageVolume object to describe the new volume:</span>
+        <span class="n">volume</span> <span class="o">=</span> <span class="n">ImageVolume</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">volume_name</span><span class="p">)</span>
+
+        <span class="c1"># Make sure the zip file does not already exists:</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span><span class="s2">&quot;The &#39;</span><span class="si">%s</span><span class="s2">&#39; file already exists.&quot;</span> <span class="o">%</span> <span class="n">file_name</span><span class="p">)</span>
+
+        <span class="c1"># Create the zip file:</span>
+        <span class="n">zf</span> <span class="o">=</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+
+        <span class="c1"># Add each of the specified images to it and the ImageVolume:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">keywords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">image_name</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">image_names</span><span class="p">):</span>
+                <span class="c1"># Verify the image name is legal:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">image_name</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;@&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">image_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="s2">&quot;The image name specified by &#39;</span><span class="si">%s</span><span class="s2">&#39; is &quot;</span>
+                            <span class="s2">&quot;not of the form: @volume:name.&quot;</span>
+                        <span class="p">)</span>
+                        <span class="o">%</span> <span class="n">image_name</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># Get the reference volume and image file names:</span>
+                <span class="n">image_volume_name</span><span class="p">,</span> <span class="n">image_file_name</span> <span class="o">=</span> <span class="n">split_image_name</span><span class="p">(</span>
+                    <span class="n">image_name</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Get the volume for the image name:</span>
+                <span class="n">image_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_volume</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">image_volume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="s2">&quot;Could not find the image volume &quot;</span>
+                            <span class="s2">&quot;specified by &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span>
+                        <span class="p">)</span>
+                        <span class="o">%</span> <span class="n">image_name</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># Get the image info:</span>
+                <span class="n">image_info</span> <span class="o">=</span> <span class="n">image_volume</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">image_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                        <span class="p">(</span><span class="s2">&quot;Could not find the image specified by &quot;</span> <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+                        <span class="o">%</span> <span class="n">image_name</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># Add the image info to the list of images:</span>
+                <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_info</span><span class="p">)</span>
+
+                <span class="c1"># Add the image file to the zip file:</span>
+                <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span>
+                    <span class="n">image_file_name</span><span class="p">,</span> <span class="n">image_volume</span><span class="o">.</span><span class="n">image_data</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Add the volume alias needed by the image (if any):</span>
+                <span class="k">if</span> <span class="n">image_volume_name</span> <span class="o">!=</span> <span class="n">volume_name</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">image_volume_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">aliases</span><span class="p">:</span>
+                        <span class="n">aliases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">image_volume_name</span><span class="p">)</span>
+
+                        <span class="c1"># Add the volume keywords as well:</span>
+                        <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">image_volume</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
+                            <span class="n">keywords</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span>
+
+                <span class="c1"># Add the volume info for the image:</span>
+                <span class="n">volume_info</span> <span class="o">=</span> <span class="n">image_volume</span><span class="o">.</span><span class="n">volume_info</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+                <span class="n">vinfo</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_volume_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">vinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">info</span><span class="p">[</span><span class="n">image_volume_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">vinfo</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+                <span class="n">vinfo</span><span class="o">.</span><span class="n">image_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+
+            <span class="c1"># Create the list of images for the volume:</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+            <span class="n">volume</span><span class="o">.</span><span class="n">images</span> <span class="o">=</span> <span class="n">images</span>
+
+            <span class="c1"># Create the list of aliases for the volume:</span>
+            <span class="n">volume</span><span class="o">.</span><span class="n">aliases</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">aliases</span><span class="p">)</span>
+
+            <span class="c1"># Create the list of keywords for the volume:</span>
+            <span class="n">volume</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
+
+            <span class="c1"># Create the final volume info list for the volume:</span>
+            <span class="n">volume</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+            <span class="c1"># Write the volume manifest source code to the zip file:</span>
+            <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;image_volume.py&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">image_volume_code</span><span class="p">)</span>
+
+            <span class="c1"># Write the image info source code to the zip file:</span>
+            <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;image_info.py&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">images_code</span><span class="p">)</span>
+
+            <span class="c1"># Write a separate licenses file for human consumption:</span>
+            <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s2">&quot;license.txt&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">license_text</span><span class="p">)</span>
+
+            <span class="c1"># Indicate no errors occurred:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+                <span class="n">remove</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+    <span class="c1"># -- Default Value Implementations ------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_volumes_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Check for and add the &#39;application&#39; image library:</span>
+        <span class="n">app_library</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="s2">&quot;library&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">isdir</span><span class="p">(</span><span class="n">app_library</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_path</span><span class="p">(</span><span class="n">app_library</span><span class="p">))</span>
+
+        <span class="c1"># Get all volumes in the standard Traits UI image library directory:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_path</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">get_resource_path</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;library&quot;</span><span class="p">)))</span>
+
+        <span class="c1"># Check to see if there is an environment variable specifying a list</span>
+        <span class="c1"># of paths containing image libraries:</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TRAITS_IMAGES&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">paths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Determine the correct OS path separator to use:</span>
+            <span class="n">separator</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span>
+            <span class="k">if</span> <span class="n">system</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+                <span class="n">separator</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span>
+
+            <span class="c1"># Add all image volumes found in each path in the environment</span>
+            <span class="c1"># variable:</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_path</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+        <span class="c1"># Return the list of default volumes found:</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">_catalog_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">volume</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span> <span class="k">for</span> <span class="n">volume</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">])</span>
+
+    <span class="c1"># -- Property Implementations -----------------------------------------------</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_images_list</span><span class="p">()</span>
+
+    <span class="c1"># -- Private Methods --------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_images_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the list of all library images.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Merge the list of images from each volume:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">volume</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">:</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">volume</span><span class="o">.</span><span class="n">images</span><span class="p">)</span>
+
+        <span class="c1"># Sort the result:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">image</span><span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">image_name</span><span class="p">)</span>
+
+        <span class="c1"># Return the images list:</span>
+        <span class="k">return</span> <span class="n">images</span>
+
+    <span class="k">def</span> <span class="nf">_add_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a list of ImageVolume objects, one for each image library</span>
+<span class="sd">            located in the specified **path**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Make sure the path is a directory:</span>
+        <span class="k">if</span> <span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+
+            <span class="c1"># Find each zip file in the directory:</span>
+            <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">splitext</span><span class="p">(</span><span class="n">base</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.zip&quot;</span><span class="p">:</span>
+
+                    <span class="c1"># Try to create a volume from the zip file and add it to</span>
+                    <span class="c1"># the result:</span>
+                    <span class="n">volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_volume</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">base</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+        <span class="c1"># Return the list of volumes found:</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">_add_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns an ImageVolume object for the image library specified by</span>
+<span class="sd">            **path**. If **path** does not specify a valid ImageVolume, None is</span>
+<span class="sd">            returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Make sure the path is a valid zip file:</span>
+        <span class="k">if</span> <span class="n">is_zipfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+
+            <span class="c1"># Create a fast zip file for reading:</span>
+            <span class="n">zf</span> <span class="o">=</span> <span class="n">FastZipFile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+
+            <span class="c1"># Extract the volume name from the path:</span>
+            <span class="n">volume_name</span> <span class="o">=</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># Get the names of all top-level entries in the zip file:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+
+            <span class="c1"># Check to see if there is a manifest file:</span>
+            <span class="k">if</span> <span class="s2">&quot;image_volume.py&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="c1"># Load the manifest code and extract the volume object:</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="n">get_python_value</span><span class="p">(</span><span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;image_volume.py&quot;</span><span class="p">),</span> <span class="s2">&quot;volume&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Set the volume name:</span>
+                <span class="n">volume</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">volume_name</span>
+
+                <span class="c1"># Try to add all of the external volume references as</span>
+                <span class="c1"># aliases for this volume:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_aliases</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+                <span class="c1"># Set the path to this volume:</span>
+                <span class="n">volume</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+
+                <span class="c1"># Save the reference to the zip file object we are using:</span>
+                <span class="n">volume</span><span class="o">.</span><span class="n">zip_file</span> <span class="o">=</span> <span class="n">zf</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Create a new volume from the zip file:</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="n">ImageVolume</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">volume_name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">zip_file</span><span class="o">=</span><span class="n">zf</span><span class="p">)</span>
+
+            <span class="c1"># If this volume is not up to date, update it:</span>
+            <span class="k">if</span> <span class="n">volume</span><span class="o">.</span><span class="n">time_stamp</span> <span class="o">&lt;</span> <span class="n">time_stamp_for</span><span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">ST_MTIME</span><span class="p">]):</span>
+                <span class="c1"># Note that the save could fail if the volume is read-only, but</span>
+                <span class="c1"># that&#39;s OK, because we&#39;re only trying to do the save in case</span>
+                <span class="c1"># a developer had added or deleted some image files, which would</span>
+                <span class="c1"># require write access to the volume:</span>
+                <span class="n">volume</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="c1"># Return the volume:</span>
+            <span class="k">return</span> <span class="n">volume</span>
+
+        <span class="c1"># Indicate no volume was found:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_add_aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Try to add all of the external volume references as aliases for</span>
+<span class="sd">            this volume.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span>
+        <span class="n">volume_name</span> <span class="o">=</span> <span class="n">volume</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">for</span> <span class="n">vname</span> <span class="ow">in</span> <span class="n">volume</span><span class="o">.</span><span class="n">aliases</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">vname</span> <span class="ow">in</span> <span class="n">aliases</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">volume_name</span> <span class="o">!=</span> <span class="n">aliases</span><span class="p">[</span><span class="n">vname</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="s2">&quot;Image library error: &quot;</span>
+                        <span class="s2">&quot;Attempt to alias &#39;</span><span class="si">%s</span><span class="s2">&#39; to &#39;</span><span class="si">%s</span><span class="s2">&#39; when it is &quot;</span>
+                        <span class="s2">&quot;already aliased to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">vname</span><span class="p">,</span> <span class="n">volume_name</span><span class="p">,</span> <span class="n">aliases</span><span class="p">[</span><span class="n">volume_name</span><span class="p">])</span>
+                <span class="p">)</span>
+            <span class="n">aliases</span><span class="p">[</span><span class="n">vname</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume_name</span>
+
+    <span class="k">def</span> <span class="nf">_duplicate_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Raises a duplicate volume name error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;Attempted to add an image volume called &#39;</span><span class="si">%s</span><span class="s2">&#39; when &quot;</span>
+                <span class="s2">&quot;a volume with that name is already defined.&quot;</span>
+            <span class="p">)</span>
+            <span class="o">%</span> <span class="n">volume_name</span>
+        <span class="p">)</span>
+
+
+<span class="c1"># Create the singleton image object:</span>
+<span class="n">ImageLibrary</span> <span class="o">=</span> <span class="n">ImageLibrary</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

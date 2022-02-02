@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.action.delete_user_perspective_action &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.action.delete_user_perspective_action</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; An action that deletes a user perspective. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">YES</span>
+
+
+<span class="kn">from</span> <span class="nn">.user_perspective_action</span> <span class="kn">import</span> <span class="n">UserPerspectiveAction</span>
+
+
+<div class="viewcode-block" id="DeleteUserPerspectiveAction"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.delete_user_perspective_action.html#pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction">[docs]</a><span class="k">class</span> <span class="nc">DeleteUserPerspectiveAction</span><span class="p">(</span><span class="n">UserPerspectiveAction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An action that deletes a user perspective. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;Action&#39; interface ---------------------------------------------------</span>
+
+    <span class="c1"># The action&#39;s unique identifier (may be None).</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;pyface.workbench.action.delete_user_perspective_action&quot;</span>
+
+    <span class="c1"># The action&#39;s name (displayed on menus/tool bar tools etc).</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Delete Perspective&quot;</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Action&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="DeleteUserPerspectiveAction.perform"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.delete_user_perspective_action.html#pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction.perform">[docs]</a>    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Perform the action. &quot;&quot;&quot;</span>
+
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">window</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">workbench</span><span class="o">.</span><span class="n">user_perspective_manager</span>
+
+        <span class="c1"># The perspective to delete.</span>
+        <span class="n">perspective</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">active_perspective</span>
+
+        <span class="c1"># Make sure that the user isn&#39;t having second thoughts!</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;Are you sure you want to delete the &quot;</span><span class="si">%s</span><span class="s1">&quot; perspective?&#39;</span>
+            <span class="o">%</span> <span class="n">perspective</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span>
+
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confirm Delete&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="n">YES</span><span class="p">:</span>
+            <span class="c1"># Set the active perspective to be the first remaining perspective.</span>
+            <span class="c1">#</span>
+            <span class="c1"># There is always a default NON-user perspective (even if no</span>
+            <span class="c1"># perspectives are explicitly defined) so we should never(!) not</span>
+            <span class="c1"># be able to find one!</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">active_perspective</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_next_perspective</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+            <span class="c1"># Remove the perspective from the window.</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">perspectives</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">perspective</span><span class="p">)</span>
+
+            <span class="c1"># Remove it from the user perspective manager.</span>
+            <span class="n">manager</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">perspective</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_next_perspective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return the first perspective that is not the active one! &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">window</span><span class="o">.</span><span class="n">active_perspective</span> <span class="ow">is</span> <span class="n">window</span><span class="o">.</span><span class="n">perspectives</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">window</span><span class="o">.</span><span class="n">perspectives</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Standard Dialogs &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="up" title="Widgets" href="widgets.html" >
+    <link rel="next" title="Pyface Applications" href="applications.html" >
+    <link rel="prev" title="Widgets" href="widgets.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="widgets.html" accesskey="U">Widgets</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="applications.html" title="Pyface Applications"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="widgets.html" title="Widgets"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="standard-dialogs">
+<span id="id1"></span><h1>Standard Dialogs<a class="headerlink" href="#standard-dialogs" title="Permalink to this headline">¶</a></h1>
+<p>In addition to being able to create custom dialogs based on the <a class="reference internal" href="api/pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDialog</span></code></a>
+interface, Pyface exposes a number of standard toolkit and OS dialogs.</p>
+<div class="section" id="about-dialog">
+<h2>About Dialog<a class="headerlink" href="#about-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id2">
+<a class="reference internal image-reference" href="_images/about_dialog.png"><img alt="an about dialog" src="_images/about_dialog.png" style="width: 765.0px; height: 667.0px;" /></a>
+<p class="caption"><span class="caption-text">An About Dialog</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>A dialog that displays a simple message about the application, along with a
+logo and copyright information.  This is designed to be suitable to be called
+from an “About” menu item.</p>
+</div>
+<div class="section" id="color-dialog">
+<h2>Color Dialog<a class="headerlink" href="#color-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="_images/color_dialog.png"><img alt="a color dialog on Mac OS" src="_images/color_dialog.png" style="width: 274.0px; height: 496.0px;" /></a>
+<p class="caption"><span class="caption-text">A Color Dialog on Mac OS</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>A dialog that takes a <a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> object and displays a standard OS color-picker
+dialog with an option that allows the setting of transparency/alpha if needed.</p>
+<p>A convenience function <a class="reference internal" href="api/pyface.color_dialog.html#pyface.color_dialog.get_color" title="pyface.color_dialog.get_color"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_color()</span></code></a> opens the dialog and returns a color value.</p>
+</div>
+<div class="section" id="confirmation-dialog">
+<h2>Confirmation Dialog<a class="headerlink" href="#confirmation-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id4">
+<a class="reference internal image-reference" href="_images/confirmation_dialog.png"><img alt="a confirmation dialog" src="_images/confirmation_dialog.png" style="width: 357.0px; height: 275.0px;" /></a>
+<p class="caption"><span class="caption-text">A Confirmation Dialog</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>A dialog that presents a message and allows the user to select a Yes/No
+response, with the option to present a Cancel button as well.  The default
+button, as well as the labels for the buttons can be controlled.
+The result value is one of the pyface constants of <code class="xref py py-obj docutils literal notranslate"><span class="pre">CANCEL</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">YES</span></code> or
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">NO</span></code>.</p>
+<p>A convenience function <a class="reference internal" href="api/pyface.confirmation_dialog.html#pyface.confirmation_dialog.confirm" title="pyface.confirmation_dialog.confirm"><code class="xref py py-func docutils literal notranslate"><span class="pre">confirm()</span></code></a> provides a simple API for opening a dialog
+and returning the result.</p>
+</div>
+<div class="section" id="directory-dialog">
+<h2>Directory Dialog<a class="headerlink" href="#directory-dialog" title="Permalink to this headline">¶</a></h2>
+<p>A dialog that shows the standard OS file selection dialog for directories only,
+as well as whether the dialog should follow “Open” or “Save As” conventions for
+selecting a directory. Other options allow specifying a default path.</p>
+<p>Typical usage for a save dialog looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># display a directory dialog for opening a directory</span>
+<span class="n">dialog</span> <span class="o">=</span> <span class="n">DirectoryDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Open </span><span class="si">{</span><span class="n">dialog</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-dialog">
+<h2>File Dialog<a class="headerlink" href="#file-dialog" title="Permalink to this headline">¶</a></h2>
+<p>A dialog that shows the standard OS file selection dialog, with options to
+filter by file type as well as whether the dialog should follow “Open” or
+“Save As” conventions.  Other options allow specifying a default directory and
+file, and wildcards for filtering file type extensions.</p>
+<p>Typical usage for a save dialog looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># display a file dialog for saving a Python file</span>
+<span class="n">dialog</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;save as&quot;</span><span class="p">,</span> <span class="n">wildcard</span><span class="o">=</span><span class="s2">&quot;*.py&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Save to </span><span class="si">{</span><span class="n">dialog</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="font-dialog">
+<h2>Font Dialog<a class="headerlink" href="#font-dialog" title="Permalink to this headline">¶</a></h2>
+<p>A dialog that takes a <a class="reference internal" href="api/pyface.font.html#pyface.font.Font" title="pyface.font.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object and displays a standard OS font selection.
+A convenience function <a class="reference internal" href="api/pyface.font_dialog.html#pyface.font_dialog.get_font" title="pyface.font_dialog.get_font"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_font()</span></code></a> opens the dialog and returns a font value.</p>
+</div>
+<div class="section" id="message-dialog">
+<h2>Message Dialog<a class="headerlink" href="#message-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id5">
+<a class="reference internal image-reference" href="_images/error_dialog.png"><img alt="an error message dialog" src="_images/error_dialog.png" style="width: 313.0px; height: 275.0px;" /></a>
+<p class="caption"><span class="caption-text">An Error Message Dialog</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>A dialog that shows the standard OS message dialog, where the user is only
+presented with the ability to confirm the message.  The dialog has a “severity”
+trait which can take the values of <code class="docutils literal notranslate"><span class="pre">&quot;information&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;warning&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;error&quot;</span></code> and displays an appropriate icon along with the message.</p>
+<p>There are convenience functions <a class="reference internal" href="api/pyface.message_dialog.html#pyface.message_dialog.information" title="pyface.message_dialog.information"><code class="xref py py-func docutils literal notranslate"><span class="pre">information()</span></code></a>, <a class="reference internal" href="api/pyface.message_dialog.html#pyface.message_dialog.warning" title="pyface.message_dialog.warning"><code class="xref py py-func docutils literal notranslate"><span class="pre">warning()</span></code></a> and <a class="reference internal" href="api/pyface.message_dialog.html#pyface.message_dialog.error" title="pyface.message_dialog.error"><code class="xref py py-func docutils literal notranslate"><span class="pre">error()</span></code></a> that
+create a dialog of the appropriate severity level.</p>
+</div>
+<div class="section" id="progress-dialog">
+<h2>Progress Dialog<a class="headerlink" href="#progress-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id6">
+<a class="reference internal image-reference" href="_images/progress_dialog.png"><img alt="a progress dialog" src="_images/progress_dialog.png" style="width: 312.0px; height: 307.0px;" /></a>
+<p class="caption"><span class="caption-text">A Progress Dialog</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>This class displays a progress bar in a dialog, together with a message and
+various additonal optional information, such as time estimates.  The progress
+dialog is designed to integrate with long-running computations that are using
+the main thread, and make an effort to keep the UI at least minimally
+responsive:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_thumbnails</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)):</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">ProgressDialog</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Creating Thumbnails...&quot;</span><span class="p">,</span>
+        <span class="nb">max</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">progress</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Processing: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">file</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">im</span><span class="p">:</span>
+            <span class="n">im</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_thumbnail.png&quot;</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">cont</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cont</span> <span class="ow">or</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>It can also be used with Python’s standard library <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a> classes to take
+advantage of potential parallelism:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_thumbnail</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="n">file</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">im</span><span class="p">:</span>
+        <span class="n">im</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_thumbnail.png&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+<span class="k">def</span> <span class="nf">create_thumbnails</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)):</span>
+    <span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">()</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">ProgressDialog</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Creating Thumbnails...&quot;</span><span class="p">,</span>
+        <span class="nb">max</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">progress</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">create_thumbnail</span><span class="p">,</span> <span class="n">paths</span><span class="p">)):</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Processing: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">(</span><span class="n">cont</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cont</span> <span class="ow">or</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">cancel_futures</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This is in contrast with the situation where operations are handled using a
+“fire-and-forget” process where computations are dispatched in the background,
+with any opportunity for updates coming via callbacks.  Since these sorts of
+jobs run in the background, a dialog (particularly a modal dialog), may not
+provide the best UX.</p>
+<p>This dialog is well-suited to situations where there are many steps to
+perform, each of which takes a small amount of time.  If instead there is only
+one step that can take a long time to perform, or if the total number of steps
+isn’t known, setting the min and max to 0 shows an indeterminate busy indicator
+in the place of the bar.</p>
+<p>The progress dialog has the option to provide a cancel button that the user
+can use to stop the underlying process.</p>
+</div>
+<div class="section" id="single-choice-dialog">
+<h2>Single-Choice Dialog<a class="headerlink" href="#single-choice-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="id7">
+<a class="reference internal image-reference" href="_images/single_choice_dialog.png"><img alt="a single-choice dialog" src="_images/single_choice_dialog.png" style="width: 408.0px; height: 438.0px;" /></a>
+<p class="caption"><span class="caption-text">A Single-Choice Dialog</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>A dialog which presents a list-box with a set of choices for the user and
+permits the selection of one of them, or to cancel.  There is also a
+<a class="reference internal" href="api/pyface.single_choice_dialog.html#pyface.single_choice_dialog.choose_one" title="pyface.single_choice_dialog.choose_one"><code class="xref py py-func docutils literal notranslate"><span class="pre">choose_one()</span></code></a> convenience function which takes a list of options and either the
+user’s selection or <code class="docutils literal notranslate"><span class="pre">None</span></code> if nothing is selected.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Standard Dialogs</a><ul>
+<li><a class="reference internal" href="#about-dialog">About Dialog</a></li>
+<li><a class="reference internal" href="#color-dialog">Color Dialog</a></li>
+<li><a class="reference internal" href="#confirmation-dialog">Confirmation Dialog</a></li>
+<li><a class="reference internal" href="#directory-dialog">Directory Dialog</a></li>
+<li><a class="reference internal" href="#file-dialog">File Dialog</a></li>
+<li><a class="reference internal" href="#font-dialog">Font Dialog</a></li>
+<li><a class="reference internal" href="#message-dialog">Message Dialog</a></li>
+<li><a class="reference internal" href="#progress-dialog">Progress Dialog</a></li>
+<li><a class="reference internal" href="#single-choice-dialog">Single-Choice Dialog</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="widgets.html"
+                        title="previous chapter">Widgets</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="next chapter">Pyface Applications</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/standard_dialogs.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

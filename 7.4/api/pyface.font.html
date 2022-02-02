@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.font module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.font_dialog module" href="pyface.font_dialog.html" >
+    <link rel="prev" title="pyface.filter module" href="pyface.filter.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.font_dialog.html" title="pyface.font_dialog module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.filter.html" title="pyface.filter module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.font">
+<span id="pyface-font-module"></span><h1>pyface.font module<a class="headerlink" href="#module-pyface.font" title="Permalink to this headline">¶</a></h1>
+<p>Toolkit-independent font utilities.</p>
+<p>Pyface fonts are intended to be generic, but able to be mapped fairly well
+to most backend toolkit font descriptions.  In most cases we can describe
+fonts along the common dimensions that are used by CSS, Wx, and Qt.  However
+when it comes to actually working with a font, the toolkit needs to take the
+description and produce something that is as close as possible to the
+specification, but within the constraints of the toolkit, operating system
+and available fonts on the machine where this is being executed.</p>
+<p>Because of this inherent ambiguity in font specification, this system tries to
+be flexible in what it accepts as a font specification, rather than trying to
+specify a unique canoncial form.</p>
+<div class="section" id="font-properties">
+<h2>Font Properties<a class="headerlink" href="#font-properties" title="Permalink to this headline">¶</a></h2>
+<p>The properties that fonts have are:</p>
+<dl>
+<dt>Font Family</dt><dd><p>A list of font family names in order of preference, such as “Helvetica”
+or “Comic Sans”.  In the case of a font that has been selected by the
+toolkit this list will have one value which is the actual font family name.</p>
+<p>There are several generic font family names that can be used as fall-backs
+in case all preferred fonts are unavailable.  The allowed values are:</p>
+<dl class="simple">
+<dt>“default”</dt><dd><p>The application’s default system font.</p>
+</dd>
+<dt>“fantasy”</dt><dd><p>A primarily decorative font, but with recognisable characters.</p>
+</dd>
+<dt>“decorative”</dt><dd><p>A synonym for “fantasy”.</p>
+</dd>
+<dt>“serif”</dt><dd><p>A proportional serif font, such as Times New Roman or Garamond.</p>
+</dd>
+<dt>“roman”</dt><dd><p>A synonym for “serif”.</p>
+</dd>
+<dt>“cursive”</dt><dd><p>A font which resembles hand-written cursive text, such as Zapf
+Chancery.</p>
+</dd>
+<dt>“script”</dt><dd><p>A synonym for “cursive”.</p>
+</dd>
+<dt>“sans-serif”</dt><dd><p>A proportional sans-serif font, such as Helvetica or Arial.</p>
+</dd>
+<dt>“swiss”</dt><dd><p>A synonym for “sans-serif”.</p>
+</dd>
+<dt>“monospace”</dt><dd><p>A fixed-pitch sans-serif font, such as Source Code Pro or Roboto Mono.
+Commonly used for display of code.</p>
+</dd>
+<dt>“modern”</dt><dd><p>A synonym for “monospace”.</p>
+</dd>
+<dt>“typewriter”</dt><dd><p>A fixed-pitch serif font which resembles typewritten text, such as
+Courier.  Commonly used for display of code.</p>
+</dd>
+<dt>“teletype”</dt><dd><p>A synonym for “typewriter”.</p>
+</dd>
+</dl>
+<p>These special names will be converted into appropriate toolkit flags which
+correspond to these generic font specifications.</p>
+</dd>
+<dt>Weight</dt><dd><p>How thick or dark the font glyphs are.  These can be given as a number
+from 1 (lightest) to 999 (darkest), but are typically specified by a
+multiple of 100 from 100 to 900, with a number of synonyms such as ‘light’
+and ‘bold’ available for those values.</p>
+</dd>
+<dt>Stretch</dt><dd><p>The amount of horizontal compression or expansion to apply to the glyphs.
+These can be given as a percentage between 50% and 200%, or by strings
+such as ‘condensed’ and ‘expanded’ that correspond to those values.</p>
+</dd>
+<dt>Style</dt><dd><p>This selects either ‘oblique’ or ‘italic’ variants typefaces of the given
+font family.  If neither is wanted, the value is ‘normal’.</p>
+</dd>
+<dt>Size</dt><dd><p>The overall size of the glyphs. This can be expressed either as the
+numeric size in points, or as a string such as “small” or “large”.</p>
+</dd>
+<dt>Variants</dt><dd><p>A set of additional font style specifiers, such as “small-caps”,
+“strikethrough”, “underline” or “overline”, where supported by the
+underlying toolkit.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="font-specificiation-class">
+<h2>Font Specificiation Class<a class="headerlink" href="#font-specificiation-class" title="Permalink to this headline">¶</a></h2>
+<p>The Pyface Font class is a HasStrictTraits class which specifies a requested
+font.  It has methods that convert the Font class to and from a toolkit Font
+class.</p>
+<dl class="py data">
+<dt id="pyface.font.WEIGHTS">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">WEIGHTS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'100':</span> <span class="pre">100,</span> <span class="pre">'1000':</span> <span class="pre">1000,</span> <span class="pre">'200':</span> <span class="pre">200,</span> <span class="pre">'300':</span> <span class="pre">300,</span> <span class="pre">'400':</span> <span class="pre">400,</span> <span class="pre">'500':</span> <span class="pre">500,</span> <span class="pre">'600':</span> <span class="pre">600,</span> <span class="pre">'700':</span> <span class="pre">700,</span> <span class="pre">'800':</span> <span class="pre">800,</span> <span class="pre">'900':</span> <span class="pre">900,</span> <span class="pre">'black':</span> <span class="pre">900,</span> <span class="pre">'bold':</span> <span class="pre">700,</span> <span class="pre">'book':</span> <span class="pre">400,</span> <span class="pre">'demi':</span> <span class="pre">600,</span> <span class="pre">'demi-bold':</span> <span class="pre">600,</span> <span class="pre">'extra</span> <span class="pre">bold':</span> <span class="pre">800,</span> <span class="pre">'extra-bold':</span> <span class="pre">800,</span> <span class="pre">'extra-heavy':</span> <span class="pre">1000,</span> <span class="pre">'extra-light':</span> <span class="pre">200,</span> <span class="pre">'hairline':</span> <span class="pre">100,</span> <span class="pre">'heavy':</span> <span class="pre">900,</span> <span class="pre">'light':</span> <span class="pre">300,</span> <span class="pre">'medium':</span> <span class="pre">500,</span> <span class="pre">'normal':</span> <span class="pre">400,</span> <span class="pre">'regular':</span> <span class="pre">400,</span> <span class="pre">'roman':</span> <span class="pre">500,</span> <span class="pre">'semi-bold':</span> <span class="pre">600,</span> <span class="pre">'thin':</span> <span class="pre">100,</span> <span class="pre">'ultra-bold':</span> <span class="pre">800,</span> <span class="pre">'ultra-light':</span> <span class="pre">200,</span> <span class="pre">'ultralight':</span> <span class="pre">200}</span></em><a class="headerlink" href="#pyface.font.WEIGHTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font weight synonyms.
+These are alternate convenience names for font weights.
+The intent is to allow a developer to use a common name (eg. “bold”) instead
+of having to remember the corresponding number (eg. 700).
+These come from:
+- the OpenType specification: <a class="reference external" href="https://docs.microsoft.com/en-us/typography/opentype/spec/os2#usweightclass">https://docs.microsoft.com/en-us/typography/opentype/spec/os2#usweightclass</a>
+- QFont weights: <a class="reference external" href="https://doc.qt.io/qt-5/qfont.html#Weight-enum">https://doc.qt.io/qt-5/qfont.html#Weight-enum</a>
+- WxPython font weights: <a class="reference external" href="https://wxpython.org/Phoenix/docs/html/wx.FontWeight.enumeration.html">https://wxpython.org/Phoenix/docs/html/wx.FontWeight.enumeration.html</a>
+- CSS Common weight name mapping: <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#common_weight_name_mapping">https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#common_weight_name_mapping</a>
+- values used by Enable: <a class="reference external" href="https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L90-L105">https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L90-L105</a>
+See also: <a class="reference external" href="https://gist.github.com/lukaszgrolik/5849599">https://gist.github.com/lukaszgrolik/5849599</a></p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.font.STRETCHES">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">STRETCHES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'condensed':</span> <span class="pre">75,</span> <span class="pre">'expanded':</span> <span class="pre">125,</span> <span class="pre">'extra-condensed':</span> <span class="pre">62.5,</span> <span class="pre">'extra-expanded':</span> <span class="pre">150,</span> <span class="pre">'normal':</span> <span class="pre">100,</span> <span class="pre">'semi-condensed':</span> <span class="pre">87.5,</span> <span class="pre">'semi-expanded':</span> <span class="pre">112.5,</span> <span class="pre">'ultra-condensed':</span> <span class="pre">50,</span> <span class="pre">'ultra-expanded':</span> <span class="pre">200}</span></em><a class="headerlink" href="#pyface.font.STRETCHES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font stretch synonyms.
+These are alternate convenience names for font stretch/width values.
+The intent is to allow a developer to use a common name (eg. “expanded”)
+instead of having to remember the corresponding number (eg. 125).
+These come from:
+- the OpenType specification: <a class="reference external" href="https://docs.microsoft.com/en-us/typography/opentype/spec/os2#uswidthclass">https://docs.microsoft.com/en-us/typography/opentype/spec/os2#uswidthclass</a>
+- QFont stetch: <a class="reference external" href="https://doc.qt.io/qt-5/qfont.html#Stretch-enum">https://doc.qt.io/qt-5/qfont.html#Stretch-enum</a>
+- CSS font-stretch: <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch">https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch</a>
+- values used by Enable: <a class="reference external" href="https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L78-L88">https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L78-L88</a></p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.font.SIZES">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">SIZES</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'large':</span> <span class="pre">14.0,</span> <span class="pre">'medium':</span> <span class="pre">12.0,</span> <span class="pre">'small':</span> <span class="pre">10.0,</span> <span class="pre">'x-large':</span> <span class="pre">18.0,</span> <span class="pre">'x-small':</span> <span class="pre">9.0,</span> <span class="pre">'xx-large':</span> <span class="pre">20.0,</span> <span class="pre">'xx-small':</span> <span class="pre">7.0}</span></em><a class="headerlink" href="#pyface.font.SIZES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font size synonyms.
+These are alternate convenience names for font size values.
+The intent is to allow a developer to use a common name (eg. “small”)
+instead of having to remember the corresponding number (eg. 10).
+These come from CSS font-size: <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">https://developer.mozilla.org/en-US/docs/Web/CSS/font-size</a></p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.font.VARIANTS">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">VARIANTS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['small-caps']</span></em><a class="headerlink" href="#pyface.font.VARIANTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Font variants. Currently only small caps variants are exposed in Qt, and
+nothing in Wx.  In the future this could include things like swashes,
+numeric variants, and so on, as exposed in the toolkit.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.font.DECORATIONS">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">DECORATIONS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['underline',</span> <span class="pre">'strikethrough',</span> <span class="pre">'overline']</span></em><a class="headerlink" href="#pyface.font.DECORATIONS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional markings on or around the glyphs of the font that are not part
+of the glyphs themselves.  Currently Qt and Wx support underline and
+strikethrough, and Qt supports overline.  In the future overlines and other
+decorations may be supported, as exposed in the toolkit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.FontFamily">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontFamily</span></code><em class="property"> <span class="pre">=</span> <span class="pre">CList(Str,</span> <span class="pre">['default'])</span></em><a class="headerlink" href="#pyface.font.FontFamily" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for font families.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.FontWeight">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontWeight</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Map(WEIGHTS,</span> <span class="pre">default_value='normal')</span></em><a class="headerlink" href="#pyface.font.FontWeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for font weights.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.FontStyle">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontStyle</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Enum(STYLES)</span></em><a class="headerlink" href="#pyface.font.FontStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for font styles.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.FontVariants">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontVariants</span></code><em class="property"> <span class="pre">=</span> <span class="pre">CSet(Enum(VARIANTS))</span></em><a class="headerlink" href="#pyface.font.FontVariants" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for font variant properties.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.FontDecorations">
+<code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontDecorations</span></code><em class="property"> <span class="pre">=</span> <span class="pre">CSet(Enum(DECORATIONS))</span></em><a class="headerlink" href="#pyface.font.FontDecorations" title="Permalink to this definition">¶</a></dt>
+<dd><p>A trait for font decorator properties.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.font.FontStretch">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontStretch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">**metadata</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontStretch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontStretch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/trait_types.html#traits.trait_types.BaseCFloat" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_types.BaseCFloat</span></code></a></p>
+<p>Trait type for font stretches.</p>
+<p>The is a CFloat trait which holds floating point values between 50 and 200,
+inclusive.  In addition to values which can be converted to floats, this
+trait also accepts named synonyms for sizes which are converted to the
+associated commonly accepted weights:</p>
+<ul class="simple">
+<li><p>‘ultra-condensed’: 50</p></li>
+<li><p>‘extra-condensed’: 62.5</p></li>
+<li><p>‘condensed’: 75</p></li>
+<li><p>‘semi-condensed’: 87.5</p></li>
+<li><p>‘normal’: 100</p></li>
+<li><p>‘semi-expanded’: 112.5</p></li>
+<li><p>‘expanded’: 125</p></li>
+<li><p>‘extra-expanded’: 150</p></li>
+<li><p>‘ultra-expanded’: 200</p></li>
+</ul>
+<dl class="py attribute">
+<dt id="pyface.font.FontStretch.default_value">
+<code class="sig-name descname"><span class="pre">default_value</span></code><em class="property"> <span class="pre">=</span> <span class="pre">100.0</span></em><a class="headerlink" href="#pyface.font.FontStretch.default_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default value for the trait.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.FontStretch.validate">
+<code class="sig-name descname"><span class="pre">validate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontStretch.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontStretch.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that a specified value is valid for this trait.</p>
+<p>Note: The ‘fast validator’ version performs this check in C.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.FontStretch.info">
+<code class="sig-name descname"><span class="pre">info</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontStretch.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontStretch.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must return a string describing the type of value accepted by the
+trait handler.</p>
+<p>The string should be a phrase describing the type defined by the
+TraitHandler subclass, rather than a complete sentence. For example,
+use the phrase, “a square sprocket” instead of the sentence, “The value
+must be a square sprocket.” The value returned by info() is combined
+with other information whenever an error occurs and therefore makes
+more sense to the user if the result is a phrase. The info() method is
+similar in purpose and use to the <strong>info</strong> attribute of a validator
+function.</p>
+<p>Note that the result can include information specific to the particular
+trait handler instance. If the info() method is not overridden, the
+default method returns the value of the ‘info_text’ attribute.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.font.FontSize">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">FontSize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">default_value=&lt;traits.trait_type._NoDefaultSpecifiedType</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">**metadata</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontSize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/trait_types.html#traits.trait_types.BaseCFloat" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_types.BaseCFloat</span></code></a></p>
+<p>Trait type for font sizes.</p>
+<p>The is a CFloat trait which also allows values which are keys of the
+size dictionary, and also ignores trailing ‘pt’ ot ‘px’ annotation in
+string values.  The value stored is a float.</p>
+<dl class="py attribute">
+<dt id="pyface.font.FontSize.default_value">
+<code class="sig-name descname"><span class="pre">default_value</span></code><em class="property"> <span class="pre">=</span> <span class="pre">12.0</span></em><a class="headerlink" href="#pyface.font.FontSize.default_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default value for the trait.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.FontSize.validate">
+<code class="sig-name descname"><span class="pre">validate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontSize.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontSize.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that a specified value is valid for this trait.</p>
+<p>Note: The ‘fast validator’ version performs this check in C.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.FontSize.info">
+<code class="sig-name descname"><span class="pre">info</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#FontSize.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.FontSize.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must return a string describing the type of value accepted by the
+trait handler.</p>
+<p>The string should be a phrase describing the type defined by the
+TraitHandler subclass, rather than a complete sentence. For example,
+use the phrase, “a square sprocket” instead of the sentence, “The value
+must be a square sprocket.” The value returned by info() is combined
+with other information whenever an error occurs and therefore makes
+more sense to the user if the result is a phrase. The info() method is
+similar in purpose and use to the <strong>info</strong> attribute of a validator
+function.</p>
+<p>Note that the result can include information specific to the particular
+trait handler instance. If the info() method is not overridden, the
+default method returns the value of the ‘info_text’ attribute.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.font.Font">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.font.</span></code><code class="sig-name descname"><span class="pre">Font</span></code><a class="reference internal" href="../_modules/pyface/font.html#Font"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.Font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasStrictTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></a></p>
+<p>A toolkit-independent font specification.</p>
+<p>This class represents a <em>request</em> for a font with certain characteristics,
+not a concrete font that can be used for drawing.  Font objects returned
+from the toolkit may or may not match what was requested, depending on the
+capabilities of the toolkit, OS, and the fonts installed on a particular
+computer.</p>
+<dl class="py attribute">
+<dt id="pyface.font.Font.family">
+<code class="sig-name descname"><span class="pre">family</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontFamily()</span></em><a class="headerlink" href="#pyface.font.Font.family" title="Permalink to this definition">¶</a></dt>
+<dd><p>The preferred font families.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.weight">
+<code class="sig-name descname"><span class="pre">weight</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontWeight()</span></em><a class="headerlink" href="#pyface.font.Font.weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>The weight of the font.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.stretch">
+<code class="sig-name descname"><span class="pre">stretch</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontStretch()</span></em><a class="headerlink" href="#pyface.font.Font.stretch" title="Permalink to this definition">¶</a></dt>
+<dd><p>How much the font is expanded or compressed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.style">
+<code class="sig-name descname"><span class="pre">style</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontStyle()</span></em><a class="headerlink" href="#pyface.font.Font.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style of the font.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.size">
+<code class="sig-name descname"><span class="pre">size</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontSize()</span></em><a class="headerlink" href="#pyface.font.Font.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the font.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.variants">
+<code class="sig-name descname"><span class="pre">variants</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontVariants()</span></em><a class="headerlink" href="#pyface.font.Font.variants" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font variants.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.font.Font.decorations">
+<code class="sig-name descname"><span class="pre">decorations</span></code><em class="property"> <span class="pre">=</span> <span class="pre">FontDecorations()</span></em><a class="headerlink" href="#pyface.font.Font.decorations" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font decorations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.Font.from_toolkit">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_toolkit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">toolkit_font</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#Font.from_toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.Font.from_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Font from a toolkit font object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>toolkit_font</strong> (<em>any</em>) – A toolkit font to be converted to a corresponding class instance,
+within the limitations of the options supported by the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.font.Font.to_toolkit">
+<code class="sig-name descname"><span class="pre">to_toolkit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/font.html#Font.to_toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.font.Font.to_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a toolkit font object from the Font instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>toolkit_font</strong> – A toolkit font which matches the property of the font as
+closely as possible given the constraints of the toolkit.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.font module</a><ul>
+<li><a class="reference internal" href="#font-properties">Font Properties</a></li>
+<li><a class="reference internal" href="#font-specificiation-class">Font Specificiation Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.filter.html"
+                        title="previous chapter">pyface.filter module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.font_dialog.html"
+                        title="next chapter">pyface.font_dialog module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.font.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

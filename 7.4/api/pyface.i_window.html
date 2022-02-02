@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_window module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.image_cache module" href="pyface.image_cache.html" >
+    <link rel="prev" title="pyface.i_widget module" href="pyface.i_widget.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.image_cache.html" title="pyface.image_cache module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.i_widget.html" title="pyface.i_widget module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.i_window">
+<span id="pyface-i-window-module"></span><h1>pyface.i_window module<a class="headerlink" href="#module-pyface.i_window" title="Permalink to this headline">¶</a></h1>
+<p>The abstract interface for all pyface top-level windows.</p>
+<dl class="py class">
+<dt id="pyface.i_window.IWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_window.</span></code><code class="sig-name descname"><span class="pre">IWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adaptee</span></em>, <em class="sig-param"><span class="pre">default=&lt;class</span> <span class="pre">'traits.adaptation.adaptation_error.AdaptationError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.i_widget.html#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_widget.IWidget</span></code></a></p>
+<p>The abstract interface for all pyface top-level windows.</p>
+<p>A pyface top-level window has no visual representation until it is opened
+(ie. its ‘control’ trait will be None until it is opened).</p>
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.position">
+<code class="sig-name descname"><span class="pre">position</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the window.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.size">
+<code class="sig-name descname"><span class="pre">size</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Tuple()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the window.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.title">
+<code class="sig-name descname"><span class="pre">title</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Str()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window title.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.opened">
+<code class="sig-name descname"><span class="pre">opened</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been opened.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.opening">
+<code class="sig-name descname"><span class="pre">opening</span></code><em class="property"> <span class="pre">=</span> <span class="pre">VetoableEvent()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.opening" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to open.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.activated">
+<code class="sig-name descname"><span class="pre">activated</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been activated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.closed">
+<code class="sig-name descname"><span class="pre">closed</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been closed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.closing">
+<code class="sig-name descname"><span class="pre">closing</span></code><em class="property"> <span class="pre">=</span> <span class="pre">VetoableEvent()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.closing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to be closed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.i_window.IWindow.deactivated">
+<code class="sig-name descname"><span class="pre">deactivated</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Event()</span></em><a class="headerlink" href="#pyface.i_window.IWindow.deactivated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been deactivated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.open">
+<code class="sig-name descname"><span class="pre">open</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+<p>This fires the <a class="reference internal" href="#pyface.i_window.IWindow.closing" title="pyface.i_window.IWindow.closing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code></a> vetoable event, giving listeners the
+opportunity to veto the opening of the window.</p>
+<p>If the window is opened, the <a class="reference internal" href="#pyface.i_window.IWindow.opened" title="pyface.i_window.IWindow.opened"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opened</span></code></a> event will be fired
+with the IWindow instance as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>opened</strong> – Whether or not the window was opened.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.close">
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+<p>This fires the <a class="reference internal" href="#pyface.i_window.IWindow.closing" title="pyface.i_window.IWindow.closing"><code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code></a> vetoable event, giving listeners the
+opportunity to veto the closing of the window.  If <code class="xref py py-obj docutils literal notranslate"><span class="pre">force</span></code> is
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> then the window will close no matter what.</p>
+<p>If the window is closed, the closed event will be fired with the window
+object as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether the window should close despite vetos.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>closed</strong> – Whether or not the window is closed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.confirm">
+<code class="sig-name descname"><span class="pre">confirm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.confirm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>cancel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</p></li>
+<li><p><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) – Which button should be the default button.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.information">
+<code class="sig-name descname"><span class="pre">information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Information'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.warning">
+<code class="sig-name descname"><span class="pre">warning</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Warning'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.IWindow.error">
+<code class="sig-name descname"><span class="pre">error</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#IWindow.error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.IWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyface.i_window.MWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.i_window.</span></code><code class="sig-name descname"><span class="pre">MWindow</span></code><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWindow interface.</p>
+<p>Implements: close(), confirm(), open()
+Reimplements: _create()</p>
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.open">
+<code class="sig-name descname"><span class="pre">open</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+<p>This fires the <code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code> vetoable event, giving listeners the
+opportunity to veto the opening of the window.</p>
+<p>If the window is opened, the <code class="xref py py-attr docutils literal notranslate"><span class="pre">opened</span></code> event will be fired
+with the IWindow instance as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>opened</strong> – Whether or not the window was opened.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.close">
+<code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+<p>This fires the <code class="xref py py-attr docutils literal notranslate"><span class="pre">closing</span></code> vetoable event, giving listeners the
+opportunity to veto the closing of the window.  If <code class="xref py py-obj docutils literal notranslate"><span class="pre">force</span></code> is
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> then the window will close no matter what.</p>
+<p>If the window is closed, the closed event will be fired with the window
+object as the event value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>force</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether the window should close despite vetos.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>closed</strong> – Whether or not the window is closed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.confirm">
+<code class="sig-name descname"><span class="pre">confirm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.confirm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>cancel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</p></li>
+<li><p><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) – Which button should be the default button.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.information">
+<code class="sig-name descname"><span class="pre">information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Information'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt
+backend.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.warning">
+<code class="sig-name descname"><span class="pre">warning</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Warning'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt
+backend.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.i_window.MWindow.error">
+<code class="sig-name descname"><span class="pre">error</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">informative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/i_window.html#MWindow.error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.i_window.MWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Further details about the message.</p></li>
+<li><p><strong>informative</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Explanatory text to display along with the message.</p></li>
+<li><p><strong>text_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Specifies what text format to use in the resulting message dialog.
+One of “auto”, “plain”, or “rich”. Only supported on the qt
+backend.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.i_widget.html"
+                        title="previous chapter">pyface.i_widget module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.image_cache.html"
+                        title="next chapter">pyface.image_cache module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.i_window.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

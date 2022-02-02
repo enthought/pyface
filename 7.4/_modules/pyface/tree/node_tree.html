@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tree.node_tree &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tree.node_tree</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; A tree control with extensible node types. &quot;&quot;&quot;</span>
+
+
+<span class="c1"># avoid deprecation warning</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getfullargspec</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">ActionEvent</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">observe</span><span class="p">,</span> <span class="n">Property</span>
+
+
+<span class="kn">from</span> <span class="nn">.node_manager</span> <span class="kn">import</span> <span class="n">NodeManager</span>
+<span class="kn">from</span> <span class="nn">.node_type</span> <span class="kn">import</span> <span class="n">NodeType</span>
+<span class="kn">from</span> <span class="nn">.node_tree_model</span> <span class="kn">import</span> <span class="n">NodeTreeModel</span>
+<span class="kn">from</span> <span class="nn">.tree</span> <span class="kn">import</span> <span class="n">Tree</span>
+
+
+<div class="viewcode-block" id="NodeTree"><a class="viewcode-back" href="../../../api/pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree">[docs]</a><span class="k">class</span> <span class="nc">NodeTree</span><span class="p">(</span><span class="n">Tree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A tree control with extensible node types. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;Tree&#39; interface -----------------------------------------------------</span>
+
+    <span class="c1"># The model that provides the data for the tree.</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">NodeTreeModel</span><span class="p">,</span> <span class="p">())</span>
+
+    <span class="c1"># &#39;NodeTree&#39; interface -------------------------------------------------</span>
+
+    <span class="c1"># The node manager looks after all node types.</span>
+    <span class="n">node_manager</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">NodeManager</span><span class="p">))</span>
+
+    <span class="c1"># The node types in the tree.</span>
+    <span class="n">node_types</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">List</span><span class="p">(</span><span class="n">NodeType</span><span class="p">))</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;NodeTree&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Properties -----------------------------------------------------------</span>
+
+    <span class="c1"># node_manager</span>
+    <span class="k">def</span> <span class="nf">_get_node_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the root node of the tree. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">node_manager</span>
+
+    <span class="k">def</span> <span class="nf">_set_node_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_manager</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the root node of the tree. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">node_manager</span> <span class="o">=</span> <span class="n">node_manager</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># node_types</span>
+    <span class="k">def</span> <span class="nf">_get_node_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the node types in the tree. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">node_manager</span><span class="o">.</span><span class="n">node_types</span>
+
+    <span class="k">def</span> <span class="nf">_set_node_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_types</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets the node types in the tree. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">node_manager</span><span class="o">.</span><span class="n">node_types</span> <span class="o">=</span> <span class="n">node_types</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Tree&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Trait event handlers -------------------------------------------------</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;node_activated&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_perform_default_action_on_activated_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when a node has been activated (i.e., double-clicked). &quot;&quot;&quot;</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">default_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_default_action</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">default_action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_perform_default_action</span><span class="p">(</span><span class="n">default_action</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;node_right_clicked&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_show_menu_on_right_clicked_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the right mouse button is clicked on the tree. &quot;&quot;&quot;</span>
+        <span class="n">obj_point</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+        <span class="n">obj</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">obj_point</span>
+        <span class="c1"># Add the node that the right-click occurred on to the selection.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="c1"># fixme: This is a hack to allow us to attach the node that the</span>
+        <span class="c1"># right-clicked occurred on to the action event.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">obj</span>
+
+        <span class="c1"># Ask the model for the node&#39;s context menu.</span>
+        <span class="n">menu_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_context_menu</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">menu_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_popup_menu</span><span class="p">(</span><span class="n">menu_manager</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ActionController&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="NodeTree.add_to_menu"><a class="viewcode-back" href="../../../api/pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree.add_to_menu">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu_item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a menu item to a menu bar. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="NodeTree.add_to_toolbar"><a class="viewcode-back" href="../../../api/pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree.add_to_toolbar">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_toolbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toolvar_item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a tool bar item to a tool bar. &quot;&quot;&quot;</span>
+
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="NodeTree.can_add_to_menu"><a class="viewcode-back" href="../../../api/pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree.can_add_to_menu">[docs]</a>    <span class="k">def</span> <span class="nf">can_add_to_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns True iff an action can be added to the menu. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="NodeTree.perform"><a class="viewcode-back" href="../../../api/pyface.tree.node_tree.html#pyface.tree.node_tree.NodeTree.perform">[docs]</a>    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Perform an action. &quot;&quot;&quot;</span>
+
+        <span class="c1"># fixme: We need a more formal event structure!</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span>
+
+        <span class="c1"># fixme: the &#39;perform&#39; method without taking an event is deprecated!</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">varargs</span><span class="p">,</span> <span class="n">varkw</span><span class="p">,</span> <span class="n">defaults</span> <span class="o">=</span> <span class="n">getfullargspec</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">)</span>
+
+        <span class="c1"># If the only argument is &#39;self&#39; then this is the DEPRECATED</span>
+        <span class="c1"># interface.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_action_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a new action event for the specified object. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">ActionEvent</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_perform_default_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Perform the default action on the specified object. &quot;&quot;&quot;</span>
+
+        <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_action_event</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_popup_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu_manager</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">point</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Popup the menu described by the menu manager. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create the actual menu control.</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">menu_manager</span><span class="o">.</span><span class="n">create_menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">menu</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="c1"># Show the menu. If an action is selected it will be performed</span>
+            <span class="c1"># *before* this call returns.</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="o">*</span><span class="n">point</span><span class="p">)</span>
+
+            <span class="c1"># This gives the actions in the menu manager a chance to cleanup</span>
+            <span class="c1"># any event listeners etc.</span>
+            <span class="n">menu_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

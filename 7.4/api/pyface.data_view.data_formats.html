@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.data_formats module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.data_view package" href="pyface.data_view.html" >
+    <link rel="next" title="pyface.data_view.data_view_errors module" href="pyface.data_view.data_view_errors.html" >
+    <link rel="prev" title="pyface.data_view.api module" href="pyface.data_view.api.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.data_view.html" accesskey="U">pyface.data_view package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.data_view.data_view_errors.html" title="pyface.data_view.data_view_errors module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.data_view.api.html" title="pyface.data_view.api module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.data_view.data_formats">
+<span id="pyface-data-view-data-formats-module"></span><h1>pyface.data_view.data_formats module<a class="headerlink" href="#module-pyface.data_view.data_formats" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.to_json">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize an object to a JSON bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>any</em>) – The data to be serialized.</p></li>
+<li><p><strong>default</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Callable that takes a Python object and returns a JSON-serializable
+data structure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>raw_data</strong> – The serialized data as a bytestring.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.from_json">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">from_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_hook</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a JSON bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The serialized JSON data as a byte string.</p></li>
+<li><p><strong>object_hook</strong> (<em>callable</em>) – Callable that takes a dictionary and returns an corresponding
+Python object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The data extracted.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.data_view.data_formats.standard_text_format">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">standard_text_format</span></code><em class="property"> <span class="pre">=</span> <span class="pre">DataFormat(mimetype='text/plain',</span> <span class="pre">serialize=functools.partial(&lt;built-in</span> <span class="pre">function</span> <span class="pre">encode&gt;,</span> <span class="pre">encoding='utf-8'),</span> <span class="pre">deserialize=functools.partial(&lt;built-in</span> <span class="pre">function</span> <span class="pre">decode&gt;,</span> <span class="pre">encoding='utf-8'))</span></em><a class="headerlink" href="#pyface.data_view.data_formats.standard_text_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text/plain format with utf-8 encoding.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.data_view.data_formats.html_format">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">html_format</span></code><em class="property"> <span class="pre">=</span> <span class="pre">DataFormat(mimetype='text/html',</span> <span class="pre">serialize=functools.partial(&lt;built-in</span> <span class="pre">function</span> <span class="pre">encode&gt;,</span> <span class="pre">encoding='utf-8'),</span> <span class="pre">deserialize=functools.partial(&lt;built-in</span> <span class="pre">function</span> <span class="pre">decode&gt;,</span> <span class="pre">encoding='utf-8'))</span></em><a class="headerlink" href="#pyface.data_view.data_formats.html_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text/html format with utf-8 encoding.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pyface.data_view.data_formats.json_format">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">json_format</span></code><em class="property"> <span class="pre">=</span> <span class="pre">DataFormat(mimetype='application/json',</span> <span class="pre">serialize=&lt;function</span> <span class="pre">to_json&gt;,</span> <span class="pre">deserialize=&lt;function</span> <span class="pre">from_json&gt;)</span></em><a class="headerlink" href="#pyface.data_view.data_formats.json_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic JSON format.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.to_csv_row">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">to_csv_row</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#to_csv_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.to_csv_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize a list to a single-row CSV bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The list to be serialized.  Any elements which are not strings will
+be converted to strings by calling <code class="docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.writer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>raw_data</strong> – The serialized data as a bytestring.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.from_csv_row">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">from_csv_row</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#from_csv_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.from_csv_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize the first row of a CSV bytestring as a list.</p>
+<p>Any rows beyond the first are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The serialized CSV data as a byte string.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.reader.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The data extracted as a list of strings.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.to_csv_column">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">to_csv_column</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#to_csv_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.to_csv_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize a list to a single-column CSV bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The list to be serialized.  Any elements which are not strings will
+be converted to strings by calling <code class="docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.writer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>raw_data</strong> – The serialized data as a bytestring.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.from_csv_column">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">from_csv_column</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#from_csv_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.from_csv_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize the first column of a CSV bytestring as a list.</p>
+<p>Any columns beyond the first are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The serialized CSV data as a byte string.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.reader.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The data extracted as a list of strings.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.to_csv">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">to_csv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize a list of lists to a CSV bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>list of lists</em>) – The data to be serialized.  Any elements which are not strings will
+be converted to strings by calling <code class="docutils literal notranslate"><span class="pre">str()</span></code>.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.writer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>raw_data</strong> – The serialized data as a bytestring.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.from_csv">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">from_csv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#from_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.from_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a CSV bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The serialized CSV data as a byte string.</p></li>
+<li><p><strong>delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The CSV delimiter.</p></li>
+<li><p><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The encoding of the bytes</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments to csv.reader.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The data extracted as a list of lists of strings.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.to_npy">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">to_npy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#to_npy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.to_npy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize an array to a bytestring using .npy format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>array-like</em>) – The array to be serialized.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>raw_data</strong> – The serialized data as a bytestring.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.data_view.data_formats.from_npy">
+<code class="sig-prename descclassname"><span class="pre">pyface.data_view.data_formats.</span></code><code class="sig-name descname"><span class="pre">from_npy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/data_view/data_formats.html#from_npy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.data_view.data_formats.from_npy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a .npy-format bytestring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><em>bytes</em></a>) – The serialized CSV data as a byte string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The data extracted as a list of lists of strings.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.data_view.api.html"
+                        title="previous chapter">pyface.data_view.api module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.data_view.data_view_errors.html"
+                        title="next chapter">pyface.data_view.data_view_errors module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.data_view.data_formats.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

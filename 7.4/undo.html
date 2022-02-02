@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Undo Framework &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="up" title="Submodules" href="submodules.html" >
+    <link rel="next" title="GUI Testing" href="testing.html" >
+    <link rel="prev" title="Timers" href="timer.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="testing.html" title="GUI Testing"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="timer.html" title="Timers"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="undo-framework">
+<h1>Undo Framework<a class="headerlink" href="#undo-framework" title="Permalink to this headline">¶</a></h1>
+<p>The Undo Framework is a component of the Enthought Tool Suite that provides
+developers with an API that implements the standard pattern for do/undo/redo
+commands.</p>
+<p>The framework is completely configurable.  Alternate implementations of all
+major components can be provided if necessary.</p>
+<div class="section" id="framework-concepts">
+<h2>Framework Concepts<a class="headerlink" href="#framework-concepts" title="Permalink to this headline">¶</a></h2>
+<p>The following are the concepts supported by the framework.</p>
+<ul>
+<li><p>Command</p>
+<p>A command is an application defined operation that can be done (i.e.
+executed), undone (i.e. reverted) and redone (i.e. repeated).</p>
+<p>A command operates on some data and maintains sufficient state to allow it to
+revert or repeat a change to the data.</p>
+<p>Commands may be merged so that potentially long sequences of similar
+commands (e.g. to add a character to some text) can be collapsed into a
+single command (e.g. to add a word to some text).</p>
+</li>
+<li><p>Macro</p>
+<p>A macro is a sequence of commands that is treated as a single command when
+being undone or redone.</p>
+</li>
+<li><p>Command Stack</p>
+<p>A command is done by pushing it onto a command stack.  The last command can
+be undone and redone by calling appropriate command stack methods.  It is
+also possible to move the stack’s position to any point and the command stack
+will ensure that commands are undone or redone as required.</p>
+<p>A command stack maintains a <em>clean</em> state which is updated as commands are
+done and undone.  It may be explicitly set, for example when the data being
+manipulated by the commands is saved to disk.</p>
+<p>PyFace actions are provided as wrappers around command stack methods
+to implement common menu items.</p>
+</li>
+<li><p>Undo Manager</p>
+<p>An undo manager is responsible for one or more command stacks and maintains
+a reference to the currently active stack.  It provides convenience undo and
+redo methods that operate on the currently active stack.</p>
+<p>An undo manager ensures that each command execution is allocated a unique
+sequence number, irrespective of which command stack it is pushed to.  Using
+this it is possible to synchronise multiple command stacks and restore them
+to a particular point in time.</p>
+<p>An undo manager will generate an event whenever the clean state of the active
+stack changes.  This can be used to maintain some sort of GUI status
+indicator to tell the user that their data has been modified since it was
+last saved.</p>
+</li>
+</ul>
+<p>Typically an application will have one undo manager and one undo stack for
+each data type that can be edited.  However this is not a requirement: how the
+command stack’s in particular are organised and linked (with the user
+manager’s sequence number) can need careful thought so as not to confuse the
+user - particularly in a plugin based application that may have many editors.</p>
+<p>To support this typical usage the PyFace <code class="docutils literal notranslate"><span class="pre">Workbench</span></code> class has an
+<code class="docutils literal notranslate"><span class="pre">undo_manager</span></code> trait and the PyFace <code class="docutils literal notranslate"><span class="pre">Editor</span></code> class has a <code class="docutils literal notranslate"><span class="pre">command_stack</span></code>
+trait.  Both are lazy loaded so can be completely ignored if they are not used.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Undo Framework</a><ul>
+<li><a class="reference internal" href="#framework-concepts">Framework Concepts</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="timer.html"
+                        title="previous chapter">Timers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="testing.html"
+                        title="next chapter">GUI Testing</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/undo.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

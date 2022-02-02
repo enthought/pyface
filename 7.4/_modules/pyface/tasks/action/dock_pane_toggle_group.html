@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.action.dock_pane_toggle_group &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.action.dock_pane_toggle_group</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; A Group for toggling the visibility of a task&#39;s dock panes. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">Action</span><span class="p">,</span> <span class="n">ActionItem</span><span class="p">,</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">cached_property</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.tasks.i_dock_pane</span> <span class="kn">import</span> <span class="n">IDockPane</span>
+
+
+<div class="viewcode-block" id="DockPaneToggleAction"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.dock_pane_toggle_group.html#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction">[docs]</a><span class="k">class</span> <span class="nc">DockPaneToggleAction</span><span class="p">(</span><span class="n">Action</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An Action for toggling the visibility of a dock pane.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;DockPaneToggleAction&#39; interface -------------------------------------</span>
+
+    <span class="n">dock_pane</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IDockPane</span><span class="p">)</span>
+
+    <span class="c1"># &#39;Action&#39; interface ---------------------------------------------------</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s2">&quot;dock_pane.name&quot;</span><span class="p">)</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;toggle&quot;</span>
+    <span class="n">tooltip</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Action&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="DockPaneToggleAction.destroy"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.dock_pane_toggle_group.html#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="c1"># Make sure that we are not listening to changes to the pane anymore.</span>
+        <span class="c1"># In traits style, we will set the basic object to None and have the</span>
+        <span class="c1"># listener check that if it is still there.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="DockPaneToggleAction.perform"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.dock_pane_toggle_group.html#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction.perform">[docs]</a>    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="o">.</span><span class="n">visible</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;UNDEFINED&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">_get_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Toggles the visibility of the </span><span class="si">%s</span><span class="s2"> pane.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;dock_pane.visible&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="o">.</span><span class="n">visible</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;dock_pane.closable&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_pane</span><span class="o">.</span><span class="n">closable</span></div>
+
+
+<div class="viewcode-block" id="DockPaneToggleGroup"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.dock_pane_toggle_group.html#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleGroup">[docs]</a><span class="k">class</span> <span class="nc">DockPaneToggleGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A Group for toggling the visibility of a task&#39;s dock panes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;Group&#39; interface ----------------------------------------------------</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;DockPaneToggleGroup&quot;</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span>
+
+    <span class="c1"># &#39;DockPaneToggleGroup&#39; interface -------------------------------------#</span>
+
+    <span class="n">task</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">observe</span><span class="o">=</span><span class="s2">&quot;parent.controller&quot;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_manager</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">manager</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">manager</span><span class="o">.</span><span class="n">controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">manager</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">task</span>
+
+    <span class="n">dock_panes</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">observe</span><span class="o">=</span><span class="s2">&quot;task.window._states.items.dock_panes&quot;</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_dock_panes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">task_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">task_state</span><span class="o">.</span><span class="n">dock_panes</span>
+
+<div class="viewcode-block" id="DockPaneToggleGroup.get_manager"><a class="viewcode-back" href="../../../../api/pyface.tasks.action.dock_pane_toggle_group.html#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleGroup.get_manager">[docs]</a>    <span class="k">def</span> <span class="nf">get_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># FIXME: Is there no better way to get a reference to the menu manager?</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">Group</span><span class="p">):</span>
+            <span class="n">manager</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="n">manager</span></div>
+
+    <span class="c1"># Private interface ----------------------------------------------------</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;dock_panes.items&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_dock_panes_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recreate the group items when dock panes have been added/removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Remove the previous group items.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dock_pane</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_panes</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">DockPaneToggleAction</span><span class="p">(</span><span class="n">dock_pane</span><span class="o">=</span><span class="n">dock_pane</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ActionItem</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">))</span>
+
+        <span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">items</span>
+
+        <span class="c1"># Inform the parent menu manager.</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_manager</span><span class="p">()</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

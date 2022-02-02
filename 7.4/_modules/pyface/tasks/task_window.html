@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.task_window &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.task_window</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.api</span> <span class="kn">import</span> <span class="n">MenuBarManager</span><span class="p">,</span> <span class="n">StatusBarManager</span><span class="p">,</span> <span class="n">ToolBarManager</span>
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">HasStrictTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+    <span class="n">Vetoable</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.tasks.action.task_action_manager_builder</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TaskActionManagerBuilder</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.i_dock_pane</span> <span class="kn">import</span> <span class="n">IDockPane</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.i_task_pane</span> <span class="kn">import</span> <span class="n">ITaskPane</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.task</span> <span class="kn">import</span> <span class="n">Task</span><span class="p">,</span> <span class="n">TaskLayout</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.task_window_backend</span> <span class="kn">import</span> <span class="n">TaskWindowBackend</span>
+<span class="kn">from</span> <span class="nn">pyface.tasks.task_window_layout</span> <span class="kn">import</span> <span class="n">TaskWindowLayout</span>
+
+<span class="c1"># Logging.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TaskWindow"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow">[docs]</a><span class="k">class</span> <span class="nc">TaskWindow</span><span class="p">(</span><span class="n">ApplicationWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The the top-level window to which tasks can be assigned.</span>
+
+<span class="sd">    A TaskWindow is responsible for creating and the managing the controls of</span>
+<span class="sd">    its tasks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># IWindow interface ----------------------------------------------------</span>
+
+    <span class="c1">#: Unless a title is specifically assigned, delegate to the active task.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;active_task.name&quot;</span><span class="p">,</span> <span class="s2">&quot;_title&quot;</span><span class="p">])</span>
+
+    <span class="c1"># TaskWindow interface ------------------------------------------------</span>
+
+    <span class="c1">#: The pane (central or dock) in the active task that currently has focus.</span>
+    <span class="n">active_pane</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ITaskPane</span><span class="p">)</span>
+
+    <span class="c1">#: The active task for this window.</span>
+    <span class="n">active_task</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+
+    <span class="c1">#: The list of all tasks currently attached to this window. All panes of</span>
+    <span class="c1">#: the inactive tasks are hidden.</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+
+    <span class="c1">#: The central pane of the active task, which is always visible.</span>
+    <span class="n">central_pane</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ITaskPane</span><span class="p">)</span>
+
+    <span class="c1">#: The list of all dock panes in the active task, which may or may not be</span>
+    <span class="c1">#: visible.</span>
+    <span class="n">dock_panes</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IDockPane</span><span class="p">)</span>
+
+    <span class="c1">#: The factory for the window&#39;s TaskActionManagerBuilder, which is</span>
+    <span class="c1">#: instantiated to translate menu and tool bar schemas into Pyface action</span>
+    <span class="c1">#: managers. This attribute can overridden to introduce custom logic into</span>
+    <span class="c1">#: the translation process, although this is not usually necessary.</span>
+    <span class="n">action_manager_builder_factory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">(</span><span class="n">TaskActionManagerBuilder</span><span class="p">)</span>
+
+    <span class="c1"># Protected traits -----------------------------------------------------</span>
+
+    <span class="n">_active_state</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_window.TaskState&quot;</span><span class="p">)</span>
+    <span class="n">_states</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_window.TaskState&quot;</span><span class="p">))</span>
+    <span class="n">_title</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+    <span class="n">_window_backend</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">TaskWindowBackend</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Widget&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TaskWindow.destroy"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Overridden to ensure that all task panes are cleanly destroyed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Allow the TaskWindowBackend to clean up first.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="c1"># Don&#39;t use &#39;remove_task&#39; here to avoid changing the active state and</span>
+        <span class="c1"># thereby removing the window&#39;s menus and toolbars. This can lead to</span>
+        <span class="c1"># undesirable animations when the window is being closed.</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Window&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TaskWindow.open"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Opens the window.</span>
+
+<span class="sd">        Overridden to make the &#39;opening&#39; event vetoable and to activate a task</span>
+<span class="sd">        if one has not already been activated. Returns whether the window was</span>
+<span class="sd">        opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opening</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="c1"># Create the control, if necessary.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+
+            <span class="c1"># Activate a task, if necessary.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">activate_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;IApplicationWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delegate to the TaskWindowBackend.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">create_contents</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;TaskWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TaskWindow.activate_task"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.activate_task">[docs]</a>    <span class="k">def</span> <span class="nf">activate_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activates a task that has already been added to the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="c1"># Hide the panes of the currently active task, if necessary.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">hide_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">)</span>
+
+            <span class="c1"># Initialize the new task, if necessary.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">initialized</span><span class="p">()</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Display the panes of the new task.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">show_task</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+            <span class="c1"># Activate the new task. The menus, toolbars, and status bar will be</span>
+            <span class="c1"># replaced at this time.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span> <span class="o">=</span> <span class="n">state</span>
+            <span class="n">task</span><span class="o">.</span><span class="n">activated</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot activate task </span><span class="si">%r</span><span class="s2">: task does not belong to the &quot;</span>
+                <span class="s2">&quot;window.&quot;</span> <span class="o">%</span> <span class="n">task</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskWindow.add_task"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.add_task">[docs]</a>    <span class="k">def</span> <span class="nf">add_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds a task to the window. The task is not activated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot add task </span><span class="si">%r</span><span class="s2">: task has already been added &quot;</span>
+                <span class="s2">&quot;to a window!&quot;</span> <span class="o">%</span> <span class="n">task</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">task</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">TaskState</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">default_layout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="c1"># Make sure the underlying control has been created, even if it is not</span>
+        <span class="c1"># yet visible.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+
+        <span class="c1"># Create the central pane.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">create_central_pane</span><span class="p">()</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">)</span>
+
+        <span class="c1"># Create the dock panes.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">create_dock_panes</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dock_pane_factory</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">extra_dock_pane_factories</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dock_pane_factory</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">dock_pane</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span><span class="p">:</span>
+            <span class="n">dock_pane</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+            <span class="n">dock_pane</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">)</span>
+
+        <span class="c1"># Build the menu and tool bars.</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_manager_builder_factory</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">create_menu_bar_manager</span><span class="p">()</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">status_bar_manager</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">status_bar</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">tool_bar_managers</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">create_tool_bar_managers</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaskWindow.remove_task"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.remove_task">[docs]</a>    <span class="k">def</span> <span class="nf">remove_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Removes a task that has already been added to the window. All the</span>
+<span class="sd">            task&#39;s panes are destroyed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+            <span class="c1"># If the task is active, make sure it is de-activated before</span>
+            <span class="c1"># deleting its controls.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span> <span class="o">==</span> <span class="n">state</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">hide_task</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot remove task </span><span class="si">%r</span><span class="s2">: task does not belong to the &quot;</span>
+                <span class="s2">&quot;window.&quot;</span> <span class="o">%</span> <span class="n">task</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskWindow.focus_next_pane"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.focus_next_pane">[docs]</a>    <span class="k">def</span> <span class="nf">focus_next_pane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Shifts focus to the &quot;next&quot; pane, taking into account the active pane</span>
+<span class="sd">            and the pane geometry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="n">panes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pane_ring</span><span class="p">()</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_pane</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="n">panes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_pane</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">panes</span><span class="p">)</span>
+            <span class="n">panes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set_focus</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaskWindow.focus_previous_pane"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.focus_previous_pane">[docs]</a>    <span class="k">def</span> <span class="nf">focus_previous_pane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Shifts focus to the &quot;previous&quot; pane, taking into account the active</span>
+<span class="sd">            pane and the pane geometry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="n">panes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pane_ring</span><span class="p">()</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_pane</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">panes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_pane</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">panes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set_focus</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TaskWindow.get_central_pane"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_central_pane">[docs]</a>    <span class="k">def</span> <span class="nf">get_central_pane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the central pane for the specified task.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span> <span class="k">if</span> <span class="n">state</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaskWindow.get_dock_pane"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_dock_pane">[docs]</a>    <span class="k">def</span> <span class="nf">get_dock_pane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the dock pane in the task with the specified ID, or</span>
+<span class="sd">            None if no such dock pane exists. If a task is not specified, the</span>
+<span class="sd">            active task is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">task</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">get_dock_pane</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="n">state</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaskWindow.get_dock_panes"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_dock_panes">[docs]</a>    <span class="k">def</span> <span class="nf">get_dock_panes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the dock panes for the specified task.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span><span class="p">[:]</span> <span class="k">if</span> <span class="n">state</span> <span class="k">else</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="TaskWindow.get_task"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_task">[docs]</a>    <span class="k">def</span> <span class="nf">get_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the task with the specified ID, or None if no such task</span>
+<span class="sd">            exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span> <span class="k">if</span> <span class="n">state</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+    <span class="c1"># Methods for saving and restoring the layout -------------------------#</span>
+
+<div class="viewcode-block" id="TaskWindow.get_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a TaskLayout (for the active task) that reflects the state</span>
+<span class="sd">            of the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">get_layout</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="TaskWindow.set_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.set_layout">[docs]</a>    <span class="k">def</span> <span class="nf">set_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Applies a TaskLayout (which should be suitable for the active task)</span>
+<span class="sd">            to the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">set_layout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskWindow.reset_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.reset_layout">[docs]</a>    <span class="k">def</span> <span class="nf">reset_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores the active task&#39;s default TaskLayout.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_layout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="o">.</span><span class="n">default_layout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskWindow.get_window_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.get_window_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_window_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a TaskWindowLayout for the current state of the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">TaskWindowLayout</span><span class="p">(</span>
+            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">size_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size_state</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">get_layout</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">clone_traits</span><span class="p">()</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="TaskWindow.set_window_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskWindow.set_window_layout">[docs]</a>    <span class="k">def</span> <span class="nf">set_window_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Applies a TaskWindowLayout to the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set window size before laying it out.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">window_layout</span><span class="o">.</span><span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">window_layout</span><span class="o">.</span><span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_state</span> <span class="o">=</span> <span class="n">window_layout</span><span class="o">.</span><span class="n">size_state</span>
+
+        <span class="c1"># Store layouts for the tasks, including the active task.</span>
+        <span class="k">for</span> <span class="n">layout</span> <span class="ow">in</span> <span class="n">window_layout</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">layout</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot apply layout for task </span><span class="si">%r</span><span class="s2">: task does not &quot;</span>
+                    <span class="s2">&quot;belong to the window.&quot;</span> <span class="o">%</span> <span class="n">layout</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Attempt to activate the requested task.</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(</span><span class="n">window_layout</span><span class="o">.</span><span class="n">get_active_task</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+            <span class="c1"># If the requested active task is already active, calling</span>
+            <span class="c1"># ``activate`` is a no-op, so we must force a re-layout.</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_window_backend</span><span class="o">.</span><span class="n">set_layout</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">activate_task</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="p">)</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;TaskWindow&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_destroy_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy all controls associated with a Task state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Notify the task that it is about to be destroyed.</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">prepare_destroy</span><span class="p">()</span>
+
+        <span class="c1"># Destroy action managers associated with the task, unless the task is</span>
+        <span class="c1"># active, in which case this will be handled by our superclass.</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">menu_bar_manager</span><span class="p">:</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">menu_bar_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">tool_bar_manager</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">tool_bar_managers</span><span class="p">:</span>
+                <span class="n">tool_bar_manager</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="c1"># Destroy all controls associated with the task.</span>
+        <span class="k">for</span> <span class="n">dock_pane</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span><span class="p">:</span>
+            <span class="n">dock_pane</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_pane_ring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a list of visible panes ordered for focus switching.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Proceed clockwise through the dock areas.</span>
+        <span class="c1"># TODO: Also take into account ordering within dock areas.</span>
+        <span class="n">panes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_state</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layout</span><span class="p">()</span>
+            <span class="n">panes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">central_pane</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">area</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="n">panes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">get_dock_pane</span><span class="p">(</span><span class="n">pane_item</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">pane_item</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iterleaves</span><span class="p">()</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
+        <span class="k">return</span> <span class="n">panes</span>
+
+    <span class="k">def</span> <span class="nf">_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_task</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the TaskState that contains the specified Task, or None if</span>
+<span class="sd">            no such state exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span> <span class="o">==</span> <span class="n">id_or_task</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_or_task</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">state</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Trait initializers ---------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">__window_backend_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TaskWindowBackend</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># Trait property getters/setters ---------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">_set_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span> <span class="o">=</span> <span class="n">title</span>
+
+    <span class="c1"># Trait change handlers ------------------------------------------------</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;_active_state&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_update_traits_given_new_active_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">central_pane</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dock_panes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_bar_manager</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_bar_managers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">task</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">central_pane</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">central_pane</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dock_panes</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">dock_panes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">menu_bar_manager</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status_bar_manager</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">status_bar_manager</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool_bar_managers</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">tool_bar_managers</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;central_pane:has_focus, dock_panes:items:has_focus&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_focus_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_pane</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;_states.items&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_states_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="o">.</span><span class="n">task</span> <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TaskState"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskState">[docs]</a><span class="k">class</span> <span class="nc">TaskState</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An object used internally by TaskWindow to maintain the state associated</span>
+<span class="sd">        with an attached Task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">task</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">TaskLayout</span><span class="p">)</span>
+    <span class="n">initialized</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">central_pane</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ITaskPane</span><span class="p">)</span>
+    <span class="n">dock_panes</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IDockPane</span><span class="p">)</span>
+    <span class="n">menu_bar_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">MenuBarManager</span><span class="p">)</span>
+    <span class="n">status_bar_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">StatusBarManager</span><span class="p">)</span>
+    <span class="n">tool_bar_managers</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">ToolBarManager</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TaskState.get_dock_pane"><a class="viewcode-back" href="../../../api/pyface.tasks.task_window.html#pyface.tasks.task_window.TaskState.get_dock_pane">[docs]</a>    <span class="k">def</span> <span class="nf">get_dock_pane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the dock pane with the specified id, or None if no such dock</span>
+<span class="sd">            pane exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">pane</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dock_panes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pane</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pane</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

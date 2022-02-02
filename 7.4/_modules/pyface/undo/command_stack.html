@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.undo.command_stack &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.undo.command_stack</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2008-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Copyright (c) 2008, Riverbank Computing Limited</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in enthought/LICENSE.txt and may be redistributed only</span>
+<span class="c1"># under the conditions described in the aforementioned license.  The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Riverbank Computing Limited</span>
+<span class="c1"># Description: &lt;Enthought undo package component&gt;</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="c1"># Enthought library imports.</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">HasTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">Int</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Property</span><span class="p">,</span>
+    <span class="n">Str</span><span class="p">,</span>
+    <span class="n">provides</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Local imports.</span>
+<span class="kn">from</span> <span class="nn">.abstract_command</span> <span class="kn">import</span> <span class="n">AbstractCommand</span>
+<span class="kn">from</span> <span class="nn">.i_command</span> <span class="kn">import</span> <span class="n">ICommand</span>
+<span class="kn">from</span> <span class="nn">.i_command_stack</span> <span class="kn">import</span> <span class="n">ICommandStack</span>
+<span class="kn">from</span> <span class="nn">.i_undo_manager</span> <span class="kn">import</span> <span class="n">IUndoManager</span>
+
+
+<span class="k">class</span> <span class="nc">_StackEntry</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The _StackEntry class is a single entry on a command stack. &quot;&quot;&quot;</span>
+
+    <span class="c1">#### &#39;_StackEntry&#39; interface ##############################################</span>
+
+    <span class="c1">#: Set if the entry corresponds to a clean point on the stack.</span>
+    <span class="n">clean</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1">#: The command instance.</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ICommand</span><span class="p">)</span>
+
+    <span class="c1">#: The sequence number of the entry.</span>
+    <span class="n">sequence_nr</span> <span class="o">=</span> <span class="n">Int</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">_MacroCommand</span><span class="p">(</span><span class="n">AbstractCommand</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The _MacroCommand class is an internal command that handles macros. &quot;&quot;&quot;</span>
+
+    <span class="c1">#### &#39;_MacroCommand&#39; interface ############################################</span>
+
+    <span class="c1">#: The commands that make up this macro.</span>
+    <span class="n">macro_commands</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">ICommand</span><span class="p">))</span>
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1"># &#39;ICommand&#39; interface.</span>
+    <span class="c1">###########################################################################</span>
+
+    <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Invoke the command. &quot;&quot;&quot;</span>
+
+        <span class="c1"># This is a dummy.</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Try and merge a command. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">macro_commands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_commands</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">merged</span>
+
+    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Redo the sub-commands. &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_commands</span><span class="p">:</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">redo</span><span class="p">()</span>
+
+        <span class="c1"># Macros cannot return values.</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Undo the sub-commands. &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">macro_commands</span><span class="p">:</span>
+            <span class="n">cmd</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="CommandStack"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">ICommandStack</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CommandStack</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The CommandStack class is the default implementation of the</span>
+<span class="sd">    ICommandStack interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#### &#39;ICommandStack&#39; interface ############################################</span>
+
+    <span class="c1">#: This is the clean state of the stack.  Its value changes as commands are</span>
+    <span class="c1">#: undone and redone.  It can also be explicity set to mark the current</span>
+    <span class="c1">#: stack position as being clean (when the data is saved to disk for</span>
+    <span class="c1">#: example).</span>
+    <span class="n">clean</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Bool</span><span class="p">)</span>
+
+    <span class="c1">#: This is the name of the command that can be redone.  It will be empty if</span>
+    <span class="c1">#: there is no command that can be redone.  It is maintained by the undo</span>
+    <span class="c1">#: stack.</span>
+    <span class="n">redo_name</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: This is the undo manager that manages this stack.</span>
+    <span class="n">undo_manager</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IUndoManager</span><span class="p">)</span>
+
+    <span class="c1">#: This is the name of the command that can be undone.  It will be empty if</span>
+    <span class="c1">#: there is no command that can be undone.  It is maintained by the undo</span>
+    <span class="c1">#: stack.</span>
+    <span class="n">undo_name</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#### Private interface ####################################################</span>
+
+    <span class="c1"># The current index into the stack (ie. the last command that was done).</span>
+    <span class="n">_index</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># The current macro stack.</span>
+    <span class="n">_macro_stack</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">_MacroCommand</span><span class="p">))</span>
+
+    <span class="c1"># The stack itself.</span>
+    <span class="n">_stack</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">_StackEntry</span><span class="p">))</span>
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1"># &#39;ICommandStack&#39; interface.</span>
+    <span class="c1">###########################################################################</span>
+
+<div class="viewcode-block" id="CommandStack.begin_macro"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.begin_macro">[docs]</a>    <span class="k">def</span> <span class="nf">begin_macro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This begins a macro by creating an empty command with the given</span>
+<span class="sd">        &#39;name&#39;.  All subsequent calls to &#39;push()&#39; create commands that will be</span>
+<span class="sd">        children of the empty command until the next call to &#39;end_macro()&#39;.</span>
+<span class="sd">        Macros may be nested.  The stack is disabled (ie. nothing can be undone</span>
+<span class="sd">        or redone) while a macro is being created (ie. while there is an</span>
+<span class="sd">        outstanding &#39;end_macro()&#39; call).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">command</span> <span class="o">=</span> <span class="n">_MacroCommand</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CommandStack.clear"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This clears the stack, without undoing or redoing any commands, and</span>
+<span class="sd">        leaves the stack in a clean state.  It is typically used when all</span>
+<span class="sd">        changes to the data have been abandoned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">stack_updated</span> <span class="o">=</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="CommandStack.end_macro"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.end_macro">[docs]</a>    <span class="k">def</span> <span class="nf">end_macro</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This ends a macro. &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="CommandStack.push"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This executes a command and saves it on the command stack so that</span>
+<span class="sd">        it can be subsequently undone and redone.  &#39;command&#39; is an instance</span>
+<span class="sd">        that implements the ICommand interface.  Its &#39;do()&#39; method is called</span>
+<span class="sd">        to execute the command.  If any value is returned by &#39;do()&#39; then it is</span>
+<span class="sd">        returned by &#39;push()&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># See if the command can be merged with the previous one.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">clean</span><span class="p">:</span>
+                <span class="n">merged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">merged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="c1"># Increment the global sequence number.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">merged</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">sequence_nr</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Execute the command.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">do</span><span class="p">()</span>
+
+        <span class="c1"># Update the stack state for a merged command.</span>
+        <span class="k">if</span> <span class="n">merged</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># If not in macro mode, remove everything after the current</span>
+                <span class="c1"># command from the stack.</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">stack_updated</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="c1"># Only update the command stack if there is no current macro.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Remove everything on the stack after the last command that was</span>
+            <span class="c1"># done.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">:]</span>
+
+            <span class="c1"># Create a new stack entry and add it to the stack.</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">_StackEntry</span><span class="p">(</span>
+                <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span> <span class="n">sequence_nr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">sequence_nr</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">stack_updated</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Add the command to the parent macro command.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">macro_commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="CommandStack.redo"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.redo">[docs]</a>    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_nr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If &#39;sequence_nr&#39; is 0 then the last command that was undone is</span>
+<span class="sd">        redone and any result returned.  Otherwise commands are redone up to</span>
+<span class="sd">        and including the given &#39;sequence_nr&#39; and any result of the last of</span>
+<span class="sd">        these is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make sure a redo is valid in the current context.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">redo_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">sequence_nr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_one</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sequence_nr</span> <span class="o">&gt;</span> <span class="n">sequence_nr</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_one</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">stack_updated</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="CommandStack.undo"><a class="viewcode-back" href="../../../api/pyface.undo.command_stack.html#pyface.undo.command_stack.CommandStack.undo">[docs]</a>    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_nr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If &#39;sequence_nr&#39; is 0 then the last command is undone.  Otherwise</span>
+<span class="sd">        commands are undone up to and including the given &#39;sequence_nr&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make sure an undo is valid in the current context.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">undo_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">sequence_nr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_undo_one</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">sequence_nr</span> <span class="o">&lt;=</span> <span class="n">sequence_nr</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_undo_one</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">undo_manager</span><span class="o">.</span><span class="n">stack_updated</span> <span class="o">=</span> <span class="bp">self</span></div>
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1">###########################################################################</span>
+
+    <span class="k">def</span> <span class="nf">_redo_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Redo the command at the current index and return the result. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">entry</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">redo</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_undo_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Undo the command at the current index. &quot;&quot;&quot;</span>
+
+        <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="n">entry</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the clean state of the stack. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">clean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">clean</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">clean</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">clean</span>
+
+    <span class="k">def</span> <span class="nf">_set_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Set the clean state of the stack. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">clean</span> <span class="o">=</span> <span class="n">clean</span>
+
+    <span class="k">def</span> <span class="nf">_get_redo_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the name of the redo command, if any. &quot;&quot;&quot;</span>
+
+        <span class="n">redo_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">):</span>
+            <span class="n">redo_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">redo_name</span>
+
+    <span class="k">def</span> <span class="nf">_get_undo_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the name of the undo command, if any. &quot;&quot;&quot;</span>
+
+        <span class="n">undo_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_macro_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span><span class="o">.</span><span class="n">command</span>
+            <span class="n">undo_name</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">undo_name</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

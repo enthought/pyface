@@ -1,0 +1,19 @@
+pyface.undo.action package
+==========================
+
+.. automodule:: pyface.undo.action
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pyface.undo.action.abstract_command_stack_action
+   pyface.undo.action.api
+   pyface.undo.action.command_action
+   pyface.undo.action.redo_action
+   pyface.undo.action.undo_action

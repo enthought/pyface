@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.util.color_helpers module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.util package" href="pyface.util.html" >
+    <link rel="next" title="pyface.util.color_parser module" href="pyface.util.color_parser.html" >
+    <link rel="prev" title="pyface.util package" href="pyface.util.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.util.html" accesskey="U">pyface.util package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.util.color_parser.html" title="pyface.util.color_parser module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.util.html" title="pyface.util package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.util.color_helpers">
+<span id="pyface-util-color-helpers-module"></span><h1>pyface.util.color_helpers module<a class="headerlink" href="#module-pyface.util.color_helpers" title="Permalink to this headline">¶</a></h1>
+<p>Routines supporting color computations</p>
+<p>Most of what is needed is provided by Python’s builtin colorsys module,
+but we need a few additional routines for things that are not covered by
+that code.</p>
+<dl class="py function">
+<dt id="pyface.util.color_helpers.channels_to_ints">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_helpers.</span></code><code class="sig-name descname"><span class="pre">channels_to_ints</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/color_helpers.html#channels_to_ints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_helpers.channels_to_ints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an iterable of floating point channel values to integers.</p>
+<p>Values are rounded to the nearest integer, rather than truncated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channels</strong> (<em>iterable of float</em>) – An iterable of channel values, each value between 0.0 and 1.0,
+inclusive.</p></li>
+<li><p><strong>maximum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The maximum value of the integer range.  Common values are 15,
+65535 or 255, which is the default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>values</strong> – A tuple of values as integers between 0 and max, inclusive.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.util.color_helpers.ints_to_channels">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_helpers.</span></code><code class="sig-name descname"><span class="pre">ints_to_channels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/color_helpers.html#ints_to_channels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_helpers.ints_to_channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an iterable of integers to floating point channel values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>tuple of int</em>) – An iterable of values as integers between 0 and max, inclusive.</p></li>
+<li><p><strong>maximum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The maximum value of the integer range.  Common values are 15,
+65535 or 255, which is the default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>channels</strong> – A tuple of channel values, each value between 0.0 and 1.0,
+inclusive.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable of float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.util.color_helpers.relative_luminance">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_helpers.</span></code><code class="sig-name descname"><span class="pre">relative_luminance</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/color_helpers.html#relative_luminance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_helpers.relative_luminance" title="Permalink to this definition">¶</a></dt>
+<dd><p>The relative luminance of the color.</p>
+<p>This value is the critical value when comparing colors for contrast when
+displayed next to each other, in particular for readability of text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>tuple of red</em><em>, </em><em>green</em><em>, </em><em>blue values</em>) – A tuple of values representing red, green and blue components of
+the color, as values from 0.0 to 1.0.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>luminance</strong> – The relative luminance of the color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Web Contrast Accessibility Guidelines
+<a class="reference external" href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef">https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.util.color_helpers.is_dark">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_helpers.</span></code><code class="sig-name descname"><span class="pre">is_dark</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/color_helpers.html#is_dark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_helpers.is_dark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the color dark to human perception?</p>
+<p>A color is dark if white contasts better with it according to the WC3
+definition of contrast ratio.  This is allows GUI code to choose either
+black or white as a contrasting color for things like text on a colored
+background.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>tuple of red</em><em>, </em><em>green</em><em>, </em><em>blue values</em>) – A tuple of values representing red, green and blue components of
+the color, as values from 0.0 to 1.0.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>Understanding Web Contrast Accessibility Guidelines
+<a class="reference external" href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef">https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html#contrast-ratiodef</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.util.html"
+                        title="previous chapter">pyface.util package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.util.color_parser.html"
+                        title="next chapter">pyface.util.color_parser module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.util.color_helpers.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

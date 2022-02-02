@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_window &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.i_window</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Enthought, Inc.</span>
+<span class="c1"># Description: &lt;Enthought pyface package component&gt;</span>
+<span class="sd">&quot;&quot;&quot; The abstract interface for all pyface top-level windows. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Vetoable</span><span class="p">,</span> <span class="n">VetoableEvent</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.constant</span> <span class="kn">import</span> <span class="n">NO</span>
+<span class="kn">from</span> <span class="nn">pyface.key_pressed_event</span> <span class="kn">import</span> <span class="n">KeyPressedEvent</span>
+<span class="kn">from</span> <span class="nn">pyface.i_widget</span> <span class="kn">import</span> <span class="n">IWidget</span>
+
+
+<div class="viewcode-block" id="IWindow"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow">[docs]</a><span class="k">class</span> <span class="nc">IWindow</span><span class="p">(</span><span class="n">IWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The abstract interface for all pyface top-level windows.</span>
+
+<span class="sd">    A pyface top-level window has no visual representation until it is opened</span>
+<span class="sd">    (ie. its &#39;control&#39; trait will be None until it is opened).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IWindow&#39; interface -----------------------------------------------------</span>
+
+    <span class="c1">#: The position of the window.</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">()</span>
+
+    <span class="c1">#: The size of the window.</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">()</span>
+
+    <span class="c1">#: The window title.</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># Window Events ----------------------------------------------------------</span>
+
+    <span class="c1">#: The window has been opened.</span>
+    <span class="n">opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+    <span class="c1">#: The window is about to open.</span>
+    <span class="n">opening</span> <span class="o">=</span> <span class="n">VetoableEvent</span><span class="p">()</span>
+
+    <span class="c1">#: The window has been activated.</span>
+    <span class="n">activated</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+    <span class="c1">#: The window has been closed.</span>
+    <span class="n">closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+    <span class="c1">#: The window is about to be closed.</span>
+    <span class="n">closing</span> <span class="o">=</span> <span class="n">VetoableEvent</span><span class="p">()</span>
+
+    <span class="c1">#: The window has been deactivated.</span>
+    <span class="n">deactivated</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+    <span class="c1">#: A key was pressed while the window had focus.</span>
+    <span class="c1"># FIXME v3: This smells of a hack. What&#39;s so special about key presses?</span>
+    <span class="c1"># FIXME v3: Str</span>
+    <span class="n">key_pressed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">KeyPressedEvent</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWindow&#39; interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IWindow.open"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Opens the window.</span>
+
+<span class="sd">        This fires the :py:attr:`closing` vetoable event, giving listeners the</span>
+<span class="sd">        opportunity to veto the opening of the window.</span>
+
+<span class="sd">        If the window is opened, the :py:attr:`opened` event will be fired</span>
+<span class="sd">        with the IWindow instance as the event value.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        opened : bool</span>
+<span class="sd">            Whether or not the window was opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWindow.close"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes the window.</span>
+
+<span class="sd">        This fires the :py:attr:`closing` vetoable event, giving listeners the</span>
+<span class="sd">        opportunity to veto the closing of the window.  If :py:obj:`force` is</span>
+<span class="sd">        :py:obj:`True` then the window will close no matter what.</span>
+
+<span class="sd">        If the window is closed, the closed event will be fired with the window</span>
+<span class="sd">        object as the event value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force : bool</span>
+<span class="sd">            Whether the window should close despite vetos.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        closed : bool</span>
+<span class="sd">            Whether or not the window is closed.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWindow.confirm"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.confirm">[docs]</a>    <span class="k">def</span> <span class="nf">confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a confirmation dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        cancel : bool</span>
+<span class="sd">            ``True`` if the dialog should contain a Cancel button.</span>
+<span class="sd">        default : NO, YES or CANCEL</span>
+<span class="sd">            Which button should be the default button.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWindow.information"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.information">[docs]</a>    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an information message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a warning message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.IWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an error message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MWindow"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow">[docs]</a><span class="k">class</span> <span class="nc">MWindow</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The mixin class that contains common code for toolkit specific</span>
+<span class="sd">    implementations of the IWindow interface.</span>
+
+<span class="sd">    Implements: close(), confirm(), open()</span>
+<span class="sd">    Reimplements: _create()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWindow&#39; interface.</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MWindow.open"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Opens the window.</span>
+
+<span class="sd">        This fires the :py:attr:`closing` vetoable event, giving listeners the</span>
+<span class="sd">        opportunity to veto the opening of the window.</span>
+
+<span class="sd">        If the window is opened, the :py:attr:`opened` event will be fired</span>
+<span class="sd">        with the IWindow instance as the event value.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        opened : bool</span>
+<span class="sd">            Whether or not the window was opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opening</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+            <span class="c1"># Create the control, if necessary.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span></div>
+
+<div class="viewcode-block" id="MWindow.close"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes the window.</span>
+
+<span class="sd">        This fires the :py:attr:`closing` vetoable event, giving listeners the</span>
+<span class="sd">        opportunity to veto the closing of the window.  If :py:obj:`force` is</span>
+<span class="sd">        :py:obj:`True` then the window will close no matter what.</span>
+
+<span class="sd">        If the window is closed, the closed event will be fired with the window</span>
+<span class="sd">        object as the event value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        force : bool</span>
+<span class="sd">            Whether the window should close despite vetos.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        closed : bool</span>
+<span class="sd">            Whether or not the window is closed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">closing</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">force</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">closed</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MWindow.confirm"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.confirm">[docs]</a>    <span class="k">def</span> <span class="nf">confirm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a confirmation dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        cancel : bool</span>
+<span class="sd">            ``True`` if the dialog should contain a Cancel button.</span>
+<span class="sd">        default : NO, YES or CANCEL</span>
+<span class="sd">            Which button should be the default button.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.confirmation_dialog</span> <span class="kn">import</span> <span class="n">confirm</span>
+
+        <span class="k">return</span> <span class="n">confirm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">cancel</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MWindow.information"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.information">[docs]</a>    <span class="k">def</span> <span class="nf">information</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Information&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an information message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">information</span>
+
+        <span class="n">information</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MWindow.warning"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.warning">[docs]</a>    <span class="k">def</span> <span class="nf">warning</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show a warning message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">warning</span>
+
+        <span class="n">warning</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MWindow.error"><a class="viewcode-back" href="../../api/pyface.i_window.html#pyface.i_window.MWindow.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">informative</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">text_format</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Convenience method to show an error message dialog.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            The text of the message to display.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The text of the dialog title.</span>
+<span class="sd">        detail : str</span>
+<span class="sd">            Further details about the message.</span>
+<span class="sd">        informative : str</span>
+<span class="sd">            Explanatory text to display along with the message.</span>
+<span class="sd">        text_format : str</span>
+<span class="sd">            Specifies what text format to use in the resulting message dialog.</span>
+<span class="sd">            One of &quot;auto&quot;, &quot;plain&quot;, or &quot;rich&quot;. Only supported on the qt</span>
+<span class="sd">            backend.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.message_dialog</span> <span class="kn">import</span> <span class="n">error</span>
+
+        <span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">detail</span><span class="p">,</span> <span class="n">informative</span><span class="p">,</span> <span class="n">text_format</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

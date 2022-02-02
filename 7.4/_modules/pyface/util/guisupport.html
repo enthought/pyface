@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.util.guisupport &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.util.guisupport</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Support for creating GUI apps and starting event loops.</span>
+
+<span class="sd">IPython&#39;s GUI integration allows interative plotting and GUI usage in IPython</span>
+<span class="sd">session. IPython has two different types of GUI integration:</span>
+
+<span class="sd">1. The terminal based IPython supports GUI event loops through Python&#39;s</span>
+<span class="sd">   PyOS_InputHook. PyOS_InputHook is a hook that Python calls periodically</span>
+<span class="sd">   whenever raw_input is waiting for a user to type code. We implement GUI</span>
+<span class="sd">   support in the terminal by setting PyOS_InputHook to a function that</span>
+<span class="sd">   iterates the event loop for a short while. It is important to note that</span>
+<span class="sd">   in this situation, the real GUI event loop is NOT run in the normal</span>
+<span class="sd">   manner, so you can&#39;t use the normal means to detect that it is running.</span>
+<span class="sd">2. In the two process IPython kernel/frontend, the GUI event loop is run in</span>
+<span class="sd">   the kernel. In this case, the event loop is run in the normal manner by</span>
+<span class="sd">   calling the function or method of the GUI toolkit that starts the event</span>
+<span class="sd">   loop.</span>
+
+<span class="sd">In addition to starting the GUI event loops in one of these two ways, IPython</span>
+<span class="sd">will *always* create an appropriate GUI application object when GUi</span>
+<span class="sd">integration is enabled.</span>
+
+<span class="sd">If you want your GUI apps to run in IPython you need to do two things:</span>
+
+<span class="sd">1. Test to see if there is already an existing main application object. If</span>
+<span class="sd">   there is, you should use it. If there is not an existing application object</span>
+<span class="sd">   you should create one.</span>
+<span class="sd">2. Test to see if the GUI event loop is running. If it is, you should not</span>
+<span class="sd">   start it. If the event loop is not running you may start it.</span>
+
+<span class="sd">This module contains functions for each toolkit that perform these things</span>
+<span class="sd">in a consistent manner. Because of how PyOS_InputHook runs the event loop</span>
+<span class="sd">you cannot detect if the event loop is running using the traditional calls</span>
+<span class="sd">(such as ``wx.GetApp.IsMainLoopRunning()`` in wxPython). If PyOS_InputHook is</span>
+<span class="sd">set These methods will return a false negative. That is, they will say the</span>
+<span class="sd">event loop is not running, when is actually is. To work around this limitation</span>
+<span class="sd">we proposed the following informal protocol:</span>
+
+<span class="sd">* Whenever someone starts the event loop, they *must* set the ``_in_event_loop``</span>
+<span class="sd">  attribute of the main application object to ``True``. This should be done</span>
+<span class="sd">  regardless of how the event loop is actually run.</span>
+<span class="sd">* Whenever someone stops the event loop, they *must* set the ``_in_event_loop``</span>
+<span class="sd">  attribute of the main application object to ``False``.</span>
+<span class="sd">* If you want to see if the event loop is running, you *must* use ``hasattr``</span>
+<span class="sd">  to see if ``_in_event_loop`` attribute has been set. If it is set, you</span>
+<span class="sd">  *must* use its value. If it has not been set, you can query the toolkit</span>
+<span class="sd">  in the normal manner.</span>
+<span class="sd">* If you want GUI support and no one else has created an application or</span>
+<span class="sd">  started the event loop you *must* do this. We don&#39;t want projects to</span>
+<span class="sd">  attempt to defer these things to someone else if they themselves need it.</span>
+
+<span class="sd">The functions below implement this logic for each GUI toolkit. If you need</span>
+<span class="sd">to create custom application subclasses, you will likely have to modify this</span>
+<span class="sd">code for your own purposes. This code can be copied into your own project</span>
+<span class="sd">so you don&#39;t have to depend on IPython.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1">#  Copyright (C) 2008-2010  The IPython Development Team</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the terms of the BSD License.  The full license is in</span>
+<span class="c1">#  the file COPYING, distributed as part of this software.</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="c1"># Prevent name conflict with local wx package.</span>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># wx</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="get_app_wx"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.get_app_wx">[docs]</a><span class="k">def</span> <span class="nf">get_app_wx</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a new wx app or return an exiting one.&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">wx</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">GetApp</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;redirect&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;redirect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">App</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">app</span></div>
+
+
+<div class="viewcode-block" id="is_event_loop_running_wx"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.is_event_loop_running_wx">[docs]</a><span class="k">def</span> <span class="nf">is_event_loop_running_wx</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Is the wx event loop running.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">get_app_wx</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="s2">&quot;_in_event_loop&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">IsMainLoopRunning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="start_event_loop_wx"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.start_event_loop_wx">[docs]</a><span class="k">def</span> <span class="nf">start_event_loop_wx</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start the wx event loop in a consistent manner.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">get_app_wx</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_event_loop_running_wx</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># qt4</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="get_app_qt4"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.get_app_qt4">[docs]</a><span class="k">def</span> <span class="nf">get_app_qt4</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a new qt4 app or return an existing one.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">pyface.qt</span> <span class="kn">import</span> <span class="n">QtGui</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">],)</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">app</span></div>
+
+
+<div class="viewcode-block" id="is_event_loop_running_qt4"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.is_event_loop_running_qt4">[docs]</a><span class="k">def</span> <span class="nf">is_event_loop_running_qt4</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Is the qt4 event loop running.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">get_app_qt4</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="s2">&quot;_in_event_loop&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Does qt4 provide a other way to detect this?</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="start_event_loop_qt4"><a class="viewcode-back" href="../../../api/pyface.util.guisupport.html#pyface.util.guisupport.start_event_loop_qt4">[docs]</a><span class="k">def</span> <span class="nf">start_event_loop_qt4</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start the qt4 event loop in a consistent manner.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">get_app_qt4</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_event_loop_running_qt4</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">_in_event_loop</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># Tk</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># gtk</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

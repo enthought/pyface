@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.viewer.tree_content_provider module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.viewer package" href="pyface.viewer.html" >
+    <link rel="next" title="pyface.viewer.tree_item module" href="pyface.viewer.tree_item.html" >
+    <link rel="prev" title="pyface.viewer.table_viewer module" href="pyface.viewer.table_viewer.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.viewer.html" accesskey="U">pyface.viewer package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.viewer.tree_item.html" title="pyface.viewer.tree_item module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.viewer.table_viewer.html" title="pyface.viewer.table_viewer module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.viewer.tree_content_provider">
+<span id="pyface-viewer-tree-content-provider-module"></span><h1>pyface.viewer.tree_content_provider module<a class="headerlink" href="#module-pyface.viewer.tree_content_provider" title="Permalink to this headline">¶</a></h1>
+<p>Abstract base class for tree content providers.</p>
+<dl class="py class">
+<dt id="pyface.viewer.tree_content_provider.TreeContentProvider">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.viewer.tree_content_provider.</span></code><code class="sig-name descname"><span class="pre">TreeContentProvider</span></code><a class="reference internal" href="../_modules/pyface/viewer/tree_content_provider.html#TreeContentProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.viewer.content_provider.html#pyface.viewer.content_provider.ContentProvider" title="pyface.viewer.content_provider.ContentProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.viewer.content_provider.ContentProvider</span></code></a></p>
+<p>Abstract base class for tree content providers.</p>
+<p>Tree content providers are used by (surprise, surprise) tree viewers!</p>
+<dl class="py method">
+<dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_elements">
+<code class="sig-name descname"><span class="pre">get_elements</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_content_provider.html#TreeContentProvider.get_elements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of the elements to display in a viewer.</p>
+<p>Returns a list of elements to display in a viewer when its (ie. the
+viewer’s) input is set to the given element.</p>
+<p>The returned list should not be modified by the viewer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_parent">
+<code class="sig-name descname"><span class="pre">get_parent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_content_provider.html#TreeContentProvider.get_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parent of an element.</p>
+<p>Returns None if the element either has no parent (ie. it is the root of
+the tree), or if the parent cannot be computed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_children">
+<code class="sig-name descname"><span class="pre">get_children</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_content_provider.html#TreeContentProvider.get_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the children of an element.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.viewer.tree_content_provider.TreeContentProvider.has_children">
+<code class="sig-name descname"><span class="pre">has_children</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/viewer/tree_content_provider.html#TreeContentProvider.has_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.has_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True iff the element has children, otherwise False.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.viewer.table_viewer.html"
+                        title="previous chapter">pyface.viewer.table_viewer module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.viewer.tree_item.html"
+                        title="next chapter">pyface.viewer.tree_item module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.viewer.tree_content_provider.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

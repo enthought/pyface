@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.color &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.color</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; Color classes and corresponding trait types for Pyface.</span>
+
+<span class="sd">The base Color class holds red, green, blue and alpha channel values as</span>
+<span class="sd">a tuple of normalized values from 0.0 to 1.0.  Various property traits</span>
+<span class="sd">pull out the individual channel values and supply values for the HSV</span>
+<span class="sd">and HSL colour spaces (with and without alpha).</span>
+
+<span class="sd">The ``from_toolkit`` and ``to_toolkit`` methods allow conversion to and</span>
+<span class="sd">from native toolkit color objects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">colorsys</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">cached_property</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pyface.util.color_helpers</span> <span class="kn">import</span> <span class="n">channels_to_ints</span><span class="p">,</span> <span class="n">is_dark</span>
+<span class="kn">from</span> <span class="nn">pyface.util.color_helpers</span> <span class="kn">import</span> <span class="n">ints_to_channels</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">pyface.util.color_parser</span> <span class="kn">import</span> <span class="n">parse_text</span>
+
+
+<span class="c1">#: A trait holding a single channel value.</span>
+<span class="n">Channel</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#: A trait holding three channel values.</span>
+<span class="n">ChannelTuple</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">Channel</span><span class="p">)</span>
+
+<span class="c1">#: A trait holding four channel values.</span>
+<span class="n">AlphaChannelTuple</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">Channel</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Color"><a class="viewcode-back" href="../../api/pyface.color.html#pyface.color.Color">[docs]</a><span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A mutable specification of a color with alpha.</span>
+
+<span class="sd">    This is a class designed to be used by user interface elements which</span>
+<span class="sd">    need to color some or all of the interface element.  Each color has a</span>
+<span class="sd">    number of different representations as channel tuples, each channel</span>
+<span class="sd">    holding a value between 0.0 and 1.0, inclusive.  The standard red,</span>
+<span class="sd">    green, blue and alpha channels are also provided as convenience</span>
+<span class="sd">    properties.</span>
+
+<span class="sd">    Methods are provided to convert to and from toolkit-specific color</span>
+<span class="sd">    objects.</span>
+
+<span class="sd">    Colors implement equality testing, but are not hashable as they are</span>
+<span class="sd">    mutable, and so are not suitable for use as dictionary keys.  If you</span>
+<span class="sd">    need a dictionary key, use an appropriate channel tuple from the</span>
+<span class="sd">    object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: A tuple holding the red, green, blue, and alpha channels.</span>
+    <span class="n">rgba</span> <span class="o">=</span> <span class="n">AlphaChannelTuple</span><span class="p">()</span>
+
+    <span class="c1">#: A tuple holding the red, green, and blue channels.</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">ChannelTuple</span><span class="p">(),</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: The red channel.</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: The green channel.</span>
+    <span class="n">green</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: The blue channel.</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: The alpha channel.</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Channel</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: A tuple holding the hue, saturation, value, and alpha channels.</span>
+    <span class="n">hsva</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">AlphaChannelTuple</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: A tuple holding the hue, saturation, and value channels.</span>
+    <span class="n">hsv</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">ChannelTuple</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgb&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: A tuple holding the hue, lightness, saturation, and alpha channels.</span>
+    <span class="n">hlsa</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">AlphaChannelTuple</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: A tuple holding the hue, lightness, and saturation channels.</span>
+    <span class="n">hls</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">ChannelTuple</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgb&#39;</span><span class="p">)</span>
+
+    <span class="c1">#: Whether the color is dark for contrast purposes.</span>
+    <span class="n">is_dark</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Bool</span><span class="p">,</span> <span class="n">observe</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Color.from_str"><a class="viewcode-back" href="../../api/pyface.color.html#pyface.color.Color.from_str">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_str</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new Color object from a string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            A string holding the representation of the color.  This can be:</span>
+
+<span class="sd">            - a color name, including all CSS color names, plus any additional</span>
+<span class="sd">              names found in pyface.color.color_table.  The names are</span>
+<span class="sd">              normalized to lower case and stripped of whitespace, hyphens and</span>
+<span class="sd">              underscores.</span>
+
+<span class="sd">            - a hex representation of the color in the form &#39;#RGB&#39;, &#39;#RGBA&#39;,</span>
+<span class="sd">              &#39;#RRGGBB&#39;, &#39;#RRGGBBAA&#39;, &#39;#RRRRGGGGBBBB&#39;, or &#39;#RRRRGGGGBBBBAAAA&#39;.</span>
+
+<span class="sd">        **traits</span>
+<span class="sd">            Any additional trait values to be passed as keyword arguments.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ColorParseError</span>
+<span class="sd">            If the string cannot be converted to a valid color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">space</span><span class="p">,</span> <span class="n">channels</span> <span class="o">=</span> <span class="n">parse_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">space</span> <span class="ow">in</span> <span class="n">traits</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;from_str() got multiple values for keyword argument &quot;</span>
+                <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">space</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">traits</span><span class="p">[</span><span class="n">space</span><span class="p">]</span> <span class="o">=</span> <span class="n">channels</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Color.from_toolkit"><a class="viewcode-back" href="../../api/pyface.color.html#pyface.color.Color.from_toolkit">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_toolkit</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">toolkit_color</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new Color object from a toolkit color object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        toolkit_color : toolkit object</span>
+<span class="sd">            A toolkit color object, such as a Qt QColor or a Wx wx.Colour.</span>
+<span class="sd">        **traits</span>
+<span class="sd">            Any additional trait values to be passed as keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
+        <span class="n">toolkit_color_to_rgba</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s1">&#39;color:toolkit_color_to_rgba&#39;</span><span class="p">)</span>
+        <span class="n">rgba</span> <span class="o">=</span> <span class="n">toolkit_color_to_rgba</span><span class="p">(</span><span class="n">toolkit_color</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">rgba</span><span class="o">=</span><span class="n">rgba</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Color.to_toolkit"><a class="viewcode-back" href="../../api/pyface.color.html#pyface.color.Color.to_toolkit">[docs]</a>    <span class="k">def</span> <span class="nf">to_toolkit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new toolkit color object from a Color object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        toolkit_color : toolkit object</span>
+<span class="sd">            A toolkit color object, such as a Qt QColor or a Wx wx.Colour.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
+        <span class="n">rgba_to_toolkit_color</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s1">&#39;color:rgba_to_toolkit_color&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rgba_to_toolkit_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Color.hex"><a class="viewcode-back" href="../../api/pyface.color.html#pyface.color.Color.hex">[docs]</a>    <span class="k">def</span> <span class="nf">hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Provide a hex representation of the Color object.</span>
+
+<span class="sd">        Note that because the hex value is restricted to 0-255 integer values</span>
+<span class="sd">        for each channel, the representation is not exact.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hex : str</span>
+<span class="sd">            A hex string in standard ``#RRGGBBAA`` format that represents</span>
+<span class="sd">            the color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">channels_to_ints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;#</span><span class="si">{:02X}{:02X}{:02X}{:02X}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Color</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">{:0.5}</span><span class="s2">, </span><span class="si">{:0.5}</span><span class="s2">, </span><span class="si">{:0.5}</span><span class="s2">, </span><span class="si">{:0.5}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(rgba=</span><span class="si">{!r}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_red</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_red</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_green</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_green</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_blue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_blue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_hsva</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">rgb_to_hsv</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_hsva</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb</span>
+        <span class="k">return</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">rgb_to_hsv</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_hlsa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">rgb_to_hls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_hlsa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">hls_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_hls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgb</span>
+        <span class="k">return</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">rgb_to_hls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_hls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">hls_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_get_is_dark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">is_dark</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgb</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

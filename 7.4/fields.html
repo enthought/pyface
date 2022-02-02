@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Fields &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="up" title="Submodules" href="submodules.html" >
+    <link rel="next" title="Timers" href="timer.html" >
+    <link rel="prev" title="Pyface DataViews" href="data_view.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="submodules.html" accesskey="U">Submodules</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="timer.html" title="Timers"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="data_view.html" title="Pyface DataViews"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="fields">
+<span id="id1"></span><h1>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h1>
+<p>Pyface provides a small collection of simple field widgets that are pre-bound
+to a Traits interface, so that you can use them in a cross-toolkit manner.</p>
+<p>Where possible, these classes share a common API for the same functionality.
+In particular, all classes have a
+<a class="reference internal" href="api/pyface.fields.i_field.html#pyface.fields.i_field.IField.value" title="pyface.fields.i_field.IField.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> trait which holds the (usually
+user-editable) value displayed in the field.  Code using the field can listen
+to changes in this trait to react to the user entering a new value for the
+field without needing to know anything about the underlying toolkit event
+signalling mechanisms.</p>
+<p>All fields also provide a trait for setting the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">context_menu</span></code> of the field. Context
+menus should be <code class="xref py py-class docutils literal notranslate"><span class="pre">MenuManager</span></code>
+instances.</p>
+<div class="section" id="textfield">
+<h2>TextField<a class="headerlink" href="#textfield" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField" title="pyface.fields.i_text_field.ITextField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ITextField</span></code></a> interface provides
+additional traits that specify whether the value should be updated on
+every keystroke (by setting
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField.update_text" title="pyface.fields.i_text_field.ITextField.update_text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">update_text</span></code></a> to <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>)
+or when the user has finished editing the field by moving focus away from
+the text field (by setting
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField.update_text" title="pyface.fields.i_text_field.ITextField.update_text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">update_text</span></code></a> to
+<code class="docutils literal notranslate"><span class="pre">&quot;editing_finshed&quot;</span></code>).</p>
+<p>The text field can be set to show a placeholder text to hint about the desired
+value that is shown when the box is empty via the
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField.placeholder" title="pyface.fields.i_text_field.ITextField.placeholder"><code class="xref py py-attr docutils literal notranslate"><span class="pre">placeholder</span></code></a> trait.  It can
+also be set to conceal typed text by setting
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField.echo" title="pyface.fields.i_text_field.ITextField.echo"><code class="xref py py-attr docutils literal notranslate"><span class="pre">echo</span></code></a> to <code class="docutils literal notranslate"><span class="pre">&quot;password&quot;</span></code> (and
+the Qt backend has a number of other options as well).  The text field can be
+set to read-only mode via the
+<a class="reference internal" href="api/pyface.fields.i_text_field.html#pyface.fields.i_text_field.ITextField.read_only" title="pyface.fields.i_text_field.ITextField.read_only"><code class="xref py py-attr docutils literal notranslate"><span class="pre">read_only</span></code></a> trait.</p>
+</div>
+<div class="section" id="spinfield">
+<h2>SpinField<a class="headerlink" href="#spinfield" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.fields.i_spin_field.html#pyface.fields.i_spin_field.ISpinField" title="pyface.fields.i_spin_field.ISpinField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISpinField</span></code></a> interface has an integer
+for the <a class="reference internal" href="api/pyface.fields.i_spin_field.html#pyface.fields.i_spin_field.ISpinField.value" title="pyface.fields.i_spin_field.ISpinField.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>, and also
+requires a range to be set, either via setting the min/max values as a tuple to
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">range</span></code> trait, or by setting
+values individually to <a class="reference internal" href="api/pyface.fields.i_spin_field.html#pyface.fields.i_spin_field.ISpinField.minimum" title="pyface.fields.i_spin_field.ISpinField.minimum"><code class="xref py py-attr docutils literal notranslate"><span class="pre">minimum</span></code></a>
+and <a class="reference internal" href="api/pyface.fields.i_spin_field.html#pyface.fields.i_spin_field.ISpinField.maximum" title="pyface.fields.i_spin_field.ISpinField.maximum"><code class="xref py py-attr docutils literal notranslate"><span class="pre">maximum</span></code></a>.</p>
+</div>
+<div class="section" id="combofield">
+<h2>ComboField<a class="headerlink" href="#combofield" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.fields.i_combo_field.html#pyface.fields.i_combo_field.IComboField" title="pyface.fields.i_combo_field.IComboField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IComboField</span></code></a> interface has an arbitrary
+<a class="reference internal" href="api/pyface.fields.i_combo_field.html#pyface.fields.i_combo_field.IComboField.value" title="pyface.fields.i_combo_field.IComboField.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> that must come from a list
+of valid <a class="reference internal" href="api/pyface.fields.i_combo_field.html#pyface.fields.i_combo_field.IComboField.values" title="pyface.fields.i_combo_field.IComboField.values"><code class="xref py py-attr docutils literal notranslate"><span class="pre">values</span></code></a>.  For non-text
+values, a <a class="reference internal" href="api/pyface.fields.i_combo_field.html#pyface.fields.i_combo_field.IComboField.formatter" title="pyface.fields.i_combo_field.IComboField.formatter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatter</span></code></a> function
+should be provided - this defaults to either <code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code> (Python 3+) or
+<code class="xref py py-func docutils literal notranslate"><span class="pre">unicode()</span></code> (Python 2).</p>
+</div>
+<div class="section" id="timefield">
+<h2>TimeField<a class="headerlink" href="#timefield" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.fields.i_time_field.html#pyface.fields.i_time_field.ITimeField" title="pyface.fields.i_time_field.ITimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ITimeField</span></code></a> interface has a
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.time" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.time</span></code></a> <a class="reference internal" href="api/pyface.fields.i_time_field.html#pyface.fields.i_time_field.ITimeField.value" title="pyface.fields.i_time_field.ITimeField.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.
+This value defaults to the current time.</p>
+</div>
+<div class="section" id="togglefield-and-subclasses">
+<h2>ToggleField and Subclasses<a class="headerlink" href="#togglefield-and-subclasses" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api/pyface.fields.i_toggle_field.html#pyface.fields.i_toggle_field.IToggleField" title="pyface.fields.i_toggle_field.IToggleField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IToggleField</span></code></a> interface holds a
+boolean <a class="reference internal" href="api/pyface.fields.i_toggle_field.html#pyface.fields.i_toggle_field.IToggleField.value" title="pyface.fields.i_toggle_field.IToggleField.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> that is
+toggled between <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> by the widget.  The interface is
+implemented by several different concrete classes with different appearances
+but similar behaviour:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckBoxField</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RadioButtonField</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ToggleButtonField</span></code></p></li>
+</ul>
+<p>There is an abstract class <code class="xref py py-class docutils literal notranslate"><span class="pre">ToggleField</span></code>
+which implements much of the behaviour and is suitable for use by custom
+implementations to toggling behaviour.</p>
+<p>All <a class="reference internal" href="api/pyface.fields.i_toggle_field.html#pyface.fields.i_toggle_field.IToggleField" title="pyface.fields.i_toggle_field.IToggleField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IToggleField</span></code></a> implementations
+have can have label text set via the
+<a class="reference internal" href="api/pyface.fields.i_toggle_field.html#pyface.fields.i_toggle_field.IToggleField.text" title="pyface.fields.i_toggle_field.IToggleField.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text</span></code></a> trait, and in the
+Qt backend they can have an image for an
+<a class="reference internal" href="api/pyface.fields.i_toggle_field.html#pyface.fields.i_toggle_field.IToggleField.icon" title="pyface.fields.i_toggle_field.IToggleField.icon"><code class="xref py py-attr docutils literal notranslate"><span class="pre">icon</span></code></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fields</a><ul>
+<li><a class="reference internal" href="#textfield">TextField</a></li>
+<li><a class="reference internal" href="#spinfield">SpinField</a></li>
+<li><a class="reference internal" href="#combofield">ComboField</a></li>
+<li><a class="reference internal" href="#timefield">TimeField</a></li>
+<li><a class="reference internal" href="#togglefield-and-subclasses">ToggleField and Subclasses</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="data_view.html"
+                        title="previous chapter">Pyface DataViews</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="timer.html"
+                        title="next chapter">Timers</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/fields.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

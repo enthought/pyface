@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tree.node_monitor &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tree.node_monitor</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; A monitor for appearance and structural changes to a node. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span>
+
+
+<span class="kn">from</span> <span class="nn">.node_event</span> <span class="kn">import</span> <span class="n">NodeEvent</span>
+
+
+<span class="c1"># Create a logger for this module.</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NodeMonitor"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor">[docs]</a><span class="k">class</span> <span class="nc">NodeMonitor</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A monitor for appearance and structural changes to a node. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;NodeMonitor&#39; interface ---------------------------------------------#</span>
+
+    <span class="c1"># The node that we are monitoring.</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># Events ----</span>
+
+    <span class="c1"># Fired when child nodes in the node that we are monitoring have changed in</span>
+    <span class="c1"># some way that affects their appearance but NOT their structure.</span>
+    <span class="n">nodes_changed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when child nodes have been inserted into the node that we are</span>
+    <span class="c1"># monitoring.</span>
+    <span class="n">nodes_inserted</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when child nodes have been removed from the node that we are</span>
+    <span class="c1"># monitoring.</span>
+    <span class="n">nodes_removed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when child nodes have been replaced in the node that we are</span>
+    <span class="c1"># monitoring.</span>
+    <span class="n">nodes_replaced</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># Fired when the structure of the node that we are monitoring has changed</span>
+    <span class="c1"># DRASTICALLY (i.e., we do not have enough information to make individual</span>
+    <span class="c1"># changes/inserts/removals).</span>
+    <span class="n">structure_changed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">NodeEvent</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;NodeMonitor&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># public methods -------------------------------------------------------</span>
+
+<div class="viewcode-block" id="NodeMonitor.start"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start listening to changes to the node. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_trait_change_handlers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.stop"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop listening to changes to the node. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_trait_change_handlers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.fire_nodes_changed"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.fire_nodes_changed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes changed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_changed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.fire_nodes_inserted"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.fire_nodes_inserted">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_inserted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes inserted event.</span>
+
+<span class="sd">        If the index is -1 it means the nodes were appended.</span>
+
+<span class="sd">        fixme: The tree and model should probably have an &#39;appended&#39; event.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_inserted</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span>
+            <span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.fire_nodes_removed"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.fire_nodes_removed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_removed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes removed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_removed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.fire_nodes_replaced"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.fire_nodes_replaced">[docs]</a>    <span class="k">def</span> <span class="nf">fire_nodes_replaced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_children</span><span class="p">,</span> <span class="n">new_children</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the nodes replaced event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodes_replaced</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span>
+            <span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">old_children</span><span class="o">=</span><span class="n">old_children</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">new_children</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeMonitor.fire_structure_changed"><a class="viewcode-back" href="../../../api/pyface.tree.node_monitor.html#pyface.tree.node_monitor.NodeMonitor.fire_structure_changed">[docs]</a>    <span class="k">def</span> <span class="nf">fire_structure_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Fires the structure changed event. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure_changed</span> <span class="o">=</span> <span class="n">NodeEvent</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">return</span></div>
+
+    <span class="c1"># protected methods ----------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_setup_trait_change_handlers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">remove</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add or remove trait change handlers to/from a node. &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> trait listeners on (</span><span class="si">%s</span><span class="s2">) in NodeMonitor (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">remove</span> <span class="ow">and</span> <span class="s2">&quot;Removing&quot;</span> <span class="ow">or</span> <span class="s2">&quot;Adding&quot;</span><span class="p">),</span>
+            <span class="n">obj</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">pass</span>  <span class="c1"># derived classes should do something here!</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

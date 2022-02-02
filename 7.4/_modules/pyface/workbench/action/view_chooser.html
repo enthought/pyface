@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.action.view_chooser &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../../index.html" >
+    <link rel="up" title="Module code" href="../../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.action.view_chooser</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot; A UI that allows the user to choose a view. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.workbench.api</span> <span class="kn">import</span> <span class="n">IView</span><span class="p">,</span> <span class="n">WorkbenchWindow</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">TraitError</span><span class="p">,</span> <span class="n">Undefined</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">TreeEditor</span><span class="p">,</span> <span class="n">TreeNode</span><span class="p">,</span> <span class="n">View</span>
+<span class="kn">from</span> <span class="nn">traitsui.menu</span> <span class="kn">import</span> <span class="n">Action</span>  <span class="c1"># fixme: Non-api import!</span>
+
+
+<div class="viewcode-block" id="Category"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.Category">[docs]</a><span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A view category. &quot;&quot;&quot;</span>
+
+    <span class="c1"># The name of the category.</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># The views in the category.</span>
+    <span class="n">views</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WorkbenchWindowTreeNode"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode">[docs]</a><span class="k">class</span> <span class="nc">WorkbenchWindowTreeNode</span><span class="p">(</span><span class="n">TreeNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A tree node for workbench windows that displays the window&#39;s views.</span>
+
+<span class="sd">    The views are grouped by their category.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;TreeNode&#39; interface -------------------------------------------------</span>
+
+    <span class="c1"># List of object classes that the node applies to.</span>
+    <span class="n">node_for</span> <span class="o">=</span> <span class="p">[</span><span class="n">WorkbenchWindow</span><span class="p">]</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;TreeNode&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="WorkbenchWindowTreeNode.get_children"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode.get_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the object&#39;s children. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Collate the window&#39;s views into categories.</span>
+        <span class="n">categories_by_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_categories_by_name</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="n">categories</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">categories_by_name</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">categories</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">category</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">categories</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Private interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_categories_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return a dictionary containing all categories keyed by name. &quot;&quot;&quot;</span>
+
+        <span class="n">categories_by_name</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">window</span><span class="o">.</span><span class="n">views</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">categories_by_name</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="n">Category</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">view</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+                <span class="n">categories_by_name</span><span class="p">[</span><span class="n">view</span><span class="o">.</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">category</span>
+
+            <span class="n">category</span><span class="o">.</span><span class="n">views</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">categories_by_name</span></div>
+
+
+<div class="viewcode-block" id="IViewTreeNode"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.IViewTreeNode">[docs]</a><span class="k">class</span> <span class="nc">IViewTreeNode</span><span class="p">(</span><span class="n">TreeNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A tree node for objects that implement the &#39;IView&#39; interface.</span>
+
+<span class="sd">    This node does *not* recognise objects that can be *adapted* to the &#39;IView&#39;</span>
+<span class="sd">    interface, only those that actually implement it. If we wanted to allow</span>
+<span class="sd">    for adaptation we would have to work out a way for the rest of the</span>
+<span class="sd">    &#39;TreeNode&#39; code to access the adapter, not the original object. We could,</span>
+<span class="sd">    of course override every method, but that seems a little, errr, tedious.</span>
+<span class="sd">    We could probably do with something like in the Pyface tree where there</span>
+<span class="sd">    is a method that returns the actual object that we want to manipulate.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IViewTreeNode.is_node_for"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.IViewTreeNode.is_node_for">[docs]</a>    <span class="k">def</span> <span class="nf">is_node_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns whether this is the node that handles a specified object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># By checking for &#39;is obj&#39; here, we are *not* allowing adaptation (if</span>
+        <span class="c1"># we were allowing adaptation it would be &#39;is not None&#39;). See the class</span>
+        <span class="c1"># doc string for details.</span>
+        <span class="k">return</span> <span class="n">IView</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Undefined</span><span class="p">)</span> <span class="ow">is</span> <span class="n">obj</span></div>
+
+<div class="viewcode-block" id="IViewTreeNode.get_icon"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.IViewTreeNode.get_icon">[docs]</a>    <span class="k">def</span> <span class="nf">get_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">is_expanded</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the icon for a specified object. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">image</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># fixme: A bit of magic here! Is there a better way to say &#39;use</span>
+            <span class="c1"># the default leaf icon&#39;?</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;&lt;item&gt;&quot;</span>
+
+        <span class="k">return</span> <span class="n">icon</span></div></div>
+
+
+<div class="viewcode-block" id="ViewChooser"><a class="viewcode-back" href="../../../../api/pyface.workbench.action.view_chooser.html#pyface.workbench.action.view_chooser.ViewChooser">[docs]</a><span class="k">class</span> <span class="nc">ViewChooser</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Allow the user to choose a view.</span>
+
+<span class="sd">    This implementation shows views in a tree grouped by category.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># The window that contains the views to choose from.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.workbench.api.WorkbenchWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The currently selected tree item (at any point in time this might be</span>
+    <span class="c1"># either None, a view category, or a view).</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># The selected view (None if the selected item is not a view).</span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Traits UI views -----------------------------------------------------#</span>
+
+    <span class="n">traits_ui_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">Item</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;window&quot;</span><span class="p">,</span>
+            <span class="n">editor</span><span class="o">=</span><span class="n">TreeEditor</span><span class="p">(</span>
+                <span class="n">nodes</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">WorkbenchWindowTreeNode</span><span class="p">(</span>
+                        <span class="n">auto_open</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;=Views&quot;</span><span class="p">,</span>
+                        <span class="n">rename</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">insert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">menu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">TreeNode</span><span class="p">(</span>
+                        <span class="n">node_for</span><span class="o">=</span><span class="p">[</span><span class="n">Category</span><span class="p">],</span>
+                        <span class="n">auto_open</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">children</span><span class="o">=</span><span class="s2">&quot;views&quot;</span><span class="p">,</span>
+                        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                        <span class="n">rename</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">insert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">menu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">IViewTreeNode</span><span class="p">(</span>
+                        <span class="n">auto_open</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                        <span class="n">rename</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">insert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">menu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">],</span>
+                <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">hide_root</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">selected</span><span class="o">=</span><span class="s2">&quot;selected&quot;</span><span class="p">,</span>
+                <span class="n">show_icons</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">show_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">buttons</span><span class="o">=</span><span class="p">[</span><span class="n">Action</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="n">enabled_when</span><span class="o">=</span><span class="s2">&quot;view is not None&quot;</span><span class="p">),</span> <span class="s2">&quot;Cancel&quot;</span><span class="p">],</span>
+        <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Show View&quot;</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ViewChooser&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_selected_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Static trait change handler. &quot;&quot;&quot;</span>
+
+        <span class="c1"># If the assignment fails then the selected object does *not* implement</span>
+        <span class="c1"># the &#39;IView&#39; interface.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="n">new</span>
+
+        <span class="k">except</span> <span class="n">TraitError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

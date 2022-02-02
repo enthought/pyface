@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Trait Types &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="next" title="Image Types" href="image_types.html" >
+    <link rel="prev" title="Pyface Applications" href="applications.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="image_types.html" title="Image Types"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="applications.html" title="Pyface Applications"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="trait-types">
+<span id="ui-trait-types"></span><h1>Trait Types<a class="headerlink" href="#trait-types" title="Permalink to this headline">¶</a></h1>
+<p>Pyface defines a number of custom Trait types that represent quantities and
+objects that are useful in the context of graphical user interfaces.</p>
+<div class="section" id="colors">
+<h2>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h2>
+<p>When working with user interfaces, it is common to want to be able to specify
+the color to use in part of the UI.  Each toolkit usually has its own way of
+representing colors, and so the ability to specify a color in a
+toolkit-independent way that can be converted to a toolkit-specific
+representation is important.  This is particularly so when you want to allow
+the user to specify a color.</p>
+<p>Pyface provides a <a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> class and a corresponding <a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor" title="pyface.ui_traits.PyfaceColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceColor</span></code></a> trait-type
+that allows this sort of representation.  Internally, the <a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> class
+stores colors as a tuple of red, green, blue and alpha values which range
+from 0.0 through to 1.0, inclusive.  Helper properties allow the user to
+specify individual channel values, as well as specify colors in alternate
+color spaces, such as HSV or HLS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Color</span><span class="p">(</span><span class="n">rgba</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
+<span class="n">Color</span><span class="p">(</span><span class="n">red</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">green</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">blue</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">Color</span><span class="p">(</span><span class="n">hls</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> instances can also be created via the <a class="reference internal" href="api/pyface.color.html#pyface.color.Color.from_str" title="pyface.color.Color.from_str"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_str()</span></code></a> method
+which allow specification of colors via CSS-style color strings, such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Color</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;aquamarine&quot;</span><span class="p">)</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">&quot;#662244&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All standard web colors are understood, as well as hexadecimal RGB(A) with
+1, 2 or 4 hex digits per channel.</p>
+<p><a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> instances are mutable, as their intended use is as values stored
+in <a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor" title="pyface.ui_traits.PyfaceColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceColor</span></code></a> trait classes which can be modified and listened to.  The
+<a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor" title="pyface.ui_traits.PyfaceColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceColor</span></code></a> validator understands string descriptions of colors, and will
+accept them as values when initializing or modifying the trait:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Style</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+
+    <span class="n">color</span> <span class="o">=</span> <span class="n">PyfaceColor</span><span class="p">(</span><span class="s2">&quot;#442266FF&quot;</span><span class="p">)</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;color.rgba&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">color_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The color has changed to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">))</span>
+
+<span class="n">shape</span> <span class="o">=</span> <span class="n">Style</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">shape</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">blue</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">shape</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;rebeccapurple&quot;</span>
+</pre></div>
+</div>
+<p>For interactions with the toolkit, the <a class="reference internal" href="api/pyface.color.html#pyface.color.Color.from_toolkit" title="pyface.color.Color.from_toolkit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_toolkit()</span></code></a> and
+<a class="reference internal" href="api/pyface.color.html#pyface.color.Color.to_toolkit" title="pyface.color.Color.to_toolkit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_toolkit()</span></code></a> methods allow conversion to and from the appropriate
+toolkit color objects, such as Qt’s <code class="xref py py-class docutils literal notranslate"><span class="pre">QColor</span></code> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">wx.Colour</span></code>.  These are most likely to be needed by internal
+Pyface functionality, and should not be needed by developers who are
+building applications on top of Pyface.</p>
+<p>It is intended that this trait will eventually replace the <code class="docutils literal notranslate"><span class="pre">Color</span></code>
+trait from TraitsUI.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Trait Types</a><ul>
+<li><a class="reference internal" href="#colors">Colors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="previous chapter">Pyface Applications</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="image_types.html"
+                        title="next chapter">Image Types</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/traits.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

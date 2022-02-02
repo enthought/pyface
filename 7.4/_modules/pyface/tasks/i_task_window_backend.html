@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.i_task_window_backend &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.i_task_window_backend</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">DelegatesTo</span><span class="p">,</span>
+    <span class="n">HasTraits</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">Interface</span><span class="p">,</span>
+    <span class="n">provides</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ITaskWindowBackend"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend">[docs]</a><span class="k">class</span> <span class="nc">ITaskWindowBackend</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The TaskWindow layout interface.</span>
+
+<span class="sd">    TaskWindow delegates to an ITaskWindowBackend object for toolkit-specific</span>
+<span class="sd">    layout functionality.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The root control of the TaskWindow to which the layout belongs.</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1">#: The TaskWindow to which the layout belongs.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_window.TaskWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ITaskWindowBackend&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ITaskWindowBackend.create_contents"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.create_contents">[docs]</a>    <span class="k">def</span> <span class="nf">create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create and return the TaskWindow&#39;s contents. (See IWindow.)</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskWindowBackend.destroy"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Destroy the backend.</span>
+
+<span class="sd">        Note that TaskWindow will destroy the widget created in create_contents,</span>
+<span class="sd">        but this method may be used to perform additional cleanup.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskWindowBackend.hide_task"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.hide_task">[docs]</a>    <span class="k">def</span> <span class="nf">hide_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Assuming the specified TaskState is active, hide its controls.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskWindowBackend.show_task"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task">[docs]</a>    <span class="k">def</span> <span class="nf">show_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Assuming no task is currently active, show the controls of the</span>
+<span class="sd">            specified TaskState.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="c1"># Methods for saving and restoring the layout -------------------------#</span>
+
+<div class="viewcode-block" id="ITaskWindowBackend.get_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.get_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a TaskLayout for the current state of the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ITaskWindowBackend.set_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.ITaskWindowBackend.set_layout">[docs]</a>    <span class="k">def</span> <span class="nf">set_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Applies a TaskLayout (which should be suitable for the active task)</span>
+<span class="sd">            to the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MTaskWindowBackend"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">ITaskWindowBackend</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MTaskWindowBackend</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mixin containing common coe for toolkit-specific implementations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;ITaskWindowBackend&#39; interface ---------------------------------------</span>
+
+    <span class="n">control</span> <span class="o">=</span> <span class="n">DelegatesTo</span><span class="p">(</span><span class="s2">&quot;window&quot;</span><span class="p">)</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_window.TaskWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ITaskWindowBackend&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MTaskWindowBackend.create_contents"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.create_contents">[docs]</a>    <span class="k">def</span> <span class="nf">create_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MTaskWindowBackend.destroy"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MTaskWindowBackend.hide_task"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.hide_task">[docs]</a>    <span class="k">def</span> <span class="nf">hide_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MTaskWindowBackend.show_task"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.show_task">[docs]</a>    <span class="k">def</span> <span class="nf">show_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MTaskWindowBackend.get_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.get_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MTaskWindowBackend.set_layout"><a class="viewcode-back" href="../../../api/pyface.tasks.i_task_window_backend.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend.set_layout">[docs]</a>    <span class="k">def</span> <span class="nf">set_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layout</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

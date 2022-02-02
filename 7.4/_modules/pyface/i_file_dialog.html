@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.i_file_dialog &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.i_file_dialog</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The interface for a dialog that allows the user to open/save files etc. &quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.i_dialog</span> <span class="kn">import</span> <span class="n">IDialog</span>
+
+
+<div class="viewcode-block" id="IFileDialog"><a class="viewcode-back" href="../../api/pyface.i_file_dialog.html#pyface.i_file_dialog.IFileDialog">[docs]</a><span class="k">class</span> <span class="nc">IFileDialog</span><span class="p">(</span><span class="n">IDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The interface for a dialog that allows the user to open/save files etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IFileDialog&#39; interface ---------------------------------------------#</span>
+
+    <span class="c1">#: The &#39;action&#39; that the user is peforming on the directory (&quot;open files&quot;</span>
+    <span class="c1">#: differs from &quot;open&quot; in that the former supports multiple selections).</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="s2">&quot;open files&quot;</span><span class="p">,</span> <span class="s2">&quot;save as&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The default directory.</span>
+    <span class="n">default_directory</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The default filename.</span>
+    <span class="n">default_filename</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The default path (directory and filename) of the chosen file.  This is</span>
+    <span class="c1">#: only used when the *default_directory* and *default_filename* are not set</span>
+    <span class="c1">#: and is equivalent to setting both.</span>
+    <span class="n">default_path</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The directory containing the chosen file.</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The name (basename only) of the chosen file.</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The path (directory and filename) of the chosen file. To be used when only</span>
+    <span class="c1">#: single selection is allowed: if *action* is &quot;open files&quot;, use *paths* instead.</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The paths (directory and filename) of the chosen files. To be used when</span>
+    <span class="c1">#: multiple selection is allowed.</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">())</span>
+
+    <span class="c1">#: The wildcard used to restrict the set of files.</span>
+    <span class="n">wildcard</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1">#: The index of the selected wildcard.</span>
+    <span class="n">wildcard_index</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MFileDialog"><a class="viewcode-back" href="../../api/pyface.i_file_dialog.html#pyface.i_file_dialog.MFileDialog">[docs]</a><span class="k">class</span> <span class="nc">MFileDialog</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The mixin class that contains common code for toolkit specific</span>
+<span class="sd">    implementations of the IFileDialog interface.</span>
+
+<span class="sd">    Implements: create_wildcard()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># FIXME v3: These are referenced elsewhere so maybe should be part of the</span>
+    <span class="c1"># interface. The format is toolkit specific and so shouldn&#39;t be exposed.</span>
+    <span class="c1"># The create_wildcard() class method (why isn&#39;t it a static method?) should</span>
+    <span class="c1"># be the basis for this - but nothing seems to use it.  For now the PyQt</span>
+    <span class="c1"># implementation will convert the wx format to its own.  Actually we need</span>
+    <span class="c1"># the format to be portable between toolkits - so stick with PyQt</span>
+    <span class="c1"># supporting the wx format or invent a data structure.</span>
+
+    <span class="c1">#: A file dialog wildcard for Python files.</span>
+    <span class="n">WILDCARD_PY</span> <span class="o">=</span> <span class="s2">&quot;Python files (*.py)|*.py|&quot;</span>
+
+    <span class="c1">#: A file dialog wildcard for text files.</span>
+    <span class="n">WILDCARD_TXT</span> <span class="o">=</span> <span class="s2">&quot;Text files (*.txt)|*.txt|&quot;</span>
+
+    <span class="c1">#: A file dialog wildcard for all files.</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
+        <span class="n">WILDCARD_ALL</span> <span class="o">=</span> <span class="s2">&quot;All files (*.*)|*.*|&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">WILDCARD_ALL</span> <span class="o">=</span> <span class="s2">&quot;All files (*)|*&quot;</span>
+
+    <span class="c1">#: A file dialog wildcard for Zip archives.</span>
+    <span class="n">WILDCARD_ZIP</span> <span class="o">=</span> <span class="s2">&quot;Zip files (*.zip)|*.zip|&quot;</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;MFileDialog&#39; *CLASS* interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MFileDialog.create_wildcard"><a class="viewcode-back" href="../../api/pyface.i_file_dialog.html#pyface.i_file_dialog.MFileDialog.create_wildcard">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_wildcard</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">extension</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates a wildcard for a given extension.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        description : str</span>
+<span class="sd">            A human-readable description of the pattern.</span>
+<span class="sd">        extenstion : list</span>
+<span class="sd">            The wildcard patterns for the extension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">extension</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)|</span><span class="si">%s</span><span class="s2">|&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

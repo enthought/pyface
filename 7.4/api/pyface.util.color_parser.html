@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.util.color_parser module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.util package" href="pyface.util.html" >
+    <link rel="next" title="pyface.util.event_loop_helper module" href="pyface.util.event_loop_helper.html" >
+    <link rel="prev" title="pyface.util.color_helpers module" href="pyface.util.color_helpers.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.util.html" accesskey="U">pyface.util package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.util.event_loop_helper.html" title="pyface.util.event_loop_helper module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.util.color_helpers.html" title="pyface.util.color_helpers module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.util.color_parser">
+<span id="pyface-util-color-parser-module"></span><h1>pyface.util.color_parser module<a class="headerlink" href="#module-pyface.util.color_parser" title="Permalink to this headline">¶</a></h1>
+<p>Color string parser for Pyface.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">parse_text</span></code> function allows the creation of Color objects from
+CSS-style strings, including all the CSS names colours or hex strings starting
+with “#”.  If there is no match, a ColorParseError is raised.</p>
+<p>A dictionary of named colours is available as the color_table module-level
+dictionary.  This dictionary holds all CSS colour names, plus a number of
+other names such as “transparent”.</p>
+<p>Additionally, two utility functions <code class="docutils literal notranslate"><span class="pre">channels_to_ints</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ints_to_channels</span></code> are provided to assist in converting between floating
+point and integer values.</p>
+<dl class="py data">
+<dt id="pyface.util.color_parser.color_table">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_parser.</span></code><code class="sig-name descname"><span class="pre">color_table</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{'aliceblue':</span> <span class="pre">(0.941,</span> <span class="pre">0.973,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'antiquewhite':</span> <span class="pre">(0.98,</span> <span class="pre">0.922,</span> <span class="pre">0.843,</span> <span class="pre">1.0),</span> <span class="pre">'aqua':</span> <span class="pre">(0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'aquamarine':</span> <span class="pre">(0.498,</span> <span class="pre">1.0,</span> <span class="pre">0.831,</span> <span class="pre">1.0),</span> <span class="pre">'azure':</span> <span class="pre">(0.941,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'beige':</span> <span class="pre">(0.961,</span> <span class="pre">0.961,</span> <span class="pre">0.863,</span> <span class="pre">1.0),</span> <span class="pre">'bisque':</span> <span class="pre">(1.0,</span> <span class="pre">0.894,</span> <span class="pre">0.769,</span> <span class="pre">1.0),</span> <span class="pre">'black':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'blanchedalmond':</span> <span class="pre">(1.0,</span> <span class="pre">0.922,</span> <span class="pre">0.804,</span> <span class="pre">1.0),</span> <span class="pre">'blue':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'blueviolet':</span> <span class="pre">(0.541,</span> <span class="pre">0.169,</span> <span class="pre">0.886,</span> <span class="pre">1.0),</span> <span class="pre">'brown':</span> <span class="pre">(0.647,</span> <span class="pre">0.165,</span> <span class="pre">0.165,</span> <span class="pre">1.0),</span> <span class="pre">'burlywood':</span> <span class="pre">(0.871,</span> <span class="pre">0.722,</span> <span class="pre">0.529,</span> <span class="pre">1.0),</span> <span class="pre">'cadetblue':</span> <span class="pre">(0.373,</span> <span class="pre">0.62,</span> <span class="pre">0.627,</span> <span class="pre">1.0),</span> <span class="pre">'chartreuse':</span> <span class="pre">(0.498,</span> <span class="pre">1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'chocolate':</span> <span class="pre">(0.824,</span> <span class="pre">0.412,</span> <span class="pre">0.118,</span> <span class="pre">1.0),</span> <span class="pre">'clear':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0),</span> <span class="pre">'coral':</span> <span class="pre">(1.0,</span> <span class="pre">0.498,</span> <span class="pre">0.314,</span> <span class="pre">1.0),</span> <span class="pre">'cornflowerblue':</span> <span class="pre">(0.392,</span> <span class="pre">0.584,</span> <span class="pre">0.929,</span> <span class="pre">1.0),</span> <span class="pre">'cornsilk':</span> <span class="pre">(1.0,</span> <span class="pre">0.973,</span> <span class="pre">0.863,</span> <span class="pre">1.0),</span> <span class="pre">'crimson':</span> <span class="pre">(0.863,</span> <span class="pre">0.078,</span> <span class="pre">0.235,</span> <span class="pre">1.0),</span> <span class="pre">'cyan':</span> <span class="pre">(0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'darkblue':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.545,</span> <span class="pre">1.0),</span> <span class="pre">'darkcyan':</span> <span class="pre">(0.0,</span> <span class="pre">0.545,</span> <span class="pre">0.545,</span> <span class="pre">1.0),</span> <span class="pre">'darkgoldenrod':</span> <span class="pre">(0.722,</span> <span class="pre">0.525,</span> <span class="pre">0.043,</span> <span class="pre">1.0),</span> <span class="pre">'darkgray':</span> <span class="pre">(0.663,</span> <span class="pre">0.663,</span> <span class="pre">0.663,</span> <span class="pre">1.0),</span> <span class="pre">'darkgreen':</span> <span class="pre">(0.0,</span> <span class="pre">0.392,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'darkgrey':</span> <span class="pre">(0.663,</span> <span class="pre">0.663,</span> <span class="pre">0.663,</span> <span class="pre">1.0),</span> <span class="pre">'darkkhaki':</span> <span class="pre">(0.741,</span> <span class="pre">0.718,</span> <span class="pre">0.42,</span> <span class="pre">1.0),</span> <span class="pre">'darkmagenta':</span> <span class="pre">(0.545,</span> <span class="pre">0.0,</span> <span class="pre">0.545,</span> <span class="pre">1.0),</span> <span class="pre">'darkolivegreen':</span> <span class="pre">(0.333,</span> <span class="pre">0.42,</span> <span class="pre">0.184,</span> <span class="pre">1.0),</span> <span class="pre">'darkorange':</span> <span class="pre">(1.0,</span> <span class="pre">0.549,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'darkorchid':</span> <span class="pre">(0.6,</span> <span class="pre">0.196,</span> <span class="pre">0.8,</span> <span class="pre">1.0),</span> <span class="pre">'darkred':</span> <span class="pre">(0.545,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'darksalmon':</span> <span class="pre">(0.914,</span> <span class="pre">0.588,</span> <span class="pre">0.478,</span> <span class="pre">1.0),</span> <span class="pre">'darkseagreen':</span> <span class="pre">(0.561,</span> <span class="pre">0.737,</span> <span class="pre">0.561,</span> <span class="pre">1.0),</span> <span class="pre">'darkslateblue':</span> <span class="pre">(0.282,</span> <span class="pre">0.239,</span> <span class="pre">0.545,</span> <span class="pre">1.0),</span> <span class="pre">'darkslategray':</span> <span class="pre">(0.184,</span> <span class="pre">0.31,</span> <span class="pre">0.31,</span> <span class="pre">1.0),</span> <span class="pre">'darkslategrey':</span> <span class="pre">(0.184,</span> <span class="pre">0.31,</span> <span class="pre">0.31,</span> <span class="pre">1.0),</span> <span class="pre">'darkturquoise':</span> <span class="pre">(0.0,</span> <span class="pre">0.808,</span> <span class="pre">0.82,</span> <span class="pre">1.0),</span> <span class="pre">'darkviolet':</span> <span class="pre">(0.58,</span> <span class="pre">0.0,</span> <span class="pre">0.827,</span> <span class="pre">1.0),</span> <span class="pre">'deeppink':</span> <span class="pre">(1.0,</span> <span class="pre">0.078,</span> <span class="pre">0.576,</span> <span class="pre">1.0),</span> <span class="pre">'deepskyblue':</span> <span class="pre">(0.0,</span> <span class="pre">0.749,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'dimgray':</span> <span class="pre">(0.412,</span> <span class="pre">0.412,</span> <span class="pre">0.412,</span> <span class="pre">1.0),</span> <span class="pre">'dimgrey':</span> <span class="pre">(0.412,</span> <span class="pre">0.412,</span> <span class="pre">0.412,</span> <span class="pre">1.0),</span> <span class="pre">'dodgerblue':</span> <span class="pre">(0.118,</span> <span class="pre">0.565,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'firebrick':</span> <span class="pre">(0.698,</span> <span class="pre">0.133,</span> <span class="pre">0.133,</span> <span class="pre">1.0),</span> <span class="pre">'floralwhite':</span> <span class="pre">(1.0,</span> <span class="pre">0.98,</span> <span class="pre">0.941,</span> <span class="pre">1.0),</span> <span class="pre">'forestgreen':</span> <span class="pre">(0.133,</span> <span class="pre">0.545,</span> <span class="pre">0.133,</span> <span class="pre">1.0),</span> <span class="pre">'fuchsia':</span> <span class="pre">(1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'gainsboro':</span> <span class="pre">(0.863,</span> <span class="pre">0.863,</span> <span class="pre">0.863,</span> <span class="pre">1.0),</span> <span class="pre">'ghostwhite':</span> <span class="pre">(0.973,</span> <span class="pre">0.973,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'gold':</span> <span class="pre">(1.0,</span> <span class="pre">0.843,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'goldenrod':</span> <span class="pre">(0.855,</span> <span class="pre">0.647,</span> <span class="pre">0.125,</span> <span class="pre">1.0),</span> <span class="pre">'gray':</span> <span class="pre">(0.502,</span> <span class="pre">0.502,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'green':</span> <span class="pre">(0.0,</span> <span class="pre">0.502,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'greenyellow':</span> <span class="pre">(0.678,</span> <span class="pre">1.0,</span> <span class="pre">0.184,</span> <span class="pre">1.0),</span> <span class="pre">'grey':</span> <span class="pre">(0.502,</span> <span class="pre">0.502,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'honeydew':</span> <span class="pre">(0.941,</span> <span class="pre">1.0,</span> <span class="pre">0.941,</span> <span class="pre">1.0),</span> <span class="pre">'hotpink':</span> <span class="pre">(1.0,</span> <span class="pre">0.412,</span> <span class="pre">0.706,</span> <span class="pre">1.0),</span> <span class="pre">'indianred':</span> <span class="pre">(0.804,</span> <span class="pre">0.361,</span> <span class="pre">0.361,</span> <span class="pre">1.0),</span> <span class="pre">'indigo':</span> <span class="pre">(0.294,</span> <span class="pre">0.0,</span> <span class="pre">0.51,</span> <span class="pre">1.0),</span> <span class="pre">'ivory':</span> <span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.941,</span> <span class="pre">1.0),</span> <span class="pre">'khaki':</span> <span class="pre">(0.941,</span> <span class="pre">0.902,</span> <span class="pre">0.549,</span> <span class="pre">1.0),</span> <span class="pre">'lavender':</span> <span class="pre">(0.902,</span> <span class="pre">0.902,</span> <span class="pre">0.98,</span> <span class="pre">1.0),</span> <span class="pre">'lavenderblush':</span> <span class="pre">(1.0,</span> <span class="pre">0.941,</span> <span class="pre">0.961,</span> <span class="pre">1.0),</span> <span class="pre">'lawngreen':</span> <span class="pre">(0.486,</span> <span class="pre">0.988,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'lemonchiffon':</span> <span class="pre">(1.0,</span> <span class="pre">0.98,</span> <span class="pre">0.804,</span> <span class="pre">1.0),</span> <span class="pre">'lightblue':</span> <span class="pre">(0.678,</span> <span class="pre">0.847,</span> <span class="pre">0.902,</span> <span class="pre">1.0),</span> <span class="pre">'lightcoral':</span> <span class="pre">(0.941,</span> <span class="pre">0.502,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'lightcyan':</span> <span class="pre">(0.878,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'lightgoldenrodyellow':</span> <span class="pre">(0.98,</span> <span class="pre">0.98,</span> <span class="pre">0.824,</span> <span class="pre">1.0),</span> <span class="pre">'lightgray':</span> <span class="pre">(0.827,</span> <span class="pre">0.827,</span> <span class="pre">0.827,</span> <span class="pre">1.0),</span> <span class="pre">'lightgreen':</span> <span class="pre">(0.565,</span> <span class="pre">0.933,</span> <span class="pre">0.565,</span> <span class="pre">1.0),</span> <span class="pre">'lightgrey':</span> <span class="pre">(0.827,</span> <span class="pre">0.827,</span> <span class="pre">0.827,</span> <span class="pre">1.0),</span> <span class="pre">'lightpink':</span> <span class="pre">(1.0,</span> <span class="pre">0.714,</span> <span class="pre">0.757,</span> <span class="pre">1.0),</span> <span class="pre">'lightsalmon':</span> <span class="pre">(1.0,</span> <span class="pre">0.627,</span> <span class="pre">0.478,</span> <span class="pre">1.0),</span> <span class="pre">'lightseagreen':</span> <span class="pre">(0.125,</span> <span class="pre">0.698,</span> <span class="pre">0.667,</span> <span class="pre">1.0),</span> <span class="pre">'lightskyblue':</span> <span class="pre">(0.529,</span> <span class="pre">0.808,</span> <span class="pre">0.98,</span> <span class="pre">1.0),</span> <span class="pre">'lightslategray':</span> <span class="pre">(0.467,</span> <span class="pre">0.533,</span> <span class="pre">0.6,</span> <span class="pre">1.0),</span> <span class="pre">'lightslategrey':</span> <span class="pre">(0.467,</span> <span class="pre">0.533,</span> <span class="pre">0.6,</span> <span class="pre">1.0),</span> <span class="pre">'lightsteelblue':</span> <span class="pre">(0.69,</span> <span class="pre">0.769,</span> <span class="pre">0.871,</span> <span class="pre">1.0),</span> <span class="pre">'lightyellow':</span> <span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.878,</span> <span class="pre">1.0),</span> <span class="pre">'lime':</span> <span class="pre">(0.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'limegreen':</span> <span class="pre">(0.196,</span> <span class="pre">0.804,</span> <span class="pre">0.196,</span> <span class="pre">1.0),</span> <span class="pre">'linen':</span> <span class="pre">(0.98,</span> <span class="pre">0.941,</span> <span class="pre">0.902,</span> <span class="pre">1.0),</span> <span class="pre">'magenta':</span> <span class="pre">(1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'maroon':</span> <span class="pre">(0.502,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'mediumaquamarine':</span> <span class="pre">(0.4,</span> <span class="pre">0.804,</span> <span class="pre">0.667,</span> <span class="pre">1.0),</span> <span class="pre">'mediumblue':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.804,</span> <span class="pre">1.0),</span> <span class="pre">'mediumorchid':</span> <span class="pre">(0.729,</span> <span class="pre">0.333,</span> <span class="pre">0.827,</span> <span class="pre">1.0),</span> <span class="pre">'mediumpurple':</span> <span class="pre">(0.576,</span> <span class="pre">0.439,</span> <span class="pre">0.859,</span> <span class="pre">1.0),</span> <span class="pre">'mediumseagreen':</span> <span class="pre">(0.235,</span> <span class="pre">0.702,</span> <span class="pre">0.443,</span> <span class="pre">1.0),</span> <span class="pre">'mediumslateblue':</span> <span class="pre">(0.482,</span> <span class="pre">0.408,</span> <span class="pre">0.933,</span> <span class="pre">1.0),</span> <span class="pre">'mediumspringgreen':</span> <span class="pre">(0.0,</span> <span class="pre">0.98,</span> <span class="pre">0.604,</span> <span class="pre">1.0),</span> <span class="pre">'mediumturquoise':</span> <span class="pre">(0.282,</span> <span class="pre">0.82,</span> <span class="pre">0.8,</span> <span class="pre">1.0),</span> <span class="pre">'mediumvioletred':</span> <span class="pre">(0.78,</span> <span class="pre">0.082,</span> <span class="pre">0.522,</span> <span class="pre">1.0),</span> <span class="pre">'midnightblue':</span> <span class="pre">(0.098,</span> <span class="pre">0.098,</span> <span class="pre">0.439,</span> <span class="pre">1.0),</span> <span class="pre">'mintcream':</span> <span class="pre">(0.961,</span> <span class="pre">1.0,</span> <span class="pre">0.98,</span> <span class="pre">1.0),</span> <span class="pre">'mistyrose':</span> <span class="pre">(1.0,</span> <span class="pre">0.894,</span> <span class="pre">0.882,</span> <span class="pre">1.0),</span> <span class="pre">'moccasin':</span> <span class="pre">(1.0,</span> <span class="pre">0.894,</span> <span class="pre">0.71,</span> <span class="pre">1.0),</span> <span class="pre">'navajowhite':</span> <span class="pre">(1.0,</span> <span class="pre">0.871,</span> <span class="pre">0.678,</span> <span class="pre">1.0),</span> <span class="pre">'navy':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'none':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0),</span> <span class="pre">'oldlace':</span> <span class="pre">(0.992,</span> <span class="pre">0.961,</span> <span class="pre">0.902,</span> <span class="pre">1.0),</span> <span class="pre">'olive':</span> <span class="pre">(0.502,</span> <span class="pre">0.502,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'olivedrab':</span> <span class="pre">(0.42,</span> <span class="pre">0.557,</span> <span class="pre">0.137,</span> <span class="pre">1.0),</span> <span class="pre">'orange':</span> <span class="pre">(1.0,</span> <span class="pre">0.647,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'orangered':</span> <span class="pre">(1.0,</span> <span class="pre">0.271,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'orchid':</span> <span class="pre">(0.855,</span> <span class="pre">0.439,</span> <span class="pre">0.839,</span> <span class="pre">1.0),</span> <span class="pre">'palegoldenrod':</span> <span class="pre">(0.933,</span> <span class="pre">0.91,</span> <span class="pre">0.667,</span> <span class="pre">1.0),</span> <span class="pre">'palegreen':</span> <span class="pre">(0.596,</span> <span class="pre">0.984,</span> <span class="pre">0.596,</span> <span class="pre">1.0),</span> <span class="pre">'paleturquoise':</span> <span class="pre">(0.686,</span> <span class="pre">0.933,</span> <span class="pre">0.933,</span> <span class="pre">1.0),</span> <span class="pre">'palevioletred':</span> <span class="pre">(0.859,</span> <span class="pre">0.439,</span> <span class="pre">0.576,</span> <span class="pre">1.0),</span> <span class="pre">'papayawhip':</span> <span class="pre">(1.0,</span> <span class="pre">0.937,</span> <span class="pre">0.835,</span> <span class="pre">1.0),</span> <span class="pre">'peachpuff':</span> <span class="pre">(1.0,</span> <span class="pre">0.855,</span> <span class="pre">0.725,</span> <span class="pre">1.0),</span> <span class="pre">'peru':</span> <span class="pre">(0.804,</span> <span class="pre">0.522,</span> <span class="pre">0.247,</span> <span class="pre">1.0),</span> <span class="pre">'pink':</span> <span class="pre">(1.0,</span> <span class="pre">0.753,</span> <span class="pre">0.796,</span> <span class="pre">1.0),</span> <span class="pre">'plum':</span> <span class="pre">(0.867,</span> <span class="pre">0.627,</span> <span class="pre">0.867,</span> <span class="pre">1.0),</span> <span class="pre">'powderblue':</span> <span class="pre">(0.69,</span> <span class="pre">0.878,</span> <span class="pre">0.902,</span> <span class="pre">1.0),</span> <span class="pre">'purple':</span> <span class="pre">(0.502,</span> <span class="pre">0.0,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'rebeccapurple':</span> <span class="pre">(0.4,</span> <span class="pre">0.2,</span> <span class="pre">0.6,</span> <span class="pre">1.0),</span> <span class="pre">'red':</span> <span class="pre">(1.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'rosybrown':</span> <span class="pre">(0.737,</span> <span class="pre">0.561,</span> <span class="pre">0.561,</span> <span class="pre">1.0),</span> <span class="pre">'royalblue':</span> <span class="pre">(0.255,</span> <span class="pre">0.412,</span> <span class="pre">0.882,</span> <span class="pre">1.0),</span> <span class="pre">'saddlebrown':</span> <span class="pre">(0.545,</span> <span class="pre">0.271,</span> <span class="pre">0.075,</span> <span class="pre">1.0),</span> <span class="pre">'salmon':</span> <span class="pre">(0.98,</span> <span class="pre">0.502,</span> <span class="pre">0.447,</span> <span class="pre">1.0),</span> <span class="pre">'sandybrown':</span> <span class="pre">(0.957,</span> <span class="pre">0.643,</span> <span class="pre">0.376,</span> <span class="pre">1.0),</span> <span class="pre">'seagreen':</span> <span class="pre">(0.18,</span> <span class="pre">0.545,</span> <span class="pre">0.341,</span> <span class="pre">1.0),</span> <span class="pre">'seashell':</span> <span class="pre">(1.0,</span> <span class="pre">0.961,</span> <span class="pre">0.933,</span> <span class="pre">1.0),</span> <span class="pre">'sienna':</span> <span class="pre">(0.627,</span> <span class="pre">0.322,</span> <span class="pre">0.176,</span> <span class="pre">1.0),</span> <span class="pre">'silver':</span> <span class="pre">(0.753,</span> <span class="pre">0.753,</span> <span class="pre">0.753,</span> <span class="pre">1.0),</span> <span class="pre">'skyblue':</span> <span class="pre">(0.529,</span> <span class="pre">0.808,</span> <span class="pre">0.922,</span> <span class="pre">1.0),</span> <span class="pre">'slateblue':</span> <span class="pre">(0.416,</span> <span class="pre">0.353,</span> <span class="pre">0.804,</span> <span class="pre">1.0),</span> <span class="pre">'slategray':</span> <span class="pre">(0.439,</span> <span class="pre">0.502,</span> <span class="pre">0.565,</span> <span class="pre">1.0),</span> <span class="pre">'slategrey':</span> <span class="pre">(0.439,</span> <span class="pre">0.502,</span> <span class="pre">0.565,</span> <span class="pre">1.0),</span> <span class="pre">'snow':</span> <span class="pre">(1.0,</span> <span class="pre">0.98,</span> <span class="pre">0.98,</span> <span class="pre">1.0),</span> <span class="pre">'springgreen':</span> <span class="pre">(0.0,</span> <span class="pre">1.0,</span> <span class="pre">0.498,</span> <span class="pre">1.0),</span> <span class="pre">'steelblue':</span> <span class="pre">(0.275,</span> <span class="pre">0.51,</span> <span class="pre">0.706,</span> <span class="pre">1.0),</span> <span class="pre">'tan':</span> <span class="pre">(0.824,</span> <span class="pre">0.706,</span> <span class="pre">0.549,</span> <span class="pre">1.0),</span> <span class="pre">'teal':</span> <span class="pre">(0.0,</span> <span class="pre">0.502,</span> <span class="pre">0.502,</span> <span class="pre">1.0),</span> <span class="pre">'thistle':</span> <span class="pre">(0.847,</span> <span class="pre">0.749,</span> <span class="pre">0.847,</span> <span class="pre">1.0),</span> <span class="pre">'tomato':</span> <span class="pre">(1.0,</span> <span class="pre">0.388,</span> <span class="pre">0.278,</span> <span class="pre">1.0),</span> <span class="pre">'transparent':</span> <span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0),</span> <span class="pre">'turquoise':</span> <span class="pre">(0.251,</span> <span class="pre">0.878,</span> <span class="pre">0.816,</span> <span class="pre">1.0),</span> <span class="pre">'violet':</span> <span class="pre">(0.933,</span> <span class="pre">0.51,</span> <span class="pre">0.933,</span> <span class="pre">1.0),</span> <span class="pre">'wheat':</span> <span class="pre">(0.961,</span> <span class="pre">0.871,</span> <span class="pre">0.702,</span> <span class="pre">1.0),</span> <span class="pre">'white':</span> <span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0),</span> <span class="pre">'whitesmoke':</span> <span class="pre">(0.961,</span> <span class="pre">0.961,</span> <span class="pre">0.961,</span> <span class="pre">1.0),</span> <span class="pre">'yellow':</span> <span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0,</span> <span class="pre">1.0),</span> <span class="pre">'yellowgreen':</span> <span class="pre">(0.604,</span> <span class="pre">0.804,</span> <span class="pre">0.196,</span> <span class="pre">1.0)}</span></em><a class="headerlink" href="#pyface.util.color_parser.color_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary mapping known color names to rgba tuples.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="pyface.util.color_parser.ColorParseError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.util.color_parser.</span></code><code class="sig-name descname"><span class="pre">ColorParseError</span></code><a class="reference internal" href="../_modules/pyface/util/color_parser.html#ColorParseError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_parser.ColorParseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+<p>An Exception raised when parsing fails.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.util.color_parser.parse_text">
+<code class="sig-prename descclassname"><span class="pre">pyface.util.color_parser.</span></code><code class="sig-name descname"><span class="pre">parse_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/util/color_parser.html#parse_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.util.color_parser.parse_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a text representation of a color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>A string holding the representation of the color.  This can be:</p>
+<ul class="simple">
+<li><p>a color name, including all CSS color names, plus any additional
+names found in pyface.color.color_table.  The names are normalized
+to lower case and stripped of whitespace, hyphens and underscores.</p></li>
+<li><p>a hex representation of the color in the form ‘#RGB’, ‘#RGBA’,
+‘#RRGGBB’, ‘#RRGGBBAA’, ‘#RRRRGGGGBBBB’, or ‘#RRRRGGGGBBBBAAAA’.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>space</strong> (<em>str</em>) – A string describing the color space for the channels.  Will be one of
+‘rgb’ or ‘rgba’.</p></li>
+<li><p><strong>channels</strong> (<em>tuple of floats</em>) – The channel values as a tuple of 3 or 4 floating point values between
+0.0 and 1.0, inclusive.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyface.util.color_parser.ColorParseError" title="pyface.util.color_parser.ColorParseError"><strong>ColorParseError</strong></a> – If the string cannot be converted to a valid color.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.util.color_helpers.html"
+                        title="previous chapter">pyface.util.color_helpers module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.util.event_loop_helper.html"
+                        title="next chapter">pyface.util.event_loop_helper module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.util.color_parser.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

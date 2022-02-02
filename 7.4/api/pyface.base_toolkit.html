@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.base_toolkit module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.beep module" href="pyface.beep.html" >
+    <link rel="prev" title="pyface.array_image module" href="pyface.array_image.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.beep.html" title="pyface.beep module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.array_image.html" title="pyface.array_image module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.base_toolkit">
+<span id="pyface-base-toolkit-module"></span><h1>pyface.base_toolkit module<a class="headerlink" href="#module-pyface.base_toolkit" title="Permalink to this headline">¶</a></h1>
+<p>Common toolkit loading utilities and classes</p>
+<p>This module provides common code for ETS packages that need to do GUI toolkit
+discovery and loading.  The common patterns that ETS has settled on are that
+where different GUI toolkits require alternative implementations of features
+the toolkit is expected to provide a callable object which takes a relative
+module path and an object name, separated by a colon and return the toolkit’s
+implementation of that object (usually this is a class, but it could be
+anything).  The assumption is that this is implemented by objects in
+sub-modules of the toolkit, but plugin authors are free to use whatever methods
+they like.</p>
+<p>Which toolkit to use is specified via the <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/traits.etsconfig.html#module-traits.etsconfig.etsconfig" title="(in traits v6.3)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig.etsconfig</span></code></a>
+package, but if this is not explicitly set by an application at startup or via
+environment variables, there needs to be a way of discovering and loading any
+available working toolkit implementations.  The default mechanism is via the
+now-standard <code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib_metadata</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">setuptools</span></code>
+“entry point” system.</p>
+<p>This module provides three things:</p>
+<ul class="simple">
+<li><p>a function <a class="reference internal" href="#pyface.base_toolkit.import_toolkit" title="pyface.base_toolkit.import_toolkit"><code class="xref py py-func docutils literal notranslate"><span class="pre">import_toolkit()</span></code></a> that attempts to find and load a toolkit
+entry point for a specified toolkit name</p></li>
+<li><p>a function <a class="reference internal" href="#pyface.base_toolkit.find_toolkit" title="pyface.base_toolkit.find_toolkit"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_toolkit()</span></code></a> that attempts to find a toolkit entry
+point that works</p></li>
+<li><p>a class <a class="reference internal" href="#pyface.base_toolkit.Toolkit" title="pyface.base_toolkit.Toolkit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Toolkit</span></code></a> class that implements the standard logic for
+finding toolkit objects.</p></li>
+</ul>
+<p>These are done in a library-agnostic way so that the same tools can be used
+not just for different pyface backends, but also for TraitsUI and ETS
+libraries where we need to switch between different GUI toolkit
+implementations.</p>
+<p>Note that there is no requirement for new toolkit implementations to use this
+<a class="reference internal" href="#pyface.base_toolkit.Toolkit" title="pyface.base_toolkit.Toolkit"><code class="xref py py-class docutils literal notranslate"><span class="pre">Toolkit</span></code></a> implementation, but they should be compatible with it.</p>
+<div class="section" id="default-toolkit-loading-logic">
+<h2>Default toolkit loading logic<a class="headerlink" href="#default-toolkit-loading-logic" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#pyface.base_toolkit.find_toolkit" title="pyface.base_toolkit.find_toolkit"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_toolkit()</span></code></a> function uses the following logic when attempting
+to load toolkits:</p>
+<ul class="simple">
+<li><p>if ETSConfig.toolkit is set, try to load a plugin with a matching name.
+If it succeeds, we are good, and if it fails then we error out.</p></li>
+<li><p>after that, we try every ‘pyface.toolkit’ plugin we can find.  If one
+succeeds, we consider ourselves good, and set the ETSConfig.toolkit
+appropriately.  The order is configurable, and by default will try to load
+the <cite>qt4</cite> toolkit first, <cite>wx</cite> next, then all others in arbitrary order,
+and <cite>null</cite> last.</p></li>
+<li><p>finally, if all else fails, we try to load the null toolkit.</p></li>
+</ul>
+<dl class="py function">
+<dt id="pyface.base_toolkit.default_priorities">
+<code class="sig-prename descclassname"><span class="pre">pyface.base_toolkit.</span></code><code class="sig-name descname"><span class="pre">default_priorities</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.base_toolkit.default_priorities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="pyface.base_toolkit.Toolkit">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.base_toolkit.</span></code><code class="sig-name descname"><span class="pre">Toolkit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolkit</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">packages</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/base_toolkit.html#Toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.base_toolkit.Toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<p>A basic toolkit implementation for use by specific toolkits.</p>
+<p>This implementation uses pathname mangling to find modules and objects in
+those modules.  If an object can’t be found, the toolkit will return a
+class that raises NotImplementedError when it is instantiated.</p>
+<dl class="py attribute">
+<dt id="pyface.base_toolkit.Toolkit.package">
+<code class="sig-name descname"><span class="pre">package</span></code><em class="property"> <span class="pre">=</span> <span class="pre">ReadOnly</span></em><a class="headerlink" href="#pyface.base_toolkit.Toolkit.package" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the package (eg. pyface)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.base_toolkit.Toolkit.toolkit">
+<code class="sig-name descname"><span class="pre">toolkit</span></code><em class="property"> <span class="pre">=</span> <span class="pre">ReadOnly</span></em><a class="headerlink" href="#pyface.base_toolkit.Toolkit.toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the toolkit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.base_toolkit.Toolkit.packages">
+<code class="sig-name descname"><span class="pre">packages</span></code><em class="property"> <span class="pre">=</span> <span class="pre">List(Str)</span></em><a class="headerlink" href="#pyface.base_toolkit.Toolkit.packages" title="Permalink to this definition">¶</a></dt>
+<dd><p>The packages to look in for implementations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.base_toolkit.import_toolkit">
+<code class="sig-prename descclassname"><span class="pre">pyface.base_toolkit.</span></code><code class="sig-name descname"><span class="pre">import_toolkit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">toolkit_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pyface.toolkits'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/base_toolkit.html#import_toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.base_toolkit.import_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempt to import an toolkit specified by an entry point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>toolkit_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the toolkit we would like to load.</p></li>
+<li><p><strong>entry_point</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the entry point that holds our toolkits.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>toolkit_object</strong> – A callable object that implements the Toolkit interface.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – If no toolkit is found, or if the toolkit cannot be loaded for some
+    reason.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.base_toolkit.find_toolkit">
+<code class="sig-prename descclassname"><span class="pre">pyface.base_toolkit.</span></code><code class="sig-name descname"><span class="pre">find_toolkit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">entry_point</span></em>, <em class="sig-param"><span class="pre">toolkits=None</span></em>, <em class="sig-param"><span class="pre">priorities=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/base_toolkit.html#find_toolkit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.base_toolkit.find_toolkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a toolkit that works.</p>
+<p>If ETSConfig is set, then attempt to find a matching toolkit.  Otherwise
+try every plugin for the entry_point until one works.  The ordering of the
+plugins is supplied via the priorities function which should be suitable
+for use as a sorting key function.  If all else fails, explicitly try to
+load the “null” toolkit backend.  If that fails, give up.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entry_point</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the entry point that holds our toolkits.</p></li>
+<li><p><strong>toolkits</strong> (<em>collection of strings</em>) – Only consider toolkits which match the given strings, ignore other
+ones.</p></li>
+<li><p><strong>priorities</strong> (<em>callable</em>) – A callable function that returns an priority for each plugin.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>toolkit</strong> – A callable object that implements the Toolkit interface.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Toolkit instance</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – If no ETSConfig.toolkit is set but the toolkit cannot be loaded for
+    some reason.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyface.base_toolkit module</a><ul>
+<li><a class="reference internal" href="#default-toolkit-loading-logic">Default toolkit loading logic</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.array_image.html"
+                        title="previous chapter">pyface.array_image module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.beep.html"
+                        title="next chapter">pyface.beep module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.base_toolkit.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

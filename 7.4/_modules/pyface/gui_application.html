@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.gui_application &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.gui_application</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module defines a :py:class:`GUIApplication` subclass of</span>
+<span class="sd">:py:class:`pyface.application.Application`.  This adds cross-platform GUI</span>
+<span class="sd">application support to the base class via :py:class:`pyface.application.GUI`.</span>
+
+<span class="sd">At a minimum this class expects to be provided with a factory that returns</span>
+<span class="sd">:py:class:`pyface.i_window.IWindow` instances.  For pure Pyface applications</span>
+<span class="sd">this is most likely to be a subclass of</span>
+<span class="sd">:py:class:`pyface.application_window.ApplicationWindow`.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Instance</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">ReadOnly</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Undefined</span><span class="p">,</span>
+    <span class="n">Vetoable</span><span class="p">,</span>
+    <span class="n">observe</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.application</span> <span class="kn">import</span> <span class="n">Application</span>
+<span class="kn">from</span> <span class="nn">.i_dialog</span> <span class="kn">import</span> <span class="n">IDialog</span>
+<span class="kn">from</span> <span class="nn">.i_splash_screen</span> <span class="kn">import</span> <span class="n">ISplashScreen</span>
+<span class="kn">from</span> <span class="nn">.i_window</span> <span class="kn">import</span> <span class="n">IWindow</span>
+<span class="kn">from</span> <span class="nn">.ui_traits</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="default_window_factory"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.default_window_factory">[docs]</a><span class="k">def</span> <span class="nf">default_window_factory</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The default window factory returns an application window.</span>
+
+<span class="sd">    This is almost never the right thing, but allows users to get off the</span>
+<span class="sd">    ground with the base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">pyface.application_window</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span>
+
+    <span class="k">return</span> <span class="n">ApplicationWindow</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GUIApplication"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.GUIApplication">[docs]</a><span class="k">class</span> <span class="nc">GUIApplication</span><span class="p">(</span><span class="n">Application</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A basic Pyface GUI application. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;GUIApplication&#39; traits -------------------------------------------------</span>
+
+    <span class="c1"># Branding ---------------------------------------------------------------</span>
+
+    <span class="c1">#: The splash screen for the application. No splash screen by default</span>
+    <span class="n">splash_screen</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">ISplashScreen</span><span class="p">)</span>
+
+    <span class="c1">#: The about dialog for the application.</span>
+    <span class="n">about_dialog</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IDialog</span><span class="p">)</span>
+
+    <span class="c1">#: Icon for the application (used in window titlebars)</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">Image</span>
+
+    <span class="c1">#: Logo of the application (used in splash screens and about dialogs)</span>
+    <span class="n">logo</span> <span class="o">=</span> <span class="n">Image</span>
+
+    <span class="c1"># Window management ------------------------------------------------------</span>
+
+    <span class="c1">#: The window factory to use when creating a window for the application.</span>
+    <span class="n">window_factory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">(</span><span class="n">default_window_factory</span><span class="p">)</span>
+
+    <span class="c1">#: Default window size</span>
+    <span class="n">window_size</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">((</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+
+    <span class="c1">#: Currently active Window if any</span>
+    <span class="n">active_window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IWindow</span><span class="p">)</span>
+
+    <span class="c1">#: List of all open windows in the application</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">IWindow</span><span class="p">))</span>
+
+    <span class="c1">#: The Pyface GUI instance for the application</span>
+    <span class="n">gui</span> <span class="o">=</span> <span class="n">ReadOnly</span>
+
+    <span class="c1"># Protected interface ----------------------------------------------------</span>
+
+    <span class="c1">#: Flag if the exiting of the application was explicitely requested by user</span>
+    <span class="c1"># An &#39;explicit&#39; exit is when the &#39;exit&#39; method is called.</span>
+    <span class="c1"># An &#39;implicit&#39; exit is when the user closes the last open window.</span>
+    <span class="n">_explicit_exit</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;GUIApplication&#39; interface</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+    <span class="c1"># Window lifecycle methods -----------------------------------------------</span>
+
+<div class="viewcode-block" id="GUIApplication.create_window"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.GUIApplication.create_window">[docs]</a>    <span class="k">def</span> <span class="nf">create_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new application window.</span>
+
+<span class="sd">        By default uses the :py:attr:`window_factory` to do this.  Subclasses</span>
+<span class="sd">        can override if they want to do something different or additional.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments to pass to the window factory.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        window : IWindow instance or None</span>
+<span class="sd">            The new IWindow instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_factory</span><span class="p">(</span><span class="n">application</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">window</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">:</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span>
+
+        <span class="k">return</span> <span class="n">window</span></div>
+
+<div class="viewcode-block" id="GUIApplication.add_window"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.GUIApplication.add_window">[docs]</a>    <span class="k">def</span> <span class="nf">add_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a new window to the windows we are tracking. &quot;&quot;&quot;</span>
+
+        <span class="c1"># Keep a handle on all windows created so that non-active windows don&#39;t</span>
+        <span class="c1"># get garbage collected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Something might try to veto the opening of the window.</span>
+        <span class="n">opened</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">opened</span><span class="p">:</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span></div>
+
+    <span class="c1"># Action handlers --------------------------------------------------------</span>
+
+<div class="viewcode-block" id="GUIApplication.do_about"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.GUIApplication.do_about">[docs]</a>    <span class="k">def</span> <span class="nf">do_about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Display the about dialog, if it exists. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">about_dialog</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">about_dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Application&#39; interface</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="GUIApplication.start"><a class="viewcode-back" href="../../api/pyface.gui_application.html#pyface.gui_application.GUIApplication.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start the application, setting up things that are required</span>
+
+<span class="sd">        Subclasses should open at least one ApplicationWindow or subclass in</span>
+<span class="sd">        their start method, and should call the superclass start() method</span>
+<span class="sd">        before doing any work themselves.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.gui</span> <span class="kn">import</span> <span class="n">GUI</span>
+
+        <span class="n">ok</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+            <span class="c1"># create the GUI so that the splash screen comes up first thing</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gui</span> <span class="o">=</span> <span class="n">GUI</span><span class="p">(</span><span class="n">splash_screen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">splash_screen</span><span class="p">)</span>
+
+            <span class="c1"># create the initial windows to show</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_windows</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ok</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;GUIApplication&#39; Private interface</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_create_windows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the initial windows to display.</span>
+
+<span class="sd">        By default calls :py:meth:`create_window` once. Subclasses can</span>
+<span class="sd">        override this method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_window</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_window</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;Application&#39; private interface</span>
+    <span class="c1"># -------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Actual implementation of running the application: starting the GUI</span>
+<span class="sd">        event loop.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Fire a notification that the app is running.  This is guaranteed to</span>
+        <span class="c1"># happen after all initialization has occurred and the event loop has</span>
+        <span class="c1"># started.  A listener for this event is a good place to do things</span>
+        <span class="c1"># where you want the event loop running.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">invoke_later</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fire_application_event</span><span class="p">,</span> <span class="s2">&quot;application_initialized&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># start the GUI - script blocks here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">start_event_loop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Destruction methods -----------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_can_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Check with each window to see if it can be closed</span>
+
+<span class="sd">        The fires closing events for each window, and returns False if any</span>
+<span class="sd">        listener vetos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_can_exit</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">):</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">closing</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=</span> <span class="n">Vetoable</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">veto</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close each window &quot;&quot;&quot;</span>
+        <span class="c1"># ensure copy of list, as we modify original list while closing</span>
+        <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)):</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+            <span class="n">window</span><span class="o">.</span><span class="n">closed</span> <span class="o">=</span> <span class="n">window</span>
+
+    <span class="k">def</span> <span class="nf">_exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Shut down the event loop &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">stop_event_loop</span><span class="p">()</span>
+
+    <span class="c1"># Trait default handlers ------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_window_factory_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Default to ApplicationWindow</span>
+
+<span class="sd">        This is almost never the right thing, but allows users to get off the</span>
+<span class="sd">        ground with the base class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.application_window</span> <span class="kn">import</span> <span class="n">ApplicationWindow</span>
+
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">application</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">ApplicationWindow</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_splash_screen_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Default SplashScreen &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.splash_screen</span> <span class="kn">import</span> <span class="n">SplashScreen</span>
+
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">SplashScreen</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logo</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logo</span>
+        <span class="k">return</span> <span class="n">dialog</span>
+
+    <span class="k">def</span> <span class="nf">_about_dialog_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Default AboutDialog &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">escape</span>
+
+        <span class="kn">from</span> <span class="nn">pyface.about_dialog</span> <span class="kn">import</span> <span class="n">AboutDialog</span>
+
+        <span class="n">additions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;&lt;h1&gt;</span><span class="si">{}</span><span class="s2">&lt;/h1&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)),</span>
+            <span class="s2">&quot;Copyright &amp;copy; 2022 </span><span class="si">{}</span><span class="s2">, all rights reserved&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">company</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">additions</span> <span class="o">+=</span> <span class="p">[</span><span class="n">escape</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)]</span>
+
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">AboutDialog</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;About </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">additions</span><span class="o">=</span><span class="n">additions</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logo</span><span class="p">:</span>
+            <span class="n">dialog</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logo</span>
+        <span class="k">return</span> <span class="n">dialog</span>
+
+    <span class="c1"># Trait listeners --------------------------------------------------------</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;windows:items:activated&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_activate_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Listener that tracks currently active window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span> <span class="o">=</span> <span class="n">window</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;windows:items:deactivated&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_deactivate_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Listener that tracks currently active window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_window</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;windows:items:closed&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_window_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Listener that ensures window handles are released when closed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">window</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

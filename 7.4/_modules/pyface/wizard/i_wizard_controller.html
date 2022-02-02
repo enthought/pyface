@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.wizard.i_wizard_controller &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.wizard.i_wizard_controller</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The interface for all pyface wizard controllers. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_wizard_page</span> <span class="kn">import</span> <span class="n">IWizardPage</span>
+
+
+<div class="viewcode-block" id="IWizardController"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController">[docs]</a><span class="k">class</span> <span class="nc">IWizardController</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The interface for all pyface wizard controllers. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IWizardController&#39; interface ----------------------------------------</span>
+
+    <span class="c1"># The pages under the control of this controller.</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">IWizardPage</span><span class="p">)</span>
+
+    <span class="c1"># The current page.</span>
+    <span class="n">current_page</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">IWizardPage</span><span class="p">)</span>
+
+    <span class="c1"># Set if the wizard complete.</span>
+    <span class="n">complete</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWizardController&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="IWizardController.get_first_page"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.get_first_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the first page in the model. &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWizardController.get_next_page"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.get_next_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the next page. &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWizardController.get_previous_page"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.get_previous_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_previous_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the previous page. &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWizardController.is_first_page"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.is_first_page">[docs]</a>    <span class="k">def</span> <span class="nf">is_first_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Is the page the first page? &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWizardController.is_last_page"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.is_last_page">[docs]</a>    <span class="k">def</span> <span class="nf">is_last_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Is the page the last page? &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWizardController.dispose_pages"><a class="viewcode-back" href="../../../api/pyface.wizard.i_wizard_controller.html#pyface.wizard.i_wizard_controller.IWizardController.dispose_pages">[docs]</a>    <span class="k">def</span> <span class="nf">dispose_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dispose all the pages. &quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

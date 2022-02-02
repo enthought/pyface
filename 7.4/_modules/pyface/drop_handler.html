@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.drop_handler &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.drop_handler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="kn">from</span> <span class="nn">pyface.i_drop_handler</span> <span class="kn">import</span> <span class="n">IDropHandler</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">provides</span><span class="p">,</span> <span class="n">Str</span>
+
+
+<div class="viewcode-block" id="BaseDropHandler"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.BaseDropHandler">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">IDropHandler</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseDropHandler</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Basic drop handler</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># BaseDropHandler interface ---------------------------------------------</span>
+
+    <span class="c1">#: Returns True if the current drop handler can handle the given drag event</span>
+    <span class="c1">#: occurring on the given target widget.</span>
+    <span class="n">on_can_handle</span> <span class="o">=</span> <span class="n">Callable</span>
+
+    <span class="c1">#: Performs drop action when drop event occurs on target widget.</span>
+    <span class="n">on_handle</span> <span class="o">=</span> <span class="n">Callable</span>
+
+    <span class="c1"># IDropHandler interface ------------------------------------------------</span>
+
+<div class="viewcode-block" id="BaseDropHandler.can_handle_drop"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.BaseDropHandler.can_handle_drop">[docs]</a>    <span class="k">def</span> <span class="nf">can_handle_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_can_handle</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseDropHandler.handle_drop"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.BaseDropHandler.handle_drop">[docs]</a>    <span class="k">def</span> <span class="nf">handle_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_handle</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="FileDropHandler"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.FileDropHandler">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">IDropHandler</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">FileDropHandler</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Class to handle backward compatible file drop events</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># FileDropHandler interface ---------------------------------------------</span>
+
+    <span class="c1">#: supported extensions</span>
+    <span class="n">extensions</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: Called when file is opened. Takes single argument: path of file</span>
+    <span class="n">open_file</span> <span class="o">=</span> <span class="n">Callable</span>
+
+    <span class="c1"># IDropHandler interface ------------------------------------------------</span>
+
+<div class="viewcode-block" id="FileDropHandler.can_handle_drop"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.FileDropHandler.can_handle_drop">[docs]</a>    <span class="k">def</span> <span class="nf">can_handle_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Does the drop event contails file data with matching extensions &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">hasUrls</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">urls</span><span class="p">():</span>
+                <span class="n">file_path</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">toLocalFile</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extensions</span><span class="p">)):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="FileDropHandler.handle_drop"><a class="viewcode-back" href="../../api/pyface.drop_handler.html#pyface.drop_handler.FileDropHandler.handle_drop">[docs]</a>    <span class="k">def</span> <span class="nf">handle_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Open the file using the supplied callback &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">urls</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">toLocalFile</span><span class="p">())</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

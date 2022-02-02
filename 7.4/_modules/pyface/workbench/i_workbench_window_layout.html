@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.workbench.i_workbench_window_layout &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.workbench.i_workbench_window_layout</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; The workbench window layout interface. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Str</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">provides</span>
+
+
+<span class="kn">from</span> <span class="nn">.i_editor</span> <span class="kn">import</span> <span class="n">IEditor</span>
+<span class="kn">from</span> <span class="nn">.i_view</span> <span class="kn">import</span> <span class="n">IView</span>
+
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout">[docs]</a><span class="k">class</span> <span class="nc">IWorkbenchWindowLayout</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The workbench window layout interface.</span>
+
+<span class="sd">    Window layouts are responsible for creating and managing the internal</span>
+<span class="sd">    structure of a workbench window (it knows how to add and remove views and</span>
+<span class="sd">    editors etc).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># The Id of the editor area.</span>
+    <span class="c1"># FIXME v3: This is toolkit specific.</span>
+    <span class="n">editor_area_id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># The workbench window that this is the layout for.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.workbench.api.WorkbenchWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Events ----</span>
+
+    <span class="c1"># Fired when an editor is about to be opened (or restored).</span>
+    <span class="n">editor_opening</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor has been opened (or restored).</span>
+    <span class="n">editor_opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor is about to be closed.</span>
+    <span class="n">editor_closing</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor has been closed.</span>
+    <span class="n">editor_closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view is about to be opened (or restored).</span>
+    <span class="n">view_opening</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view has been opened (or restored).</span>
+    <span class="n">view_opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view is about to be closed (*not* hidden!).</span>
+    <span class="n">view_closing</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view has been closed (*not* hidden!).</span>
+    <span class="n">view_closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># FIXME v3: The &quot;just for convenience&quot; returns are a really bad idea.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Why? They allow the call to be used on the LHS of an expression...</span>
+    <span class="c1"># Because they have nothing to do with what the call is supposed to be</span>
+    <span class="c1"># doing, they are unlikely to be used (because they are so unexpected and</span>
+    <span class="c1"># inconsistently implemented), and only serve to replace two shorter lines</span>
+    <span class="c1"># of code with one long one, arguably making code more difficult to read.</span>
+<div class="viewcode-block" id="IWorkbenchWindowLayout.activate_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.activate_editor">[docs]</a>    <span class="k">def</span> <span class="nf">activate_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate an editor.</span>
+
+<span class="sd">        Returns the editor (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.activate_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.activate_view">[docs]</a>    <span class="k">def</span> <span class="nf">activate_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate a view.</span>
+
+<span class="sd">        Returns the view (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.add_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.add_editor">[docs]</a>    <span class="k">def</span> <span class="nf">add_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add an editor.</span>
+
+<span class="sd">        Returns the editor (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.add_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.add_view">[docs]</a>    <span class="k">def</span> <span class="nf">add_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot; Add a view.</span>
+
+<span class="sd">        Returns the view (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.close_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close_editor">[docs]</a>    <span class="k">def</span> <span class="nf">close_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close an editor.</span>
+
+<span class="sd">        Returns the editor (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.close_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close_view">[docs]</a>    <span class="k">def</span> <span class="nf">close_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close a view.</span>
+
+<span class="sd">        FIXME v3: Currently views are never &#39;closed&#39; in the same sense as an</span>
+<span class="sd">        editor is closed. When we close an editor, we destroy its control.</span>
+<span class="sd">        When we close a view, we merely hide its control. I&#39;m not sure if this</span>
+<span class="sd">        is a good idea or not. It came about after discussion with Dave P. and</span>
+<span class="sd">        he mentioned that some views might find it hard to persist enough state</span>
+<span class="sd">        that they can be re-created exactly as they were when they are shown</span>
+<span class="sd">        again.</span>
+
+<span class="sd">        Returns the view (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.close"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close the entire window layout.</span>
+
+<span class="sd">        FIXME v3: Should this be called &#39;destroy&#39;?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.create_initial_layout"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.create_initial_layout">[docs]</a>    <span class="k">def</span> <span class="nf">create_initial_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the initial window layout.</span>
+
+<span class="sd">        Returns the layout.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.contains_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.contains_view">[docs]</a>    <span class="k">def</span> <span class="nf">contains_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return True if the view exists in the window layout.</span>
+
+<span class="sd">        Note that this returns True even if the view is hidden.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.hide_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.hide_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">hide_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide the editor area.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.hide_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.hide_view">[docs]</a>    <span class="k">def</span> <span class="nf">hide_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide a view.</span>
+
+<span class="sd">        Returns the view (just for convenience).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.refresh"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Refresh the window layout to reflect any changes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.reset_editors"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.reset_editors">[docs]</a>    <span class="k">def</span> <span class="nf">reset_editors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first editor in every group.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.reset_views"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.reset_views">[docs]</a>    <span class="k">def</span> <span class="nf">reset_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first view in every region.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.show_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">show_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show the editor area.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.show_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_view">[docs]</a>    <span class="k">def</span> <span class="nf">show_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show a view.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="c1"># Methods for saving and restoring the layout -------------------------#</span>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.get_view_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_view_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_view_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the state of the views.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.set_view_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_view_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_view_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores the state of the views.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.get_editor_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_editor_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the state of the editors.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.set_editor_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_editor_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_editor_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores the state of the editors.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.get_toolkit_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_toolkit_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_toolkit_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return any toolkit-specific data that should be part of the memento.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IWorkbenchWindowLayout.set_toolkit_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_toolkit_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_toolkit_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores any toolkit-specific data.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout">[docs]</a><span class="nd">@provides</span><span class="p">(</span><span class="n">IWorkbenchWindowLayout</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MWorkbenchWindowLayout</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Mixin containing common code for toolkit-specific implementations. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;IWorkbenchWindowLayout&#39; interface -----------------------------------</span>
+
+    <span class="c1"># The Id of the editor area.</span>
+    <span class="c1"># FIXME v3: This is toolkit specific.</span>
+    <span class="n">editor_area_id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span>
+
+    <span class="c1"># The workbench window that this is the layout for.</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.workbench.api.WorkbenchWindow&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Events ----</span>
+
+    <span class="c1"># Fired when an editor is about to be opened (or restored).</span>
+    <span class="n">editor_opening</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor has been opened (or restored).</span>
+    <span class="n">editor_opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor is about to be closed.</span>
+    <span class="n">editor_closing</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when an editor has been closed.</span>
+    <span class="n">editor_closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IEditor</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view is about to be opened (or restored).</span>
+    <span class="n">view_opening</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view has been opened (or restored).</span>
+    <span class="n">view_opened</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view is about to be closed (*not* hidden!).</span>
+    <span class="n">view_closing</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># Fired when a view has been closed (*not* hidden!).</span>
+    <span class="n">view_closed</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="n">IView</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;IWorkbenchWindowLayout&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.activate_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.activate_editor">[docs]</a>    <span class="k">def</span> <span class="nf">activate_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate an editor. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.activate_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.activate_view">[docs]</a>    <span class="k">def</span> <span class="nf">activate_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate a view. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.add_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.add_editor">[docs]</a>    <span class="k">def</span> <span class="nf">add_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add an editor. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.add_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.add_view">[docs]</a>    <span class="k">def</span> <span class="nf">add_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot; Add a view. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.close_editor"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close_editor">[docs]</a>    <span class="k">def</span> <span class="nf">close_editor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">editor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close an editor. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.close_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close_view">[docs]</a>    <span class="k">def</span> <span class="nf">close_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close a view. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.close"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close the entire window layout. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.create_initial_layout"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.create_initial_layout">[docs]</a>    <span class="k">def</span> <span class="nf">create_initial_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create the initial window layout. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.contains_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.contains_view">[docs]</a>    <span class="k">def</span> <span class="nf">contains_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return True if the view exists in the window layout. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.hide_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.hide_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">hide_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide the editor area. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.hide_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.hide_view">[docs]</a>    <span class="k">def</span> <span class="nf">hide_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Hide a view. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.refresh"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Refresh the window layout to reflect any changes. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.reset_editors"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.reset_editors">[docs]</a>    <span class="k">def</span> <span class="nf">reset_editors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first editor in every group. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.reset_views"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.reset_views">[docs]</a>    <span class="k">def</span> <span class="nf">reset_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Activate the first view in every region. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.show_editor_area"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_editor_area">[docs]</a>    <span class="k">def</span> <span class="nf">show_editor_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show the editor area. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.show_view"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_view">[docs]</a>    <span class="k">def</span> <span class="nf">show_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show a view. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+    <span class="c1"># Methods for saving and restoring the layout -------------------------#</span>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.get_view_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_view_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_view_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the state of the views. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.set_view_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_view_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_view_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores the state of the views. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.get_editor_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_editor_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_editor_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the state of the editors. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.set_editor_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_editor_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_editor_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores the state of the editors. &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.get_toolkit_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_toolkit_memento">[docs]</a>    <span class="k">def</span> <span class="nf">get_toolkit_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Return any toolkit-specific data that should be part of the memento.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MWorkbenchWindowLayout.set_toolkit_memento"><a class="viewcode-back" href="../../../api/pyface.workbench.i_workbench_window_layout.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_toolkit_memento">[docs]</a>    <span class="k">def</span> <span class="nf">set_toolkit_memento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memento</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Restores any toolkit-specific data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span></div>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># Protected &#39;MWorkbenchWindowLayout&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_editor_references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns a reference to every editor. &quot;&quot;&quot;</span>
+
+        <span class="n">editor_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">editor_manager</span>
+
+        <span class="n">editor_references</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">editors</span><span class="p">:</span>
+            <span class="c1"># Create the editor reference.</span>
+            <span class="c1">#</span>
+            <span class="c1"># If the editor manager returns &#39;None&#39; instead of a resource</span>
+            <span class="c1"># reference then this editor will not appear the next time the</span>
+            <span class="c1"># workbench starts up. This is useful for things like text files</span>
+            <span class="c1"># that have an editor but have NEVER been saved.</span>
+            <span class="n">editor_reference</span> <span class="o">=</span> <span class="n">editor_manager</span><span class="o">.</span><span class="n">get_editor_memento</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">editor_reference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">editor_references</span><span class="p">[</span><span class="n">editor</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">editor_reference</span>
+
+        <span class="k">return</span> <span class="n">editor_references</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

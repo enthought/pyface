@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.font &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../genindex.html" >
+    <link rel="search" title="Search" href="../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../index.html" >
+    <link rel="up" title="Module code" href="../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.font</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; Toolkit-independent font utilities.</span>
+
+<span class="sd">Pyface fonts are intended to be generic, but able to be mapped fairly well</span>
+<span class="sd">to most backend toolkit font descriptions.  In most cases we can describe</span>
+<span class="sd">fonts along the common dimensions that are used by CSS, Wx, and Qt.  However</span>
+<span class="sd">when it comes to actually working with a font, the toolkit needs to take the</span>
+<span class="sd">description and produce something that is as close as possible to the</span>
+<span class="sd">specification, but within the constraints of the toolkit, operating system</span>
+<span class="sd">and available fonts on the machine where this is being executed.</span>
+
+<span class="sd">Because of this inherent ambiguity in font specification, this system tries to</span>
+<span class="sd">be flexible in what it accepts as a font specification, rather than trying to</span>
+<span class="sd">specify a unique canoncial form.</span>
+
+<span class="sd">Font Properties</span>
+<span class="sd">---------------</span>
+
+<span class="sd">The properties that fonts have are:</span>
+
+<span class="sd">Font Family</span>
+<span class="sd">    A list of font family names in order of preference, such as &quot;Helvetica&quot;</span>
+<span class="sd">    or &quot;Comic Sans&quot;.  In the case of a font that has been selected by the</span>
+<span class="sd">    toolkit this list will have one value which is the actual font family name.</span>
+
+<span class="sd">    There are several generic font family names that can be used as fall-backs</span>
+<span class="sd">    in case all preferred fonts are unavailable.  The allowed values are:</span>
+
+<span class="sd">    &quot;default&quot;</span>
+<span class="sd">        The application&#39;s default system font.</span>
+
+<span class="sd">    &quot;fantasy&quot;</span>
+<span class="sd">        A primarily decorative font, but with recognisable characters.</span>
+
+<span class="sd">    &quot;decorative&quot;</span>
+<span class="sd">        A synonym for &quot;fantasy&quot;.</span>
+
+<span class="sd">    &quot;serif&quot;</span>
+<span class="sd">        A proportional serif font, such as Times New Roman or Garamond.</span>
+
+<span class="sd">    &quot;roman&quot;</span>
+<span class="sd">        A synonym for &quot;serif&quot;.</span>
+
+<span class="sd">    &quot;cursive&quot;</span>
+<span class="sd">        A font which resembles hand-written cursive text, such as Zapf</span>
+<span class="sd">        Chancery.</span>
+
+<span class="sd">    &quot;script&quot;</span>
+<span class="sd">        A synonym for &quot;cursive&quot;.</span>
+
+<span class="sd">    &quot;sans-serif&quot;</span>
+<span class="sd">        A proportional sans-serif font, such as Helvetica or Arial.</span>
+
+<span class="sd">    &quot;swiss&quot;</span>
+<span class="sd">        A synonym for &quot;sans-serif&quot;.</span>
+
+<span class="sd">    &quot;monospace&quot;</span>
+<span class="sd">        A fixed-pitch sans-serif font, such as Source Code Pro or Roboto Mono.</span>
+<span class="sd">        Commonly used for display of code.</span>
+
+<span class="sd">    &quot;modern&quot;</span>
+<span class="sd">        A synonym for &quot;monospace&quot;.</span>
+
+<span class="sd">    &quot;typewriter&quot;</span>
+<span class="sd">        A fixed-pitch serif font which resembles typewritten text, such as</span>
+<span class="sd">        Courier.  Commonly used for display of code.</span>
+
+<span class="sd">    &quot;teletype&quot;</span>
+<span class="sd">        A synonym for &quot;typewriter&quot;.</span>
+
+<span class="sd">    These special names will be converted into appropriate toolkit flags which</span>
+<span class="sd">    correspond to these generic font specifications.</span>
+
+<span class="sd">Weight</span>
+<span class="sd">    How thick or dark the font glyphs are.  These can be given as a number</span>
+<span class="sd">    from 1 (lightest) to 999 (darkest), but are typically specified by a</span>
+<span class="sd">    multiple of 100 from 100 to 900, with a number of synonyms such as &#39;light&#39;</span>
+<span class="sd">    and &#39;bold&#39; available for those values.</span>
+
+<span class="sd">Stretch</span>
+<span class="sd">    The amount of horizontal compression or expansion to apply to the glyphs.</span>
+<span class="sd">    These can be given as a percentage between 50% and 200%, or by strings</span>
+<span class="sd">    such as &#39;condensed&#39; and &#39;expanded&#39; that correspond to those values.</span>
+
+<span class="sd">Style</span>
+<span class="sd">    This selects either &#39;oblique&#39; or &#39;italic&#39; variants typefaces of the given</span>
+<span class="sd">    font family.  If neither is wanted, the value is &#39;normal&#39;.</span>
+
+<span class="sd">Size</span>
+<span class="sd">    The overall size of the glyphs. This can be expressed either as the</span>
+<span class="sd">    numeric size in points, or as a string such as &quot;small&quot; or &quot;large&quot;.</span>
+
+<span class="sd">Variants</span>
+<span class="sd">    A set of additional font style specifiers, such as &quot;small-caps&quot;,</span>
+<span class="sd">    &quot;strikethrough&quot;, &quot;underline&quot; or &quot;overline&quot;, where supported by the</span>
+<span class="sd">    underlying toolkit.</span>
+
+<span class="sd">Font Specificiation Class</span>
+<span class="sd">-------------------------</span>
+
+<span class="sd">The Pyface Font class is a HasStrictTraits class which specifies a requested</span>
+<span class="sd">font.  It has methods that convert the Font class to and from a toolkit Font</span>
+<span class="sd">class.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseCFloat</span><span class="p">,</span> <span class="n">CList</span><span class="p">,</span> <span class="n">CSet</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Map</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">traits.trait_type</span> <span class="kn">import</span> <span class="n">NoDefaultSpecified</span>
+
+
+<span class="c1">#: Font weight synonyms.</span>
+<span class="c1">#: These are alternate convenience names for font weights.</span>
+<span class="c1">#: The intent is to allow a developer to use a common name (eg. &quot;bold&quot;) instead</span>
+<span class="c1">#: of having to remember the corresponding number (eg. 700).</span>
+<span class="c1">#: These come from:</span>
+<span class="c1">#: - the OpenType specification: https://docs.microsoft.com/en-us/typography/opentype/spec/os2#usweightclass</span>
+<span class="c1">#: - QFont weights: https://doc.qt.io/qt-5/qfont.html#Weight-enum</span>
+<span class="c1">#: - WxPython font weights: https://wxpython.org/Phoenix/docs/html/wx.FontWeight.enumeration.html</span>
+<span class="c1">#: - CSS Common weight name mapping: https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#common_weight_name_mapping</span>
+<span class="c1">#: - values used by Enable: https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L90-L105</span>
+<span class="c1">#: See also: https://gist.github.com/lukaszgrolik/5849599</span>
+<span class="n">WEIGHTS</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">100</span><span class="p">)}</span>
+<span class="n">WEIGHTS</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s1">&#39;thin&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">&#39;hairline&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">&#39;extra-light&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s1">&#39;ultra-light&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s1">&#39;ultralight&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="s1">&#39;light&#39;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">&#39;normal&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">&#39;regular&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">&#39;book&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">&#39;medium&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">&#39;roman&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">&#39;semi-bold&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">&#39;demi-bold&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">&#39;demi&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">&#39;bold&#39;</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+    <span class="s1">&#39;extra-bold&#39;</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="s1">&#39;ultra-bold&#39;</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="s1">&#39;extra bold&#39;</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="s1">&#39;black&#39;</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+    <span class="s1">&#39;heavy&#39;</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+    <span class="s1">&#39;extra-heavy&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1">#: Font stretch synonyms.</span>
+<span class="c1">#: These are alternate convenience names for font stretch/width values.</span>
+<span class="c1">#: The intent is to allow a developer to use a common name (eg. &quot;expanded&quot;)</span>
+<span class="c1">#: instead of having to remember the corresponding number (eg. 125).</span>
+<span class="c1">#: These come from:</span>
+<span class="c1">#: - the OpenType specification: https://docs.microsoft.com/en-us/typography/opentype/spec/os2#uswidthclass</span>
+<span class="c1">#: - QFont stetch: https://doc.qt.io/qt-5/qfont.html#Stretch-enum</span>
+<span class="c1">#: - CSS font-stretch: https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch</span>
+<span class="c1">#: - values used by Enable: https://github.com/enthought/enable/blob/78d2e494097fac71cc5c73efef5fb464963fb4db/kiva/fonttools/_constants.py#L78-L88</span>
+<span class="n">STRETCHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ultra-condensed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s1">&#39;extra-condensed&#39;</span><span class="p">:</span> <span class="mf">62.5</span><span class="p">,</span>
+    <span class="s1">&#39;condensed&#39;</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+    <span class="s1">&#39;semi-condensed&#39;</span><span class="p">:</span> <span class="mf">87.5</span><span class="p">,</span>
+    <span class="s1">&#39;normal&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">&#39;semi-expanded&#39;</span><span class="p">:</span> <span class="mf">112.5</span><span class="p">,</span>
+    <span class="s1">&#39;expanded&#39;</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+    <span class="s1">&#39;extra-expanded&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+    <span class="s1">&#39;ultra-expanded&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">#: Font size synonyms.</span>
+<span class="c1">#: These are alternate convenience names for font size values.</span>
+<span class="c1">#: The intent is to allow a developer to use a common name (eg. &quot;small&quot;)</span>
+<span class="c1">#: instead of having to remember the corresponding number (eg. 10).</span>
+<span class="c1">#: These come from CSS font-size: https://developer.mozilla.org/en-US/docs/Web/CSS/font-size</span>
+<span class="n">SIZES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;xx-small&#39;</span><span class="p">:</span> <span class="mf">7.0</span><span class="p">,</span>
+    <span class="s1">&#39;x-small&#39;</span><span class="p">:</span> <span class="mf">9.0</span><span class="p">,</span>
+    <span class="s1">&#39;small&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="s1">&#39;medium&#39;</span><span class="p">:</span> <span class="mf">12.0</span><span class="p">,</span>
+    <span class="s1">&#39;large&#39;</span><span class="p">:</span> <span class="mf">14.0</span><span class="p">,</span>
+    <span class="s1">&#39;x-large&#39;</span><span class="p">:</span> <span class="mf">18.0</span><span class="p">,</span>
+    <span class="s1">&#39;xx-large&#39;</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">STYLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="s1">&#39;italic&#39;</span><span class="p">,</span> <span class="s1">&#39;oblique&#39;</span><span class="p">)</span>
+
+<span class="c1">#: Font variants. Currently only small caps variants are exposed in Qt, and</span>
+<span class="c1">#: nothing in Wx.  In the future this could include things like swashes,</span>
+<span class="c1">#: numeric variants, and so on, as exposed in the toolkit.</span>
+<span class="n">VARIANTS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;small-caps&#39;</span><span class="p">]</span>
+
+<span class="c1">#: Additional markings on or around the glyphs of the font that are not part</span>
+<span class="c1">#: of the glyphs themselves.  Currently Qt and Wx support underline and</span>
+<span class="c1">#: strikethrough, and Qt supports overline.  In the future overlines and other</span>
+<span class="c1">#: decorations may be supported, as exposed in the toolkit.</span>
+<span class="n">DECORATIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;underline&#39;</span><span class="p">,</span> <span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span> <span class="s1">&#39;overline&#39;</span><span class="p">]</span>
+
+<span class="c1">#: A trait for font families.</span>
+<span class="n">FontFamily</span> <span class="o">=</span> <span class="n">CList</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">])</span>
+
+<span class="c1">#: A trait for font weights.</span>
+<span class="n">FontWeight</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="n">WEIGHTS</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+
+<span class="c1">#: A trait for font styles.</span>
+<span class="n">FontStyle</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">STYLES</span><span class="p">)</span>
+
+<span class="c1">#: A trait for font variant properties.</span>
+<span class="n">FontVariants</span> <span class="o">=</span> <span class="n">CSet</span><span class="p">(</span><span class="n">Enum</span><span class="p">(</span><span class="n">VARIANTS</span><span class="p">))</span>
+
+<span class="c1">#: A trait for font decorator properties.</span>
+<span class="n">FontDecorations</span> <span class="o">=</span> <span class="n">CSet</span><span class="p">(</span><span class="n">Enum</span><span class="p">(</span><span class="n">DECORATIONS</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="FontStretch"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontStretch">[docs]</a><span class="k">class</span> <span class="nc">FontStretch</span><span class="p">(</span><span class="n">BaseCFloat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Trait type for font stretches.</span>
+
+<span class="sd">    The is a CFloat trait which holds floating point values between 50 and 200,</span>
+<span class="sd">    inclusive.  In addition to values which can be converted to floats, this</span>
+<span class="sd">    trait also accepts named synonyms for sizes which are converted to the</span>
+<span class="sd">    associated commonly accepted weights:</span>
+
+<span class="sd">    - &#39;ultra-condensed&#39;: 50</span>
+<span class="sd">    - &#39;extra-condensed&#39;: 62.5</span>
+<span class="sd">    - &#39;condensed&#39;: 75</span>
+<span class="sd">    - &#39;semi-condensed&#39;: 87.5</span>
+<span class="sd">    - &#39;normal&#39;: 100</span>
+<span class="sd">    - &#39;semi-expanded&#39;: 112.5</span>
+<span class="sd">    - &#39;expanded&#39;: 125</span>
+<span class="sd">    - &#39;extra-expanded&#39;: 150</span>
+<span class="sd">    - &#39;ultra-expanded&#39;: 200</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The default value for the trait.</span>
+    <span class="n">default_value</span> <span class="o">=</span> <span class="mf">100.0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="n">NoDefaultSpecified</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">default_value</span> <span class="o">!=</span> <span class="n">NoDefaultSpecified</span><span class="p">:</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">default_value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FontStretch.validate"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontStretch.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">STRETCHES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">50</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="FontStretch.info"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontStretch.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;a float from 50 to 200, &quot;</span>
+            <span class="s2">&quot;a value that can convert to a float from 50 to 200, &quot;</span>
+        <span class="p">)</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">SIZES</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="s2">&quot; or a string with a float value from 50 to 200 followed by &#39;%&#39;&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span></div></div>
+
+
+<div class="viewcode-block" id="FontSize"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontSize">[docs]</a><span class="k">class</span> <span class="nc">FontSize</span><span class="p">(</span><span class="n">BaseCFloat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Trait type for font sizes.</span>
+
+<span class="sd">    The is a CFloat trait which also allows values which are keys of the</span>
+<span class="sd">    size dictionary, and also ignores trailing &#39;pt&#39; ot &#39;px&#39; annotation in</span>
+<span class="sd">    string values.  The value stored is a float.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The default value for the trait.</span>
+    <span class="n">default_value</span> <span class="o">=</span> <span class="mf">12.0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="n">NoDefaultSpecified</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">default_value</span> <span class="o">!=</span> <span class="n">NoDefaultSpecified</span><span class="p">:</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">default_value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="o">**</span><span class="n">metadata</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FontSize.validate"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontSize.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;pt&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;px&#39;</span><span class="p">))</span>
+        <span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">SIZES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="FontSize.info"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.FontSize.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;a positive float, a value that can convert to a positive float, &quot;</span>
+        <span class="p">)</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">SIZES</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="s2">&quot; or a string with a positive float value followed by &#39;pt&#39; or &#39;px&#39;&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span></div></div>
+
+
+<div class="viewcode-block" id="Font"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.Font">[docs]</a><span class="k">class</span> <span class="nc">Font</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A toolkit-independent font specification.</span>
+
+<span class="sd">    This class represents a *request* for a font with certain characteristics,</span>
+<span class="sd">    not a concrete font that can be used for drawing.  Font objects returned</span>
+<span class="sd">    from the toolkit may or may not match what was requested, depending on the</span>
+<span class="sd">    capabilities of the toolkit, OS, and the fonts installed on a particular</span>
+<span class="sd">    computer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The preferred font families.</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="n">FontFamily</span><span class="p">()</span>
+
+    <span class="c1">#: The weight of the font.</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">FontWeight</span><span class="p">()</span>
+
+    <span class="c1">#: How much the font is expanded or compressed.</span>
+    <span class="n">stretch</span> <span class="o">=</span> <span class="n">FontStretch</span><span class="p">()</span>
+
+    <span class="c1">#: The style of the font.</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="n">FontStyle</span><span class="p">()</span>
+
+    <span class="c1">#: The size of the font.</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">FontSize</span><span class="p">()</span>
+
+    <span class="c1">#: The font variants.</span>
+    <span class="n">variants</span> <span class="o">=</span> <span class="n">FontVariants</span><span class="p">()</span>
+
+    <span class="c1">#: The font decorations.</span>
+    <span class="n">decorations</span> <span class="o">=</span> <span class="n">FontDecorations</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Font.from_toolkit"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.Font.from_toolkit">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_toolkit</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">toolkit_font</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a Font from a toolkit font object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        toolkit_font : any</span>
+<span class="sd">            A toolkit font to be converted to a corresponding class instance,</span>
+<span class="sd">            within the limitations of the options supported by the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
+        <span class="n">toolkit_font_to_properties</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span>
+            <span class="s1">&#39;font:toolkit_font_to_properties&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">toolkit_font_to_properties</span><span class="p">(</span><span class="n">toolkit_font</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Font.to_toolkit"><a class="viewcode-back" href="../../api/pyface.font.html#pyface.font.Font.to_toolkit">[docs]</a>    <span class="k">def</span> <span class="nf">to_toolkit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a toolkit font object from the Font instance.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        toolkit_font : any</span>
+<span class="sd">            A toolkit font which matches the property of the font as</span>
+<span class="sd">            closely as possible given the constraints of the toolkit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
+        <span class="n">font_to_toolkit_font</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s1">&#39;font:font_to_toolkit_font&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">font_to_toolkit_font</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Produce a CSS2-style representation of the font. &quot;&quot;&quot;</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">!=</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+            <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">)</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">variant</span> <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">VARIANTS</span>
+            <span class="k">if</span> <span class="n">variant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variants</span>
+        <span class="p">)</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">decoration</span> <span class="k">for</span> <span class="n">decoration</span> <span class="ow">in</span> <span class="n">DECORATIONS</span>
+            <span class="k">if</span> <span class="n">decoration</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decorations</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+            <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stretch</span> <span class="o">!=</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:g}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stretch</span><span class="p">))</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+        <span class="c1"># if size is an integer we want &quot;12pt&quot; not &quot;12.pt&quot;</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">==</span> <span class="n">size</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">pt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="nb">repr</span><span class="p">(</span><span class="n">family</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">family</span> <span class="k">else</span> <span class="n">family</span>
+                <span class="k">for</span> <span class="n">family</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">family</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">terms</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">traits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trait_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editable_traits</span><span class="p">())</span>
+        <span class="n">trait_args</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">traits</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">trait_args</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

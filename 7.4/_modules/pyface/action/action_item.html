@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.action.action_item &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.action.action_item</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="sd">&quot;&quot;&quot; An action manager item that represents an actual action. &quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Property</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">observe</span>
+
+
+<span class="kn">from</span> <span class="nn">pyface.action.action</span> <span class="kn">import</span> <span class="n">Action</span>
+<span class="kn">from</span> <span class="nn">pyface.action.action_manager_item</span> <span class="kn">import</span> <span class="n">ActionManagerItem</span>
+
+<span class="c1"># Import the toolkit specific versions of the internal classes.</span>
+<span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="kn">import</span> <span class="n">toolkit_object</span>
+
+<span class="n">_MenuItem</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s2">&quot;action.action_item:_MenuItem&quot;</span><span class="p">)</span>
+<span class="n">_Tool</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s2">&quot;action.action_item:_Tool&quot;</span><span class="p">)</span>
+<span class="n">_PaletteTool</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s2">&quot;action.action_item:_PaletteTool&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ActionItem"><a class="viewcode-back" href="../../../api/pyface.action.action_item.html#pyface.action.action_item.ActionItem">[docs]</a><span class="k">class</span> <span class="nc">ActionItem</span><span class="p">(</span><span class="n">ActionManagerItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; An action manager item that represents an actual action. &quot;&quot;&quot;</span>
+
+    <span class="c1"># &#39;ActionManagerItem&#39; interface ----------------------------------------</span>
+
+    <span class="c1">#: The item&#39;s unique identifier (&#39;unique&#39; in this case means unique within</span>
+    <span class="c1">#: its group).</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1"># &#39;ActionItem&#39; interface -----------------------------------------------</span>
+
+    <span class="c1">#: The action!</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Action</span><span class="p">)</span>
+
+    <span class="c1">#: The toolkit specific control created for this item.</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1">#: The toolkit specific Id of the control created for this item.</span>
+    <span class="c1">#</span>
+    <span class="c1">#: We have to keep the Id as well as the control because wx tool bar tools</span>
+    <span class="c1">#: are created as &#39;wxObjectPtr&#39;s which do not have Ids, and the Id is</span>
+    <span class="c1">#: required to manipulate the state of a tool via the tool bar 8^(</span>
+    <span class="c1"># FIXME v3: Why is this part of the public interface?</span>
+    <span class="n">control_id</span> <span class="o">=</span> <span class="n">Any</span><span class="p">()</span>
+
+    <span class="c1"># Private interface ----------------------------------------------------</span>
+
+    <span class="c1">#: All of the internal instances that wrap this item.</span>
+    <span class="n">_wrappers</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Any</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ActionManagerItem&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+    <span class="c1"># Trait properties -----------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">_get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="c1"># Trait change handlers ------------------------------------------------</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;enabled&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_enabled_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s1">&#39;visible&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_visible_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span>
+
+    <span class="nd">@observe</span><span class="p">(</span><span class="s2">&quot;_wrappers:items:control&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_on_destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Handle the destruction of the wrapper. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------------------------------------------</span>
+    <span class="c1"># &#39;ActionItem&#39; interface.</span>
+    <span class="c1"># ------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="ActionItem.add_to_menu"><a class="viewcode-back" href="../../../api/pyface.action.action_item.html#pyface.action.action_item.ActionItem.add_to_menu">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add the item to a menu.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The parent of the new menu item control.</span>
+<span class="sd">        menu : toolkit menu</span>
+<span class="sd">            The menu to add the action item to.</span>
+<span class="sd">        controller : ActionController instance or None</span>
+<span class="sd">            The controller to use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">controller</span><span class="o">.</span><span class="n">can_add_to_menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">):</span>
+            <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_MenuItem</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">menu</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">)</span>
+
+            <span class="c1"># fixme: Martin, who uses this information?</span>
+            <span class="k">if</span> <span class="n">controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">control</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control_id</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">control_id</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActionItem.add_to_toolbar"><a class="viewcode-back" href="../../../api/pyface.action.action_item.html#pyface.action.action_item.ActionItem.add_to_toolbar">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_toolbar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">tool_bar</span><span class="p">,</span> <span class="n">image_cache</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds the item to a tool bar.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The parent of the new menu item control.</span>
+<span class="sd">        tool_bar : toolkit toolbar</span>
+<span class="sd">            The toolbar to add the action item to.</span>
+<span class="sd">        image_cache : ImageCache instance</span>
+<span class="sd">            The image cache for resized images.</span>
+<span class="sd">        controller : ActionController instance or None</span>
+<span class="sd">            The controller to use.</span>
+<span class="sd">        show_labels : bool</span>
+<span class="sd">            Should the toolbar item show a label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">controller</span><span class="o">.</span><span class="n">can_add_to_toolbar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="p">):</span>
+            <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_Tool</span><span class="p">(</span>
+                <span class="n">parent</span><span class="p">,</span> <span class="n">tool_bar</span><span class="p">,</span> <span class="n">image_cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">show_labels</span>
+            <span class="p">)</span>
+
+            <span class="c1"># fixme: Martin, who uses this information?</span>
+            <span class="k">if</span> <span class="n">controller</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">control</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control_id</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">control_id</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActionItem.add_to_palette"><a class="viewcode-back" href="../../../api/pyface.action.action_item.html#pyface.action.action_item.ActionItem.add_to_palette">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_palette</span><span class="p">,</span> <span class="n">image_cache</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Adds the item to a tool palette.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parent : toolkit control</span>
+<span class="sd">            The parent of the new menu item control.</span>
+<span class="sd">        tool_palette : toolkit tool palette</span>
+<span class="sd">            The tool palette to add the action item to.</span>
+<span class="sd">        image_cache : ImageCache instance</span>
+<span class="sd">            The image cache for resized images.</span>
+<span class="sd">        show_labels : bool</span>
+<span class="sd">            Should the toolbar item show a label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_PaletteTool</span><span class="p">(</span><span class="n">tool_palette</span><span class="p">,</span> <span class="n">image_cache</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">show_labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActionItem.destroy"><a class="viewcode-back" href="../../../api/pyface.action.action_item.html#pyface.action.action_item.ActionItem.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Called when the action is no longer required.</span>
+
+<span class="sd">        By default this method calls &#39;destroy&#39; on the action itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

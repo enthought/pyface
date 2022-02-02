@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.tasks.task_layout &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.tasks.task_layout</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Enum</span><span class="p">,</span> <span class="n">HasStrictTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="LayoutItem"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem">[docs]</a><span class="k">class</span> <span class="nc">LayoutItem</span><span class="p">(</span><span class="n">HasStrictTraits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The base class for all Task-related layout objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pformat</span><span class="p">()</span>
+
+<div class="viewcode-block" id="LayoutItem.iterleaves"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem.iterleaves">[docs]</a>    <span class="k">def</span> <span class="nf">iterleaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="LayoutItem.pargs"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem.pargs">[docs]</a>    <span class="k">def</span> <span class="nf">pargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="LayoutItem.pformat"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem.pformat">[docs]</a>    <span class="k">def</span> <span class="nf">pformat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Pretty-format the layout item. Returns a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pstream</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">multiline</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stream</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LayoutItem.pprint"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem.pprint">[docs]</a>    <span class="k">def</span> <span class="nf">pprint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Pretty-prints the layout item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pstream</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">multiline</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LayoutItem.pstream"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutItem.pstream">[docs]</a>    <span class="k">def</span> <span class="nf">pstream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Pretty-formats the layout item to a stream.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">call</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span>
+        <span class="n">indent</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pargs</span><span class="p">()]</span>
+        <span class="n">traits</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">trait</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traits</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">trait</span><span class="o">.</span><span class="n">pretty_skip</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">trait</span><span class="o">.</span><span class="n">transient</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">trait</span><span class="o">.</span><span class="n">default</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="n">traits</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="n">traits</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">traits</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">arg_indent</span> <span class="o">=</span> <span class="n">indent</span>
+            <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">arg_indent</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">LayoutItem</span><span class="p">):</span>
+                <span class="n">value</span><span class="o">.</span><span class="n">pstream</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">arg_indent</span><span class="p">,</span> <span class="n">multiline</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">multiline</span><span class="p">:</span>
+                    <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LayoutContainer"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutContainer">[docs]</a><span class="k">class</span> <span class="nc">LayoutContainer</span><span class="p">(</span><span class="n">LayoutItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The base class for all layout items that contain other layout items.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">pretty_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="c1"># Items may either be specified as a positional arg or a kwarg.</span>
+        <span class="k">if</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;items&quot;</span> <span class="ow">in</span> <span class="n">traits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Received &#39;items&#39; as positional and keyword argument.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">traits</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LayoutContainer.iterleaves"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutContainer.iterleaves">[docs]</a>    <span class="k">def</span> <span class="nf">iterleaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">iterleaves</span><span class="p">():</span>
+                <span class="k">yield</span> <span class="n">leaf</span></div>
+
+<div class="viewcode-block" id="LayoutContainer.pargs"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.LayoutContainer.pargs">[docs]</a>    <span class="k">def</span> <span class="nf">pargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span></div></div>
+
+
+<div class="viewcode-block" id="PaneItem"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.PaneItem">[docs]</a><span class="k">class</span> <span class="nc">PaneItem</span><span class="p">(</span><span class="n">LayoutItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A pane in a Task layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The ID of the item. If the item refers to a TaskPane, this is the ID of</span>
+    <span class="c1">#: that TaskPane.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">pretty_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#: The width of the pane in pixels. If not specified, the pane will be</span>
+    <span class="c1">#: sized according to its size hint.</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1">#: The height of the pane in pixels. If not specified, the pane will be</span>
+    <span class="c1">#: sized according to its size hint.</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">traits</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">traits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+
+<div class="viewcode-block" id="PaneItem.pargs"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.PaneItem.pargs">[docs]</a>    <span class="k">def</span> <span class="nf">pargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="Tabbed"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.Tabbed">[docs]</a><span class="k">class</span> <span class="nc">Tabbed</span><span class="p">(</span><span class="n">LayoutContainer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A tab area in a Task layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: A tabbed layout can only contain PaneItems as sub-items. Splitters and</span>
+    <span class="c1">#: other Tabbed layouts are not allowed.</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">,</span> <span class="n">pretty_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#: The ID of the TaskPane which is active in layout. If not specified, the</span>
+    <span class="c1">#: first pane is active.</span>
+    <span class="n">active_tab</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Str</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Splitter"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.Splitter">[docs]</a><span class="k">class</span> <span class="nc">Splitter</span><span class="p">(</span><span class="n">LayoutContainer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A split area in a Task layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The orientation of the splitter.</span>
+    <span class="n">orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+
+    <span class="c1">#: The sub-items of the splitter, which are PaneItems, Tabbed layouts, and</span>
+    <span class="c1">#: other Splitters.</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span>
+        <span class="n">Union</span><span class="p">(</span>
+            <span class="n">Instance</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">),</span>
+            <span class="n">Instance</span><span class="p">(</span><span class="n">Tabbed</span><span class="p">),</span>
+            <span class="n">Instance</span><span class="p">(</span><span class="s2">&quot;pyface.tasks.task_layout.Splitter&quot;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">pretty_skip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HSplitter"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.HSplitter">[docs]</a><span class="k">class</span> <span class="nc">HSplitter</span><span class="p">(</span><span class="n">Splitter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A convenience class for horizontal splitters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">orientation</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VSplitter"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.VSplitter">[docs]</a><span class="k">class</span> <span class="nc">VSplitter</span><span class="p">(</span><span class="n">Splitter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A convenience class for vertical splitters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">orientation</span> <span class="o">=</span> <span class="n">Str</span><span class="p">(</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DockLayout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.DockLayout">[docs]</a><span class="k">class</span> <span class="nc">DockLayout</span><span class="p">(</span><span class="n">LayoutItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The layout for a main window&#39;s dock area.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># The layouts for the task&#39;s dock panes.</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Tabbed</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Splitter</span><span class="p">))</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Tabbed</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Splitter</span><span class="p">))</span>
+    <span class="n">top</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Tabbed</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Splitter</span><span class="p">))</span>
+    <span class="n">bottom</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">Instance</span><span class="p">(</span><span class="n">PaneItem</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Tabbed</span><span class="p">),</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Splitter</span><span class="p">))</span>
+
+    <span class="c1">#: Assignments of dock areas to the window&#39;s corners. By default, the top</span>
+    <span class="c1">#: and bottom dock areas extend into both of the top and both of the</span>
+    <span class="c1">#: bottom corners, respectively.</span>
+    <span class="n">top_left_corner</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="n">top_right_corner</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span>
+    <span class="n">bottom_left_corner</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="n">bottom_right_corner</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TaskLayout"><a class="viewcode-back" href="../../../api/pyface.tasks.task_layout.html#pyface.tasks.task_layout.TaskLayout">[docs]</a><span class="k">class</span> <span class="nc">TaskLayout</span><span class="p">(</span><span class="n">DockLayout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The layout for a Task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The ID of the task for which this is a layout.</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Str</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.data_view.data_formats &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.data_view.data_formats</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span><span class="p">,</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">pyface.data_view.i_data_wrapper</span> <span class="kn">import</span> <span class="n">DataFormat</span><span class="p">,</span> <span class="n">text_format</span>
+
+
+<span class="c1"># Scalar formats</span>
+
+<div class="viewcode-block" id="to_json"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_json">[docs]</a><span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Serialize an object to a JSON bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : any</span>
+<span class="sd">        The data to be serialized.</span>
+<span class="sd">    default : callable or None</span>
+<span class="sd">        Callable that takes a Python object and returns a JSON-serializable</span>
+<span class="sd">        data structure.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized data as a bytestring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">str_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">str_data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="from_json"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_json">[docs]</a><span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize a JSON bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized JSON data as a byte string.</span>
+<span class="sd">    object_hook : callable</span>
+<span class="sd">        Callable that takes a dictionary and returns an corresponding</span>
+<span class="sd">        Python object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : any</span>
+<span class="sd">        The data extracted.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">object_hook</span><span class="p">)</span></div>
+
+
+<span class="c1">#: The text/plain format with utf-8 encoding.</span>
+<span class="n">standard_text_format</span> <span class="o">=</span> <span class="n">text_format</span><span class="p">()</span>
+
+<span class="c1">#: The text/html format with utf-8 encoding.</span>
+<span class="n">html_format</span> <span class="o">=</span> <span class="n">text_format</span><span class="p">(</span><span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;text/html&#39;</span><span class="p">)</span>
+
+<span class="c1">#: A generic JSON format.</span>
+<span class="n">json_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="n">to_json</span><span class="p">,</span> <span class="n">from_json</span><span class="p">)</span>
+
+
+<span class="c1"># 1D formats</span>
+
+<div class="viewcode-block" id="to_csv_row"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv_row">[docs]</a><span class="k">def</span> <span class="nf">to_csv_row</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Serialize a list to a single-row CSV bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : list</span>
+<span class="sd">        The list to be serialized.  Any elements which are not strings will</span>
+<span class="sd">        be converted to strings by calling ``str()``.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.writer.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized data as a bytestring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="from_csv_row"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv_row">[docs]</a><span class="k">def</span> <span class="nf">from_csv_row</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize the first row of a CSV bytestring as a list.</span>
+
+<span class="sd">    Any rows beyond the first are ignored.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized CSV data as a byte string.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.reader.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : list of str</span>
+<span class="sd">        The data extracted as a list of strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">))</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="to_csv_column"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv_column">[docs]</a><span class="k">def</span> <span class="nf">to_csv_column</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Serialize a list to a single-column CSV bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : list</span>
+<span class="sd">        The list to be serialized.  Any elements which are not strings will</span>
+<span class="sd">        be converted to strings by calling ``str()``.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.writer.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized data as a bytestring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">row</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="from_csv_column"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv_column">[docs]</a><span class="k">def</span> <span class="nf">from_csv_column</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize the first column of a CSV bytestring as a list.</span>
+
+<span class="sd">    Any columns beyond the first are ignored.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized CSV data as a byte string.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.reader.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : list of str</span>
+<span class="sd">        The data extracted as a list of strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">))</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">]</span></div>
+
+
+<span class="n">text_row_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span>
+    <span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">to_csv_row</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">),</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">from_csv_row</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">csv_row_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span><span class="s1">&#39;text/csv&#39;</span><span class="p">,</span> <span class="n">to_csv_row</span><span class="p">,</span> <span class="n">from_csv_row</span><span class="p">)</span>
+<span class="n">text_column_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span>
+    <span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">to_csv_column</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">),</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">from_csv_column</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">csv_column_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span><span class="s1">&#39;text/csv&#39;</span><span class="p">,</span> <span class="n">to_csv_column</span><span class="p">,</span> <span class="n">from_csv_column</span><span class="p">)</span>
+
+
+<span class="c1"># 2D formats</span>
+
+<div class="viewcode-block" id="to_csv"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_csv">[docs]</a><span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Serialize a list of lists to a CSV bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : list of lists</span>
+<span class="sd">        The data to be serialized.  Any elements which are not strings will</span>
+<span class="sd">        be converted to strings by calling ``str()``.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.writer.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized data as a bytestring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="from_csv"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_csv">[docs]</a><span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize a CSV bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized CSV data as a byte string.</span>
+<span class="sd">    delimiter : str</span>
+<span class="sd">        The CSV delimiter.</span>
+<span class="sd">    encoding : str</span>
+<span class="sd">        The encoding of the bytes</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional arguments to csv.reader.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : list of list of str</span>
+<span class="sd">        The data extracted as a list of lists of strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">))</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="to_npy"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.to_npy">[docs]</a><span class="k">def</span> <span class="nf">to_npy</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Serialize an array to a bytestring using .npy format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array-like</span>
+<span class="sd">        The array to be serialized.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized data as a bytestring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="from_npy"><a class="viewcode-back" href="../../../api/pyface.data_view.data_formats.html#pyface.data_view.data_formats.from_npy">[docs]</a><span class="k">def</span> <span class="nf">from_npy</span><span class="p">(</span><span class="n">raw_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize a .npy-format bytestring.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw_data : bytes</span>
+<span class="sd">        The serialized CSV data as a byte string.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : list of list of str</span>
+<span class="sd">        The data extracted as a list of lists of strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="n">table_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span>
+    <span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">to_csv</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">),</span>
+    <span class="n">partial</span><span class="p">(</span><span class="n">from_csv</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">csv_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span><span class="s1">&#39;text/csv&#39;</span><span class="p">,</span> <span class="n">to_csv</span><span class="p">,</span> <span class="n">from_csv</span><span class="p">)</span>
+<span class="n">npy_format</span> <span class="o">=</span> <span class="n">DataFormat</span><span class="p">(</span><span class="s1">&#39;application/x-npy&#39;</span><span class="p">,</span> <span class="n">to_npy</span><span class="p">,</span> <span class="n">from_npy</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

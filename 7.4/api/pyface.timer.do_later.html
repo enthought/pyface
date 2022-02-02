@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.timer.do_later module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.timer package" href="pyface.timer.html" >
+    <link rel="next" title="pyface.timer.i_timer module" href="pyface.timer.i_timer.html" >
+    <link rel="prev" title="pyface.timer.api module" href="pyface.timer.api.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.timer.html" accesskey="U">pyface.timer package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.timer.i_timer.html" title="pyface.timer.i_timer module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.timer.api.html" title="pyface.timer.api module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.timer.do_later">
+<span id="pyface-timer-do-later-module"></span><h1>pyface.timer.do_later module<a class="headerlink" href="#module-pyface.timer.do_later" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="pyface.timer.do_later.DoLaterTimer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.timer.do_later.</span></code><code class="sig-name descname"><span class="pre">DoLaterTimer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kw_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#DoLaterTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.timer.timer.html#pyface.timer.timer.Timer" title="pyface.timer.timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.timer.Timer</span></code></a></p>
+<p>Performs a callback once at a later time.</p>
+<p>This is not used by the <cite>do_later</cite> functions and is only provided for
+backwards compatibility of the API.</p>
+<dl class="py attribute">
+<dt id="pyface.timer.do_later.DoLaterTimer.repeat">
+<code class="sig-name descname"><span class="pre">repeat</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>The perform the callback once.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.timer.do_later.do_later">
+<code class="sig-prename descclassname"><span class="pre">pyface.timer.do_later.</span></code><code class="sig-name descname"><span class="pre">do_later</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#do_later"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.do_later.do_later" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does something 50 milliseconds from now.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callable</strong> (<em>callable</em>) – The callable to call in 50ms time.</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Arguments to be passed through to the callable.</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Arguments to be passed through to the callable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyface.timer.do_later.do_after">
+<code class="sig-prename descclassname"><span class="pre">pyface.timer.do_later.</span></code><code class="sig-name descname"><span class="pre">do_after</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/timer/do_later.html#do_after"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.timer.do_later.do_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does something after some specified time interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The time interval in milliseconds to wait before calling.</p></li>
+<li><p><strong>callable</strong> (<em>callable</em>) – The callable to call.</p></li>
+<li><p><strong>args</strong> – Positional arguments to be passed through to the callable.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to be passed through to the callable.
+Arguments to be passed through to the callable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.timer.api.html"
+                        title="previous chapter">pyface.timer.api module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.timer.i_timer.html"
+                        title="next chapter">pyface.timer.i_timer module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.timer.do_later.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
