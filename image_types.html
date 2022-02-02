@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Image Types &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="next" title="Submodules" href="submodules.html" >
+    <link rel="prev" title="Trait Types" href="traits.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="submodules.html" title="Submodules"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="traits.html" title="Trait Types"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="image-types">
+<h1>Image Types<a class="headerlink" href="#image-types" title="Permalink to this headline">¶</a></h1>
+<p>Pyface’s image model presumes that there are three different types of
+image objects provided by a toolkit:</p>
+<dl class="simple">
+<dt>Images</dt><dd><p>The “image” image type is optimized for pixel
+access and manipulation.  For the Qt toolkit this is the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QImage</span></code> class, while for the Wx toolkit it is
+<code class="xref py py-class docutils literal notranslate"><span class="pre">wx.Image</span></code>.</p>
+</dd>
+<dt>Bitmap</dt><dd><p>The “bitmap” image type is optimized for rendering
+to the screen.  For the Qt toolkit this is the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QPixmap</span></code> class, while for the Wx toolkit it is
+<code class="xref py py-class docutils literal notranslate"><span class="pre">wx.Bitmap</span></code>.</p>
+</dd>
+<dt>Icon</dt><dd><p>The “icon” image type is really a collection of related images that
+represent different states of a GUI, such as disabled, selected,
+activated and so on.  For the Qt toolkit this is the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">QIcon</span></code> class, while for the Wx toolkit it is
+<code class="xref py py-class docutils literal notranslate"><span class="pre">wx.Icon</span></code>.</p>
+</dd>
+</dl>
+<p>Additionally, there may be other sources of images, such as images stored in
+numpy arrays of appropriate shape and dtype, PIL/Pillow images, and images
+stored in files, both user-supplied and stored as resources with a Python
+library.</p>
+<div class="section" id="iimage-interface">
+<h2><a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a> Interface<a class="headerlink" href="#iimage-interface" title="Permalink to this headline">¶</a></h2>
+<p>To handle all of these different notions of an “image”, Pyface has a base
+interface <a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a> that exposes methods for creating
+each toolkit image type from underlying image data.  There are corresponding
+concrete implementations of the interface for Numpy arrays and image resources.</p>
+<p>Additionally, there is an <a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.Image" title="pyface.ui_traits.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> trait that is
+designed to accept any <a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a> as a value, but to
+also accept the name of a resource or file to load into an image.</p>
+<div class="section" id="arrayimage">
+<h3><a class="reference internal" href="api/pyface.array_image.html#pyface.array_image.ArrayImage" title="pyface.array_image.ArrayImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayImage</span></code></a><a class="headerlink" href="#arrayimage" title="Permalink to this headline">¶</a></h3>
+<p>This implementation of <a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a> wraps an NxMx3 or
+NxMx4 numpy array of unsigned bytes which it treats as RGB or RGBA image
+data.  When converting to toolkit objects, the data is copied.</p>
+</div>
+<div class="section" id="imageresource">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code><a class="headerlink" href="#imageresource" title="Permalink to this headline">¶</a></h3>
+<p>An image resource is an image stored as part of a Python package, either as
+a file or inside a zip file or similar, and so guaranteed to be available
+for use in an application for GUI components.  Pyface provides the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code> class and associated resource
+discovery machinery to support this use-case.</p>
+<p>Resources are specified to the <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code>
+by filename (adding standard image file extensions if not present in the name).
+The Pyface resource system searches for files matching the given name in these
+places:</p>
+<ul class="simple">
+<li><p>in “images” directories inside the current Python package</p></li>
+<li><p>in “images.zip” files inside the current Python package</p></li>
+<li><p>in directories given as explicit search paths</p></li>
+</ul>
+<p>If an image of a particular size is requested, the system will also look for
+directories with names of the form <code class="docutils literal notranslate"><span class="pre">images/{width}x{height}</span></code> and will use
+any matching image from these preferentially.</p>
+<p>The most common way to specify images for use in button icons or complex
+TraitsUI table and tree data structures is by adding an “images” directory
+next to the module using the image, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_package</span><span class="o">/</span>
+    <span class="n">my_module</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">images</span><span class="o">/</span>
+        <span class="n">my_image</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>The image code like the following in my_module.py will work:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">ImageResource</span>
+<span class="kn">from</span> <span class="nn">pyface.actions.api</span> <span class="kn">import</span> <span class="n">Action</span>
+
+<span class="n">img_res</span> <span class="o">=</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s2">&quot;my_image&quot;</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">=</span> <span class="n">Action</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="s2">&quot;my_image&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When using this approach, remember that image files will need to be added
+to the <code class="docutils literal notranslate"><span class="pre">package_data</span></code> in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> or they will not be shipped alongside
+the code.</p>
+</div>
+</div>
+<div class="section" id="image-helpers-module">
+<h2><a class="reference internal" href="api/pyface.util.image_helpers.html#module-pyface.util.image_helpers" title="pyface.util.image_helpers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">image_helpers</span></code></a> Module<a class="headerlink" href="#image-helpers-module" title="Permalink to this headline">¶</a></h2>
+<p>Since there is a lot of shared functionality between the various
+implementations of the <a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a> interface, the
+<a class="reference internal" href="api/pyface.util.image_helpers.html#module-pyface.util.image_helpers" title="pyface.util.image_helpers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.util.image_helpers</span></code></a> module provides a number of functions and
+other objects to perform lower-level tasks, such as converting between toolkit
+types.</p>
+<p>Implementers of new toolkits will likely want to write their own versions of
+these, and writers of new concrete <a class="reference internal" href="api/pyface.i_image.html#pyface.i_image.IImage" title="pyface.i_image.IImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code></a>
+implementations may want to make use of them to simplify the implementation of
+the interface.</p>
+</div>
+<div class="section" id="imagelibrary">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code><a class="headerlink" href="#imagelibrary" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code> system is built around
+supplying image files which are local to the place where they are being used.
+Sometimes, however, you want your images to be available throughout the
+application.  Pyface provides the <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code>
+to allow for this use case.</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code> is a global object that
+holds a catalog of <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume" title="pyface.image.image.ImageVolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageVolume</span></code></a> objects that in
+turn contain images and associated metadata.  Image volumes are either
+directories or zipfiles containing images and metadata files.</p>
+<div class="section" id="accessing-images-and-image-metadata">
+<h3>Accessing Images and Image Metadata<a class="headerlink" href="#accessing-images-and-image-metadata" title="Permalink to this headline">¶</a></h3>
+<p>If you give an <a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.Image" title="pyface.ui_traits.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> an image name which
+starts with <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, then it will interpret the name to be the id of an
+image in the <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code> of the form
+<code class="docutils literal notranslate"><span class="pre">&#64;&lt;volume-name&gt;:&lt;image-name&gt;</span></code>.  Alternatively, you can ask the image
+library directly for an image resource that corresponds to the id via the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">image_resource()</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.image.image</span> <span class="kn">import</span> <span class="n">ImageLibrary</span>
+<span class="kn">from</span> <span class="nn">pyface.actions.api</span> <span class="kn">import</span> <span class="n">Action</span>
+
+<span class="n">red_ball_image</span> <span class="o">=</span> <span class="n">ImageLibrary</span><span class="o">.</span><span class="n">image_resource</span><span class="p">(</span><span class="s2">&quot;@icons:red_ball&quot;</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">=</span> <span class="n">Action</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">red_ball_image</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each image has an <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageInfo" title="pyface.image.image.ImageInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInfo</span></code></a> metadata object
+associated with it which can be obtained via the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">image_info()</span></code> method.  A list of all
+known image metadata can be obtained from the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">images</span></code> trait.</p>
+</div>
+<div class="section" id="imagevolume-instances">
+<h3><a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume" title="pyface.image.image.ImageVolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageVolume</span></code></a> Instances<a class="headerlink" href="#imagevolume-instances" title="Permalink to this headline">¶</a></h3>
+<p>Image volumes are represented by the <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume" title="pyface.image.image.ImageVolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageVolume</span></code></a>
+class.  Image volumes may have multiple aliases in addition to their primary
+name, and these aliases can be used as part of the id of an image.  The
+volume which stores an image can be found using the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">find_volume()</span></code> method.  The
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">catalog</span></code> and
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">aliases</span></code> attributes are dictionaries
+that map names to volume objects.</p>
+<p>By default the <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code> is initialized
+with:</p>
+<ul class="simple">
+<li><p>an <code class="docutils literal notranslate"><span class="pre">&quot;application&quot;</span></code> volume which is assumed to be in a “library” directory
+next to the application executable (ie. whatever is in <code class="docutils literal notranslate"><span class="pre">sys.argv[0]</span></code>
+which is usually the main module’s path);</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">std</span></code> and <code class="docutils literal notranslate"><span class="pre">icons</span></code> volumes in <code class="docutils literal notranslate"><span class="pre">pyface/image/library</span></code></p></li>
+<li><p>any path listed in the <code class="docutils literal notranslate"><span class="pre">TRAITS_IMAGES</span></code> environment variable which contains
+a volume.</p></li>
+</ul>
+<p>Additional volumes can be added programatically by calling
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">add_volume()</span></code> with the path of a zipfile
+or directory.  Alternatively <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_path()</span></code>
+can be used to add volume by giving a name for the volume and a directory path
+to use.  If no path is provided in either case, the library will look for an
+<code class="docutils literal notranslate"><span class="pre">images</span></code> directory next to the current module.</p>
+<p>Just as with image libraries, the
+<a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.image_resource" title="pyface.image.image.ImageVolume.image_resource"><code class="xref py py-meth docutils literal notranslate"><span class="pre">image_resource()</span></code></a> method returns an
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code> instance for the specified image
+name.  Additionally, the bytes of the actual image file are available through
+<a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.image_data" title="pyface.image.image.ImageVolume.image_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">image_data()</span></code></a>.</p>
+<p>Image volumes have a <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.info" title="pyface.image.image.ImageVolume.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">info</span></code></a> trait that
+holds a list of <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolumeInfo" title="pyface.image.image.ImageVolumeInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageVolumeInfo</span></code></a> instances.  These
+hold metadata about groups of images, including copyright and licensing
+information.  The <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.category" title="pyface.image.image.ImageVolume.category"><code class="xref py py-attr docutils literal notranslate"><span class="pre">category</span></code></a> and
+<a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.keywords" title="pyface.image.image.ImageVolume.keywords"><code class="xref py py-attr docutils literal notranslate"><span class="pre">keywords</span></code></a> traits hold additional
+information about the volume itself.</p>
+<p>Image volumes are designed to reflect the actual contents of the directories
+or zipfile that they refer to.  The
+<a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.update" title="pyface.image.image.ImageVolume.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method clears and reloads the
+data from disk.  The <a class="reference internal" href="api/pyface.image.image.html#pyface.image.image.ImageVolume.save" title="pyface.image.image.ImageVolume.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> method saves
+any changes made by the user into the data file.</p>
+<p>Images stored in image volumes which are zipfiles are extracted to temporary
+files as needed for actual use.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Image Types</a><ul>
+<li><a class="reference internal" href="#iimage-interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">IImage</span></code> Interface</a><ul>
+<li><a class="reference internal" href="#arrayimage"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayImage</span></code></a></li>
+<li><a class="reference internal" href="#imageresource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageResource</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-helpers-module"><code class="xref py py-mod docutils literal notranslate"><span class="pre">image_helpers</span></code> Module</a></li>
+<li><a class="reference internal" href="#imagelibrary"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLibrary</span></code></a><ul>
+<li><a class="reference internal" href="#accessing-images-and-image-metadata">Accessing Images and Image Metadata</a></li>
+<li><a class="reference internal" href="#imagevolume-instances"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageVolume</span></code> Instances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="traits.html"
+                        title="previous chapter">Trait Types</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="submodules.html"
+                        title="next chapter">Submodules</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/image_types.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

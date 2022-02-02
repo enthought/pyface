@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.util.font_parser &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../../../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../../../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <h1>Source code for pyface.util.font_parser</h1><div class="highlight"><pre>
+<span></span><span class="c1"># (C) Copyright 2005-2022 Enthought, Inc., Austin, TX</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># This software is provided without warranty under the terms of the BSD</span>
+<span class="c1"># license included in LICENSE.txt and may be redistributed only under</span>
+<span class="c1"># the conditions described in the aforementioned license. The license</span>
+<span class="c1"># is also available online at http://www.enthought.com/licenses/BSD.txt</span>
+<span class="c1">#</span>
+<span class="c1"># Thanks for using Enthought open source!</span>
+
+
+<span class="n">GENERIC_FAMILIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="s1">&#39;fantasy&#39;</span><span class="p">,</span> <span class="s1">&#39;decorative&#39;</span><span class="p">,</span> <span class="s1">&#39;serif&#39;</span><span class="p">,</span> <span class="s1">&#39;roman&#39;</span><span class="p">,</span> <span class="s1">&#39;cursive&#39;</span><span class="p">,</span> <span class="s1">&#39;script&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;swiss&#39;</span><span class="p">,</span> <span class="s1">&#39;monospace&#39;</span><span class="p">,</span> <span class="s1">&#39;modern&#39;</span><span class="p">,</span> <span class="s1">&#39;typewriter&#39;</span><span class="p">,</span> <span class="s1">&#39;teletype&#39;</span>
+<span class="p">}</span>
+<span class="n">WEIGHTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;thin&#39;</span><span class="p">,</span> <span class="s1">&#39;extra-light&#39;</span><span class="p">,</span> <span class="s1">&#39;light&#39;</span><span class="p">,</span> <span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;medium&#39;</span><span class="p">,</span> <span class="s1">&#39;demi-bold&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;extra-bold&#39;</span><span class="p">,</span> <span class="s1">&#39;heavy&#39;</span><span class="p">,</span> <span class="s1">&#39;extra-heavy&#39;</span>
+<span class="p">}</span>
+<span class="n">STRETCHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ultra-condensed&#39;</span><span class="p">,</span> <span class="s1">&#39;extra-condensed&#39;</span><span class="p">,</span> <span class="s1">&#39;condensed&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;semi-condensed&#39;</span><span class="p">,</span> <span class="s1">&#39;semi-expanded&#39;</span><span class="p">,</span> <span class="s1">&#39;expanded&#39;</span><span class="p">,</span> <span class="s1">&#39;extra-expanded&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ultra-expanded&#39;</span>
+<span class="p">}</span>
+<span class="n">STYLES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;italic&#39;</span><span class="p">,</span> <span class="s1">&#39;oblique&#39;</span><span class="p">}</span>
+<span class="n">VARIANTS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;small-caps&#39;</span><span class="p">}</span>
+<span class="n">DECORATIONS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;underline&#39;</span><span class="p">,</span> <span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span> <span class="s1">&#39;overline&#39;</span><span class="p">}</span>
+<span class="n">NOISE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pt&#39;</span><span class="p">,</span> <span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="s1">&#39;px&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="FontParseError"><a class="viewcode-back" href="../../../api/pyface.util.font_parser.html#pyface.util.font_parser.FontParseError">[docs]</a><span class="k">class</span> <span class="nc">FontParseError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An exception raised when font parsing fails.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="simple_parser"><a class="viewcode-back" href="../../../api/pyface.util.font_parser.html#pyface.util.font_parser.simple_parser">[docs]</a><span class="k">def</span> <span class="nf">simple_parser</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An extremely simple font description parser.</span>
+
+<span class="sd">    The parser is simple, and works by splitting the description on whitespace</span>
+<span class="sd">    and examining each resulting token for understood terms:</span>
+
+<span class="sd">    Size</span>
+<span class="sd">        The first numeric term is treated as the font size.</span>
+
+<span class="sd">    Weight</span>
+<span class="sd">        The following weight terms are accepted: &#39;thin&#39;, &#39;extra-light&#39;,</span>
+<span class="sd">        &#39;light&#39;, &#39;regular&#39;, &#39;medium&#39;, &#39;demi-bold&#39;, &#39;bold&#39;, &#39;extra-bold&#39;,</span>
+<span class="sd">        &#39;heavy&#39;, &#39;extra-heavy&#39;.</span>
+
+<span class="sd">    Stretch</span>
+<span class="sd">        The following stretch terms are accepted: &#39;ultra-condensed&#39;,</span>
+<span class="sd">        &#39;extra-condensed&#39;, &#39;condensed&#39;, &#39;semi-condensed&#39;, &#39;semi-expanded&#39;,</span>
+<span class="sd">        &#39;expanded&#39;, &#39;extra-expanded&#39;, &#39;ultra-expanded&#39;.</span>
+
+<span class="sd">    Style</span>
+<span class="sd">        The following style terms are accepted: &#39;italic&#39;, &#39;oblique&#39;.</span>
+
+<span class="sd">    Variant</span>
+<span class="sd">        The following variant terms are accepted: &#39;small-caps&#39;.</span>
+
+<span class="sd">    Decorations</span>
+<span class="sd">        The following decoration terms are accepted: &#39;underline&#39;,</span>
+<span class="sd">        &#39;strikethrough&#39;, &#39;overline&#39;.</span>
+
+<span class="sd">    Generic Families</span>
+<span class="sd">        The following generic family terms are accepted: &#39;default&#39;, &#39;fantasy&#39;,</span>
+<span class="sd">        &#39;decorative&#39;, &#39;serif&#39;, &#39;roman&#39;, &#39;cursive&#39;, &#39;script&#39;, &#39;sans-serif&#39;,</span>
+<span class="sd">        &#39;swiss&#39;, &#39;monospace&#39;, &#39;modern&#39;, &#39;typewriter&#39;, &#39;teletype&#39;.</span>
+
+<span class="sd">    In addtion, the parser ignores the terms &#39;pt&#39;, &#39;point&#39;, &#39;px&#39;, and &#39;family&#39;.</span>
+<span class="sd">    Any remaining terms are combined into the typeface name.  There is no</span>
+<span class="sd">    expected order to the terms.</span>
+
+<span class="sd">    This parser is roughly compatible with the various ad-hoc parsers in</span>
+<span class="sd">    TraitsUI and Kiva, allowing for the slight differences between them and</span>
+<span class="sd">    adding support for additional options supported by Pyface fonts, such as</span>
+<span class="sd">    stretch and variants.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    description : str</span>
+<span class="sd">        The font description to be parsed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    properties : dict</span>
+<span class="sd">        Font properties suitable for use in creating a Pyface Font.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This is not a particularly good parser, as it will fail to properly</span>
+<span class="sd">    parse something like &quot;10 pt times new roman&quot; or &quot;14 pt computer modern&quot;</span>
+<span class="sd">    since they have generic font names as part of the font face name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">face</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">generic_family</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span>
+    <span class="n">stretch</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span>
+    <span class="n">variants</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">decorations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">description</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">NOISE</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">GENERIC_FAMILIES</span><span class="p">:</span>
+            <span class="n">generic_family</span> <span class="o">=</span> <span class="n">word</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">WEIGHTS</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">word</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">STRETCHES</span><span class="p">:</span>
+            <span class="n">stretch</span> <span class="o">=</span> <span class="n">word</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">STYLES</span><span class="p">:</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">word</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">VARIANTS</span><span class="p">:</span>
+            <span class="n">variants</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">DECORATIONS</span><span class="p">:</span>
+            <span class="n">decorations</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="n">face</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="n">family</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">face</span><span class="p">:</span>
+        <span class="n">family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">face</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">generic_family</span><span class="p">:</span>
+        <span class="n">family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generic_family</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">family</span><span class="p">:</span>
+        <span class="n">family</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="mi">12</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="n">family</span><span class="p">,</span>
+        <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+        <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span>
+        <span class="s1">&#39;stretch&#39;</span><span class="p">:</span> <span class="n">stretch</span><span class="p">,</span>
+        <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="n">style</span><span class="p">,</span>
+        <span class="s1">&#39;variants&#39;</span><span class="p">:</span> <span class="n">variants</span><span class="p">,</span>
+        <span class="s1">&#39;decorations&#39;</span><span class="p">:</span> <span class="n">decorations</span><span class="p">,</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

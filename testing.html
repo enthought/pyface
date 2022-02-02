@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>GUI Testing &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="index.html" >
+    <link rel="next" title="pyface package" href="api/pyface.html" >
+    <link rel="prev" title="Undo Framework" href="undo.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 7.4 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="api/pyface.html" title="pyface package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="undo.html" title="Undo Framework"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="gui-testing">
+<span id="testing"></span><h1>GUI Testing<a class="headerlink" href="#gui-testing" title="Permalink to this headline">¶</a></h1>
+<p>GUI testing involves a slew of difficulties on top of what is normally
+encountered when writing typical unit tests. This is a result of having to deal
+with the underlying event loop that drives the GUI. Consider a scenario in
+which you have a simple <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasTraits</span></code></a> class and you call
+<a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits.configure_traits" title="(in traits v6.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code></a> on it to start the
+application. Typically python execution stops at this point and control is
+passed to the underlying event loop. In a test context though, we need
+direct access to that event loop. To simulate and test GUI interactions we need
+to be able to post events to the event loop, process them manually, and then
+make assertions about the desired behavior. Even further, the event loop is
+global state. Therefore, great care needs to be taken in each test to pick up
+after itself to avoid interactions with other tests. This is still necessary
+even if the test fails.</p>
+<p>Pyface provides a few utilities that are useful in this process.  Namely,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code>.</p>
+<div class="section" id="guitestassistant">
+<h2>GuiTestAssistant<a class="headerlink" href="#guitestassistant" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GuiTestAssistant is currently only available on Qt.</p>
+</div>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> is a mixin class intended to augment
+<a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">unittest.TestCase</span></code></a>. In fact, it inherits from
+<a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/traits.testing.html#traits.testing.unittest_tools.UnittestTools" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnittestTools</span></code></a> from Traits and thus
+gives access to methods like
+<a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/traits.testing.html#traits.testing.unittest_tools.UnittestTools.assertTraitChanges" title="(in traits v6.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTraitChanges()</span></code></a>. See the
+<a class="reference external" href="https://docs.enthought.com/traits/traits_user_manual/testing.html#testing">Traits Testing documentation</a>
+for more.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> holds a reference to a <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui.GUI</span></code> object
+(for api details see the interface <a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI" title="pyface.i_gui.IGUI"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGUI</span></code></a>) which is what
+gives the low level access to the event loop. <code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui.GUI</span></code> provides methods such as
+<a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI.start_event_loop" title="pyface.i_gui.IGUI.start_event_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_event_loop()</span></code></a>,
+<a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI.stop_event_loop" title="pyface.i_gui.IGUI.stop_event_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stop_event_loop()</span></code></a>,
+<a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI.process_events" title="pyface.i_gui.IGUI.process_events"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process_events()</span></code></a>,
+<a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI.invoke_later" title="pyface.i_gui.IGUI.invoke_later"><code class="xref py py-meth docutils literal notranslate"><span class="pre">invoke_later()</span></code></a>, and
+<a class="reference internal" href="api/pyface.i_gui.html#pyface.i_gui.IGUI.set_trait_later" title="pyface.i_gui.IGUI.set_trait_later"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_trait_later()</span></code></a>. This is accessible via the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">gui</span></code> attribute on <code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code>.</p>
+<p>What <code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> provides that is novel, is effectively better
+control to ensure that your tests clean up after themselves.  For example,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> provides standard <code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code>
+methods which try to clean up existing UI state and empty the event loop even
+if a test fails.  In addition, the methods typically have timeouts so that the
+test will fail rather than blocking forever in the case something has gone
+wrong. Effectively, the class aims to remember to do the overhead to ensure
+your tests don’t cause trouble, and at the same time give you the low level
+event loop access needed to write your GUI tests.</p>
+<p>This class provides the following methods (some of them being context managers):</p>
+<ul>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_loop()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Takes an integer <code class="docutils literal notranslate"><span class="pre">repeat</span></code> parameter and artificially replicates the event
+loop by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">sendPostedEvents()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">processEvents()</span></code> <code class="docutils literal notranslate"><span class="pre">repeat</span></code>
+number of times.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_loop_until_condition()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Runs the real Qt event loop until the provided condition evaluates to True.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_loop_until_traits_change()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Run the real application event loop until a change notification for all of
+the specified traits is received.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">event_loop_with_timeout()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Helper context manager to send all posted events to the event queue
+and wait for them to be processed.</p>
+<p>This differs from the <cite>event_loop()</cite> context manager in that it
+starts the real event loop rather than emulating it with
+<code class="docutils literal notranslate"><span class="pre">QApplication.processEvents()</span></code></p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTraitChangesInEventLoop()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Runs the real Qt event loop, collecting trait change events until
+the provided condition evaluates to True.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete_widget()</span></code></p>
+<blockquote>
+<div><p>Context Manager</p>
+<p>Runs the real Qt event loop until the widget provided has been
+deleted.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_qt_widget()</span></code></p>
+<blockquote>
+<div><p>Takes parameters <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">type_</span></code> and <code class="docutils literal notranslate"><span class="pre">test</span></code>. Recursively walks the Qt
+widget tree from Qt widget <code class="docutils literal notranslate"><span class="pre">start</span></code> until it finds a widget of type <code class="docutils literal notranslate"><span class="pre">type_</span></code>
+(a QWidget subclass) that satisfies the provided <code class="docutils literal notranslate"><span class="pre">test</span></code> method.</p>
+<p>Note: This method is known to be finicky / linked to sporadic seg faults.
+The TraitsUI <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> is often
+an easier to use, safer alternative if working with a TraitsUI based
+application.</p>
+</div></blockquote>
+</li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEventuallyTrueInGui()</span></code></p>
+<blockquote>
+<div><p>Assert that the given condition becomes true if we run the GUI
+event loop for long enough.</p>
+<p>This assertion runs the real Qt event loop, polling the condition
+and returning as soon as the condition becomes true. If the condition
+does not become true within the given timeout, the assertion fails.</p>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Some care needs to be taken with the various methods that run the event
+loop while waiting for a condition function to return true, such as
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">event_loop_until_condition()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEventuallyTrueInGui()</span></code>.
+These work by running the real application event loop and polling for the
+state of the condition being tested.  If the condition being tested is
+transient, it is possible that it may switch from False to True and back to
+False in between polling checks, and so fail to detect that the condition
+occurred.</p>
+<p>When writing tests that use these methods, you should be careful to test
+for conditions that once True, remains True.</p>
+</div>
+<p>For a very simple example consider this (slightly modified) test from pyface’s
+own test suite.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">Window</span>
+<span class="kn">from</span> <span class="nn">pyface.util.gui_test_assistant</span> <span class="kn">import</span> <span class="n">GuiTestAssistant</span>
+
+<span class="k">class</span> <span class="nc">TestWindow</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">,</span> <span class="n">GuiTestAssistant</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">GuiTestAssistant</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">Window</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">control</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">control</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">GuiTestAssistant</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_open_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># test that opening works as expected</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertTraitChanges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;opening&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertTraitChanges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;opened&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+        <span class="c1"># test that closing works as expected with a different approach</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_loop_until_traits_change</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="s2">&quot;closing&quot;</span><span class="p">,</span> <span class="s2">&quot;closed&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modaldialogtester">
+<h2>ModalDialogTester<a class="headerlink" href="#modaldialogtester" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ModalDialogTester is currently only available on Qt.</p>
+</div>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> is, as the name suggests, intended specifically for
+use testing modal dialogs. Modal dialogs are dialogs which sit on top of the
+main content of the application, and effectively demand interaction.  The
+rest of the UI is blocked until the dialog is addressed. These require special
+care to test and <code class="xref py py-class docutils literal notranslate"><span class="pre">GuiTestAssistant</span></code> doesen’t provide this functionality.
+When testing modal dialog related code the main recommendation for doing so is
+try to avoid it. If you can, try testing the dialog in a non-modal fashion. Or,
+if possible for your use case, use <a class="reference external" href="https://docs.python.org/3/library/unittest.mock.html#module-unittest.mock" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">unittest.mock</span></code></a> to patch the
+class or its “open” method with a dummy implementation that returns a useful
+result. If you absolutely do need to test the real modal dialog in a modal
+fashion, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> aims to help make this as easy as possible.</p>
+<p>To use it, instantiate a <code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> instance, passing it a
+function taking no arguments which when called opens the modal dialog. From
+there you can call the <code class="xref py py-meth docutils literal notranslate"><span class="pre">open_and_run()</span></code> method on the tester object just
+instantiated, and pass in a <code class="docutils literal notranslate"><span class="pre">when_opened</span></code> callable which will take the tester
+object as its sole argument. This method first calls the function to open the
+dialog and then subsequently the <code class="docutils literal notranslate"><span class="pre">when_opened</span></code> callable.  In the body of the
+<code class="docutils literal notranslate"><span class="pre">when_opened</span></code> callable is where you define the interactions with the modal
+dialog you want to be performed during the test. You can use the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">get_dialog_widget()</span></code> method on the tester object (accesible since the
+tester is passed as an argument to <code class="docutils literal notranslate"><span class="pre">when_opened</span></code>) to get access to the UI for
+the dialog. Then interactions can be performed using methods such as
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">find_qt_widget()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">click_widget()</span></code>, etc. Alternatively, if working
+with a TraitsUI application, you could use the TraitsUI
+<a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to perform these interactions (see the
+<a class="reference external" href="https://docs.enthought.com/traitsui/traitsui_user_manual/testing.html">TraitsUI Testing documentation</a>).
+If doing so, it is important to remember to set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_process_events</span></code>
+attribute on the <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to False.
+This prevents <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> from both trying to drive the event loop
+simultaneously, which can lead to very strange, difficult to diagnose, bugs.
+Finally, you should ensure that your <code class="docutils literal notranslate"><span class="pre">when_opened</span></code> callable will close the
+dialog.  You don’t want to leave the dialog open and blocking (there are
+timeouts in place as a safety net, but neverthelesss).
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> provides a method <code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> for this purpose.
+To verify the dailog was indeed opened once, you can run
+<code class="docutils literal notranslate"><span class="pre">self.assertTrue(tester.dialog_was_opened)</span></code>.</p>
+<p>Additionally, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> provides a context manager
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">capture_error()</span></code> to be used inside the event loop. When errors or failures
+occur they could be missed by <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">unittest</span></code></a>, but this catches them.
+These can then be checked with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">assert_no_errors_collected()</span></code> method.</p>
+<p>For a very simple example consider this (slightly modified) test from pyface’s
+own test suite.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">from</span> <span class="nn">pyface.api</span> <span class="kn">import</span> <span class="n">Dialog</span><span class="p">,</span> <span class="n">OK</span>
+<span class="kn">from</span> <span class="nn">pyface.util.modal_dialog_tester</span> <span class="kn">import</span> <span class="n">ModalDialogTester</span>
+
+<span class="k">class</span> <span class="nc">TestDialog</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">Dialog</span><span class="p">()</span>
+        <span class="c1"># test that accept works as expected</span>
+        <span class="n">tester</span> <span class="o">=</span> <span class="n">ModalDialogTester</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">)</span>
+        <span class="n">tester</span><span class="o">.</span><span class="n">open_and_run</span><span class="p">(</span><span class="n">when_opened</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">tester</span><span class="o">.</span><span class="n">dialog_was_opened</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tester</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="n">OK</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">return_code</span><span class="p">,</span> <span class="n">OK</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">GUI Testing</a><ul>
+<li><a class="reference internal" href="#guitestassistant">GuiTestAssistant</a></li>
+<li><a class="reference internal" href="#modaldialogtester">ModalDialogTester</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="undo.html"
+                        title="previous chapter">Undo Framework</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api/pyface.html"
+                        title="next chapter">pyface package</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/testing.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 01, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

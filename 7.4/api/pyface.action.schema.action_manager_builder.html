@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>pyface.action.schema.action_manager_builder module &mdash; pyface 7.4 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        LINK_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 7.4 documentation" href="../index.html" >
+    <link rel="up" title="pyface.action.schema package" href="pyface.action.schema.html" >
+    <link rel="next" title="pyface.action.schema.api module" href="pyface.action.schema.api.html" >
+    <link rel="prev" title="pyface.action.schema package" href="pyface.action.schema.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 7.4 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.action.html" >pyface.action package</a></li>
+          <li class="active"><a href="pyface.action.schema.html" accesskey="U">pyface.action.schema package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.schema.api.html" title="pyface.action.schema.api module"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.schema.html" title="pyface.action.schema package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body" role="main">
+            
+  <div class="section" id="module-pyface.action.schema.action_manager_builder">
+<span id="pyface-action-schema-action-manager-builder-module"></span><h1>pyface.action.schema.action_manager_builder module<a class="headerlink" href="#module-pyface.action.schema.action_manager_builder" title="Permalink to this headline">¶</a></h1>
+<p>Base action manager builder class</p>
+<p>This module provides a base class that takes a schema for an action manager
+and builds the concrete action manager and its groups and items, folding in
+schema additions.</p>
+<dl class="py class">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.action.schema.action_manager_builder.</span></code><code class="sig-name descname"><span class="pre">ActionManagerBuilder</span></code><a class="reference internal" href="../_modules/pyface/action/schema/action_manager_builder.html#ActionManagerBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traits/traits_api_reference/has_traits.html#traits.has_traits.HasTraits" title="(in traits v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></a></p>
+<p>Builds action managers from schemas, merging schema additions.</p>
+<dl class="py attribute">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder.controller">
+<code class="sig-name descname"><span class="pre">controller</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Instance(&quot;pyface.action.action_controller.ActionController&quot;)</span></em><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder.controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ActionController to use with the action managers created by the
+builder.  May be None.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder.additions">
+<code class="sig-name descname"><span class="pre">additions</span></code><em class="property"> <span class="pre">=</span> <span class="pre">List(Instance(SchemaAddition))</span></em><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder.additions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schema additions to apply to all managers built by this builder.
+Any additions which do not match part of the supplied schema will be
+ignored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder.create_action_manager">
+<code class="sig-name descname"><span class="pre">create_action_manager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/schema/action_manager_builder.html#ActionManagerBuilder.create_action_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder.create_action_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a manager for the given schema using the additions.</p>
+<p>Any additions whose paths do not match the supplied</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>schema</strong> (<a class="reference internal" href="pyface.action.schema.schema.html#pyface.action.schema.schema.Schema" title="pyface.action.schema.schema.Schema"><em>Schema</em></a>) – An Schema for an ActionManager subclass (ie. one of MenuBarSchema,
+MenuSchema, or ToolBarSchema).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>manager</strong> – The concrete ActionManager instance corresponding to the Schema
+with addtions.  This does not yet have concrete toolkit widgets
+associated with it: usually those will be created separately.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pyface.action.action_manager.html#pyface.action.action_manager.ActionManager" title="pyface.action.action_manager.ActionManager">ActionManager</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder.get_additional_toolbar_schemas">
+<code class="sig-name descname"><span class="pre">get_additional_toolbar_schemas</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/schema/action_manager_builder.html#ActionManagerBuilder.get_additional_toolbar_schemas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder.get_additional_toolbar_schemas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get any top-level toolbars from additions.</p>
+<p>Unlike menus, there is no base toolbar manager, so additions which
+contribute new toolbars appear with no path.  It is up to the class
+using the builder how it wants to handle these additional toolbars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>schemas</strong> – The additional toolbars specified in self.additions.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of ToolBarSchema</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyface.action.schema.action_manager_builder.ActionManagerBuilder.prepare_item">
+<code class="sig-name descname"><span class="pre">prepare_item</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/action/schema/action_manager_builder.html#ActionManagerBuilder.prepare_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.action.schema.action_manager_builder.ActionManagerBuilder.prepare_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called immediately after a concrete Pyface item has been created
+(or, in the case of items that are not produced from schemas,
+immediately before they are processed).</p>
+<p>This hook can be used to perform last-minute transformations or
+configuration. Returns a concrete Pyface item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>pyface.action item</em>) – A concrete Pyface item.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to the item in the Schema.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>item</strong> – A modified or transformed Pyface item.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pyface.action item</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.action.schema.html"
+                        title="previous chapter">pyface.action.schema package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.action.schema.api.html"
+                        title="next chapter">pyface.action.schema.api module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.action.schema.action_manager_builder.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2022, Enthought
+      </li>
+      <li>
+      Last updated on Feb 02, 2022.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
