@@ -19,6 +19,9 @@ class PILImage(MPILImage):
     """ The toolkit specific implementation of a PILImage.
     """
 
+    #: An internal cache of images by size.
+    _image_cache = Dict()
+
     # ------------------------------------------------------------------------
     # 'IImage' interface.
     # ------------------------------------------------------------------------
@@ -38,9 +41,12 @@ class PILImage(MPILImage):
             The toolkit image corresponding to the image and the specified
             size.
         """
-        from PIL.ImageQt import ImageQt
-        image = ImageQt(self.image)
-        if size is not None:
-            return resize_image(image, size)
-        else:
-            return image
+        # use the cache of images to ensure referential integrity of images
+        # when being used
+        if size not in self._image_cache:
+            from PIL.ImageQt import ImageQt
+            image = ImageQt(self.image)
+            if size is not None:
+                image = resize_image(image, size)
+            self._image_cache[size] = image
+        return self._image_cache[size]
