@@ -45,7 +45,9 @@ def image_to_bitmap(image):
     bitmap : QPixmap
         The corresponding QPixmap.
     """
-    return QPixmap.fromImage(image)
+    bitmap = QPixmap.fromImage(image)
+    bitmap._image = image
+    return bitmap
 
 
 def bitmap_to_image(bitmap):
