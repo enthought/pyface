@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Array, HasStrictTraits, provides
+from traits.api import Array, Dict, HasStrictTraits, provides
 
 from pyface.i_image import IImage
 from pyface.util.image_helpers import (
@@ -29,6 +29,9 @@ class ArrayImage(HasStrictTraits):
     #: The bytes of the image.
     data = ImageArray()
 
+    #: An internal cache of images by size.
+    _image_cache = Dict()
+
     # ------------------------------------------------------------------------
     # 'IImage' interface.
     # ------------------------------------------------------------------------
@@ -48,10 +51,12 @@ class ArrayImage(HasStrictTraits):
             The toolkit image corresponding to the image and the specified
             size.
         """
-        image = array_to_image(self.data)
-        if size is not None:
-            image = resize_image(image, size)
-        return image
+        if size not in self._image_cache:
+            image = array_to_image(self.data)
+            if size is not None:
+                image = resize_image(image, size)
+            self._image_cache[size] = image
+        return self._image_cache[size]
 
     def create_bitmap(self, size=None):
         """ Creates a toolkit-specific bitmap image for this array.
