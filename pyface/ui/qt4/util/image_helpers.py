@@ -45,7 +45,10 @@ def image_to_bitmap(image):
     bitmap : QPixmap
         The corresponding QPixmap.
     """
-    return QPixmap.fromImage(image)
+    bitmap = QPixmap.fromImage(image)
+    # keep a reference to the QImage to ensure underlying data is available
+    bitmap._image = image
+    return bitmap
 
 
 def bitmap_to_image(bitmap):
@@ -166,6 +169,7 @@ def array_to_image(array):
     elif channels == 4:
         image = QImage(data.data, width, height, bytes_per_line,
                        QImage.Format.Format_ARGB32)
+    # keep a reference to the array to ensure underlying data is available
     image._numpy_data = data
     return image
 
