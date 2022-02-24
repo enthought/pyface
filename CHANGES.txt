@@ -2,6 +2,30 @@
 Pyface Changelog
 ================
 
+Release 7.4.1
+=============
+
+Highlights of this release
+--------------------------
+
+This is a bugfix release that fixes an issue that was causing memory
+corruption and occasional segfaults when using the new ArrayImage and
+PILImage classes on Windows with PySide2.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Mark Dickinson
+* Rahul Poruri
+* Corran Webster
+* John Wiggins
+
+Fixes
+
+* fix segfaults and memory corruption from dropped QImage references (#1108)
+
 Release 7.4.0
 =============
 
