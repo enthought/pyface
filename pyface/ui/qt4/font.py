@@ -114,7 +114,7 @@ def font_to_toolkit_font(font):
 
     qt_font.setPointSizeF(font.size)
     qt_font.setWeight(weight_to_qt_weight[font.weight_])
-    qt_font.setStretch(font.stretch)
+    qt_font.setStretch(int(font.stretch))
     qt_font.setStyle(style_to_qt_style[font.style])
     qt_font.setUnderline('underline' in font.decorations)
     qt_font.setStrikeOut('strikethrough' in font.decorations)

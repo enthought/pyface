@@ -117,7 +117,7 @@ def font_to_toolkit_font(font):
     wx_font : wx.font.Font
         The best matching wx font.
     """
-    size = font.size
+    size = int(font.size)
     for family in font.family:
         if family in generic_family_to_wx_family:
             default_family = generic_family_to_wx_family[family]
