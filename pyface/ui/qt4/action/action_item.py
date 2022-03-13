@@ -316,6 +316,7 @@ class _Tool(HasTraits):
         self.control.setWhatsThis(action.description)
         self.control.setEnabled(action.enabled)
         self.control.setVisible(action.visible)
+        self.control.setShortcut(action.accelerator)
 
         if action.style == "toggle":
             self.control.setCheckable(True)
