@@ -26,6 +26,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     # Link to code in sphinx generated API docs
     "sphinx.ext.viewcode",
+    "sphinx_copybutton",
     'traits.util.trait_documenter'
 ]
 

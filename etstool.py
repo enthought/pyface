@@ -410,6 +410,8 @@ def docs(edm, runtime, toolkit, environment):
     commands = [
         "{edm} install -y -e {environment} " + packages,
         "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",  # noqa: E501
+        # Temporarily install sphinx-copybutton from PyPI
+        "{edm} run -e {environment} -- pip install sphinx-copybutton"
     ]
     click.echo(
         "Installing documentation tools in  '{environment}'".format(
