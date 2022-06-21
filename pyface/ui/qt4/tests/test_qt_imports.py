@@ -44,4 +44,4 @@ class TestPyfaceQtImports(unittest.TestCase):
 
     def test_import_qopenglwidget(self):
         # smoke test
-        from pyface.qt.QtOpenGL import QOpenGLWidget
+        from pyface.qt.QtOpenGL import QOpenGLWidget  # noqa: F401
