@@ -119,14 +119,15 @@ class Window(MWindow, Widget):
             # so we need a reference to control
             control = self.control
 
-            # Widget.destroy() hides the widget, sets self.control to None
-            # and deletes it later, so we call it before control.close()
+            # Widget.destroy() sets self.control to None and deletes it later,
+            # so we call it before control.close()
             # This is not strictly necessary (closing the window in fact
             # hides it), but the close may trigger an application shutdown,
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
             super().destroy()
             control.close()
+            control.hide()
 
     # -------------------------------------------------------------------------
     # Private interface.
