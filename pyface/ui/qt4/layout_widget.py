@@ -104,6 +104,11 @@ class LayoutWidget(MLayoutWidget, Widget):
             vertical_policy = "default"
         return (horizontal_policy, vertical_policy)
 
+    def destroy(self):
+        if self.control is not None:
+            self.control.hide()
+            super().destroy()
+
 
 def _clone_size_policy(size_policy):
     """ Clone the state of an existing QSizePolicy object
