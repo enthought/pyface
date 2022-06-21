@@ -119,7 +119,7 @@ class Window(MWindow, Widget):
             # so we need a reference to control
             control = self.control
 
-            # Widget.destroy() hsets self.control to None and deletes it later,
+            # Widget.destroy() sets self.control to None and deletes it later,
             # so we call it before control.close()
             # This is not strictly necessary (closing the window in fact
             # hides it), but the close may trigger an application shutdown,
