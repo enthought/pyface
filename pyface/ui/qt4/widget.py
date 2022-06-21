@@ -98,7 +98,6 @@ class Widget(MWidget, HasTraits):
 
     def destroy(self):
         if self.control is not None:
-            self.control.hide()
             self.control.deleteLater()
             super().destroy()
 
