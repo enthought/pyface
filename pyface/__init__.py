@@ -24,6 +24,7 @@ __requires__ = [
     "traits>=6.2",
 ]
 __extras_require__ = {
+    "docs": ["enthought-sphinx-theme", "sphinx", "sphinx-copybutton"],
     "wx": ["wxpython>=4", "numpy"],
     "pyqt": ["pyqt>=4.10", "pygments"],
     "pyqt5": ["pyqt5", "pygments"],
