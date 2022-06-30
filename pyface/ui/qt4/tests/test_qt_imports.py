@@ -41,3 +41,7 @@ class TestPyfaceQtImports(unittest.TestCase):
         self.assertTrue(len(w) == 1)
         for warn in w:
             self.assertEqual(warn.category, DeprecationWarning)
+
+    def test_import_qopenglwidget(self):
+        # smoke test
+        from pyface.qt.QtOpenGL import QOpenGLWidget  # noqa: F401
