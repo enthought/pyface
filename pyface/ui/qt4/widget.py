@@ -140,6 +140,7 @@ class Widget(MWidget, HasTraits):
     def _handle_control_context_menu(self, pos):
         """ Signal handler for displaying context menu. """
         if self.control is not None and self.context_menu is not None:
+            pos = self.control.mapToGlobal(pos)
             menu = self.context_menu.create_menu(self.control)
             menu.show(pos.x(), pos.y())
 
