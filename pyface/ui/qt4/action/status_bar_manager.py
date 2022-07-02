@@ -57,7 +57,7 @@ class StatusBarManager(HasTraits):
 
         return self.status_bar
 
-    def destroy_status_bar(self):
+    def destroy(self):
         """ Destroys the status bar. """
         if self.status_bar is not None:
             self.status_bar.deleteLater()

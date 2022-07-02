@@ -222,7 +222,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             if old is not None:
                 self.control.SetStatusBar(None)
-                old.remove_status_bar(self.control)
+                old.destroy(self.control)
             self._create_status_bar(self.control)
 
     @observe("tool_bar_manager, tool_bar_managers.items")
