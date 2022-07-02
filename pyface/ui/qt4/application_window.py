@@ -177,7 +177,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _status_bar_manager_updated(self, event):
         if self.control is not None:
             if event.old is not None:
-                event.old.destroy_status_bar()
+                event.old.destroy()
             self._create_status_bar(self.control)
 
     @observe("tool_bar_manager, tool_bar_managers.items")
