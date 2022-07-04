@@ -12,13 +12,11 @@
 
 import platform
 
-from traits.api import Any, Callable, List, provides, Str, Tuple
+from traits.api import Any, Callable, List, provides, Tuple
 
 from pyface.qt import QtCore, QtGui
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.ui_traits import Image
 from .dialog import Dialog
-from .image_resource import ImageResource
 
 
 # The HTML displayed in the QLabel.

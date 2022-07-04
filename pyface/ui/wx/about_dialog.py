@@ -18,12 +18,10 @@ import wx
 import wx.html
 import wx.lib.wxpTag
 
-from traits.api import List, provides, Str
+from traits.api import provides
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.ui_traits import Image
 from .dialog import Dialog
-from .image_resource import ImageResource
 
 
 _DIALOG_TEXT = """
