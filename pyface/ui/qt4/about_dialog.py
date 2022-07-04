@@ -60,14 +60,6 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-    # 'IAboutDialog' interface ---------------------------------------------
-
-    additions = List(Str)
-
-    copyrights = List(Str)
-
-    image = Image(ImageResource("about"))
-
     # Private interface ---------------------------------------------------#
 
     #: A list of connected Qt signals to be removed before destruction.

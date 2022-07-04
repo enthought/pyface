@@ -37,3 +37,16 @@ class MAboutDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IAboutDialog interface.
     """
+
+    #: Additional strings to be added to the dialog.
+    additions = List(Str)
+
+    #: Additional copyright strings to be added above the standard ones.
+    copyrights = List(Str)
+
+    #: The image displayed in the dialog.
+    image = Image()
+
+    def _image_default(self):
+        from .image_resource import ImageResource
+        return ImageResource('about')
