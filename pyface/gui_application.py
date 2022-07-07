@@ -21,11 +21,13 @@ this is most likely to be a subclass of
 
 
 import logging
+from time import sleep
 
 from traits.api import (
     Bool,
     Callable,
     Instance,
+    Int,
     List,
     ReadOnly,
     Tuple,
@@ -63,6 +65,9 @@ class GUIApplication(Application):
 
     #: The splash screen for the application. No splash screen by default
     splash_screen = Instance(ISplashScreen)
+
+    #: How long to display the splash screen, in seconds. Flashed by default.
+    splash_screen_duration = Int
 
     #: The about dialog for the application.
     about_dialog = Instance(IDialog)
@@ -167,6 +172,8 @@ class GUIApplication(Application):
             # create the GUI so that the splash screen comes up first thing
             if self.gui is Undefined:
                 self.gui = GUI(splash_screen=self.splash_screen)
+                if self.splash_screen_duration > 0:
+                    sleep(self.splash_screen_duration)
 
             # create the initial windows to show
             self._create_windows()
