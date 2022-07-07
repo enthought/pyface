@@ -18,12 +18,10 @@ import wx
 import wx.html
 import wx.lib.wxpTag
 
-from traits.api import List, provides, Str
+from traits.api import provides
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.ui_traits import Image
 from .dialog import Dialog
-from .image_resource import ImageResource
 
 
 _DIALOG_TEXT = """
@@ -69,14 +67,6 @@ class AboutDialog(MAboutDialog, Dialog):
     """ The toolkit specific implementation of an AboutDialog.  See the
     IAboutDialog interface for the API documentation.
     """
-
-    # 'IAboutDialog' interface ---------------------------------------------
-
-    additions = List(Str)
-
-    copyrights = List(Str)
-
-    image = Image(ImageResource("about"))
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
