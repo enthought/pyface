@@ -374,6 +374,9 @@ class _Tool(HasTraits):
         """ Delete the reference to the control to avoid attempting to talk to
         it again.
         """
+        if self.control is not None:
+            # Remove the cycle since we're no longer needed.
+            del self.control._tool_instance
         self.control = None
 
     def _qt4_on_triggered(self):
