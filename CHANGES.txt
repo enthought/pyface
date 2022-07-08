@@ -26,6 +26,7 @@ Thanks to:
 
 Fixes
 
+* fix ConsoleWidget PySide6 issues (#1146, #1147)
 * fix default AboutDialog image (#1142)
 * remove reference cycle for actions on clean-up (#1143)
 * status bar manager not cleaned up properly (#1141)
