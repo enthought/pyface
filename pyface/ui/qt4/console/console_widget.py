@@ -1351,6 +1351,7 @@ class ConsoleWidget(QtGui.QWidget):
 
             elif key == QtCore.Qt.Key.Key_Right:
                 original_block_number = cursor.blockNumber()
+                # note: avoid mode keyword argument (see #1147)
                 cursor.movePosition(
                     QtGui.QTextCursor.MoveOperation.Right,
                     anchormode,
