@@ -1336,10 +1336,12 @@ class ConsoleWidget(QtGui.QWidget):
                     self._continuation_prompt
                 ):
                     self._control.moveCursor(
-                        QtGui.QTextCursor.MoveOperation.PreviousBlock, mode=anchormode
+                        QtGui.QTextCursor.MoveOperation.PreviousBlock,
+                        mode=anchormode,
                     )
                     self._control.moveCursor(
-                        QtGui.QTextCursor.MoveOperation.EndOfBlock, mode=anchormode
+                        QtGui.QTextCursor.MoveOperation.EndOfBlock,
+                        mode=anchormode
                     )
                     intercepted = True
 
@@ -1349,12 +1351,16 @@ class ConsoleWidget(QtGui.QWidget):
 
             elif key == QtCore.Qt.Key.Key_Right:
                 original_block_number = cursor.blockNumber()
-                cursor.movePosition(QtGui.QTextCursor.MoveOperation.Right, mode=anchormode)
+                # note: avoid mode keyword argument (see #1147)
+                cursor.movePosition(
+                    QtGui.QTextCursor.MoveOperation.Right,
+                    anchormode,
+                )
                 if cursor.blockNumber() != original_block_number:
                     cursor.movePosition(
                         QtGui.QTextCursor.MoveOperation.Right,
-                        n=len(self._continuation_prompt),
-                        mode=anchormode,
+                        anchormode,
+                        len(self._continuation_prompt),
                     )
                 self._set_cursor(cursor)
                 intercepted = True
@@ -1511,7 +1517,12 @@ class ConsoleWidget(QtGui.QWidget):
 
         # Calculate the number of characters available.
         width = self._control.viewport().width()
-        char_width = QtGui.QFontMetrics(self.font).width(" ")
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            char_width = QtGui.QFontMetrics(self.font).horizontalAdvance(" ")
+        else:
+            char_width = QtGui.QFontMetrics(self.font).width(" ")
         displaywidth = max(10, (width / char_width) - 1)
 
         # Some degenerate cases.
