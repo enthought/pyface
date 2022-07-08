@@ -19,7 +19,8 @@ class TestConsoleWidget(unittest.TestCase):
 
     def setUp(self):
         # ensure QApplication is set up
-        QApplication().instance()
+        if not QApplication.instance():
+            QApplication([])
 
     def test_format_as_columns(self):
         # regression test for Pyface #1146
