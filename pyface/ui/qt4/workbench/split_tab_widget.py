@@ -998,7 +998,7 @@ class _DragableTabBar(QtGui.QTabBar):
         QtGui.QTabBar.mouseReleaseEvent(self, e)
 
         if e.button() != QtCore.Qt.MouseButton.LeftButton:
-            if e.button() == QtCore.Qt.MouseButton.MidddleButton:
+            if e.button() == QtCore.Qt.MouseButton.MiddleButton:
                 self.tabCloseRequested.emit(self.tabAt(e.pos()))
             return
 

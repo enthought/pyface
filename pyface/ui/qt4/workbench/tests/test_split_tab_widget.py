@@ -12,13 +12,13 @@
 import unittest
 
 from pyface.qt import QtCore, QtGui
-from pyface.ui.qt4.workbench.split_tab_widget import SplitTabWidget
+from pyface.ui.qt4.workbench.split_tab_widget import _DragableTabBar
 
 
 class TestSplitTabWidget(unittest.TestCase):
 
     def test_mouseReleaseEvent(self):
-        widget = SplitTabWidget(None, None)
+        widget = _DragableTabBar(None, None)
         event = QtGui.QMouseEvent(
             QtCore.QEvent.Type.MouseButtonRelease,
             QtCore.QPointF(0.0, 0.0),
