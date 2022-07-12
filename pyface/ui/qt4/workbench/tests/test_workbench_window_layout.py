@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import sys
 import unittest
 from unittest import mock
 
