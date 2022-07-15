@@ -203,8 +203,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view_ids = [v.id for v in self.window.views if self.contains_view(v)]
 
         # Everything else is provided by QMainWindow.
-        state = self.window.control.saveState()
-
+        state = self.window.control.saveState().data()
         return (0, (view_ids, state))
 
     def set_view_memento(self, memento):
