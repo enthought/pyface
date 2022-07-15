@@ -26,6 +26,7 @@ Thanks to:
 
 Fixes
 
+* fixes for Qt workbench backend (#1149)
 * fix ConsoleWidget PySide6 issues (#1146, #1147)
 * fix default AboutDialog image (#1142)
 * remove reference cycle for actions on clean-up (#1143)
