@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import sys
 import unittest
 from unittest import mock
 
@@ -21,12 +20,8 @@ from pyface.ui.qt4.workbench.workbench_window_layout import (
 
 class TestWorkbenchWindowLayout(unittest.TestCase):
 
-    @unittest.skipIf(sys.version_info == (3, 8), "Can't mock SplitTabWidget")
     def test_change_of_active_qt_editor(self):
         # Test error condition for enthought/mayavi#321
-
-        # This doesn't work on Python 3.8 because of some incompatibility
-        # between unittest.mock.Mock and Qt, I think
         mock_split_tab_widget = mock.Mock(spec=SplitTabWidget)
 
         layout = WorkbenchWindowLayout(_qt4_editor_area=mock_split_tab_widget)

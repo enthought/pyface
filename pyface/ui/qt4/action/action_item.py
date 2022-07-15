@@ -376,7 +376,8 @@ class _Tool(HasTraits):
         """
         if self.control is not None:
             # Remove the cycle since we're no longer needed.
-            del self.control._tool_instance
+            if hasattr(self.control, "_tool_instance"):
+                del self.control._tool_instance
         self.control = None
 
     def _qt4_on_triggered(self):
