@@ -2,6 +2,48 @@
 Pyface Changelog
 ================
 
+Release 7.4.2
+=============
+
+Highlights of this release
+--------------------------
+
+This is a bugfix release that collects a number of additional issues discovered
+and fixed since the 7.4.1 release.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Eric Anderson
+* Mark Dickinson
+* Robert Kern
+* Orion Poplawski
+* Rahul Poruri
+* PyHannes
+* Corran Webster
+
+Fixes
+
+* fixes for Qt workbench backend (#1149)
+* fix ConsoleWidget PySide6 issues (#1146, #1147)
+* fix default AboutDialog image (#1142)
+* remove reference cycle for actions on clean-up (#1143)
+* status bar manager not cleaned up properly (#1141)
+* expose QOpenGLWidget in a consistent place in pyface.qt (#1138)
+* map popup menu coordinates to global (#1137)
+* fix issues with last window close on Qt6 (#1136)
+* font size and stretch are ints at the toolkit level (#1118)
+
+Documentation
+
+* add copy buttons for example code (#1134)
+
+CI
+
+* add a publish to PyPI Github action (#1126)
+
 Release 7.4.1
 =============
 
