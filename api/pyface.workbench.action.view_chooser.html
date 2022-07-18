@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
     <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" >
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -24,6 +25,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/img/favicon.png">
@@ -100,7 +103,7 @@
 <dl class="py class">
 <dt id="pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.workbench.action.view_chooser.</span></code><code class="sig-name descname"><span class="pre">WorkbenchWindowTreeNode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/action/view_chooser.html#WorkbenchWindowTreeNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.tree_node.html#traitsui.tree_node.TreeNode" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.tree_node.TreeNode</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.tree_node.html#traitsui.tree_node.TreeNode" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.tree_node.TreeNode</span></code></a></p>
 <p>A tree node for workbench windows that displays the window’s views.</p>
 <p>The views are grouped by their category.</p>
 <dl class="py method">
@@ -114,7 +117,7 @@
 <dl class="py class">
 <dt id="pyface.workbench.action.view_chooser.IViewTreeNode">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pyface.workbench.action.view_chooser.</span></code><code class="sig-name descname"><span class="pre">IViewTreeNode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">traits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyface/workbench/action/view_chooser.html#IViewTreeNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyface.workbench.action.view_chooser.IViewTreeNode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.tree_node.html#traitsui.tree_node.TreeNode" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.tree_node.TreeNode</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.tree_node.html#traitsui.tree_node.TreeNode" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">traitsui.tree_node.TreeNode</span></code></a></p>
 <p>A tree node for objects that implement the ‘IView’ interface.</p>
 <p>This node does <em>not</em> recognise objects that can be <em>adapted</em> to the ‘IView’
 interface, only those that actually implement it. If we wanted to allow
@@ -196,7 +199,7 @@ is a method that returns the actual object that we want to manipulate.</p>
         &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Mar 08, 2022.
+      Last updated on Jul 18, 2022.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.

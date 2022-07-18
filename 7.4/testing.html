@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
     <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="_static/copybutton.css" type="text/css" >
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -24,6 +25,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/clipboard.min.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/img/favicon.png">
@@ -185,7 +188,7 @@ deleted.</p>
 widget tree from Qt widget <code class="docutils literal notranslate"><span class="pre">start</span></code> until it finds a widget of type <code class="docutils literal notranslate"><span class="pre">type_</span></code>
 (a QWidget subclass) that satisfies the provided <code class="docutils literal notranslate"><span class="pre">test</span></code> method.</p>
 <p>Note: This method is known to be finicky / linked to sporadic seg faults.
-The TraitsUI <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> is often
+The TraitsUI <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> is often
 an easier to use, safer alternative if working with a TraitsUI based
 application.</p>
 </div></blockquote>
@@ -276,11 +279,11 @@ tester is passed as an argument to <code class="docutils literal notranslate"><s
 the dialog. Then interactions can be performed using methods such as
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">find_qt_widget()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">click_widget()</span></code>, etc. Alternatively, if working
 with a TraitsUI application, you could use the TraitsUI
-<a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to perform these interactions (see the
+<a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to perform these interactions (see the
 <a class="reference external" href="https://docs.enthought.com/traitsui/traitsui_user_manual/testing.html">TraitsUI Testing documentation</a>).
 If doing so, it is important to remember to set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_process_events</span></code>
-attribute on the <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to False.
-This prevents <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> and
+attribute on the <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> to False.
+This prevents <a class="reference external" href="https://docs.enthought.com/traitsui/api/traitsui.testing.tester.ui_tester.html#traitsui.testing.tester.ui_tester.UITester" title="(in traitsui v7.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">UITester</span></code></a> and
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ModalDialogTester</span></code> from both trying to drive the event loop
 simultaneously, which can lead to very strange, difficult to diagnose, bugs.
 Finally, you should ensure that your <code class="docutils literal notranslate"><span class="pre">when_opened</span></code> callable will close the
@@ -374,7 +377,7 @@ own test suite.</p>
         &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Mar 08, 2022.
+      Last updated on Jul 15, 2022.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
