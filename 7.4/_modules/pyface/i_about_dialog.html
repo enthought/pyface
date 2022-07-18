@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/spc-extend.css">
     <link rel="stylesheet" href="../../_static/enthought.css" type="text/css" >
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" >
+    <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" >
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -24,6 +25,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/clipboard.min.js"></script>
+    <script type="text/javascript" src="../../_static/copybutton.js"></script>
     <script type="text/javascript" src="../../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../../_static/img/favicon.png">
@@ -91,7 +94,6 @@
 
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Str</span>
 
-
 <span class="kn">from</span> <span class="nn">pyface.i_dialog</span> <span class="kn">import</span> <span class="n">IDialog</span>
 <span class="kn">from</span> <span class="nn">pyface.ui_traits</span> <span class="kn">import</span> <span class="n">Image</span>
 
@@ -114,7 +116,20 @@
 <div class="viewcode-block" id="MAboutDialog"><a class="viewcode-back" href="../../api/pyface.i_about_dialog.html#pyface.i_about_dialog.MAboutDialog">[docs]</a><span class="k">class</span> <span class="nc">MAboutDialog</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The mixin class that contains common code for toolkit specific</span>
 <span class="sd">    implementations of the IAboutDialog interface.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Additional strings to be added to the dialog.</span>
+    <span class="n">additions</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: Additional copyright strings to be added above the standard ones.</span>
+    <span class="n">copyrights</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">Str</span><span class="p">)</span>
+
+    <span class="c1">#: The image displayed in the dialog.</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_image_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.image_resource</span> <span class="kn">import</span> <span class="n">ImageResource</span>
+        <span class="k">return</span> <span class="n">ImageResource</span><span class="p">(</span><span class="s1">&#39;about&#39;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -154,7 +169,7 @@
         &copy; Copyright 2008-2022, Enthought
       </li>
       <li>
-      Last updated on Mar 08, 2022.
+      Last updated on Jul 15, 2022.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
