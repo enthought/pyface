@@ -147,7 +147,7 @@ needs.  At its simplest, the action might look something like this::
     from pyface.action.api import Action
 
     def hello_world():
-        print 'Hello world!'
+        print('Hello world!')
 
     hello_action = Action(
         name="Hello",
@@ -173,7 +173,7 @@ this::
         tooltip = "Say hello"
 
         def perform(self, event=None):
-            print 'Hello world!'
+            print('Hello world!')
 
 Because actions usually require some context, the most common use will be to
 supply a class method as the :py:attr:`~.action.Action.on_perform` callable.  And for toolbar

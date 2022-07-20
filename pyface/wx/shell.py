@@ -930,8 +930,8 @@ class Shell(wx.StyledTextCtrl):
 
     def run(self, command, prompt=1, verbose=1):
         """Execute command within the shell as if it was typed in directly.
-        >>> shell.run('print "this"')
-        >>> print "this"
+        >>> shell.run('print("this")')
+        >>> print("this")
         this
         >>>
         """
