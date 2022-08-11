@@ -213,6 +213,7 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
         module_names = ", ".join(module_names)
         logger.warning(msg, entry_point, toolkit_name, module_names)
 
+    toolkit_exception = None
     for plugin in plugins:
         try:
             toolkit_object = plugin.load()
@@ -222,11 +223,12 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
             module_name = plugin.value.split(":")[0]
             logger.info(msg, plugin.name, module_name)
             logger.debug(exc, exc_info=True)
+            toolkit_exception = exc
 
     msg = "No {} plugin could be loaded for {}"
     msg = msg.format(entry_point, toolkit_name)
     logger.info(msg)
-    raise RuntimeError(msg)
+    raise RuntimeError(msg) from toolkit_exception
 
 
 def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
