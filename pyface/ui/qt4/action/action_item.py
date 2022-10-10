@@ -376,7 +376,12 @@ class _Tool(HasTraits):
         """
         if self.control is not None:
             # Remove the cycle since we're no longer needed.
-            if hasattr(self.control, "_tool_instance"):
+            try:
+                has_instance = hasattr(self.control, "_tool_instance")
+            # PyQt5 "wrapped C/C++ object ... has been deleted"
+            except RuntimeError:
+                has_instance = False
+            if has_instance:
                 del self.control._tool_instance
         self.control = None
 
