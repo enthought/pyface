@@ -378,7 +378,7 @@ class _Tool(HasTraits):
             # Remove the cycle since we're no longer needed.
             try:
                 has_instance = hasattr(self.control, "_tool_instance")
-            # PyQt5 "wrapped C/C++ object ... has been deleted"
+            # fixes mayavi #1180: PyQt5 "wrapped C/C++ object ... has been deleted"
             except RuntimeError:
                 has_instance = False
             if has_instance:
