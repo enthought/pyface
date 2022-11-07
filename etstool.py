@@ -223,8 +223,9 @@ def install(edm, runtime, toolkit, environment, editable, source):
                 "{edm} run -e {environment} -- pip install pyside6<6.4"
             )
         else:
+            parameters["pyside6"] = "pyside6 < 6.4"
             commands.append(
-                '{edm} run -e {environment} -- pip install "pyside6 < 6.4"'
+                '{edm} run -e {environment} -- pip install "{pyside6}"'
             )
 
         commands.append(
