@@ -111,8 +111,13 @@ class EventLoopHelper(HasStrictTraits):
             `timeout` is rounded to the nearest millisecond.
         """
 
+        condition_result = False
+
         def handler():
-            if condition():
+            nonlocal condition_result
+
+            condition_result = bool(condition())
+            if condition_result:
                 self.qt_app.quit()
 
         # Make sure we don't get a premature exit from the event loop.
@@ -128,7 +133,7 @@ class EventLoopHelper(HasStrictTraits):
             condition_timer.start()
             try:
                 self.qt_app.exec_()
-                if not condition():
+                if not condition_result:
                     raise ConditionTimeoutError(
                         "Timed out waiting for condition"
                     )
