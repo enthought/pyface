@@ -118,7 +118,7 @@ class EventLoopHelper(HasStrictTraits):
 
             condition_result = bool(condition())
             if condition_result:
-                self.qt_app.quit()
+                self.qt_app.exit()
 
         # Make sure we don't get a premature exit from the event loop.
         with dont_quit_when_last_window_closed(self.qt_app):
@@ -128,7 +128,7 @@ class EventLoopHelper(HasStrictTraits):
             timeout_timer = QtCore.QTimer()
             timeout_timer.setSingleShot(True)
             timeout_timer.setInterval(round(timeout * 1000))
-            timeout_timer.timeout.connect(self.qt_app.quit)
+            timeout_timer.timeout.connect(self.qt_app.exit)
             timeout_timer.start()
             condition_timer.start()
             try:
