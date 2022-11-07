@@ -216,12 +216,17 @@ def install(edm, runtime, toolkit, environment, editable, source):
             commands.append(
                 "{edm} run -e {environment} -- pip install pyside6<6.2.2"
             )
-        else:
+        elif sys.platform == "linux":
             # PySide6 6.4 has some backwards-incompatible changes to Enums
             # that we haven't updated for yet. xref: enthought/pyface#1164
             commands.append(
+                "{edm} run -e {environment} -- pip install pyside6<6.4"
+            )
+        else:
+            commands.append(
                 "{edm} run -e {environment} -- pip install 'pyside6<6.4'"
             )
+
         commands.append(
             "{edm} run -e {environment} -- pip install pillow"
         )
