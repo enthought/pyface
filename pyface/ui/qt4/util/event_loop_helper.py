@@ -120,24 +120,26 @@ class EventLoopHelper(HasStrictTraits):
             if condition_result:
                 self.qt_app.exit()
 
-        condition_timer = QtCore.QTimer()
-        condition_timer.setInterval(50)
-        condition_timer.timeout.connect(handler)
-        timeout_timer = QtCore.QTimer()
-        timeout_timer.setSingleShot(True)
-        timeout_timer.setInterval(round(timeout * 1000))
-        timeout_timer.timeout.connect(self.qt_app.exit)
-        timeout_timer.start()
-        condition_timer.start()
-        try:
-            self.qt_app.exec_()
-            if not condition_result:
-                raise ConditionTimeoutError(
-                    "Timed out waiting for condition"
-                )
-        finally:
-            timeout_timer.stop()
-            condition_timer.stop()
+        # Make sure we don't get a premature exit from the event loop.
+        with dont_quit_when_last_window_closed(self.qt_app):
+            condition_timer = QtCore.QTimer()
+            condition_timer.setInterval(50)
+            condition_timer.timeout.connect(handler)
+            timeout_timer = QtCore.QTimer()
+            timeout_timer.setSingleShot(True)
+            timeout_timer.setInterval(round(timeout * 1000))
+            timeout_timer.timeout.connect(self.qt_app.exit)
+            timeout_timer.start()
+            condition_timer.start()
+            try:
+                self.qt_app.exec_()
+                if not condition_result:
+                    raise ConditionTimeoutError(
+                        "Timed out waiting for condition"
+                    )
+            finally:
+                timeout_timer.stop()
+                condition_timer.stop()
 
     @contextlib.contextmanager
     def delete_widget(self, widget, timeout=1.0):
