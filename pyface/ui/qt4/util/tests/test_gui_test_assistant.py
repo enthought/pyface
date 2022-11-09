@@ -7,6 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
+import itertools
 import unittest
 
 from pyface.timer.api import CallbackTimer
@@ -94,3 +95,37 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
             self.assertEventuallyTrueInGui(
                 lambda: len(my_list) > 0, timeout=0.1
             )
+
+    def test_assert_eventually_true_in_gui_dont_retest_immediately_true(self):
+        # Given an always-True condition
+        return_value_logs = []
+
+        def logging_condition():
+            return_value = True
+            return_value_logs.append(return_value)
+            return return_value
+
+        # When we wait for the condition to become true
+        self.assertEventuallyTrueInGui(logging_condition)
+
+        # Then the condition should have been evaluated exactly once.
+        self.assertEqual(return_value_logs, [True])
+
+    def test_assert_eventually_true_in_gui_dont_retest_eventually_true(self):
+        # Given a condition that returns two False values, followed by
+        # infinitely many True values ...
+        return_values = itertools.chain([False]*2, itertools.repeat(True))
+
+        return_value_logs = []
+
+        def logging_condition():
+            return_value = next(return_values)
+            return_value_logs.append(return_value)
+            return return_value
+
+        # When we wait for the condition to become true
+        self.assertEventuallyTrueInGui(logging_condition)
+
+        # Then the condition should not have been evaluated again after
+        # becoming True.
+        self.assertEqual(return_value_logs.count(True), 1)

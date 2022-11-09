@@ -80,7 +80,7 @@ class TestGetColor(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(
             lambda: get_color(None, "rebeccapurple")
         )
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+        tester.open_and_wait(when_opened=lambda x: x.close(accept=False))
 
         self.assertEqual(tester.result, None)
 
@@ -90,6 +90,6 @@ class TestGetColor(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(
             lambda: get_color(None, "rebeccapurple", True)
         )
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+        tester.open_and_wait(when_opened=lambda x: x.close(accept=False))
 
         self.assertEqual(tester.result, None)
