@@ -111,9 +111,14 @@ class EventLoopHelper(HasStrictTraits):
             `timeout` is rounded to the nearest millisecond.
         """
 
+        condition_result = False
+
         def handler():
-            if condition():
-                self.qt_app.quit()
+            nonlocal condition_result
+
+            condition_result = bool(condition())
+            if condition_result:
+                self.qt_app.exit()
 
         # Make sure we don't get a premature exit from the event loop.
         with dont_quit_when_last_window_closed(self.qt_app):
@@ -123,12 +128,12 @@ class EventLoopHelper(HasStrictTraits):
             timeout_timer = QtCore.QTimer()
             timeout_timer.setSingleShot(True)
             timeout_timer.setInterval(round(timeout * 1000))
-            timeout_timer.timeout.connect(self.qt_app.quit)
+            timeout_timer.timeout.connect(self.qt_app.exit)
             timeout_timer.start()
             condition_timer.start()
             try:
                 self.qt_app.exec_()
-                if not condition():
+                if not condition_result:
                     raise ConditionTimeoutError(
                         "Timed out waiting for condition"
                     )
