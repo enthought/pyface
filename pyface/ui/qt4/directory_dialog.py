@@ -52,7 +52,10 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        files = self.control.selectedFiles()
+        if self.control is not None:
+            files = self.control.selectedFiles()
+        else:
+            files = []
 
         if files:
             self.path = str(files[0])
