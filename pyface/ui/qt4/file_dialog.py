@@ -102,9 +102,10 @@ class FileDialog(MFileDialog, Dialog):
         self.directory, self.filename = os.path.split(self.path)
 
         # Get the index of the selected filter.
-        self.wildcard_index = self.control.nameFilters().index(
-            self.control.selectedNameFilter()
-        )
+        if self.control is not None:
+            self.wildcard_index = self.control.nameFilters().index(
+                self.control.selectedNameFilter()
+            )
 
         # Let the window close as normal.
         super().close()
