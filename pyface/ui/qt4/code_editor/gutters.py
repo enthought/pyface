@@ -133,7 +133,7 @@ class LineNumberWidget(GutterWidget):
             if block.isVisible() and bottom >= event.rect().top():
                 painter.drawText(
                     0,
-                    top,
+                    int(top),
                     self.width() - 2,
                     self.fontMetrics().height(),
                     QtCore.Qt.AlignmentFlag.AlignRight,
