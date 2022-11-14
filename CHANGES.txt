@@ -2,6 +2,41 @@
 Pyface Changelog
 ================
 
+Release 7.4.3
+=============
+
+Highlights of this release
+--------------------------
+
+This is a bugfix release that collects a number of additional issues discovered
+and fixed since the 7.4.2 release.  Among the fixes, this PySide6 to less than
+6.4.0, as 6.4 has breaking changes in it.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Alex Chabot-Leclerc
+* Mark Dickinson
+* Eric Larson
+* Steven Kern
+* Corran Webster
+
+Fixes
+
+* Fix code editor gutter widget on recent Python versions (#1176)
+* fix issues with FileDialog and DirectoryDialog close method on Linux (#1175)
+* update setup.py metadata (#1173)
+* restrict to PySide versions before 6.4.0 (#1169)
+* don't do unneccessary evaluations of conditions in EventLoopHelper (#1168)
+* fix a deleted object error in PyQt5 (#1161)
+* better reporting of toolkit errors (#1157)
+
+Documentation
+
+* fix some Python 2 style print statements in documentation (#1157)
+
 Release 7.4.2
 =============
 
