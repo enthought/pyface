@@ -12,6 +12,7 @@ import unittest
 
 from pyface.timer.api import CallbackTimer
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
+from pyface.ui.qt4.util.event_loop_helper import ConditionTimeoutError
 from traits.api import Event, HasStrictTraits
 
 
@@ -129,3 +130,50 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
         # Then the condition should not have been evaluated again after
         # becoming True.
         self.assertEqual(return_value_logs.count(True), 1)
+
+    def test_event_loop_until_condition_immediate_exit(self):
+
+        def condition():
+            return True
+
+        self.gui.invoke_after(10, self.qt_app.exit)
+
+        with self.assertWarns(RuntimeWarning) as cm:
+            self.event_loop_helper.event_loop_until_condition(condition)
+
+        self.assertIn("without evaluating condition", str(cm.warning))
+
+    def test_event_loop_until_condition_early_exit(self):
+
+        def condition():
+            return False
+
+        self.gui.invoke_after(1000, self.qt_app.exit)
+
+        with self.assertWarns(RuntimeWarning) as cm:
+            self.event_loop_helper.event_loop_until_condition(condition)
+
+        self.assertIn("without condition evaluating to True", str(cm.warning))
+
+    def test_event_loop_until_condition_timeout(self):
+
+        def condition():
+            return False
+
+        with self.assertRaises(ConditionTimeoutError) as cm:
+            self.event_loop_helper.event_loop_until_condition(condition, timeout=1.0)
+
+        self.assertIn(
+            "without condition evaluating to True",
+            str(cm.exception),
+        )
+
+    def test_event_loop_until_condition_exception(self):
+
+        def condition():
+            return False
+
+        with self.assertRaises(ConditionTimeoutError) as cm:
+            self.event_loop_helper.event_loop_until_condition(condition, timeout=0.01)
+
+        self.assertIn("without evaluating condition", str(cm.exception))
