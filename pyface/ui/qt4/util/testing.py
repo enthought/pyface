@@ -48,7 +48,7 @@ def delete_widget(widget, timeout=1.0):
     yield
 
     timer.start()
-    app.exec_()
+    app.exec()
 
     if not timer.isActive():
         # We exited the event loop on timeout.

@@ -60,7 +60,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
-        retval = self.control.exec_()
+        retval = self.control.exec()
         if self.control is None:
             # dialog window closed, treat as Cancel, nullify choice
             retval = CANCEL
