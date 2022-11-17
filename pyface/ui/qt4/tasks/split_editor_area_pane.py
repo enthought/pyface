@@ -1026,7 +1026,7 @@ class DraggableTabBar(QtGui.QTabBar):
                 drag.setPixmap(self.drag_obj.get_pixmap())
                 drag.setHotSpot(self.drag_obj.get_hotspot())
                 drag.setMimeData(mimedata)
-                drag.exec()
+                drag.exec_()
                 self.drag_obj = None  # deactivate the drag_obj again
                 return
         return super().mouseMoveEvent(event)

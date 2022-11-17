@@ -53,9 +53,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     # If we create custom buttons with the various roles, then we need to
     # keep track of the buttons so we can see what the user clicked.  It's
-    # not correct nor sufficient to check the return result from QMessageBox.exec().
+    # not correct nor sufficient to check the return result from QMessageBox.exec_().
     # (As of Qt 4.5.1, even clicking a button with the YesRole would lead to
-    # exec() returning QDialog.DialogCode.Rejected.
+    # exec_() returning QDialog.DialogCode.Rejected.
     _button_result_map = Dict()
 
     # ------------------------------------------------------------------------
@@ -127,7 +127,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
-        retval = self.control.exec()
+        retval = self.control.exec_()
         if self.control is None:
             # dialog window closed
             if self.cancel:
