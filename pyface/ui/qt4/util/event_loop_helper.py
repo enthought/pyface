@@ -11,6 +11,7 @@
 
 import contextlib
 import threading
+import warnings
 
 from pyface.i_gui import IGUI
 from pyface.qt import QtCore, QtGui
@@ -93,8 +94,19 @@ class EventLoopHelper(HasStrictTraits):
         """Runs the real Qt event loop until the provided condition evaluates
         to True.
 
-        Raises ConditionTimeoutError if the timeout occurs before the condition
-        is satisfied.
+        Notes
+        -----
+
+        This runs the real Qt event loop, polling the condition every 50 ms and
+        returning as soon as the condition becomes true. If the condition does
+        not become true within the given timeout, a ConditionTimeoutError is
+        raised.
+
+        Because the state of the condition is only polled every 50 ms, it
+        may fail to detect transient states that appear and disappear within
+        a 50 ms window.  Code should ensure that any state that is being
+        tested by the condition cannot revert to a False value once it becomes
+        True.
 
         Parameters
         ----------
@@ -106,19 +118,35 @@ class EventLoopHelper(HasStrictTraits):
             Number of seconds to run the event loop in the case that the trait
             change does not occur.
 
-        Notes
-        -----
             `timeout` is rounded to the nearest millisecond.
+
+        Raises
+        ------
+
+        Raises ConditionTimeoutError if the timeout occurs before the condition
+        is satisfied.  If the event loop exits before the condition evaluates
+        to True or times out, a RuntimeWarning will be generated.
+
+        In either of these cases, the message will indicate whether the
+        condition was ever successfully evaluated (which may indicate an error
+        in the condition's code) or whether it always evalutated to False.
         """
 
-        condition_result = False
+        condition_result = None
+        timed_out = False
 
         def handler():
             nonlocal condition_result
 
-            condition_result = bool(condition())
+            condition_result = bool(condition_result or condition())
             if condition_result:
                 self.qt_app.exit()
+
+        def do_timeout():
+            nonlocal timed_out
+
+            timed_out = True
+            self.qt_app.exit()
 
         # Make sure we don't get a premature exit from the event loop.
         with dont_quit_when_last_window_closed(self.qt_app):
@@ -128,15 +156,24 @@ class EventLoopHelper(HasStrictTraits):
             timeout_timer = QtCore.QTimer()
             timeout_timer.setSingleShot(True)
             timeout_timer.setInterval(round(timeout * 1000))
-            timeout_timer.timeout.connect(self.qt_app.exit)
+            timeout_timer.timeout.connect(do_timeout)
             timeout_timer.start()
             condition_timer.start()
             try:
                 self.qt_app.exec_()
                 if not condition_result:
-                    raise ConditionTimeoutError(
-                        "Timed out waiting for condition"
-                    )
+                    if condition_result is None:
+                        status = "without evaluating condition"
+                    else:
+                        status = "without condition evaluating to True"
+                    if timed_out:
+                        raise ConditionTimeoutError(f"Timed out {status}.")
+                    else:
+                        warnings.warn(
+                            RuntimeWarning(
+                                f"Event loop exited early {status}."
+                            )
+                        )
             finally:
                 timeout_timer.stop()
                 condition_timer.stop()
