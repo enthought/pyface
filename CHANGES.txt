@@ -2,6 +2,31 @@
 Pyface Changelog
 ================
 
+Release 7.4.4
+=============
+
+Highlights of this release
+--------------------------
+
+This is a quick bugfix release that resolves some issues with the 7.4.3 release
+on CI for downstream projects.  The issues were on testing code, and so
+shouldn't impact application code or behaviour.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Corran Webster
+
+Fixes
+
+* Don't raise ConditionTimeoutError if test doesn't time out (#1182)
+
+CI
+
+* get CI working again with ubuntu-current on GitHub (#1186)
+
 Release 7.4.3
 =============
 
