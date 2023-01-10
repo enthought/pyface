@@ -1,5 +1,5 @@
 # (C) Copyright 2007 Riverbank Computing Limited
-# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -43,7 +43,7 @@ _DIALOG_TEXT = """
       %s
       </p>
       <p>
-      Copyright &copy; 2003-2022 Enthought, Inc.<br>
+      Copyright &copy; 2003-2023 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
   </center>
