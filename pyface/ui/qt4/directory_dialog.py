@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -52,7 +52,10 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        files = self.control.selectedFiles()
+        if self.control is not None:
+            files = self.control.selectedFiles()
+        else:
+            files = []
 
         if files:
             self.path = str(files[0])
