@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -146,6 +146,11 @@ class GuiTestAssistant(UnittestTools):
         tested by the condition cannot revert to a False value once it becomes
         True.
 
+        If the event loop exits before the condition evaluates to True or times
+        out, a RuntimeWarning will be generated and the message will indicate
+        whether the condition was ever successfully evaluated  or whether it
+        always evalutated to False.
+
         Parameters
         ----------
         condition : callable
@@ -154,6 +159,8 @@ class GuiTestAssistant(UnittestTools):
         timeout : float
             Number of seconds to run the event loop in the case that the
             condition is not satisfied.
+
+            `timeout` is rounded to the nearest millisecond.
         """
         try:
             yield

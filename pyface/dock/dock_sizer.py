@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -1314,7 +1314,7 @@ class DockSplitter(DockItem):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x + idx + 1, y + dy / 2, x + dx - 2, y + dy / 2)
+            dc.DrawLine(x + idx + 1, y + dy // 2, x + dx - 2, y + dy // 2)
 
             iy = y + 2
             ix = x
@@ -1327,7 +1327,7 @@ class DockSplitter(DockItem):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x + dx / 2, y + idy + 1, x + dx / 2, y + dy - 2)
+            dc.DrawLine(x + dx // 2, y + idy + 1, x + dx // 2, y + dy - 2)
 
             iy = y
             ix = x + 2

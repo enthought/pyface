@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2022 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -82,6 +82,6 @@ class TestGetFont(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(
             lambda: get_font(None, "12 Helvetica sans-serif")
         )
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+        tester.open_and_wait(when_opened=lambda x: x.close(accept=False))
 
         self.assertEqual(tester.result, None)
