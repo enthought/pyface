@@ -17,6 +17,7 @@
 
 
 import sys
+import warnings
 
 
 from pyface.qt import QtCore, QtGui, qt_api
@@ -121,8 +122,8 @@ class SplitTabWidget(QtGui.QSplitter):
         callable returns the restored widget.
         """
 
-        # Ensure we are not restoring to a non-empty widget.
-        assert self.count() == 0
+        # Warn if we are restoring to a non-empty widget.
+        warnings.warn("Attempting to restore to a non-empty widget.")
 
         self._restore_qsplitter(state, factory, self)
 
