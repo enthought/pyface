@@ -160,7 +160,10 @@ class EventLoopHelper(HasStrictTraits):
             timeout_timer.start()
             condition_timer.start()
             try:
-                self.qt_app.exec_()
+                if hasattr(self.qt_app, "exec"):
+                    self.qt_app.exec()
+                else:
+                    self.qt_app.exec_()
                 if not condition_result:
                     if condition_result is None:
                         status = "without evaluating condition"
@@ -203,7 +206,10 @@ class EventLoopHelper(HasStrictTraits):
         widget.destroyed.connect(self.qt_app.quit)
         yield
         timer.start()
-        self.qt_app.exec_()
+        if hasattr(self.qt_app, "exec"):
+            self.qt_app.exec()
+        else:
+            self.qt_app.exec_()
         if not timer.isActive():
             # We exited the event loop on timeout
             raise ConditionTimeoutError(
