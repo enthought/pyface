@@ -45,7 +45,7 @@ class GuiTestAssistant(UnittestTools):
             self.traitsui_raise_patch = None
         else:
             self.traitsui_raise_patch = mock.patch(
-                "traitsui.qt.ui_base._StickyDialog.raise_"
+                "traitsui.qt4.ui_base._StickyDialog.raise_"
             )
             self.traitsui_raise_patch.start()
 
