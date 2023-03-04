@@ -10,7 +10,6 @@
 
 
 import os
-import platform
 import unittest
 
 # importlib.resources is new in Python 3.7, and importlib.resources.files is
@@ -24,12 +23,6 @@ except ImportError:
 import pyface
 import pyface.tests
 from ..image_resource import ImageResource
-from ..toolkit import toolkit_object
-
-
-is_qt = toolkit_object.toolkit == "qt"
-if is_qt:
-    from pyface.qt import qt_api
 
 
 SEARCH_PATH = os.fspath(files("pyface") / "images")

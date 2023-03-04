@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 from . import qt_api
 
-if  qt_api == "pyqt5":
+if qt_api == "pyqt5":
     from PyQt5.QtCore import *
 
     from PyQt5.QtCore import pyqtProperty as Property

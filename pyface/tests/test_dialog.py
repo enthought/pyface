@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..dialog import Dialog

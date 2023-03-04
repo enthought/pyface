@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..message_dialog import MessageDialog, information, warning, error

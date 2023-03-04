@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..constant import CANCEL, NO, OK, YES
