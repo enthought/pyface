@@ -45,7 +45,7 @@ interface, which in turn inherits from :py:class:`.IDialog`,
 is the combination of these.  The :py:class:`.MFileDialog` class provides some
 mix-in capabilities around the expression of filters for file types.  And then
 there are two concrete implementations, :py:class:`pyface.ui.wx.file_dialog.FileDialog`
-for wxPython and :py:class:`pyface.ui.qt4.file_dialog.FileDialog` for the Qt
+for wxPython and :py:class:`pyface.ui.qt.file_dialog.FileDialog` for the Qt
 backends.  These toolkit classes in turn inherit from the appropriate toolkit's
 :py:class:`Dialog`, :py:class:`Window`, and :py:class:`Widget` classes, as well
 as the :py:class:`.MFileDialog` mixin.

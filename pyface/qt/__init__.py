@@ -18,7 +18,6 @@ QtAPIs = [
     ("pyside6", "PySide6"),
     ("pyqt5", "PyQt5"),
     ("pyqt6", "PyQt6"),
-    ("pyqt", "PyQt4"),
 ]
 api_names, modules = zip(*QtAPIs)
 
@@ -56,8 +55,7 @@ elif qt_api not in api_names:
     raise RuntimeError(msg)
 
 # useful constants
-is_qt4 = qt_api in {"pyqt"}
 is_qt5 = qt_api in {"pyqt5", "pyside2"}
 is_qt6 = qt_api in {"pyqt6", "pyside6"}
-is_pyqt = qt_api in {"pyqt", "pyqt5", "pyqt6"}
-is_pyside = qt_api in {"pyside", "pyside2", "pyside6"}
+is_pyqt = qt_api in {"pyqt5", "pyqt6"}
+is_pyside = qt_api in {"pyside2", "pyside6"}

@@ -52,7 +52,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
             import wx
 
             control = wx.Control(parent)
-        elif toolkit_object.toolkit == "qt4":
+        elif toolkit_object.toolkit == "qt":
             from pyface.qt import QtGui
 
             control = QtGui.QWidget(parent)

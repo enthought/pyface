@@ -347,7 +347,7 @@ if __name__ == "__main__":
                 "dock/images/*",
                 "tree/images/*",
                 "tests/images/*",
-                "ui/qt4/images/*",
+                "ui/qt/images/*",
                 "ui/wx/images/*",
                 "ui/wx/grid/images/*",
             ]
@@ -355,8 +355,8 @@ if __name__ == "__main__":
         packages=find_packages(),
         entry_points={
             "pyface.toolkits": [
-                "qt4 = pyface.ui.qt4.init:toolkit_object",
-                "qt = pyface.ui.qt4.init:toolkit_object",
+                "qt4 = pyface.ui.qt.init:toolkit_object",
+                "qt = pyface.ui.qt.init:toolkit_object",
                 "wx = pyface.ui.wx.init:toolkit_object",
                 "null = pyface.ui.null.init:toolkit_object",
             ]

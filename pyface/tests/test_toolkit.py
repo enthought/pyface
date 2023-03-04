@@ -47,7 +47,7 @@ class TestToolkit(unittest.TestCase):
             plugins = {
                 ep.name for ep in entry_points()['pyface.toolkits']
             }
-        self.assertLessEqual({"qt4", "wx", "qt", "null"}, plugins)
+        self.assertLessEqual({"qt", "qt4", "wx", "null"}, plugins)
 
     def test_toolkit_object(self):
         # test that the Toolkit class works as expected

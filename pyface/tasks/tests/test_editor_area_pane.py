@@ -18,7 +18,7 @@ from pyface.toolkit import toolkit_object
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
-USING_WX = ETSConfig.toolkit not in ["", "qt4"]
+USING_WX = ETSConfig.toolkit not in ["", "qt"]
 
 
 class EditorAreaPaneTestCase(unittest.TestCase):

@@ -13,7 +13,7 @@ from traits.etsconfig.api import ETSConfig
 
 # Skip tests if Enaml is not installed or we're using the wx backend.
 SKIP_REASON = None
-if ETSConfig.toolkit not in ["", "qt4"]:
+if ETSConfig.toolkit not in ["", "qt"]:
     SKIP_REASON = "Enaml does not support WX"
 else:
     try:
