@@ -102,7 +102,7 @@ class TestImageResource(unittest.TestCase):
         self.assertEqual(image_resource._ref.filename, IMAGE_PATH)
         self.assertEqual(size, (64, 64))
 
-   def test_image_size_search_path(self):
+    def test_image_size_search_path(self):
         image_resource = ImageResource("splash", [SEARCH_PATH])
         image = image_resource.create_image()
         size = image_resource.image_size(image)
