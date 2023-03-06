@@ -15,6 +15,7 @@ jobs:
 
     env:
       ETS_TOOLKIT: qt4
+      EXCLUDE_TESTS: wx
 
     runs-on: ${{ matrix.os }}
 
@@ -65,6 +66,7 @@ jobs:
 
     env:
       ETS_TOOLKIT: wx
+      EXCLUDE_TESTS: qt4
 
     runs-on: ${{ matrix.os }}
 
