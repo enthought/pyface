@@ -14,7 +14,7 @@ jobs:
         qt-api: ['pyqt5', 'pyside2', 'pyside6']
 
     env:
-      ETS_TOOLKIT: qt
+      ETS_TOOLKIT: qt4
 
     runs-on: ${{ matrix.os }}
 
