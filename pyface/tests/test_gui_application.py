@@ -13,6 +13,7 @@ import os
 from shutil import rmtree
 from tempfile import mkdtemp
 import unittest
+from unittest import mock
 
 from traits.api import Bool, observe
 
@@ -148,6 +149,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(app.home, ETSConfig.application_home)
         self.assertEqual(app.user_data, ETSConfig.user_data)
         self.assertEqual(app.company, ETSConfig.company)
+        self.assertIsNone(app.icon)
+        self.assertIsNone(app.logo)
 
     def test_initialize_application_home(self):
         dirpath = mkdtemp()
@@ -293,3 +296,52 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS[:-1])
         self.assertEqual(app.windows, [])
+
+    def test_application_icon(self):
+        app = GUIApplication(
+            icon='core',
+        )
+        app.gui
+
+        with mock.patch('pyface.gui.GUI.set_application_icon') as mock_method:
+            self.gui.invoke_after(1000, app.exit)
+            app.run()
+
+            mock_method.assert_called_once_with(app.icon)
+
+    def test_application_icon_changed(self):
+        app = GUIApplication()
+
+        with mock.patch('pyface.gui.GUI.set_application_icon') as mock_method:
+            self.gui.invoke_after(1000, app.exit)
+            app.run()
+
+            mock_method.assert_not_called()
+
+        with mock.patch('pyface.gui.GUI.set_application_icon') as mock_method:
+            app.icon = 'core'
+
+            mock_method.assert_called_once_with(app.icon)
+
+    def test_application_name(self):
+        app = GUIApplication()
+
+        with mock.patch('pyface.gui.GUI.set_application_name') as mock_method:
+            self.gui.invoke_after(1000, app.exit)
+            app.run()
+
+            mock_method.assert_called_once_with(app.name)
+
+    def test_application_name_changed(self):
+        app = GUIApplication(name="")
+
+        with mock.patch('pyface.gui.GUI.set_application_name') as mock_method:
+            self.gui.invoke_after(1000, app.exit)
+            app.run()
+
+            mock_method.assert_not_called()
+
+        with mock.patch('pyface.gui.GUI.set_application_name') as mock_method:
+            app.name = 'changed name'
+
+            mock_method.assert_called_once_with(app.name)

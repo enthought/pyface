@@ -16,7 +16,7 @@ import os
 
 
 from traits.etsconfig.api import ETSConfig
-from traits.api import Bool, HasTraits, Interface, Str
+from traits.api import Any, Bool, HasTraits, Interface, Str
 
 
 # Logging.
@@ -27,6 +27,9 @@ class IGUI(Interface):
     """ The interface of a pyface GUI. """
 
     # 'GUI' interface -----------------------------------------------------#
+
+    #: The toolkit application object.  This is typically read-only.
+    application = Any()
 
     #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
     #: displayed)?
@@ -157,6 +160,20 @@ class IGUI(Interface):
 
     def stop_event_loop(self):
         """ Stop the GUI event loop. """
+
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+        """
+
+    def set_application_name(self, image):
+        """ Set the application name in the OS.
+
+        This controls the name displayed in system docks and similar locations
+        within the operating system.
+        """
 
 
 class MGUI(HasTraits):

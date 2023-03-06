@@ -16,14 +16,11 @@
 import logging
 import sys
 
-
 import wx
 
+from traits.api import Bool, HasTraits, Property, provides, Str
 
-from traits.api import Bool, HasTraits, provides, Str
-from pyface.util.guisupport import start_event_loop_wx
-
-
+from pyface.util.guisupport import get_app_wx, start_event_loop_wx
 from pyface.i_gui import IGUI, MGUI
 
 
@@ -36,6 +33,8 @@ class GUI(MGUI, HasTraits):
 
     # 'GUI' interface -----------------------------------------------------#
 
+    application = Property()
+
     busy = Bool(False)
 
     started = Bool(False)
@@ -46,7 +45,15 @@ class GUI(MGUI, HasTraits):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, splash_screen=None):
+    def __init__(self, splash_screen=None, name="", icon=None):
+        # Change the application icon, if any
+        if icon is not None:
+            self.set_application_icon(icon)
+
+        # Change the application name, if any
+        if name:
+            self.set_application_name(name)
+
         # Display the (optional) splash screen.
         self._splash_screen = splash_screen
 
@@ -120,7 +127,38 @@ class GUI(MGUI, HasTraits):
         """ Stop the GUI event loop. """
 
         logger.debug("---------- stopping GUI event loop ----------")
-        wx.GetApp().ExitMainLoop()
+        self.application.ExitMainLoop()
+
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+
+        Note
+        ----
+        This does not change the dock icon in MacOS.
+        """
+        # ensure app exists before doing anything else
+        self.application
+        icon = image.create_icon()
+        dock_icon = wx.adv.TaskBarIcon(wx.adv.TBI_DOCK)
+        dock_icon.SetIcon(icon)
+
+    def set_application_name(self, name):
+        """ Set the application name at the toolkit level.
+
+        This sets the name displayed for the application in various places
+        in the OS.
+
+        Note
+        ----
+        This does not change the name of the application in the MacOS menu or
+        dock.
+        """
+        # ensure app exists before doing anything else
+        app = self.application
+        app.SetAppDisplayName(name)
 
     # ------------------------------------------------------------------------
     # Trait handlers.
@@ -140,3 +178,6 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
+
+    def _get_application(self):
+        return get_app_wx()

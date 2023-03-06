@@ -13,16 +13,13 @@
 
 
 import logging
+import sys
 
+from traits.api import Bool, HasTraits, Property, observe, provides, Str
 
 from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Bool, HasTraits, observe, provides, Str
-from pyface.util.guisupport import start_event_loop_qt4
-
-
 from pyface.i_gui import IGUI, MGUI
+from pyface.util.guisupport import get_app_qt4, start_event_loop_qt4
 
 
 # Logging.
@@ -37,6 +34,8 @@ class GUI(MGUI, HasTraits):
 
     # 'GUI' interface -----------------------------------------------------#
 
+    application = Property()
+
     busy = Bool(False)
 
     started = Bool(False)
@@ -47,7 +46,15 @@ class GUI(MGUI, HasTraits):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, splash_screen=None):
+    def __init__(self, splash_screen=None, name="", icon=None):
+        # Change the application icon, if any
+        if icon is not None:
+            self.set_application_icon(icon)
+
+        # Change the application name, if any
+        if name:
+            self.set_application_name(name)
+
         # Display the (optional) splash screen.
         self._splash_screen = splash_screen
 
@@ -109,7 +116,30 @@ class GUI(MGUI, HasTraits):
 
     def stop_event_loop(self):
         logger.debug("---------- stopping GUI event loop ----------")
-        QtGui.QApplication.quit()
+        self.application.quit()
+
+    def set_application_icon(self, image):
+        """ Set the application icon in the OS.
+
+        This controls the icon displayed in system docks and similar locations
+        within the operating system.
+        """
+        # ensure application exists before doing anything else
+        app = self.application
+        app.setWindowIcon(image.create_icon())
+
+    def set_application_name(self, name):
+        """ Set the application name at the toolkit level.
+
+        This sets the name displayed for the application in various places
+        in the OS.
+
+        Note
+        ----
+        This does not change the name of the application in the MacOS menu or
+        dock.
+        """
+        self.application.setApplicationDisplayName(name)
 
     # ------------------------------------------------------------------------
     # Trait handlers.
@@ -128,6 +158,9 @@ class GUI(MGUI, HasTraits):
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
+
+    def _get_application(self):
+        return get_app_qt4(*sys.argv)
 
 
 class _FutureCall(QtCore.QObject):
