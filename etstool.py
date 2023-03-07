@@ -199,7 +199,6 @@ def install(edm, runtime, toolkit, environment, editable, source):
     commands.extend([
         "{edm} install -y -e {environment} " + packages,
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
-        "{edm} run -e {environment} -- python setup.py clean --all",
         install_pyface,
     ])
 
@@ -351,7 +350,6 @@ def cleanup(edm, runtime, toolkit, environment):
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = [
-        "{edm} run -e {environment} -- python setup.py clean",
         "{edm} environments remove {environment} --purge -y",
     ]
     click.echo("Cleaning up environment '{environment}'".format(**parameters))
@@ -385,22 +383,6 @@ def test_clean(edm, runtime, toolkit, no_environment_vars=False):
         test(args=test_args, standalone_mode=False)
     finally:
         cleanup(args=args, standalone_mode=False)
-
-
-@cli.command()
-@edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
-@click.option("--environment", default=None, help="EDM environment to use")
-def update(edm, runtime, toolkit, environment):
-    """ Update/Reinstall package into environment.
-
-    """
-    parameters = get_parameters(edm, runtime, toolkit, environment)
-    commands = ["{edm} run -e {environment} -- python setup.py install"]
-    click.echo("Re-installing in  '{environment}'".format(**parameters))
-    execute(commands, parameters)
-    click.echo("Done update")
 
 
 @cli.command()
