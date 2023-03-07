@@ -131,7 +131,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
                 root.editor_area.active_tabwidget, root.rightchild.tabwidget()
             )
         finally:
-            root.deleteLater()
+            with event_loop():
+                root.deleteLater()
 
     def _setUp_collapse(self, parent=None):
         """ Creates a root, its leftchild and rightchild, so that collapse can
@@ -192,7 +193,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             self.assertEqual(root.tabwidget().count(), 4)
             self.assertEqual(root.tabwidget().currentWidget(), btn2)
         finally:
-            root.deleteLater()
+            with event_loop():
+                root.deleteLater()
 
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty
@@ -230,11 +232,11 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             )
         finally:
             # this is being perhaps overly paranoid
-            right.destroy()
-            left.destroy()
-            root.editor_area.destroy()
-            tabwidget.deleteLater()
-            root.deleteLater()
+            with event_loop():
+                right.destroy()
+                left.destroy()
+                root.editor_area.destroy()
+                #root.deleteLater()
 
     def test_persistence(self):
         """ Tests whether get_layout/set_layout work correctly by setting a
@@ -354,7 +356,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             file1.close()
             file2.close()
         finally:
-            editor_area.destroy()
+            with event_loop():
+                editor_area.destroy()
 
     def test_context_menu_merge_text_left_right_split(self):
         # Regression test for enthought/pyface#422
@@ -394,7 +397,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 window.close()
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_context_menu_merge_text_top_bottom_split(self):
         # Regression test for enthought/pyface#422
@@ -434,7 +438,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 window.close()
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_no_context_menu_if_outside_tabwidgets(self):
         # Check that the case of a position not in any of the tab widgets
@@ -470,7 +475,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 window.close()
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
         # Regression test: if an editor contains tabs, a change in focus
@@ -508,7 +514,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 window.close()
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_active_editor_after_focus_change(self):
         window = TaskWindow(size=(800, 600))
@@ -549,7 +556,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 window.close()
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_editor_label_change_inactive(self):
         # regression test for pyface#523
@@ -591,7 +599,8 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
             self.assertEqual(tab_text, "New Name")
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
 
     def test_editor_tooltip_change_inactive(self):
         # regression test related to pyface#523
@@ -633,4 +642,5 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
             self.assertEqual(tab_tooltip, "New Tooltip")
         finally:
-            window.destroy()
+            with event_loop():
+                window.destroy()
