@@ -37,7 +37,7 @@ pyside6 = ['pyside6<6.4', 'pygments']
 numpy = ['numpy']
 traitsui = ['traitsui']
 test = ['packaging']
-wx = ['wxpython>=4', 'numpy']
+wx = ['wxPython>=4', 'numpy']
 
 [project.urls]
 source = 'https://github.com/enthought/pyface'
