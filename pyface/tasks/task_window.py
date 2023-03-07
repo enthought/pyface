@@ -90,14 +90,15 @@ class TaskWindow(ApplicationWindow):
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
         """
-        # Allow the TaskWindowBackend to clean up first.
-        self._window_backend.destroy()
+        if self.control is not None:
+            # Allow the TaskWindowBackend to clean up first.
+            self._window_backend.destroy()
 
-        # Don't use 'remove_task' here to avoid changing the active state and
-        # thereby removing the window's menus and toolbars. This can lead to
-        # undesirable animations when the window is being closed.
-        for state in self._states:
-            self._destroy_state(state)
+            # Don't use 'remove_task' here to avoid changing the active state and
+            # thereby removing the window's menus and toolbars. This can lead to
+            # undesirable animations when the window is being closed.
+            for state in self._states:
+                self._destroy_state(state)
         super().destroy()
 
     # ------------------------------------------------------------------------

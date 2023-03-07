@@ -52,10 +52,11 @@ class TaskWindowBackend(MTaskWindowBackend):
     def destroy(self):
         """ Destroy the backend.
         """
-        app = QtGui.QApplication.instance()
-        app.focusChanged.disconnect(self._focus_changed_signal)
-        # signal to layout we don't need it any more
-        self._main_window_layout.control = None
+        if self._main_window_layout.control is not None:
+            app = QtGui.QApplication.instance()
+            app.focusChanged.disconnect(self._focus_changed_signal)
+            # signal to layout we don't need it any more
+            self._main_window_layout.control = None
 
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
