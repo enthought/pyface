@@ -18,6 +18,7 @@ jobs:
       EXCLUDE_TESTS: wx
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20  # should be plenty, it's usually < 5
 
     steps:
     - name: Check out the target commit
@@ -62,7 +63,7 @@ jobs:
   tests-wx:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.8']
 
     env:
@@ -84,6 +85,12 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Install wxPython (Ubuntu)
+      # wheels are not available for Linux through PyPI, so grab appropriate
+      # wheels from wxPython website
+      run: |
+        python -m pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-22.04 wxPython
+      if: matrix.os == 'ubuntu-latest'
     - name: Install dependencies and local packages
       run: |
         python -m pip install .[wx,traitsui,test]
