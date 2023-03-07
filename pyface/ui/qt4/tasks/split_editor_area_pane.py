@@ -125,22 +125,23 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
-        # disconnect application level focus change signals first, else it gives
-        # weird runtime errors trying to access non-existent objects
-        QtGui.QApplication.instance().focusChanged.disconnect(
-            self._focus_changed
-        )
+        if self.control is not None:
+            # disconnect application level focus change signals first, else it gives
+            # weird runtime errors trying to access non-existent objects
+            QtGui.QApplication.instance().focusChanged.disconnect(
+                self._focus_changed
+            )
 
-        for editor in self.editors[:]:
-            self.remove_editor(editor)
+            for editor in self.editors[:]:
+                self.remove_editor(editor)
 
-        while self._connections_to_remove:
-            signal, handler = self._connections_to_remove.pop()
-            signal.disconnect(handler)
+            while self._connections_to_remove:
+                signal, handler = self._connections_to_remove.pop()
+                signal.disconnect(handler)
 
-        # Remove reference to active tabwidget so that it can be deleted
-        # together with the main control
-        self.active_tabwidget = None
+            # Remove reference to active tabwidget so that it can be deleted
+            # together with the main control
+            self.active_tabwidget = None
 
         super().destroy()
 

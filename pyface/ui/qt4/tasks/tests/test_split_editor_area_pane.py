@@ -229,6 +229,10 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
                 root.editor_area.active_tabwidget, root.leftchild.tabwidget()
             )
         finally:
+            # this is being perhaps overly paranoid
+            right.destroy()
+            left.destroy()
+            root.editor_area.destroy()
             tabwidget.deleteLater()
             root.deleteLater()
 
