@@ -52,5 +52,7 @@ class TraitsTaskPane(TaskPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
-        self.ui.dispose()
+        if self.ui is not None:
+            self.ui.dispose()
+            self.ui = None
         self.control = self.ui = None
