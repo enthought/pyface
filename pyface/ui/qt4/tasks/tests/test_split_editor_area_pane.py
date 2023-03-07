@@ -196,13 +196,16 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 root.deleteLater()
 
+    #@unittest.skip("ignore for now")
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty
         tabwidget. It's sibling can have an arbitrary layout and the result
         would be such that this layout is transferred to the parent.
         """
         # setup
-        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
+        editor_area=SplitEditorAreaPane()
+        editor_area.create(None)
+        root = editor_area.control
         try:
             tabwidget = root.tabwidget()
             tabwidget.setParent(None)
@@ -231,12 +234,7 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
                 root.editor_area.active_tabwidget, root.leftchild.tabwidget()
             )
         finally:
-            # this is being perhaps overly paranoid
-            with event_loop():
-                right.destroy()
-                left.destroy()
-                root.editor_area.destroy()
-                #root.deleteLater()
+            editor_area.destroy()
 
     def test_persistence(self):
         """ Tests whether get_layout/set_layout work correctly by setting a
