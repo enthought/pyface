@@ -64,7 +64,7 @@ jobs:
   tests-wx:
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-latest]
+        os: [windows-latest]
         python-version: ['3.8', '3.10']
       fail-fast: false
 
@@ -77,36 +77,15 @@ jobs:
     steps:
     - name: Check out the target commit
       uses: actions/checkout@v3
-    - name: Install Linux packages for wx support
-      # this is the full build dependencies, probably don't all need this
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential ccache
-        sudo apt-get install -y libgtk-3-dev libjpeg-dev libtiff-dev \
-          libsdl2-dev libgstreamer-plugins-base1.0-dev libnotify-dev \
-          libsm-dev libwebkit2gtk-4.0-dev libxtst-dev libexpat1-dev \
-          libgl1-mesa-dev libglu1-mesa-dev libcurl4-openssl-dev \
-          libgstreamer-plugins-bad1.0-dev
-      if: matrix.os == 'ubuntu-22.04'
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install wxPython (Ubuntu)
-      # wheels are not available for Linux through PyPI, so grab appropriate
-      # wheels from wxPython website
-      run: |
-        python -m pip install -f "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/${{ matrix.os }}" wxPython
-      if: matrix.os == 'ubuntu-22.04'
     - name: Install dependencies and local packages
       run: |
         python -m pip install ".[wx,test,traitsui]"
     - name: Create clean test directory
       run: |
         mkdir testdir
-    - name: Run the test suite (Linux)
-      run: cd testdir && xvfb-run -a python -X faulthandler -m unittest discover -v pyface
-      if: matrix.os == 'ubuntu-22.04'
     - name: Run the test suite (Windows/macOS)
       run: cd testdir && python -X faulthandler -m unittest discover -v pyface
-      if: matrix.os != 'ubuntu-22.04'
