@@ -35,6 +35,7 @@ pyqt6 = ['pyqt6', 'pygments']
 pyside2 = ['pyside2', 'pygments']
 pyside6 = ['pyside6<6.4', 'pygments']
 numpy = ['numpy']
+traitsui = ['traitsui']
 test = ['packaging']
 wx = ['wxpython>=4', 'numpy']
 
