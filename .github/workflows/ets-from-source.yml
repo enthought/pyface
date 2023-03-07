@@ -17,10 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        toolkit: ['wx', 'pyqt5', 'pyside2']
-        exclude:
-          - os: ubuntu-latest
-            toolkit: 'wx'
+        toolkit: ['pyside6']
     runs-on: ${{ matrix.os }}
     env:
       # Set root directory, mainly for Windows, so that the EDM Python
@@ -29,7 +26,7 @@ jobs:
       # relative path between the site-packages and the source directory.
       EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Qt dependencies for Linux
         run: |
           sudo apt-get update
@@ -50,20 +47,13 @@ jobs:
           sudo apt-get install libpulse-mainloop-glib0
         shell: bash
         if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit != 'wx'
-      - name: Install Wx dependencies for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install libsdl-image1.2
-          sudo apt-get install libsdl2-2.0-0
-        shell: bash
-        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit == 'wx'
       - name: Cache EDM packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v1
+        uses: enthought/setup-edm-action@v2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment

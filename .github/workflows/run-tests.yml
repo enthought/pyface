@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
 
     env:
-      ETS_TOOLKIT: qt4
+      ETS_TOOLKIT: qt
       EXCLUDE_TESTS: wx
 
     runs-on: ${{ matrix.os }}

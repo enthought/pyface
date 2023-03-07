@@ -61,7 +61,7 @@ class MainWindow(ApplicationWindow):
         )
 
         # Add a tool bar if we are using qt4 - wx has layout issues
-        if toolkit_object.toolkit == "qt4":
+        if toolkit_object.toolkit.startswith("qt"):
             from pygments.styles import STYLE_MAP
 
             styles = list(STYLE_MAP)
