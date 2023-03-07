@@ -303,7 +303,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Returns the editor corresponding to editor_widget
         """
         for editor in self.editors:
-            if editor.control is editor_widget:
+            if getattr(editor, "control", None) is editor_widget:
                 return editor
         return None
 
