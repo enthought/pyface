@@ -191,7 +191,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
-        "{edm} install -y -e {environment} " + packages,
+        "{edm} install -y -e {environment} --add-repository enthought/lgpl --add-repository enthought/gpl " + packages,  # noqa: E501
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         install_pyface,
     ]
