@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 
 from traits.api import Any, List, Str, provides
 
@@ -60,7 +60,10 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
-        retval = self.control.exec_()
+        if qt_api == 'pyside2':
+            retval = self.control.exec_()
+        else:
+            retval = self.control.exec()
         if self.control is None:
             # dialog window closed, treat as Cancel, nullify choice
             retval = CANCEL

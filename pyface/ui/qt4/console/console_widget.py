@@ -597,7 +597,12 @@ class ConsoleWidget(QtGui.QWidget):
         """
         if not printer:
             printer = QtGui.QPrinter()
-            if QtGui.QPrintDialog(printer).exec_() != QtGui.QDialog.DialogCode.Accepted:
+            dialog = QtGui.QPrintDialog(printer)
+            if hasattr(dialog, "exec"):
+                result = dialog.exec()
+            else:
+                result = dialog.exec_()
+            if result != QtGui.QDialog.DialogCode.Accepted:
                 return
         self._control.print_(printer)
 
@@ -616,7 +621,11 @@ class ConsoleWidget(QtGui.QWidget):
             root, ext = os.path.splitext(self._filename)
             if ext.lower() in (".xml", ".xhtml"):
                 dialog.selectNameFilter(filters[-1])
-        if dialog.exec_():
+        if hasattr(dialog, "exec"):
+            result = dialog.exec()
+        else:
+            result = dialog.exec_()
+        if result:
             filename = str(dialog.selectedFiles()[0])
             self._filename = filename
             choice = str(dialog.selectedNameFilter())
@@ -688,8 +697,11 @@ class ConsoleWidget(QtGui.QWidget):
             layout.addWidget(checkbox)
             widget.setLayout(layout)
             widget.show()
-            reply = box.exec_()
-            inline = reply == 0
+            if hasattr(box, "exec"):
+                reply = box.exec()
+            else:
+                reply = box.exec_()
+            inline = (reply == 0)
             if checkbox.checkState():
                 # don't ask anymore, always use this choice
                 if inline:
@@ -2029,4 +2041,7 @@ class ConsoleWidget(QtGui.QWidget):
         """ Shows a context menu at the given QPoint (in widget coordinates).
         """
         menu = self._context_menu_make(pos)
-        menu.exec_(self._control.mapToGlobal(pos))
+        if hasattr(menu, "exec"):
+            menu.exec(self._control.mapToGlobal(pos))
+        else:
+            menu.exec_(self._control.mapToGlobal(pos))
