@@ -196,14 +196,13 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
             with event_loop():
                 root.deleteLater()
 
-    #@unittest.skip("ignore for now")
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty
         tabwidget. It's sibling can have an arbitrary layout and the result
         would be such that this layout is transferred to the parent.
         """
         # setup
-        editor_area=SplitEditorAreaPane()
+        editor_area = SplitEditorAreaPane()
         editor_area.create(None)
         root = editor_area.control
         try:
