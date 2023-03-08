@@ -100,9 +100,21 @@ dependencies = {
     "coverage",
     "flake8",
     "flake8_ets",
-    "pillow_simd",
     "packaging",
 }
+
+# if on mac, see if we can handle pillow_simd - do we have AVX2?
+if sys.platform == "darwin":
+    result = subprocess.run(
+        ['sysctl', 'machdep.cpu.leaf7_features'],
+        capture_output=True,
+        check=True,
+    )
+    if b'AVX2' in result.stdout.split():
+        dependencies.add('pillow_simd')
+else:
+    dependencies.add('pillow_simd')
+
 
 source_dependencies = {
     "traits": "git+http://github.com/enthought/traits.git#egg=traits",
