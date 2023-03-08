@@ -59,5 +59,8 @@ known_enthought = ['pyface', 'traits', 'traitsui']
 line_length = 79
 order_by_type = false
 
+[tool.setuptools]
+packages = ['pyface']
+
 [tool.setuptools.package-data]
 pyface = ["image/library/*.zip", "**/images/*"]

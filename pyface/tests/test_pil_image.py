@@ -17,9 +17,9 @@ import unittest
 # new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
 # importlib_resources package.
 try:
-    from importlib.resources import files
+    from importlib.resources import files, as_file
 except ImportError:
-    from importlib_resources import files
+    from importlib_resources import files, as_file
 
 from pyface.util._optional_dependencies import optional_import
 
@@ -33,27 +33,30 @@ with optional_import(
     from PIL import Image
     from ..pil_image import PILImage
 
-IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
+image_source = files("pyface.tests") / "images" / "core.png"
 
 
 @unittest.skipIf(Image is None, "Pillow not available")
 class TestPILImage(unittest.TestCase):
 
-    def setUp(self):
-        self.pil_image = Image.open(IMAGE_PATH)
-
     def test_create_image(self):
-        image = PILImage(self.pil_image)
-        toolkit_image = image.create_image()
-        self.assertIsNotNone(toolkit_image)
-        self.assertEqual(image.image, self.pil_image)
+        with as_file(image_source) as image_path:
+            pil_image = Image.open(image_path)
+            image = PILImage(pil_image)
+            toolkit_image = image.create_image()
+            self.assertIsNotNone(toolkit_image)
+            self.assertEqual(image.image, pil_image)
 
     def test_create_bitmap(self):
-        image = PILImage(self.pil_image)
-        bitmap = image.create_bitmap()
-        self.assertIsNotNone(bitmap)
+        with as_file(image_source) as image_path:
+            pil_image = Image.open(image_path)
+            image = PILImage(pil_image)
+            bitmap = image.create_bitmap()
+            self.assertIsNotNone(bitmap)
 
     def test_create_icon(self):
-        image = PILImage(self.pil_image)
-        icon = image.create_icon()
-        self.assertIsNotNone(icon)
+        with as_file(image_source) as image_path:
+            pil_image = Image.open(image_path)
+            image = PILImage(pil_image)
+            icon = image.create_icon()
+            self.assertIsNotNone(icon)
