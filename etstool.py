@@ -103,7 +103,7 @@ dependencies = {
     "packaging",
 }
 
-# if on mac, see if we can handle pillow_simd - do we have AVX2?
+# if on mac, see if we can handle pillow_simd - do we have AVX2? - see #1207
 if sys.platform == "darwin":
     result = subprocess.run(
         ['sysctl', 'machdep.cpu.leaf7_features'],
