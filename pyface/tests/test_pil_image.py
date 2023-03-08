@@ -24,7 +24,7 @@ from pyface.util._optional_dependencies import optional_import
 Image = None
 
 with optional_import(
-        "pillow",
+        "PIL",
         msg="PILImage not available due to missing pillow.",
         logger=logging.getLogger(__name__)):
 
