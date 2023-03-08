@@ -8,8 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-
-import os
 import logging
 import unittest
 
@@ -17,9 +15,9 @@ import unittest
 # new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
 # importlib_resources package.
 try:
-    from importlib.resources import files, as_file
+    from importlib.resources import as_file, files
 except ImportError:
-    from importlib_resources import files, as_file
+    from importlib_resources import as_file, files
 
 from pyface.util._optional_dependencies import optional_import
 
