@@ -60,7 +60,7 @@ jobs:
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Check mac capabilities
-        run: sysctl -a | grep machdep.cpu.features
+        run: sysctl -a | ggrep machdep.cpu.leaf7_features
         if: matrix.os == 'macos-latest'
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
