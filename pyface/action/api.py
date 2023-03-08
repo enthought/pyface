@@ -41,7 +41,6 @@ Action Managers
 - ``MenuBarManager``
 - ``StatusBarManager``
 - ``ToolBarManager``
-- ``ToolPaletteManager``, only for the Wx toolkit.
 
 Action Manager Items
 --------------------
@@ -94,6 +93,3 @@ from .window_action import CloseWindowAction, WindowAction
 # becomes toolkit agnostic.
 
 from traits.etsconfig.api import ETSConfig
-
-if ETSConfig.toolkit == "wx":
-    from .tool_palette_manager import ToolPaletteManager
