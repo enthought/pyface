@@ -29,9 +29,6 @@ class IHeadingText(Interface):
     #: The heading text.
     text = Str("Default")
 
-    #: The background image.
-    image = Image()
-
 
 class MHeadingText(HasTraits):
     """ The mixin class that contains common code for toolkit specific
