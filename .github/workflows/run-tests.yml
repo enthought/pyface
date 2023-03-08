@@ -1,4 +1,4 @@
-name: Run test suite for PySide6 and wxPython
+name: Run test suite for Qt and wxPython
 
 on: [pull_request, workflow_dispatch]
 
