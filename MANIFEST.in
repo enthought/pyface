@@ -1,11 +1,12 @@
-include image_LICENSE.txt
-include image_LICENSE_Eclipse.txt
-include image_LICENSE_Nuvola.txt
-include image_LICENSE_OOo.txt
-include LICENSE-CC-BY-3.0.txt
-include LICENSE.txt
-include README.rst
 include MANIFEST.in
+include .flake8
+include .coveragerc
+include *.rst
+include *.txt
+include *.cfg
+include *-requirements.txt
+include *.toml
+include etstool.py
 recursive-include pyface *.py *.png *.jpg *.gif *.svg *.zip *.txt
 graft docs
 prune docs/build
