@@ -4,7 +4,6 @@ include .coveragerc
 include *.rst
 include *.txt
 include *.cfg
-include *-requirements.txt
 include *.toml
 include etstool.py
 recursive-include pyface *.py *.png *.jpg *.gif *.svg *.zip *.txt
