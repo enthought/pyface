@@ -121,20 +121,6 @@ class MApplicationWindow(HasTraits):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        """ Destroy the control if it exists. """
-
-        if self.menu_bar_manager is not None:
-            self.menu_bar_manager.destroy()
-
-        if self.tool_bar_manager is not None:
-            self.tool_bar_manager.destroy()
-
-        if self.status_bar_manager is not None:
-            self.status_bar_manager.destroy()
-
-        for tool_bar_manager in self.tool_bar_managers:
-            tool_bar_manager.destroy()
-
         super().destroy()
 
     # ------------------------------------------------------------------------

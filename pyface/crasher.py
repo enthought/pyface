@@ -1,5 +1,5 @@
 """
-The script below segfaults for me around 10% of the time with:
+The script below segfaults for me some proportion (>10%) of the time with:
 
 - Ubuntu 22.04
 - Python 3.10 (Ubuntu package)
@@ -7,35 +7,49 @@ The script below segfaults for me around 10% of the time with:
 
 To reproduce:
 
-- Save this script under the name 'crasher.py'
 - Create and activate a Python 3.10 venv with e.g.
 
     python -m venv --clear crasher
     source crasher/bin/activate
 
-- Install pyface and PySide6 < 6.4 from PyPI:
+- Install PySide6 < 6.4 from PyPI
 
-    python -m pip install pyface "PySide6<6.4"
+    python -m pip install "PySide6 < 6.4"
 
-- Run this script under unittest:
+- Clone Pyface, check out the debug-segfault-1211 branch and install
+
+    python -m pip install -e .
+
+- Run this file under unittest:
 
     python -m unittest crasher
-
 """
 
 import unittest
 
 from pyface.gui import GUI
-from pyface.api import ApplicationWindow
+from pyface.qt import QtGui
 from traits.api import HasTraits, Instance
+
+from .window import Window
+
+
+class MyApplicationWindow(Window):
+    def _create(self):
+        super()._create()
+        contents = QtGui.QWidget(self.control)
+        self.control.setCentralWidget(contents)
+
+    def _create_control(self, parent):
+        return super()._create_control(parent)
 
 
 class MyTasksApplication(HasTraits):
-    window = Instance(ApplicationWindow)
+    window = Instance(MyApplicationWindow)
 
     def run(self):
         gui = GUI()
-        window = ApplicationWindow()
+        window = MyApplicationWindow()
         window.open()
         self.window = window
         gui.invoke_later(self.exit)
@@ -46,8 +60,7 @@ class MyTasksApplication(HasTraits):
         self.window = None
         window.close()
         window.destroy()
-        #window.closed = True
-
+        # window.closed = True
 
 
 class TestTasksApplication(unittest.TestCase):
