@@ -22,7 +22,7 @@ To reproduce:
 
 - Run this file under unittest:
 
-    python -m unittest crasher
+    python -m unittest pyface.crasher
 """
 
 import unittest
