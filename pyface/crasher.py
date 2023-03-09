@@ -32,54 +32,27 @@ from pyface.qt import QtGui
 from traits.api import Any, HasTraits, Instance
 
 
-
 class MyWindow(HasTraits):
     control = Any()
 
-    parent = Any()
+    def open(self):
+        if self.control is None:
+            control = QtGui.QMainWindow()
+            control.setEnabled(True)
+            control.setVisible(True)
+            self.control = control
 
-    def _create(self):
-        self.control = self._create_control(self.parent)
-
-    def _create_control(self, parent):
-        control = QtGui.QMainWindow(parent)
-        control.setEnabled(True)
-        control.setVisible(True)
-        return control
-
-    def destroy(self):
+    def close(self):
         if self.control is not None:
-            # Avoid problems with recursive calls.
-            # Widget.destroy() sets self.control to None,
-            # so we need a reference to control
             control = self.control
+            self.control = None
 
-            # Widget.destroy() sets self.control to None and deletes it later,
-            # so we call it before control.close()
-            # This is not strictly necessary (closing the window in fact
-            # hides it), but the close may trigger an application shutdown,
-            # which can take a long time and may also attempt to recursively
-            # destroy the window again.
-            if self.control is not None:
-                self.control.deleteLater()
-                if self.control is not None:
-                    self.control = None
-            # super().destroy()
+            control.deleteLater()
             control.close()
             control.hide()
 
-    def open(self):
-        if self.control is None:
-            self._create()
 
-    def close(self, force=False):
-        """Closes the window."""
-        if self.control is not None:
-            if force:
-                self.destroy()
-
-
-class MyTasksApplication(HasTraits):
+class MyApplication(HasTraits):
     window = Instance(MyWindow)
 
     def run(self):
@@ -94,16 +67,14 @@ class MyTasksApplication(HasTraits):
         window = self.window
         self.window = None
         window.close()
-        window.destroy()
-        # window.closed = True
 
 
-class TestTasksApplication(unittest.TestCase):
+class TestApplication(unittest.TestCase):
     def test_lifecycle(self):
-        app = MyTasksApplication()
+        app = MyApplication()
         app.run()
 
         # Run the event loop
-        # gui = GUI()
-        # gui.invoke_after(100, gui.stop_event_loop)
-        # gui.start_event_loop()
+        gui = GUI()
+        gui.invoke_after(100, gui.stop_event_loop)
+        gui.start_event_loop()
