@@ -29,20 +29,22 @@ import unittest
 
 from pyface.gui import GUI
 from pyface.qt import QtGui
-from traits.api import HasTraits, Instance
-
-from .widget import Widget
+from traits.api import Any, HasTraits, Instance
 
 
-class MyWindow(Widget):
-    """The toolkit specific implementation of a Window.  See the IWindow
-    interface for the API documentation.
-    """
+
+class MyWindow(HasTraits):
+    control = Any()
+
+    parent = Any()
+
+    def _create(self):
+        self.control = self._create_control(self.parent)
 
     def _create_control(self, parent):
         control = QtGui.QMainWindow(parent)
-        control.setEnabled(self.enabled)
-        control.setVisible(self.visible)
+        control.setEnabled(True)
+        control.setVisible(True)
         return control
 
     def destroy(self):
@@ -58,7 +60,11 @@ class MyWindow(Widget):
             # hides it), but the close may trigger an application shutdown,
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
-            super().destroy()
+            if self.control is not None:
+                self.control.deleteLater()
+                if self.control is not None:
+                    self.control = None
+            # super().destroy()
             control.close()
             control.hide()
 
@@ -66,16 +72,11 @@ class MyWindow(Widget):
         if self.control is None:
             self._create()
 
-        self.show(True)
-        return self.control is not None
-
     def close(self, force=False):
         """Closes the window."""
         if self.control is not None:
             if force:
                 self.destroy()
-
-        return self.control is None
 
 
 class MyTasksApplication(HasTraits):
@@ -103,6 +104,6 @@ class TestTasksApplication(unittest.TestCase):
         app.run()
 
         # Run the event loop
-        gui = GUI()
-        gui.invoke_after(100, gui.stop_event_loop)
-        gui.start_event_loop()
+        # gui = GUI()
+        # gui.invoke_after(100, gui.stop_event_loop)
+        # gui.start_event_loop()
