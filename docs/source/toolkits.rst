@@ -91,6 +91,13 @@ the third party library, something like this::
         }
     )
 
+or in a ``pyproject.toml`` something like:
+
+..  code-block:: toml
+
+    [project.entry-points.'pyface.toolkits']
+    my_toolkit = 'my_project.my_toolkit.init:toolkit_object'
+
 The left-hand side is the name of the toolkit, suitable for use with
 :py:obj:`ETSConfig`, and the right-hand side is the location of a toolkit
 object which matches the specification above: a callable object which takes
