@@ -38,7 +38,3 @@ from .wizard_controller import WizardController
 
 from .chained_wizard import ChainedWizard
 from .chained_wizard_controller import ChainedWizardController
-
-# These are deprecated.  Use Wizard and WizardController instead.
-from .simple_wizard import SimpleWizard
-from .simple_wizard_controller import SimpleWizardController

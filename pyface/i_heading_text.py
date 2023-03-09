@@ -15,9 +15,6 @@ import warnings
 from traits.api import HasTraits, Int, Interface, Str
 
 
-from pyface.ui_traits import Image
-
-
 class IHeadingText(Interface):
     """ A widget which shows heading text in a panel. """
 
@@ -28,9 +25,6 @@ class IHeadingText(Interface):
 
     #: The heading text.
     text = Str("Default")
-
-    #: The background image.
-    image = Image()
 
 
 class MHeadingText(HasTraits):

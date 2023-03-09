@@ -42,18 +42,6 @@ class ExpandableHeader(Widget):
     #: The carat image to show when the panel is expanded.
     expanded_carat_image = Image(ImageResource("carat_open"))
 
-    #: The backing header image when the mouse is elsewhere
-    #: This is not used and deprecated.
-    header_bar_image = Image(ImageResource("panel_gradient"))
-
-    #: The backing header image when the mouse is over
-    #: This is not used and deprecated.
-    header_mouseover_image = Image(ImageResource("panel_gradient_over"))
-
-    #: The image to use for the close button.
-    #: This is not used and deprecated.
-    remove_image = Image(ImageResource("close"))
-
     #: Represents the current state of the panel. True means expanded.
     state = Bool(False)
 

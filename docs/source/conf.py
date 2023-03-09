@@ -216,10 +216,6 @@ autodoc_mock_imports = [
     'wx.lib.gridmovers',
     'wx.stc',
     'wx.py',
-    'IPython',
-    'IPython.frontend',
-    'IPython.frontend.wx',
-    'IPython.frontend.wx.wx_frontend',
 ]
 
 
