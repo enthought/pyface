@@ -27,9 +27,9 @@ jobs:
       EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
       - uses: actions/checkout@v3
-      - name: Install Qt dependencies for Linux
-        uses: ./.github/actions/apt-get-qt-deps
-        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit != 'wx'
+      - name: Install Qt dependencies
+        uses: ./.github/actions/install-qt-support
+        if: matrix.toolkit != 'wx'
       - name: Cache EDM packages
         uses: actions/cache@v3
         with:
