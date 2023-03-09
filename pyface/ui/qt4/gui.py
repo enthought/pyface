@@ -13,6 +13,7 @@
 
 
 import logging
+import threading
 
 
 from pyface.qt import QtCore, QtGui
@@ -159,7 +160,8 @@ class _FutureCall(QtCore.QObject):
             self._calls_mutex.unlock()
 
         # Move to the main GUI thread.
-        self.moveToThread(QtGui.QApplication.instance().thread())
+        if threading.current_thread() != threading.main_thread():
+            self.moveToThread(QtGui.QApplication.instance().thread())
 
         # Post an event to be dispatched on the main GUI thread. Note that
         # we do not call QTimer.singleShot here, which would be simpler, because
