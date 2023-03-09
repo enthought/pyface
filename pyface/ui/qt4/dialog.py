@@ -145,7 +145,10 @@ class Dialog(MDialog, Window):
             dialog.windowFlags() & ~QtCore.Qt.WindowType.WindowContextHelpButtonHint
         )
 
-        retval = dialog.exec_()
+        if hasattr(self.control, "exec"):
+            retval = self.control.exec()
+        else:
+            retval = self.control.exec_()
         return _RESULT_MAP[retval]
 
     # -------------------------------------------------------------------------

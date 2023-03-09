@@ -953,7 +953,10 @@ class DraggableTabWidget(QtGui.QTabWidget):
             menu = self.editor_area.get_context_menu(pos=global_pos)
             if menu is not None:
                 qmenu = menu.create_menu(self)
-                qmenu.exec_(global_pos)
+                if hasattr(qmenu, 'exec'):
+                    qmenu.exec(global_pos)
+                else:
+                    qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
@@ -1027,7 +1030,10 @@ class DraggableTabBar(QtGui.QTabBar):
                 drag.setPixmap(self.drag_obj.get_pixmap())
                 drag.setHotSpot(self.drag_obj.get_hotspot())
                 drag.setMimeData(mimedata)
-                drag.exec_()
+                if hasattr(drag, 'exec'):
+                    drag.exec()
+                else:
+                    drag.exec_()
                 self.drag_obj = None  # deactivate the drag_obj again
                 return
         return super().mouseMoveEvent(event)
