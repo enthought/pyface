@@ -27,17 +27,99 @@ To reproduce:
 
 import unittest
 
-from pyface.api import Window
 from pyface.gui import GUI
-from traits.api import HasTraits, Instance
+from pyface.qt import QtGui
+from traits.api import HasTraits, Instance, Property, Tuple
+
+from .widget import Widget
+
+
+class MyWindow(Widget):
+    """The toolkit specific implementation of a Window.  See the IWindow
+    interface for the API documentation.
+    """
+
+    def _create_control(self, parent):
+        control = QtGui.QMainWindow(parent)
+        control.setEnabled(self.enabled)
+        control.setVisible(self.visible)
+        return control
+
+    def destroy(self):
+        if self.control is not None:
+            # Avoid problems with recursive calls.
+            # Widget.destroy() sets self.control to None,
+            # so we need a reference to control
+            control = self.control
+
+            # Widget.destroy() sets self.control to None and deletes it later,
+            # so we call it before control.close()
+            # This is not strictly necessary (closing the window in fact
+            # hides it), but the close may trigger an application shutdown,
+            # which can take a long time and may also attempt to recursively
+            # destroy the window again.
+            super().destroy()
+            control.close()
+            control.hide()
+
+    def open(self):
+        """Opens the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the opening of the window.
+
+        If the window is opened, the :py:attr:`opened` event will be fired
+        with the IWindow instance as the event value.
+
+        Returns
+        -------
+        opened : bool
+            Whether or not the window was opened.
+        """
+        # self.opening = event = Vetoable()
+        # if not event.veto:
+        # Create the control, if necessary.
+        if self.control is None:
+            self._create()
+
+        self.show(True)
+        self.opened = self
+        return self.control is not None
+
+    def close(self, force=False):
+        """Closes the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the closing of the window.  If :py:obj:`force` is
+        :py:obj:`True` then the window will close no matter what.
+
+        If the window is closed, the closed event will be fired with the window
+        object as the event value.
+
+        Parameters
+        ----------
+        force : bool
+            Whether the window should close despite vetos.
+
+        Returns
+        -------
+        closed : bool
+            Whether or not the window is closed.
+        """
+        if self.control is not None:
+            if force:
+                self.destroy()
+                self.closed = self
+
+        return self.control is None
 
 
 class MyTasksApplication(HasTraits):
-    window = Instance(Window)
+    window = Instance(MyWindow)
 
     def run(self):
         gui = GUI()
-        window = Window()
+        window = MyWindow()
         window.open()
         self.window = window
         gui.invoke_later(self.exit)
