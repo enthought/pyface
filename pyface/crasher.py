@@ -27,49 +27,95 @@ To reproduce:
 
 import unittest
 
-from pyface.gui import GUI
-from pyface.qt import QtGui
+from PySide6 import QtWidgets
+
+from pyface.qt import QtCore, QtGui
+
+
+class _FutureCall(QtCore.QObject):
+    """ This is a helper class that is similar to the wx FutureCall class. """
+
+    # Keep a list of references so that they don't get garbage collected.
+    _calls = []
+
+    # A new Qt event type for _FutureCalls
+    _pyface_event = QtCore.QEvent.Type(QtCore.QEvent.registerEventType())
+
+    def __init__(self, ms, callable, *args, **kw):
+        super().__init__()
+
+        # Save the arguments.
+        self._ms = ms
+        self._callable = callable
+        self._args = args
+        self._kw = kw
+
+        # Save the instance.
+        self._calls.append(self)
+
+        # Move to the main GUI thread.
+        self.moveToThread(QtGui.QApplication.instance().thread())
+
+        # Post an event to be dispatched on the main GUI thread. Note that
+        # we do not call QTimer.singleShot here, which would be simpler, because
+        # that only works on QThreads. We want regular Python threads to work.
+        event = QtCore.QEvent(self._pyface_event)
+        QtGui.QApplication.postEvent(self, event)
+
+    def event(self, event):
+        """ QObject event handler.
+        """
+        if event.type() == self._pyface_event:
+            if self._ms == 0:
+                # Invoke the callable now
+                try:
+                    self._callable(*self._args, **self._kw)
+                finally:
+                    # We cannot remove from self._calls here. QObjects don't like being
+                    # garbage collected during event handlers (there are tracebacks,
+                    # plus maybe a memory leak, I think).
+                    QtCore.QTimer.singleShot(0, self._finished)
+            else:
+                # Invoke the callable (puts it at the end of the event queue)
+                QtCore.QTimer.singleShot(self._ms, self._dispatch)
+            return True
+
+        return super().event(event)
+
+    def _dispatch(self):
+        """ Invoke the callable.
+        """
+        try:
+            self._callable(*self._args, **self._kw)
+        finally:
+            self._finished()
+
+    def _finished(self):
+        """ Remove the call from the list, so it can be garbage collected.
+        """
+        self._calls.remove(self)
+
 
 
 class MyWindow:
-
-    def __init__(self):
-        self.control = None
-
     def open(self):
-        if self.control is None:
-            control = QtGui.QMainWindow()
-            control.setEnabled(True)
-            control.setVisible(True)
-            self.control = control
-
-    def close(self):
-        if self.control is not None:
-            control = self.control
-            self.control = None
-
-            control.deleteLater()
-            control.close()
-            control.hide()
+        control = QtWidgets.QMainWindow()
+        control.setEnabled(True)
+        control.setVisible(True)
+        self.control = control
 
 
 class MyApplication:
 
-    def __init__(self):
-        self.window = None
-
     def run(self):
-        gui = GUI()
+        self.app = qt_app = QtWidgets.QApplication()
+
         window = MyWindow()
         window.open()
         self.window = window
-        gui.invoke_later(self.exit)
-        gui.start_event_loop()
 
-    def exit(self):
-        window = self.window
-        self.window = None
-        window.close()
+        _FutureCall(100, qt_app.quit)
+        qt_app.exec()
 
 
 class TestApplication(unittest.TestCase):
@@ -77,7 +123,4 @@ class TestApplication(unittest.TestCase):
         app = MyApplication()
         app.run()
 
-        # Run the event loop
-        gui = GUI()
-        gui.invoke_after(100, gui.stop_event_loop)
-        gui.start_event_loop()
+        print("leaving")
