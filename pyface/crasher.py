@@ -29,7 +29,7 @@ import unittest
 
 from pyface.gui import GUI
 from pyface.qt import QtGui
-from traits.api import HasTraits, Instance, Property, Tuple
+from traits.api import HasTraits, Instance
 
 from .widget import Widget
 
@@ -63,53 +63,17 @@ class MyWindow(Widget):
             control.hide()
 
     def open(self):
-        """Opens the window.
-
-        This fires the :py:attr:`closing` vetoable event, giving listeners the
-        opportunity to veto the opening of the window.
-
-        If the window is opened, the :py:attr:`opened` event will be fired
-        with the IWindow instance as the event value.
-
-        Returns
-        -------
-        opened : bool
-            Whether or not the window was opened.
-        """
-        # self.opening = event = Vetoable()
-        # if not event.veto:
-        # Create the control, if necessary.
         if self.control is None:
             self._create()
 
         self.show(True)
-        self.opened = self
         return self.control is not None
 
     def close(self, force=False):
-        """Closes the window.
-
-        This fires the :py:attr:`closing` vetoable event, giving listeners the
-        opportunity to veto the closing of the window.  If :py:obj:`force` is
-        :py:obj:`True` then the window will close no matter what.
-
-        If the window is closed, the closed event will be fired with the window
-        object as the event value.
-
-        Parameters
-        ----------
-        force : bool
-            Whether the window should close despite vetos.
-
-        Returns
-        -------
-        closed : bool
-            Whether or not the window is closed.
-        """
+        """Closes the window."""
         if self.control is not None:
             if force:
                 self.destroy()
-                self.closed = self
 
         return self.control is None
 
