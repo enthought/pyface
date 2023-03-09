@@ -22,7 +22,7 @@ jobs:
         toolkit: ['pyqt5']
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Qt dependencies for Linux
         uses: ./.github/actions/apt-get-qt-deps
         if: startsWith(matrix.os, 'ubuntu')
