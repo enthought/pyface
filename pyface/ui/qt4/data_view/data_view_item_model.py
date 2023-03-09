@@ -239,7 +239,7 @@ class DataViewItemModel(QAbstractItemModel):
                     value_type.set_text(self.model, row, column, value)
             elif role == Qt.ItemDataRole.CheckStateRole:
                 if value_type.has_check_state(self.model, row, column):
-                    state = set_check_state_map[value]
+                    state = set_check_state_map[Qt.CheckState(value)]
                     value_type.set_check_state(self.model, row, column, state)
 
         except DataViewSetError:
