@@ -10,10 +10,9 @@
 
 
 import unittest
-from unittest import mock
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtGui
 from pyface.qt.QtTest import QTest
 
 
