@@ -610,10 +610,10 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
         # key bindings
         self.find_key = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Find)
-        if sys.platform == "darwin":
-            self.replace_key = QtGui.QKeySequence("Ctrl+R")
-        else:
-            self.replace_key = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Replace)  # noqa: E501
+        self.replace_key = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Replace)  # noqa: E501
+        # not all platforms have a standard replace key; use Ctrl+Alt+F
+        if self.replace_key.isEmpty():
+            self.replace_key = QtGui.QKeySequence("Ctrl+Alt+F")
 
     def _remove_event_listeners(self):
         self.code.selectionChanged.disconnect(self._update_replace_enabled)
