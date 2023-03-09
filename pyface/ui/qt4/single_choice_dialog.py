@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtGui
 
 from traits.api import Any, List, Str, provides
 
