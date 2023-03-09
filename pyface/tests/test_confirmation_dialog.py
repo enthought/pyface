@@ -18,7 +18,7 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-is_qt = toolkit_object.toolkit == "qt4"
+is_qt = toolkit_object.toolkit.startswith("qt")
 if is_qt:
     from pyface.qt import qt_api
 

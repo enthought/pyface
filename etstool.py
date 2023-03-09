@@ -83,8 +83,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    "3.6": {"pyqt5", "pyside2", "pyside6", "wx"},
-    "3.8": {"pyside6"},
+    "3.8": {"pyside6", "pyqt6"},
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -101,7 +100,21 @@ dependencies = {
     "coverage",
     "flake8",
     "flake8_ets",
+    "packaging",
 }
+
+# if on mac, see if we can handle pillow_simd - do we have AVX2? - see #1207
+if sys.platform == "darwin":
+    result = subprocess.run(
+        ['sysctl', 'machdep.cpu.leaf7_features'],
+        capture_output=True,
+        check=True,
+    )
+    if b'AVX2' in result.stdout.split():
+        dependencies.add('pillow_simd')
+else:
+    dependencies.add('pillow_simd')
+
 
 source_dependencies = {
     "traits": "git+http://github.com/enthought/traits.git#egg=traits",
@@ -110,12 +123,13 @@ source_dependencies = {
 
 extra_dependencies = {
     # XXX once pyside2 is available in EDM, we will want it here
-    "pyside2": {"pillow"},
-    # XXX once pyside6 is available in EDM, we will want it here
-    "pyside6": set(),
-    "pyqt5": {"pyqt5", "pillow"},
+    "pyside2": set(),
+    "pyside6": {"pyside6"},
+    # XXX once pyqt5 is available in EDM, we will want it here
+    "pyqt5": set(),
+    "pyqt6": {"pyqt6"},
     # XXX once wxPython 4 is available in EDM, we will want it here
-    "wx": {"pillow"},
+    "wx": set(),
     "null": set(),
 }
 
@@ -135,9 +149,9 @@ doc_ignore = {
 }
 
 environment_vars = {
-    "pyside2": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside2"},
-    "pyside6": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside6"},
-    "pyqt5": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
+    "pyside2": {"ETS_TOOLKIT": "qt", "QT_API": "pyside2"},
+    "pyside6": {"ETS_TOOLKIT": "qt", "QT_API": "pyside6"},
+    "pyqt5": {"ETS_TOOLKIT": "qt", "QT_API": "pyqt5"},
     "wx": {"ETS_TOOLKIT": "wx"},
     "null": {"ETS_TOOLKIT": "null"},
 }
@@ -161,8 +175,8 @@ def cli():
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option(
     "--editable/--not-editable",
@@ -187,64 +201,12 @@ def install(edm, runtime, toolkit, environment, editable, source):
     install_pyface += "."
 
     # edm commands to setup the development environment
-    if sys.platform == 'linux':
-        commands = [
-            "edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}",  # noqa: E501
-        ]
-    else:
-        commands = [
-            "edm environments create {environment} --force --version={runtime}"
-        ]
-
-    commands.extend([
-        "{edm} install -y -e {environment} " + packages,
+    commands = [
+        "edm environments create {environment} --force --version={runtime}",
+        "{edm} install -y -e {environment} --add-repository enthought/lgpl --add-repository enthought/gpl " + packages,  # noqa: E501
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
-        "{edm} run -e {environment} -- python setup.py clean --all",
         install_pyface,
-    ])
-
-    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
-    if toolkit == "pyside2":
-        commands.extend(
-            [
-                "{edm} run -e {environment} -- pip install shiboken2",
-                "{edm} run -e {environment} -- pip install pyside2",
-            ]
-        )
-    elif toolkit == "pyside6":
-        if sys.platform == 'darwin':
-            commands.append(
-                "{edm} run -e {environment} -- pip install pyside6<6.2.2"
-            )
-        elif sys.platform == "linux":
-            # PySide6 6.4 has some backwards-incompatible changes to Enums
-            # that we haven't updated for yet. xref: enthought/pyface#1164
-            commands.append(
-                "{edm} run -e {environment} -- pip install pyside6<6.4"
-            )
-        else:  # Windows
-            parameters["pyside6"] = "pyside6 < 6.4"
-            commands.append(
-                '{edm} run -e {environment} -- pip install {pyside6}'
-            )
-
-        commands.append(
-            "{edm} run -e {environment} -- pip install pillow"
-        )
-    elif toolkit == "wx":
-        if sys.platform == "darwin":
-            commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"  # noqa: E501
-            )
-        elif sys.platform == "linux":
-            # XXX this is mainly for TravisCI workers; need a generic solution
-            commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/ wxPython<4.1"  # noqa: E501
-            )
-        else:
-            commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython"
-            )
+    ]
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -272,8 +234,8 @@ def install(edm, runtime, toolkit, environment, editable, source):
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def shell(edm, runtime, toolkit, environment):
     """ Create a shell into the EDM development environment
@@ -289,8 +251,8 @@ def shell(edm, runtime, toolkit, environment):
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option(
     "--no-environment-vars",
@@ -342,8 +304,8 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def cleanup(edm, runtime, toolkit, environment):
     """ Remove a development environment.
@@ -351,7 +313,6 @@ def cleanup(edm, runtime, toolkit, environment):
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = [
-        "{edm} run -e {environment} -- python setup.py clean",
         "{edm} environments remove {environment} --purge -y",
     ]
     click.echo("Cleaning up environment '{environment}'".format(**parameters))
@@ -361,8 +322,8 @@ def cleanup(edm, runtime, toolkit, environment):
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option(
     "--no-environment-vars",
     is_flag=True,
@@ -389,24 +350,8 @@ def test_clean(edm, runtime, toolkit, no_environment_vars=False):
 
 @cli.command()
 @edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
-@click.option("--environment", default=None, help="EDM environment to use")
-def update(edm, runtime, toolkit, environment):
-    """ Update/Reinstall package into environment.
-
-    """
-    parameters = get_parameters(edm, runtime, toolkit, environment)
-    commands = ["{edm} run -e {environment} -- python setup.py install"]
-    click.echo("Re-installing in  '{environment}'".format(**parameters))
-    execute(commands, parameters)
-    click.echo("Done update")
-
-
-@cli.command()
-@edm_option
-@click.option("--runtime", default="3.6", help="Python version to use")
-@click.option("--toolkit", default="pyqt5", help="Toolkit and API to use")
+@click.option("--runtime", default="3.8", help="Python version to use")
+@click.option("--toolkit", default="pyside6", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 def docs(edm, runtime, toolkit, environment):
     """ Autogenerate documentation
@@ -489,8 +434,8 @@ def test_all(edm):
 
 @cli.command()
 @edm_option
-@click.option('--runtime', default="3.6")
-@click.option('--toolkit', default="pyqt5")
+@click.option('--runtime', default="3.8")
+@click.option('--toolkit', default="pyside6")
 @click.option(
     "--environment", default=None, help="Name of EDM environment to check."
 )

@@ -1,0 +1,66 @@
+[project]
+name = 'pyface'
+description = 'Traits-capable windowing framework'
+readme = 'README.rst'
+requires-python = '>=3.7'
+authors = [{name='Enthought', email='info@enthought.com'}]
+keywords = ['gui', 'traits', 'traitsui', 'pyqt', 'pyside', 'wxpython']
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: BSD License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+]
+dependencies = [
+    'importlib-resources>=1.1.0; python_version<"3.9"',
+    'pyface',
+    'traits>=6.2',
+]
+version = '8.0.0.dev0'
+license = {file = "LICENSE.txt"}
+
+[project.entry-points.'pyface.toolkits']
+qt = 'pyface.ui.qt4.init:toolkit_object'
+qt4 = 'pyface.ui.qt4.init:toolkit_object'
+wx = 'pyface.ui.wx.init:toolkit_object'
+null = 'pyface.ui.null.init:toolkit_object'
+
+[project.optional-dependencies]
+docs = ['enthought-sphinx-theme', 'sphinx', 'sphinx-copybutton']
+examples = ['traitsui', 'numpy']
+pillow = ['pillow']
+pyqt5 = ['pyqt5', 'pygments']
+pyqt6 = ['pyqt6', 'pygments']
+pyside2 = ['pyside2', 'pygments']
+pyside6 = ['pyside6<6.4', 'pygments']
+numpy = ['numpy']
+traitsui = ['traitsui']
+test = ['packaging']
+wx = ['wxPython>=4', 'numpy']
+
+[project.urls]
+source = 'https://github.com/enthought/pyface'
+docs = 'https://docs.enthought.com/pyface'
+
+[build-system]
+requires = ['setuptools>=61', 'wheel']
+build-backend = 'setuptools.build_meta'
+
+[tool.black]
+line-length = 79
+target-version = ['py38']
+
+[tool.isort]
+profile = 'black'
+sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'ENTHOUGHT', 'FIRSTPARTY', 'LOCALFOLDER']
+known_third_party = ['wx', 'PyQt5', 'PyQt6', 'PySide2', 'PySide6', 'PIL', 'pygments', 'numpy']
+known_enthought = ['pyface', 'traits', 'traitsui']
+line_length = 79
+order_by_type = false
+
+[tool.setuptools]
+packages = ['pyface']
+
+[tool.setuptools.package-data]
+pyface = ["image/library/*.zip", "**/images/*"]

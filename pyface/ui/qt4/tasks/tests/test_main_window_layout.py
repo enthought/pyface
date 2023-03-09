@@ -19,7 +19,7 @@ try:
     from pyface.qt import QtGui
     from pyface.ui.qt4.tasks.main_window_layout import MainWindowLayout
 except ImportError:
-    if toolkit_object.toolkit == "qt4":
+    if toolkit_object.toolkit.startswith("qt"):
         raise
 
 

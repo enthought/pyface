@@ -65,10 +65,12 @@ class PythonShellPane(TaskPane):
     def destroy(self):
         """ Destroy the python shell task pane
         """
-        logger.debug("PythonShellPane: destroying python shell pane")
-        self.editor.destroy()
-        self.control = self.editor = None
+        if self.editor is not None:
+            logger.debug("PythonShellPane: destroying python shell pane")
+            self.editor.destroy()
+            self.editor = None
         logger.debug("PythonShellPane: destroyed")
+        super().destroy()
 
 
 class PythonShellTask(Task):

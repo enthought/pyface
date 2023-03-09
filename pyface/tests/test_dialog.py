@@ -16,7 +16,7 @@ from ..dialog import Dialog
 from ..constant import OK, CANCEL
 from ..toolkit import toolkit_object
 
-is_qt = toolkit_object.toolkit == "qt4"
+is_qt = toolkit_object.toolkit.startswith("qt")
 if is_qt:
     from pyface.qt import qt_api
 

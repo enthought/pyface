@@ -43,12 +43,12 @@ class DockPaneToggleAction(Action):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        super().destroy()
-
         # Make sure that we are not listening to changes to the pane anymore.
         # In traits style, we will set the basic object to None and have the
         # listener check that if it is still there.
         self.dock_pane = None
+
+        super().destroy()
 
     def perform(self, event=None):
         if self.dock_pane:

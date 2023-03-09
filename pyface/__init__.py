@@ -8,35 +8,14 @@
 #
 # Thanks for using Enthought open source!
 
-""" Reusable MVC-based components for Traits-based applications.
-    Part of the TraitsUI project of the Enthought Tool Suite.
 """
-
-try:
-    from pyface._version import full_version as __version__
-except ImportError:
-    __version__ = "not-built"
-
-
-__requires__ = [
-    'importlib-metadata>=3.6.0; python_version<"3.8"',
-    'importlib-resources>=1.1.0; python_version<"3.9"',
-    "traits>=6.2",
-]
-__extras_require__ = {
-    "docs": ["enthought-sphinx-theme", "sphinx", "sphinx-copybutton"],
-    "wx": ["wxpython>=4", "numpy"],
-    "pyqt": ["pyqt>=4.10", "pygments"],
-    "pyqt5": ["pyqt5", "pygments"],
-    "pyqt6": ["pyqt6", "pygments"],
-    "pyside2": ["pyside2", "shiboken2", "pygments"],
-    "pyside6": ["pyside6", "pygments"],
-    "pillow": ["pillow"],
-    "test": ["packaging"],
-}
+Reusable components for Traits-based applications.
+Part of the Enthought Tool Suite.
+"""
 
 
 # ============================= Test Loader ==================================
+
 def load_tests(loader, standard_tests, pattern):
     """ Custom test loading function that enables test filtering using regex
     exclusion pattern.

@@ -46,8 +46,9 @@ class TraitsDockPane(DockPane):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         # Destroy the Traits-generated control inside the dock control.
-        self.ui.dispose()
-        self.ui = None
+        if self.ui is not None:
+            self.ui.dispose()
+            self.ui = None
 
         # Destroy the dock control.
         super().destroy()

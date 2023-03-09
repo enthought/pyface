@@ -7,7 +7,7 @@ name: Test with EDM
 on: pull_request
 
 env:
-  INSTALL_EDM_VERSION: 3.3.1
+  INSTALL_EDM_VERSION: 3.5.0
   QT_MAC_WANTS_LAYER: 1
 
 jobs:
@@ -17,10 +17,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        toolkit: ['wx', 'pyqt5', 'pyside2', 'pyside6']
-        exclude:
-          - os: ubuntu-latest
-            toolkit: 'wx'
+        toolkit: ['pyside6']
+      fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
     env:
@@ -30,42 +28,17 @@ jobs:
       # relative path between the site-packages and the source directory.
       EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Qt dependencies for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install qtbase5-dev
-          sudo apt-get install qtchooser
-          sudo apt-get install qt5-qmake
-          sudo apt-get install qtbase5-dev-tools
-          sudo apt-get install libegl1
-          sudo apt-get install libxkbcommon-x11-0
-          sudo apt-get install libxcb-icccm4
-          sudo apt-get install libxcb-image0
-          sudo apt-get install libxcb-keysyms1
-          sudo apt-get install libxcb-randr0
-          sudo apt-get install libxcb-render-util0
-          sudo apt-get install libxcb-xinerama0
-          sudo apt-get install libxcb-shape0
-          sudo apt-get install pulseaudio
-          sudo apt-get install libpulse-mainloop-glib0
-          sudo apt-get install libgstreamer-gl1.0-0
-        shell: bash
-        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit != 'wx'
-      - name: Install Wx dependencies for Linux
-        run: |
-          sudo apt-get update
-          sudo apt-get install libsdl-image1.2
-          sudo apt-get install libsdl2-2.0-0
-        shell: bash
-        if: startsWith(matrix.os, 'ubuntu') && matrix.toolkit == 'wx'
+      - uses: actions/checkout@v3
+      - name: Install Qt dependencies
+        uses: ./.github/actions/install-qt-support
+        if: matrix.toolkit != 'wx'
       - name: Cache EDM packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v1
+        uses: enthought/setup-edm-action@v2
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment

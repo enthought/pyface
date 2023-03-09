@@ -89,8 +89,8 @@ The image code like the following in my_module.py will work:
     action = Action(image="my_image")
 
 When using this approach, remember that image files will need to be added
-to the ``package_data`` in ``setup.py`` or they will not be shipped alongside
-the code.
+to the ``package_data`` in the project configuration or they will not be
+shipped alongside the code.
 
 :mod:`~pyface.util.image_helpers` Module
 ----------------------------------------

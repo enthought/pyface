@@ -42,12 +42,12 @@ class TaskToggleAction(Action):
     # ------------------------------------------------------------------------
 
     def destroy(self):
-        super().destroy()
-
         # Make sure that we are not listening to changes in the task anymore
         # In traits style, we will set the basic object to None and have the
         # listener check that if it is still there.
         self.task = None
+
+        super().destroy()
 
     def perform(self, event=None):
         window = self.task.window

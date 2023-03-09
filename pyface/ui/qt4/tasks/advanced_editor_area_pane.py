@@ -103,19 +103,20 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
-        self.control.removeEventFilter(self._filter)
-        self.control._remove_event_listeners()
-        self._filter = None
+        if self.control is not None:
+            self.control.removeEventFilter(self._filter)
+            self.control._remove_event_listeners()
+            self._filter = None
 
-        for editor in self.editors:
-            editor_widget = editor.control.parent()
-            self.control.destroy_editor_widget(editor_widget)
-            editor.editor_area = None
-        self.active_editor = None
+            for editor in self.editors:
+                editor_widget = editor.control.parent()
+                self.control.destroy_editor_widget(editor_widget)
+                editor.editor_area = None
+            self.active_editor = None
 
-        while self._connections_to_remove:
-            signal, handler = self._connections_to_remove.pop()
-            signal.disconnect(handler)
+            while self._connections_to_remove:
+                signal, handler = self._connections_to_remove.pop()
+                signal.disconnect(handler)
 
         super().destroy()
 
