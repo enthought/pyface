@@ -11,14 +11,17 @@
 
 import sys
 
-
-from pyface.qt import QtCore, QtGui
-
+from pyface.qt import QtCore, QtGui, is_qt5
 
 from .find_widget import FindWidget
 from .gutters import LineNumberWidget, StatusGutterWidget
 from .replace_widget import ReplaceWidget
 from .pygments_highlighter import PygmentsHighlighter
+
+
+def _exact_match(user_keys, key_sequence):
+    """Utility function for matching key sequences"""
+    return user_keys.matches(key_sequence) == QtGui.QKeySequence.SequenceMatch.ExactMatch  # noqa: E501
 
 
 class CodeWidget(QtGui.QPlainTextEdit):
@@ -389,7 +392,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
         if self.isReadOnly():
             return super().keyPressEvent(event)
 
-        key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
+        if is_qt5:
+            key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
+        else:
+            key_sequence = QtGui.QKeySequence(event.keyCombination())
 
         self.keyPressEvent_action(event)  # FIXME: see above
 
@@ -398,35 +404,42 @@ class CodeWidget(QtGui.QPlainTextEdit):
         # beginning of the document. Likewise, if the cursor is somewhere in the
         # last line, the "down" key causes it to go to the end.
         cursor = self.textCursor()
-        if key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Up)):
+        if _exact_match(
+            key_sequence,
+            QtGui.QKeySequence(QtCore.Qt.Key.Key_Up),
+        ):
             cursor.movePosition(QtGui.QTextCursor.MoveOperation.StartOfLine)
             if cursor.atStart():
                 self.setTextCursor(cursor)
                 event.accept()
-        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Down)):
+        elif _exact_match(
+            key_sequence,
+            QtGui.QKeySequence(QtCore.Qt.Key.Key_Down),
+        ):
             cursor.movePosition(QtGui.QTextCursor.MoveOperation.EndOfLine)
             if cursor.atEnd():
                 self.setTextCursor(cursor)
                 event.accept()
 
-        elif self.auto_indent and key_sequence.matches(
+        elif self.auto_indent and _exact_match(
+            key_sequence,
             QtGui.QKeySequence(QtCore.Qt.Key.Key_Return)
         ):
             event.accept()
             return self.autoindent_newline()
-        elif key_sequence.matches(self.indent_key):
+        elif _exact_match(key_sequence, self.indent_key):
             event.accept()
             return self.block_indent()
-        elif key_sequence.matches(self.unindent_key):
+        elif _exact_match(key_sequence, self.unindent_key):
             event.accept()
             return self.block_unindent()
-        elif key_sequence.matches(self.comment_key):
+        elif _exact_match(key_sequence, self.comment_key):
             event.accept()
             return self.block_comment()
         elif (
             self.auto_indent
             and self.smart_backspace
-            and key_sequence.matches(self.backspace_key)
+            and _exact_match(key_sequence, self.backspace_key)
             and self._backspace_should_unindent()
         ):
             event.accept()
@@ -594,6 +607,13 @@ class AdvancedCodeWidget(QtGui.QWidget):
         layout.addWidget(self.replace)
 
         self.setLayout(layout)
+
+        # key bindings
+        self.find_key = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Find)
+        if sys.platform == "darwin":
+            self.replace_key = QtGui.QKeySequence("Ctrl+R")
+        else:
+            self.replace_key = QtGui.QKeySequence(QtGui.QKeySequence.StandardKey.Replace)  # noqa: E501
 
     def _remove_event_listeners(self):
         self.code.selectionChanged.disconnect(self._update_replace_enabled)
@@ -789,13 +809,17 @@ class AdvancedCodeWidget(QtGui.QWidget):
     # ------------------------------------------------------------------------
 
     def keyPressEvent(self, event):
-        key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
-        if key_sequence.matches(QtGui.QKeySequence.StandardKey.Find):
+        if is_qt5:
+            key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
+        else:
+            key_sequence = QtGui.QKeySequence(event.keyCombination())
+
+        if _exact_match(key_sequence, self.find_key):
             self.enable_find()
-        elif key_sequence.matches(QtGui.QKeySequence.StandardKey.Replace):
+        elif _exact_match(key_sequence, self.replace_key):
             if not self.code.isReadOnly():
                 self.enable_replace()
-        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key.Key_Escape)):
+        elif _exact_match(key_sequence, QtGui.QKeySequence(QtCore.Qt.Key.Key_Escape)):
             if self.active_find_widget:
                 self.find.hide()
                 self.replace.hide()

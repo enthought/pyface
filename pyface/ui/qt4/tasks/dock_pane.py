@@ -85,7 +85,7 @@ class DockPane(TaskPane, MDockPane):
         style = control.style()
         contents_minsize.setHeight(
             contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent)
+            + style.pixelMetric(style.PixelMetric.PM_DockWidgetHandleExtent)
         )
         control.setMinimumSize(contents_minsize)
 
