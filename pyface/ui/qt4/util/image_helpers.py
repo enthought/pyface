@@ -172,8 +172,3 @@ def array_to_image(array):
     # keep a reference to the array to ensure underlying data is available
     image._numpy_data = data
     return image
-
-
-# backwards compatible names - will be removed in Pyface 8
-array_to_QImage = array_to_image
-QImage_to_array = image_to_array

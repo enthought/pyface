@@ -13,7 +13,7 @@
 from traits.api import HasTraits, Str
 
 from pyface.api import GUI, OK
-from pyface.wizard.api import SimpleWizard, WizardPage
+from pyface.wizard.api import Wizard, WizardPage
 from pyface.ui_traits import TraitsUIColor as Color
 
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
-    wizard = SimpleWizard(
+    wizard = Wizard(
         parent=None,
         title="Create something magical",
         pages=[
