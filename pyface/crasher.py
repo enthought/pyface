@@ -27,29 +27,17 @@ To reproduce:
 
 import unittest
 
+from pyface.api import Window
 from pyface.gui import GUI
-from pyface.qt import QtGui
 from traits.api import HasTraits, Instance
-
-from .window import Window
-
-
-class MyApplicationWindow(Window):
-    def _create(self):
-        super()._create()
-        contents = QtGui.QWidget(self.control)
-        self.control.setCentralWidget(contents)
-
-    def _create_control(self, parent):
-        return super()._create_control(parent)
 
 
 class MyTasksApplication(HasTraits):
-    window = Instance(MyApplicationWindow)
+    window = Instance(Window)
 
     def run(self):
         gui = GUI()
-        window = MyApplicationWindow()
+        window = Window()
         window.open()
         self.window = window
         gui.invoke_later(self.exit)
