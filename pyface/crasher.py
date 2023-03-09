@@ -29,11 +29,12 @@ import unittest
 
 from pyface.gui import GUI
 from pyface.qt import QtGui
-from traits.api import Any, HasTraits, Instance
 
 
-class MyWindow(HasTraits):
-    control = Any()
+class MyWindow:
+
+    def __init__(self):
+        self.control = None
 
     def open(self):
         if self.control is None:
@@ -52,8 +53,10 @@ class MyWindow(HasTraits):
             control.hide()
 
 
-class MyApplication(HasTraits):
-    window = Instance(MyWindow)
+class MyApplication:
+
+    def __init__(self):
+        self.window = None
 
     def run(self):
         gui = GUI()
