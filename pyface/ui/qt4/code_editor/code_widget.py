@@ -839,4 +839,7 @@ if __name__ == "__main__":
 
     window.resize(640, 640)
     window.show()
-    sys.exit(app.exec_())
+    if hasattr(app, "exec"):
+        sys.exit(app.exec())
+    else:
+        sys.exit(app.exec_())
