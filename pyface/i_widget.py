@@ -120,12 +120,12 @@ class MWidget(HasTraits):
     #: An optional context menu for the widget.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
-    def create(self):
+    def _create(self):
         """ Creates the toolkit specific control.
 
-        The default implementation simply calls _create()
+        The default implementation simply calls create()
         """
-        self._create()
+        self.create()
 
     def destroy(self):
         """ Call clean-up code and destroy toolkit objects.
@@ -141,7 +141,7 @@ class MWidget(HasTraits):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the

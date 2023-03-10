@@ -75,7 +75,8 @@ class ImageWidget(LayoutWidget):
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=True for old behaviour",
+                "in a future Pyface version, use create=False and explicitly "
+                "call create() for future behaviour",
                 PendingDeprecationWarning,
             )
 

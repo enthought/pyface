@@ -129,8 +129,8 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
-        super()._create()
+    def create(self):
+        super().create()
 
         contents = self._create_contents(self.control)
         self.control.setCentralWidget(contents)
