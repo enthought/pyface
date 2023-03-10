@@ -159,7 +159,11 @@ class _FutureCall(QtCore.QObject):
         finally:
             self._calls_mutex.unlock()
 
-        # Move to the main GUI thread.
+        # Move to the main GUI thread if necessary.
+        # Note that calling QApplication.thread() seems to cause an
+        # atexit-time segfault on Linux.
+        # xref: https://bugreports.qt.io/browse/PYSIDE-2254
+        # xref: https://github.com/enthought/pyface/issues/1211
         if threading.current_thread() != threading.main_thread():
             self.moveToThread(QtGui.QApplication.instance().thread())
 
