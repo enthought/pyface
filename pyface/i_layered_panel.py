@@ -91,7 +91,7 @@ class MLayeredPanel(HasTraits):
     def __init__(self, parent=None, **traits):
         """ Creates a new LayeredPanel. """
 
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         # Base class constructor.
         super().__init__(parent=parent, **traits)
@@ -104,4 +104,9 @@ class MLayeredPanel(HasTraits):
                 "in a future Pyface version, use create=False and explicitly "
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
             )

@@ -53,7 +53,7 @@ class PythonEditor(MPythonEditor, LayoutWidget):
     def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         # Base class constructor.
         super().__init__(parent=parent, **traits)
@@ -67,8 +67,11 @@ class PythonEditor(MPythonEditor, LayoutWidget):
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
             )
-
-        return
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+            )
 
     # ------------------------------------------------------------------------
     # 'PythonEditor' interface.

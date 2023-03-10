@@ -156,7 +156,7 @@ class WorkbenchWindow(ApplicationWindow):
         self.opening = event = Vetoable()
         if not event.veto:
             if self.control is None:
-                self._create()
+                self.create()
 
             self.show(True)
 

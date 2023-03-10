@@ -75,7 +75,7 @@ class ExpandableHeader(Widget):
                 lambda event: container.remove_panel(event.new),
                 "panel_closed",
             )
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         # Base class constructor.
         super().__init__(parent=parent, **traits)
@@ -88,6 +88,11 @@ class ExpandableHeader(Widget):
                 "in a future Pyface version, use create=False and explicitly "
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
             )
 
     # ------------------------------------------------------------------------

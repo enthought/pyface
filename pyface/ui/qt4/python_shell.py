@@ -59,7 +59,7 @@ class PythonShell(MPythonShell, LayoutWidget):
     # or make it a sub-class of HasTraits.
     def __init__(self, parent=None, **traits):
 
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         super().__init__(parent=parent, **traits)
 
@@ -71,6 +71,11 @@ class PythonShell(MPythonShell, LayoutWidget):
                 "in a future Pyface version, use create=False and explicitly "
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
             )
 
     # --------------------------------------------------------------------------

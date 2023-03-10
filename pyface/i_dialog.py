@@ -161,7 +161,7 @@ class MDialog(HasTraits):
             The value of the ``return_code`` trait.
         """
         if self.control is None:
-            self._create()
+            self.create()
 
         if self.style == "modal":
             self.return_code = self._show_modal()

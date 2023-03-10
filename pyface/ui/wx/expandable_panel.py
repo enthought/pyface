@@ -42,7 +42,7 @@ class ExpandablePanel(LayoutWidget):
     def __init__(self, parent=None, **traits):
         """ Creates a new LayeredPanel. """
 
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         # Base class constructor.
         super().__init__(parent=parent, **traits)
@@ -56,6 +56,12 @@ class ExpandablePanel(LayoutWidget):
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
             )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+            )
+
     # ------------------------------------------------------------------------
     # 'Expandale' interface.
     # ------------------------------------------------------------------------

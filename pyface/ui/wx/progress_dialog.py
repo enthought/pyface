@@ -54,7 +54,7 @@ class ProgressBar(Widget):
         its own window
 
         """
-        create = traits.pop("create", True)
+        create = traits.pop("create", None)
 
         # XXX minimum is ignored - it either should be deprecated or supported
         super().__init__(
@@ -72,6 +72,11 @@ class ProgressBar(Widget):
                 "in a future Pyface version, use create=False and explicitly "
                 "call create() for future behaviour",
                 PendingDeprecationWarning,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
             )
 
     def _create_control(self, parent):
