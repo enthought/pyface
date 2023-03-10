@@ -28,7 +28,7 @@ AREA_MAP = {
     "top": QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
     "bottom": QtCore.Qt.DockWidgetArea.BottomDockWidgetArea,
 }
-INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
+INVERSE_AREA_MAP = {v: k for k, v in AREA_MAP.items()}
 
 
 @provides(IDockPane)
@@ -85,7 +85,7 @@ class DockPane(TaskPane, MDockPane):
         style = control.style()
         contents_minsize.setHeight(
             contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent)
+            + style.pixelMetric(style.PixelMetric.PM_DockWidgetHandleExtent)
         )
         control.setMinimumSize(contents_minsize)
 
@@ -185,8 +185,8 @@ class DockPane(TaskPane, MDockPane):
 
     def _receive_dock_area(self, area):
         with self._signal_context():
-            if int(area) in INVERSE_AREA_MAP:
-                self.dock_area = INVERSE_AREA_MAP[int(area)]
+            if area in INVERSE_AREA_MAP:
+                self.dock_area = INVERSE_AREA_MAP[area]
 
     def _receive_floating(self, floating):
         with self._signal_context():

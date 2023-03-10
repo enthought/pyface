@@ -632,7 +632,7 @@ class EditorWidget(QtGui.QDockWidget):
         style = self.style()
         contents_minsize.setHeight(
             contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent)
+            + style.pixelMetric(style.PixelMetric.PM_DockWidgetHandleExtent)
         )
         self.setMinimumSize(contents_minsize)
 

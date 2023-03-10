@@ -26,12 +26,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.DialogCode.Accepted): OK,
-    int(QtGui.QDialog.DialogCode.Rejected): CANCEL,
-    int(QtGui.QMessageBox.StandardButton.Ok): OK,
-    int(QtGui.QMessageBox.StandardButton.Cancel): CANCEL,
-    int(QtGui.QMessageBox.StandardButton.Yes): YES,
-    int(QtGui.QMessageBox.StandardButton.No): NO,
+    QtGui.QDialog.DialogCode.Accepted: OK,
+    QtGui.QDialog.DialogCode.Rejected: CANCEL,
+    QtGui.QMessageBox.StandardButton.Ok: OK,
+    QtGui.QMessageBox.StandardButton.Cancel: CANCEL,
+    QtGui.QMessageBox.StandardButton.Yes: YES,
+    QtGui.QMessageBox.StandardButton.No: NO,
 }
 
 
