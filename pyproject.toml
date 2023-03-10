@@ -14,7 +14,6 @@ classifiers = [
 ]
 dependencies = [
     'importlib-resources>=1.1.0; python_version<"3.9"',
-    'pyface',
     'traits>=6.2',
 ]
 version = '8.0.0.dev0'
