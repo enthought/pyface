@@ -161,7 +161,7 @@ class _FutureCall(QtCore.QObject):
 
         # Move to the main GUI thread if necessary.
         # Note that calling QApplication.thread() seems to cause an
-        # atexit-time segfault on Linux.
+        # atexit-time segfault on Linux under some versions of PySide6.
         # xref: https://bugreports.qt.io/browse/PYSIDE-2254
         # xref: https://github.com/enthought/pyface/issues/1211
         if threading.current_thread() != threading.main_thread():
