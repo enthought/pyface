@@ -251,6 +251,31 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.window.close()
 
+    def test_statusbar_timed_changed(self):
+        from time import sleep
+
+        # test that status bar gets changed as expected
+        self.window.status_bar_manager = StatusBarManager(
+            message="hello world"
+        )
+        with self.event_loop():
+            self.window._create()
+        with self.event_loop():
+            self.window.show(True)
+        with self.event_loop():
+            duration = 0.3
+            status_bar = self.window.status_bar_manager
+            status_bar.message_duration_sec = duration
+            status_bar.messages = ["goodbye world"]
+            self.assertEqual(status_bar.message, "goodbye world")
+            sleep(duration)
+            self.gui.process_events()
+            self.assertEqual(status_bar.message, "")
+        with self.event_loop():
+            self.window.show(False)
+        with self.event_loop():
+            self.window.close()
+
     def test_icon(self):
         # test that status bar gets created as expected
         self.window.icon = ImageResource("core")
