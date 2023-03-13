@@ -13,6 +13,7 @@ classifiers = [
     'Programming Language :: Python :: 3',
 ]
 dependencies = [
+    'importlib-metadata>=3.6; python_version<"3.10"',
     'importlib-resources>=1.1.0; python_version<"3.9"',
     'traits>=6.2',
 ]
