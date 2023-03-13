@@ -24,7 +24,7 @@ class WidgetMixin(UnittestTools):
         self.gui = GUI()
 
         self.parent = self._create_parent()
-        self.parent._create()
+        self.parent.create()
         self.addCleanup(self._destroy_parent)
         self.gui.process_events()
 
@@ -40,7 +40,7 @@ class WidgetMixin(UnittestTools):
         raise NotImplementedError()
 
     def _create_widget_control(self):
-        self.widget._create()
+        self.widget.create()
         self.addCleanup(self._destroy_widget)
         self.widget.show(True)
         self.gui.process_events()
@@ -65,7 +65,7 @@ class WidgetMixin(UnittestTools):
     def test_widget_tooltip_cleanup(self):
         widget = self._create_widget()
         with patch.object(widget, '_tooltip_updated', return_value=None) as updated:
-            widget._create()
+            widget.create()
             try:
                 widget.show(True)
                 self.gui.process_events()
@@ -88,7 +88,7 @@ class WidgetMixin(UnittestTools):
     def test_widget_context_menu_cleanup(self):
         widget = self._create_widget()
         with patch.object(widget, '_context_menu_updated', return_value=None) as updated:
-            widget._create()
+            widget.create()
             try:
                 widget.show(True)
                 self.gui.process_events()

@@ -139,7 +139,7 @@ class MDialog(HasTraits):
     implementations of the IDialog interface.
 
     Implements: open()
-    Reimplements: _add_event_listeners(), _create()
+    Reimplements: _add_event_listeners(), create()
     """
 
     # ------------------------------------------------------------------------

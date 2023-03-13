@@ -203,7 +203,7 @@ class MWindow(HasTraits):
     implementations of the IWindow interface.
 
     Implements: close(), confirm(), open()
-    Reimplements: _create()
+    Reimplements: create()
     """
 
     # -------------------------------------------------------------------------

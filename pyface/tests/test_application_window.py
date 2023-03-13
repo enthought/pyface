@@ -56,7 +56,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def test_show(self):
         # test that show and hide works as expected
         with self.event_loop():
-            self.window._create()
+            self.window.create()
             self.window.show(True)
         with self.event_loop():
             self.window.show(False)
@@ -135,7 +135,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -161,7 +161,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -181,7 +181,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         ]
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -201,7 +201,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         ]
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -225,7 +225,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             message="hello world"
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -239,7 +239,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             message="hello world"
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -255,7 +255,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that status bar gets created as expected
         self.window.icon = ImageResource("core")
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():

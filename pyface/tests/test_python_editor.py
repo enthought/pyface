@@ -29,7 +29,7 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
-        self.window._create()
+        self.window.create()
 
     def tearDown(self):
         if self.widget.control is not None:
@@ -90,7 +90,6 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
             self.widget = PythonEditor(
                 parent=self.window.control,
                 show_line_numbers=False,
-                create=False,
             )
             self.widget.create()
 

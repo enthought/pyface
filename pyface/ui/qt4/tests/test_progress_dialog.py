@@ -28,7 +28,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create(self):
         # test that creation and destruction works as expected
-        self.dialog._create()
+        self.dialog.create()
         self.gui.process_events()
         self.assertIsNotNone(self.dialog.control)
         self.assertIsNotNone(self.dialog.progress_bar)
@@ -42,7 +42,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def test_show_time(self):
         # test that creation works with show_time
         self.dialog.show_time = True
-        self.dialog._create()
+        self.dialog.create()
         self.gui.process_events()
         self.assertIsNotNone(self.dialog._elapsed_control)
         self.assertIsNotNone(self.dialog._estimated_control)
@@ -53,7 +53,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def test_show_percent(self):
         # test that creation works with show_percent
         self.dialog.show_percent = True
-        self.dialog._create()
+        self.dialog.create()
         self.gui.process_events()
         self.assertEqual(self.dialog.progress_bar.format(), "%p%")
         self.dialog.destroy()

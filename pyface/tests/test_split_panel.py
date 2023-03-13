@@ -25,7 +25,7 @@ class TestSplitPanel(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
-        self.window._create()
+        self.window.create()
 
     def tearDown(self):
         if self.widget.control is not None:

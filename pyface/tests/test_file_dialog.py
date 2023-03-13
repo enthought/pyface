@@ -50,7 +50,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -62,7 +62,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
     def test_close(self):
         # test that close works
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -70,7 +70,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         # test that default path works
         self.dialog.default_path = os.path.join("images", "core.png")
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -79,7 +79,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.default_directory = "images"
         self.dialog.default_filename = "core.png"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -87,7 +87,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         # test that open files action works
         self.dialog.action = "open files"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -95,7 +95,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         # test that open files action works
         self.dialog.action = "save as"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 

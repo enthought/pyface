@@ -27,7 +27,7 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.gui = GUI()
         self.parent = Window()
-        self.parent._create()
+        self.parent.create()
         self.parent.open()
         self.addCleanup(self._destroy_parent)
         self.gui.process_events()

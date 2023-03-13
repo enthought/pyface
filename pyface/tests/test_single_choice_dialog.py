@@ -45,7 +45,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -58,7 +58,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works no cancel button
         self.dialog.cancel = False
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -67,9 +67,9 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             parent = Window()
             self.dialog.parent = parent.control
-            parent._create()
+            parent.create()
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
         with self.event_loop():
@@ -79,7 +79,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with message
         self.dialog.message = "This is the message"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 

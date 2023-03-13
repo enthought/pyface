@@ -78,7 +78,7 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
         Create a dialog, then destroy at the end of a with block.
         """
         with self.event_loop():
-            dialog._create()
+            dialog.create()
         try:
             yield
         finally:

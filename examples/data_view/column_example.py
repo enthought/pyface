@@ -143,7 +143,7 @@ class MainWindow(ApplicationWindow):
                 ),
             ]
         )
-        self.data_view._create()
+        self.data_view.create()
         return self.data_view.control
 
     def _data_default(self):

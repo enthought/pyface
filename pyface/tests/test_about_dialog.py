@@ -41,7 +41,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -55,8 +55,8 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         parent = Window()
         self.dialog.parent = parent.control
         with self.event_loop():
-            parent._create()
-            self.dialog._create()
+            parent.create()
+            self.dialog.create()
 
         with self.event_loop():
             self.dialog.destroy()

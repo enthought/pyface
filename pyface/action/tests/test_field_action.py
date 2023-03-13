@@ -22,7 +22,7 @@ class TestFieldAction(unittest.TestCase):
         self.gui = GUI()
 
         self.parent = Window()
-        self.parent._create()
+        self.parent.create()
         self.addCleanup(self._destroy_parent)
 
     def _destroy_parent(self):

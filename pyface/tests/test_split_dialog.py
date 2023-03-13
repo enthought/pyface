@@ -35,7 +35,7 @@ class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -48,7 +48,7 @@ class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
         # test that horizontal split works
         self.dialog.direction = "horizontal"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -56,7 +56,7 @@ class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
         # test that ratio works
         self.dialog.ratio = 0.25
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -65,7 +65,7 @@ class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.lhs = HeadingText
         self.dialog.rhs = HeadingText
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -79,7 +79,7 @@ class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.lhs = create_toolkit_control
         self.dialog.rhs = create_toolkit_control
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
 
         with self.event_loop():
             self.dialog.destroy()

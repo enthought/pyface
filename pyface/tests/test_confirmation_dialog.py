@@ -50,7 +50,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -63,7 +63,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that size works as expected
         self.dialog.size = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -71,7 +71,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that position works as expected
         self.dialog.position = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -80,9 +80,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             parent = Window()
             self.dialog.parent = parent.control
-            parent._create()
+            parent.create()
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
         with self.event_loop():
@@ -92,7 +92,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with ok_label
         self.dialog.yes_label = "Sure"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -100,7 +100,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with ok_label
         self.dialog.no_label = "No Way"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -108,7 +108,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with ok_label
         self.dialog.default = YES
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -116,7 +116,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works with cancel button
         self.dialog.cancel = True
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -125,7 +125,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.cancel = True
         self.dialog.cancel_label = "Back"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -134,7 +134,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.cancel = True
         self.dialog.default = CANCEL
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -142,7 +142,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works with a non-standard image
         self.dialog.image = ImageResource("core")
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 

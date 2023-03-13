@@ -39,7 +39,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -52,7 +52,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation works with can_cancel
         self.dialog.can_cancel = True
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -60,7 +60,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation works with can_ok
         self.dialog.can_ok = True
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -68,7 +68,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation works with show_time
         self.dialog.show_time = True
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -77,7 +77,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation works with show_percent
         self.dialog.show_percent = True
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 

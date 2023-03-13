@@ -51,7 +51,7 @@ class TestFontDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -63,7 +63,7 @@ class TestFontDialog(unittest.TestCase, GuiTestAssistant):
     def test_close(self):
         # test that close works
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
