@@ -88,7 +88,7 @@ class PreferenceDialog(SplitDialog):
         panel.SetAutoLayout(True)
 
         # The 'pretty' title bar ;^)
-        self.__title = HeadingText(parent=panel, create=False)
+        self.__title = HeadingText(parent=panel)
         self.__title.create()
         sizer.Add(
             self.__title.control,

@@ -52,7 +52,7 @@ class Wizard(MWizard, Dialog):
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog. """
 
-        self._layered_panel = panel = LayeredPanel(parent=parent, create=False)
+        self._layered_panel = panel = LayeredPanel(parent=parent)
         panel.create()
         # fixme: Specific size?
         panel.control.SetSize((100, 200))

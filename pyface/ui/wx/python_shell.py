@@ -60,13 +60,13 @@ class PythonShell(MPythonShell, LayoutWidget):
         super().__init__(parent=parent, **traits)
 
         if create:
-            # Create the toolkit-specific control that represents the widget.
+            # Create the widget's toolkit-specific control.
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=False and explicitly "
-                "call create() for future behaviour",
-                PendingDeprecationWarning,
+                "in a future Pyface version, code should not pass the create ",
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
             )
         elif create is not None:
             warnings.warn(

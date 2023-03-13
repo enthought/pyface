@@ -66,18 +66,24 @@ class TableViewer(ContentViewer):
         specifies the size of the images (if any) displayed in the table.
 
         """
-        create = traits.pop('create', True)
+        create = traits.pop('create', None)
 
         # Base class constructors.
         super().__init__(parent=parent, _image_size=image_size, **traits)
 
         if create:
+            # Create the widget's toolkit-specific control.
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=False and explicitly "
-                "call create() for future behaviour",
-                PendingDeprecationWarning,
+                "in a future Pyface version, code should not pass the create ",
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
             )
 
     def _create_control(self, parent):

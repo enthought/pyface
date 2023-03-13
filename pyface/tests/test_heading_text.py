@@ -31,7 +31,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
 
     def tearDown(self):
         if self.widget.control is not None:
-            with self.delete_widget(self.widget.control):
+            with self.delete_widget(self.window.control):
                 self.widget.destroy()
 
         if self.window.control is not None:
@@ -43,10 +43,25 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def test_lifecycle(self):
-        # test that destroy works
+        # test that create/destroy works
+        self.widget = HeadingText(self.window.control)
+
+        self.assertIsNone(self.widget.control)
+
         with self.event_loop():
-            with self.assertWarns(PendingDeprecationWarning):
-                self.widget = HeadingText(self.window.control)
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_one_stage_create(self):
+        # test that automatic creation works
+        with self.event_loop():
+            with self.assertWarns(DeprecationWarning):
+                self.widget = HeadingText(self.window.control, create=True)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -55,7 +70,8 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
 
     def test_two_stage_create(self):
         # test that create=False works
-        self.widget = HeadingText(create=False)
+        with self.assertWarns(DeprecationWarning):
+            self.widget = HeadingText(create=False)
 
         self.assertIsNone(self.widget.control)
 
@@ -74,7 +90,6 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
             self.widget = HeadingText(
                 self.window.control,
                 text="Hello",
-                create=False,
             )
             self.widget.create()
 
@@ -91,6 +106,5 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
             with self.assertWarns(PendingDeprecationWarning):
                 self.widget = HeadingText(
                     self.window.control,
-                    create=False,
                     image=ImageResource("core.png"),
                 )

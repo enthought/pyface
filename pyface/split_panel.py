@@ -36,9 +36,9 @@ class SplitPanel(Widget, SplitWidget):
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=False and explicitly "
-                "call create() for future behaviour",
-                PendingDeprecationWarning,
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
             )
         elif create is not None:
             warnings.warn(

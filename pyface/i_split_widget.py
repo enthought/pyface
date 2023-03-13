@@ -35,10 +35,12 @@ class ISplitWidget(Interface):
     #: The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.5)
 
-    #: An optional callable that provides the left hand/top panel.
+    #: An optional callable that provides the left hand/top panel, either as
+    #: a toolkit widget or an IWidget.
     lhs = Callable
 
-    #: An optional callable that provides the right hand/bottom panel.
+    #: An optional callable that provides the right hand/bottom panel, either
+    #: as a toolkit widget or an IWidget.
     rhs = Callable
 
     # ------------------------------------------------------------------------
@@ -105,10 +107,12 @@ class MSplitWidget(HasTraits):
     #: The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.5)
 
-    #: An optional callable that provides the left hand/top panel.
+    #: An optional callable that provides the left hand/top panel, either as
+    #: a toolkit widget or an IWidget.
     lhs = Callable
 
-    #: An optional callable that provides the right hand/bottom panel.
+    #: An optional callable that provides the right hand/bottom panel, either
+    #: as a toolkit widget or an IWidget.
     rhs = Callable
 
     def _create_lhs(self, parent):

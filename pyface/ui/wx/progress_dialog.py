@@ -69,9 +69,9 @@ class ProgressBar(Widget):
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=False and explicitly "
-                "call create() for future behaviour",
-                PendingDeprecationWarning,
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
             )
         elif create is not None:
             warnings.warn(
@@ -331,7 +331,7 @@ class ProgressDialog(MProgressDialog, Window):
         return label
 
     def _create_gauge(self, dialog, parent_sizer):
-        self.progress_bar = ProgressBar(dialog, self.min, self.max, create=False)
+        self.progress_bar = ProgressBar(dialog, self.min, self.max)
         self.progress_bar.create()
         parent_sizer.Add(
             self.progress_bar.control, 0, wx.CENTER | wx.ALL, self.margin

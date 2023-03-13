@@ -21,7 +21,7 @@ no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
-class TestHeadingText(unittest.TestCase, GuiTestAssistant):
+class TestSplitPanel(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
@@ -41,10 +41,25 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def test_lifecycle(self):
-        # test that destroy works
+        # test that create/destroy works
+        self.widget = SplitPanel(self.window.control)
+
+        self.assertIsNone(self.widget.control)
+
         with self.event_loop():
-            with self.assertWarns(PendingDeprecationWarning):
-                self.widget = SplitPanel(self.window.control)
+            self.widget.parent = self.window.control
+            self.widget.create()
+
+        self.assertIsNotNone(self.widget.control)
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_one_stage_create(self):
+        # test that automatic creation works
+        with self.event_loop():
+            with self.assertWarns(DeprecationWarning):
+                self.widget = SplitPanel(self.window.control, create=True)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -53,7 +68,8 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
 
     def test_two_stage_create(self):
         # test that create=False works
-        self.widget = SplitPanel(create=False)
+        with self.assertWarns(DeprecationWarning):
+            self.widget = SplitPanel(create=False)
 
         self.assertIsNone(self.widget.control)
 
@@ -84,9 +100,29 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
 
     def test_contents(self):
         # test that contents works
+        self.widget = SplitPanel(
+            self.window.control, lhs=HeadingText, rhs=HeadingText
+        )
         with self.event_loop():
-            self.widget = SplitPanel(
-                self.window.control, lhs=HeadingText, rhs=HeadingText
-            )
+            self.widget.create()
+
+        with self.event_loop():
+            self.widget.destroy()
+
+    def test_contents_toolkit_control(self):
+        # test that toolkit control contents works
+        def create_toolkit_control(parent):
+            widget = HeadingText(parent)
+            widget.create()
+            return widget.control
+
+        self.widget = SplitPanel(
+            self.window.control,
+            lhs=create_toolkit_control,
+            rhs=create_toolkit_control,
+        )
+        with self.event_loop():
+            self.widget.create()
+
         with self.event_loop():
             self.widget.destroy()

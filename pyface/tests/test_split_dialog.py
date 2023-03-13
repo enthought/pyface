@@ -20,7 +20,7 @@ no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
-class TestDialog(unittest.TestCase, GuiTestAssistant):
+class TestSplitDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.dialog = SplitDialog()
@@ -66,5 +66,20 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.rhs = HeadingText
         with self.event_loop():
             self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
+
+    def test_contents_toolkit_control(self):
+        # test that toolkit control contents works
+        def create_toolkit_control(parent):
+            widget = HeadingText(parent)
+            widget.create()
+            return widget.control
+
+        self.dialog.lhs = create_toolkit_control
+        self.dialog.rhs = create_toolkit_control
+        with self.event_loop():
+            self.dialog._create()
+
         with self.event_loop():
             self.dialog.destroy()

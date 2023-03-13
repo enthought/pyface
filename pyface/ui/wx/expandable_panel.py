@@ -52,9 +52,9 @@ class ExpandablePanel(LayoutWidget):
             self.create()
             warnings.warn(
                 "automatic widget creation is deprecated and will be removed "
-                "in a future Pyface version, use create=False and explicitly "
-                "call create() for future behaviour",
-                PendingDeprecationWarning,
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
             )
         elif create is not None:
             warnings.warn(
@@ -132,7 +132,7 @@ class ExpandablePanel(LayoutWidget):
         panel.SetAutoLayout(True)
 
         # Add the panel header.
-        heading = ExpandableHeader(panel, title=text, create=False)
+        heading = ExpandableHeader(panel, title=text)
         heading.create()
         sizer.Add(heading.control, 1, wx.EXPAND)
 
