@@ -307,7 +307,7 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         )
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
 
-        self.assertEqual(tester.result, YES)
+        self.assertEqual(tester.result, OK)
 
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_reject(self):
