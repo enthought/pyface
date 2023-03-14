@@ -49,7 +49,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.create(self.window.control)
+            self.widget.create(parent=self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -75,7 +75,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.create(self.window.control)
+            self.widget.create(parent=self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 

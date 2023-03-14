@@ -47,7 +47,7 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.create(self.window.control)
+            self.widget.create(parent=self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -62,8 +62,8 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         layer_widget = HeadingText()
 
         with self.event_loop():
-            self.widget.create(self.window.control)
-            layer_widget.create(self.window.control)
+            self.widget.create(parent=self.window.control)
+            layer_widget.create(parent=self.window.control)
 
         try:
             with self.event_loop():
@@ -83,9 +83,9 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         layer_widget_2 = HeadingText()
 
         with self.event_loop():
-            self.widget.create(self.window.control)
-            layer_widget_1.create(self.window.control)
-            layer_widget_2.create(self.window.control)
+            self.widget.create(parent=self.window.control)
+            layer_widget_1.create(parent=self.window.control)
+            layer_widget_2.create(parent=self.window.control)
             self.widget.add_layer("test 1", layer_widget_1.control)
             self.widget.add_layer("test 2", layer_widget_2.control)
 
@@ -114,9 +114,9 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         layer_widget_2 = HeadingText()
 
         with self.event_loop():
-            self.widget.create(self.window.control)
-            layer_widget_1.create(self.window.control)
-            layer_widget_2.create(self.window.control)
+            self.widget.create(parent=self.window.control)
+            layer_widget_1.create(parent=self.window.control)
+            layer_widget_2.create(parent=self.window.control)
             self.widget.add_layer("test 1", layer_widget_1.control)
             self.widget.add_layer("test 2", layer_widget_2.control)
 
