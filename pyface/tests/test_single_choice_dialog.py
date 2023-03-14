@@ -66,10 +66,9 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with a parent
         with self.event_loop():
             parent = Window()
-            self.dialog.parent = parent.control
             parent.create()
         with self.event_loop():
-            self.dialog.create()
+            self.dialog.create(parent.control)
         with self.event_loop():
             self.dialog.destroy()
         with self.event_loop():

@@ -79,8 +79,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with a parent
         with self.event_loop():
             parent = Window()
-            self.dialog.parent = parent.control
-            parent.create()
+            parent.create(parent.control)
         with self.event_loop():
             self.dialog.create()
         with self.event_loop():

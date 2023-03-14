@@ -79,9 +79,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
         parent = Window()
-        self.dialog.parent = parent.control
         with self.event_loop():
-            parent.create()
+            parent.create(parent.control)
             self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()

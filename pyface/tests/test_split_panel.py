@@ -47,8 +47,7 @@ class TestSplitPanel(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+            self.widget.create(self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -74,8 +73,7 @@ class TestSplitPanel(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+            self.widget.create(self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 
