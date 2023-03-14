@@ -292,6 +292,24 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
+    def test_extras(self):
+        # test that label and extra text arguments work
+        tester = ModalDialogTester(
+            lambda: confirm(
+                None,
+                "message",
+                default=NO,
+                no_label="Reject",
+                yes_label="Confirm",
+                informative="informative",
+                detail="detail",
+            )
+        )
+        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
+
+        self.assertEqual(tester.result, YES)
+
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_reject(self):
         # test that cancel works as expected
         tester = ModalDialogTester(
