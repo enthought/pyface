@@ -37,13 +37,11 @@ selection_types = DataViewWidget().trait("selection_type").trait_type.values
 @requires_numpy
 class TestWidget(LayoutWidgetMixin, unittest.TestCase):
 
-    def _create_widget(self):
+    def _create_widget_simple(self, **traits):
         self.data = np.arange(120.0).reshape(4, 5, 6)
         self.model = ArrayDataModel(data=self.data, value_type=FloatValue())
-        return DataViewWidget(
-            parent=self.parent.control,
-            data_model=self.model
-        )
+        traits.setdefault("data_model", self.model)
+        return DataViewWidget(**traits)
 
     def test_defaults(self):
         self.assertTrue(self.widget.header_visible)

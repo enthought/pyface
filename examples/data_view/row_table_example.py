@@ -109,16 +109,7 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Creates the left hand side or top depending on the style. """
-
-        self.data_view = DataViewWidget(
-            parent=parent,
-            data_model=RowTableDataModel(
-                data=self.data,
-                row_header_data=row_header_data,
-                column_data=column_data
-            ),
-        )
-        self.data_view.create()
+        self.data_view.create(parent)
         return self.data_view.control
 
     def _data_default(self):
@@ -138,6 +129,15 @@ class MainWindow(ApplicationWindow):
         ]
         logger.info("Data initialized")
         return people
+
+    def _data_view_default(self):
+        return DataViewWidget(
+            data_model=RowTableDataModel(
+                data=self.data,
+                row_header_data=row_header_data,
+                column_data=column_data
+            ),
+        )
 
     def destroy(self):
         self.data_view.destroy()

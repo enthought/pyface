@@ -340,5 +340,6 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
 class TestWidgetCommon(WidgetMixin, unittest.TestCase):
 
-    def _create_widget(self):
-        return ConcreteWidget(parent=self.parent.control, tooltip='Dummy')
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("tooltip", "Dummy")
+        return ConcreteWidget(**traits)

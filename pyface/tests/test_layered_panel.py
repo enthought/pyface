@@ -47,8 +47,7 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.widget.control)
 
         with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+            self.widget.create(parent=self.window.control)
 
         self.assertIsNotNone(self.widget.control)
 
@@ -60,13 +59,11 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
     def test_add_layer(self):
         # test that a layer can be added
         self.widget = LayeredPanel()
-        with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+        layer_widget = HeadingText()
 
-        layer_widget = HeadingText(parent=self.window.control)
         with self.event_loop():
-            layer_widget.create()
+            self.widget.create(parent=self.window.control)
+            layer_widget.create(parent=self.window.control)
 
         try:
             with self.event_loop():
@@ -77,22 +74,18 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
         finally:
             with self.event_loop():
                 layer_widget.destroy()
-
-        with self.event_loop():
-            self.widget.destroy()
+                self.widget.destroy()
 
     def test_show_layer(self):
         # test that a layer can be shown
         self.widget = LayeredPanel()
-        with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+        layer_widget_1 = HeadingText()
+        layer_widget_2 = HeadingText()
 
-        layer_widget_1 = HeadingText(parent=self.window.control)
-        layer_widget_2 = HeadingText(parent=self.window.control)
         with self.event_loop():
-            layer_widget_1.create()
-            layer_widget_2.create()
+            self.widget.create(parent=self.window.control)
+            layer_widget_1.create(parent=self.window.control)
+            layer_widget_2.create(parent=self.window.control)
             self.widget.add_layer("test 1", layer_widget_1.control)
             self.widget.add_layer("test 2", layer_widget_2.control)
 
@@ -112,22 +105,18 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
             with self.event_loop():
                 layer_widget_1.destroy()
                 layer_widget_2.destroy()
-
-        with self.event_loop():
-            self.widget.destroy()
+                self.widget.destroy()
 
     def test_has_layer(self):
         # test that a has_layer works
         self.widget = LayeredPanel()
-        with self.event_loop():
-            self.widget.parent = self.window.control
-            self.widget.create()
+        layer_widget_1 = HeadingText()
+        layer_widget_2 = HeadingText()
 
-        layer_widget_1 = HeadingText(parent=self.window.control)
-        layer_widget_2 = HeadingText(parent=self.window.control)
         with self.event_loop():
-            layer_widget_1.create()
-            layer_widget_2.create()
+            self.widget.create(parent=self.window.control)
+            layer_widget_1.create(parent=self.window.control)
+            layer_widget_2.create(parent=self.window.control)
             self.widget.add_layer("test 1", layer_widget_1.control)
             self.widget.add_layer("test 2", layer_widget_2.control)
 

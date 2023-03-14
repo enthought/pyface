@@ -13,7 +13,7 @@
 
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Enum, HasTraits, Instance, Int, Str
-from traitsui.api import View, Item
+from traitsui.api import View, Item, UI
 
 
 class Person(HasTraits):
@@ -42,14 +42,17 @@ class MainWindow(ApplicationWindow):
 
     # 'IWindow' interface --------------------------------------------------
 
-    # The size of the window.
+    #: The size of the window.
     size = (320, 240)
 
-    # The window title.
+    #: The window title.
     title = "TraitsUI Person"
 
-    # The traits object to display
+    #: The traits object to display
     person = Instance(Person, ())
+
+    #: The TraitsUI UI instance
+    _ui = Instance(UI)
 
     # ------------------------------------------------------------------------
     # Protected 'IApplication' interface.
@@ -57,8 +60,14 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the editor. """
-        self._ui = self.person.edit_traits(kind="panel", parent=parent)
+        self._ui = self.person.edit_traits(kind="subpanel", parent=parent)
         return self._ui.control
+
+    def destroy(self):
+        if self._ui is not None:
+            self._ui.dispose()
+            self._ui = None
+        super().destroy()
 
 
 # Application entry point.

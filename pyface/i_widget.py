@@ -73,7 +73,7 @@ class IWidget(Interface):
             Whether or not the widget has keyboard focus.
         """
 
-    def create(self):
+    def create(self, parent=None):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the
@@ -120,12 +120,14 @@ class MWidget(HasTraits):
     #: An optional context menu for the widget.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
-    def create(self):
+    def create(self, parent=None):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
+        if parent is not None:
+            self.parent = parent
         self.control = self._create_control(self.parent)
         self._initialize_control()
         self._add_event_listeners()

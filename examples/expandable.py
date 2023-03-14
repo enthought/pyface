@@ -41,8 +41,8 @@ class MainWindow(SplitApplicationWindow):
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
 
-        self._expandable = expandable = ExpandablePanel(parent)
-        self._expandable.create()
+        self._expandable = expandable = ExpandablePanel()
+        self._expandable.create(parent)
 
         for i in range(10):
             panel = self._create_content(expandable.control)

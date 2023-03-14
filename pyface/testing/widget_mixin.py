@@ -37,6 +37,9 @@ class WidgetMixin(UnittestTools):
         return Window()
 
     def _create_widget(self):
+        return self._create_widget_simple(parent=self.parent.control)
+
+    def _create_widget_simple(self, **traits):
         raise NotImplementedError()
 
     def _create_widget_control(self):
@@ -54,6 +57,16 @@ class WidgetMixin(UnittestTools):
         self.widget.destroy()
         self.gui.process_events()
         self.widget = None
+
+    def test_lazy_parent_create(self):
+        self.widget = self._create_widget_simple()
+        self.widget.create(parent=self.parent.control)
+        try:
+            self.assertIsNotNone(self.widget.control)
+            self.widget.show(True)
+            self.gui.process_events()
+        finally:
+            self.widget.destroy()
 
     def test_widget_tooltip(self):
         self._create_widget_control()
