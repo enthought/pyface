@@ -134,7 +134,7 @@ if __name__ == '__main__':
                     value_type=IntValue(),
                 ),
             )
-            self.data_view._create()
+            self.data_view.create()
             return self.data_view.control
 
         def destroy(self):

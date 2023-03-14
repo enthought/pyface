@@ -203,7 +203,7 @@ class MWindow(HasTraits):
     implementations of the IWindow interface.
 
     Implements: close(), confirm(), open()
-    Reimplements: _create()
+    Reimplements: create()
     """
 
     # -------------------------------------------------------------------------
@@ -228,7 +228,7 @@ class MWindow(HasTraits):
         if not event.veto:
             # Create the control, if necessary.
             if self.control is None:
-                self._create()
+                self.create()
 
             self.show(True)
             self.opened = self

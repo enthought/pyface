@@ -48,7 +48,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -61,7 +61,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that size works as expected
         self.dialog.size = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -69,7 +69,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that position works as expected
         self.dialog.position = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -77,7 +77,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with ok_label
         self.dialog.ok_label = "Sure"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -85,7 +85,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with cancel_label
         self.dialog.cancel_label = "I Don't Think So"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -93,7 +93,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with help
         self.dialog.help_id = "test_help"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -102,7 +102,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.help_id = "test_help"
         self.dialog.help_label = "Assistance"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 

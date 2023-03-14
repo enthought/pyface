@@ -52,7 +52,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     def test_show(self):
         # test that show works as expected
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():

@@ -25,7 +25,7 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
-        self.window._create()
+        self.window.create()
 
     def tearDown(self):
         if self.widget.control is not None:
@@ -42,7 +42,7 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
 
     def test_lifecycle(self):
         # test that create and destory work
-        self.widget = LayeredPanel(create=False)
+        self.widget = LayeredPanel()
 
         self.assertIsNone(self.widget.control)
 
@@ -59,12 +59,12 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
 
     def test_add_layer(self):
         # test that a layer can be added
-        self.widget = LayeredPanel(create=False)
+        self.widget = LayeredPanel()
         with self.event_loop():
             self.widget.parent = self.window.control
             self.widget.create()
 
-        layer_widget = HeadingText(parent=self.window.control, create=False)
+        layer_widget = HeadingText(parent=self.window.control)
         with self.event_loop():
             layer_widget.create()
 
@@ -83,13 +83,13 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
 
     def test_show_layer(self):
         # test that a layer can be shown
-        self.widget = LayeredPanel(create=False)
+        self.widget = LayeredPanel()
         with self.event_loop():
             self.widget.parent = self.window.control
             self.widget.create()
 
-        layer_widget_1 = HeadingText(parent=self.window.control, create=False)
-        layer_widget_2 = HeadingText(parent=self.window.control, create=False)
+        layer_widget_1 = HeadingText(parent=self.window.control)
+        layer_widget_2 = HeadingText(parent=self.window.control)
         with self.event_loop():
             layer_widget_1.create()
             layer_widget_2.create()
@@ -118,13 +118,13 @@ class TestLayeredPanel(unittest.TestCase, GuiTestAssistant):
 
     def test_has_layer(self):
         # test that a has_layer works
-        self.widget = LayeredPanel(create=False)
+        self.widget = LayeredPanel()
         with self.event_loop():
             self.widget.parent = self.window.control
             self.widget.create()
 
-        layer_widget_1 = HeadingText(parent=self.window.control, create=False)
-        layer_widget_2 = HeadingText(parent=self.window.control, create=False)
+        layer_widget_1 = HeadingText(parent=self.window.control)
+        layer_widget_2 = HeadingText(parent=self.window.control)
         with self.event_loop():
             layer_widget_1.create()
             layer_widget_2.create()

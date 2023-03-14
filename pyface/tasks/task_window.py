@@ -116,7 +116,7 @@ class TaskWindow(ApplicationWindow):
         if not event.veto:
             # Create the control, if necessary.
             if self.control is None:
-                self._create()
+                self.create()
 
             # Activate a task, if necessary.
             if self._active_state is None and self._states:
@@ -184,7 +184,7 @@ class TaskWindow(ApplicationWindow):
         # Make sure the underlying control has been created, even if it is not
         # yet visible.
         if self.control is None:
-            self._create()
+            self.create()
 
         # Create the central pane.
         state.central_pane = task.create_central_pane()

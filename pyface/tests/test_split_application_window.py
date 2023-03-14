@@ -76,6 +76,25 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
                 with self.event_loop():
                     self.window.close()
 
+    def test_contents_toolkit_control(self):
+        # test that toolkit control contents works
+        def create_toolkit_control(parent):
+            widget = HeadingText(parent)
+            widget.create()
+            return widget.control
+
+        self.window.lhs = create_toolkit_control
+        self.window.rhs = create_toolkit_control
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
+                with self.event_loop():
+                    self.window.open()
+
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
+                with self.event_loop():
+                    self.window.close()
+
     def test_ratio(self):
         # test that ratio split works
         self.window.ratio = 0.25

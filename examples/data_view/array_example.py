@@ -61,7 +61,7 @@ class MainWindow(ApplicationWindow):
                 FileDropHandler(extensions=['.npy'], open_file=self.load_data),
             ],
         )
-        self.data_view._create()
+        self.data_view.create()
         return self.data_view.control
 
     def destroy(self):

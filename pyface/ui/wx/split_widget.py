@@ -16,6 +16,7 @@ import wx
 
 from traits.api import provides
 
+from pyface.i_widget import IWidget
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
@@ -73,6 +74,8 @@ class SplitWidget(MSplitWidget):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
+            if isinstance(lhs, IWidget):
+                lhs.create()
             if not isinstance(lhs, wx.Window):
                 lhs = lhs.control
 
@@ -89,6 +92,8 @@ class SplitWidget(MSplitWidget):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
+            if isinstance(rhs, IWidget):
+                rhs.create()
             if not isinstance(rhs, wx.Window):
                 rhs = rhs.control
 

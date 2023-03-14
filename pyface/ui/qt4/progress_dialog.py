@@ -272,8 +272,8 @@ class ProgressDialog(MProgressDialog, Window):
     def _create_control(self, parent):
         return QtGui.QDialog(parent)
 
-    def _create(self):
-        super()._create()
+    def create(self):
+        super().create()
         self._create_contents(self.control)
 
     def _create_contents(self, parent):

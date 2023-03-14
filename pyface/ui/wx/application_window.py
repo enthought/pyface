@@ -107,9 +107,9 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self):
 
-        super()._create()
+        super().create()
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)

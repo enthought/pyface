@@ -58,7 +58,7 @@ class TestMainWindowLayout(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window(size=(500, 500))
-        self.window._create()
+        self.window.create()
 
     def tearDown(self):
         if self.window.control is not None:

@@ -88,7 +88,7 @@ class PreferenceDialog(SplitDialog):
         panel.SetAutoLayout(True)
 
         # The 'pretty' title bar ;^)
-        self.__title = HeadingText(parent=panel, create=False)
+        self.__title = HeadingText(parent=panel)
         self.__title.create()
         sizer.Add(
             self.__title.control,
@@ -100,7 +100,6 @@ class PreferenceDialog(SplitDialog):
         # The preference page of the node currently selected in the tree.
         self._layered_panel = LayeredPanel(
             parent=panel,
-            create=False,
             min_width=-1,
             min_height=-1,
         )

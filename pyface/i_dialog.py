@@ -139,7 +139,7 @@ class MDialog(HasTraits):
     implementations of the IDialog interface.
 
     Implements: open()
-    Reimplements: _add_event_listeners(), _create()
+    Reimplements: _add_event_listeners(), create()
     """
 
     # ------------------------------------------------------------------------
@@ -161,7 +161,7 @@ class MDialog(HasTraits):
             The value of the ``return_code`` trait.
         """
         if self.control is None:
-            self._create()
+            self.create()
 
         if self.style == "modal":
             self.return_code = self._show_modal()
@@ -177,9 +177,9 @@ class MDialog(HasTraits):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self):
         """ Creates the window's widget hierarchy. """
 
-        super()._create()
+        super().create()
 
         self._create_contents(self.control)

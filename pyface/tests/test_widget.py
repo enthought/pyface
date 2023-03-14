@@ -67,7 +67,7 @@ class MainWindow(ApplicationWindow):
             A control to be used for contents of the window.
         """
         self.widget = ConcreteWidget(parent=parent)
-        self.widget._create()
+        self.widget.create()
         return self.widget.control
 
 
@@ -171,7 +171,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_contents_visible(self):
         window = MainWindow()
-        window._create()
+        window.create()
 
         try:
             with self.event_loop():
@@ -191,7 +191,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_contents_hidden(self):
         window = MainWindow()
-        window._create()
+        window.create()
 
         try:
             with self.event_loop():
@@ -213,7 +213,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
     @unittest.skipUnless(is_qt, "Qt-specific test of hidden state")
     def test_contents_hide_external_change(self):
         window = MainWindow()
-        window._create()
+        window.create()
 
         try:
             with self.event_loop():
@@ -251,7 +251,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
         # Test setting the widget visible to true when its parent visibility
         # is false.
         window = MainWindow()
-        window._create()
+        window.create()
 
         try:
             # given
@@ -279,7 +279,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
         # Test showing the widget when the parent is also visible, and then
         # make the parent invisible
         window = MainWindow()
-        window._create()
+        window.create()
 
         try:
             # given

@@ -57,7 +57,7 @@ if __name__ == '__main__':
                 parent=parent,
                 data_model=IndexDataModel(),
             )
-            self.data_view._create()
+            self.data_view.create()
             return self.data_view.control
 
         def destroy(self):

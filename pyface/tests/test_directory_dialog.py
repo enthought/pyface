@@ -40,7 +40,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -52,7 +52,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def test_close(self):
         # test that close works
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -60,7 +60,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that default path works
         self.dialog.default_path = os.path.join("images", "core.png")
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -68,7 +68,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that block on new directories works
         self.dialog.new_directory = False
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -76,7 +76,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that message setting works
         self.dialog.message = "Select a directory"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 

@@ -25,16 +25,16 @@ Lifecycle
 
 When a :class:`~pyface.widget.Widget` instance is created only the traits
 are initialized.  The underlying toolkit widget is not created until the
-widget's :meth:`~pyface.widget.Widget._create` method is called, which is
+widget's :meth:`~pyface.widget.Widget.create` method is called, which is
 responsible for creating the toolkit object, configuring it, and connecting
 handlers that react to changes at the toolkit level or on the traits,
 keeping the state of the Python class synchronised with the state of the
-underlying toolkit object.  The :meth:`~pyface.widget.Widget._create` method
+underlying toolkit object.  The :meth:`~pyface.widget.Widget.create` method
 calls the :meth:`~pyface.widget.Widget._create_control` method to create the
 actual toolkit control and configure it, and also calls the
 :meth:`~pyface.widget.Widget._add_event_listeners` method to handle hooking
 up the different types of change handlers.  Some widget subclasses may do
-additional things in their :meth:`~pyface.widget.Widget._create` methods,
+additional things in their :meth:`~pyface.widget.Widget.create` methods,
 as appropriate for their purpose.
 
 To destroy the toolkit object, the :meth:`~pyface.widget.Widget.destroy`

@@ -53,13 +53,13 @@ class MField(HasTraits):
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        super()._create()
+        super().create()
 
         self.show(self.visible)
         self.enable(self.enabled)

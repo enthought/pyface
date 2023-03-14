@@ -123,9 +123,12 @@ class MWidget(HasTraits):
     def create(self):
         """ Creates the toolkit specific control.
 
-        The default implementation simply calls _create()
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
         """
-        self._create()
+        self.control = self._create_control(self.parent)
+        self._initialize_control()
+        self._add_event_listeners()
 
     def destroy(self):
         """ Call clean-up code and destroy toolkit objects.
@@ -144,12 +147,17 @@ class MWidget(HasTraits):
     def _create(self):
         """ Creates the toolkit specific control.
 
-        This method should create the control and assign it to the
-        :py:attr:``control`` trait.
+        The default implementation simply calls create()
         """
-        self.control = self._create_control(self.parent)
-        self._initialize_control()
-        self._add_event_listeners()
+        from warnings import warn
+
+        warn(
+            "The _create() method will be removed in a future version of "
+            "Pyface.  Use create() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        self.create()
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
