@@ -47,7 +47,8 @@ class MHeadingText(HasTraits):
             warnings.warn(
                 "background images are no-longer supported for Wx and the "
                 "'image' trait will be removed in a future Pyface update",
-                PendingDeprecationWarning,
+                DeprecationWarning,
+                stacklevel=2,
             )
 
         create = traits.pop("create", None)
@@ -63,11 +64,13 @@ class MHeadingText(HasTraits):
                 "in a future Pyface version, code should not pass the create "
                 "parameter and should instead call create() explicitly",
                 DeprecationWarning,
+                stacklevel=2,
             )
         elif create is not None:
             warnings.warn(
                 "setting create=False is no longer required",
                 DeprecationWarning,
+                stacklevel=2,
             )
 
     # ------------------------------------------------------------------------

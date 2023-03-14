@@ -52,6 +52,7 @@ class ListBox(LayoutWidget):
                 "in a future Pyface version, code should not pass the create "
                 "parameter and should instead call create() explicitly",
                 DeprecationWarning,
+                stacklevel=2,
             )
 
     def create(self):

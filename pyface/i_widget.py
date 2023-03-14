@@ -154,7 +154,8 @@ class MWidget(HasTraits):
         warn(
             "The _create() method will be removed in a future version of "
             "Pyface.  Use create() instead.",
-            PendingDeprecationWarning,
+            DeprecationWarning,
+            stacklevel=2,
         )
         self.create()
 

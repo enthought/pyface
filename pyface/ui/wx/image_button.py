@@ -98,11 +98,13 @@ class ImageButton(LayoutWidget):
                 "in a future Pyface version, code should not pass the create "
                 "parameter and should instead call create() explicitly",
                 DeprecationWarning,
+                stacklevel=2,
             )
         elif create is not None:
             warnings.warn(
                 "setting create=False is no longer required",
                 DeprecationWarning,
+                stacklevel=2,
             )
 
     def _create_control(self, parent):

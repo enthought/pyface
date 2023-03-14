@@ -103,7 +103,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
     def test_image(self):
         # test that image raises a deprecation warning
         with self.event_loop():
-            with self.assertWarns(PendingDeprecationWarning):
+            with self.assertWarns(DeprecationWarning):
                 self.widget = HeadingText(
                     self.window.control,
                     image=ImageResource("core.png"),
