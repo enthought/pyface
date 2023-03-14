@@ -65,15 +65,15 @@ Interfaces
 - :class:`~.ILayoutWidget`
 - :class:`~.IMessageDialog`
 - :class:`~.IPILImage`
+- :class:`~.IProgressDialog`
 - :class:`~.IPythonEditor`
 - :class:`~.IPythonShell`
-- :class:`~.IProgressDialog`
 - :class:`~.ISingleChoiceDialog`
 - :class:`~.ISplashScreen`
 - :class:`~.ISplitWidget`
 - :class:`~.ISystemMetrics`
-- :class:`~.IWindow`
 - :class:`~.IWidget`
+- :class:`~.IWindow`
 
 Constants
 ---------
@@ -206,7 +206,6 @@ from .widget import Widget
 # Public Interfaces
 # ----------------------------------------------------------------------------
 
-# Import from pyface.interfaces if you don't want toolit side-effects
 from .i_about_dialog import IAboutDialog
 from .i_application_window import IApplicationWindow
 from .i_clipboard import IClipboard
@@ -217,21 +216,22 @@ from .i_drop_handler import IDropHandler
 from .i_file_dialog import IFileDialog
 from .i_gui import IGUI
 from .i_heading_text import IHeadingText
+from .i_image import IImage
 from .i_image_resource import IImageResource
 from .i_layered_panel import ILayeredPanel
 from .i_layout_item import ILayoutItem
 from .i_layout_widget import ILayoutWidget
 from .i_message_dialog import IMessageDialog
-from .i_progress_dialog import IProgressDialog
 from .i_pil_image import IPILImage
+from .i_progress_dialog import IProgressDialog
 from .i_python_editor import IPythonEditor
 from .i_python_shell import IPythonShell
 from .i_single_choice_dialog import ISingleChoiceDialog
 from .i_splash_screen import ISplashScreen
 from .i_split_widget import ISplitWidget
 from .i_system_metrics import ISystemMetrics
-from .i_window import IWindow
 from .i_widget import IWidget
+from .i_window import IWindow
 
 # ----------------------------------------------------------------------------
 # Legacy and Wx-specific imports.
