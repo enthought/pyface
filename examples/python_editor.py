@@ -10,6 +10,7 @@
 
 """ Python editor example. """
 
+from traits.api import Instance
 
 from pyface.api import ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 from pyface.action.api import (
@@ -21,11 +22,15 @@ from pyface.action.api import (
     ToolBarManager,
 )
 from pyface.fields.api import ComboField
+from pyface.i_python_editor import IPythonEditor
 from pyface.toolkit import toolkit_object
 
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
+
+    #: The PythonEditor instance
+    _editor = Instance(IPythonEditor)
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -36,6 +41,9 @@ class MainWindow(ApplicationWindow):
 
         # Base class constructor.
         super().__init__(**traits)
+
+        # The main editor Widget
+        self._editor = PythonEditor()
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
@@ -99,10 +107,13 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the editor. """
-
-        self._editor = PythonEditor(parent)
-
+        self._editor.create(parent)
         return self._editor.control
+
+    def destroy(self):
+        if self._editor is not None:
+            self._editor.destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.

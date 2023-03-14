@@ -43,10 +43,23 @@ class MainWindow(ApplicationWindow):
             logger.exception()
 
     def _create_contents(self, parent):
-        """ Creates the left hand side or top depending on the style. """
+        self.data_view.create(parent)
+        return self.data_view.control
 
-        self.data_view = DataViewWidget(
-            parent=parent,
+    def destroy(self):
+        self.data_view.destroy()
+        super().destroy()
+
+    @observe('data')
+    def _data_updated(self, event):
+        if self.data_view is not None:
+            self.data_view.data_model.data = self.data
+
+    def _data_default(self):
+        return np.random.uniform(size=(10000, 10, 10)) * 1000000
+
+    def _data_view_default(self):
+        return DataViewWidget(
             data_model=ArrayDataModel(
                 data=self.data,
                 value_type=FloatValue(),
@@ -61,20 +74,6 @@ class MainWindow(ApplicationWindow):
                 FileDropHandler(extensions=['.npy'], open_file=self.load_data),
             ],
         )
-        self.data_view.create()
-        return self.data_view.control
-
-    def destroy(self):
-        self.data_view.destroy()
-        super().destroy()
-
-    @observe('data')
-    def _data_updated(self, event):
-        if self.data_view is not None:
-            self.data_view.data_model.data = self.data
-
-    def _data_default(self):
-        return np.random.uniform(size=(10000, 10, 10))*1000000
 
 
 # Application entry point.

@@ -12,11 +12,15 @@
 
 
 from pyface.api import ApplicationWindow, GUI, PythonShell
-from pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.i_python_shell import IPythonShell
+from traits.api import Instance
 
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
+
+    #: The PythonShell that forms the contents of the window
+    _shell = Instance(IPythonShell, allow_none=False)
 
     # 'IWindow' interface --------------------------------------------------
 
@@ -32,10 +36,15 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the editor. """
-
-        self._shell = PythonShell(parent)
-
+        self._shell.create(parent)
         return self._shell.control
+
+    def destroy(self):
+        self._shell.destroy()
+        super().destroy()
+
+    def __shell_default(self):
+        return PythonShell()
 
 
 # Application entry point.

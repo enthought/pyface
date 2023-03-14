@@ -122,28 +122,7 @@ class MainWindow(ApplicationWindow):
     data_view = Instance(IDataViewWidget)
 
     def _create_contents(self, parent):
-        """ Creates the left hand side or top depending on the style. """
-
-        self.data_view = DataViewWidget(
-            parent=parent,
-            data_model=ColumnDataModel(
-                data=self.data,
-                row_info=self.row_info,
-            ),
-            selection_mode='extended',
-            exporters=[
-                RowExporter(
-                    format=table_format,
-                    column_headers=True,
-                    row_headers=True,
-                ),
-                RowExporter(
-                    format=csv_format,
-                    column_headers=True,
-                ),
-            ]
-        )
-        self.data_view.create()
+        self.data_view.create(parent)
         return self.data_view.control
 
     def _data_default(self):
@@ -163,6 +142,26 @@ class MainWindow(ApplicationWindow):
         ]
         logger.info("Data initialized")
         return people
+
+    def _data_view_default(self):
+        return DataViewWidget(
+            data_model=ColumnDataModel(
+                data=self.data,
+                row_info=self.row_info,
+            ),
+            selection_mode='extended',
+            exporters=[
+                RowExporter(
+                    format=table_format,
+                    column_headers=True,
+                    row_headers=True,
+                ),
+                RowExporter(
+                    format=csv_format,
+                    column_headers=True,
+                ),
+            ]
+        )
 
     def destroy(self):
         self.data_view.destroy()

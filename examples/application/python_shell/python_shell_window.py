@@ -85,7 +85,8 @@ class PythonShellWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the shell widget. """
-        self.shell = PythonShell(parent)
+        self.shell = PythonShell()
+        self.shell.create(parent)
         return self.shell.control
 
     def _menu_bar_manager_default(self):
