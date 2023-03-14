@@ -34,7 +34,7 @@ class TestApiQt(unittest.TestCase):
     def test_importable_items_minimal(self):
         # Test items should be importable in a minimal Qt environment
         # Pygments is excused. Attempt to import PythonEditor or PythonShell
-        # will fail in an environment without pygments will fail, just as it
+        # will fail in an environment without pygments, just as it
         # would if these items were imported directly from the corresponding
         # subpackages.
         from pyface.api import (   # noqa: F401
@@ -90,6 +90,32 @@ class TestApiQt(unittest.TestCase):
             error,
             information,
             warning,
+            # Interfaces
+            IAboutDialog,
+            IApplicationWindow,
+            IClipboard,
+            IConfirmationDialog,
+            IDialog,
+            IDirectoryDialog,
+            IDropHandler,
+            IFileDialog,
+            IGUI,
+            IHeadingText,
+            IImageResource,
+            ILayeredPanel,
+            ILayoutItem,
+            ILayoutWidget,
+            IMessageDialog,
+            IProgressDialog,
+            IPILImage,
+            IPythonEditor,
+            IPythonShell,
+            ISingleChoiceDialog,
+            ISplashScreen,
+            ISplitWidget,
+            ISystemMetrics,
+            IWindow,
+            IWidget,
         )
 
     def test_python_editor_python_shell_importable(self):
@@ -167,4 +193,30 @@ class TestApiWx(unittest.TestCase):
             fix_introspect_bug,
             information,
             warning,
+            # Interfaces
+            IAboutDialog,
+            IApplicationWindow,
+            IClipboard,
+            IConfirmationDialog,
+            IDialog,
+            IDirectoryDialog,
+            IDropHandler,
+            IFileDialog,
+            IGUI,
+            IHeadingText,
+            IImageResource,
+            ILayeredPanel,
+            ILayoutItem,
+            ILayoutWidget,
+            IMessageDialog,
+            IProgressDialog,
+            IPILImage,
+            IPythonEditor,
+            IPythonShell,
+            ISingleChoiceDialog,
+            ISplashScreen,
+            ISplitWidget,
+            ISystemMetrics,
+            IWindow,
+            IWidget,
         )
