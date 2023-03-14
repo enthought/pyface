@@ -60,29 +60,23 @@ class ToggleFieldMixin(FieldMixin):
 
 class TestCheckboxField(ToggleFieldMixin, unittest.TestCase):
 
-    def _create_widget(self):
-        return CheckBoxField(
-            parent=self.parent.control,
-            text="Toggle",
-            tooltip="Dummy",
-        )
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("text", "Toggle")
+        traits.setdefault("tooltip", "Dummy")
+        return CheckBoxField(**traits)
 
 
 class TestRadioButtonField(ToggleFieldMixin, unittest.TestCase):
 
-    def _create_widget(self):
-        return RadioButtonField(
-            parent=self.parent.control,
-            text="Toggle",
-            tooltip="Dummy",
-        )
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("text", "Toggle")
+        traits.setdefault("tooltip", "Dummy")
+        return RadioButtonField(**traits)
 
 
 class TestToggleButtonField(ToggleFieldMixin, unittest.TestCase):
 
-    def _create_widget(self):
-        return ToggleButtonField(
-            parent=self.parent.control,
-            text="Toggle",
-            tooltip="Dummy",
-        )
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("text", "Toggle")
+        traits.setdefault("tooltip", "Dummy")
+        return ToggleButtonField(**traits)

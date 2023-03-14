@@ -222,13 +222,13 @@ class MDataViewWidget(HasTraits):
     # Widget Interface
     # ------------------------------------------------------------------------
 
-    def create(self):
+    def create(self, parent=None):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
         """
-        super().create()
+        super().create(parent=parent)
 
         self.show(self.visible)
         self.enable(self.enabled)

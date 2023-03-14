@@ -177,9 +177,9 @@ class MDialog(HasTraits):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def create(self):
+    def create(self, parent=None):
         """ Creates the window's widget hierarchy. """
 
-        super().create()
+        super().create(parent=parent)
 
         self._create_contents(self.control)

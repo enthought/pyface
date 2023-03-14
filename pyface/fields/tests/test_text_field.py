@@ -20,10 +20,11 @@ is_wx = toolkit.toolkit == "wx"
 
 
 class TestTextField(FieldMixin, unittest.TestCase):
-    def _create_widget(self):
-        return TextField(
-            parent=self.parent.control, value="test", tooltip="Dummy"
-        )
+
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("value", "test")
+        traits.setdefault("tooltip", "Dummy")
+        return TextField(**traits)
 
     # Tests ------------------------------------------------------------------
 

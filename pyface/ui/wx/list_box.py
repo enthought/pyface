@@ -55,8 +55,8 @@ class ListBox(LayoutWidget):
                 stacklevel=2,
             )
 
-    def create(self):
-        super().create()
+    def create(self, parent=None):
+        super().create(parent=parent)
 
         self._populate()
 

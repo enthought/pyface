@@ -18,12 +18,10 @@ from .field_mixin import FieldMixin
 
 class TestTimeField(FieldMixin, unittest.TestCase):
 
-    def _create_widget(self):
-        return TimeField(
-            parent=self.parent.control,
-            value=time(12, 0, 0),
-            tooltip="Dummy",
-        )
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("value", time(12, 0, 0))
+        traits.setdefault("tooltip", "Dummy")
+        return TimeField(**traits)
 
     # Tests ------------------------------------------------------------------
 
