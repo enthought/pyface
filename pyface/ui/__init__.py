@@ -13,6 +13,17 @@ from importlib.abc import MetaPathFinder, Loader
 import sys
 
 
+# Import hooks for loading pyface.ui.qt.* in place of a pyface.ui.qt4.*
+# This is just the implementation, it is not connected in this module, but
+# is available for applications which want to install it themselves.
+# It is here rather than in pyface.ui.qt4 so it can be imported and used
+# without generating the warnings from pyface.ui.qt4
+#
+# To use manually:
+#
+#     import sys
+#     sys.meta_path.append(PyfaceUIQt4Finder())
+
 class PyfaceUIQt4Loader(Loader):
     """This loads pyface.ui.qt.* in place of a pyface.ui.qt4.*
 
@@ -27,8 +38,16 @@ class PyfaceUIQt4Loader(Loader):
         new_name = fullname.replace(".qt4.", ".qt.", 1)
         try:
             module = importlib.import_module(new_name)
-        except ImportError:
-            ...
+        except ModuleNotFoundError as exc:
+            # give better feedback about import failure
+            if exc.name == new_name:
+                raise ModuleNotFoundError(
+                    f"No module named {fullname!r}",
+                    name=fullname,
+                    path=exc.path,
+                )
+            else:
+                raise
         sys.modules[fullname] = module
         return module
 

@@ -14,6 +14,7 @@ import warnings
 
 
 class TestPyfaceQtImports(unittest.TestCase):
+
     def test_imports(self):
         # check that all Qt API imports work
         import pyface.qt.QtCore  # noqa: F401

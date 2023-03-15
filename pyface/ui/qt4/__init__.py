@@ -15,15 +15,29 @@ import warnings
 
 from traits.etsconfig.api import ETSConfig
 
+from pyface.ui import PyfaceUIQt4Finder
 
-if (
+
+
+if any(isinstance(finder, PyfaceUIQt4Finder) for finder in sys.meta_path):
+    # Importing from pyface.ui.qt4.* is deprecated
+    # Already have loader registered.
+    warnings.warn(
+        """The pyface.ui.qt4.* modules have moved to pyface.ui.qt.*
+
+Backward compatibility import hooks are in place.  They will be removed in a
+future release of Pyface.
+""",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+elif (
     os.environ.get('ETS_QT4_IMPORTS', None)  # environment says we want this
     or os.environ.get('ETS_TOOLKIT', None) == "qt4"  # environment says old qt4
     or ETSConfig.toolkit == "qt4"  # the ETSConfig toolkit says old qt4
 ):
     # Register our loader.  This is messing with global state that we do not own
     # so we only do it when we have other global state telling us to.
-    from pyface.ui import PyfaceUIQt4Finder
 
     sys.meta_path.append(PyfaceUIQt4Finder())
 
@@ -31,8 +45,8 @@ if (
     warnings.warn(
         """The pyface.ui.qt4.* modules have moved to pyface.ui.qt.*
 
-Backward compatibility import hooks are in place.  They will be removed in a
-future release of Pyface.
+Backward compatibility import hooks have been automatically applied.
+They will be removed in a future release of Pyface.
 """,
         DeprecationWarning,
         stacklevel=2,
