@@ -12,7 +12,7 @@
 import unittest
 
 from pyface.qt import QtCore, QtGui
-from pyface.ui.qt4.workbench.split_tab_widget import _DragableTabBar
+from pyface.ui.qt.workbench.split_tab_widget import _DragableTabBar
 
 
 class TestSplitTabWidget(unittest.TestCase):

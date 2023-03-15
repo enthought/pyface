@@ -41,7 +41,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     def _get_screen_width(self):
         # QDesktopWidget.screenGeometry() is deprecated and Qt docs
-        # suggest using screens() instead, but screens in not available in qt4
+        # suggest using screens() instead, but screens in not available in qt
         # see issue: enthought/pyface#721
         if not is_qt4:
             return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
@@ -50,7 +50,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     def _get_screen_height(self):
         # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
-        # suggest using screens() instead, but screens in not available in qt4
+        # suggest using screens() instead, but screens in not available in qt
         # see issue: enthought/pyface#721
         if not is_qt4:
             return (

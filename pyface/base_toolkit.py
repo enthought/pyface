@@ -57,7 +57,7 @@ to load toolkits:
 - after that, we try every 'pyface.toolkit' plugin we can find.  If one
   succeeds, we consider ourselves good, and set the ETSConfig.toolkit
   appropriately.  The order is configurable, and by default will try to load
-  the `qt4` toolkit first, `wx` next, then all others in arbitrary order,
+  the `qt` toolkit first, `wx` next, then all others in arbitrary order,
   and `null` last.
 
 - finally, if all else fails, we try to load the null toolkit.
@@ -81,7 +81,7 @@ from traits.etsconfig.api import ETSConfig
 logger = logging.getLogger(__name__)
 
 
-TOOLKIT_PRIORITIES = {"qt4": -2, "wx": -1, "null": float("inf")}
+TOOLKIT_PRIORITIES = {"qt": -2, "wx": -1, "null": float("inf")}
 default_priorities = lambda plugin: TOOLKIT_PRIORITIES.get(plugin.name, 0)
 
 

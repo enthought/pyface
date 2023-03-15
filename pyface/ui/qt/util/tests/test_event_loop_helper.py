@@ -11,7 +11,7 @@ import unittest
 from traits.api import HasTraits, provides
 
 from pyface.i_gui import IGUI
-from pyface.ui.qt4.util.event_loop_helper import EventLoopHelper
+from pyface.ui.qt.util.event_loop_helper import EventLoopHelper
 
 
 @provides(IGUI)

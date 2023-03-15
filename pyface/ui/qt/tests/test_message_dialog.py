@@ -17,7 +17,7 @@ import unittest
 
 from pyface.api import MessageDialog
 from pyface.qt import QtCore, QtGui
-from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
+from pyface.ui.qt.util.gui_test_assistant import GuiTestAssistant
 
 
 class TestMessageDialog(GuiTestAssistant, unittest.TestCase):

@@ -15,7 +15,7 @@ from traits.api import provides
 from pyface.qt import QtGui
 from pyface.i_layout_item import DEFAULT_SIZE
 from pyface.i_layout_widget import ILayoutWidget, MLayoutWidget
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.qt.widget import Widget
 
 
 #: Maximum widget size (some versions of PyQt don't export it)

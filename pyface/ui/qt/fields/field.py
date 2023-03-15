@@ -14,7 +14,7 @@
 from traits.api import Any, provides
 
 from pyface.fields.i_field import IField, MField
-from pyface.ui.qt4.layout_widget import LayoutWidget
+from pyface.ui.qt.layout_widget import LayoutWidget
 
 
 @provides(IField)

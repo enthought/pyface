@@ -20,7 +20,7 @@ if np is not None:
 from pyface.data_view.exporters.row_exporter import RowExporter
 from pyface.data_view.data_formats import table_format
 from pyface.data_view.value_types.api import FloatValue
-from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
+from pyface.ui.qt.data_view.data_view_item_model import DataViewItemModel
 
 
 @requires_numpy

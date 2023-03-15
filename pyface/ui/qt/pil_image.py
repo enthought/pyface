@@ -11,7 +11,7 @@
 from traits.api import provides
 
 from pyface.i_pil_image import IPILImage, MPILImage
-from pyface.ui.qt4.util.image_helpers import resize_image
+from pyface.ui.qt.util.image_helpers import resize_image
 
 
 @provides(IPILImage)

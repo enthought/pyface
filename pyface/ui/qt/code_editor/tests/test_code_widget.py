@@ -16,7 +16,7 @@ from pyface.qt import QtGui
 from pyface.qt.QtTest import QTest
 
 
-from pyface.ui.qt4.code_editor.code_widget import (
+from pyface.ui.qt.code_editor.code_widget import (
     CodeWidget,
     AdvancedCodeWidget,
 )

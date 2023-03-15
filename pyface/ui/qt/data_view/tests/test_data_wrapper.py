@@ -11,7 +11,7 @@
 from unittest import TestCase
 
 from pyface.qt.QtCore import QMimeData
-from pyface.ui.qt4.data_view.data_wrapper import DataWrapper
+from pyface.ui.qt.data_view.data_wrapper import DataWrapper
 
 
 class TestDataWrapper(TestCase):

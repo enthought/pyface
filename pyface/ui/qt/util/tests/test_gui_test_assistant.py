@@ -11,8 +11,8 @@ import itertools
 import unittest
 
 from pyface.timer.api import CallbackTimer
-from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
-from pyface.ui.qt4.util.event_loop_helper import ConditionTimeoutError
+from pyface.ui.qt.util.gui_test_assistant import GuiTestAssistant
+from pyface.ui.qt.util.event_loop_helper import ConditionTimeoutError
 from traits.api import Event, HasStrictTraits
 
 

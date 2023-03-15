@@ -18,9 +18,9 @@ from pyface.qt import QtGui, is_qt6
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 
-from pyface.ui.qt4.util.testing import silence_output
-from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
-from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
+from pyface.ui.qt.util.testing import silence_output
+from pyface.ui.qt.util.gui_test_assistant import GuiTestAssistant
+from pyface.ui.qt.util.modal_dialog_tester import ModalDialogTester
 from pyface.util.testing import skip_if_no_traitsui
 
 

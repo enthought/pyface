@@ -37,7 +37,7 @@ if _app is None:
 
 
 # create the toolkit object
-toolkit_object = Toolkit("pyface", "qt", "pyface.ui.qt4")
+toolkit_object = Toolkit("pyface", "qt", "pyface.ui.qt")
 
 
 # ensure that Traits has a UI handler appropriate for the toolkit.

@@ -16,7 +16,7 @@ import threading
 import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
-from pyface.ui.qt4.gui import GUI
+from pyface.ui.qt.gui import GUI
 from traits.testing.api import UnittestTools
 from traits.testing.unittest_tools import (
     _TraitsChangeCollector as TraitsChangeCollector,
@@ -44,16 +44,22 @@ class GuiTestAssistant(UnittestTools):
         except ImportError:
             self.traitsui_raise_patch = None
         else:
-            self.traitsui_raise_patch = mock.patch(
-                "traitsui.qt4.ui_base._StickyDialog.raise_"
-            )
+            try:
+                import traitsui.qt  # noqa: F401
+                self.traitsui_raise_patch = mock.patch(
+                    "traitsui.qt.ui_base._StickyDialog.raise_"
+                )
+            except ModuleNotFoundError:
+                self.traitsui_raise_patch = mock.patch(
+                    "traitsui.qt4.ui_base._StickyDialog.raise_"
+                )
             self.traitsui_raise_patch.start()
 
         def new_activate(self):
             self.control.activateWindow()
 
         self.pyface_raise_patch = mock.patch(
-            "pyface.ui.qt4.window.Window.activate",
+            "pyface.ui.qt.window.Window.activate",
             new_callable=lambda: new_activate,
         )
         self.pyface_raise_patch.start()

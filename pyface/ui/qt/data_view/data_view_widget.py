@@ -19,7 +19,7 @@ from pyface.qt.QtGui import (
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
-from pyface.ui.qt4.layout_widget import LayoutWidget
+from pyface.ui.qt.layout_widget import LayoutWidget
 from .data_view_item_model import DataViewItemModel
 
 # XXX This file is scaffolding and may need to be rewritten
