@@ -43,7 +43,7 @@ that signifies the GUI toolkit.
 
 The supported values of **ETSConfig.toolkit** are:
 
-* 'qt4' or 'qt': PySide2, PySide6 or `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_,
+* 'qt' or 'qt4': PySide2, PySide6 or `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_,
   which provide Python bindings for the `Qt <http://www.qt.io>`_ framework.
 * 'wx': `wxPython 4 <http://www.wxpython.org>`_, which provides Python bindings
   for the `wxWidgets <http://wxwidgets.org>`_ toolkit.
