@@ -30,7 +30,7 @@ class TestQt4ImportHooks(unittest.TestCase):
             with self._clean_meta_path():
                 with self.assertWarns(FutureWarning):
                     with self.assertRaises(ModuleNotFoundError) as cm:
-                        import pyface.ui.qt4.tests.good_package.good_import
+                        import pyface.ui.qt4.tests.good_package.good_import  # noqa F401
 
                     self.assertEqual(cm.exception.name, "pyface.ui.qt4.tests")
 
@@ -45,7 +45,7 @@ class TestQt4ImportHooks(unittest.TestCase):
                 sys.meta_path.append(ShadowedModuleFinder())
 
                 with self.assertWarns(DeprecationWarning):
-                    import pyface.ui.qt4.tests.good_package.good_import
+                    import pyface.ui.qt4.tests.good_package.good_import  # noqa F401
 
                 import pyface.ui.qt.tests.good_package.good_import
 
@@ -65,7 +65,7 @@ class TestQt4ImportHooks(unittest.TestCase):
 
                 with self.assertWarns(DeprecationWarning):
                     with self.assertRaises(ModuleNotFoundError) as cm:
-                        import pyface.ui.qt4.tests.good_package.no_module
+                        import pyface.ui.qt4.tests.good_package.no_module  # noqa F401
 
                     self.assertEqual(
                         cm.exception.name,
@@ -83,7 +83,7 @@ class TestQt4ImportHooks(unittest.TestCase):
 
                 with self.assertWarns(DeprecationWarning):
                     with self.assertRaises(ModuleNotFoundError) as cm:
-                        import pyface.ui.qt4.tests.good_package.has_bad_import
+                        import pyface.ui.qt4.tests.good_package.has_bad_import  # noqa F401
 
                     self.assertEqual(cm.exception.name, "nonexistent_module")
 
@@ -138,7 +138,7 @@ class TestQt4ImportHooks(unittest.TestCase):
                 with self._set_environment("ETS_TOOLKIT", "qt"):
                     with self.assertWarns(FutureWarning):
                         with self.assertRaises(ModuleNotFoundError):
-                            import pyface.ui.qt4.tests.good_package.good_import
+                            import pyface.ui.qt4.tests.good_package.good_import  # noqa F401
 
     def test_qt4_import_with_etsconfig_toolkit_qt4(self):
         with self._unload_modules([
@@ -171,7 +171,7 @@ class TestQt4ImportHooks(unittest.TestCase):
                 with self._set_etsconfig_toolkit("qt"):
                     with self.assertWarns(FutureWarning):
                         with self.assertRaises(ModuleNotFoundError):
-                            import pyface.ui.qt4.tests.good_package.good_import
+                            import pyface.ui.qt4.tests.good_package.good_import  # noqa F401
 
     @contextmanager
     def _clean_meta_path(self):
@@ -214,7 +214,6 @@ class TestQt4ImportHooks(unittest.TestCase):
                 del os.environ[name]
             else:
                 os.environ[name] = old_value
-
 
     @contextmanager
     def _set_etsconfig_toolkit(self, value):

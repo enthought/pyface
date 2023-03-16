@@ -13,4 +13,4 @@
 """Dummy module for testing toolkit imports"""
 
 # raise a module not found error from somewhere else
-import nonexistent_module
+import nonexistent_module  # noqa F401
