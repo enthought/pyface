@@ -67,7 +67,7 @@ class ShadowedModuleFinder(MetaPathFinder):
 
     """
 
-    def __init__(self, package="pyface.ui.qt4", true_package="pyface.ui.qt"):
+    def __init__(self, package="pyface.ui.qt4.", true_package="pyface.ui.qt."):
         self.package = package
         self.true_package = true_package
 
