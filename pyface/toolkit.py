@@ -19,5 +19,5 @@ algorithm.
 from .base_toolkit import find_toolkit
 
 
-# The toolkit function.
+#: The callable toolkit object.
 toolkit = toolkit_object = find_toolkit("pyface.toolkits")

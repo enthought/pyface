@@ -15,7 +15,7 @@ import unittest
 
 from traits.etsconfig.api import ETSConfig
 
-from pyface.ui import PyfaceUIQt4Finder
+from pyface.ui import ShadowedModuleFinder
 
 
 class TestQt4ImportHooks(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestQt4ImportHooks(unittest.TestCase):
             "pyface.ui.qt4.tests.good_package.good_import",
         ]):
             with self._clean_meta_path():
-                sys.meta_path.append(PyfaceUIQt4Finder())
+                sys.meta_path.append(ShadowedModuleFinder())
 
                 with self.assertWarns(DeprecationWarning):
                     import pyface.ui.qt4.tests.good_package.good_import
@@ -61,7 +61,7 @@ class TestQt4ImportHooks(unittest.TestCase):
             "pyface.ui.qt4.tests.good_package",
         ]):
             with self._clean_meta_path():
-                sys.meta_path.append(PyfaceUIQt4Finder())
+                sys.meta_path.append(ShadowedModuleFinder())
 
                 with self.assertWarns(DeprecationWarning):
                     with self.assertRaises(ModuleNotFoundError) as cm:
@@ -79,7 +79,7 @@ class TestQt4ImportHooks(unittest.TestCase):
             "pyface.ui.qt4.tests.good_package",
         ]):
             with self._clean_meta_path():
-                sys.meta_path.append(PyfaceUIQt4Finder())
+                sys.meta_path.append(ShadowedModuleFinder())
 
                 with self.assertWarns(DeprecationWarning):
                     with self.assertRaises(ModuleNotFoundError) as cm:
@@ -175,11 +175,11 @@ class TestQt4ImportHooks(unittest.TestCase):
 
     @contextmanager
     def _clean_meta_path(self):
-        """Temporarily remove PyfaceUIQt4Finder instances from sys.meta_path"""
+        """Temporarily remove ShadowedModuleFinder instances from sys.meta_path"""
         old_meta_path = sys.meta_path[:]
         sys.meta_path[:] = [
             finder for finder in sys.meta_path
-            if not isinstance(finder, PyfaceUIQt4Finder)
+            if not isinstance(finder, ShadowedModuleFinder)
         ]
         try:
             yield

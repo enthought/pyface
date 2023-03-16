@@ -8,8 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-import importlib
+from importlib import import_module
 from importlib.abc import MetaPathFinder, Loader
+from importlib.util import find_spec
+from importlib.machinery import ModuleSpec
 import sys
 
 
@@ -22,43 +24,61 @@ import sys
 # To use manually:
 #
 #     import sys
-#     sys.meta_path.append(PyfaceUIQt4Finder())
+#     sys.meta_path.append(ShadowedModuleFinder())
 
-class PyfaceUIQt4Loader(Loader):
-    """This loads pyface.ui.qt.* in place of a pyface.ui.qt4.*
-
-    The basic operation is to take the name of the module, replace the
-    "qt4" with "qt", load that module, and then add an alias into sys.modules.
+class ShadowedModuleLoader(Loader):
+    """This loads another module into sys.modules with the given name.
     """
 
-    def module_repr(self, module):
-        return repr(module)
+    def __init__(self, fullname, new_name, new_spec):
+        self.fullname = fullname
+        self.new_name = new_name
+        self.new_spec = new_spec
 
-    def load_module(self, fullname):
-        new_name = fullname.replace(".qt4.", ".qt.", 1)
-        try:
-            module = importlib.import_module(new_name)
-        except ModuleNotFoundError as exc:
-            # give better feedback about import failure
-            if exc.name == new_name:
-                raise ModuleNotFoundError(
-                    f"No module named {fullname!r}",
-                    name=fullname,
-                    path=exc.path,
-                )
-            else:
-                raise
-        sys.modules[fullname] = module
-        return module
+    def create_module(self, spec):
+        if self.new_name not in sys.modules:
+            import_module(self.new_name)
+        return sys.modules[self.new_name]
+
+    def exec_module(self, module):
+        # patch up the __spec__ with the true module's original __spec__
+        if self.new_spec:
+            module.__spec__ = self.new_spec
+            self.new_spec = None
+        # don't need to do anything more - module code has already been run
 
 
-class PyfaceUIQt4Finder(MetaPathFinder):
-    """MetaPath-based finder for importing pyface.ui.qt4.*
+class ShadowedModuleFinder(MetaPathFinder):
+    """MetaPathFinder for shadowing modules in a package
 
-    This matches imports from any path starting with pyface.ui.qt4. and
-    returns a loader which will instead load from pyface.ui.qt.*
+    This finds modules with names that match a package but arranges loading
+    from a different package.  By default this is  matches imports from any
+    path starting with pyface.ui.qt4. and returns a loader which will instead
+    load from pyface.ui.qt.*
+
+    The end result is that sys.modules has two entries for pointing to the
+    same module object.
+
+    This may be hooked up by code in pyface.ui.qt4, but it can also be
+    installed manually with::
+
+        import sys
+        sys.meta_path.append(ShadowedModuleFinder())
+
     """
 
-    def find_module(self, fullname, path=None):
-        if fullname.startswith('pyface.ui.qt4.'):
-            return PyfaceUIQt4Loader()
+    def __init__(self, package="pyface.ui.qt4", true_package="pyface.ui.qt"):
+        self.package = package
+        self.true_package = true_package
+
+    def find_spec(self, fullname, path, target=None):
+        if fullname.startswith(self.package):
+            new_name = fullname.replace(self.package, self.true_package, 1)
+            new_spec = find_spec(new_name)
+            if new_spec is None:
+                return None
+            return ModuleSpec(
+                name=fullname,
+                loader=ShadowedModuleLoader(fullname, new_name, new_spec),
+            )
+

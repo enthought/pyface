@@ -73,6 +73,34 @@ second trait provides a hook where an application can insert other packages
 into the search path to override the default implementations of a toolkit's
 widgets, if needed.
 
+The "qt4" Toolkit
+-----------------
+
+The "qt4" toolkit is the same as the "qt" toolkit in almost all respects:
+in older versions of Pyface it was the standard name for all the Qt-based
+toolkits whether or not they were actually using Qt4.
+
+However it does trigger some backwards-compatibility code that may be useful
+for legacy applications. In particular it installs import hooks that makes the
+``pyface.ui.qt4.*`` package namespace an alias for ``pyface.ui.qt.*`` modules.
+
+This backwards-compatibility code can also be invoked by setting the
+``ETS_QT4_IMPORTS`` environment variable to any non-empty value, or adding
+an instance of the :py:class:`pyface.ui.ShadowedModuleFinder` module finder
+to :py:attr:`sys.meta_path` list.
+
+..  warning::
+
+    Library code which imports from ``pyface.ui.qt4.*`` should not use this
+    compatibility code.  Instead it should be updated to import from
+    ``pyface.ui.qt.*`` as soon as practical.  Backwards-compatibility can be
+    achieved fairly easily by using :py:attr:`pyface.toolkit.toolkit` to access
+    objects rather than direct imports.
+
+This backwards-compatibility code will be removed in Pyface 9, and applications
+which rely on the particulars of the implementation and are encouraged to
+migrate to the newer import locations as soon as practical.
+
 Toolkit Entrypoints
 ===================
 

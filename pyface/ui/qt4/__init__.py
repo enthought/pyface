@@ -15,11 +15,11 @@ import warnings
 
 from traits.etsconfig.api import ETSConfig
 
-from pyface.ui import PyfaceUIQt4Finder
+from pyface.ui import ShadowedModuleFinder
 
 
 
-if any(isinstance(finder, PyfaceUIQt4Finder) for finder in sys.meta_path):
+if any(isinstance(finder, ShadowedModuleFinder) for finder in sys.meta_path):
     # Importing from pyface.ui.qt4.* is deprecated
     # Already have loader registered.
     warnings.warn(
@@ -39,7 +39,7 @@ elif (
     # Register our loader.  This is messing with global state that we do not own
     # so we only do it when we have other global state telling us to.
 
-    sys.meta_path.append(PyfaceUIQt4Finder())
+    sys.meta_path.append(ShadowedModuleFinder())
 
     # Importing from pyface.ui.qt4.* is deprecated
     warnings.warn(
@@ -62,7 +62,7 @@ Applications which require backwards compatibility can either:
 - set the ETS_QT4_IMPORTS environment variable
 - set the ETS_TOOLKIT environment variable to "qt4",
 - the ETSConfig.toolkit to "qt4"
-- install pyface.ui.PyfaceUIQt4Finder() into sys.meta_path/
+- install pyface.ui.ShadowedModuleFinder() into sys.meta_path
 """,
         FutureWarning,
         stacklevel=2,
