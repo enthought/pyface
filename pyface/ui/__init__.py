@@ -10,8 +10,8 @@
 
 from importlib import import_module
 from importlib.abc import MetaPathFinder, Loader
-from importlib.util import find_spec
 from importlib.machinery import ModuleSpec
+from importlib.util import find_spec
 import sys
 
 
@@ -88,6 +88,12 @@ class ShadowedModuleFinder(MetaPathFinder):
         import sys
         sys.meta_path.append(ShadowedModuleFinder())
 
+    Parameters
+    ----------
+    package : str
+        The prefix of the "shadow" package.
+    true_package : str
+        The prefix of the "real" package which contains the actual code.
     """
 
     def __init__(self, package="pyface.ui.qt4.", true_package="pyface.ui.qt."):
