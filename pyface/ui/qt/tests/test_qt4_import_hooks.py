@@ -54,6 +54,16 @@ class TestQt4ImportHooks(unittest.TestCase):
                     pyface.ui.qt.tests.good_package.good_import,
                 )
 
+                self.assertIs(
+                    pyface.ui.qt4.tests.good_package,
+                    pyface.ui.qt.tests.good_package,
+                )
+
+                self.assertIs(
+                    pyface.ui.qt4.tests,
+                    pyface.ui.qt.tests,
+                )
+
     def test_qt4_import_with_hook_no_module(self):
         with self._unload_modules([
             "pyface.ui.qt4",

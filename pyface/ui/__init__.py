@@ -27,7 +27,18 @@ import sys
 #     sys.meta_path.append(ShadowedModuleFinder())
 
 class ShadowedModuleLoader(Loader):
-    """This loads another module into sys.modules with the given name.
+    """This loads another module into sys.modules with a given name.
+
+    Parameters
+    ----------
+    fullname : str
+        The full name of the module we're trying to import.
+        Eg. "pyface.ui.qt4.foo"
+    new_name : str
+        The full name of the corresponding "real" module.
+        Eg. "pyface.ui.qt.foo"
+    new_spec : ModuleSpec instance
+        The spec object for the corresponding "real" module.
     """
 
     def __init__(self, fullname, new_name, new_spec):
@@ -36,16 +47,28 @@ class ShadowedModuleLoader(Loader):
         self.new_spec = new_spec
 
     def create_module(self, spec):
+        """Create the module object.
+
+        This doesn't create the module object directly, rather it gets the
+        underlying "real" module's object, importing it if needed.  This object
+        is then returned as the "new" module.
+        """
         if self.new_name not in sys.modules:
             import_module(self.new_name)
         return sys.modules[self.new_name]
 
     def exec_module(self, module):
+        """Execute code for the module.
+
+        This is given a module which has already been executed, so we don't
+        need to execute anything.  However we do need to remove the __spec__
+        that the importlibs machinery has injected into the module and
+        replace it with the original spec for the underlying "real" module.
+        """
         # patch up the __spec__ with the true module's original __spec__
         if self.new_spec:
             module.__spec__ = self.new_spec
             self.new_spec = None
-        # don't need to do anything more - module code has already been run
 
 
 class ShadowedModuleFinder(MetaPathFinder):
@@ -80,5 +103,5 @@ class ShadowedModuleFinder(MetaPathFinder):
             return ModuleSpec(
                 name=fullname,
                 loader=ShadowedModuleLoader(fullname, new_name, new_spec),
+                is_package=(new_spec.submodule_search_locations is not None),
             )
-
