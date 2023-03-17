@@ -98,7 +98,7 @@ to :py:attr:`sys.meta_path` list.
     objects rather than direct imports.
 
 This backwards-compatibility code will be removed in Pyface 9, and applications
-which rely on the particulars of the implementation and are encouraged to
+which rely on the particulars of the implementation are encouraged to
 migrate to the newer import locations as soon as practical.
 
 Toolkit Entrypoints
