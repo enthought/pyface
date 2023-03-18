@@ -1,3 +1,4 @@
+# (C) Copyright 2007 Riverbank Computing Limited
 # (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
@@ -8,41 +9,31 @@
 #
 # Thanks for using Enthought open source!
 
-
-import sys
-from os.path import basename
-
+import warnings
 
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import (
-    Bool, Event, File, Instance, observe, Property, provides, Str
-)
-from pyface.tasks.api import Editor
+from traits.api import Bool, Event, provides, Str
 
 
-from i_python_editor import IPythonEditor
+from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+from pyface.ui.qt.layout_widget import LayoutWidget
+from pyface.ui.qt.code_editor.code_widget import AdvancedCodeWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(Editor):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
 
     # 'IPythonEditor' interface --------------------------------------------
 
-    obj = Instance(File)
-
-    path = Str()
-
     dirty = Bool(False)
 
-    name = Property(Str, observe="path")
-
-    tooltip = Property(Str, observe="path")
+    path = Str()
 
     show_line_numbers = Bool(True)
 
@@ -52,18 +43,35 @@ class PythonEditor(Editor):
 
     key_pressed = Event(KeyPressedEvent)
 
-    def _get_tooltip(self):
-        return self.path
+    # ------------------------------------------------------------------------
+    # 'object' interface.
+    # ------------------------------------------------------------------------
 
-    def _get_name(self):
-        return basename(self.path) or "Untitled"
+    def __init__(self, parent=None, **traits):
+
+        create = traits.pop("create", None)
+
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
     # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
     # ------------------------------------------------------------------------
-
-    def create(self, parent):
-        self.control = self._create_control(parent)
 
     def load(self, path=None):
         """ Loads the contents of the editor.
@@ -103,16 +111,43 @@ class PythonEditor(Editor):
         )
 
     # ------------------------------------------------------------------------
+    # 'Widget' interface.
+    # ------------------------------------------------------------------------
+
+    def _add_event_listeners(self):
+        super()._add_event_listeners()
+        self.control.code.installEventFilter(self._event_filter)
+
+        # Connect signals for text changes.
+        self.control.code.modificationChanged.connect(self._on_dirty_changed)
+        self.control.code.textChanged.connect(self._on_text_changed)
+
+    def _remove_event_listeners(self):
+        if self.control is not None:
+            # Disconnect signals for text changes.
+            self.control.code.modificationChanged.disconnect(
+                self._on_dirty_changed
+            )
+            self.control.code.textChanged.disconnect(self._on_text_changed)
+            # Disconnect signals from control and other dependent widgets
+            self.control._remove_event_listeners()
+
+            if self._event_filter is not None:
+                self.control.code.removeEventFilter(self._event_filter)
+
+        super()._remove_event_listeners()
+
+    def __event_filter_default(self):
+        return PythonEditorEventFilter(self, self.control)
+
+    # ------------------------------------------------------------------------
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    @observe('path')
-    def _path_updated(self, event):
-        if self.control is not None:
-            self.load()
+    def _path_changed(self):
+        self._changed_path()
 
-    @observe('show_line_numbers')
-    def _show_line_numbers_updated(self, event=None):
+    def _show_line_numbers_changed(self):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
                 self.show_line_numbers
@@ -126,19 +161,8 @@ class PythonEditor(Editor):
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.
         """
-        from pyface.ui.qt.code_editor.code_widget import AdvancedCodeWidget
-
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_updated()
-
-        # Install event filter to trap key presses.
-        event_filter = PythonEditorEventFilter(self, self.control)
-        self.control.installEventFilter(event_filter)
-        self.control.code.installEventFilter(event_filter)
-
-        # Connect signals for text changes.
-        control.code.modificationChanged.connect(self._on_dirty_changed)
-        control.code.textChanged.connect(self._on_text_changed)
+        self._show_line_numbers_changed()
 
         # Load the editor's contents.
         self.load()

@@ -21,8 +21,8 @@ version = '8.0.0.dev0'
 license = {file = "LICENSE.txt"}
 
 [project.entry-points.'pyface.toolkits']
-qt = 'pyface.ui.qt4.init:toolkit_object'
-qt4 = 'pyface.ui.qt4.init:toolkit_object'
+qt = 'pyface.ui.qt.init:toolkit_object'
+qt4 = 'pyface.ui.qt.init:toolkit_object'
 wx = 'pyface.ui.wx.init:toolkit_object'
 null = 'pyface.ui.null.init:toolkit_object'
 

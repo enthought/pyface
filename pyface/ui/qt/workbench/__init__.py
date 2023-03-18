@@ -7,9 +7,3 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Import the toolkit specific version.
-from pyface.toolkit import toolkit_object
-
-# WIP: Currently only supports qt backend. API might change without
-# prior notification
-PyMimeData = toolkit_object("mimedata:PyMimeData")

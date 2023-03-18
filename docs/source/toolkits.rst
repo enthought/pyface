@@ -21,7 +21,7 @@ ways:
   attribute appropriately::
 
     from tratis.etsconfig.api import ETSConfig
-    ETSConfig.toolkit = 'qt4'
+    ETSConfig.toolkit = 'qt'
 
   This must be done _before_ any widget imports in your application, including
   importing :py:mod:`pyface.api`.  Precisely, this must be set before the
@@ -30,7 +30,7 @@ ways:
 If for some reason Pyface can't load a deliberately specified toolkit, then it
 will raise an exception.
 
-If the toolkit is not specified, Pyface will try to load the ``qt4`` or ``wx``
+If the toolkit is not specified, Pyface will try to load the ``qt`` or ``wx``
 toolkits, in that order, and then any other toolkits that it knows about
 other than ``null``.  If all of those fail, then it will try to load the
 ``null`` toolkit.
@@ -57,8 +57,8 @@ The API module for the new widget class typically looks something like this::
 
 The base toolkits use the identifier to select which module to import the
 toolkit object by constructing a full module path from the partial path and
-importing the object.  For example the ``qt4`` backend will look for the
-concrete implementation in :py:mod:`pyface.ui.qt4.my_package.my_widget`
+importing the object.  For example the ``qt`` backend will look for the
+concrete implementation in :py:mod:`pyface.ui.qt.my_package.my_widget`
 while the ``wx`` backend will look for
 :py:mod:`pyface.ui.wx.my_package.my_widget`.
 
@@ -72,6 +72,34 @@ packages that it searches when trying to import a toolkit object.  This
 second trait provides a hook where an application can insert other packages
 into the search path to override the default implementations of a toolkit's
 widgets, if needed.
+
+The "qt4" Toolkit
+-----------------
+
+The "qt4" toolkit is the same as the "qt" toolkit in almost all respects:
+in older versions of Pyface it was the standard name for all the Qt-based
+toolkits whether or not they were actually using Qt4.
+
+However it does trigger some backwards-compatibility code that may be useful
+for legacy applications. In particular it installs import hooks that makes the
+``pyface.ui.qt4.*`` package namespace an alias for ``pyface.ui.qt.*`` modules.
+
+This backwards-compatibility code can also be invoked by setting the
+``ETS_QT4_IMPORTS`` environment variable to any non-empty value, or adding
+an instance of the :py:class:`pyface.ui.ShadowedModuleFinder` module finder
+to :py:attr:`sys.meta_path` list.
+
+..  warning::
+
+    Library code which imports from ``pyface.ui.qt4.*`` should not use this
+    compatibility code.  Instead it should be updated to import from
+    ``pyface.ui.qt.*`` as soon as practical.  Backwards-compatibility can be
+    achieved fairly easily by using :py:attr:`pyface.toolkit.toolkit` to access
+    objects rather than direct imports.
+
+This backwards-compatibility code will be removed in Pyface 9, and applications
+which rely on the particulars of the implementation are encouraged to
+migrate to the newer import locations as soon as practical.
 
 Toolkit Entrypoints
 ===================

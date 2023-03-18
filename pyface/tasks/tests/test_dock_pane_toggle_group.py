@@ -19,7 +19,7 @@ from traits.api import List
 from traits.etsconfig.api import ETSConfig
 
 
-USING_WX = ETSConfig.toolkit not in ["", "qt4"]
+USING_WX = ETSConfig.toolkit not in {"", "qt", "qt4"}
 
 
 class BogusTask(Task):

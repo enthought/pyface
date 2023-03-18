@@ -7,9 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Import the toolkit specific version.
-from pyface.toolkit import toolkit_object
+# This is used to test what happens when there is an unrelated import error
+# when importing a toolkit object
 
-# WIP: Currently only supports qt backend. API might change without
-# prior notification
-PyMimeData = toolkit_object("mimedata:PyMimeData")
+"""Dummy module for testing toolkit imports"""
+
+# raise a module not found error from somewhere else
+import nonexistent_module  # noqa F401

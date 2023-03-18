@@ -141,7 +141,10 @@ doc_dependencies = {
 doc_ignore = {
     "pyface/wx/*",
     "pyface/qt/*",
-    "pyface/ui/*",
+    "pyface/ui/null/*",
+    "pyface/ui/qt/*",
+    "pyface/ui/qt4/*",
+    "pyface/ui/wx/*",
     "pyface/dock/*",
     "pyface/util/fix_introspect_bug.py",
     "pyface/grid/*",
