@@ -11,6 +11,8 @@
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
+from pyface.qt import QtGui
+
 from traits.api import HasTraits, Int, Property, provides, Tuple
 
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
