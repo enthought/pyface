@@ -80,13 +80,13 @@ class _MenuItem(HasTraits):
             menu.addAction(self.control)
         elif action.image is None:
             self.control = menu.addAction(
-                action.name, self._qt4_on_triggered, action.accelerator
+                action.name, self._qt_on_triggered, action.accelerator
             )
         else:
             self.control = menu.addAction(
                 action.image.create_icon(),
                 action.name,
-                self._qt4_on_triggered,
+                self._qt_on_triggered,
                 action.accelerator,
             )
         menu.menu_items.append(self)
@@ -108,9 +108,9 @@ class _MenuItem(HasTraits):
         elif action.style == "radio":
             # Create an action group if it hasn't already been done.
             try:
-                ag = item.parent._qt4_ag
+                ag = item.parent._qt_ag
             except AttributeError:
-                ag = item.parent._qt4_ag = QtGui.QActionGroup(parent)
+                ag = item.parent._qt_ag = QtGui.QActionGroup(parent)
 
             self.control.setActionGroup(ag)
 
@@ -128,7 +128,7 @@ class _MenuItem(HasTraits):
         action.observe(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
-        self.control.destroyed.connect(self._qt4_on_destroyed)
+        self.control.destroyed.connect(self._qt_on_destroyed)
 
         if controller is not None:
             self.controller = controller
@@ -150,13 +150,13 @@ class _MenuItem(HasTraits):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _qt4_on_destroyed(self, control=None):
+    def _qt_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
         it again.
         """
         self.control = None
 
-    def _qt4_on_triggered(self):
+    def _qt_on_triggered(self):
         """ Called when the menu item has been clicked. """
 
         action = self.item.action
@@ -310,7 +310,7 @@ class _Tool(HasTraits):
             self.control = tool_bar.addAction(image, action.name)
         tool_bar.tools.append(self)
 
-        self.control.triggered.connect(self._qt4_on_triggered)
+        self.control.triggered.connect(self._qt_on_triggered)
 
         self.control.setToolTip(action.tooltip)
         self.control.setWhatsThis(action.description)
@@ -323,9 +323,9 @@ class _Tool(HasTraits):
         elif action.style == "radio":
             # Create an action group if it hasn't already been done.
             try:
-                ag = item.parent._qt4_ag
+                ag = item.parent._qt_ag
             except AttributeError:
-                ag = item.parent._qt4_ag = QtGui.QActionGroup(parent)
+                ag = item.parent._qt_ag = QtGui.QActionGroup(parent)
 
             self.control.setActionGroup(ag)
 
@@ -348,7 +348,7 @@ class _Tool(HasTraits):
         action.observe(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
-        self.control.destroyed.connect(self._qt4_on_destroyed)
+        self.control.destroyed.connect(self._qt_on_destroyed)
 
         if controller is not None:
             self.controller = controller
@@ -370,7 +370,7 @@ class _Tool(HasTraits):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _qt4_on_destroyed(self, control=None):
+    def _qt_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
         it again.
         """
@@ -385,7 +385,7 @@ class _Tool(HasTraits):
                 del self.control._tool_instance
         self.control = None
 
-    def _qt4_on_triggered(self):
+    def _qt_on_triggered(self):
         """ Called when the tool bar tool is clicked. """
 
         action = self.item.action

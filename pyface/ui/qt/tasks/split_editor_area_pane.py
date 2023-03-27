@@ -26,7 +26,7 @@ from traits.api import (
     Str,
     Tuple,
 )
-from pyface.qt import is_qt4, QtCore, QtGui, is_qt6, is_pyside
+from pyface.qt import QtCore, QtGui, is_qt6, is_pyside
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -1082,18 +1082,12 @@ class TabDragObject(object):
         painter.drawPrimitive(QtGui.QStyle.PrimitiveElement.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
-        if is_qt4:  # grab wasn't introduced until Qt5
-            pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
-        else:
-            pixmap1 = tabBar.grab(tab_rect)
+        pixmap1 = tabBar.grab(tab_rect)
 
         painter.drawPixmap(0, 0, pixmap1)
 
         # region of the page widget
-        if is_qt4:
-            pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
-        else:
-            pixmap2 = self.widget.grab()
+        pixmap2 = self.widget.grab()
         painter.drawPixmap(
             0, tab_rect.height(), size.width(), size.height(), pixmap2
         )

@@ -11,12 +11,7 @@
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-
-from pyface.qt import QtGui, is_qt4
-
-
 from traits.api import HasTraits, Int, Property, provides, Tuple
-
 
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
@@ -43,23 +38,15 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # QDesktopWidget.screenGeometry() is deprecated and Qt docs
         # suggest using screens() instead, but screens in not available in qt
         # see issue: enthought/pyface#721
-        if not is_qt4:
-            return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
-        else:
-            return QtGui.QApplication.instance().desktop().availableGeometry().width()
+        return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
 
     def _get_screen_height(self):
         # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
         # suggest using screens() instead, but screens in not available in qt
         # see issue: enthought/pyface#721
-        if not is_qt4:
-            return (
-                QtGui.QApplication.instance().screens()[0].availableGeometry().height()
-            )
-        else:
-            return (
-                QtGui.QApplication.instance().desktop().availableGeometry().height()
-            )
+        return (
+            QtGui.QApplication.instance().screens()[0].availableGeometry().height()
+        )
 
     def _get_dialog_background_color(self):
         color = (

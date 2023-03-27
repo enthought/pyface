@@ -20,7 +20,7 @@ from pyface.qt import QtCore, QtGui
 
 
 from traits.api import Bool, HasTraits, observe, provides, Str
-from pyface.util.guisupport import start_event_loop_qt4
+from pyface.util.guisupport import start_event_loop_qt
 
 
 from pyface.i_gui import IGUI, MGUI
@@ -104,7 +104,7 @@ class GUI(MGUI, HasTraits):
         self.set_trait_later(self, "started", True)
 
         logger.debug("---------- starting GUI event loop ----------")
-        start_event_loop_qt4()
+        start_event_loop_qt()
 
         self.started = False
 

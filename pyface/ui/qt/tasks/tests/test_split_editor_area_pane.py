@@ -28,7 +28,7 @@ from pyface.tasks.api import (
     Task,
     TaskWindow,
 )
-from pyface.util.guisupport import get_app_qt4
+from pyface.util.guisupport import get_app_qt
 from pyface.ui.qt.util.testing import event_loop
 from pyface.util.gui_test_assistant import GuiTestAssistant
 
@@ -493,7 +493,7 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
         try:
             with event_loop():
-                app = get_app_qt4()
+                app = get_app_qt()
                 app.setActiveWindow(window.control)
 
             # Add and activate an editor which contains tabs.
@@ -527,7 +527,7 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
         try:
             with event_loop():
-                app = get_app_qt4()
+                app = get_app_qt()
                 app.setActiveWindow(window.control)
 
             # Add and activate an editor which contains tabs.
@@ -570,7 +570,7 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
         try:
             with event_loop():
-                app = get_app_qt4()
+                app = get_app_qt()
                 app.setActiveWindow(window.control)
 
             # Add and activate an editor which contains tabs.
@@ -613,7 +613,7 @@ class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
 
         try:
             with event_loop():
-                app = get_app_qt4()
+                app = get_app_qt()
                 app.setActiveWindow(window.control)
 
             # Add and activate an editor which contains tabs.

@@ -26,7 +26,7 @@ automatically used in the absence of a real backend.
 
 Currently, the GUI toolkits are
 
-* PySide2 (stable) and PySide6 (experimental)
+* PySide2 and PySide6 (stable)
 * PyQt5 (stable) and PyQt6 (in development)
 * wxPython 4 (experimental)
 
@@ -43,11 +43,14 @@ that signifies the GUI toolkit.
 
 The supported values of **ETSConfig.toolkit** are:
 
-* 'qt' or 'qt4': PySide2, PySide6 or `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_,
+* ``'qt'`` or ``'qt4'``: PySide2, PySide6 or `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_,
   which provide Python bindings for the `Qt <http://www.qt.io>`_ framework.
-* 'wx': `wxPython 4 <http://www.wxpython.org>`_, which provides Python bindings
+  Note that selecting ``qt4`` will turn on the backwards-compatibility for the
+  :py:mod:`pyface.ui.qt4` sub-package (see below) but is otherwise not
+  preferred in new code and will eventually be removed.
+* ``'wx'``: `wxPython 4 <http://www.wxpython.org>`_, which provides Python bindings
   for the `wxWidgets <http://wxwidgets.org>`_ toolkit.
-* 'null': A do-nothing toolkit, for situations where neither of the other
+* ``'null'``: A do-nothing toolkit, for situations where neither of the other
   toolkits is installed.
 
 The default behavior of Pyface is to search for available toolkit-specific
@@ -63,6 +66,24 @@ order of precedence:
        ETSConfig.toolkit = 'wx'
 
 #. The user can define a value for the ETS_TOOLKIT environment variable.
+
+Backwards Compatibility With ``pyface.ui.qt4``
+----------------------------------------------
+
+In Pyface 8.0 the :py:mod:`pyface.ui.qt4` sub-package was renamed to
+:py:mod:`pyface.ui.qt`.  While most code does not import directly from
+:py:mod:`pyface.ui.qt4` it is possible that there is some advanced code that
+does use this namespace in downstream projects.  Pyface 8.0 contains backwards
+compatible code for this namespace which is turned off by default, but can be
+activated in a number of ways:
+
+* by setting the ``ETS_QT4_IMPORTS`` environment variable to a non-empty value.
+  This allows end-users of applications built to activate this code.
+* by using the ``'qt4'`` for the ``ETS_TOOLKIT`` or ``ETSConfig.toolkit``.
+* by explicitly registering a ``qt4`` :py:class:`~pyface.ui.ShadowModuleFinder`
+  in :py:obj:`sys.meta_path` (advanced)
+
+This backwards compatibility code will be removed in a future Pyface version.
 
 Contents
 ========

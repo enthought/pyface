@@ -89,8 +89,8 @@ class _wxLabelEditor(Editor):
         self._set_text(w)
 
 
-class _PyQt4LabelEditor(Editor):
-    """ _PyQt4LabelEditor is the PyQt implementation of a label editor. """
+class _QtLabelEditor(Editor):
+    """ _QtLabelEditor is the Qt implementation of a label editor. """
 
     def create_control(self, parent):
 
@@ -156,8 +156,8 @@ class ExampleEditorManager(EditorManager):
 
         if tk_name == 'wx':
             ed = _wxLabelEditor(window=window, obj=obj)
-        elif tk_name == 'qt4' or tk_name == 'qt':
-            ed = _PyQt4LabelEditor(window=window, obj=obj)
+        elif tk_name in {'qt4', 'qt'}:
+            ed = _QtLabelEditor(window=window, obj=obj)
         else:
             raise NotImplementedError(
                 "unsupported toolkit: %s" % tk_name

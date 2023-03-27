@@ -43,7 +43,7 @@ class ImageCache(MImageCache, HasTraits):
         image = QtGui.QPixmapCache.find(filename)
 
         if image is not None:
-            scaled = self._qt4_scale(image)
+            scaled = self._qt_scale(image)
 
             if scaled is not image:
                 # The Qt cache is application wide so we only keep the last
@@ -53,7 +53,7 @@ class ImageCache(MImageCache, HasTraits):
         else:
             # Load the image from the file and add it to the cache.
             image = QtGui.QPixmap(filename)
-            scaled = self._qt4_scale(image)
+            scaled = self._qt_scale(image)
             QtGui.QPixmapCache.insert(filename, scaled)
 
         return scaled
@@ -65,7 +65,7 @@ class ImageCache(MImageCache, HasTraits):
     # Private 'ImageCache' interface.
     # ------------------------------------------------------------------------
 
-    def _qt4_scale(self, image):
+    def _qt_scale(self, image):
         """ Scales the given image if necessary. """
 
         # Although Qt won't scale the image if it doesn't need to, it will make

@@ -19,7 +19,7 @@ from traits.api import Event, HasStrictTraits, Instance
 from pyface.api import GUI
 from pyface.i_gui import IGUI
 from pyface.qt import QtCore
-from pyface.util.guisupport import get_app_qt4, is_event_loop_running_qt4
+from pyface.util.guisupport import get_app_qt, is_event_loop_running_qt
 
 
 class SimpleApplication(HasStrictTraits):
@@ -59,14 +59,14 @@ class TestGui(unittest.TestCase):
 
         def exit_app(event):
             # Record whether the event loop is running or not, then exit.
-            application_running.append(is_event_loop_running_qt4())
+            application_running.append(is_event_loop_running_qt())
             application.stop()
 
         application.observe(exit_app, "application_running")
 
         # Make sure that the application stops after 10 seconds, no matter
         # what.
-        qt_app = get_app_qt4()
+        qt_app = get_app_qt()
         timeout_timer = QtCore.QTimer()
         timeout_timer.setSingleShot(True)
         timeout_timer.setInterval(10000)  # 10 second timeout

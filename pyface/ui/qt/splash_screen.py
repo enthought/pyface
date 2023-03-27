@@ -51,7 +51,7 @@ class SplashScreen(MSplashScreen, Window):
 
     def _create_control(self, parent):
         splash_screen = QtGui.QSplashScreen(self.image.create_image())
-        self._qt4_show_message(splash_screen)
+        self._qt_show_message(splash_screen)
 
         return splash_screen
 
@@ -63,9 +63,9 @@ class SplashScreen(MSplashScreen, Window):
         """ Called when the splash screen text has been changed. """
 
         if self.control is not None:
-            self._qt4_show_message(self.control)
+            self._qt_show_message(self.control)
 
-    def _qt4_show_message(self, control):
+    def _qt_show_message(self, control):
         """ Set the message text for a splash screen control. """
 
         if self.text_font is not None:

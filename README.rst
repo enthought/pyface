@@ -3,10 +3,9 @@ Pyface: Traits-capable Windowing Framework
 ==========================================
 
 The Pyface project contains a toolkit-independent GUI abstraction layer,
-which is used to support the "visualization" features of the Traits package.
-Thus, you can write code in terms of the Traits API (views, items, editors,
-etc.), and let Pyface and your selected toolkit and back-end take care of
-the details of displaying them.
+which wraps an underlying GUI toolkit with classes that integrate with the
+`Traits <docs.enthought.com/traits>`_ framework so that changes in the
+underlying GUI widgets are reflected by in changes in the wrapped traits.
 
 The following GUI backends are supported:
 
@@ -22,27 +21,71 @@ or infrastructures may also require additional dependencies.
 
 To install with PySide2 dependencies::
 
-    $ pip install pyface[pyside2]
+    $ pip install "pyface[pyside2]"
 
 To install with PySide6 dependencies (experimental)::
 
-    $ pip install pyface[pyside6]
+    $ pip install "pyface[pyside6]"
 
 To install with PyQt5 dependencies::
 
-    $ pip install pyface[pyqt5]
+    $ pip install "pyface[pyqt5]"
 
 To install with wxPython4 dependencies (experimental)::
 
-    $ pip install pyface[wx]
+    $ pip install "pyface[wx]"
 
-``pillow`` is an optional dependency for the PILImage class::
+In addition, to run examples you will want add the ``examples`` dependencies::
 
-    $ pip install pyface[pillow]
+    $ pip install "pyface[examples]"
 
-To install with additional test dependencies::
+To install with additional ``test`` dependencies::
 
-    $ pip install pyface[test]
+    $ pip install "pyface[test]"
+
+To install with additional ``doc`` dependencies::
+
+    $ pip install "pyface[doc]"
+
+There are additional optional dependencies on ``numpy`` and ``pillow`` for
+certain image types.
+
+Example
+-------
+
+The following code creates a window with a simple Python shell widget::
+
+    from pyface.api import ApplicationWindow, GUIApplication, PythonShell
+    from traits.api import Instance
+
+    class PythonShellWindow(ApplicationWindow):
+
+        title = "Python Shell"
+
+        shell = Instance(PythonShell)
+
+        def _create_contents(self, parent):
+            self.shell = PythonShell(parent)
+            self.shell.create()
+            return self.shell.control
+
+        def destroy(self):
+            if self.shell is not None:
+                self.shell.destroy()
+            super().destroy()
+
+    def create_app_window(application, **kwargs):
+        return PythonShellWindow()
+
+    app = GUIApplication(
+        name="PythonShell",
+        window_factory=create_app_window
+    )
+
+    app.run()
+
+More complete examples with menus, toolbars and so forth can be found in the
+examples.
 
 Documentation
 -------------
@@ -90,5 +133,5 @@ License
 -------
 
 Pyface source code is licensed with a BSD-style license.  Some default images
-are licensed with other licenses. See the license files for further
-information.
+and icons are licensed with other licenses. See the image_LICENSE.txt file for
+further information.

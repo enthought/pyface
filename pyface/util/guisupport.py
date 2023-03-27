@@ -72,12 +72,6 @@ so you don't have to depend on IPython.
 #  the file COPYING, distributed as part of this software.
 # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# Imports
-# -----------------------------------------------------------------------------
-
-# Prevent name conflict with local wx package.
-
 
 # -----------------------------------------------------------------------------
 # wx
@@ -123,7 +117,7 @@ def start_event_loop_wx(app=None):
 # -----------------------------------------------------------------------------
 
 
-def get_app_qt4(*args, **kwargs):
+def get_app_qt(*args, **kwargs):
     """Create a new qt app or return an existing one."""
     from pyface.qt import QtGui
 
@@ -135,10 +129,10 @@ def get_app_qt4(*args, **kwargs):
     return app
 
 
-def is_event_loop_running_qt4(app=None):
+def is_event_loop_running_qt(app=None):
     """Is the qt event loop running."""
     if app is None:
-        app = get_app_qt4([""])
+        app = get_app_qt([""])
     if hasattr(app, "_in_event_loop"):
         return app._in_event_loop
     else:
@@ -146,11 +140,11 @@ def is_event_loop_running_qt4(app=None):
         return False
 
 
-def start_event_loop_qt4(app=None):
+def start_event_loop_qt(app=None):
     """Start the qt event loop in a consistent manner."""
     if app is None:
-        app = get_app_qt4([""])
-    if not is_event_loop_running_qt4(app):
+        app = get_app_qt([""])
+    if not is_event_loop_running_qt(app):
         app._in_event_loop = True
         if hasattr(app, 'exec'):
             app.exec()
@@ -161,10 +155,7 @@ def start_event_loop_qt4(app=None):
         app._in_event_loop = True
 
 
-# -----------------------------------------------------------------------------
-# Tk
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# gtk
-# -----------------------------------------------------------------------------
+# Backwards-compatible names, will be removed in future version
+get_app_qt4 = get_app_qt  # noqa: F401
+is_event_loop_running_qt4 = is_event_loop_running_qt  # noqa: F401
+start_event_loop_qt4 = start_event_loop_qt  # noqa: F401

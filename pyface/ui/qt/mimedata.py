@@ -27,6 +27,7 @@ class PyMimeData(QtCore.QMimeData):
     """
 
     # The MIME type for instances.
+    # TODO: change the 'qt4' to 'qt'
     MIME_TYPE = "application/x-ets-qt4-instance"
     NOPICKLE_MIME_TYPE = "application/x-ets-qt4-instance-no-pickle"
 

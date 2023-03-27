@@ -59,8 +59,8 @@ class ColorView(View):
 
         return panel
 
-    def _qt4_create_control(self, parent, color):
-        """ Create a Qt4 version of the control. """
+    def _qt_create_control(self, parent, color):
+        """ Create a Qt version of the control. """
 
         from pyface.qt import QtGui
 

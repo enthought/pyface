@@ -91,7 +91,7 @@ class MToggleField(HasTraits):
 
     def _text_updated(self, event):
         if self.control is not None:
-            self._set_control_text(self.text)
+            self._get_control_text(self.text)
 
     def _icon_updated(self, event):
         if self.control is not None:

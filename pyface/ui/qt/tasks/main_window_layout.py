@@ -12,7 +12,7 @@ from itertools import combinations
 import logging
 
 
-from pyface.qt import QtCore, QtGui, is_qt4
+from pyface.qt import QtCore, QtGui
 
 
 from traits.api import Any, HasTraits
@@ -153,11 +153,6 @@ class MainWindowLayout(HasTraits):
                 self.set_layout_for_area(
                     sublayout, q_dock_area, _toplevel_call=False
                 )
-
-        if is_qt4:
-            # Remove the fixed sizes once Qt activates the layout.
-            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
-
     def set_layout_for_area(
         self, layout, q_dock_area, _toplevel_added=False, _toplevel_call=True
     ):
@@ -227,11 +222,6 @@ class MainWindowLayout(HasTraits):
 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
-
-        if is_qt4:
-            # Remove the fixed sizes once Qt activates the layout.
-            if _toplevel_call:
-                QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
@@ -311,14 +301,8 @@ class MainWindowLayout(HasTraits):
                     "Cannot retrieve dock widget for pane %r" % layout.id
                 )
             else:
-                if is_qt4:
-                    if layout.width > 0:
-                        dock_widget.widget().setFixedWidth(layout.width)
-                    if layout.height > 0:
-                        dock_widget.widget().setFixedHeight(layout.height)
-                else:
-                    sizeHint = lambda: QtCore.QSize(layout.width, layout.height)
-                    dock_widget.widget().sizeHint = sizeHint
+                sizeHint = lambda: QtCore.QSize(layout.width, layout.height)
+                dock_widget.widget().sizeHint = sizeHint
             return dock_widget
 
         elif isinstance(layout, LayoutContainer):

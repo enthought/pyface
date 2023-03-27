@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..constant import CANCEL, NO, OK, YES
@@ -29,7 +28,6 @@ ModalDialogTester = toolkit_object(
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 is_pyqt5 = is_qt and qt_api == "pyqt5"
-is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -159,10 +157,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     def test_confirm_reject(self):
         # test that cancel works as expected
         tester = ModalDialogTester(
@@ -176,10 +170,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     def test_confirm_yes(self):
         # test that yes works as expected
         tester = ModalDialogTester(lambda: self.window.confirm("message"))
@@ -191,10 +181,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     def test_confirm_no(self):
         # test that no works as expected
         tester = ModalDialogTester(lambda: self.window.confirm("message"))
@@ -205,10 +191,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     @unittest.skipIf(
         is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
-    )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )
     def test_confirm_cancel(self):
         # test that cncel works as expected
@@ -227,10 +209,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     def test_information_ok(self):
         self._check_message_dialog_ok(self.window.information)
 
@@ -242,10 +220,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     def test_warning_ok(self):
         self._check_message_dialog_ok(self.window.warning)
 
@@ -256,10 +230,6 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
-    )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     def test_error_ok(self):
         self._check_message_dialog_ok(self.window.error)

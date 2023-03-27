@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..message_dialog import MessageDialog, information, warning, error
@@ -30,7 +29,6 @@ ModalDialogTester = toolkit_object(
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 is_pyqt5 = is_qt and qt_api == "pyqt5"
-is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 USING_QT = is_qt
 
@@ -140,10 +138,6 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_accept(self):
         # test that accept works as expected
@@ -156,10 +150,6 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
     )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
-    )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_close(self):
         # test that closing works as expected
@@ -171,10 +161,6 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
-    )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_ok(self):
@@ -196,10 +182,6 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Message dialog click tests don't work on pyqt5."
-    )
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_parent(self):

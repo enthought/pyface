@@ -16,14 +16,14 @@ import os
 import sys
 
 from pyface.qt.QtCore import QTimer
-from pyface.util.guisupport import get_app_qt4
+from pyface.util.guisupport import get_app_qt
 
 
 @contextmanager
 def event_loop():
     """ Post and process the Qt events at the exit of the code block. """
 
-    app = get_app_qt4()
+    app = get_app_qt()
 
     yield
 
@@ -37,7 +37,7 @@ def delete_widget(widget, timeout=1.0):
     delete a Qt widget.
     """
 
-    app = get_app_qt4()
+    app = get_app_qt()
 
     timer = QTimer()
     timer.setSingleShot(True)

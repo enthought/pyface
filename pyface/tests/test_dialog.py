@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..dialog import Dialog
@@ -29,7 +28,6 @@ ModalDialogTester = toolkit_object(
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 is_pyqt5 = is_qt and qt_api == "pyqt5"
-is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -136,10 +134,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
     )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
-    )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_ok(self):
         # test that OK works as expected
@@ -151,10 +145,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
@@ -168,10 +158,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
     )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
-    )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_ok(self):
         self.dialog.ok_label = "Sure"
@@ -184,10 +170,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_cancel(self):
@@ -203,10 +185,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_help(self):
@@ -224,10 +202,6 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(
         is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_help(self):

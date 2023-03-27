@@ -11,8 +11,7 @@
 """
 
 API for the ``pyface.data_view`` subpackage.
-Note that this public-facing API is provisional and may change in future
-minor releases until Pyface 8.
+Note that this public-facing API is provisional.
 
 - :class:`~.AbstractDataExporter`
 - :class:`~.AbstractDataModel`

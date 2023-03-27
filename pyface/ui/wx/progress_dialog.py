@@ -37,6 +37,8 @@ class ProgressBar(Widget):
     #: The orientation of the progress bar.
     direction = Orientation("horizontal")
 
+    #: The size of
+
     #: The maximum value for the progress bar.
     _max = Int()
 
