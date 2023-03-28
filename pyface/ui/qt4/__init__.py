@@ -18,7 +18,13 @@ from traits.etsconfig.api import ETSConfig
 from pyface.ui import ShadowedModuleFinder
 
 
-if any(isinstance(finder, ShadowedModuleFinder) for finder in sys.meta_path):
+if any(
+    (
+        isinstance(finder, ShadowedModuleFinder)
+        and finder.package == "pyface.ui.qt4."
+    )
+    for finder in sys.meta_path
+):
     # Importing from pyface.ui.qt4.* is deprecated
     # Already have loader registered.
     warnings.warn(
