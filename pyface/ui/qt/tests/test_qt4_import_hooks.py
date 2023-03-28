@@ -34,6 +34,26 @@ class TestQt4ImportHooks(unittest.TestCase):
 
                     self.assertEqual(cm.exception.name, "pyface.ui.qt4.tests")
 
+    def test_qt4_import_other_package_hook(self):
+        with self._unload_modules([
+            "pyface.ui.qt4",
+            "pyface.ui.qt4.tests",
+            "pyface.ui.qt4.tests.good_package",
+            "pyface.ui.qt4.tests.good_package.good_import",
+        ]):
+            with self._clean_meta_path():
+                # test with shadow module finder for different package
+                # (eg. another ETS package using the same code)
+                sys.meta_path.append(ShadowedModuleFinder(
+                    package='foo.bar.',
+                    true_package='foo.baz.',
+                ))
+                with self.assertWarns(FutureWarning):
+                    with self.assertRaises(ModuleNotFoundError) as cm:
+                        import pyface.ui.qt4.tests.good_package.good_import  # noqa F401
+
+                    self.assertEqual(cm.exception.name, "pyface.ui.qt4.tests")
+
     def test_qt4_import_with_hook(self):
         with self._unload_modules([
             "pyface.ui.qt4",
