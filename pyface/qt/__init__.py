@@ -36,16 +36,20 @@ else:
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
+    msg = "Nothing found in sys.modules or os.environ.\n"
+    msg += "Attempting to import...\n"
     for api_name, module in QtAPIs:
         try:
             importlib.import_module(module)
+            msg += f"Successfully imported {module}\n"
             importlib.import_module(".QtCore", module)
             qt_api = api_name
             break
-        except ImportError:
+        except ImportError as err:
+            msg += f"Failed to import {err.name}; problem involved: {err.path}.\n"
             continue
     else:
-        raise ImportError("Cannot import any of " + ", ".join(modules))
+        raise ImportError(msg + "Cannot import any of " + ", ".join(modules))
 
 # otherwise check QT_API value is valid
 elif qt_api not in api_names:
