@@ -87,23 +87,27 @@ UI Traits
 ---------
 
 - :attr:`~.Alignment`
-- :class:`~.Border`
 - :class:`~.HasBorder`
 - :class:`~.HasMargin`
 - :class:`~.Image`
-- :class:`~.Margin`
+- :attr:`~.Orientation`
+- :attr:`~.Position`
+- :class:`~.PyfaceColor`
+- :class:`~.PyfaceFont`
 
 Miscellaneous
 -------------
 
 - :class:`~.ArrayImage`
 - :class:`~.BaseDropHandler`
+- :class:`~.Border`
 - :class:`~.beep`
 - :class:`~.FileDropHandler`
 - :class:`~.Filter`
 - :class:`~.HeadingText`
 - :class:`~.ImageCache`
 - :class:`~.LayeredPanel`
+- :class:`~.Margin`
 - :class:`~.PILImage`
 - :class:`~.PythonEditor`
 - :class:`~.PythonShell`
@@ -138,12 +142,14 @@ from .application_window import ApplicationWindow
 from .beep import beep
 from .clipboard import clipboard, Clipboard
 from .confirmation_dialog import confirm, ConfirmationDialog
+from .color import Color
 from .constant import OK, CANCEL, YES, NO
 from .dialog import Dialog
 from .directory_dialog import DirectoryDialog
 from .drop_handler import BaseDropHandler, FileDropHandler
 from .file_dialog import FileDialog
 from .filter import Filter
+from .font import Font
 from .gui import GUI
 from .gui_application import GUIApplication
 from .heading_text import HeadingText
@@ -198,7 +204,10 @@ from .split_application_window import SplitApplicationWindow
 from .split_dialog import SplitDialog
 from .split_panel import SplitPanel
 from .system_metrics import SystemMetrics
-from .ui_traits import Alignment, Border, HasBorder, HasMargin, Image, Margin
+from .ui_traits import (
+    Alignment, Border, HasBorder, HasMargin, Image, Margin, Orientation,
+    Position, PyfaceColor, PyfaceFont
+)
 from .window import Window
 from .widget import Widget
 
