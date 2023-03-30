@@ -13,6 +13,7 @@ from unittest import TestCase
 from traits.testing.api import UnittestTools
 
 from pyface.color import Color
+from pyface.color_tuple import ColorTuple
 
 
 class TestColor(UnittestTools, TestCase):
@@ -80,6 +81,11 @@ class TestColor(UnittestTools, TestCase):
         toolkit_color = color.to_toolkit()
         result = Color.from_toolkit(toolkit_color)
         self.assertEqual(result.rgba, (0.4, 0.2, 0.6, 0.8))
+
+    def test_to_color_tuple(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        color_tuple = color.to_color_tuple()
+        self.assertEqual(color_tuple, ColorTuple(0.4, 0.2, 0.6, 0.8))
 
     def test_hex(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))

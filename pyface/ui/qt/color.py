@@ -13,12 +13,15 @@ This module provides a couple of utility methods to support the
 pyface.color.Color class to_toolkit and from_toolkit methods.
 """
 
+from typing import cast
+
 from pyface.qt.QtGui import QColor
+from pyface.util.color_helpers import (
+    channels_to_ints, ints_to_channels, RGBATuple,
+)
 
-from pyface.color import channels_to_ints, ints_to_channels
 
-
-def toolkit_color_to_rgba(qcolor):
+def toolkit_color_to_rgba(qcolor: QColor) -> RGBATuple:
     """ Convert a QColor to an RGBA tuple.
 
     Parameters
@@ -37,10 +40,10 @@ def toolkit_color_to_rgba(qcolor):
         qcolor.blue(),
         qcolor.alpha(),
     )
-    return ints_to_channels(values)
+    return cast(RGBATuple, ints_to_channels(values))
 
 
-def rgba_to_toolkit_color(rgba):
+def rgba_to_toolkit_color(rgba: RGBATuple) -> QColor:
     """ Convert an RGBA tuple to a QColor.
 
     Parameters
