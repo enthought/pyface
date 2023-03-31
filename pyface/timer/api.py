@@ -40,8 +40,8 @@ from .i_timer import ICallbackTimer, IEventTimer, ITimer
 # TODO: refactor to delay imports where possible
 _relative_imports = {
     'do_later': 'do_later',
-    'do_after': 'do_after',
-    'DoLaterTimer': 'do_after',
+    'do_after': 'do_later',
+    'DoLaterTimer': 'do_later',
     'CallbackTimer': 'timer',
     'EventTimer': 'timer',
     'Timer': 'timer',

@@ -135,9 +135,6 @@ class MApplicationWindow(HasTraits):
         if self.menu_bar_manager is not None:
             self.menu_bar_manager.destroy()
 
-        if self.tool_bar_manager is not None:
-            self.tool_bar_manager.destroy()
-
         if self.status_bar_manager is not None:
             self.status_bar_manager.destroy()
 

@@ -52,7 +52,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             self.control.SetStatusBar(status_bar)
 
     def _create_tool_bar(self, parent):
-        tool_bar_managers = self._get_tool_bar_managers()
+        tool_bar_managers = self.tool_bar_managers
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
                 tool_bar = tool_bar_manager.create_tool_bar(parent, aui=True)
@@ -147,18 +147,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return info
 
-    def _get_tool_bar_managers(self):
-        """ Return all tool bar managers specified for the window. """
-
-        # fixme: V3 remove the old-style single toolbar option!
-        if self.tool_bar_manager is not None:
-            tool_bar_managers = [self.tool_bar_manager]
-
-        else:
-            tool_bar_managers = self.tool_bar_managers
-
-        return tool_bar_managers
-
     def _wx_enable_tool_bar(self, tool_bar, enabled):
         """ Enable/Disablea tool bar. """
 
@@ -198,7 +186,7 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.destroy()
             self._create_status_bar(self.control)
 
-    @observe("tool_bar_manager, tool_bar_managers.items")
+    @observe("tool_bar_managers.items")
     def _update_tool_bar_managers(self, event):
         if self.control is not None:
             self._create_tool_bar(self.control)
