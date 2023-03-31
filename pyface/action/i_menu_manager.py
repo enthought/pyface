@@ -11,8 +11,8 @@
 from traits.api import Instance, Str
 
 
+from pyface.action.action import Action
 from pyface.action.i_action_manager import IActionManager
-from pyface.action.action_item import Action
 
 
 class IMenuManager(IActionManager):

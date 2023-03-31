@@ -8,9 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Bool, Enum, Str, Tuple
+from traits.api import Bool, Str, Tuple
 
 from pyface.action.i_action_manager import IActionManager
+from pyface.ui_traits import Orientation
 
 
 class IToolBarManager(IActionManager):
@@ -25,7 +26,7 @@ class IToolBarManager(IActionManager):
     name = Str("ToolBar")
 
     # The orientation of the toolbar.
-    orientation = Enum("horizontal", "vertical")
+    orientation = Orientation("horizontal")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)

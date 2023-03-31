@@ -81,6 +81,11 @@ from .gui_application_action import (
     ExitAction,
     GUIApplicationAction,
 )
+from .i_action_manager import IActionManager
+from .i_menu_bar_manager import IMenuBarManager
+from .i_menu_manager import IMenuManager
+from .i_status_bar_manager import IStatusBarManager
+from .i_tool_bar_manager import IToolBarManager
 from .listening_action import ListeningAction
 from .traitsui_widget_action import TraitsUIWidgetAction
 from .window_action import CloseWindowAction, WindowAction
