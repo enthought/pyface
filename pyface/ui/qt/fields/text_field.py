@@ -15,7 +15,7 @@ from traits.api import Map, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
 from pyface.qt.QtGui import QLineEdit
-from .field import Field
+from .editable_field import EditableField
 
 
 ECHO_TO_QT_ECHO_MODE = {
@@ -33,7 +33,7 @@ Echo = Map(ECHO_TO_QT_ECHO_MODE, default_value="normal")
 
 
 @provides(ITextField)
-class TextField(MTextField, Field):
+class TextField(MTextField, EditableField):
     """ The Qt-specific implementation of the text field class """
 
     #: Display typed text, or one of several hidden "password" modes.

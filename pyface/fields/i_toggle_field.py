@@ -13,11 +13,11 @@
 
 from traits.api import Bool, HasTraits, Str
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 from pyface.ui_traits import Image
 
 
-class IToggleField(IField):
+class IToggleField(IEditableField):
     """ The toggle field interface.
 
     This is for a toggle between two states, represented by a boolean value.

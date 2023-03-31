@@ -14,10 +14,10 @@ from datetime import time
 
 from traits.api import HasTraits, Time
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ITimeField(IField):
+class ITimeField(IEditableField):
     """ The time field interface.
 
     This is for a field that edits a datetime.time value.

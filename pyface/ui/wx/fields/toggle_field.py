@@ -15,11 +15,11 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_toggle_field import IToggleField, MToggleField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(IToggleField)
-class ToggleField(MToggleField, Field):
+class ToggleField(MToggleField, EditableField):
     """ The Wx-specific implementation of the toggle field class """
 
     # ------------------------------------------------------------------------

@@ -17,11 +17,11 @@ import wx.adv
 from traits.api import provides
 
 from pyface.fields.i_time_field import ITimeField, MTimeField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ITimeField)
-class TimeField(MTimeField, Field):
+class TimeField(MTimeField, EditableField):
     """ The Wx-specific implementation of the time field class """
 
     # ------------------------------------------------------------------------

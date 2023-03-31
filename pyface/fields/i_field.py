@@ -64,13 +64,6 @@ class MField(HasTraits):
         self.show(self.visible)
         self.enable(self.enabled)
 
-    def _update_value(self, value):
-        """ Handle a change to the value from user interaction
-
-        This is a method suitable for calling from a toolkit event handler.
-        """
-        self.value = self._get_control_value()
-
     def _get_control(self):
         """ If control is not passed directly, get it from the trait. """
         control = self.control
@@ -86,10 +79,6 @@ class MField(HasTraits):
 
     def _set_control_value(self, value):
         """ Toolkit specific method to set the control's value. """
-        raise NotImplementedError()
-
-    def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
         raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------

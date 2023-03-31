@@ -19,11 +19,11 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ISpinField)
-class SpinField(MSpinField, Field):
+class SpinField(MSpinField, EditableField):
     """ The Wx-specific implementation of the spin field class """
 
     # ------------------------------------------------------------------------

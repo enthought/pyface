@@ -10,33 +10,28 @@
 
 """ The Qt-specific implementation of the text field class """
 
+from traits.api import provides
 
-from traits.api import Any, provides
-
-from pyface.fields.i_field import IField, MField
-from pyface.ui.qt.layout_widget import LayoutWidget
+from pyface.fields.i_field import IEditableField, MEditableField
+from pyface.ui.qt.field import Field
 
 
-@provides(IField)
-class Field(MField, LayoutWidget):
+@provides(IEditableField)
+class EditableField(MEditableField, Field):
     """ The Qt-specific implementation of the field class
 
-    This is an abstract class which is not meant to be instantiated.  Because
-    many concrete QWidgets provide a `value` property, the default getters and
-    setters target this.
+    This is an abstract class which is not meant to be instantiated. Because
+    many concrete QWidgets provide a `value` property, the default control
+    observer targets this.
     """
-
-    #: The value held by the field.
-    value = Any()
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
-        return self.control.value()
-
-    def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
-        self.control.setValue(value)
+    def _observe_control_value(self, remove=False):
+        """ Toolkit specific method to change the control value observer. """
+        if remove:
+            self.control.valueChanged[int].disconnect(self._update_value)
+        else:
+            self.control.valueChanged[int].connect(self._update_value)

@@ -19,11 +19,11 @@ from traits.api import provides
 from pyface.fields.i_combo_field import IComboField, MComboField
 from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QComboBox
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(IComboField)
-class ComboField(MComboField, Field):
+class ComboField(MComboField, EditableField):
     """ The Qt-specific implementation of the combo field class """
 
     # ------------------------------------------------------------------------
@@ -40,11 +40,6 @@ class ComboField(MComboField, Field):
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
-
-    def _update_value(self, value):
-        """ Handle a change to the value from user interaction
-        """
-        self.value = self._get_control_value()
 
     # Toolkit control interface ---------------------------------------------
 

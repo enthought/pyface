@@ -13,10 +13,10 @@
 
 from traits.api import Bool, Enum, HasTraits, Str
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ITextField(IField):
+class ITextField(IEditableField):
     """ The text field interface. """
 
     #: The value held by the field.

@@ -13,10 +13,10 @@
 
 from traits.api import HasTraits, Int, Property, Range, Tuple
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ISpinField(IField):
+class ISpinField(IEditableField):
     """ The spin field interface.
 
     This is for spinners holding integer values.
