@@ -13,8 +13,6 @@
 
 from traits.api import HasTraits, Instance, List
 
-
-from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.i_window import IWindow
 from pyface.ui_traits import Image
 
@@ -38,17 +36,25 @@ class IApplicationWindow(IWindow):
     icon = Image()
 
     #: The menu bar manager (None iff there is no menu bar).
-    menu_bar_manager = Instance(MenuBarManager)
+    menu_bar_manager = Instance(
+        "pyface.action.menu_bar_manager.MenuBarManager"
+    )
 
     #: The status bar manager (None iff there is no status bar).
-    status_bar_manager = Instance(StatusBarManager)
+    status_bar_manager = Instance(
+        "pyface.action.status_bar_manager.StatusBarManager"
+    )
 
     #: The tool bar manager (None iff there is no tool bar).
-    tool_bar_manager = Instance(ToolBarManager)
+    tool_bar_manager = Instance(
+        "pyface.action.tool_bar_manager.ToolBarManager"
+    )
 
     #: If the underlying toolkit supports multiple toolbars, you can use this
     #: list instead of the single ToolBarManager instance above.
-    tool_bar_managers = List(ToolBarManager)
+    tool_bar_managers = List(
+        Instance("pyface.action.menu_bar_manager.ToolBarManager")
+    )
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.

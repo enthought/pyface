@@ -65,10 +65,11 @@ Useful Application and Window actions
 
 """
 
+# Imports which don't select the toolkit as a side-effect.
+
 from .action import Action
 from .action_controller import ActionController
 from .action_event import ActionEvent
-from .action_item import ActionItem
 from .action_manager import ActionManager
 from .action_manager_item import ActionManagerItem
 from .field_action import FieldAction
@@ -81,15 +82,65 @@ from .gui_application_action import (
     GUIApplicationAction,
 )
 from .listening_action import ListeningAction
-from .menu_manager import MenuManager
-from .menu_bar_manager import MenuBarManager
-from .status_bar_manager import StatusBarManager
-from .tool_bar_manager import ToolBarManager
 from .traitsui_widget_action import TraitsUIWidgetAction
 from .window_action import CloseWindowAction, WindowAction
 
-# This part of the module handles widgets that are still wx specific.  This
-# will all be removed when everything has been ported to PyQt and pyface
-# becomes toolkit agnostic.
 
-from traits.etsconfig.api import ETSConfig
+# ----------------------------------------------------------------------------
+# Deferred imports
+# ----------------------------------------------------------------------------
+
+# These imports have the side-effect of performing toolkit selection
+
+_toolkit_imports = {
+    'MenuManager': "menu_manager",
+    'MenuBarManager': "menu_bar_manager",
+    'StatusBarManager': "status_bar_manager",
+    'ToolBarManager': "tool_bar_manager",
+}
+
+# These are pyface.* imports that have selection as a side-effect
+# TODO: refactor to delay imports where possible
+_relative_imports = {
+    'ActionItem': "action_item",
+}
+
+
+def __getattr__(name):
+    """Lazily load attributes with side-effects
+
+    In particular, lazily load toolkit backend names.  For efficiency, lazily
+    loaded objects are injected into the module namespace
+    """
+    # sentinel object for no result
+    not_found = object()
+    result = not_found
+
+    if name in _relative_imports:
+        from importlib import import_module
+        source = _relative_imports[name]
+        module = import_module(f"pyface.action.{source}")
+        result = getattr(module, name)
+
+    elif name in _toolkit_imports:
+        from pyface.toolkit import toolkit_object
+        source = _toolkit_imports[name]
+        result = toolkit_object(f"action.{source}:{name}")
+
+    if result is not_found:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+    globals()[name] = result
+    return result
+
+
+# ----------------------------------------------------------------------------
+# Introspection support
+# ----------------------------------------------------------------------------
+
+# the list of available names we report for introspection purposes
+_extra_names = set(_toolkit_imports) | set(_relative_imports)
+
+
+def __dir__():
+    return sorted(set(globals()) | _extra_names)

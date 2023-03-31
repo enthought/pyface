@@ -45,7 +45,7 @@ class ActionManager(HasTraits):
     enabled = Bool(True)
 
     #: All of the contribution groups in the manager.
-    groups = Property(List(Group))
+    groups = Property(List(Instance(Group)), observe='_groups.items')
 
     #: The manager's unique identifier (if it has one).
     id = Str()
@@ -61,7 +61,7 @@ class ActionManager(HasTraits):
     # Private interface ----------------------------------------------------
 
     #: All of the contribution groups in the manager.
-    _groups = List(Group)
+    _groups = List(Instance(Group))
 
     # ------------------------------------------------------------------------
     # 'object' interface.

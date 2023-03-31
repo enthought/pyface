@@ -36,3 +36,6 @@ toolkit_object = Toolkit("pyface", "wx", "pyface.ui.wx")
 if ui_handler is None:
     # Tell the traits notification handlers to use this UI handler
     set_ui_handler(GUI.invoke_later)
+
+# Fix for broken Pycrust introspect module.  Imported to patch pycrust
+from pyface.util import fix_introspect_bug  # noqa: F401
