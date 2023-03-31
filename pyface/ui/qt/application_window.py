@@ -18,17 +18,10 @@
 
 import sys
 
-
-from pyface.qt import QtGui
-
-
-from pyface.action.api import MenuBarManager, StatusBarManager
-from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, observe, provides, Str
 
-
+from pyface.qt import QtGui
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
-from pyface.ui_traits import Image
 from .image_resource import ImageResource
 from .window import Window
 
@@ -38,23 +31,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     """ The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
-
-    # 'IApplicationWindow' interface ---------------------------------------
-
-    #: The icon to display in the application window title bar.
-    icon = Image()
-
-    #: The menu bar manager for the window.
-    menu_bar_manager = Instance(MenuBarManager)
-
-    #: The status bar manager for the window.
-    status_bar_manager = Instance(StatusBarManager)
-
-    #: DEPRECATED: The tool bar manager for the window.
-    tool_bar_manager = Instance(ToolBarManager)
-
-    #: The collection of tool bar managers for the window.
-    tool_bar_managers = List(ToolBarManager)
 
     # 'IWindow' interface -------------------------------------------------#
 

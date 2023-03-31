@@ -13,6 +13,9 @@
 
 from traits.api import HasTraits, Instance, List
 
+from pyface.action.i_menu_bar_manager import IMenuBarManager
+from pyface.action.i_status_bar_manager import IStatusBarManager
+from pyface.action.i_tool_bar_manager import IToolBarManager
 from pyface.i_window import IWindow
 from pyface.ui_traits import Image
 
@@ -35,26 +38,14 @@ class IApplicationWindow(IWindow):
     #: The window icon.  The default is toolkit specific.
     icon = Image()
 
-    #: The menu bar manager (None iff there is no menu bar).
-    menu_bar_manager = Instance(
-        "pyface.action.menu_bar_manager.MenuBarManager"
-    )
+    #: The menu bar manager for the window.
+    menu_bar_manager = Instance(IMenuBarManager)
 
-    #: The status bar manager (None iff there is no status bar).
-    status_bar_manager = Instance(
-        "pyface.action.status_bar_manager.StatusBarManager"
-    )
+    #: The status bar manager for the window.
+    status_bar_manager = Instance(IStatusBarManager)
 
-    #: The tool bar manager (None iff there is no tool bar).
-    tool_bar_manager = Instance(
-        "pyface.action.tool_bar_manager.ToolBarManager"
-    )
-
-    #: If the underlying toolkit supports multiple toolbars, you can use this
-    #: list instead of the single ToolBarManager instance above.
-    tool_bar_managers = List(
-        Instance("pyface.action.menu_bar_manager.ToolBarManager")
-    )
+    #: The collection of tool bar managers for the window.
+    tool_bar_managers = List(Instance(IToolBarManager))
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
@@ -121,6 +112,18 @@ class MApplicationWindow(HasTraits):
 
     Implements: destroy(), _create_trim_widgets()
     """
+
+    #: The icon to display in the application window title bar.
+    icon = Image()
+
+    #: The menu bar manager for the window.
+    menu_bar_manager = Instance(IMenuBarManager)
+
+    #: The status bar manager for the window.
+    status_bar_manager = Instance(IStatusBarManager)
+
+    #: The collection of tool bar managers for the window.
+    tool_bar_managers = List(Instance(IToolBarManager))
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.

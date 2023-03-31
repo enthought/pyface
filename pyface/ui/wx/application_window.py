@@ -16,12 +16,7 @@ import wx
 
 from traits.api import Instance, List, Str, observe, provides
 
-from pyface.action.api import MenuBarManager, StatusBarManager
-from pyface.action.api import ToolBarManager
-from pyface.i_application_window import (
-    IApplicationWindow, MApplicationWindow,
-)
-from pyface.ui_traits import Image
+from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.wx.aui import aui, PyfaceAuiManager
 from .image_resource import ImageResource
 from .window import Window
@@ -33,29 +28,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    # 'IApplicationWindow' interface ---------------------------------------
-
-    icon = Image()
-
-    menu_bar_manager = Instance(MenuBarManager)
-
-    status_bar_manager = Instance(StatusBarManager)
-
-    tool_bar_manager = Instance(ToolBarManager)
-
-    # If the underlying toolkit supports multiple toolbars then you can use
-    # this list instead.
-    tool_bar_managers = List(ToolBarManager)
-
     # 'IWindow' interface -------------------------------------------------#
-
-    # fixme: We can't set the default value of the actual 'size' trait here as
-    # in the toolkit-specific event handlers for window size and position
-    # changes, we set the value of the shadow '_size' trait. The problem is
-    # that by doing that traits never knows that the trait has been set and
-    # hence always returns the default value! Using a trait initializer method
-    # seems to work however (e.g. 'def _size_default'). Hmmmm....
-    ##     size = (800, 600)
 
     title = Str("Pyface")
 
