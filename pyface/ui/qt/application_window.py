@@ -18,7 +18,7 @@
 
 import sys
 
-from traits.api import Instance, List, observe, provides, Str
+from traits.api import observe, provides, Str
 
 from pyface.qt import QtGui
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow

@@ -14,7 +14,7 @@
 
 import wx
 
-from traits.api import Instance, List, Str, observe, provides
+from traits.api import Str, observe, provides
 
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.wx.aui import aui, PyfaceAuiManager

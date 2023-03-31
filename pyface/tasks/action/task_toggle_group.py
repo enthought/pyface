@@ -9,12 +9,11 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.action.api import Action, ActionItem, Group
+from pyface.action.api import Action, Group
 from traits.api import Any, List, Instance, Property, Str, observe
 
 
 from pyface.tasks.task import Task
-from pyface.tasks.task_window import TaskWindow
 
 
 class TaskToggleAction(Action):
@@ -89,13 +88,15 @@ class TaskToggleGroup(Group):
     manager = Any()
 
     #: The window that contains the group.
-    window = Instance(TaskWindow)
+    window = Instance("pyface.tasks.task_window.TaskWindow")
 
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
 
     def _get_items(self):
+        from pyface.action.api import ActionItem
+
         items = []
         if len(self.window.tasks) > 1:
             # at least two tasks, so something to toggle
