@@ -16,9 +16,12 @@
 import wx
 
 
-from traits.api import Any, HasTraits, List, Property, Str
+from traits.api import Any, HasTraits, List, Property, Str, provides
+
+from pyface.action.i_status_bar_manager import IStatusBarManager
 
 
+@provides(IStatusBarManager)
 class StatusBarManager(HasTraits):
     """ A status bar manager realizes itself in a status bar control. """
 
