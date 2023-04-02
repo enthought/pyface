@@ -16,14 +16,7 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
-<<<<<<< HEAD
 from .editable_field import EditableField
-=======
-from pyface.ui.wx.util.alignment import (
-    get_alignment_style, set_alignment_style
-)
-from .field import Field
->>>>>>> enh/more-field-features
 
 
 @provides(ITextField)
@@ -94,17 +87,6 @@ class TextField(MTextField, EditableField):
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
         self.control.SetEditable(not read_only)
-
-    def _get_control_alignment(self):
-        """ Toolkit specific method to get the control's read_only state. """
-        return get_alignment_style(self.control.GetWindowStyle())
-
-    def _set_control_alignment(self, alignment):
-        """ Toolkit specific method to set the control's read_only state. """
-        old_style = self.control.GetWindowStyle()
-        new_style = set_alignment_style(alignment, old_style)
-        self.control.SetWindowStyle(new_style)
-        self.control.Refresh()
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """

@@ -15,6 +15,9 @@ from traits.api import Any, provides
 
 from pyface.fields.i_field import IField, MField
 from pyface.ui.qt.layout_widget import LayoutWidget
+from pyface.ui.qt.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
 
 
 @provides(IField)
@@ -40,3 +43,12 @@ class Field(MField, LayoutWidget):
     def _set_control_value(self, value):
         """ Toolkit specific method to set the control's value. """
         self.control.setValue(value)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        # default implementation
+        return qalignment_to_alignment(self.control.alignment())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        self.control.setAlignment(alignment_to_qalignment(alignment))

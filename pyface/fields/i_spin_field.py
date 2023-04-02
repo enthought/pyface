@@ -59,9 +59,6 @@ class MSpinField(HasTraits):
     #: Whether the values wrap around at maximum and minimum.
     wrap = Bool()
 
-    #: The alignment of the text in the field.
-    alignment = Alignment()
-
     # ------------------------------------------------------------------------
     # object interface
     # ------------------------------------------------------------------------
@@ -83,15 +80,12 @@ class MSpinField(HasTraits):
         self._set_control_bounds(self.bounds)
         self._set_control_value(self.value)
         self._set_control_wrap(self.wrap)
-        if self.alignment != 'default':
-            self._set_control_alignment(self.alignment)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
         self.observe(self._wrap_updated, "wrap", dispatch="ui")
-        self.observe(self._alignment_updated, "alignment", dispatch="ui",)
         if self.control is not None:
             self._observe_control_value()
 
@@ -102,9 +96,6 @@ class MSpinField(HasTraits):
         )
         self.observe(
             self._wrap_updated, "wrap", dispatch="ui", remove=True
-        )
-        self.observe(
-            self._alignment_updated, "alignment", dispatch="ui", remove=True
         )
         super()._remove_event_listeners()
 
@@ -124,14 +115,6 @@ class MSpinField(HasTraits):
 
     def _set_control_wrap(self, wrap):
         """ Toolkit specific method to set whether the control wraps. """
-        raise NotImplementedError
-
-    def _get_control_alignment(self):
-        """ Toolkit specific method to get the control's alignment. """
-        raise NotImplementedError
-
-    def _set_control_alignment(self, alignment):
-        """ Toolkit specific method to set the control's alignment. """
         raise NotImplementedError
 
     # Trait property handlers -----------------------------------------------
@@ -172,7 +155,3 @@ class MSpinField(HasTraits):
     def _wrap_updated(self):
         if self.control is not None:
             self._set_control_wrap(self.wrap)
-
-    def _alignment_updated(self):
-        if self.control is not None:
-            self._set_control_alignment(self.alignment)

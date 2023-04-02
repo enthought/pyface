@@ -14,18 +14,22 @@ from pyface.qt.QtCore import Qt
 
 
 ALIGNMENT_TO_QALIGNMENT = {
-    "default": Qt.AlignLeft | Qt.AlignVCenter,
-    "left": Qt.AlignLeft | Qt.AlignVCenter,
-    "center": Qt.AlignHCenter | Qt.AlignVCenter,
-    "right": Qt.AlignRight | Qt.AlignVCenter,
+    "default": Qt.Alignment.AlignLeft | Qt.Alignment.AlignVCenter,
+    "left": Qt.Alignment.AlignLeft | Qt.Alignment.AlignVCenter,
+    "center": Qt.Alignment.AlignHCenter | Qt.Alignment.AlignVCenter,
+    "right": Qt.Alignment.AlignRight | Qt.Alignment.AlignVCenter,
 }
 QALIGNMENT_TO_ALIGNMENT = {
     0: "default",
-    Qt.AlignLeft: "left",
-    Qt.AlignHCenter: "center",
-    Qt.AlignRight: "right",
+    Qt.Alignment.AlignLeft: "left",
+    Qt.Alignment.AlignHCenter: "center",
+    Qt.Alignment.AlignRight: "right",
 }
-ALIGNMENT_MASK = Qt.AlignLeft | Qt.AlignHCenter | Qt.AlignRight
+ALIGNMENT_MASK = (
+    Qt.AlignmentFlag.AlignLeft
+    | Qt.AlignmentFlag.AlignHCenter
+    | Qt.AlignmentFlag.AlignRight
+)
 
 
 def alignment_to_qalignment(alignment):

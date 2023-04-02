@@ -14,4 +14,11 @@ from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
 
 class FieldMixin(LayoutWidgetMixin):
     """ Mixin which provides standard methods for all fields. """
-    pass
+
+    def test_text_field_alignment(self):
+        self._create_widget_control()
+
+        self.widget.alignment = 'right'
+        self.gui.process_events()
+
+        self.assertEqual(self.widget._get_control_alignment(), 'right')

@@ -60,6 +60,16 @@ class ToggleField(MToggleField, Editable_Field):
         else:
             self.control.toggled.connect(self._update_value)
 
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        # dummy implementation
+        return self.alignment
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        # use stylesheet for button alignment
+        self.control.setStyleSheet(f"text-align: {alignment}")
+
 
 class CheckBoxField(ToggleField):
     """ The Qt-specific implementation of the checkbox class """
