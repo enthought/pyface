@@ -14,9 +14,12 @@
 from traits.api import Map, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
+from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QLineEdit
+from pyface.ui.qt4.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
 from .editable_field import EditableField
-
 
 ECHO_TO_QT_ECHO_MODE = {
     "normal": QLineEdit.EchoMode.Normal,
@@ -30,6 +33,20 @@ QT_ECHO_MODE_TO_ECHO = {
 
 # mapped trait for Qt line edit echo modes
 Echo = Map(ECHO_TO_QT_ECHO_MODE, default_value="normal")
+
+ALIGNMENT_TO_QALIGNMENT = {
+    "default": Qt.AlignLeft | Qt.AlignVCenter,
+    "left": Qt.AlignLeft | Qt.AlignVCenter,
+    "center": Qt.AlignHCenter | Qt.AlignVCenter,
+    "right": Qt.AlignRight | Qt.AlignVCenter,
+}
+QALIGNMENT_TO_ALIGNMENT = {
+    0: "default",
+    Qt.AlignLeft: "left",
+    Qt.AlignHCenter: "center",
+    Qt.AlignRight: "right",
+}
+ALIGNMENT_MASK = Qt.AlignLeft | Qt.AlignHCenter | Qt.AlignRight
 
 
 @provides(ITextField)
@@ -95,6 +112,14 @@ class TextField(MTextField, EditableField):
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
         self.control.setReadOnly(read_only)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        return qalignment_to_alignment(self.control.alignment())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        self.control.setAlignment(alignment_to_qalignment(alignment))
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """

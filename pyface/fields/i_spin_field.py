@@ -11,9 +11,10 @@
 """ The spin field interface. """
 
 
-from traits.api import HasTraits, Int, Property, Range, Tuple
+from traits.api import Bool, HasTraits, Int, Property, Range, Tuple
 
 from pyface.fields.i_editable_field import IEditableField
+from pyface.ui_traits import Alignment
 
 
 class ISpinField(IEditableField):
@@ -34,6 +35,12 @@ class ISpinField(IEditableField):
     #: The maximum value
     maximum = Property(Int, observe="bounds")
 
+    #: Whether the values wrap around at maximum and minimum.
+    wrap = Bool()
+
+    #: The alignment of the text in the field.
+    alignment = Alignment()
+
 
 class MSpinField(HasTraits):
 
@@ -48,6 +55,12 @@ class MSpinField(HasTraits):
 
     #: The maximum value for the spinner
     maximum = Property(Int, observe="bounds")
+
+    #: Whether the values wrap around at maximum and minimum.
+    wrap = Bool()
+
+    #: The alignment of the text in the field.
+    alignment = Alignment()
 
     # ------------------------------------------------------------------------
     # object interface
@@ -68,16 +81,30 @@ class MSpinField(HasTraits):
     def _initialize_control(self):
         super()._initialize_control()
         self._set_control_bounds(self.bounds)
+        self._set_control_value(self.value)
+        self._set_control_wrap(self.wrap)
+        if self.alignment != 'default':
+            self._set_control_alignment(self.alignment)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
+        self.observe(self._wrap_updated, "wrap", dispatch="ui")
+        self.observe(self._alignment_updated, "alignment", dispatch="ui",)
+        if self.control is not None:
+            self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
         self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
+        )
+        self.observe(
+            self._wrap_updated, "wrap", dispatch="ui", remove=True
+        )
+        self.observe(
+            self._alignment_updated, "alignment", dispatch="ui", remove=True
         )
         super()._remove_event_listeners()
 
@@ -90,6 +117,22 @@ class MSpinField(HasTraits):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         raise NotImplementedError()
+
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        raise NotImplementedError
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        raise NotImplementedError
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        raise NotImplementedError
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        raise NotImplementedError
 
     # Trait property handlers -----------------------------------------------
 
@@ -125,3 +168,11 @@ class MSpinField(HasTraits):
     def _bounds_updated(self, event):
         if self.control is not None:
             self._set_control_bounds(self.bounds)
+
+    def _wrap_updated(self):
+        if self.control is not None:
+            self._set_control_wrap(self.wrap)
+
+    def _alignment_updated(self):
+        if self.control is not None:
+            self._set_control_alignment(self.alignment)

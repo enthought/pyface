@@ -19,7 +19,14 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
+<<<<<<< HEAD
 from .editable_field import EditableField
+=======
+from pyface.ui.wx.util.alignment import (
+    get_alignment_style, set_alignment_style
+)
+from .field import Field
+>>>>>>> enh/more-field-features
 
 
 @provides(ISpinField)
@@ -65,3 +72,24 @@ class SpinField(MSpinField, EditableField):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         self.control.SetRange(*bounds)
+
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        return bool(self.control.GetWindowStyle() & wx.SP_WRAP)
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        if wrap != self._get_control_wrap():
+            self.control.ToggleWindowStyle(wx.SP_WRAP)
+            self.control.Refresh()
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        return get_alignment_style(self.control.GetWindowStyle())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's read_only state. """
+        old_style = self.control.GetWindowStyle()
+        new_style = set_alignment_style(alignment, old_style)
+        self.control.SetWindowStyle(new_style)
+        self.control.Refresh()
