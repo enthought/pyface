@@ -64,7 +64,6 @@ class MComboField(HasTraits):
     def _initialize_control(self):
         super()._initialize_control()
         self._set_control_values(self.values)
-        self._set_control_value(self.value)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """

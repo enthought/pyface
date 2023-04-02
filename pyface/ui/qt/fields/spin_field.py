@@ -18,7 +18,7 @@ from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
 from pyface.qt.QtGui import QSpinBox
-from .field import EditableField
+from .editable_field import EditableField
 
 
 @provides(ISpinField)

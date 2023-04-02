@@ -62,13 +62,9 @@ class MToggleField(HasTraits):
         super()._add_event_listeners()
         self.observe(self._text_updated, "text", dispatch="ui")
         self.observe(self._icon_updated, "icon", dispatch="ui")
-        if self.control is not None:
-            self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
         self.observe(self._text_updated, "text", dispatch="ui", remove=True)
         self.observe(self._icon_updated, "icon", dispatch="ui", remove=True)
         super()._remove_event_listeners()

@@ -37,22 +37,6 @@ class MTimeField(HasTraits):
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _initialize_control(self):
-        super(MTimeField, self)._initialize_control()
-        self._set_control_value(self.value)
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super(MTimeField, self)._add_event_listeners()
-        if self.control is not None:
-            self._observe_control_value()
-
-    def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
-        super(MTimeField, self)._remove_event_listeners()
-
     # Trait defaults --------------------------------------------------------
 
     def _value_default(self):

@@ -33,12 +33,14 @@ Interfaces
 
 from .i_combo_field import IComboField
 from .i_field import IField
+from .i_image_field import IImageField
 from .i_spin_field import ISpinField
 from .i_text_field import ITextField
 from .i_time_field import ITimeField
 from .i_toggle_field import IToggleField
 
 from .combo_field import ComboField
+from .image_field import ImageField
 from .spin_field import SpinField
 from .text_field import TextField
 from .time_field import TimeField

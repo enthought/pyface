@@ -37,6 +37,23 @@ class MField(HasTraits):
     # IWidget interface
     # ------------------------------------------------------------------------
 
+    def create(self, parent=None):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
+        """
+        super().create(parent=parent)
+
+        self.show(self.visible)
+        self.enable(self.enabled)
+
+    def _initialize_control(self):
+        """ Perform any post-creation initialization for the control.
+        """
+        super()._initialize_control()
+        self._set_control_value(self.value)
+
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
@@ -52,17 +69,6 @@ class MField(HasTraits):
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
-
-    def create(self, parent=None):
-        """ Creates the toolkit specific control.
-
-        This method should create the control and assign it to the
-        :py:attr:``control`` trait.
-        """
-        super().create(parent=parent)
-
-        self.show(self.visible)
-        self.enable(self.enabled)
 
     def _get_control(self):
         """ If control is not passed directly, get it from the trait. """

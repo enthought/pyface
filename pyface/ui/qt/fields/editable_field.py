@@ -12,8 +12,8 @@
 
 from traits.api import provides
 
-from pyface.fields.i_field import IEditableField, MEditableField
-from pyface.ui.qt.field import Field
+from pyface.fields.i_editable_field import IEditableField, MEditableField
+from pyface.ui.qt.fields.field import Field
 
 
 @provides(IEditableField)

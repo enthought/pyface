@@ -68,19 +68,14 @@ class MSpinField(HasTraits):
     def _initialize_control(self):
         super()._initialize_control()
         self._set_control_bounds(self.bounds)
-        self._set_control_value(self.value)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
-        if self.control is not None:
-            self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
         self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
         )
