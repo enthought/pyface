@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,21 +8,17 @@
 #
 # Thanks for using Enthought open source!
 
-from itertools import combinations
 import logging
 
 
-from traits.api import Any, HasTraits
+from traits.api import HasTraits
 
 
 from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import (
-    LayoutContainer,
     PaneItem,
     Tabbed,
     Splitter,
-    HSplitter,
-    VSplitter,
 )
 
 # row/col orientation for AUI
@@ -169,12 +165,12 @@ class MainWindowLayout(HasTraits):
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_pane(self, dock_widget):
         """ Returns a PaneItem for a QDockWidget.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_dock_pane(self, pane):
         """ Returns the DockPane associated with a PaneItem.

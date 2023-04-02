@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@
 import sys
 
 
-from traits.api import Enum, Str, Int
+from traits.api import Enum, HasTraits, Int, List, Str
 
 
 from pyface.i_dialog import IDialog
@@ -26,8 +26,9 @@ class IFileDialog(IDialog):
 
     # 'IFileDialog' interface ---------------------------------------------#
 
-    #: The 'action' that the user is peforming on the directory.
-    action = Enum("open", "save as")
+    #: The 'action' that the user is peforming on the directory ("open files"
+    #: differs from "open" in that the former supports multiple selections).
+    action = Enum("open", "open files", "save as")
 
     #: The default directory.
     default_directory = Str()
@@ -43,11 +44,16 @@ class IFileDialog(IDialog):
     #: The directory containing the chosen file.
     directory = Str()
 
-    #: The name of the chosen file.
+    #: The name (basename only) of the chosen file.
     filename = Str()
 
-    #: The path (directory and filename) of the chosen file.
+    #: The path (directory and filename) of the chosen file. To be used when only
+    #: single selection is allowed: if *action* is "open files", use *paths* instead.
     path = Str()
+
+    #: The paths (directory and filename) of the chosen files. To be used when
+    #: multiple selection is allowed.
+    paths = List(Str())
 
     #: The wildcard used to restrict the set of files.
     wildcard = Str()
@@ -56,7 +62,7 @@ class IFileDialog(IDialog):
     wildcard_index = Int(0)
 
 
-class MFileDialog(object):
+class MFileDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IFileDialog interface.
 

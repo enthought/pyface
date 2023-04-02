@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,19 +10,16 @@
 
 import logging
 
-import os
-
-
 import wx
-
-# Logger.
-logger = logging.getLogger(__name__)
 
 # Multiple AUI versions are no longer supported; the C version in wx.aui is not
 # capable of supporting the windowing flexibility needed by tasks. Therefore,
 # only AGW's pure-python AUI implementation is used.
 
 from wx.lib.agw import aui
+
+# Logger.
+logger = logging.getLogger(__name__)
 
 # AGW's library does need some patching for some usability differences desired
 # for pyface but not for the standard wxPython version
@@ -49,7 +46,6 @@ class PyfaceAuiManager(aui.AuiManager):
         docks, panes = aui.CopyDocksAndPanes2(self._docks, self._panes)
 
         sash_size = self._art.GetMetric(aui.AUI_DOCKART_SASH_SIZE)
-        caption_size = self._art.GetMetric(aui.AUI_DOCKART_CAPTION_SIZE)
         opposite_size = self.GetOppositeDockTotalSize(
             docks, dock.dock_direction
         )

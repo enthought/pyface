@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,10 +14,17 @@ import logging
 
 
 from pyface.api import ApplicationWindow, GUI
-from traits.api import Callable, Constant, Delegate, Event, Instance
-from traits.api import List, Str, Tuple, Str, Vetoable, Undefined
-from traits.api import on_trait_change, provides
-
+from traits.api import (
+    Constant,
+    Delegate,
+    Instance,
+    List,
+    Str,
+    Tuple,
+    Undefined,
+    Vetoable,
+    observe,
+)
 
 from .i_editor import IEditor
 from .i_editor_manager import IEditorManager
@@ -149,7 +156,7 @@ class WorkbenchWindow(ApplicationWindow):
         self.opening = event = Vetoable()
         if not event.veto:
             if self.control is None:
-                self._create()
+                self.create()
 
             self.show(True)
 
@@ -250,7 +257,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _editor_manager_default(self):
         """ Trait initializer. """
 
-        from editor_manager import EditorManager
+        from .editor_manager import EditorManager
 
         return EditorManager(window=self)
 
@@ -291,7 +298,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # This case allows for views that are created and added dynamically
         # (i.e. they were not even known about when the window was created).
-        if not view in self.views:
+        if view not in self.views:
             self.views.append(view)
 
     def close_editor(self, editor):
@@ -362,7 +369,7 @@ class WorkbenchWindow(ApplicationWindow):
         editor = self.create_editor(obj, kind)
 
         if editor is None:
-            logger.warn("no editor for object %s", obj)
+            logger.warning("no editor for object %s", obj)
 
         self.add_editor(editor)
         self.activate_editor(editor)
@@ -614,7 +621,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # If we have no known perspectives, make a new blank one up.
         else:
-            logger.warn("no known perspectives - creating a new one")
+            logger.warning("no known perspectives - creating a new one")
             perspective = Perspective()
 
         return perspective
@@ -632,7 +639,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn("default perspective %s no longer available", id)
+                logger.warning("default perspective %s no longer available", id)
 
         else:
             perspective = None
@@ -652,7 +659,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn("previous perspective %s no longer available", id)
+                logger.warning("previous perspective %s no longer available", id)
 
         else:
             perspective = None
@@ -849,16 +856,15 @@ class WorkbenchWindow(ApplicationWindow):
 
     # Dynamic ----
 
-    @on_trait_change("layout.editor_closed")
-    def _on_editor_closed(self, editor):
+    @observe("layout:editor_closed")
+    def _on_editor_closed(self, event):
         """ Dynamic trait change handler. """
 
-        if editor is None or editor is Undefined:
+        if event.new is None or event.new is Undefined:
             return
-
-        index = self.editors.index(editor)
+        index = self.editors.index(event.new)
         del self.editors[index]
-        if editor is self.active_editor:
+        if event.new is self.active_editor:
             if len(self.editors) > 0:
                 index = min(index, len(self.editors) - 1)
                 # If the user closed the editor manually then this method is
@@ -873,31 +879,30 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    @on_trait_change("editors.has_focus")
-    def _on_editor_has_focus_changed(self, obj, trait_name, old, new):
+    @observe("editors:items:has_focus")
+    def _on_editor_has_focus_changed(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "has_focus" and new:
-            self.active_editor = obj
+        if event.new:
+            self.active_editor = event.object
 
         return
 
-    @on_trait_change("views.has_focus")
-    def _has_focus_changed_for_view(self, obj, trait_name, old, new):
+    @observe("views:items:has_focus")
+    def _has_focus_changed_for_view(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "has_focus" and new:
-            self.active_view = obj
+        if event.new:
+            self.active_view = event.object
 
         return
 
-    @on_trait_change("views.visible")
-    def _visible_changed_for_view(self, obj, trait_name, old, new):
+    @observe("views:items:visible")
+    def _visible_changed_for_view(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "visible":
-            if not new:
-                if obj is self.active_view:
-                    self.active_view = None
+        if not event.new:
+            if event.object is self.active_view:
+                self.active_view = None
 
         return

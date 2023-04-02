@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -31,7 +31,7 @@ from traits.api import (
     Tuple,
     Undefined,
     Vetoable,
-    on_trait_change,
+    observe,
 )
 
 from .application import Application
@@ -162,7 +162,7 @@ class GUIApplication(Application):
         """
         from pyface.gui import GUI
 
-        ok = super(GUIApplication, self).start()
+        ok = super().start()
         if ok:
             # create the GUI so that the splash screen comes up first thing
             if self.gui is Undefined:
@@ -214,7 +214,7 @@ class GUIApplication(Application):
         The fires closing events for each window, and returns False if any
         listener vetos.
         """
-        if not super(GUIApplication, self)._can_exit():
+        if not super()._can_exit():
             return False
 
         for window in reversed(self.windows):
@@ -258,17 +258,13 @@ class GUIApplication(Application):
 
     def _about_dialog_default(self):
         """ Default AboutDialog """
-        from sys import version_info
+        from html import escape
 
-        if (version_info.major, version_info.minor) >= (3, 2):
-            from html import escape
-        else:
-            from cgi import escape
         from pyface.about_dialog import AboutDialog
 
         additions = [
             "<h1>{}</h1>".format(escape(self.name)),
-            "Copyright &copy; 2018 {}, all rights reserved".format(
+            "Copyright &copy; 2023 {}, all rights reserved".format(
                 escape(self.company)
             ),
             "",
@@ -284,22 +280,24 @@ class GUIApplication(Application):
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change("windows:activated")
-    def _on_activate_window(self, window, trait, old, new):
+    @observe("windows:items:activated")
+    def _on_activate_window(self, event):
         """ Listener that tracks currently active window.
         """
+        window = event.object
         if window in self.windows:
             self.active_window = window
 
-    @on_trait_change("windows:deactivated")
-    def _on_deactivate_window(self, window, trait, old, new):
+    @observe("windows:items:deactivated")
+    def _on_deactivate_window(self, event):
         """ Listener that tracks currently active window.
         """
         self.active_window = None
 
-    @on_trait_change("windows:closed")
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
+        window = event.object
         if window in self.windows:
             self.windows.remove(window)

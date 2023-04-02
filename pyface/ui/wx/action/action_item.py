@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -122,11 +122,11 @@ class _MenuItem(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_visible_changed, "visible")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
-        action.on_trait_change(self._on_action_name_changed, "name")
-        action.on_trait_change(self._on_action_image_changed, "image")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_visible_changed, "visible")
+        action.observe(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_name_changed, "name")
+        action.observe(self._on_action_image_changed, "image")
 
         if controller is not None:
             self.controller = controller
@@ -134,18 +134,11 @@ class _MenuItem(HasTraits):
 
     def dispose(self):
         action = self.item.action
-        action.on_trait_change(
-            self._on_action_enabled_changed, "enabled", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_visible_changed, "visible", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_checked_changed, "checked", remove=True
-        )
-        action.on_trait_change(
-            self._on_action_name_changed, "name", remove=True
-        )
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_visible_changed, "visible", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
+        action.observe(self._on_action_name_changed, "name", remove=True)
+        action.observe(self._on_action_image_changed, "image", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -184,19 +177,19 @@ class _MenuItem(HasTraits):
 
         self.control.Check(self.checked)
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
-
+        action = event.object
         self.control.Enable(action.enabled and action.visible)
 
-    def _on_action_visible_changed(self, action, trait_name, old, new):
+    def _on_action_visible_changed(self, event):
         """ Called when the visible trait is changed on an action. """
-
+        action = event.object
         self.control.Enable(action.visible and action.enabled)
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
-
+        action = event.object
         if self.item.action.style == "radio":
             # fixme: Not sure why this is even here, we had to guard it to
             # make it work? Must take a look at svn blame!
@@ -218,17 +211,17 @@ class _MenuItem(HasTraits):
         self.control.Check(action.checked)
         self._skip_menu_event = False
 
-    def _on_action_name_changed(self, action, trait_name, old, new):
+    def _on_action_name_changed(self, event):
         """ Called when the name trait is changed on an action. """
-
+        action = event.object
         label = action.name
         if len(action.accelerator) > 0:
             label = label + "\t" + action.accelerator
         self.control.SetText(label)
 
-    def _on_action_image_changed(self, action, trait_name, old, new):
+    def _on_action_image_changed(self, event):
         """ Called when the name trait is changed on an action. """
-
+        action = event.object
         if self.control is not None:
             self.control.SetIcon(action.image.create_icon())
 
@@ -395,13 +388,19 @@ class _Tool(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_visible_changed, "visible")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_visible_changed, "visible")
+        action.observe(self._on_action_checked_changed, "checked")
 
         if controller is not None:
             self.controller = controller
             controller.add_to_toolbar(self)
+
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_visible_changed, "visible", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -447,9 +446,9 @@ class _Tool(HasTraits):
 
         self.tool_bar.ToggleTool(self.control_id, self.checked)
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
-
+        action = event.object
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.EnableTool(self.control_id, action.enabled)
         else:
@@ -457,9 +456,9 @@ class _Tool(HasTraits):
                 self.control_id, action.enabled and action.visible
             )
 
-    def _on_action_visible_changed(self, action, trait_name, old, new):
+    def _on_action_visible_changed(self, event):
         """ Called when the visible trait is changed on an action. """
-
+        action = event.object
         if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.ShowTool(self.control_id, action.visible)
         else:
@@ -467,20 +466,20 @@ class _Tool(HasTraits):
                 self.control_id, self.enabled and action.visible
             )
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
-
+        action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
-            if new:
+            if event.new:
                 for item in self.item.parent.items:
                     if item is not self.item:
                         item.action.checked = False
 
         # This will *not* emit a tool event.
-        self.tool_bar.ToggleTool(self.control_id, new)
+        self.tool_bar.ToggleTool(self.control_id, event.new)
 
         return
 
@@ -491,8 +490,6 @@ class _Tool(HasTraits):
 
         action = self.item.action
         action_event = ActionEvent()
-
-        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         if self.controller is not None:
@@ -567,7 +564,6 @@ class _PaletteTool(HasTraits):
         # And they never contain shortcuts.
         label = label.replace("&", "")
 
-        image = action.image.create_image()
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
@@ -588,10 +584,15 @@ class _PaletteTool(HasTraits):
 
         # Listen to the trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, "enabled")
-        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.observe(self._on_action_enabled_changed, "enabled")
+        action.observe(self._on_action_checked_changed, "checked")
 
         return
+
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -599,25 +600,25 @@ class _PaletteTool(HasTraits):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_action_enabled_changed(self, action, trait_name, old, new):
+    def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
-
+        action = event.object
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
-    def _on_action_checked_changed(self, action, trait_name, old, new):
+    def _on_action_checked_changed(self, event):
         """ Called when the checked trait is changed on an action. """
-
+        action = event.object
         if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
-            if new:
+            if event.new:
                 for item in self.item.parent.items:
                     if item is not self.item:
                         item.action.checked = False
 
         # This will *not* emit a tool event.
-        self.tool_palette.toggle_tool(self.tool_id, new)
+        self.tool_palette.toggle_tool(self.tool_id, event.new)
 
         return
 
@@ -628,8 +629,6 @@ class _PaletteTool(HasTraits):
 
         action = self.item.action
         action_event = ActionEvent()
-
-        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         action.checked = self.tool_palette.get_tool_state(self.tool_id) == 1

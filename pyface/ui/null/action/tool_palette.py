@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -40,7 +40,7 @@ class ToolPalette(Widget):
         """ Creates a new tool palette. """
 
         # Base class constructor.
-        super(ToolPalette, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)

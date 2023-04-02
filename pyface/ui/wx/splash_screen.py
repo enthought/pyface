@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,13 +20,14 @@ import wx
 import wx.adv
 
 
-from traits.api import Any, Bool, Font, Instance, Int, provides
+from traits.api import Any, Bool, Int, provides
 from traits.api import Tuple, Str
 
 
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.wx.util.font_helper import new_font_like
+from .image_resource import ImageResource
 from .window import Window
 
 
@@ -38,7 +39,7 @@ class SplashScreen(MSplashScreen, Window):
 
     # 'ISplashScreen' interface --------------------------------------------
 
-    image = Instance(ImageResource, ImageResource("splash"))
+    image = Image(ImageResource("splash"))
 
     log_level = Int(DEBUG)
 

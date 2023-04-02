@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,17 +10,16 @@
 
 """ A clickable/draggable widget containing an image. """
 
+import warnings
 
 import wx
 
-
 from traits.api import Any, Bool, Event
 
+from .layout_widget import LayoutWidget
 
-from .widget import Widget
 
-
-class ImageWidget(Widget):
+class ImageWidget(LayoutWidget):
     """ A clickable/draggable widget containing an image. """
 
     # 'ImageWidget' interface ---------------------------------------------#
@@ -64,10 +63,31 @@ class ImageWidget(Widget):
 
     def __init__(self, parent, **traits):
         """ Creates a new widget. """
-
         # Base class constructors.
-        super(ImageWidget, self).__init__(**traits)
 
+        create = traits.pop('create', None)
+
+        # Base-class constructors.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create ",
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
         # Add some padding around the image.
         size = (self.bitmap.GetWidth() + 10, self.bitmap.GetHeight() + 10)
 
@@ -96,7 +116,7 @@ class ImageWidget(Widget):
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1, wx.SOLID
         )
 
-        return
+        return self.control
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -207,7 +227,7 @@ class ImageWidget(Widget):
             wdc.DrawLine(wdx - 1, 1, wdx - 1, wdy)
             wdc.DrawLine(1, wdy - 1, wdx - 1, wdy - 1)
 
-        if self._selected == True:
+        if self._selected:
             wdc.SetBrush(wx.TRANSPARENT_BRUSH)
             wdc.SetPen(pens[bd])
             wdc.DrawLine(1, 1, wdx - 1, 1)

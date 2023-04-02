@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -19,7 +19,7 @@ class EditImageRenderer(GridCellImageRenderer):
     image = ImageResource("table_edit")
 
     def __init__(self, **kw):
-        super(EditImageRenderer, self).__init__(self, **kw)
+        super().__init__(self, **kw)
 
     def get_image_for_cell(self, grid, row, col):
         """ returns the image resource for the table_edit bitmap """

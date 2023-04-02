@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -32,6 +32,7 @@ from pyface.api import (
     error,
 )
 from pyface.action.api import Action, StatusBarManager
+from pyface.action.schema.api import SGroup, SMenu, SMenuBar, SToolBar
 from pyface.tasks.api import (
     EditorAreaPane,
     IEditor,
@@ -43,10 +44,6 @@ from pyface.tasks.api import (
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
     EditorAction,
-    SGroup,
-    SMenu,
-    SMenuBar,
-    SToolBar,
     TaskAction,
 )
 from traits.api import (
@@ -54,7 +51,7 @@ from traits.api import (
     Property,
     Str,
     cached_property,
-    on_trait_change,
+    observe,
 )
 
 from python_browser_pane import PythonBrowserPane
@@ -87,11 +84,11 @@ class PythonEditorTask(Task):
     id = "example.python_editor_task"
 
     #: The human-readable name of the task.
-    name = u"Python Editor"
+    name = "Python Editor"
 
     #: The currently active editor in the editor area, if any.
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     #: The editor area for this task.
@@ -292,11 +289,12 @@ class PythonEditorTask(Task):
         """
         browser = PythonBrowserPane()
 
-        def handler(path):
+        def handler(event):
+            path = event.new
             if os.path.isfile(path):
                 return self.create_editor(path)
 
-        browser.on_trait_change(handler, "activated")
+        browser.observe(handler, "activated")
         return [browser]
 
     # -------------------------------------------------------------------------
@@ -333,15 +331,16 @@ class PythonEditorTask(Task):
 
     # Trait change handlers --------------------------------------------------
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
-        event.veto = not close
+        window = event.new
+        window.veto = not close
 
-    @on_trait_change("active_editor.name")
-    def _change_title(self):
+    @observe("active_editor.name")
+    def _change_title(self, event):
         """ Update the window title when the active editor changes.
         """
         if self.window.active_task == self:
@@ -350,8 +349,8 @@ class PythonEditorTask(Task):
             else:
                 self.window.title = self.name
 
-    @on_trait_change("active_editor.[line,column,selection_length]")
-    def _update_status(self):
+    @observe("active_editor.[line,column,selection_length]")
+    def _update_status(self, event):
         if self.active_editor is not None:
             editor = self.active_editor
             if editor.selection_length:

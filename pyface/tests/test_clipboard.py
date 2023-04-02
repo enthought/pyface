@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,11 @@
 
 import unittest
 
+from traits.etsconfig.api import ETSConfig
+
 from ..clipboard import clipboard
+
+is_wx = (ETSConfig.toolkit == 'wx')
 
 
 class TestObject(object):
@@ -42,12 +46,12 @@ class TestClipboard(unittest.TestCase):
         self.assertFalse(self.clipboard.has_object_data)
 
     def test_set_text_data_unicode(self):
-        self.clipboard.data = u"test"
+        self.clipboard.data = "test"
         self.assertTrue(self.clipboard.has_data)
         self.assertEqual(self.clipboard.data_type, "str")
-        self.assertEqual(self.clipboard.data, u"test")
+        self.assertEqual(self.clipboard.data, "test")
         self.assertTrue(self.clipboard.has_text_data)
-        self.assertEqual(self.clipboard.text_data, u"test")
+        self.assertEqual(self.clipboard.text_data, "test")
         self.assertFalse(self.clipboard.has_file_data)
         self.assertFalse(self.clipboard.has_object_data)
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,6 +7,25 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
+
+"""
+
+API for the ``pyface.wizard`` subpackage.
+
+- :class:`~.WizardPage`
+- :class:`~.Wizard`
+- :class:`~.WizardController`
+- :class:`~.ChainedWizard`
+- :class:`~.ChainedWizardController`
+
+Interfaces
+----------
+
+- :class:`~.IWizardPage`
+- :class:`~.IWizard`
+- :class:`~.IWizardController`
+
+"""
 
 from .i_wizard_page import IWizardPage
 from .wizard_page import WizardPage
@@ -19,7 +38,3 @@ from .wizard_controller import WizardController
 
 from .chained_wizard import ChainedWizard
 from .chained_wizard_controller import ChainedWizardController
-
-# These are deprecated.  Use Wizard and WizardController instead.
-from .simple_wizard import SimpleWizard
-from .simple_wizard_controller import SimpleWizardController

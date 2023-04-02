@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,10 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" The interface for a dialog that allows the user to open/save files etc. """
+"""The interface for a dialog that allows the user to display progress of an
+operation."""
 
 
-from traits.api import Any, Bool, Int, Str
+from traits.api import Any, Bool, HasTraits, Int, Str
 
 
 from pyface.i_dialog import IDialog
@@ -74,7 +75,7 @@ class IProgressDialog(IDialog):
         """
 
 
-class MProgressDialog(object):
+class MProgressDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IProgressDialog interface.
 
@@ -95,7 +96,7 @@ class MProgressDialog(object):
             msg = "Dialog min ({}) is greater than dialog max ({})."
             raise AttributeError(msg.format(self.min, self.max))
 
-        super(MProgressDialog, self).open()
+        super().open()
 
     # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.

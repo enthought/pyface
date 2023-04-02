@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -31,8 +31,6 @@ class CheckboxImageRenderer(MappedGridCellImageRenderer):
             text_map = {True: "True", False: "False"}
 
         # Base-class constructor
-        super(CheckboxImageRenderer, self).__init__(
-            checked_image_map, text_map
-        )
+        super().__init__(checked_image_map, text_map)
 
         return

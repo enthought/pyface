@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -152,6 +152,8 @@ def read_file(file_name):
 def write_file(file_name, data):
     """ Writes the specified data to the specified file.
     """
+    if isinstance(data, str):
+        data = data.encode('utf8')
     with open(file_name, "wb") as fh:
         fh.write(data)
 
@@ -185,7 +187,7 @@ def split_image_name(image_name):
     """
     col = image_name.find(":")
     volume_name = image_name[1:col]
-    file_name = image_name[col + 1 :]
+    file_name = image_name[col + 1:]
     if file_name.find(".") < 0:
         file_name += ".png"
 
@@ -520,7 +522,7 @@ class ImageVolume(HasPrivateTraits):
     images = List(ImageInfo)
 
     #: A dictionary mapping image names to ImageInfo objects:
-    catalog = Property(depends_on="images")
+    catalog = Property(observe="images")
 
     #: The time stamp of when the image library was last modified:
     time_stamp = Str()
@@ -788,7 +790,7 @@ class ImageVolume(HasPrivateTraits):
                     zf.read("image_info.py"), "images"
                 )
 
-            # Check to see if our time stamp is up to data with the file:
+            # Check to see if our time stamp is up to date with the file:
             if self.time_stamp < time_stamp:
 
                 # If not, create an ImageInfo object for all image files
@@ -956,7 +958,7 @@ class ImageLibrary(HasPrivateTraits):
     catalog = Dict(Str, ImageVolume)
 
     #: The list of available images in the library:
-    images = Property(List, depends_on="volumes.images")
+    images = Property(List, observe="volumes.items.images")
 
     # -- Private Traits ---------------------------------------------------------
 

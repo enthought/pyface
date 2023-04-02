@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -55,12 +55,12 @@ class TreeModel(HasTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_children(self, node):
         """ Returns the children of a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
@@ -79,7 +79,7 @@ class TreeModel(HasTraits):
     def drop(self, node, obj):
         """ Drops an object onto a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node.
@@ -173,7 +173,7 @@ class TreeModel(HasTraits):
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
-    def fire_nodes_removed(self, parent, children):
+    def fire_nodes_removed(self, node, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)

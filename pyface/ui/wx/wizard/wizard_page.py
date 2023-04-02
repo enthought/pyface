@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
+from traits.api import Bool, HasTraits, provides, Str, Tuple
 from pyface.api import HeadingText
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 

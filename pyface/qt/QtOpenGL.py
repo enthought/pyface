@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,9 +14,16 @@ if qt_api == "pyqt":
 
 elif qt_api == "pyqt5":
     from PyQt5.QtOpenGL import *
+    from PyQt5.QtWidgets import QOpenGLWidget
 
-elif qt_api == "pyside2":
-    from PySide2.QtOpenGL import *
+elif qt_api == "pyqt6":
+    from PyQt6.QtOpenGL import *
+    from PyQt6.QtOpenGLWidgets import *
+
+elif qt_api == "pyside6":
+    from PySide6.QtOpenGL import *
+    from PySide6.QtOpenGLWidgets import *
 
 else:
-    from PySide.QtOpenGL import *
+    from PySide2.QtOpenGL import *
+    from PySide2.QtWidgets import QOpenGLWidget

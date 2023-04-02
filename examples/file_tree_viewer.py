@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -73,20 +73,14 @@ class FileTreeLabelProvider(TreeLabelProvider):
 
     def get_image(self, viewer, element):
         """ Returns the filename of the label image for an element. """
-
-        selected = viewer.is_selected(element)
         expanded = viewer.is_expanded(element)
-
         if isdir(element):
             if expanded:
                 image = self.OPEN_FOLDER
-
             else:
                 image = self.CLOSED_FOLDER
-
         else:
             image = self.DOCUMENT
-
         return image
 
     def get_text(self, viewer, element):

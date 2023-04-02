@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,10 +12,14 @@
 
 
 import wx
-from wx.grid import Grid as wxGrid
-
-
-from .grid_model import GridModel
+from wx.grid import (
+    Grid as wxGrid,
+    GridTableMessage,
+    GRIDTABLE_NOTIFY_ROWS_APPENDED,
+    GRIDTABLE_NOTIFY_ROWS_DELETED,
+    GRIDTABLE_NOTIFY_COLS_APPENDED,
+    GRIDTABLE_NOTIFY_COLS_DELETED,
+)
 
 
 class Grid(wxGrid):
@@ -29,14 +33,6 @@ class Grid(wxGrid):
 
         # The model that provides the data and row/column information.
         self.model = None
-
-        # Automatically size columns and rows to fit their content.
-        #
-        # fixme: wx seems sensitive to the location of these two lines. Put
-        # them *before* the call to 'SetTable', otherwise the grid takes
-        # forever to initialize!
-        ##self.AutoSizeColumns()
-        ##self.AutoSizeRows()
 
         # Don't display any extra space around the rows and columns.
         self.SetMargins(0, 0)
@@ -54,7 +50,7 @@ class Grid(wxGrid):
         #
         # fixme: We should create a default model if one is not supplied.
         self.SetTable(model._grid_table_base, True)
-        model.on_trait_change(self._on_model_changed, "model_changed")
+        model.observe(self._on_model_changed, "model_changed")
 
         self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self._on_cell_change)
         self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
@@ -122,24 +118,10 @@ class Grid(wxGrid):
     def _on_cell_change(self, evt):
         """ Called when the contents of a cell have been changed. """
 
-        row = evt.GetRow()
-        col = evt.GetCol()
-
-        ##print 'Cell changed at', row, col
-        value = self.GetTable().GetValue(row, col)
-
-        ##print 'New value', value
-        ##print 'Type', type(value)
-
         evt.Skip()
 
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
-
-        ##row = evt.GetRow()
-        ##col = evt.GetCol()
-
-        ##print 'Cell selected at', row, col
 
         evt.Skip()
 
@@ -216,9 +198,9 @@ class Grid(wxGrid):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_model_changed(self, message):
+    def _on_model_changed(self, event):
         """ Called when the model has changed. """
-
+        message = event.new
         self.BeginBatch()
         self.ProcessTableMessage(message)
         self.EndBatch()

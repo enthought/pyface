@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -165,7 +165,7 @@ class MDIWindowMenu(MenuManager):
         """ Creates a new MDI window menu. """
 
         # Base class constructor.
-        super(MDIWindowMenu, self).__init__(
+        super().__init__(
             Cascade(window=window),
             Tile(window=window),
             Separator(),

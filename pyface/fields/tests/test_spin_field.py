@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,13 +16,12 @@ from .field_mixin import FieldMixin
 
 
 class TestSpinField(FieldMixin, unittest.TestCase):
-    def _create_widget(self):
-        return SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip="Dummy",
-        )
+
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("value", 1)
+        traits.setdefault("bounds", (0, 100))
+        traits.setdefault("tooltip", "Dummy")
+        return SpinField(**traits)
 
     # Tests ------------------------------------------------------------------
 

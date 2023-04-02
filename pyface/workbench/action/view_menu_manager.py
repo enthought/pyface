@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,7 @@ import logging
 
 from pyface.action.api import Group, MenuManager
 from traits.api import Any, Bool, Instance, List, Str
-from traits.api import on_trait_change
+from traits.api import observe
 
 
 from .perspective_menu_manager import PerspectiveMenuManager
@@ -88,11 +88,8 @@ class ViewMenuManager(MenuManager):
     # 'ViewMenuManager' interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change(
-        "window.active_perspective,window.active_part,"
-        "window.views,window.views_items"
-    )
-    def refresh(self):
+    @observe("window.active_perspective,window.active_part,window.views.items")
+    def refresh(self, event):
         """ Refreshes the checked state of the actions in the menu. """
 
         logger.debug("refreshing view menu")

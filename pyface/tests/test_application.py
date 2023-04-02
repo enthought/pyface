@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,8 +14,8 @@ from shutil import rmtree
 from tempfile import mkdtemp
 from unittest import TestCase
 
-from traits.api import Bool
-from traits.testing.unittest_tools import UnittestTools
+from traits.api import Bool, observe
+from traits.testing.api import UnittestTools
 
 from ..application import ApplicationExit, Application
 
@@ -58,15 +58,15 @@ class TestingApp(Application):
     exit_prepared_error = Bool(False)
 
     def start(self):
-        super(TestingApp, self).start()
+        super().start()
         return self.start_cleanly
 
     def stop(self):
-        super(TestingApp, self).stop()
+        super().stop()
         return self.stop_cleanly
 
     def _run(self):
-        super(TestingApp, self)._run()
+        super()._run()
         if self.do_exit:
             if self.error_exit:
                 raise ApplicationExit("error message")
@@ -75,8 +75,10 @@ class TestingApp(Application):
             self.exit_vetoed = True
         return True
 
-    def _exiting_fired(self, event):
-        event.veto = self.veto_exit
+    @observe('exiting')
+    def _set_veto_on_exiting_event(self, event):
+        vetoable_event = event.new
+        vetoable_event.veto = self.veto_exit
 
     def _prepare_exit(self):
         self.exit_prepared = True
@@ -89,11 +91,12 @@ class TestApplication(TestCase, UnittestTools):
         self.application_events = []
 
     def event_listener(self, event):
-        self.application_events.append(event)
+        application_event = event.new
+        self.application_events.append(application_event)
 
     def connect_listeners(self, app):
         for event in EVENTS:
-            app.on_trait_change(self.event_listener, event)
+            app.observe(self.event_listener, event)
 
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig

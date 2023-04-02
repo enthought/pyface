@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,17 +7,16 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-import mock
+
 import tempfile
 import shutil
-import os
 import unittest
+from unittest import mock
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.workbench.perspective import Perspective
 from pyface.workbench.api import Workbench
-from pyface.workbench.user_perspective_manager import UserPerspectiveManager
 from pyface.workbench.workbench_window import (
     WorkbenchWindow,
     WorkbenchWindowLayout,

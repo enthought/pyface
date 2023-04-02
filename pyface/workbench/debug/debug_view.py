@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 
 
 from pyface.workbench.api import View, WorkbenchWindow
-from traits.api import HasTraits, Instance, Str, on_trait_change
+from traits.api import HasTraits, Instance, Str, observe
 from traitsui.api import View as TraitsView
 
 
@@ -30,10 +30,8 @@ class DebugViewModel(HasTraits):
     # 'Model' interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change(
-        "window.active_editor", "window.active_part", "window.active_view"
-    )
-    def refresh(self):
+    @observe("window.active_editor,window.active_part,window.active_view")
+    def refresh(self, event):
         """ Refresh the model. """
 
         self.active_editor = self._get_id(self.window.active_editor)

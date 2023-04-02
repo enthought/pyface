@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,8 +20,9 @@ import logging
 
 from traits.api import Str, List, Dict, Instance
 from pyface.api import PythonShell, FileDialog, OK
+from pyface.action.schema.api import SMenu, SMenuBar
 from pyface.tasks.api import Task, TaskPane
-from pyface.tasks.action.api import SMenuBar, SMenu, TaskAction
+from pyface.tasks.action.api import TaskAction
 
 # set up logging
 logger = logging.getLogger()
@@ -64,10 +65,12 @@ class PythonShellPane(TaskPane):
     def destroy(self):
         """ Destroy the python shell task pane
         """
-        logger.debug("PythonShellPane: destroying python shell pane")
-        self.editor.destroy()
-        self.control = self.editor = None
+        if self.editor is not None:
+            logger.debug("PythonShellPane: destroying python shell pane")
+            self.editor.destroy()
+            self.editor = None
         logger.debug("PythonShellPane: destroyed")
+        super().destroy()
 
 
 class PythonShellTask(Task):

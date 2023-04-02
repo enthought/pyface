@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,12 +11,12 @@
 """ The interface for a dialog that prompts the user for confirmation. """
 
 
-from traits.api import Bool, Enum, Instance, Str
+from traits.api import Bool, Enum, HasTraits, Str
 
 
 from pyface.constant import CANCEL, NO, YES
 from pyface.i_dialog import IDialog
-from pyface.i_image_resource import IImageResource
+from pyface.ui_traits import Image
 
 
 class IConfirmationDialog(IDialog):
@@ -31,7 +31,7 @@ class IConfirmationDialog(IDialog):
     default = Enum(NO, YES, CANCEL)
 
     #: The image displayed with the message.  The default is toolkit specific.
-    image = Instance(IImageResource)
+    image = Image()
 
     #: The message displayed in the body of the dialog (use the inherited
     #: 'title' trait to set the title of the dialog itself).
@@ -50,7 +50,7 @@ class IConfirmationDialog(IDialog):
     yes_label = Str()
 
 
-class MConfirmationDialog(object):
+class MConfirmationDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -82,19 +82,19 @@ class MTaskWindowBackend(HasTraits):
     # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def destroy(self):
         pass
 
     def hide_task(self, state):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def show_task(self, state):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_layout(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def set_layout(self, layout):
-        raise NotImplementedError
+        raise NotImplementedError()

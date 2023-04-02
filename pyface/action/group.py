@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,14 +13,12 @@
 from functools import partial
 
 
-from traits.api import Any, Bool, HasTraits, Instance, List, Property
-from traits.api import Str
+from traits.api import Any, Bool, HasTraits, List, observe, Property, Str
 from traits.trait_base import user_name_for
 
 
 from pyface.action.action import Action
 from pyface.action.action_item import ActionItem
-from pyface.action.action_manager_item import ActionManagerItem
 
 
 class Group(HasTraits):
@@ -71,7 +69,7 @@ class Group(HasTraits):
             Items to add to the group.
         """
         # Base class constructor.
-        super(Group, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add any specified items.
         for item in items:
@@ -88,9 +86,10 @@ class Group(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe("enabled")
+    def _enabled_updated(self, event):
         for item in self.items:
-            item.enabled = new
+            item.enabled = event.new
 
     # Methods -------------------------------------------------------------#
 

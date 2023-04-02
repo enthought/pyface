@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -28,7 +28,7 @@ class GUIApplicationAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application")
+    object = Property(observe="application")
 
     # 'WindowAction' interface -----------------------------------------------
 
@@ -45,7 +45,7 @@ class GUIApplicationAction(ListeningAction):
     def destroy(self):
         # Disconnect listeners to application and dependent properties.
         self.application = None
-        super(GUIApplicationAction, self).destroy()
+        super().destroy()
 
 
 class ActiveWindowAction(GUIApplicationAction):
@@ -53,7 +53,7 @@ class ActiveWindowAction(GUIApplicationAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application.active_window")
+    object = Property(observe="application.active_window")
 
     # ------------------------------------------------------------------------
     # Protected interface.
@@ -68,7 +68,7 @@ class ActiveWindowAction(GUIApplicationAction):
 class CreateWindowAction(GUIApplicationAction):
     """ A standard 'New Window' menu action. """
 
-    name = u"New Window"
+    name = "New Window"
     accelerator = "Ctrl+N"
 
     def perform(self, event=None):
@@ -83,7 +83,7 @@ class ExitAction(GUIApplicationAction):
     method = "exit"
 
     def _name_default(self):
-        return (u"Exit " if IS_WINDOWS else u"Quit ") + self.application.name
+        return ("Exit " if IS_WINDOWS else "Quit ") + self.application.name
 
 
 class AboutAction(GUIApplicationAction):
@@ -92,7 +92,7 @@ class AboutAction(GUIApplicationAction):
     method = "do_about"
 
     def _name_default(self):
-        return u"About " + self.application.name
+        return "About " + self.application.name
 
 
 class CloseActiveWindowAction(ActiveWindowAction):
@@ -101,6 +101,6 @@ class CloseActiveWindowAction(ActiveWindowAction):
     This method closes the active window of the application.
     """
 
-    name = u"Close Window"
+    name = "Close Window"
     accelerator = "Ctrl+W"
     method = "close"

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,11 +10,9 @@
 
 
 from wx.grid import (
-    Grid,
     PyGridTableBase,
     GridCellAttr,
     GridTableMessage,
-    GridCellFloatRenderer,
 )
 from wx.grid import (
     GRIDTABLE_NOTIFY_ROWS_DELETED,
@@ -25,10 +23,6 @@ from wx.grid import (
     GRIDTABLE_NOTIFY_COLS_APPENDED,
 )
 from wx.grid import GRIDTABLE_REQUEST_VIEW_GET_VALUES
-from wx.grid import GRID_VALUE_BOOL
-from wx import ALIGN_LEFT, ALIGN_CENTRE, Colour
-
-from .default_renderer import DefaultRenderer
 
 
 class VirtualModel(PyGridTableBase):
@@ -42,7 +36,6 @@ class VirtualModel(PyGridTableBase):
         [(rowname, dictionary),
         dictionary.get(colname, None) returns the data for a cell
         """
-        ##print 'Initializing virtual model'
         PyGridTableBase.__init__(self)
         self.set_data_source(data)
         self.colnames = column_names
@@ -112,7 +105,6 @@ class VirtualModel(PyGridTableBase):
         (wxGrid) -> Reset the grid view.   Call this to
         update the grid if rows and columns have been added or deleted
         """
-        ##print 'VirtualModel.reset_view'
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
             (

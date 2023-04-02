@@ -1,3 +1,5 @@
+.. _overview:
+
 ========
 Overview
 ========
@@ -43,7 +45,7 @@ interface, which in turn inherits from :py:class:`.IDialog`,
 is the combination of these.  The :py:class:`.MFileDialog` class provides some
 mix-in capabilities around the expression of filters for file types.  And then
 there are two concrete implementations, :py:class:`pyface.ui.wx.file_dialog.FileDialog`
-for wxPython and :py:class:`pyface.ui.qt4.file_dialog.FileDialog` for the Qt
+for wxPython and :py:class:`pyface.ui.qt.file_dialog.FileDialog` for the Qt
 backends.  These toolkit classes in turn inherit from the appropriate toolkit's
 :py:class:`Dialog`, :py:class:`Window`, and :py:class:`Widget` classes, as well
 as the :py:class:`.MFileDialog` mixin.
@@ -145,7 +147,7 @@ needs.  At its simplest, the action might look something like this::
     from pyface.action.api import Action
 
     def hello_world():
-        print 'Hello world!'
+        print('Hello world!')
 
     hello_action = Action(
         name="Hello",
@@ -171,7 +173,7 @@ this::
         tooltip = "Say hello"
 
         def perform(self, event=None):
-            print 'Hello world!'
+            print('Hello world!')
 
 Because actions usually require some context, the most common use will be to
 supply a class method as the :py:attr:`~.action.Action.on_perform` callable.  And for toolbar
@@ -188,7 +190,7 @@ define a very simple Python editor application with menus::
             """ Creates a new application window. """
 
             # Base class constructor.
-            super(MainWindow, self).__init__(**traits)
+            super().__init__(**traits)
 
             # Add a menu bar.
             self.menu_bar_manager = MenuBarManager(
@@ -229,7 +231,7 @@ define a very simple Python editor application with menus::
             if self.control:
                 try:
                     self._editor.save()
-                except IOError, e:
+                except IOError:
                     # If you are trying to save to a file that doesn't exist,
                     # open up a FileDialog with a 'save as' action.
                     dlg = FileDialog(

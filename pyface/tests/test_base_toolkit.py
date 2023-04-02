@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -27,12 +27,17 @@ class TestToolkit(unittest.TestCase):
 
     def test_find_current_toolkit_no_etsconfig(self):
         old_etsconfig_toolkit = ETSConfig._toolkit
+        expected_toolkit = (
+            "qt"
+            if old_etsconfig_toolkit == "qt4"
+            else old_etsconfig_toolkit
+        )
         ETSConfig._toolkit = ""
         try:
             toolkit = find_toolkit("pyface.toolkits", old_etsconfig_toolkit)
             self.assertEqual(toolkit.package, "pyface")
-            self.assertEqual(toolkit.toolkit, old_etsconfig_toolkit)
-            self.assertEqual(ETSConfig.toolkit, old_etsconfig_toolkit)
+            self.assertEqual(toolkit.toolkit, expected_toolkit)
+            self.assertEqual(ETSConfig.toolkit, expected_toolkit)
         finally:
             ETSConfig._toolkit = old_etsconfig_toolkit
 

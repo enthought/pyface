@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,9 +18,10 @@
 
 import wx
 
-from traits.api import HasPrivateTraits, Instance, Bool, Event, Color
+from traits.api import HasPrivateTraits, Instance, Bool, Event
 
 from pyface.wx.drag_and_drop import PythonDropTarget, PythonDropSource
+from pyface.ui_traits import TraitsUIColor as Color
 from .dock_sizer import DockControl, FEATURE_EXTERNAL_DRAG
 from .ifeature_tool import IFeatureTool
 

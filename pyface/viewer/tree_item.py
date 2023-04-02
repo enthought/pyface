@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,21 +10,21 @@
 
 """ A generic base-class for items in a tree data structure.
 
-An example:-
+An example::
 
-root = TreeItem(data='Root')
+    root = TreeItem(data='Root')
 
-fruit = TreeItem(data='Fruit')
-fruit.append(TreeItem(data='Apple', allows_children=False))
-fruit.append(TreeItem(data='Orange', allows_children=False))
-fruit.append(TreeItem(data='Pear', allows_children=False))
-root.append(fruit)
+    fruit = TreeItem(data='Fruit')
+    fruit.append(TreeItem(data='Apple', allows_children=False))
+    fruit.append(TreeItem(data='Orange', allows_children=False))
+    fruit.append(TreeItem(data='Pear', allows_children=False))
+    root.append(fruit)
 
-veg = TreeItem(data='Veg')
-veg.append(TreeItem(data='Carrot', allows_children=False))
-veg.append(TreeItem(data='Cauliflower', allows_children=False))
-veg.append(TreeItem(data='Sprout', allows_children=False))
-root.append(veg)
+    veg = TreeItem(data='Veg')
+    veg.append(TreeItem(data='Carrot', allows_children=False))
+    veg.append(TreeItem(data='Cauliflower', allows_children=False))
+    veg.append(TreeItem(data='Sprout', allows_children=False))
+    root.append(veg)
 
 """
 

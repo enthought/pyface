@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,15 +13,24 @@ A resource manager locates and loads application resources such as images and
 sounds etc.
 """
 
-
-import collections, glob, inspect, os, sys, types
+import collections.abc
+import glob
+import inspect
+import os
 from os.path import join
+import types
 from zipfile import is_zipfile, ZipFile
 
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
 from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
-
 
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
@@ -51,7 +60,28 @@ class ResourceManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def locate_image(self, image_name, path, size=None):
-        """ Locates an image. """
+        """ Locates an image.
+
+        Parameters
+        ----------
+        image_name : str
+            Name of the image file.
+        path : list of (str or ModuleType)
+            Paths from which image files will be searched. Note that for each
+            path, a subdirectory named 'images' will be search first.
+            The first match will be returned.
+        size : tuple of (m: int, n: int), optional
+            Specific size of the image requested. If provided, then
+            the subdirectory ``images/{m}x{n}`` will be searched first,
+            followed by the ``images`` subdirectory and its containing folder.
+            Default is None.
+
+        Returns
+        -------
+        image_ref : ImageReference or None
+            ImageReference to the image found, or None if no matching images
+            are found.
+        """
 
         if not isinstance(path, collections.abc.Sequence):
             path = [path]
@@ -111,27 +141,24 @@ class ResourceManager(HasTraits):
         else:
             subdirs = ["images/%dx%d" % (size[0], size[1]), "images", ""]
 
+        # Concrete image filenames to be searched
+        image_filenames = [basename + extension for extension in extensions]
+
         for dirname in resource_path:
 
-            # If we come across a reference to a module, use pkg_resources
-            # to try and find the image inside of an .egg, .zip, etc.
+            # If we come across a reference to a module, try and find the
+            # image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
-                from pkg_resources import resource_string
-
-                for path in subdirs:
-                    for extension in extensions:
-                        searchpath = "%s/%s%s" % (path, basename, extension)
-                        try:
-                            data = resource_string(
-                                dirname.__name__, searchpath
-                            )
-                            return ImageReference(
-                                self.resource_factory, data=data
-                            )
-                        except IOError:
-                            pass
-                else:
+                try:
+                    data = _find_resource_data(
+                        dirname, subdirs, image_filenames
+                    )
+                except OSError:
                     continue
+                else:
+                    return ImageReference(
+                        self.resource_factory, data=data
+                    )
 
             # Is there anything resembling the image name in the directory?
             for path in subdirs:
@@ -239,3 +266,80 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
+
+
+def _get_package_data(module, rel_path):
+    """ Return package data in bytes for the given module and resource path.
+
+    Parameters
+    ----------
+    module : ModuleType
+        A module from which package data will be discovered.
+        If the module name does not conform to the package requirement, then
+        its "__file__" attribute is used for locating the directory to search
+        for resource files.
+    rel_path : str
+        "/"-separated path for loading data file.
+
+    Returns
+    -------
+    data : bytes
+        Loaded data in bytes.
+
+    Raises
+    ------
+    OSError
+        If the path referenced does not resolve to an existing file or the
+        file cannot be read.
+    """
+
+    if (module.__spec__ is None
+            or module.__spec__.submodule_search_locations is None):
+        module_dir_path = os.path.dirname(module.__file__)
+        path = os.path.join(module_dir_path, *rel_path.split("/"))
+        with open(path, "rb") as fp:
+            return fp.read()
+
+    return (
+        files(module).joinpath(rel_path).read_bytes()
+    )
+
+
+def _find_resource_data(module, subdirs, filenames):
+    """ For the given module, search directories and names, find a matching
+    resource file and return its content as bytes.
+
+    Parameters
+    ----------
+    module : ModuleType
+        A module from which package data will be discovered.
+        If the module name does not conform to the package requirement, then
+        its "__file__" attribute is used for locating the directory to search
+        for resource files.
+    subdirs : list of str
+        Name of subdirectories to try. Each value can be a "/"-separated
+        string to represent more nested subdirectories.
+    filenames : list of str
+        File names to try.
+
+    Returns
+    -------
+    data : bytes
+        Loaded data in bytes.
+
+    Raises
+    ------
+    OSError
+        If the path referenced does not resolve to an existing file or the
+        file cannot be read.
+    """
+    for path in subdirs:
+        for filename in filenames:
+            searchpath = "%s/%s" % (path, filename)
+            try:
+                return _get_package_data(module, searchpath)
+            except OSError:
+                pass
+    raise OSError(
+        "Unable to load data for the given module and search paths."
+    )

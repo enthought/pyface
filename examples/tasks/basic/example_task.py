@@ -1,11 +1,14 @@
-from pyface.tasks.api import Task, TaskLayout, PaneItem
-from pyface.tasks.action.api import (
-    DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
-    TaskAction,
-)
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     ConfirmationDialog,
     FileDialog,
@@ -14,7 +17,9 @@ from pyface.api import (
     OK,
     CANCEL,
 )
-from traits.api import on_trait_change
+from pyface.tasks.api import Task, TaskLayout, PaneItem
+from pyface.tasks.action.api import DockPaneToggleGroup, TaskAction
+from traits.api import observe
 
 
 from example_panes import PythonEditorPane, PythonScriptBrowserPane
@@ -79,8 +84,8 @@ class ExampleTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         browser = PythonScriptBrowserPane()
-        handler = lambda: self._open_file(browser.selected_file)
-        browser.on_trait_change(handler, "activated")
+        handler = lambda _: self._open_file(browser.selected_file)
+        browser.observe(handler, "activated")
         return [browser]
 
     # ------------------------------------------------------------------------
@@ -148,9 +153,10 @@ class ExampleTask(Task):
                     return self._prompt_for_save()
         return True
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
+        window = event.new
         if not self._prompt_for_save():
-            event.veto = True
+            window.veto = True

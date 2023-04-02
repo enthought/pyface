@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,22 +8,17 @@
 #
 # Thanks for using Enthought open source!
 
-""" Expandable example. """
+""" ExpandablePanel example.
 
+This is currently only supported by the WxPython toolkit.
+"""
 
-import os, sys
+import os
 
-
-import wx
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+from traits.api import Float, Str
 
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.expandable_panel import ExpandablePanel
-from traits.api import Float, Str
-
 
 from file_tree import FileTree
 
@@ -46,7 +41,8 @@ class MainWindow(SplitApplicationWindow):
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
 
-        self._expandable = expandable = ExpandablePanel(parent)
+        self._expandable = expandable = ExpandablePanel()
+        self._expandable.create(parent)
 
         for i in range(10):
             panel = self._create_content(expandable.control)

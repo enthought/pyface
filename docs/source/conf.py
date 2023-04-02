@@ -11,13 +11,9 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
-
-# If your extensions are in another directory, add it here. If the directory
-# is relative to the documentation root, use os.path.abspath to make it
-# absolute, like shown here.
-#sys.path.append(os.path.abspath('some/directory'))
-sys.path.insert(0, os.path.abspath('./sphinxext'))
+import os
+import runpy
+import sys
 
 # General configuration
 # ---------------------
@@ -27,6 +23,10 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
+    # Link to code in sphinx generated API docs
+    "sphinx.ext.viewcode",
+    "sphinx_copybutton",
     'traits.util.trait_documenter'
 ]
 
@@ -41,14 +41,14 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'pyface'
-copyright = '2008-2020, Enthought'
+copyright = '2008-2023, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-d = {}
-with open(os.path.join('..', '..', 'pyface', '_version.py')) as fp:
-    exec (fp.read(), d)
-version = release = d['full_version']
+version_py = os.path.join('..', '..', 'pyface', '_version.py')
+version_content = runpy.run_path(version_py)
+version = ".".join(version_content["version"].split(".", 2)[:2])
+release = version
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -163,14 +163,6 @@ except ImportError as exc:
     html_favicon = "et.png"
     html_style = 'default.css'
 
-# Useful aliases to avoid repeating long URLs.
-extlinks = {
-    'github-examples': (
-        'https://github.com/enthought/pyface/tree/master/examples/%s',
-        'github-examples'
-    )
-}
-
 # Options for LaTeX output
 # ------------------------
 
@@ -224,8 +216,19 @@ autodoc_mock_imports = [
     'wx.lib.gridmovers',
     'wx.stc',
     'wx.py',
-    'IPython',
-    'IPython.frontend',
-    'IPython.frontend.wx',
-    'IPython.frontend.wx.wx_frontend',
 ]
+
+
+def autodoc_skip_member(app, what, name, obj, skip, options):
+    # Skip load_tests
+    return skip or name == "load_tests"
+
+
+def setup(app):
+    app.connect('autodoc-skip-member', autodoc_skip_member)
+
+intersphinx_mapping = {
+    "traits": ("http://docs.enthought.com/traits", None),
+    "traitsui": ("http://docs.enthought.com/traitsui", None),
+    "python": ("https://docs.python.org/3", None),
+}

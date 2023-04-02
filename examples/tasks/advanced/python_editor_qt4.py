@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,9 @@ from os.path import basename
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, Instance, File, Str, Property, provides
+from traits.api import (
+    Bool, Event, File, Instance, observe, Property, provides, Str
+)
 from pyface.tasks.api import Editor
 
 
@@ -38,9 +40,9 @@ class PythonEditor(Editor):
 
     dirty = Bool(False)
 
-    name = Property(Str, depends_on="path")
+    name = Property(Str, observe="path")
 
-    tooltip = Property(Str, depends_on="path")
+    tooltip = Property(Str, observe="path")
 
     show_line_numbers = Bool(True)
 
@@ -97,18 +99,20 @@ class PythonEditor(Editor):
         """
         self.control.code.set_line_column(lineno, 0)
         self.control.code.moveCursor(
-            QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
+            QtGui.QTextCursor.MoveOperation.EndOfLine, QtGui.QTextCursor.MoveMode.KeepAnchor
         )
 
     # ------------------------------------------------------------------------
     # Trait handlers.
     # ------------------------------------------------------------------------
 
-    def _path_changed(self):
+    @observe('path')
+    def _path_updated(self, event):
         if self.control is not None:
             self.load()
 
-    def _show_line_numbers_changed(self):
+    @observe('show_line_numbers')
+    def _show_line_numbers_updated(self, event=None):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
                 self.show_line_numbers
@@ -122,10 +126,10 @@ class PythonEditor(Editor):
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.
         """
-        from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
+        from pyface.ui.qt.code_editor.code_widget import AdvancedCodeWidget
 
         self.control = control = AdvancedCodeWidget(parent)
-        self._show_line_numbers_changed()
+        self._show_line_numbers_updated()
 
         # Install event filter to trap key presses.
         event_filter = PythonEditorEventFilter(self, self.control)
@@ -159,7 +163,7 @@ class PythonEditorEventFilter(QtCore.QObject):
     """
 
     def __init__(self, editor, parent):
-        super(PythonEditorEventFilter, self).__init__(parent)
+        super().__init__(parent)
         self.__editor = editor
 
     def eventFilter(self, obj, event):
@@ -168,7 +172,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         if (
             self.__editor.control
             and obj == self.__editor.control
-            and event.type() == QtCore.QEvent.FocusOut
+            and event.type() == QtCore.QEvent.Type.FocusOut
         ):
             # Hack for Traits UI compatibility.
             self.__editor.control.lostFocus.emit()
@@ -176,7 +180,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         elif (
             self.__editor.control
             and obj == self.__editor.control.code
-            and event.type() == QtCore.QEvent.KeyPress
+            and event.type() == QtCore.QEvent.Type.KeyPress
         ):
             # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
@@ -189,17 +193,17 @@ class PythonEditorEventFilter(QtCore.QObject):
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
                 alt_down=(
-                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                    (mods & QtCore.Qt.KeyboardModifier.AltModifier) == QtCore.Qt.KeyboardModifier.AltModifier
                 ),
                 control_down=(
-                    (mods & QtCore.Qt.ControlModifier)
-                    == QtCore.Qt.ControlModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ControlModifier)
+                    == QtCore.Qt.KeyboardModifier.ControlModifier
                 ),
                 shift_down=(
-                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                    (mods & QtCore.Qt.KeyboardModifier.ShiftModifier) == QtCore.Qt.KeyboardModifier.ShiftModifier
                 ),
                 key_code=kcode,
                 event=event,
             )
 
-        return super(PythonEditorEventFilter, self).eventFilter(obj, event)
+        return super().eventFilter(obj, event)

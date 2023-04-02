@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,8 +15,9 @@
     and the notebook tabs and dragbars associated with the DockWindow.
 """
 
+import sys
 
-import wx, sys
+import wx
 
 from traits.api import (
     HasPrivateTraits,
@@ -35,12 +36,14 @@ from traits.api import (
     Undefined,
     Bool,
     cached_property,
+    observe,
 )
 from traitsui.dock_window_theme import dock_window_theme
 from traitsui.wx.helper import BufferDC
 
 from pyface.api import SystemMetrics
 from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.wx.drag_and_drop import PythonDropSource
 from pyface.timer.api import do_later, do_after
 from .idockable import IDockable
@@ -259,10 +262,10 @@ class DockImages(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     # Image for closing a tab:
-    close_tab = Instance(ImageResource, ImageResource("close_tab"))
+    close_tab = Image(ImageResource("close_tab"))
 
     # Image for closing a drag bar:
-    close_drag = Instance(ImageResource, ImageResource("close_drag"))
+    close_drag = Image(ImageResource("close_drag"))
 
     # ---------------------------------------------------------------------------
     #  Initalizes the object:
@@ -271,7 +274,7 @@ class DockImages(HasPrivateTraits):
     def __init__(self, **traits):
         """ Initializes the object.
         """
-        super(DockImages, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._lazy_init_done = False
 
@@ -366,11 +369,17 @@ class DockItem(HasPrivateTraits):
     # The parent of this item:
     parent = Any()
 
+    # The control associated with this item (used in subclasses):
+    control = Instance(wx.Control)
+
     # The DockWindow that owns this item:
-    owner = Property(depends_on="parent")
+    owner = Property(observe="parent")
 
     # Bounds of the item:
     bounds = Bounds
+
+    # The name of this item (used in subclasses):
+    name = Str()
 
     # Current width of the item:
     width = Int(-1)
@@ -385,10 +394,10 @@ class DockItem(HasPrivateTraits):
     tab_state = Any()
 
     # The tab displayable version of the control's UI name:
-    tab_name = Property(depends_on="name")
+    tab_name = Property(observe="name")
 
     # Width of the item's tab:
-    tab_width = Property(depends_on="control, tab_state, tab_name")
+    tab_width = Property(observe="control, tab_state, tab_name")
 
     # The DockWindowTheme for this item's DockWindow:
     theme = Property
@@ -420,18 +429,9 @@ class DockItem(HasPrivateTraits):
     # Current active set of features:
     active_features = Property
 
-    # The name of this item (implemented in subclasses):
-    # name = Str()
-
-    # The control associated with this item (implemented in subclasses):
-    # control = Instance( wx.Control )
-
     # ---------------------------------------------------------------------------
     #  Implementation of the 'owner' property:
     # ---------------------------------------------------------------------------
-
-    def __init__(self, **kw):
-        super(DockItem, self).__init__(**kw)
 
     @cached_property
     def _get_owner(self):
@@ -622,7 +622,7 @@ class DockItem(HasPrivateTraits):
     def begin_draw(self, dc, ox=0, oy=0):
         """ Prepares for drawing into a device context.
         """
-        self._save_clip = dc.GetClippingBox()
+        self._save_clip = dc.GetClippingRect()
         x, y, dx, dy = self.bounds
         dc.SetClippingRegion(x + ox, y + oy, dx, dy)
 
@@ -1215,7 +1215,7 @@ class DockItem(HasPrivateTraits):
                 if object.feature_can_drop_on(
                     self.object
                 ) or object.feature_can_drop_on_dock_control(self):
-                    from feature_tool import FeatureTool
+                    from .feature_tool import FeatureTool
 
                     self.drop_features = [FeatureTool(dock_control=self)]
             else:
@@ -1314,7 +1314,7 @@ class DockSplitter(DockItem):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x + idx + 1, y + dy / 2, x + dx - 2, y + dy / 2)
+            dc.DrawLine(x + idx + 1, y + dy // 2, x + dx - 2, y + dy // 2)
 
             iy = y + 2
             ix = x
@@ -1327,7 +1327,7 @@ class DockSplitter(DockItem):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x + dx / 2, y + idy + 1, x + dx / 2, y + dy - 2)
+            dc.DrawLine(x + dx // 2, y + idy + 1, x + dx // 2, y + dy - 2)
 
             iy = y
             ix = x + 2
@@ -1640,7 +1640,7 @@ class DockControl(DockItem):
     feature_changed = Event()
 
     # The image to display for this control:
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The UI name of this control:
     name = Str()
@@ -1999,7 +1999,8 @@ class DockControl(DockItem):
     #  Handles the 'activated' event being fired:
     # ---------------------------------------------------------------------------
 
-    def _activated_fired(self):
+    @observe('activated')
+    def _activate_dockable_tab(self, event):
         """ Notifies the active dockable that the control's tab is being
             activated.
         """
@@ -2010,7 +2011,8 @@ class DockControl(DockItem):
     #  Handles the 'feature_changed' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _feature_changed(self):
+    @observe("feature_changed")
+    def _feature_changed_updated(self, event):
         """ Handles the 'feature_changed' trait being changed
         """
         self.set_feature_mode()
@@ -2019,9 +2021,11 @@ class DockControl(DockItem):
     #  Handles the 'control' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _control_changed(self, old, new):
+    @observe("control")
+    def _control_updated(self, event):
         """ Handles the 'control' trait being changed.
         """
+        old, new = event.old, event.new
         self._tab_width = None
 
         if old is not None:
@@ -2035,7 +2039,8 @@ class DockControl(DockItem):
     #  Handles the 'name' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _name_changed(self):
+    @observe("name")
+    def _name_updated(self, event):
         """ Handles the 'name' trait being changed.
         """
         self._tab_width = self._tab_name = None
@@ -2044,7 +2049,8 @@ class DockControl(DockItem):
     #  Handles the 'style' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _style_changed(self):
+    @observe("style")
+    def _style_updated(self, event):
         """ Handles the 'style' trait being changed.
         """
         if self.parent is not None:
@@ -2054,7 +2060,8 @@ class DockControl(DockItem):
     #  Handles the 'image' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _image_changed(self):
+    @observe("image")
+    def _image_updated(self, event):
         """ Handles the 'image' trait being changed.
         """
         self._image = None
@@ -2063,7 +2070,8 @@ class DockControl(DockItem):
     #  Handles the 'visible' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _visible_changed(self):
+    @observe("visible")
+    def _visible_updated(self, event):
         """ Handles the 'visible' trait being changed.
         """
         if self.parent is not None:
@@ -2073,9 +2081,11 @@ class DockControl(DockItem):
     #  Handles the 'dockable' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _dockable_changed(self, dockable):
+    @observe("dockable")
+    def _dockable_updated(self, event):
         """ Handles the 'dockable' trait being changed.
         """
+        dockable = event.new
         if dockable is not None:
             dockable.dockable_bind(self)
 
@@ -2244,7 +2254,8 @@ class DockGroup(DockItem):
     #  Handles 'initialized' being changed:
     # ---------------------------------------------------------------------------
 
-    def _initialized_changed(self):
+    @observe("initialized")
+    def _initialized_updated(self, event):
         """ Handles 'initialized' being changed.
         """
         for item in self.contents:
@@ -2558,7 +2569,7 @@ class DockRegion(DockGroup):
         if isinstance(item, DockGroup) and (len(item.contents) == 1):
             item = item.contents[0]
             if isinstance(item, DockRegion):
-                contents[i : i + 1] = item.contents[:]
+                contents[i:i + 1] = item.contents[:]
             else:
                 contents[i] = item
         else:
@@ -2603,7 +2614,7 @@ class DockRegion(DockGroup):
     def toggle_lock(self):
         """ Toggles the 'lock' status of every control in the group.
         """
-        super(DockRegion, self).toggle_lock()
+        super().toggle_lock()
         self._is_notebook = None
 
     # ---------------------------------------------------------------------------
@@ -2726,7 +2737,7 @@ class DockRegion(DockGroup):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super(DockRegion, self).dock_info_at(x, y, tdx, is_control)
+        info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
             return info
 
@@ -2868,7 +2879,7 @@ class DockRegion(DockGroup):
         ):
             self.scroll(self._scroll)
         else:
-            super(DockRegion, self).mouse_up(event)
+            super().mouse_up(event)
 
     # ---------------------------------------------------------------------------
     #  Handles the mouse moving while the left mouse button is pressed:
@@ -3004,7 +3015,9 @@ class DockRegion(DockGroup):
     #  Handles the 'active' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _active_changed(self, old, new):
+    @observe("active")
+    def _active_updated(self, event):
+        old, new = event.old, event.new
         self._set_visibility()
 
         # Set the correct tab state for each tab:
@@ -3032,7 +3045,8 @@ class DockRegion(DockGroup):
     #  Handles the 'contents' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _contents_changed(self):
+    @observe("contents")
+    def _contents_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         self._is_notebook = None
@@ -3041,7 +3055,8 @@ class DockRegion(DockGroup):
         self.calc_min(True)
         self.modified = True
 
-    def _contents_items_changed(self, event):
+    @observe("contents:items")
+    def _contents_items_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         self._is_notebook = None
@@ -3529,7 +3544,7 @@ class DockSection(DockGroup):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super(DockSection, self).dock_info_at(x, y, tdx, is_control)
+        info = super().dock_info_at(x, y, tdx, is_control)
         if info is not None:
             return info
 
@@ -3761,7 +3776,8 @@ class DockSection(DockGroup):
     #  Handles the 'contents' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _contents_changed(self):
+    @observe("contents")
+    def _contents_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         for item in self.contents:
@@ -3769,7 +3785,8 @@ class DockSection(DockGroup):
         self.calc_min(True)
         self.modified = True
 
-    def _contents_items_changed(self, event):
+    @observe("contents:items")
+    def _contents_items_updated(self, event):
         """ Handles the 'contents' trait being changed.
         """
         for item in event.added:
@@ -3781,13 +3798,15 @@ class DockSection(DockGroup):
     #  Handles the 'splitters' trait being changed:
     # ---------------------------------------------------------------------------
 
-    def _splitters_changed(self):
+    @observe("splitters")
+    def _splitters_updated(self, event):
         """ Handles the 'splitters' trait being changed.
         """
         for item in self.splitters:
             item.parent = self
 
-    def _splitters_items_changed(self, event):
+    @observe("splitters:items")
+    def _splitters_items_updated(self, event):
         """ Handles the 'splitters' trait being changed.
         """
         for item in event.added:
@@ -3828,9 +3847,6 @@ class DockInfo(HasPrivateTraits):
 
     # Dock Control:
     control = Instance(DockItem)
-
-    def __init__(self, **kw):
-        super(DockInfo, self).__init__(**kw)
 
     # ---------------------------------------------------------------------------
     #  Draws the DockInfo on the display:
@@ -3986,7 +4002,7 @@ class DockSizer(wx.Sizer):
     # ---------------------------------------------------------------------------
 
     def __init__(self, contents=None):
-        super(DockSizer, self).__init__()
+        super().__init__()
 
         # Make sure the DockImages singleton has been initialized:
         DockImages.init()
@@ -4047,7 +4063,7 @@ class DockSizer(wx.Sizer):
         elif isinstance(contents, DockControl):
             self._contents = self._set_section([contents], True)
         else:
-            raise TypeError
+            raise TypeError()
 
         # Set the owner DockWindow for the top-level group (if possible)
         # so that it can notify the owner when the DockWindow becomes empty:
@@ -4069,7 +4085,7 @@ class DockSizer(wx.Sizer):
             elif isinstance(item, DockItem):
                 items.append(item)
             else:
-                raise TypeError
+                raise TypeError()
 
         return DockRegion(contents=items)
 
@@ -4083,7 +4099,7 @@ class DockSizer(wx.Sizer):
             elif isinstance(item, DockControl):
                 items.append(DockRegion(contents=[item]))
             else:
-                raise TypeError
+                raise TypeError()
         return DockSection(is_row=is_row).trait_set(contents=items)
 
     # ---------------------------------------------------------------------------

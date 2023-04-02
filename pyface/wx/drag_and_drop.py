@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -53,7 +53,7 @@ class FileDropSource(wx.DropSource):
             data_object.AddFile(file)
 
         # Create the drop source and begin the drag and drop operation:
-        super(FileDropSource, self).__init__(source)
+        super().__init__(source)
         self.SetData(data_object)
         self.result = self.DoDragDrop(True)
 
@@ -164,7 +164,7 @@ class PythonDropTarget(wx.DropTarget):
         """
 
         # Base-class constructor.
-        super(PythonDropTarget, self).__init__()
+        super().__init__()
 
         # The handler can either be a function that will be called when
         # any data is dropped onto the target, or an instance that supports

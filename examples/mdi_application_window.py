@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,14 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Application window example. """
+""" Application window example.
 
-
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+This example only works with the WxPython toolkit.
+"""
 
 from pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
@@ -32,7 +28,7 @@ class MainWindow(MDIApplicationWindow):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(

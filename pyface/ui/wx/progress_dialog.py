@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,14 +12,15 @@
 """ A simple progress bar intended to run in the UI thread
 """
 
+import warnings
+
 import wx
 import time
 
+from traits.api import Bool, Instance, Int, Property, Str
 
-from traits.api import Bool, Enum, Instance, Int, Property, provides, Str
-
-
-from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
+from pyface.i_progress_dialog import MProgressDialog
+from pyface.ui_traits import Orientation
 from .widget import Widget
 from .window import Window
 
@@ -34,7 +35,7 @@ class ProgressBar(Widget):
     control = Instance(wx.Gauge)
 
     #: The orientation of the progress bar.
-    direction = Enum("horizontal", "horizontal", "vertical")
+    direction = Orientation("horizontal")
 
     #: The maximum value for the progress bar.
     _max = Int()
@@ -46,20 +47,46 @@ class ProgressBar(Widget):
         maximum=100,
         direction="horizontal",
         size=(200, -1),
+        **traits,
     ):
         """
         Constructs a progress bar which can be put into a panel, or optionaly,
         its own window
 
         """
-        self._max = maximum
-        self.parent = parent
+        create = traits.pop("create", None)
 
+        # XXX minimum is ignored - it either should be deprecated or supported
+        super().__init__(
+            parent=parent,
+            _max=maximum,
+            direction=direction,
+            size=size,
+            **traits,
+        )
+
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
         style = wx.GA_HORIZONTAL
-        if direction == "vertical":
+        if self.direction == "vertical":
             style = wx.GA_VERTICAL
 
-        self.control = wx.Gauge(parent, -1, maximum, style=style, size=size)
+        return wx.Gauge(parent, -1, self._max, style=style, size=self.size)
 
     def update(self, value):
         """ Update the progress bar to the desired value. """
@@ -140,7 +167,7 @@ class ProgressDialog(MProgressDialog, Window):
         # before open() is called
         self._start_time = 0
 
-        super(ProgressDialog, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
     # -------------------------------------------------------------------------
     # IWindow Interface
@@ -148,7 +175,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def open(self):
         """ Opens the window. """
-        super(ProgressDialog, self).open()
+        super().open()
         self._start_time = time.time()
         wx.GetApp().Yield(True)
 
@@ -161,7 +188,7 @@ class ProgressDialog(MProgressDialog, Window):
         if self._message_control is not None:
             self._message_control = None
 
-        super(ProgressDialog, self).close()
+        super().close()
 
     # -------------------------------------------------------------------------
     # IProgressDialog Interface
@@ -276,7 +303,7 @@ class ProgressDialog(MProgressDialog, Window):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._cancel = None
 
-        if self.can_cancel == True:
+        if self.can_cancel:
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(
                 dialog, wx.ID_CANCEL, self.cancel_button_label
@@ -307,6 +334,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_gauge(self, dialog, parent_sizer):
         self.progress_bar = ProgressBar(dialog, self.min, self.max)
+        self.progress_bar.create()
         parent_sizer.Add(
             self.progress_bar.control, 0, wx.CENTER | wx.ALL, self.margin
         )
@@ -336,7 +364,7 @@ class ProgressDialog(MProgressDialog, Window):
         if not self.show_percent:
             return
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _create_timer(self, dialog, parent_sizer):
         if not self.show_time:
@@ -388,7 +416,6 @@ class ProgressDialog(MProgressDialog, Window):
         sizer = wx.BoxSizer(wx.VERTICAL)
         dialog.SetSizer(sizer)
         dialog.SetAutoLayout(True)
-        dialog.SetBackgroundColour(wx.NullColour)
 
         self.dialog_size = wx.Size()
 

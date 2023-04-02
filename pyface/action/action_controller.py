@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -48,7 +48,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a menu/menubar.
+            ``True`` if the action can be added to a menu/menubar.
         """
         return True
 
@@ -73,7 +73,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a toolbar.
+            ``True`` if the action can be added to a toolbar.
         """
         return True
 

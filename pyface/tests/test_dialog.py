@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,7 @@ from ..dialog import Dialog
 from ..constant import OK, CANCEL
 from ..toolkit import toolkit_object
 
-is_qt = toolkit_object.toolkit == "qt4"
+is_qt = toolkit_object.toolkit.startswith("qt")
 if is_qt:
     from pyface.qt import qt_api
 
@@ -48,7 +48,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -61,7 +61,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that size works as expected
         self.dialog.size = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -69,23 +69,23 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that position works as expected
         self.dialog.position = (100, 100)
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
     def test_create_cancel_renamed(self):
         # test that creation and destruction works as expected with cancel_label
-        self.dialog.cancel_label = u"I Don't Think So"
+        self.dialog.cancel_label = "I Don't Think So"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -93,16 +93,16 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with help
         self.dialog.help_id = "test_help"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
     def test_create_help_label(self):
         # test that creation and destruction works as expected with help
         self.dialog.help_id = "test_help"
-        self.dialog.help_label = u"Assistance"
+        self.dialog.help_label = "Assistance"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -174,10 +174,10 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
@@ -191,11 +191,11 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_cancel(self):
-        self.dialog.cancel_label = u"I Don't Think So"
+        self.dialog.cancel_label = "I Don't Think So"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(
-            when_opened=lambda x: x.click_widget(u"I Don't Think So")
+            when_opened=lambda x: x.click_widget("I Don't Think So")
         )
 
         self.assertEqual(tester.result, CANCEL)
@@ -211,7 +211,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_help(self):
         def click_help_and_close(tester):
-            tester.click_widget(u"Help")
+            tester.click_widget("Help")
             tester.close(accept=True)
 
         self.dialog.help_id = "help_test"
@@ -232,11 +232,11 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_help(self):
         def click_help_and_close(tester):
-            tester.click_widget(u"Assistance")
+            tester.click_widget("Assistance")
             tester.close(accept=True)
 
         self.dialog.help_id = "help_test"
-        self.dialog.help_label = u"Assistance"
+        self.dialog.help_label = "Assistance"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=click_help_and_close)

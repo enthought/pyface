@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -56,7 +56,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
     def test_show(self):
         # test that show and hide works as expected
         with self.event_loop():
-            self.window._create()
+            self.window.create()
             self.window.show(True)
         with self.event_loop():
             self.window.show(False)
@@ -135,7 +135,33 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
+        with self.event_loop():
+            self.window.show(True)
+        with self.event_loop():
+            self.window.show(False)
+        with self.event_loop():
+            self.window.close()
+
+    def test_menubar_multiple_menus(self):
+        # test that menubar gets created as expected
+        self.window.menu_bar_manager = MenuBarManager(
+            MenuManager(
+                Action(name="New"),
+                Action(name="Open"),
+                Action(name="Save"),
+                Action(name="Close"),
+                Action(name="Quit"),
+                name="File",
+            ),
+            MenuManager(
+                Action(name="Zoom in"),
+                Action(name="Zoom out"),
+                name="View",
+            )
+        )
+        with self.event_loop():
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -155,7 +181,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         ]
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -175,7 +201,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             )
         ]
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -199,7 +225,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             message="hello world"
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -213,7 +239,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
             message="hello world"
         )
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():
@@ -229,7 +255,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that status bar gets created as expected
         self.window.icon = ImageResource("core")
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():

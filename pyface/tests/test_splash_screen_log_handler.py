@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,13 +11,13 @@
 
 import unittest
 
-from traits.api import Any, HasTraits, Str
+from traits.api import HasTraits, Str
 
 from ..splash_screen_log_handler import SplashScreenLogHandler
 
 
 class DummySplashScreen(HasTraits):
-    text = Str(u"original")
+    text = Str("original")
 
 
 class DummyRecord(object):
@@ -34,12 +34,12 @@ class TestSplashScreenLogHandler(unittest.TestCase):
         self.sslh = SplashScreenLogHandler(self.ss)
 
     def test_unicode_message(self):
-        self.assertEqual(self.ss.text, u"original")
-        message = u"G\u00f6khan"
+        self.assertEqual(self.ss.text, "original")
+        message = "G\u00f6khan"
         self.sslh.emit(DummyRecord(message))
-        self.assertEqual(self.ss.text, message + u"...")
+        self.assertEqual(self.ss.text, message + "...")
 
     def test_ascii_message(self):
         message = "Goekhan"
         self.sslh.emit(DummyRecord(message))
-        self.assertEqual(self.ss.text, message + u"...")
+        self.assertEqual(self.ss.text, message + "...")

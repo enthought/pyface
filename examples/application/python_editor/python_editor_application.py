@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -50,15 +50,15 @@ def main():
     parser.add_argument("files", nargs="*", help="the files to open")
     namespace = parser.parse_args()
     if len(namespace.files) == 0:
-        namespace.files.append(u"")
+        namespace.files.append("")
 
     # set up callback to open files once app is up and running
-    def open_files():
+    def open_files(event):
         """ Open files once app is active. """
         for path in namespace.files:
             app.active_task.create_editor(path)
 
-    app.on_trait_change(open_files, "application_initialized")
+    app.observe(open_files, "application_initialized")
 
     # invoke the mainloop
     app.run()

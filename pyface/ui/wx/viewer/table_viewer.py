@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,19 +10,21 @@
 
 """ A viewer for tabular data. """
 
+import warnings
 
 import wx
-from wx.lib.agw import ultimatelistctrl as ULC
 
-
-from traits.api import Color, Event, Instance, Trait
-
+from traits.api import Event, Instance, Int, Tuple
 
 from pyface.ui.wx.image_list import ImageList
+from pyface.ui_traits import TraitsUIColor as Color
 from pyface.viewer.content_viewer import ContentViewer
 from pyface.viewer.table_column_provider import TableColumnProvider
 from pyface.viewer.table_content_provider import TableContentProvider
 from pyface.viewer.table_label_provider import TableLabelProvider
+
+
+version_4_0 = (wx.VERSION < (4, 1))
 
 
 class TableViewer(ContentViewer):
@@ -52,6 +54,9 @@ class TableViewer(ContentViewer):
     # A drag operation was started on a node.
     row_begin_drag = Event()
 
+    # The size of the icons in the table.
+    _image_size = Tuple(Int, Int)
+
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
 
@@ -61,15 +66,31 @@ class TableViewer(ContentViewer):
         specifies the size of the images (if any) displayed in the table.
 
         """
+        create = traits.pop('create', None)
 
-        # Base-class constructor.
-        super(TableViewer, self).__init__(**traits)
+        # Base class constructors.
+        super().__init__(parent=parent, _image_size=image_size, **traits)
 
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
         # Create the toolkit-specific control.
-        self.control = table = _Table(parent, image_size, self)
-
-        # Get our actual id.
-        wxid = table.GetId()
+        self.control = table = _Table(parent, self._image_size, self)
 
         # Table events.
         table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_item_selected)
@@ -93,9 +114,9 @@ class TableViewer(ContentViewer):
 
         # We use a dynamic handler instead of a static handler here, as we
         # don't want to react if the input is set in the constructor.
-        self.on_trait_change(self._on_input_changed, "input")
+        self.observe(self._on_input_changed, "input")
 
-        return
+        return table
 
     # ------------------------------------------------------------------------
     # 'TableViewer' interface.
@@ -125,13 +146,13 @@ class TableViewer(ContentViewer):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_input_changed(self, obj, trait_name, old, new):
+    def _on_input_changed(self, event):
         """ Called when the input is changed. """
 
         # Update the table contents.
         self._update_contents()
 
-        if old is None:
+        if event.old is None:
             self._update_column_widths()
 
         return
@@ -310,12 +331,18 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
 
         # Set up attributes to show alternate rows with a different background
         # colour.
-        self._even_row_attribute = wx.ListItemAttr()
+        if version_4_0:
+            self._even_row_attribute = wx.ListItemAttr()
+        else:
+            self._even_row_attribute = wx.ItemAttr()
         self._even_row_attribute.SetBackgroundColour(
             self._viewer.even_row_background
         )
 
-        self._odd_row_attribute = wx.ListItemAttr()
+        if version_4_0:
+            self._odd_row_attribute = wx.ListItemAttr()
+        else:
+            self._odd_row_attribute = wx.ItemAttr()
         self._odd_row_attribute.SetBackgroundColour(
             self._viewer.odd_row_background
         )

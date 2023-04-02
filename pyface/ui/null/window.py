@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Any, Event, Property, provides, Str
+from traits.api import Event, Property, provides, Str
 from traits.api import Tuple
 
 
@@ -61,13 +61,6 @@ class Window(MWindow, Widget):
     # ------------------------------------------------------------------------
 
     def show(self, visible):
-        pass
-
-    # ------------------------------------------------------------------------
-    # Protected 'IWindow' interface.
-    # ------------------------------------------------------------------------
-
-    def _add_event_listeners(self):
         pass
 
     # ------------------------------------------------------------------------

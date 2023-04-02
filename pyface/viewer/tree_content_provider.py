@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -35,7 +35,7 @@ class TreeContentProvider(ContentProvider):
 
         """
 
-        return get_children(element)
+        return self.get_children(element)
 
     # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
@@ -54,9 +54,9 @@ class TreeContentProvider(ContentProvider):
     def get_children(self, element):
         """ Returns the children of an element. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def has_children(self, element):
         """ Returns True iff the element has children, otherwise False. """
 
-        raise NotImplementedError
+        raise NotImplementedError()

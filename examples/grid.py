@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,28 +8,25 @@
 #
 # Thanks for using Enthought open source!
 
-""" Expandable example. """
+""" Grid example.
 
+This is currently only supported by the WxPython toolkit.
+"""
+import os
 
-import os, sys
-
-
-import wx
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+from traits.api import Float, Str
+from traits.observation.api import match
 
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.ui.wx.grid.api import (
     Grid,
     TraitGridModel,
-    SimpleGridModel,
     GridRow,
     GridColumn,
     TraitGridColumn,
 )
-from traits.api import Float, Str
+
+from file_tree import FileTree
 
 
 class MainWindow(SplitApplicationWindow):
@@ -84,17 +81,16 @@ class MainWindow(SplitApplicationWindow):
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
 
-        # self._model = model = SimpleGridModel(data = self.data,
-        #                                      rows = self.rows,
-        #                                      columns = self.cols)
-
         self._model = model = TraitGridModel(
             data=self.trait_data, columns=self.trait_col, row_name_trait="name"
         )
 
         self._grid = grid = Grid(parent, model=model)
 
-        self._grid.on_trait_change(self._on_grid_anytrait_changed)
+        self._grid.observe(
+            self._on_grid_anytrait_changed,
+            match(lambda name, ctrait: True)  # listen to all traits
+        )
 
         return grid.control
 
@@ -122,10 +118,10 @@ class MainWindow(SplitApplicationWindow):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_grid_anytrait_changed(self, tree, trait_name, old, new):
+    def _on_grid_anytrait_changed(self, event):
         """ Called when any trait on the tree has changed. """
 
-        print("trait", trait_name, "value", new)
+        print("trait", event.name, "value", event.new)
 
         return
 

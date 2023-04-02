@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,10 +20,11 @@ class TraitsEditor(Editor):
 
     # TraitsEditor interface -----------------------------------------------
 
-    # The model object to view. If not specified, the editor is used instead.
+    #: The model object to view. If not specified, the editor is used instead.
     model = Instance(HasTraits)
 
-    # The UI object associated with the Traits view, if it has been constructed.
+    #: The UI object associated with the Traits view, if it has been
+    #: constructed.
     ui = Instance("traitsui.ui.UI")
 
     # ------------------------------------------------------------------------
@@ -35,7 +36,7 @@ class TraitsEditor(Editor):
         """
         if self.model:
             return {"object": self.model, "editor": self}
-        return super(TraitsEditor, self).trait_context()
+        return super().trait_context()
 
     # ------------------------------------------------------------------------
     # 'IEditor' interface.

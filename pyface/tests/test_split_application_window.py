@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -66,6 +66,25 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         # test that contents works
         self.window.lhs = HeadingText
         self.window.rhs = HeadingText
+        with self.assertTraitChanges(self.window, "opening", count=1):
+            with self.assertTraitChanges(self.window, "opened", count=1):
+                with self.event_loop():
+                    self.window.open()
+
+        with self.assertTraitChanges(self.window, "closing", count=1):
+            with self.assertTraitChanges(self.window, "closed", count=1):
+                with self.event_loop():
+                    self.window.close()
+
+    def test_contents_toolkit_control(self):
+        # test that toolkit control contents works
+        def create_toolkit_control(parent):
+            widget = HeadingText(parent)
+            widget.create()
+            return widget.control
+
+        self.window.lhs = create_toolkit_control
+        self.window.rhs = create_toolkit_control
         with self.assertTraitChanges(self.window, "opening", count=1):
             with self.assertTraitChanges(self.window, "opened", count=1):
                 with self.event_loop():

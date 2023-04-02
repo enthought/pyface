@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -244,40 +244,30 @@ class NodeTreeModel(TreeModel):
     def _start_monitor(self, monitor):
         """ Starts a monitor. """
 
-        monitor.on_trait_change(self._on_nodes_changed, "nodes_changed")
+        monitor.observe(self._on_nodes_changed, "nodes_changed")
 
-        monitor.on_trait_change(self._on_nodes_inserted, "nodes_inserted")
+        monitor.observe(self._on_nodes_inserted, "nodes_inserted")
 
-        monitor.on_trait_change(self._on_nodes_removed, "nodes_removed")
+        monitor.observe(self._on_nodes_removed, "nodes_removed")
 
-        monitor.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
+        monitor.observe(self._on_nodes_replaced, "nodes_replaced")
 
-        monitor.on_trait_change(
-            self._on_structure_changed, "structure_changed"
-        )
+        monitor.observe(self._on_structure_changed, "structure_changed")
 
         monitor.start()
 
     def _stop_monitor(self, monitor):
         """ Stops a monitor. """
 
-        monitor.on_trait_change(
-            self._on_nodes_changed, "nodes_changed", remove=True
-        )
+        monitor.observe(self._on_nodes_changed, "nodes_changed", remove=True)
 
-        monitor.on_trait_change(
-            self._on_nodes_inserted, "nodes_inserted", remove=True
-        )
+        monitor.observe(self._on_nodes_inserted, "nodes_inserted", remove=True)
 
-        monitor.on_trait_change(
-            self._on_nodes_removed, "nodes_removed", remove=True
-        )
+        monitor.observe(self._on_nodes_removed, "nodes_removed", remove=True)
 
-        monitor.on_trait_change(
-            self._on_nodes_replaced, "nodes_replaced", remove=True
-        )
+        monitor.observe(self._on_nodes_replaced, "nodes_replaced", remove=True)
 
-        monitor.on_trait_change(
+        monitor.observe(
             self._on_structure_changed, "structure_changed", remove=True
         )
 
@@ -306,29 +296,29 @@ class NodeTreeModel(TreeModel):
 
     # Dynamic ----
 
-    def _on_nodes_changed(self, monitor, trait_name, event):
+    def _on_nodes_changed(self, event):
         """ Called when nodes have changed. """
 
-        self.nodes_changed = event
+        self.nodes_changed = event.new
 
-    def _on_nodes_inserted(self, monitor, trait_name, event):
+    def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
 
-        self.nodes_inserted = event
+        self.nodes_inserted = event.new
 
-    def _on_nodes_removed(self, monitor, trait_name, event):
+    def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
 
-        self.nodes_removed = event
+        self.nodes_removed = event.new
 
-    def _on_nodes_replaced(self, monitor, trait_name, event):
+    def _on_nodes_replaced(self, event):
         """ Called when nodes have been replaced. """
 
-        self.nodes_replaced = event
+        self.nodes_replaced = event.new
 
-    def _on_structure_changed(self, monitor, trait_name, event):
+    def _on_structure_changed(self, event):
         """ Called when the structure of a node has changed drastically. """
 
-        self.structure_changed = event
+        self.structure_changed = event.new
 
         return

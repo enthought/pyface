@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,7 +12,7 @@
 import unittest
 
 from traits.api import Enum, HasTraits
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.gui import GUI
 from pyface.toolkit import toolkit
@@ -27,7 +27,7 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.gui = GUI()
         self.parent = Window()
-        self.parent._create()
+        self.parent.create()
         self.parent.open()
         self.addCleanup(self._destroy_parent)
         self.gui.process_events()

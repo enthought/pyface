@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The abstract interface for all pyface dialogs. """
 
 
-from traits.api import Bool, Enum, Int, Str
+from traits.api import Bool, Enum, HasTraits, Int, Str
 
 
 from pyface.constant import OK
@@ -134,12 +134,12 @@ class IDialog(IWindow):
         """
 
 
-class MDialog(object):
+class MDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 
     Implements: open()
-    Reimplements: _add_event_listeners(), _create()
+    Reimplements: _add_event_listeners(), create()
     """
 
     # ------------------------------------------------------------------------
@@ -161,7 +161,7 @@ class MDialog(object):
             The value of the ``return_code`` trait.
         """
         if self.control is None:
-            self._create()
+            self.create()
 
         if self.style == "modal":
             self.return_code = self._show_modal()
@@ -177,19 +177,9 @@ class MDialog(object):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self, parent=None):
         """ Creates the window's widget hierarchy. """
 
-        super(MDialog, self)._create()
+        super().create(parent=parent)
 
         self._create_contents(self.control)
-
-    # ------------------------------------------------------------------------
-    # Protected 'IWindow' interface.
-    # ------------------------------------------------------------------------
-
-    def _add_event_listeners(self):
-        """ Adds any event listeners required by the window. """
-
-        # We don't bother for dialogs.
-        pass

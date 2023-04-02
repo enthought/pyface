@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -53,7 +53,7 @@ class LineNumberDialog(HasStrictTraits):
     traits_view = View(
         Item(
             "line",
-            label=u"Line Number:",
+            label="Line Number:",
             editor=RangeEditor(low=1, high_name="max_line", mode="spinner"),
         ),
         buttons=OKCancelButtons,
@@ -67,10 +67,10 @@ class PythonEditor(TraitsEditor):
     code = Str()
 
     #: Whether or not undo operation is possible.
-    can_undo = Property(Bool, depends_on="ui.history.undoable")
+    can_undo = Property(Bool, observe="ui.history.undoable")
 
     #: Whether or not redo operation is possible.
-    can_redo = Property(Bool, depends_on="ui.history.redoable")
+    can_redo = Property(Bool, observe="ui.history.redoable")
 
     #: The current cursor line.
     line = Int(1)
@@ -82,7 +82,7 @@ class PythonEditor(TraitsEditor):
     selection = Str()
 
     #: The length of the currently selected text.
-    selection_length = Property(Int, depends_on="selection")
+    selection_length = Property(Int, observe="selection")
 
     #: The start of the currently selected text, if any.
     selection_start = Int()
@@ -99,12 +99,12 @@ class PythonEditor(TraitsEditor):
     obj = File()
 
     #: The editor's user-visible name.
-    name = Property(Str, depends_on="obj")
+    name = Property(Str, observe="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Str, depends_on="obj")
+    tooltip = Property(Str, observe="obj")
 
-    dirty = Property(Bool, depends_on=["obj", "_last_save", "ui.history.now"])
+    dirty = Property(Bool, observe=["obj", "_last_save", "ui.history.now"])
 
     # -------------------------------------------------------------------------
     # PythonTextEditor interface
@@ -131,7 +131,7 @@ class PythonEditor(TraitsEditor):
                 self.code = fp.read()
             self.obj = path
         else:
-            self.code = u""
+            self.code = ""
 
         if self.ui is not None:
             # reset history
@@ -184,7 +184,7 @@ class PythonEditor(TraitsEditor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        super(PythonEditor, self).create(parent)
+        super().create(parent)
         self.ui.history = UndoHistory()
         self._last_save = 0
 

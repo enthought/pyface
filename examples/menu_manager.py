@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,12 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+""" Menu Manager example. """
 
 from pyface.action.api import Action
 from pyface.action.api import Group, MenuManager, Separator

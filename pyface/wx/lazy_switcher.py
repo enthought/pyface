@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -39,7 +39,7 @@ class SwitcherModel(HasTraits):
     def create_page(self, parent, index):
         """ Creates a page for the switcher panel. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class SwitcherControl(wx.Panel):
@@ -61,7 +61,7 @@ class SwitcherControl(wx.Panel):
         self._create_widget(model, label)
 
         # Listen for when the selected item in the model is changed.
-        model.on_trait_change(self._on_selected_changed, "selected")
+        model.observe(self._on_selected_changed, "selected")
 
         return
 
@@ -69,9 +69,9 @@ class SwitcherControl(wx.Panel):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_selected_changed(self, selected):
+    def _on_selected_changed(self, event):
         """ Called when the selected item in the model is changed. """
-
+        selected = event.new
         self.combo.SetSelection(selected)
 
         return
@@ -100,7 +100,6 @@ class SwitcherControl(wx.Panel):
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-        ##self.SetBackgroundColour("light grey")
 
         # Switcher combo.
         sizer.Add(self._combo(self, model, label), 1, wx.EXPAND)
@@ -164,9 +163,6 @@ class SwitcherPanel(wxScrolledPanel):
         # Create the widget!
         self._create_widget(model, label)
 
-        # Listen for when the selected item in the model is changed.
-        # model.on_trait_change(self._on_selected_changed, 'selected')
-
         return
 
     # ------------------------------------------------------------------------
@@ -181,17 +177,6 @@ class SwitcherPanel(wxScrolledPanel):
         return
 
     # ------------------------------------------------------------------------
-    # Trait event handlers.
-    # ------------------------------------------------------------------------
-
-    def _on_selected_changed(self, selected):
-        """ Called when the selected item in the model is changed. """
-
-        self._show_page(selected)
-
-        return
-
-    # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
 
@@ -201,10 +186,6 @@ class SwitcherPanel(wxScrolledPanel):
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-        ##self.SetBackgroundColour('red')
-
-        # if model.selected != -1:
-        #    self._show_page(model.selected)
 
         # Nothing to add here as we add the panel contents lazily!
         pass
@@ -217,7 +198,6 @@ class SwitcherPanel(wxScrolledPanel):
 
         # If a page is already displayed then hide it.
         if self.current is not None:
-            current_size = self.current.GetSize()
             self.current.Show(False)
             self.sizer.Remove(self.current)
 
@@ -230,9 +210,6 @@ class SwitcherPanel(wxScrolledPanel):
             # Add it to the cache!
             self._page_cache[index] = page
 
-        # if self.current is not None:
-        #    page.SetSize(current_size)
-
         # Display the page.
         self.sizer.Add(page, 15, wx.EXPAND, 5)
         page.Show(True)
@@ -242,8 +219,6 @@ class SwitcherPanel(wxScrolledPanel):
         # Force a new layout of the sizer's children but KEEPING the current
         # dimension.
         self.sizer.Layout()
-        # self.sizer.Fit(self)
-        # self.SetupScrolling()
 
 
 class Switcher(wx.Panel):

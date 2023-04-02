@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,12 +11,11 @@
 """ A tool bar manager realizes itself in a tool palette control. """
 
 
-from traits.api import Any, Bool, Enum, Instance, Tuple
+from traits.api import Bool, Instance, Tuple
 
 
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
-from .tool_palette import ToolPalette
 
 
 class ToolPaletteManager(ActionManager):
@@ -43,7 +42,7 @@ class ToolPaletteManager(ActionManager):
         """ Creates a new tool bar manager. """
 
         # Base class contructor.
-        super(ToolPaletteManager, self).__init__(*args, **traits)
+        super().__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
         # tool bar exactly once.

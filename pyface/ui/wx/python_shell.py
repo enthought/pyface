@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,6 +16,7 @@ import builtins
 import os
 import sys
 import types
+import warnings
 
 
 from wx.py.shell import Shell as PyShellBase
@@ -31,11 +32,11 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonShell)
-class PythonShell(MPythonShell, Widget):
+class PythonShell(MPythonShell, LayoutWidget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
@@ -50,19 +51,30 @@ class PythonShell(MPythonShell, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    # FIXME v3: Either make this API consistent with other Widget sub-classes
-    # or make it a sub-class of HasTraits.
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
+        create = traits.pop("create", None)
+
         # Base class constructor.
-        super(PythonShell, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # Set up to be notified whenever a Python statement is executed:
-        self.control.handlers.append(self._on_command_executed)
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
     # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
@@ -172,6 +184,9 @@ class PythonShell(MPythonShell, Widget):
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
 
+        # Set up to be notified whenever a Python statement is executed:
+        shell.handlers.append(self._on_command_executed)
+
         return shell
 
     # ------------------------------------------------------------------------
@@ -263,7 +278,7 @@ class PyShell(PyShellBase):
         # wx.py.shell dosent reassign it back to the original on destruction
         self.raw_input = input
 
-        super(PyShell, self).__init__(
+        super().__init__(
             parent,
             id,
             pos,
@@ -309,7 +324,7 @@ class PyShell(PyShellBase):
         self.redirectStdin(False)
         builtins.raw_input = self.raw_input
         self.destroy()
-        super(PyShellBase, self).Destroy()
+        super().Destroy()
 
 
 class _NullIO(object):

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,9 +17,8 @@
 import wx
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
-import traitsui.wx
+import traitsui.wx  # noqa: F401
 from traits.api import HasPrivateTraits, Instance
-from traitsui.api import View, Group
 
 from pyface.api import SystemMetrics
 from pyface.image_resource import ImageResource
@@ -58,7 +57,7 @@ class DockWindowShell(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     def __init__(self, dock_control, use_mouse=False, **traits):
-        super(DockWindowShell, self).__init__(**traits)
+        super().__init__(**traits)
 
         old_control = dock_control.control
         parent = wx.GetTopLevelParent(old_control)

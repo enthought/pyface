@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,18 +14,19 @@
 import wx
 
 
-from traits.api import Bool, Instance, Int, Tuple
+from traits.api import Bool, Int, Tuple
 
 
+from pyface.ui_traits import Image
 from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
 try:
     # import wx.aui
-    from wx.lib.agw import aui
+    from wx.lib.agw import aui  # noqa: F401
 
     AUI = True
-except:
+except ImportError:
     AUI = False
 
 
@@ -43,7 +44,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # 'MDIApplicationWindow' interface -------------------------------------
 
     # The workarea background image.
-    background_image = Instance(ImageResource, ImageResource("background"))
+    background_image = Image(ImageResource("background"))
 
     # Should we tile the workarea  background image?  The alternative is to
     # scale it.  Be warned that scaling the image allows for 'pretty' images,
@@ -103,7 +104,7 @@ class MDIApplicationWindow(ApplicationWindow):
             # Let the AUI manager look after the frame.
             self._aui_manager.SetManagedWindow(self.control)
 
-        contents = super(MDIApplicationWindow, self)._create_contents(parent)
+        contents = super()._create_contents(parent)
 
         return contents
 

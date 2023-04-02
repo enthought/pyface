@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,10 +20,11 @@ class TraitsTaskPane(TaskPane):
 
     # TraitsTaskPane interface ---------------------------------------------
 
-    # The model object to view. If not specified, the pane is used instead.
+    #: The model object to view. If not specified, the pane is used instead.
     model = Instance(HasTraits)
 
-    # The UI object associated with the Traits view, if it has been constructed.
+    #: The UI object associated with the Traits view, if it has been
+    #: constructed.
     ui = Instance("traitsui.ui.UI")
 
     # ------------------------------------------------------------------------
@@ -35,7 +36,7 @@ class TraitsTaskPane(TaskPane):
         """
         if self.model:
             return {"object": self.model, "pane": self}
-        return super(TraitsTaskPane, self).trait_context()
+        return super().trait_context()
 
     # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
@@ -51,5 +52,7 @@ class TraitsTaskPane(TaskPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
-        self.ui.dispose()
+        if self.ui is not None:
+            self.ui.dispose()
+            self.ui = None
         self.control = self.ui = None

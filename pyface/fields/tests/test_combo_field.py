@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,13 +18,12 @@ from .field_mixin import FieldMixin
 
 
 class TestComboField(FieldMixin, unittest.TestCase):
-    def _create_widget(self):
-        return ComboField(
-            parent=self.parent.control,
-            value="one",
-            values=["one", "two", "three", "four"],
-            tooltip="Dummy",
-        )
+
+    def _create_widget_simple(self, **traits):
+        traits.setdefault("value", "one")
+        traits.setdefault("values", ["one", "two", "three", "four"])
+        traits.setdefault("tooltip", "Dummy")
+        return ComboField(**traits)
 
     # Tests ------------------------------------------------------------------
 

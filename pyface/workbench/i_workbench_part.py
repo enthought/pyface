@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -105,14 +105,14 @@ class MWorkbenchPart(HasTraits):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def destroy_control(self):
         """ Destroy the toolkit-specific control that represents the part. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """
 
-        raise NotImplementedError
+        raise NotImplementedError()

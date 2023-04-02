@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,13 +11,13 @@
 """ A widget for editing Python code. """
 
 
-from traits.api import Bool, Event, Interface, Str
+from traits.api import Bool, Event, HasTraits, Str
 
-
+from pyface.i_layout_widget import ILayoutWidget
 from pyface.key_pressed_event import KeyPressedEvent
 
 
-class IPythonEditor(Interface):
+class IPythonEditor(ILayoutWidget):
     """ A widget for editing Python code. """
 
     # 'IPythonEditor' interface --------------------------------------------
@@ -77,7 +77,7 @@ class IPythonEditor(Interface):
         """
 
 
-class MPythonEditor(object):
+class MPythonEditor(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonEditor interface.
 

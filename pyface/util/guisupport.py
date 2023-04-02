@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -119,12 +119,12 @@ def start_event_loop_wx(app=None):
 
 
 # -----------------------------------------------------------------------------
-# qt4
+# qt
 # -----------------------------------------------------------------------------
 
 
 def get_app_qt4(*args, **kwargs):
-    """Create a new qt4 app or return an existing one."""
+    """Create a new qt app or return an existing one."""
     from pyface.qt import QtGui
 
     app = QtGui.QApplication.instance()
@@ -136,23 +136,26 @@ def get_app_qt4(*args, **kwargs):
 
 
 def is_event_loop_running_qt4(app=None):
-    """Is the qt4 event loop running."""
+    """Is the qt event loop running."""
     if app is None:
         app = get_app_qt4([""])
     if hasattr(app, "_in_event_loop"):
         return app._in_event_loop
     else:
-        # Does qt4 provide a other way to detect this?
+        # Does qt provide a other way to detect this?
         return False
 
 
 def start_event_loop_qt4(app=None):
-    """Start the qt4 event loop in a consistent manner."""
+    """Start the qt event loop in a consistent manner."""
     if app is None:
         app = get_app_qt4([""])
     if not is_event_loop_running_qt4(app):
         app._in_event_loop = True
-        app.exec_()
+        if hasattr(app, 'exec'):
+            app.exec()
+        else:
+            app.exec_()
         app._in_event_loop = False
     else:
         app._in_event_loop = True

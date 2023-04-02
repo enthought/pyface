@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,12 +10,11 @@
 
 """ A viewer based on a tree control. """
 
+import warnings
 
 import wx
 
-
-from traits.api import Any, Bool, Enum, Event, Instance, List
-
+from traits.api import Bool, Enum, Event, Instance, Int, List, Tuple
 
 from pyface.ui.wx.image_list import ImageList
 from pyface.viewer.content_viewer import ContentViewer
@@ -74,6 +73,9 @@ class TreeViewer(ContentViewer):
     # A key was pressed while the tree is in focus.
     key_pressed = Event()
 
+    # The size of the icons in the tree.
+    _image_size = Tuple(Int, Int)
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
@@ -87,15 +89,32 @@ class TreeViewer(ContentViewer):
         specifies the size of the label images (if any) displayed in the tree.
 
         """
+        create = traits.pop('create', None)
 
-        # Base class constructor.
-        super(TreeViewer, self).__init__(**traits)
+        # Base class constructors.
+        super().__init__(parent=parent, _image_size=image_size, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
 
         # Create the toolkit-specific control.
         self.control = tree = wx.TreeCtrl(parent, -1, style=self._get_style())
-
-        # Get our actual Id.
-        wxid = tree.GetId()
 
         # Wire up the wx tree events.
         tree.Bind(wx.EVT_CHAR, self._on_char)
@@ -113,7 +132,7 @@ class TreeViewer(ContentViewer):
 
         # The image list is a wxPython-ism that caches all images used in the
         # control.
-        self._image_list = ImageList(image_size[0], image_size[1])
+        self._image_list = ImageList(*self._image_size)
         if self.show_images:
             tree.AssignImageList(self._image_list)
 
@@ -124,7 +143,7 @@ class TreeViewer(ContentViewer):
         if self.input is not None:
             self._add_element(None, self.input)
 
-        return
+        return tree
 
     # ------------------------------------------------------------------------
     # 'TreeViewer' interface.

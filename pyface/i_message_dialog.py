@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,7 @@
 """ The interface for a dialog that displays a message. """
 
 
-from traits.api import Enum, Str
+from traits.api import Enum, HasTraits, Str
 
 
 from pyface.i_dialog import IDialog
@@ -35,7 +35,7 @@ class IMessageDialog(IDialog):
     severity = Enum("information", "warning", "error")
 
 
-class MMessageDialog(object):
+class MMessageDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IMessageDialog interface.
     """

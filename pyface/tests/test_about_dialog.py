@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,12 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-
+import os
 import unittest
 
 from ..about_dialog import AboutDialog
 from ..constant import OK, CANCEL
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
@@ -42,7 +41,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -54,10 +53,9 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
         parent = Window()
-        self.dialog.parent = parent.control
         with self.event_loop():
-            parent._create()
-            self.dialog._create()
+            parent.create(parent.control)
+            self.dialog.create()
 
         with self.event_loop():
             self.dialog.destroy()
@@ -104,4 +102,17 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.assertIn("test line 1<br />test line 2<br>", html)
         self.assertIn(
             "Copyright &copy; copyright<br />Copyright &copy; copyleft", html
+        )
+
+    def test_image_default(self):
+        # test that the default image is found
+        import pyface
+        expected_path = os.path.join(
+            os.path.dirname(pyface.__file__),
+            "images",
+            "about.png",
+        )
+        self.assertEqual(
+            self.dialog.image.absolute_path,
+            expected_path,
         )

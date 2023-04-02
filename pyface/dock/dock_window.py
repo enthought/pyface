@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -35,6 +35,7 @@ from traits.api import (
     Str,
     List,
     Bool,
+    observe,
 )
 from traits.trait_base import traits_home
 from traitsui.api import View, HGroup, VGroup, Item, Handler, error
@@ -186,7 +187,7 @@ class DockWindowHandler(HasPrivateTraits):
     def open_view_for(self, control, use_mouse=True):
         """ Creates a new view of a specified control.
         """
-        from dock_window_shell import DockWindowShell
+        from .dock_window_shell import DockWindowShell
 
         DockWindowShell(control, use_mouse=use_mouse)
 
@@ -304,7 +305,7 @@ class DockWindow(HasPrivateTraits):
         style=wx.FULL_REPAINT_ON_RESIZE,
         **traits
     ):
-        super(DockWindow, self).__init__(**traits)
+        super().__init__(**traits)
 
         # Create the actual window:
         self.control = control = wx.Window(parent, wid, pos, size, style)
@@ -343,7 +344,9 @@ class DockWindow(HasPrivateTraits):
 
     # -- Trait Event Handlers ---------------------------------------------------
 
-    def _theme_changed(self, theme):
+    @observe("theme")
+    def _update_background_color_and_layout(self, event):
+        theme = event.new
         if self.control is not None:
             if theme.use_theme_color:
                 color = theme.tab.image_slice.bg_color
@@ -423,10 +426,10 @@ class DockWindow(HasPrivateTraits):
         """
         fb = self._feature_bar
         if fb is None:
-            from feature_bar import FeatureBar
+            from .feature_bar import FeatureBar
 
             self._feature_bar = fb = FeatureBar(parent=self.control)
-            fb.on_trait_change(self._feature_bar_closed, "completed")
+            fb.observe(self._feature_bar_closed, "completed")
 
         fb.dock_control = dock_control
         fb.show()
@@ -435,7 +438,7 @@ class DockWindow(HasPrivateTraits):
     #  Handles closing the feature bar:
     # ---------------------------------------------------------------------------
 
-    def _feature_bar_closed(self):
+    def _feature_bar_closed(self, event):
         fb = self._feature_bar
         fb.dock_control.feature_bar_closed()
         fb.hide()

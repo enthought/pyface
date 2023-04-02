@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,14 +14,15 @@
     toolbar button.
 """
 
-
+import warnings
 import wx
+
 from numpy import array, frombuffer, reshape, ravel, dtype
 
-from traits.api import Bool, Str, Range, Enum, Instance, Event
+from traits.api import Any, Bool, Str, Range, Enum, Event
 
-from .widget import Widget
-from .image_resource import ImageResource
+from pyface.ui_traits import Image, Orientation
+from .layout_widget import LayoutWidget
 
 # -------------------------------------------------------------------------------
 #  Constants:
@@ -35,7 +36,7 @@ DisabledTextColor = wx.Colour(128, 128, 128)
 # -------------------------------------------------------------------------------
 
 
-class ImageButton(Widget):
+class ImageButton(LayoutWidget):
     """ An image and text-based control that can be used as a normal, radio or
         toolbar button.
     """
@@ -54,7 +55,7 @@ class ImageButton(Widget):
     # ---------------------------------------------------------------------------
 
     # The image:
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The (optional) label:
     label = Str()
@@ -69,13 +70,15 @@ class ImageButton(Widget):
     style = Enum("button", "radio", "toolbar", "checkbox")
 
     # Orientation of the text relative to the image:
-    orientation = Enum("vertical", "horizontal")
+    orientation = Orientation()
 
     # Is the control selected ('radio' or 'checkbox' style)?
     selected = Bool(False)
 
     # Fired when a 'button' or 'toolbar' style control is clicked:
     clicked = Event()
+
+    _image = Any()
 
     # ---------------------------------------------------------------------------
     #  Initializes the object:
@@ -84,10 +87,43 @@ class ImageButton(Widget):
     def __init__(self, parent, **traits):
         """ Creates a new image control.
         """
-        self._image = None
+        create = traits.pop("create", None)
 
-        super(ImageButton, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
+        if create:
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
+        self._recalc_size()
+
+        control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
+        control._owner = self
+        self._mouse_over = self._button_down = False
+
+        # Set up mouse event handlers:
+        control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
+        control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
+        control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
+        control.Bind(wx.EVT_PAINT, self._on_paint)
+
+        return control
+
+    def _recalc_size(self):
         # Calculate the size of the button:
         idx = idy = tdx = tdy = 0
         if self._image is not None:
@@ -121,16 +157,6 @@ class ImageButton(Widget):
         # Create the toolkit-specific control:
         self._dx = dx + wp2 + wp2
         self._dy = dy + hp2 + hp2
-        self.control = wx.Window(parent, -1, size=wx.Size(self._dx, self._dy))
-        self.control._owner = self
-        self._mouse_over = self._button_down = False
-
-        # Set up mouse event handlers:
-        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
-        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
-        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
-        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
-        self.control.Bind(wx.EVT_PAINT, self._on_paint)
 
     # ---------------------------------------------------------------------------
     #  Handles the 'image' trait being changed:
@@ -141,6 +167,9 @@ class ImageButton(Widget):
         if image is not None:
             self._img = image.create_image()
             self._image = self._img.ConvertToBitmap()
+
+        self._recalc_size()
+        self.control.SetSize(wx.Size(self._dx, self._dy))
 
         if self.control is not None:
             self.control.Refresh()
@@ -234,7 +263,6 @@ class ImageButton(Widget):
                 wdc.SetTextForeground(DisabledTextColor)
             wdc.SetFont(wx.NORMAL_FONT)
             wdc.DrawText(self.label, ox + self._tx, oy + self._ty)
-
         pens = [self._selectedPenLight, self._selectedPenDark]
         bd = self._button_down
         style = self.style

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -46,6 +46,9 @@ class MessageDialog(MMessageDialog, Dialog):
     detail = Str()
 
     severity = Enum("information", "warning", "error")
+
+    # unused trait, this functionality is only supported on Qt
+    text_format = Enum("auto", "plain", "rich")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

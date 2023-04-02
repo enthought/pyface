@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,9 +11,10 @@
 """ The base class for all node types. """
 
 
-from traits.api import Any, HasPrivateTraits, Instance, List
-from pyface.api import ImageResource
-from pyface.action.api import Action, ActionManagerItem, Group
+from traits.api import Any, HasPrivateTraits, Instance
+
+from pyface.api import Image, ImageResource
+from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
 
 
@@ -37,14 +38,14 @@ class NodeType(HasPrivateTraits):
     node_manager = Instance("pyface.tree.node_manager.NodeManager")
 
     # The image used to represent nodes that DO NOT allow children.
-    image = Instance(ImageResource)
+    image = Image(DOCUMENT)
 
     # The image used to represent nodes that allow children and are NOT
     # expanded.
-    closed_image = Instance(ImageResource)
+    closed_image = Image(CLOSED_FOLDER)
 
     # The image used to represent nodes that allow children and ARE expanded.
-    open_image = Instance(ImageResource)
+    open_image = Image(OPEN_FOLDER)
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).
@@ -67,7 +68,7 @@ class NodeType(HasPrivateTraits):
     def is_type_for(self, node):
         """ Returns True if a node is deemed to be of this type. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def allows_children(self, node):
         """ Does the node allow children (ie. a folder vs a file). """
@@ -166,7 +167,7 @@ class NodeType(HasPrivateTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
@@ -185,7 +186,7 @@ class NodeType(HasPrivateTraits):
     def drop(self, obj, data):
         """ Drops an object onto a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node. """

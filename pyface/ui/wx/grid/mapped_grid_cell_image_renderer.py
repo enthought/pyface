@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -21,7 +21,7 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
     def __init__(self, image_map=None, text_map=None):
 
         # Base-class constructor. We pass ourself as the provider
-        super(MappedGridCellImageRenderer, self).__init__(self)
+        super().__init__(self)
 
         self.image_map = image_map
         self.text_map = text_map

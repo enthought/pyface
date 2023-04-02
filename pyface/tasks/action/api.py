@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,6 +8,63 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.tasks.action`` subpackage.
+
+Tasks-specific Action Controller
+--------------------------------
+
+- :class:`~.TaskActionController`
+
+Tasks-specific Action Manager factory
+-------------------------------------
+
+- :class:`~.TaskActionManagerBuilder`
+
+Tasks-specific Actions
+----------------------
+
+- :class:`~.CentralPaneAction`
+- :class:`~.DockPaneAction`
+- :class:`~.EditorAction`
+- :class:`~.TaskAction`
+- :class:`~.TaskWindowAction`
+- :class:`~.TasksApplicationAction`
+
+Useful Tasks Actions and Groups
+-------------------------------
+
+- :class:`~.DockPaneToggleGroup`
+- :class:`~.TaskToggleGroup`
+- :class:`~.TaskWindowToggleGroup`
+- :class:`~.CreateTaskWindowAction`
+
+ActionSchemas and aliases
+-------------------------
+
+Import of these objects from pyface.tasks.actions.api is deprecated and will
+be removed in a future Pyface release.  Instead use pyface.action.schema.api.
+
+- :class:`~.ActionSchema`
+- :class:`~.GroupSchema`
+- :class:`~.MenuSchema`
+- :class:`~.MenuBarSchema`
+- :class:`~.ToolBarSchema`
+- :attr:`~.SGroup`
+- :attr:`~.SMenu`
+- :attr:`~.SMenuBar`
+- :attr:`~.SToolBar`
+
+Schema Addition
+---------------
+
+Import of this object from pyface.tasks.actions.api is deprecated and will
+be removed in a future Pyface release.  Instead use pyface.action.schema.api.
+
+- :class:`~.SchemaAddition`
+
+"""
 
 from .dock_pane_toggle_group import DockPaneToggleGroup
 from .schema import (

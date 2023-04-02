@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -41,7 +41,7 @@ class MultiToolbarWindow(ApplicationWindow):
     # Protected 'Window' interface.
     # ------------------------------------------------------------------------
     def _create_contents(self, parent):
-        panel = super(MultiToolbarWindow, self)._create_contents(parent)
+        panel = super()._create_contents(parent)
         self._create_trim_widgets(parent)
 
         return panel

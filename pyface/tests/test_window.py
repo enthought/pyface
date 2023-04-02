@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,7 @@ from ..constant import CANCEL, NO, OK, YES
 from ..toolkit import toolkit_object
 from ..window import Window
 
-is_qt = toolkit_object.toolkit == "qt4"
+is_qt = toolkit_object.toolkit.startswith("qt")
 if is_qt:
     from pyface.qt import qt_api
 
@@ -65,7 +65,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     def test_show(self):
         # test that showing works as expected
         with self.event_loop():
-            self.window._create()
+            self.window.create()
         with self.event_loop():
             self.window.show(True)
         with self.event_loop():

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,16 +11,11 @@
 """ Chained wizard example. """
 
 
-import os
-import sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
+from traits.api import HasTraits, Str
 
 from pyface.api import GUI, OK
 from pyface.wizard.api import ChainedWizard, Wizard, WizardPage
-from traits.api import Color, HasTraits, Int, Str
+from pyface.ui_traits import TraitsUIColor as Color
 
 
 class Details(HasTraits):
@@ -46,7 +41,7 @@ class SimpleWizardPage(WizardPage):
         """ Create the wizard page. """
 
         details = Details(color=self.color)
-        details.on_trait_change(self._on_name_changed, "name")
+        details.observe(self._on_name_changed, "name")
 
         return details.edit_traits(parent=parent, kind="subpanel").control
 
@@ -56,10 +51,10 @@ class SimpleWizardPage(WizardPage):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_name_changed(self, new):
+    def _on_name_changed(self, event):
         """ Called when the name has been changed. """
 
-        self.complete = len(new.strip()) > 0
+        self.complete = len(event.new.strip()) > 0
 
         return
 

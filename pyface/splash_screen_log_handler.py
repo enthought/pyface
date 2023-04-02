@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -26,7 +26,7 @@ class SplashScreenLogHandler(Handler):
             The splash screen being used to display the log messages
         """
         # Base class constructor.
-        super(SplashScreenLogHandler, self).__init__()
+        super().__init__()
 
         # The splash screen that we will display log messages on.
         self._splash_screen = splash_screen
@@ -39,4 +39,4 @@ class SplashScreenLogHandler(Handler):
         record : logging record instance
             The log record to be displayed.
         """
-        self._splash_screen.text = str(record.getMessage()) + u"..."
+        self._splash_screen.text = str(record.getMessage()) + "..."

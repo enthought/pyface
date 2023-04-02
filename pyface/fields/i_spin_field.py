@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -30,10 +30,10 @@ class ISpinField(IField):
     bounds = Tuple(Int, Int)
 
     #: The minimum value
-    minimum = Property(Int, depends_on="bounds")
+    minimum = Property(Int, observe="bounds")
 
     #: The maximum value
-    maximum = Property(Int, depends_on="bounds")
+    maximum = Property(Int, observe="bounds")
 
     #: Whether the values wrap around at maximum and minimum.
     wrap = Bool()
@@ -51,10 +51,10 @@ class MSpinField(HasTraits):
     bounds = Tuple(Int, Int)
 
     #: The minimum value for the spinner
-    minimum = Property(Int, depends_on="bounds")
+    minimum = Property(Int, observe="bounds")
 
     #: The maximum value for the spinner
-    maximum = Property(Int, depends_on="bounds")
+    maximum = Property(Int, observe="bounds")
 
     #: Whether the values wrap around at maximum and minimum.
     wrap = Bool()
@@ -70,7 +70,7 @@ class MSpinField(HasTraits):
         value = traits.pop("value", None)
         if "bounds" in traits:
             traits["value"] = traits["bounds"][0]
-        super(MSpinField, self).__init__(**traits)
+        super().__init__(**traits)
         if value is not None:
             self.value = value
 
@@ -79,7 +79,7 @@ class MSpinField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_control(self):
-        super(MSpinField, self)._initialize_control()
+        super()._initialize_control()
         self._set_control_bounds(self.bounds)
         self._set_control_value(self.value)
         self._set_control_wrap(self.wrap)
@@ -88,12 +88,10 @@ class MSpinField(HasTraits):
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
-        super(MSpinField, self)._add_event_listeners()
-        self.on_trait_change(self._bounds_updated, "bounds", dispatch="ui")
-        self.on_trait_change(self._wrap_updated, "wrap", dispatch="ui")
-        self.on_trait_change(
-            self._alignment_updated, "alignment", dispatch="ui",
-        )
+        super()._add_event_listeners()
+        self.observe(self._bounds_updated, "bounds", dispatch="ui")
+        self.observe(self._wrap_updated, "wrap", dispatch="ui")
+        self.observe(self._alignment_updated, "alignment", dispatch="ui",)
         if self.control is not None:
             self._observe_control_value()
 
@@ -101,16 +99,16 @@ class MSpinField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
             self._observe_control_value(remove=True)
-        self.on_trait_change(
+        self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
         )
-        self.on_trait_change(
+        self.observe(
             self._wrap_updated, "wrap", dispatch="ui", remove=True
         )
-        self.on_trait_change(
+        self.observe(
             self._alignment_updated, "alignment", dispatch="ui", remove=True
         )
-        super(MSpinField, self)._remove_event_listeners()
+        super()._remove_event_listeners()
 
     # Toolkit control interface ---------------------------------------------
 
@@ -169,7 +167,7 @@ class MSpinField(HasTraits):
 
     # Trait change handlers --------------------------------------------------
 
-    def _bounds_updated(self):
+    def _bounds_updated(self, event):
         if self.control is not None:
             self._set_control_bounds(self.bounds)
 

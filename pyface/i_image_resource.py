@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,17 +9,16 @@
 # Thanks for using Enthought open source!
 """ The interface for an image resource. """
 
-try:
-    from collections.abc import Sequence
-except ImportError:  # Python 3.8 deprecation
-    from collections import Sequence
+from collections.abc import Sequence
 
+from traits.api import HasTraits, List, Str
+
+from pyface.i_image import IImage
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
-from traits.api import Interface, List, Str
 
 
-class IImageResource(Interface):
+class IImageResource(IImage):
     """ The interface for an image resource.
 
     An image resource describes the location of an image and provides a way
@@ -38,68 +37,6 @@ class IImageResource(Interface):
     #: for the image (see the resource manager for more details).
     search_path = List()
 
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-
-    def __init__(self, name, search_path=None):
-        """ Creates a new image resource. """
-
-    # ------------------------------------------------------------------------
-    # 'ImageResource' interface.
-    # ------------------------------------------------------------------------
-
-    def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size.
-        """
-
-    # FIXME v3: The need to distinguish between bitmaps and images is toolkit
-    # specific so, strictly speaking, the conversion to a bitmap should be done
-    # wherever the toolkit actually needs it.
-    def create_bitmap(self, size=None):
-        """ Creates a toolkit specific bitmap for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size as a bitmap.
-        """
-
-    def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this resource.
-
-        Parameters
-        ----------
-        size : (int, int) or None
-            The desired size as a width, height tuple, or None if wanting
-            default image size.
-
-        Returns
-        -------
-        image : toolkit image
-            The toolkit image corresponding to the resource and the specified
-            size as an icon.
-        """
-
     @classmethod
     def image_size(cls, image):
         """ Get the size of a toolkit image
@@ -116,7 +53,7 @@ class IImageResource(Interface):
         """
 
 
-class MImageResource(object):
+class MImageResource(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IImageResource interface.
 
@@ -150,7 +87,7 @@ class MImageResource(object):
     # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource.
+        """ Creates a toolkit-specific image for this resource.
 
         Parameters
         ----------

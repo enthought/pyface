@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,14 +12,14 @@
 
 import wx
 
-from traits.api import Bool, Instance, Property
+from traits.api import Instance
 
 from pyface.timer.i_timer import BaseTimer
 
 
 class CallbackTimer(wx.Timer):
     def __init__(self, timer):
-        super(CallbackTimer, self).__init__()
+        super().__init__()
         self.timer = timer
 
     def Notify(self):

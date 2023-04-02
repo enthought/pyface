@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -58,7 +58,7 @@ class PreferenceNode(TreeItem):
     def create_page(self):
         """ Creates the preference page for this node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def lookup(self, id):
         """ Returns the child of this node with the specified Id.

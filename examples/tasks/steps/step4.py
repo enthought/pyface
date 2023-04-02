@@ -8,6 +8,7 @@ incorrect tying of the controls to SecondTask because the class attributes
 were shared between both classes.
 """
 
+from pyface.action.schema.api import SMenu, SMenuBar, SToolBar
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -30,13 +31,10 @@ from pyface.tasks.api import (
 )
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
-    SMenuBar,
-    SMenu,
-    SToolBar,
     TaskAction,
     TaskToggleGroup,
 )
-from traits.api import on_trait_change, Property, Instance
+from traits.api import Property, Instance
 
 
 class ExamplePane(DockPane):
@@ -59,7 +57,7 @@ class ExampleTask(Task):
     name = "Multi-Tab Editor"
 
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     editor_area = Instance(IEditorAreaPane)

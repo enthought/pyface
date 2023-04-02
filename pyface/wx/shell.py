@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -181,7 +181,7 @@ class Shell(wx.StyledTextCtrl):
         **kwds
     ):
         """Create a PyCrust Shell instance."""
-        wxStyledTextCtrl.__init__(self, parent, id, pos, size, style)
+        wx.StyledTextCtrl.__init__(self, parent, id, pos, size, style)
         # Grab these so they can be restored by self.redirect* methods.
         self.stdin = sys.stdin
         self.stdout = sys.stdout
@@ -192,7 +192,7 @@ class Shell(wx.StyledTextCtrl):
         sys.path.insert(0, os.curdir)
         # Import a default interpreter class if one isn't provided.
         if InterpClass is None:
-            from PyCrust.interpreter import Interpreter
+            from wx.py.interpreter import Interpreter
         else:
             Interpreter = InterpClass
         # Create default locals so we have something interesting.
@@ -343,7 +343,7 @@ class Shell(wx.StyledTextCtrl):
             startupText = "Startup script executed: " + startupScript
             self.push(
                 "print(%s);exec(open(%s).read())"
-                % ("startupText", "startupScript")
+                % (repr(startupText), repr(startupScript))
             )
         else:
             self.push("")
@@ -488,7 +488,6 @@ class Shell(wx.StyledTextCtrl):
         altDown = event.AltDown()
         shiftDown = event.ShiftDown()
         currpos = self.GetCurrentPos()
-        endpos = self.GetTextLength()
         selecting = self.GetSelectionStart() != self.GetSelectionEnd()
         # Return (Enter) is used to submit a command to the interpreter.
         if not controlDown and key == WXK_RETURN:
@@ -691,7 +690,7 @@ class Shell(wx.StyledTextCtrl):
             command = self.history[i]
             if command[: len(searchText)] == searchText:
                 # Replace the current selection with the one we've found.
-                self.ReplaceSelection(command[len(searchText) :])
+                self.ReplaceSelection(command[len(searchText):])
                 endpos = self.GetCurrentPos()
                 self.SetSelection(endpos, startpos)
                 # We've now warped into middle of the history.
@@ -931,8 +930,8 @@ class Shell(wx.StyledTextCtrl):
 
     def run(self, command, prompt=1, verbose=1):
         """Execute command within the shell as if it was typed in directly.
-        >>> shell.run('print "this"')
-        >>> print "this"
+        >>> shell.run('print("this")')
+        >>> print("this")
         this
         >>>
         """
@@ -1016,7 +1015,7 @@ class Shell(wx.StyledTextCtrl):
         if len(completions) == 0:
             return 0
         if len(completions) == 1:
-            self.write(completions[0][len(command) :])
+            self.write(completions[0][len(command):])
         else:
             self.AutoCompShow(len(command), "\n".join(completions))
         return 1

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -74,7 +74,7 @@ class PythonShellWindow(ApplicationWindow):
     icon = ImageResource("python_icon")
 
     #: The Python shell widget to use.
-    shell = Instance("pyface.i_python_shell.IPythonShell")
+    shell = Instance("pyface.i_python_shell.IPythonShell", allow_none=False)
 
     def do_run_file(self):
         """ Run a file selected by the user. """
@@ -85,8 +85,12 @@ class PythonShellWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the shell widget. """
-        self.shell = PythonShell(parent)
+        self.shell.create(parent)
         return self.shell.control
+
+    def destroy(self):
+        self.shell.destroy()
+        super().destroy()
 
     def _menu_bar_manager_default(self):
         menu_bar = MenuBarManager(
@@ -117,6 +121,9 @@ class PythonShellWindow(ApplicationWindow):
 
     def _status_bar_manager_default(self):
         return StatusBarManager()
+
+    def _shell_default(self):
+        return PythonShell()
 
 
 if __name__ == "__main__":

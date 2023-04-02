@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,21 +13,14 @@
 
 import logging
 import os
-
+import warnings
 
 import wx
 
 
 from traits.api import (
-    Any,
-    Bool,
-    Callable,
-    Enum,
-    Event,
-    Instance,
-    List,
-    Property,
-    Str,
+    Any, Bool, Callable, Enum, Event, Instance, Int, List, Property, Str,
+    Tuple,
 )
 
 
@@ -37,7 +30,7 @@ from pyface.sorter import Sorter
 from pyface.tree.tree_model import TreeModel
 from pyface.ui.wx.gui import GUI
 from pyface.ui.wx.image_list import ImageList
-from pyface.ui.wx.widget import Widget
+from pyface.ui.wx.layout_widget import LayoutWidget
 from pyface.wx.drag_and_drop import PythonDropSource, PythonDropTarget
 
 
@@ -75,7 +68,7 @@ class _Tree(wx.TreeCtrl):
         super().Destroy()
 
 
-class Tree(Widget):
+class Tree(LayoutWidget):
     """ A tree control with a model/ui architecture. """
 
     # The default tree style.
@@ -163,6 +156,9 @@ class Tree(Widget):
     # Flag for allowing selection events to be ignored
     _ignore_selection_events = Bool(False)
 
+    # The size of the icons in the tree.
+    _image_size = Tuple(Int, Int)
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
@@ -176,13 +172,32 @@ class Tree(Widget):
         specifies the size of the images (if required) displayed in the tree.
 
         """
+        create = traits.pop('create', None)
 
         # Base class constructors.
-        super(Tree, self).__init__(**traits)
+        super().__init__(parent=parent, _image_size=image_size, **traits)
 
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
         # Create the toolkit-specific control.
         self.control = tree = _Tree(
-            self, parent, style=self._get_style()
+            self, parent, wxid=wx.ID_ANY, style=self._get_style()
         )
 
         # Wire up the wx tree events.
@@ -211,11 +226,11 @@ class Tree(Widget):
         tree.Bind(wx.EVT_TREE_DELETE_ITEM, self._on_tree_delete_item)
 
         # Enable the tree as a drag and drop target.
-        self.control.SetDropTarget(PythonDropTarget(self))
+        tree.SetDropTarget(PythonDropTarget(self))
 
         # The image list is a wxPython-ism that caches all images used in the
         # control.
-        self._image_list = ImageList(image_size[0], image_size[1])
+        self._image_list = ImageList(*self._image_size)
         if self.show_images:
             tree.AssignImageList(self._image_list)
 
@@ -228,6 +243,7 @@ class Tree(Widget):
 
         # Listen for changes to the model.
         self._add_model_listeners(self.model)
+        return tree
 
     # ------------------------------------------------------------------------
     # 'Tree' interface.
@@ -468,7 +484,7 @@ class Tree(Widget):
         except KeyError:
             # fixme: No, really, this is a serious one... How do we get in this
             # situation.  It came up when using the canvas stuff...
-            logger.warn("removing node: %s" % str(node))
+            logger.warning("removing node: %s" % str(node))
 
     def _get_style(self):
         """ Returns the wx style flags for creating the tree control. """
@@ -500,36 +516,28 @@ class Tree(Widget):
         """ Adds listeners for model changes. """
 
         # Listen for changes to the model.
-        model.on_trait_change(self._on_root_changed, "root")
-        model.on_trait_change(self._on_nodes_changed, "nodes_changed")
-        model.on_trait_change(self._on_nodes_inserted, "nodes_inserted")
-        model.on_trait_change(self._on_nodes_removed, "nodes_removed")
-        model.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
-        model.on_trait_change(self._on_structure_changed, "structure_changed")
+        model.observe(self._on_root_changed, "root")
+        model.observe(self._on_nodes_changed, "nodes_changed")
+        model.observe(self._on_nodes_inserted, "nodes_inserted")
+        model.observe(self._on_nodes_removed, "nodes_removed")
+        model.observe(self._on_nodes_replaced, "nodes_replaced")
+        model.observe(self._on_structure_changed, "structure_changed")
 
     def _remove_model_listeners(self, model):
         """ Removes listeners for model changes. """
 
         # Unhook the model event listeners.
-        model.on_trait_change(self._on_root_changed, "root", remove=True)
+        model.observe(self._on_root_changed, "root", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_changed, "nodes_changed", remove=True
-        )
+        model.observe(self._on_nodes_changed, "nodes_changed", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_inserted, "nodes_inserted", remove=True
-        )
+        model.observe(self._on_nodes_inserted, "nodes_inserted", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_removed, "nodes_removed", remove=True
-        )
+        model.observe(self._on_nodes_removed, "nodes_removed", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_replaced, "nodes_replaced", remove=True
-        )
+        model.observe(self._on_nodes_replaced, "nodes_replaced", remove=True)
 
-        model.on_trait_change(
+        model.observe(
             self._on_structure_changed, "structure_changed", remove=True
         )
 
@@ -817,9 +825,9 @@ class Tree(Widget):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_root_changed(self, root):
+    def _on_root_changed(self, event):
         """ Called when the root of the model has changed. """
-
+        root = event.new
         # Delete everything...
         if self.control is not None:
             self.control.DeleteAllItems()
@@ -832,20 +840,19 @@ class Tree(Widget):
 
     def _on_nodes_changed(self, event):
         """ Called when nodes have been changed. """
-
-        self._update_node(self._get_wxid(event.node), event.node)
-
-        for child in event.children:
+        node_event = event.new
+        self._update_node(self._get_wxid(node_event.node), node_event.node)
+        for child in node_event.children:
             cid = self._get_wxid(child)
             if cid is not None:
                 self._update_node(cid, child)
 
     def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
-
-        parent = event.node
-        children = event.children
-        index = event.index
+        node_event = event.new
+        parent = node_event.node
+        children = node_event.children
+        index = node_event.index
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
@@ -889,14 +896,13 @@ class Tree(Widget):
 
     def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
-
-        parent = event.node
-        children = event.children
+        node_event = event.new
+        parent = node_event.node
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
         if pid is not None:
-            for child in event.children:
+            for child in node_event.children:
                 cid = self._get_wxid(child)
                 if cid is not None:
                     self.control.Delete(cid)
@@ -907,8 +913,9 @@ class Tree(Widget):
 
     def _on_nodes_replaced(self, event):
         """ Called when nodes have been replaced. """
-
-        for old_child, new_child in zip(event.old_children, event.children):
+        node_event = event.new
+        old_new_children = zip(node_event.old_children, node_event.children)
+        for old_child, new_child in old_new_children:
             cid = self._get_wxid(old_child)
             if cid is not None:
                 # Remove listeners from the old node.
@@ -948,8 +955,8 @@ class Tree(Widget):
 
     def _on_structure_changed(self, event):
         """ Called when the structure of a node has changed drastically. """
-
-        self.refresh(event.node)
+        node_event = event.new
+        self.refresh(node_event.node)
 
         return
 

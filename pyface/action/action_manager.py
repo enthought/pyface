@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,9 +11,9 @@
 """ Abstract base class for all action managers. """
 
 
-from traits.api import Bool, Constant, Event, HasTraits, Instance
-from traits.api import List, Property, Str
-
+from traits.api import (
+    Bool, Constant, Event, HasTraits, Instance, List, observe, Property, Str
+)
 
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
@@ -86,7 +86,7 @@ class ActionManager(HasTraits):
         If a string is passed, a Group is created with id set to the string.
         """
         # Base class constructor.
-        super(ActionManager, self).__init__(**traits)
+        super().__init__(**traits)
 
         # The last group in every manager is the group with Id 'additions'.
         #
@@ -112,12 +112,6 @@ class ActionManager(HasTraits):
             # Otherwise, the item is an action manager item so add it to the
             # current group.
             else:
-                ##                 # If no group has been created then add one.  This is only
-                ##                 # relevant when using the 'shorthand' way to define menus.
-                ##                 if group is None:
-                ##                     group = Group(id='__first__')
-                ##                     self.insert(-1, group)
-
                 group.append(arg)
 
     # ------------------------------------------------------------------------
@@ -131,13 +125,15 @@ class ActionManager(HasTraits):
 
     # Trait change handlers ------------------------------------------------
 
-    def _enabled_changed(self, trait_name, old, new):
+    @observe('enabled')
+    def _enabled_updated(self, event):
         for group in self._groups:
-            group.enabled = new
+            group.enabled = event.new
 
-    def _visible_changed(self, trait_name, old, new):
+    @observe('visible')
+    def _visible_updated(self, event):
         for group in self._groups:
-            group.visible = new
+            group.visible = event.new
 
     # Methods -------------------------------------------------------------#
 

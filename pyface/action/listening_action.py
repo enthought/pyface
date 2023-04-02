@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -16,7 +16,7 @@ import logging
 
 
 from pyface.action.action import Action
-from traits.api import Any, Str
+from traits.api import Any, Str, observe, Undefined
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -55,12 +55,14 @@ class ListeningAction(Action):
         """
 
         if self.object:
-            self.object.on_trait_change(
-                self._enabled_update, self.enabled_name, remove=True
-            )
-            self.object.on_trait_change(
-                self._visible_update, self.visible_name, remove=True
-            )
+            if self.enabled_name:
+                self.object.observe(
+                    self._enabled_update, self.enabled_name, remove=True
+                )
+            if self.visible_name:
+                self.object.observe(
+                    self._visible_update, self.visible_name, remove=True
+                )
 
     def perform(self, event=None):
         """ Call the appropriate function.
@@ -74,7 +76,7 @@ class ListeningAction(Action):
             if method:
                 method()
         else:
-            super(ListeningAction, self).perform(event)
+            super().perform(event)
 
     # -------------------------------------------------------------------------
     # Protected interface.
@@ -98,36 +100,42 @@ class ListeningAction(Action):
 
     # Trait change handlers --------------------------------------------------
 
-    def _enabled_name_changed(self, old, new):
+    @observe('enabled_name')
+    def _enabled_name_updated(self, event):
+        old, new = event.old, event.new
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._enabled_update, old, remove=True)
+                obj.observe(self._enabled_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._enabled_update, new)
+                obj.observe(self._enabled_update, new)
         self._enabled_update()
 
-    def _visible_name_changed(self, old, new):
+    @observe('visible_name')
+    def _visible_name_updated(self, event):
+        old, new = event.old, event.new
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._visible_update, old, remove=True)
+                obj.observe(self._visible_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._visible_update, new)
+                obj.observe(self._visible_update, new)
         self._visible_update()
 
-    def _object_changed(self, old, new):
+    @observe('object')
+    def _object_updated(self, event):
+        old, new = event.old, event.new
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
             if name:
-                if old:
-                    old.on_trait_change(method, name, remove=True)
+                if old and old is not Undefined:
+                    old.observe(method, name, remove=True)
                 if new:
-                    new.on_trait_change(method, name)
-            method()
+                    new.observe(method, name)
+                method()
 
-    def _enabled_update(self):
+    def _enabled_update(self, event=None):
         if self.enabled_name:
             if self.object:
                 self.enabled = bool(
@@ -138,7 +146,7 @@ class ListeningAction(Action):
         else:
             self.enabled = bool(self.object)
 
-    def _visible_update(self):
+    def _visible_update(self, event=None):
         if self.visible_name:
             if self.object:
                 self.visible = bool(

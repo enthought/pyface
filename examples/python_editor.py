@@ -10,6 +10,7 @@
 
 """ Python editor example. """
 
+from traits.api import Instance
 
 from pyface.api import ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 from pyface.action.api import (
@@ -21,11 +22,15 @@ from pyface.action.api import (
     ToolBarManager,
 )
 from pyface.fields.api import ComboField
+from pyface.i_python_editor import IPythonEditor
 from pyface.toolkit import toolkit_object
 
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
+
+    #: The PythonEditor instance
+    _editor = Instance(IPythonEditor)
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -35,7 +40,10 @@ class MainWindow(ApplicationWindow):
         """ Creates a new application window. """
 
         # Base class constructor.
-        super(MainWindow, self).__init__(**traits)
+        super().__init__(**traits)
+
+        # The main editor Widget
+        self._editor = PythonEditor()
 
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
@@ -60,8 +68,8 @@ class MainWindow(ApplicationWindow):
             )
         )
 
-        # Add a tool bar if we are using qt4 - wx has layout issues
-        if toolkit_object.toolkit == "qt4":
+        # Add a tool bar if we are using qt - wx has layout issues
+        if toolkit_object.toolkit.startswith("qt"):
             from pygments.styles import STYLE_MAP
 
             styles = list(STYLE_MAP)
@@ -99,10 +107,13 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the editor. """
-
-        self._editor = PythonEditor(parent)
-
+        self._editor.create(parent)
         return self._editor.control
+
+    def destroy(self):
+        if self._editor is not None:
+            self._editor.destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.

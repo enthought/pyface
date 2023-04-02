@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,19 +11,15 @@
 import unittest
 
 
-from pyface.tasks.action.api import (
-    SMenu,
-    SMenuBar,
-    SGroup,
-    DockPaneToggleGroup,
-)
+from pyface.action.schema.api import SMenu, SMenuBar, SGroup
+from pyface.tasks.action.api import DockPaneToggleGroup
 from pyface.tasks.api import DockPane, Task, TaskPane, TaskWindow
 from pyface.gui import GUI
 from traits.api import List
 from traits.etsconfig.api import ETSConfig
 
 
-USING_WX = ETSConfig.toolkit not in ["", "qt4"]
+USING_WX = ETSConfig.toolkit not in {"", "qt", "qt4"}
 
 
 class BogusTask(Task):
@@ -137,7 +133,3 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         names = self.get_dock_pane_toggle_action_names()
         expected_names = ["Dock Pane 1"]
         self.assertEqual(list(sorted(expected_names)), list(sorted(names)))
-
-
-if __name__ == "__main__":
-    unittest.main()

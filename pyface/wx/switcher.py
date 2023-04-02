@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -45,7 +45,7 @@ class SwitcherModel(HasTraits):
     def create_page(self, parent, index):
         """ Creates a page for the switcher panel. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class SwitcherControl(wx.Panel):
@@ -67,7 +67,7 @@ class SwitcherControl(wx.Panel):
         self._create_widget(model, label)
 
         # Listen for when the selected item in the model is changed.
-        model.on_trait_change(self._on_selected_changed, "selected")
+        model.observe(self._on_selected_changed, "selected")
 
         return
 
@@ -75,9 +75,9 @@ class SwitcherControl(wx.Panel):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_selected_changed(self, selected):
+    def _on_selected_changed(self, event):
         """ Called when the selected item in the model is changed. """
-
+        selected = event.new
         self.combo.SetSelection(selected)
 
         return
@@ -106,7 +106,6 @@ class SwitcherControl(wx.Panel):
         self.sizer = sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
-        ##self.SetBackgroundColour("light grey")
 
         # Switcher combo.
         sizer.Add(self._combo(self, model, label), 1, wx.EXPAND)
@@ -171,7 +170,7 @@ class SwitcherPanel(wxScrolledPanel):
         self._create_widget(model, label)
 
         # Listen for when the selected item in the model is changed.
-        model.on_trait_change(self._on_selected_changed, "selected")
+        model.observe(self._on_selected_changed, "selected")
 
         return
 
@@ -179,9 +178,9 @@ class SwitcherPanel(wxScrolledPanel):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_selected_changed(self, selected):
+    def _on_selected_changed(self, event):
         """ Called when the selected item in the model is changed. """
-
+        selected = event.new
         self._show_page(selected)
 
         return

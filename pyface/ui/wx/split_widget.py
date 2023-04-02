@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,31 +12,19 @@
 """ Mix-in class for split widgets.
 """
 
-
 import wx
 
+from traits.api import provides
 
-from traits.api import Callable, Enum, Float, HasTraits, provides
-
-
+from pyface.i_widget import IWidget
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
 @provides(ISplitWidget)
-class SplitWidget(MSplitWidget, HasTraits):
+class SplitWidget(MSplitWidget):
     """ The toolkit specific implementation of a SplitWidget.  See the
     ISPlitWidget interface for the API documentation.
     """
-
-    # 'ISplitWidget' interface ---------------------------------------------
-
-    direction = Enum("vertical", "vertical", "horizontal")
-
-    ratio = Float(0.5)
-
-    lhs = Callable
-
-    rhs = Callable
 
     # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
@@ -86,6 +74,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
+            if isinstance(lhs, IWidget):
+                lhs.create()
             if not isinstance(lhs, wx.Window):
                 lhs = lhs.control
 
@@ -102,6 +92,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
+            if isinstance(rhs, IWidget):
+                rhs.create()
             if not isinstance(rhs, wx.Window):
                 rhs = rhs.control
 

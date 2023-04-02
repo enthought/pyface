@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,7 @@
 """ The abstract interface for all pyface top-level windows. """
 
 
-from traits.api import Event, Tuple, Str, Vetoable, VetoableEvent
+from traits.api import Event, HasTraits, Tuple, Str, Vetoable, VetoableEvent
 
 
 from pyface.constant import NO
@@ -120,7 +120,12 @@ class IWindow(IWidget):
         """
 
     def information(
-        self, message, title="Information", detail="", informative=""
+        self,
+        message,
+        title="Information",
+        detail="",
+        informative="",
+        text_format="auto"
     ):
         """ Convenience method to show an information message dialog.
 
@@ -134,10 +139,20 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
-    def warning(self, message, title="Warning", detail="", informative=""):
+    def warning(
+        self,
+        message,
+        title="Warning",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -150,10 +165,20 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
-    def error(self, message, title="Error", detail="", informative=""):
+    def error(
+        self,
+        message,
+        title="Error",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -166,16 +191,19 @@ class IWindow(IWidget):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich".
 
         """
 
 
-class MWindow(object):
+class MWindow(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWindow interface.
 
     Implements: close(), confirm(), open()
-    Reimplements: _create()
+    Reimplements: create()
     """
 
     # -------------------------------------------------------------------------
@@ -200,7 +228,7 @@ class MWindow(object):
         if not event.veto:
             # Create the control, if necessary.
             if self.control is None:
-                self._create()
+                self.create()
 
             self.show(True)
             self.opened = self
@@ -254,7 +282,12 @@ class MWindow(object):
         return confirm(self.control, message, title, cancel, default)
 
     def information(
-        self, message, title="Information", detail="", informative=""
+        self,
+        message,
+        title="Information",
+        detail="",
+        informative="",
+        text_format="auto"
     ):
         """ Convenience method to show an information message dialog.
 
@@ -268,13 +301,26 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import information
 
-        information(self.control, message, title, detail, informative)
+        information(
+            self.control, message, title, detail, informative, text_format
+        )
 
-    def warning(self, message, title="Warning", detail="", informative=""):
+    def warning(
+        self,
+        message,
+        title="Warning",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -287,13 +333,26 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import warning
 
-        warning(self.control, message, title, detail, informative)
+        warning(
+            self.control, message, title, detail, informative, text_format
+        )
 
-    def error(self, message, title="Error", detail="", informative=""):
+    def error(
+        self,
+        message,
+        title="Error",
+        detail="",
+        informative="",
+        text_format="auto"
+    ):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -306,8 +365,12 @@ class MWindow(object):
             Further details about the message.
         informative : str
             Explanatory text to display along with the message.
+        text_format : str
+            Specifies what text format to use in the resulting message dialog.
+            One of "auto", "plain", or "rich". Only supported on the qt
+            backend.
 
         """
         from .message_dialog import error
 
-        error(self.control, message, title, detail, informative)
+        error(self.control, message, title, detail, informative, text_format)

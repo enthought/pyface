@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -18,7 +18,7 @@ from .action_event import ActionEvent
 class FieldAction(Action):
     """ A widget action containing an IField
 
-    When the value in the field is changed, the `on_peform` method is called
+    When the value in the field is changed, the `on_perform` method is called
     with the new value as the argument.
     """
 
@@ -48,16 +48,17 @@ class FieldAction(Action):
             A toolkit control or None.
         """
         field = self.field_type(parent=parent, **self.field_defaults)
-        field._create()
-        field.on_trait_change(self.value_updated, "value")
+        field.create()
+        field.observe(self.value_updated, "value")
         field.control._field = field
         return field.control
 
-    def value_updated(self, value):
+    def value_updated(self, event):
         """ Handle changes to the field value by calling perform.
 
         The event passed to `perform` has the `value` as an attribute.
         """
+        value = event.new
         action_event = ActionEvent(value=value)
         self.perform(action_event)
 

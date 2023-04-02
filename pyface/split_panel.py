@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,6 +10,7 @@
 
 """ A panel that is split in two either horizontally or vertically. """
 
+import warnings
 
 from pyface.split_widget import SplitWidget
 from pyface.widget import Widget
@@ -22,11 +23,31 @@ class SplitPanel(Widget, SplitWidget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new panel. """
 
-        # Base class constructor.
-        super(SplitPanel, self).__init__(**traits)
+        create = traits.pop("create", None)
 
-        # Create the widget's toolkit-specific control.
-        self.control = self._create_splitter(parent)
+        # Base class constructor.
+        super().__init__(parent=parent, **traits)
+
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+    def _create_control(self, parent):
+        """ Create the toolkit control """
+        return self._create_splitter(parent)

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,7 +15,6 @@ from traits.etsconfig.api import ETSConfig
 
 from ..single_choice_dialog import SingleChoiceDialog
 from ..constant import OK, CANCEL
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
@@ -46,7 +45,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -59,7 +58,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works no cancel button
         self.dialog.cancel = False
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -67,10 +66,9 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
         # test that creation and destruction works as expected with a parent
         with self.event_loop():
             parent = Window()
-            self.dialog.parent = parent.control
-            parent._create()
+            parent.create()
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create(parent.control)
         with self.event_loop():
             self.dialog.destroy()
         with self.event_loop():
@@ -78,9 +76,9 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_message(self):
         # test that creation and destruction works as expected with message
-        self.dialog.message = u"This is the message"
+        self.dialog.message = "This is the message"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 

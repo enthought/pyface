@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,10 +12,25 @@
 import os
 import unittest
 
-from traits.api import DefaultValue, HasTraits, TraitError
-from traits.testing.unittest_tools import UnittestTools
+# importlib.resources is new in Python 3.7, and importlib.resources.files is
+# new in Python 3.9, so for Python < 3.9 we must rely on the 3rd party
+# importlib_resources package.
+try:
+    from importlib.resources import files
+except ImportError:
+    from importlib_resources import files
 
-from ..i_image_resource import IImageResource
+try:
+    import PIL.Image
+except ImportError:
+    PIL = None
+
+from traits.api import DefaultValue, HasTraits, TraitError
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
+from traits.testing.api import UnittestTools
+
+from ..color import Color
+from ..font import Font
 from ..image_resource import ImageResource
 from ..ui_traits import (
     Border,
@@ -23,17 +38,29 @@ from ..ui_traits import (
     HasMargin,
     Image,
     Margin,
+    PyfaceColor,
+    PyfaceFont,
     image_resource_cache,
     image_bitmap_cache,
 )
 
 
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class ImageClass(HasTraits):
 
     image = Image
+
+
+class ColorClass(HasTraits):
+
+    color = PyfaceColor()
+
+
+class FontClass(HasTraits):
+
+    font = PyfaceFont()
 
 
 class HasMarginClass(HasTraits):
@@ -74,7 +101,7 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         from pyface.image_resource import ImageResource
 
         image_class = ImageClass(image="about")
-        im = image_class.image.create_image()
+        image_class.image.create_image()
 
         self.assertIsInstance(image_class.image, ImageResource)
         self.assertEqual(image_class.image.name, "about")
@@ -93,6 +120,27 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
             image_class.image._ref.file_name, "dialog-warning.png"
         )
         self.assertEqual(image_class.image._ref.volume_name, "icons")
+
+    @requires_numpy
+    def test_init_array_image(self):
+        from pyface.array_image import ArrayImage
+
+        data = np.full((32, 64, 4), 0xee, dtype='uint8')
+        image = ArrayImage(data)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, ArrayImage)
+        self.assertTrue((image_class.image.data == data).all())
+
+    @unittest.skipIf(PIL is None, "PIL/Pillow is not available")
+    def test_init_pil_image(self):
+        from pyface.pil_image import PILImage
+
+        pil_image = PIL.Image.open(IMAGE_PATH)
+        image = PILImage(pil_image)
+        image_class = ImageClass(image=image)
+
+        self.assertIsInstance(image_class.image, PILImage)
 
 
 class TestMargin(unittest.TestCase):
@@ -123,6 +171,322 @@ class TestMargin(unittest.TestCase):
         self.assertEqual(margin.bottom, 1)
         self.assertEqual(margin.left, 4)
         self.assertEqual(margin.right, 2)
+
+
+class TestPyfaceColor(unittest.TestCase):
+
+    def test_init(self):
+        trait = PyfaceColor()
+        self.assertEqual(trait.default_value, (Color, (), {}))
+        self.assertEqual(
+            trait.default_value_type,
+            DefaultValue.callable_and_args,
+        )
+
+    def test_init_name(self):
+        trait = PyfaceColor("rebeccapurple")
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_hex(self):
+        trait = PyfaceColor("#663399ff")
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_color(self):
+        trait = PyfaceColor(Color(rgba=(0.4, 0.2, 0.6, 1.0)))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_tuple(self):
+        trait = PyfaceColor((0.4, 0.2, 0.6, 1.0))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_list(self):
+        trait = PyfaceColor([0.4, 0.2, 0.6, 1.0])
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    @requires_numpy
+    def test_init_array(self):
+        trait = PyfaceColor(np.array([0.4, 0.2, 0.6, 1.0]))
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    @requires_numpy
+    def test_init_array_structured_dtype(self):
+        """ Test if "typical" RGBA structured array value works. """
+        arr = np.array(
+            [(0.4, 0.2, 0.6, 1.0)],
+            dtype=np.dtype([
+                ('red', float),
+                ('green', float),
+                ('blue', float),
+                ('alpha', float),
+            ]),
+        )
+        trait = PyfaceColor(arr[0])
+        self.assertEqual(
+            trait.default_value,
+            (Color, (), {'rgba': (0.4, 0.2, 0.6, 1.0)})
+        )
+
+    def test_init_invalid(self):
+        with self.assertRaises(TraitError):
+            PyfaceColor((0.4, 0.2))
+
+    def test_validate_color(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, color)
+        self.assertIs(
+            validated, color
+        )
+
+    def test_validate_name(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, "rebeccapurple")
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_hex(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, "#663399ff")
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_tuple(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, (0.4, 0.2, 0.6, 0.8))
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, [0.4, 0.2, 0.6, 0.8])
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_rgb_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, [0.4, 0.2, 0.6])
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_bad_string(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, "not a color")
+
+    def test_validate_bad_object(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, object())
+
+    def test_info(self):
+        trait = PyfaceColor()
+        self.assertIsInstance(trait.info(), str)
+
+    def test_default_trait(self):
+        color_class = ColorClass()
+        self.assertEqual(color_class.color, Color())
+
+    def test_set_color(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=color)
+        self.assertIs(color_class.color, color)
+
+    def test_set_name(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color="rebeccapurple")
+        self.assertEqual(color_class.color, color)
+
+    def test_set_hex(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color="#663399ff")
+        self.assertEqual(color_class.color, color)
+
+    def test_set_tuple(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=(0.4, 0.2, 0.6, 1.0))
+        self.assertEqual(color_class.color, color)
+
+    def test_set_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=[0.4, 0.2, 0.6, 1.0])
+        self.assertEqual(color_class.color, color)
+
+    @requires_numpy
+    def test_set_array(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        color_class = ColorClass(color=np.array([0.4, 0.2, 0.6, 1.0]))
+        self.assertEqual(color_class.color, color)
+
+    @requires_numpy
+    def test_set_structured_dtype(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        arr = np.array(
+            [(0.4, 0.2, 0.6, 1.0)],
+            dtype=np.dtype([
+                ('red', float),
+                ('green', float),
+                ('blue', float),
+                ('alpha', float),
+            ]),
+        )
+        color_class = ColorClass(color=arr[0])
+        self.assertEqual(color_class.color, color)
+
+
+class TestPyfaceFont(unittest.TestCase):
+
+    def test_init(self):
+        trait = PyfaceFont()
+        self.assertEqual(trait.default_value, (Font, (), {}))
+        self.assertEqual(
+            trait.default_value_type,
+            DefaultValue.callable_and_args,
+        )
+
+    def test_init_empty_string(self):
+        trait = PyfaceFont("")
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["default"],
+                    'size': 12.0,
+                    'weight': "normal",
+                    'stretch': 100,
+                    'style': "normal",
+                    'variants': set(),
+                    'decorations': set(),
+                },
+            )
+        )
+
+    def test_init_typical_string(self):
+        trait = PyfaceFont(
+            "10 pt bold condensed italic underline Helvetica sans-serif")
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["helvetica", "sans-serif"],
+                    'size': 10.0,
+                    'weight': "bold",
+                    'stretch': 75.0,
+                    'style': "italic",
+                    'variants': set(),
+                    'decorations': {"underline"},
+                },
+            )
+        )
+
+    def test_init_font(self):
+        font = Font(
+            family=["helvetica", "sans-serif"],
+            size=10.0,
+            weight="bold",
+            stretch=75.0,
+            style="italic",
+            variants=set(),
+            decorations={"underline"},
+        )
+        trait = PyfaceFont(font)
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'family': ["helvetica", "sans-serif"],
+                    'size': 10.0,
+                    'weight': "bold",
+                    'stretch': 75.0,
+                    'style': "italic",
+                    'variants': set(),
+                    'decorations': {"underline"},
+                },
+            )
+        )
+
+    def test_init_invalid(self):
+        with self.assertRaises(ValueError):
+            PyfaceFont(0)
+
+    def test_set_empty_string(self):
+        font_class = FontClass()
+        font_class.font = ""
+        self.assertFontEqual(font_class.font, Font())
+
+    def test_set_typical_string(self):
+        font_class = FontClass()
+        font_class.font = "10 pt bold condensed italic underline Helvetica sans-serif"  # noqa: E501
+        self.assertFontEqual(
+            font_class.font,
+            Font(
+                family=["helvetica", "sans-serif"],
+                size=10.0,
+                weight="bold",
+                stretch=75.0,
+                style="italic",
+                variants=set(),
+                decorations={"underline"},
+            ),
+        )
+
+    def test_set_font(self):
+        font_class = FontClass()
+        font = Font(
+            family=["helvetica", "sans-serif"],
+            size=10.0,
+            weight="bold",
+            stretch=75.0,
+            style="italic",
+            variants=set(),
+            decorations={"underline"},
+        )
+        font_class.font = font
+        self.assertIs(font_class.font, font)
+
+    def test_set_failure(self):
+        font_class = FontClass()
+
+        with self.assertRaises(TraitError):
+            font_class.font = None
+
+    def assertFontEqual(self, font1, font2):
+        state1 = font1.trait_get(transient=lambda x: not x)
+        state2 = font2.trait_get(transient=lambda x: not x)
+        self.assertEqual(state1, state2)
 
 
 class TestHasMargin(unittest.TestCase, UnittestTools):

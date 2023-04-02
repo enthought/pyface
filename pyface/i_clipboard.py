@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,11 +14,8 @@
 
 """ The interface for manipulating the toolkit clipboard.
 """
-try:
-    from collections.abc import Sequence
-except ImportError:  # Python 3.8 deprecation
-    from collections import Sequence
 
+from collections.abc import Sequence
 
 from traits.api import HasStrictTraits, Interface, Property
 

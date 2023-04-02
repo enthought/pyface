@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Dict, Either, Instance, List
+from traits.api import Dict, Instance, List, Union
 
 
 from .grid_model import GridModel, GridRow
@@ -23,7 +23,7 @@ class CompositeGridModel(GridModel):
     data = List(Instance(GridModel))
 
     # The rows in the model.
-    rows = Either(None, List(Instance(GridRow)))
+    rows = Union(None, List(Instance(GridRow)))
 
     # The cached data indexes.
     _data_index = Dict()
@@ -35,7 +35,7 @@ class CompositeGridModel(GridModel):
         """ Create a CompositeGridModel object. """
 
         # Base class constructor
-        super(CompositeGridModel, self).__init__(**traits)
+        super().__init__(**traits)
 
         self._row_count = None
 

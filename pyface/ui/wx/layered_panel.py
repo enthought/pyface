@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -14,14 +14,14 @@
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
+from traits.api import Int, provides
 
-from traits.api import Any, Str, Int
+from pyface.i_layered_panel import ILayeredPanel, MLayeredPanel
+from .layout_widget import LayoutWidget
 
 
-from .widget import Widget
-
-
-class LayeredPanel(Widget):
+@provides(ILayeredPanel)
+class LayeredPanel(MLayeredPanel, LayoutWidget):
     """ A Layered panel.
 
     A layered panel contains one or more named layers, with only one layer
@@ -33,38 +33,10 @@ class LayeredPanel(Widget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    # "Layered Panel' interface --------------------------------------------
-
-    # The toolkit-specific control of the currently displayed layer.
-    current_layer = Any()
-
-    # The name of the currently displayed layer.
-    current_layer_name = Str()
-
     # The minimum for the panel, which is the maximum of the minimum
     # sizes of the layers
     min_width = Int(0)
     min_height = Int(0)
-
-    # ------------------------------------------------------------------------
-    # 'object' interface.
-    # ------------------------------------------------------------------------
-
-    def __init__(self, parent, **traits):
-        """ Creates a new LayeredPanel. """
-
-        # Base class constructor.
-        super(LayeredPanel, self).__init__(**traits)
-
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # The layers in the panel.
-        #
-        # { str name : wx.Window layer }
-        self._layers = {}
-
-        return
 
     # ------------------------------------------------------------------------
     # 'LayeredPanel' interface.
@@ -130,11 +102,6 @@ class LayeredPanel(Widget):
         layer = self._show_layer(name, self._layers[name])
 
         return layer
-
-    def has_layer(self, name):
-        """ Does the panel contain a layer with the specified name? """
-
-        return name in self._layers
 
     # ------------------------------------------------------------------------
     # Private interface.

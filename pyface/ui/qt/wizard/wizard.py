@@ -1,0 +1,222 @@
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2008 Riverbank Computing Limited
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD license.
+# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+
+
+""" The base class for all pyface wizards. """
+
+
+from pyface.qt import QtCore, QtGui
+
+
+from traits.api import Bool, Instance, List, Property, provides, Str
+from pyface.api import Dialog
+from pyface.wizard.i_wizard import IWizard, MWizard
+from pyface.wizard.i_wizard_controller import IWizardController
+from pyface.wizard.i_wizard_page import IWizardPage
+
+
+@provides(IWizard)
+class Wizard(MWizard, Dialog):
+    """ The base class for all pyface wizards.
+
+    See the IWizard interface for the API documentation.
+
+    """
+
+    # 'IWizard' interface -------------------------------------------------#
+
+    pages = Property(List(IWizardPage))
+
+    controller = Instance(IWizardController)
+
+    show_cancel = Bool(True)
+
+    # 'IWindow' interface -------------------------------------------------#
+
+    title = Str("Wizard")
+
+    # ------------------------------------------------------------------------
+    # 'IWizard' interface.
+    # ------------------------------------------------------------------------
+
+    # Override MWizard implementation to do nothing. We still call these methods
+    # because it expected by IWizard, and users may wish to hook in custom code
+    # before changing a page.
+
+    def next(self):
+        pass
+
+    def previous(self):
+        pass
+
+    # ------------------------------------------------------------------------
+    # Protected 'IDialog' interface.
+    # ------------------------------------------------------------------------
+
+    def _create_contents(self, parent):
+        pass
+
+    # ------------------------------------------------------------------------
+    # Protected 'IWidget' interface.
+    # ------------------------------------------------------------------------
+
+    def _create_control(self, parent):
+        control = _Wizard(parent, self)
+        control.setOptions(
+            QtGui.QWizard.WizardOption.NoDefaultButton
+            | QtGui.QWizard.WizardOption.NoBackButtonOnStartPage
+        )
+        control.setModal(self.style == "modal")
+        control.setWindowTitle(self.title)
+
+        # Necessary for 'nonmodal'. See Dialog for more info.
+        if self.style == "nonmodal":
+            control.finished.connect(self._finished_fired)
+
+        if self.size != (-1, -1):
+            size = QtCore.QSize(*self.size)
+            control.setMinimumSize(size)
+            control.resize(size)
+
+        if not self.show_cancel:
+            control.setOption(QtGui.QWizard.WizardOption.NoCancelButton)
+
+        if self.help_id:
+            control.setOption(QtGui.QWizard.WizardOption.HaveHelpButton)
+            control.helpRequested.connect(self._help_requested)
+
+        # Add the initial pages.
+        for page in self.pages:
+            page.pyface_wizard = self
+            control.addWizardPage(page)
+
+        # Set the start page.
+        control.setStartWizardPage()
+
+        return control
+
+    # ------------------------------------------------------------------------
+    # Private interface.
+    # ------------------------------------------------------------------------
+
+    def _help_requested(self):
+        """ Called when the 'Help' button is pressed. """
+
+        # FIXME: Hook into a help system.
+        print("Show help for", self.help_id)
+
+    # Trait handlers -------------------------------------------------------
+
+    def _get_pages(self):
+        """ The pages getter. """
+
+        return self.controller.pages
+
+    def _set_pages(self, pages):
+        """ The pages setter. """
+
+        # Remove pages from the old list that appear in the new list.  The old
+        # list will now contain pages that are no longer in the wizard.
+        old_pages = self.pages
+        new_pages = []
+
+        for page in pages:
+            try:
+                old_pages.remove(page)
+            except ValueError:
+                new_pages.append(page)
+
+        # Dispose of the old pages.
+        for page in old_pages:
+            page.dispose_page()
+
+        # If we have created the control then we need to add the new pages,
+        # otherwise we leave it until the control is created.
+        if self.control:
+            for page in new_pages:
+                self.control.addWizardPage(page)
+
+        self.controller.pages = pages
+
+    def _controller_default(self):
+        """ Provide a default controller. """
+
+        from pyface.wizard.wizard_controller import WizardController
+
+        return WizardController()
+
+
+class _Wizard(QtGui.QWizard):
+    """ A QWizard sub-class that hooks into the controller to determine the
+    next page to show. """
+
+    def __init__(self, parent, pyface_wizard):
+        """ Initialise the object. """
+
+        QtGui.QWizard.__init__(self, parent)
+
+        self._pyface_wizard = pyface_wizard
+        self._controller = pyface_wizard.controller
+        self._ids = {}
+
+        self.currentIdChanged.connect(self._update_controller)
+
+    def addWizardPage(self, page):
+        """ Add a page that provides IWizardPage. """
+
+        # We must pass a parent otherwise TraitsUI does the wrong thing.
+        qpage = page.create_page(self)
+        qpage.pyface_wizard = self._pyface_wizard
+        id = self.addPage(qpage)
+        self._ids[id] = page
+
+    def setStartWizardPage(self):
+        """ Set the first page. """
+
+        page = self._controller.get_first_page()
+        id = self._page_to_id(page)
+
+        if id >= 0:
+            self.setStartId(id)
+
+    def nextId(self):
+        """ Reimplemented to return the id of the next page to display. """
+
+        if self.currentId() < 0:
+            return self._page_to_id(self._controller.get_first_page())
+        current = self._ids[self.currentId()]
+        next = self._controller.get_next_page(current)
+
+        return self._page_to_id(next)
+
+    def _update_controller(self, id):
+        """ Called when the current page has changed. """
+
+        # Keep the controller in sync with the wizard.
+        self._controller.current_page = self._ids.get(id)
+
+    def _page_to_id(self, page):
+        """ Return the id of the given page. """
+
+        if page is None:
+            id = -1
+        else:
+            for id, p in self._ids.items():
+                if p is page:
+                    break
+            else:
+                id = -1
+
+        return id

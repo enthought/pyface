@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -48,7 +48,3 @@ class IDHelperTestCase(unittest.TestCase):
 
         self.assertEqual(get_unique_id(bogus_1), "Bogus_1")
         self.assertEqual(get_unique_id(bogus_2), "Bogus_2")
-
-
-if __name__ == "__main__":
-    unittest.main()

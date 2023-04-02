@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,6 +10,6 @@
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
-# WIP: Currently only supports qt4 backend. API might change without
+# WIP: Currently only supports qt backend. API might change without
 # prior notification
 PyMimeData = toolkit_object("mimedata:PyMimeData")

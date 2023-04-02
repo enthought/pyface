@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,11 +11,10 @@
 
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.image_cache import ImageCache
 from pyface.toolkit import toolkit_object
-from pyface.widget import Widget
 from pyface.window import Window
 from ..action import Action
 from ..action_controller import ActionController
@@ -53,7 +52,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
             import wx
 
             control = wx.Control(parent)
-        elif toolkit_object.toolkit == "qt4":
+        elif toolkit_object.toolkit.startswith("qt"):
             from pyface.qt import QtGui
 
             control = QtGui.QWidget(parent)

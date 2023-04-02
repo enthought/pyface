@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,7 +11,6 @@
 """ A model that provides data for a grid. """
 
 
-import wx
 from wx.grid import (
     GridTableBase,
     GridTableMessage,
@@ -19,7 +18,7 @@ from wx.grid import (
 )
 
 
-from traits.api import Any, Bool, HasTraits, Trait, Event, List
+from traits.api import Any, Bool, HasTraits, Event, List
 
 
 from .grid_column import GridColumn
@@ -107,8 +106,6 @@ class GridModel(HasTraits):
     def SetValue(self, row, col, value):
         """ Set the value at the specified row and column. """
 
-        label = self.GetColLabelValue(col)
-
         try:
             self.data[row][col] = value
 
@@ -168,7 +165,7 @@ class GridModel(HasTraits):
     def DeleteRows(self, pos, num_rows):
         """ Called when the view is deleting rows. """
 
-        del self.data[pos : pos + num_rows]
+        del self.data[pos:pos + num_rows]
 
         # Tell the grid that we've deleted some rows.
         #

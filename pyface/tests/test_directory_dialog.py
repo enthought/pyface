@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,7 +13,6 @@ import os
 import unittest
 
 from ..directory_dialog import DirectoryDialog
-from ..gui import GUI
 from ..toolkit import toolkit_object
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
@@ -41,7 +40,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.destroy()
 
@@ -53,7 +52,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def test_close(self):
         # test that close works
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -61,7 +60,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that default path works
         self.dialog.default_path = os.path.join("images", "core.png")
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -69,7 +68,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that block on new directories works
         self.dialog.new_directory = False
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 
@@ -77,7 +76,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
         # test that message setting works
         self.dialog.message = "Select a directory"
         with self.event_loop():
-            self.dialog._create()
+            self.dialog.create()
         with self.event_loop():
             self.dialog.close()
 

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,20 +12,15 @@
 """ Enthought pyface package component
 """
 
-
 import sys
-
 
 import wx
 import wx.html
 import wx.lib.wxpTag
 
-
-from traits.api import Instance, List, provides, Str
-
+from traits.api import provides
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.image_resource import ImageResource
 from .dialog import Dialog
 
 
@@ -72,14 +67,6 @@ class AboutDialog(MAboutDialog, Dialog):
     """ The toolkit specific implementation of an AboutDialog.  See the
     IAboutDialog interface for the API documentation.
     """
-
-    # 'IAboutDialog' interface ---------------------------------------------
-
-    additions = List(Str)
-
-    copyrights = List(Str)
-
-    image = Instance(ImageResource, ImageResource("about"))
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -132,7 +119,7 @@ class AboutDialog(MAboutDialog, Dialog):
         additions = "<br />".join(self.additions)
 
         # Get the version numbers.
-        py_version = sys.version[0 : sys.version.find("(")]
+        py_version = sys.version[0:sys.version.find("(")]
         wx_version = wx.VERSION_STRING
 
         # The additional copyright strings.

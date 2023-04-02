@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -25,7 +25,7 @@ class ConditionHandler(object):
         self.times = []
         self.called = False
 
-    def callback(self):
+    def callback(self, event=None):
         self.times.append(perf_counter())
         self.count += 1
         self.called = True
@@ -74,7 +74,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_single_shot_method(self):
         timer = EventTimer.single_shot()
         handler = ConditionHandler()
-        timer.on_trait_change(handler.callback, "timeout")
+        timer.observe(handler.callback, "timeout")
         try:
             self.assertTrue(timer.active)
             self.event_loop_helper.event_loop_until_condition(
@@ -103,7 +103,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_timeout_event(self):
         timer = EventTimer()
         handler = ConditionHandler()
-        timer.on_trait_change(handler.callback, "timeout")
+        timer.observe(handler.callback, "timeout")
 
         timer.start()
         try:
@@ -116,7 +116,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_repeat(self):
         timer = EventTimer(repeat=4)
         handler = ConditionHandler()
-        timer.on_trait_change(handler.callback, "timeout")
+        timer.observe(handler.callback, "timeout")
 
         timer.start()
         try:
@@ -131,7 +131,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_interval(self):
         timer = EventTimer(repeat=4, interval=0.1)
         handler = ConditionHandler()
-        timer.on_trait_change(handler.callback, "timeout")
+        timer.observe(handler.callback, "timeout")
 
         timer.start()
         try:
@@ -162,7 +162,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_expire(self):
         timer = EventTimer(expire=1.0, interval=0.1)
         handler = ConditionHandler()
-        timer.on_trait_change(handler.callback, "timeout")
+        timer.observe(handler.callback, "timeout")
 
         timer.start()
         try:
@@ -422,9 +422,14 @@ class TestTimer(TestCase, GuiTestAssistant):
 
         self.assertFalse(timer.IsRunning())
 
-        self.assertEqual(handler.count, 4)
-
-        expected_times = [start_time + 0.2 * i + 0.2 for i in range(4)]
+        # The callback may be called more than 4 times depending
+        # on the order when condition timer in event_loop_unit_condition
+        # is called relative to the Timer here. Timer accuracy also depends
+        # on whether the event loop is interrupted by the system.
+        # The objective is that the timer should not be called too frequently.
+        expected_times = [
+            start_time + 0.2 * i + 0.2 for i in range(handler.count)
+        ]
 
         self.assertTrue(
             all(

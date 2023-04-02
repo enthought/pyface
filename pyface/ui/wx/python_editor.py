@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,6 +12,7 @@
 """ Enthought pyface package component
 """
 
+import warnings
 
 import wx.stc
 
@@ -22,11 +23,11 @@ from traits.api import Bool, Event, provides, Str
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.wx.python_stc import PythonSTC, faces
-from .widget import Widget
+from .layout_widget import LayoutWidget
 
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
+class PythonEditor(MPythonEditor, LayoutWidget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
@@ -49,16 +50,30 @@ class PythonEditor(MPythonEditor, Widget):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, parent, **traits):
+    def __init__(self, parent=None, **traits):
         """ Creates a new pager. """
 
+        create = traits.pop("create", None)
+
         # Base class constructor.
-        super(PythonEditor, self).__init__(**traits)
+        super().__init__(parent=parent, **traits)
 
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        return
+        if create:
+            # Create the widget's toolkit-specific control.
+            self.create()
+            warnings.warn(
+                "automatic widget creation is deprecated and will be removed "
+                "in a future Pyface version, code should not pass the create "
+                "parameter and should instead call create() explicitly",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+        elif create is not None:
+            warnings.warn(
+                "setting create=False is no longer required",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
     # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
@@ -97,30 +112,9 @@ class PythonEditor(MPythonEditor, Widget):
     def set_style(self, n, fore, back):
 
         self.control.StyleSetForeground(n, fore)
-        # self.StyleSetBackground(n, '#c0c0c0')
-        # self.StyleSetBackground(n, '#ffffff')
         self.control.StyleSetBackground(n, back)
         self.control.StyleSetFaceName(n, "courier new")
         self.control.StyleSetSize(n, faces["size"])
-
-        # self.StyleSetForeground(n, "#f0f0f0")
-        ##self.StyleSetBackground(n, "#000000")
-        # self.StyleSetFaceName(n, "courier new")
-        # self.StyleSetSize(n, 20)
-        # self.StyleSetUnderline(n, 1)
-        # self.StyleSetItalic(n, 1)
-        # self.StyleSetBold(n, 1)
-        # StyleClearAll
-        # StyleResetDefault
-        # StyleSetCase
-        # StyleSetChangeable
-        # StyleSetCharacterSet
-        # StyleSetEOLFilled
-        # StyleSetFont
-        # StyleSetFontAttr
-        # StyleSetHotSpot
-        # StyleSetSpec --- batch
-        # StyleSetVisible
 
     def select_line(self, lineno):
         """ Selects the specified line. """

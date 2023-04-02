@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,7 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" A tool bar manager realizes itself in a tool bar control. """
+""" A toolkit-specific tool bar manager that realizes itself in a tool bar
+control.
+
+- :attr:`~.ToolBarManager`
+"""
 
 
 # Import the toolkit specific version.

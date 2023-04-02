@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,22 +12,18 @@
 """ Enthought pyface package component
 """
 
-
-import sys
-
-
 import wx
-from pyface.wx.aui import aui, PyfaceAuiManager
 
+from traits.api import Instance, List, Str, observe, provides
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Str
-from pyface.i_application_window import IApplicationWindow
-from pyface.i_application_window import MApplicationWindow
-from pyface.image_resource import ImageResource
-
-
+from pyface.i_application_window import (
+    IApplicationWindow, MApplicationWindow,
+)
+from pyface.ui_traits import Image
+from pyface.wx.aui import aui, PyfaceAuiManager
+from .image_resource import ImageResource
 from .window import Window
 
 
@@ -39,7 +35,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     # 'IApplicationWindow' interface ---------------------------------------
 
-    icon = Instance(ImageResource)
+    icon = Image()
 
     menu_bar_manager = Instance(MenuBarManager)
 
@@ -111,9 +107,9 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
 
-    def _create(self):
+    def create(self, parent=None):
 
-        super(ApplicationWindow, self)._create()
+        super().create(parent=parent)
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)
@@ -155,7 +151,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def destroy(self):
         if self.control:
             self._aui_manager.UnInit()
-        super(ApplicationWindow, self).destroy()
+        super().destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -226,11 +222,11 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             if old is not None:
                 self.control.SetStatusBar(None)
-                old.remove_status_bar(self.control)
+                old.destroy()
             self._create_status_bar(self.control)
 
-    @on_trait_change("tool_bar_manager, tool_bar_managers")
-    def _update_tool_bar_managers(self):
+    @observe("tool_bar_manager, tool_bar_managers.items")
+    def _update_tool_bar_managers(self, event):
         if self.control is not None:
             self._create_tool_bar(self.control)
 

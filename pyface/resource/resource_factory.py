@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -21,9 +21,9 @@ class ResourceFactory(object):
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """
 
-        raise NotImplemented
+        raise NotImplementedError()
 
     def image_from_data(self, data):
         """ Creates an image from the specified data. """
 
-        raise NotImplemented
+        raise NotImplementedError()
