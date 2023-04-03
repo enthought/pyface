@@ -10,7 +10,7 @@
 
 """ The image field interface. """
 
-from traits.api import Any, HasTraits, Property, cached_property
+from traits.api import Any, HasTraits
 
 from pyface.fields.i_field import IField
 from pyface.ui_traits import Image

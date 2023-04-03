@@ -11,7 +11,7 @@
 """ The editable field interface. """
 
 
-from traits.api import Any, HasTraits
+from traits.api import HasTraits
 
 from .i_field import IField
 
@@ -21,11 +21,11 @@ class IEditableField(IField):
 
     A editable field is a widget that displays a user-editable value.
     """
- 
+
 
 class MEditableField(HasTraits):
     """The editable field mix-in.
-    
+
     Classes which use this mixin should implemnt _observe_control_value to
     connect a toolkit handler that calls _update_value.
     """
@@ -43,7 +43,6 @@ class MEditableField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         self._observe_control_value(remove=True)
         super()._remove_event_listeners()
-
 
     # ------------------------------------------------------------------------
     # Private interface

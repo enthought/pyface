@@ -14,7 +14,6 @@
 from traits.api import Bool, HasTraits, Int, Property, Range, Tuple
 
 from pyface.fields.i_editable_field import IEditableField
-from pyface.ui_traits import Alignment
 
 
 class ISpinField(IEditableField):

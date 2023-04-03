@@ -11,7 +11,7 @@
 """ The Wx-specific implementation of the text field class """
 
 
-from traits.api import Any, provides
+from traits.api import provides
 
 from pyface.fields.i_editable_field import IEditableField, MEditableField
 from pyface.ui.wx.fields.field import Field

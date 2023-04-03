@@ -10,8 +10,6 @@
 
 """ The Qt-specific implementation of the text field class """
 
-from pyface.qt.QtGui import QLabel
-
 from traits.api import provides
 
 from pyface.ui.wx.fields.field import Field

@@ -16,7 +16,6 @@ from traits.api import provides
 
 from pyface.ui.qt.fields.field import Field
 from pyface.fields.i_image_field import IImageField, MImageField
-from pyface.array_image import ArrayImage
 
 
 @provides(IImageField)

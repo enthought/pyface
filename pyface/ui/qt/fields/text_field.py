@@ -14,7 +14,6 @@
 from traits.api import Map, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
-from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QLineEdit
 from .editable_field import EditableField
 
