@@ -37,5 +37,5 @@ def alignment_to_qalignment(alignment):
 
 
 def qalignment_to_alignment(alignment):
-    h_alignment = alignment & ALIGNMENT_MASK)
+    h_alignment = alignment & ALIGNMENT_MASK
     return QALIGNMENT_TO_ALIGNMENT[h_alignment]
