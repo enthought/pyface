@@ -17,11 +17,11 @@ from pyface.fields.i_toggle_field import IToggleField, MToggleField
 from pyface.qt.QtGui import (
     QCheckBox, QIcon, QPushButton, QRadioButton
 )
-from .editable_field import Editable_Field
+from .editable_field import EditableField
 
 
 @provides(IToggleField)
-class ToggleField(MToggleField, Editable_Field):
+class ToggleField(MToggleField, EditableField):
     """ The Qt-specific implementation of the toggle field class """
 
     # ------------------------------------------------------------------------

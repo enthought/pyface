@@ -115,6 +115,7 @@ class MField(HasTraits):
         if self.control is not None:
             self._set_control_value(value)
 
-    def _alignment_updated(self):
+    def _alignment_updated(self, event):
+        alignment = event.new
         if self.control is not None:
-            self._set_control_alignment(self.alignment)
+            self._set_control_alignment(alignment)

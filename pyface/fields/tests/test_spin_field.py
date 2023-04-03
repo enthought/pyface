@@ -58,4 +58,4 @@ class TestSpinField(FieldMixin, unittest.TestCase):
         self.widget.wrap = True
         self.gui.process_events()
 
-        self.assertEqual(self.widget._get_control_wrap(), True)
+        self.assertTrue(self.widget._get_control_wrap())

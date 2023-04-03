@@ -80,8 +80,7 @@ class MTextField(HasTraits):
         if self.control is not None:
             if self.update_text == "editing_finished":
                 self._observe_control_editing_finished(remove=True)
-            else:
-                self._observe_control_value(remove=True)
+                self._observe_control_value()
         self.observe(
             self._update_text_updated,
             "update_text",

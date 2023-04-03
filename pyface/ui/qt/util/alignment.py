@@ -14,10 +14,10 @@ from pyface.qt.QtCore import Qt
 
 
 ALIGNMENT_TO_QALIGNMENT = {
-    "default": Qt.Alignment.AlignLeft | Qt.Alignment.AlignVCenter,
-    "left": Qt.Alignment.AlignLeft | Qt.Alignment.AlignVCenter,
-    "center": Qt.Alignment.AlignHCenter | Qt.Alignment.AlignVCenter,
-    "right": Qt.Alignment.AlignRight | Qt.Alignment.AlignVCenter,
+    "default": Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+    "left": Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+    "center": Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter,
+    "right": Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter,
 }
 QALIGNMENT_TO_ALIGNMENT = {
     0: "default",

@@ -102,9 +102,16 @@ class ComboField(MComboField, EditableField):
 
     def _get_control_alignment(self):
         """ Toolkit specific method to get the control's alignment. """
-        # default implementation
-        return qalignment_to_alignment(self.control.lineEdit().alignment())
+        # only works if combobox is ieditable, which currently is always False
+        line_edit = self.control.lineEdit()
+        if line_edit is not None:
+            return qalignment_to_alignment(line_edit.alignment())
+        else:
+            # no widget; cheat
+            return self.alignment
 
     def _set_control_alignment(self, alignment):
         """ Toolkit specific method to set the control's alignment. """
-        self.control.lineEdit().setAlignment(alignment_to_qalignment(alignment))
+        line_edit = self.control.lineEdit()
+        if line_edit is not None:
+            return line_edit.setAlignment(alignment_to_qalignment(alignment))

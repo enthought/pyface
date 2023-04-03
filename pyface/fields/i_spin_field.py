@@ -38,9 +38,6 @@ class ISpinField(IEditableField):
     #: Whether the values wrap around at maximum and minimum.
     wrap = Bool()
 
-    #: The alignment of the text in the field.
-    alignment = Alignment()
-
 
 class MSpinField(HasTraits):
 
@@ -152,6 +149,6 @@ class MSpinField(HasTraits):
         if self.control is not None:
             self._set_control_bounds(self.bounds)
 
-    def _wrap_updated(self):
+    def _wrap_updated(self, event):
         if self.control is not None:
-            self._set_control_wrap(self.wrap)
+            self._set_control_wrap(event.new)
