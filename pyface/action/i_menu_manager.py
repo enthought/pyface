@@ -10,7 +10,6 @@
 
 from traits.api import Instance, Str
 
-
 from pyface.action.action import Action
 from pyface.action.i_action_manager import IActionManager
 
@@ -35,4 +34,12 @@ class IMenuManager(IActionManager):
     # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
-        """ Creates a menu representation of the manager. """
+        """ Creates a menu representation of the manager.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control that owns the menu.
+        controller : ActionController
+            An optional ActionController for all items in the menu.
+        """

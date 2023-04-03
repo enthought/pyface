@@ -272,6 +272,8 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
+        group : Group
+            The group to walk.
         fn : callable
             A callable to apply to the tree of groups and items.
         """
@@ -290,6 +292,9 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
+        item : item
+            The item to walk.  This may be a submenu or similar in addition to
+            simple Action items.
         fn : callable
             A callable to apply to the tree of items and subgroups.
         """

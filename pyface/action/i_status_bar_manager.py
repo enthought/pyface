@@ -31,7 +31,13 @@ class IStatusBarManager(Interface):
     visible = Bool(True)
 
     def create_status_bar(self, parent):
-        """ Creates a status bar. """
+        """ Creates a status bar.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control that owns the status bar.
+        """
 
     def destroy(self):
         """ Destroys the status bar. """

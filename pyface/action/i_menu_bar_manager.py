@@ -22,4 +22,12 @@ class IMenuBarManager(IActionManager):
     # ------------------------------------------------------------------------
 
     def create_menu_bar(self, parent, controller=None):
-        """ Creates a menu bar representation of the manager. """
+        """ Creates a menu bar representation of the manager.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control that owns the menubar.
+        controller : ActionController
+            An optional ActionController for all items in the menubar.
+        """

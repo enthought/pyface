@@ -60,14 +60,16 @@ class IActionManager(Interface):
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, *args, **traits):
+    def __init__(self, *items, **traits):
         """ Creates a new action manager.
 
         Parameters
         ----------
-        args : collection of strings, Group instances, or ActionManagerItem instances
-            Positional arguments are interpreted as Items or Groups managed
-            by the action manager.
+        items : collection of strings, Group, or ActionManagerItem instances
+            Positional arguments are interpreted as Items or Groups
+            managed by the action manager.
+        traits : additional traits
+            Traits to be passed to the usual Traits ``__init__``.
 
         Notes
         -----
@@ -176,6 +178,8 @@ class IActionManager(Interface):
 
         Parameters
         ----------
+        group : Group
+            The group to walk.
         fn : callable
             A callable to apply to the tree of groups and items.
         """
@@ -187,6 +191,9 @@ class IActionManager(Interface):
 
         Parameters
         ----------
+        item : item
+            The item to walk.  This may be a submenu or similar in addition to
+            simple Action items.
         fn : callable
             A callable to apply to the tree of items and subgroups.
         """

@@ -39,4 +39,12 @@ class IToolBarManager(IActionManager):
     # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
-        """ Creates a tool bar. """
+        """ Creates a tool bar.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control that owns the toolbar.
+        controller : ActionController
+            An optional ActionController for all items in the toolbar.
+        """

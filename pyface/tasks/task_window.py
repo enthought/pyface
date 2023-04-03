@@ -451,15 +451,29 @@ class TaskState(HasStrictTraits):
         with an attached Task.
     """
 
+    #: The Task that the state comes from.
     task = Instance(Task)
+
+    #: The layout of panes in the TaskWindow.
     layout = Instance(TaskLayout)
+
+    #: Whether the task state has been initialized.
     initialized = Bool(False)
 
+    #: The central pane of the TaskWindow
     central_pane = Instance(ITaskPane)
-    dock_panes = List(IDockPane)
+
+    #: The list of all dock panes.
+    dock_panes = List(Instance(IDockPane))
+
+    #: The TaskWindow's menu bar manager instance.
     menu_bar_manager = Instance(IMenuBarManager)
+
+    #: The TaskWindow's status bar instance.
     status_bar_manager = Instance(IStatusBarManager)
-    tool_bar_managers = List(IToolBarManager)
+
+    #: The TaskWindow's tool bar instances.
+    tool_bar_managers = List(Instance(IToolBarManager))
 
     def get_dock_pane(self, id):
         """ Returns the dock pane with the specified id, or None if no such dock
