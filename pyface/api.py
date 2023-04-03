@@ -14,8 +14,10 @@ API for the ``pyface`` package.
 
 - :class:`~.Application`
 - :class:`~.ApplicationWindow`
+- :class:`~.BaseToolkit`
 - :attr:`~.clipboard`
 - :class:`~.Clipboard`
+- :func:`~.find_toolkit`
 - :class:`~.GUI`
 - :class:`~.GUIApplication`
 - :class:`~.ImageResource`
@@ -137,6 +139,7 @@ Wx-specific classes
 # Imports which don't select the toolkit as a side-effect.
 
 from .application import Application
+from .base_toolkit import BaseToolkit, find_toolkit
 from .color import Color
 from .constant import OK, CANCEL, YES, NO
 from .filter import Filter

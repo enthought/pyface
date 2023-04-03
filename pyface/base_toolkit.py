@@ -231,7 +231,11 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
     raise RuntimeError(msg) from toolkit_exception
 
 
-def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
+def find_toolkit(
+        entry_point="pyface.toolkits",
+        toolkits=None,
+        priorities=default_priorities,
+    ):
     """ Find a toolkit that works.
 
     If ETSConfig is set, then attempt to find a matching toolkit.  Otherwise
