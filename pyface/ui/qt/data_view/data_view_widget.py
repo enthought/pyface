@@ -12,10 +12,10 @@ import logging
 
 from traits.api import Callable, Enum, Instance, observe, provides
 
-from pyface.qt.QtCore import QAbstractItemModel
-from pyface.qt.QtGui import (
-    QAbstractItemView, QItemSelection, QItemSelectionModel, QTreeView
+from pyface.qt.QtCore import (
+    QAbstractItemModel, QItemSelection, QItemSelectionModel
 )
+from pyface.qt.QtGui import QAbstractItemView, QTreeView
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )

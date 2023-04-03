@@ -10,13 +10,13 @@
 from . import qt_api
 
 if qt_api == "pyqt5":
-    from PyQt5.QtNetwork import *
+    from PyQt5.QtWidgets import *
 
 elif qt_api == "pyqt6":
-    from PyQt6.QtNetwork import *
+    from PyQt6.QtWidgets import *
 
 elif qt_api == "pyside6":
-    from PySide6.QtNetwork import *
+    from PySide6.QtWidgets import *
 
 else:
-    from PySide2.QtNetwork import *
+    from PySide2.QtWidgets import *
