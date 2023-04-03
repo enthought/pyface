@@ -21,9 +21,9 @@ ALIGNMENT_TO_QALIGNMENT = {
 }
 QALIGNMENT_TO_ALIGNMENT = {
     0: "default",
-    Qt.AlignmentFlag.AlignLeft: "left",
-    Qt.AlignmentFlag.AlignHCenter: "center",
-    Qt.AlignmentFlag.AlignRight: "right",
+    int(Qt.AlignmentFlag.AlignLeft): "left",
+    int(Qt.AlignmentFlag.AlignHCenter): "center",
+    int(Qt.AlignmentFlag.AlignRight): "right",
 }
 ALIGNMENT_MASK = (
     Qt.AlignmentFlag.AlignLeft
@@ -37,5 +37,5 @@ def alignment_to_qalignment(alignment):
 
 
 def qalignment_to_alignment(alignment):
-    h_alignment = alignment & ALIGNMENT_MASK
+    h_alignment = int(alignment & ALIGNMENT_MASK)
     return QALIGNMENT_TO_ALIGNMENT[h_alignment]
