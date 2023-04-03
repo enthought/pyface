@@ -14,7 +14,6 @@ from collections.abc import Sequence
 from traits.api import HasTraits, List, Str
 
 from pyface.i_image import IImage
-from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
 
 
@@ -130,6 +129,8 @@ class MImageResource(HasTraits):
         """
 
         if self._ref is None:
+            from pyface.resource_manager import resource_manager
+
             self._ref = resource_manager.locate_image(
                 self.name, self.search_path, size
             )

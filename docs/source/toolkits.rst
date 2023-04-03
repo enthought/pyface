@@ -23,9 +23,10 @@ ways:
     from tratis.etsconfig.api import ETSConfig
     ETSConfig.toolkit = 'qt'
 
-  This must be done _before_ any widget imports in your application, including
-  importing :py:mod:`pyface.api`.  Precisely, this must be set before the
-  first import of :py:mod:`pyface.toolkit`.
+  This must be done _before_ any widget imports in your application.
+  Precisely, this must be set before the first call to
+  :py:func:`pyface.base_toolkit.find_toolkit` (which usually happens
+  as a side-effect of importing :py:mod:`pyface.toolkit`).
 
 If for some reason Pyface can't load a deliberately specified toolkit, then it
 will raise an exception.
@@ -34,6 +35,14 @@ If the toolkit is not specified, Pyface will try to load the ``qt`` or ``wx``
 toolkits, in that order, and then any other toolkits that it knows about
 other than ``null``.  If all of those fail, then it will try to load the
 ``null`` toolkit.
+
+Pyface tries to defer toolkit selection as long as possible until it is
+actually needed because importing a toolkit tends to be slow and have
+significant side-effects. Very occasionally an application or test suite may
+need to ensure that the toolkit has been selected (for example, to enable
+"ui" dispatch from background threads in Traits).  This can be achieved by
+either importing :py:mod:`pyface.toolkit` or, more directly, by calling
+:py:func:`pyface.base_toolkit.find_toolkit`.
 
 Once selected, the toolkit infrastructure is largely transparent to the
 application.

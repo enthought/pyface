@@ -17,9 +17,12 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Any, Bool, HasTraits, List, Property, Str
+from traits.api import Any, Bool, HasTraits, List, Property, Str, provides
+
+from pyface.action.i_status_bar_manager import IStatusBarManager
 
 
+@provides(IStatusBarManager)
 class StatusBarManager(HasTraits):
     """ A status bar manager realizes itself in a status bar control. """
 

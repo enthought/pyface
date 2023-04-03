@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from pyface.action.api import StatusBarManager
 from traits.api import Callable, HasTraits, Instance, List, Str
 
 
@@ -49,7 +48,7 @@ class Task(HasTraits):
     menu_bar = Instance(MenuBarSchema)
 
     #: The (optional) status bar for the task.
-    status_bar = Instance(StatusBarManager)
+    status_bar = Instance("pyface.action.status_bar_manager.StatusBarManager")
 
     #: The list of tool bars for the tasks.
     tool_bars = List(ToolBarSchema)

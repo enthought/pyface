@@ -18,7 +18,6 @@ from traits.trait_base import user_name_for
 
 
 from pyface.action.action import Action
-from pyface.action.action_item import ActionItem
 
 
 class Group(HasTraits):
@@ -151,6 +150,8 @@ class Group(HasTraits):
         action, and that is inserted.  If the item is a callable, then an
         Action is created for the callable, and then that is handled as above.
         """
+        from pyface.action.action_item import ActionItem
+
         if isinstance(item, Action):
             item = ActionItem(action=item)
         elif callable(item):

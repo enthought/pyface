@@ -14,14 +14,9 @@
 
 import wx
 
-from traits.api import Instance, List, Str, observe, provides
+from traits.api import Str, observe, provides
 
-from pyface.action.api import MenuBarManager, StatusBarManager
-from pyface.action.api import ToolBarManager
-from pyface.i_application_window import (
-    IApplicationWindow, MApplicationWindow,
-)
-from pyface.ui_traits import Image
+from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.wx.aui import aui, PyfaceAuiManager
 from .image_resource import ImageResource
 from .window import Window
@@ -33,29 +28,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    # 'IApplicationWindow' interface ---------------------------------------
-
-    icon = Image()
-
-    menu_bar_manager = Instance(MenuBarManager)
-
-    status_bar_manager = Instance(StatusBarManager)
-
-    tool_bar_manager = Instance(ToolBarManager)
-
-    # If the underlying toolkit supports multiple toolbars then you can use
-    # this list instead.
-    tool_bar_managers = List(ToolBarManager)
-
     # 'IWindow' interface -------------------------------------------------#
-
-    # fixme: We can't set the default value of the actual 'size' trait here as
-    # in the toolkit-specific event handlers for window size and position
-    # changes, we set the value of the shadow '_size' trait. The problem is
-    # that by doing that traits never knows that the trait has been set and
-    # hence always returns the default value! Using a trait initializer method
-    # seems to work however (e.g. 'def _size_default'). Hmmmm....
-    ##     size = (800, 600)
 
     title = Str("Pyface")
 
@@ -79,7 +52,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             self.control.SetStatusBar(status_bar)
 
     def _create_tool_bar(self, parent):
-        tool_bar_managers = self._get_tool_bar_managers()
+        tool_bar_managers = self.tool_bar_managers
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
                 tool_bar = tool_bar_manager.create_tool_bar(parent, aui=True)
@@ -174,18 +147,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return info
 
-    def _get_tool_bar_managers(self):
-        """ Return all tool bar managers specified for the window. """
-
-        # fixme: V3 remove the old-style single toolbar option!
-        if self.tool_bar_manager is not None:
-            tool_bar_managers = [self.tool_bar_manager]
-
-        else:
-            tool_bar_managers = self.tool_bar_managers
-
-        return tool_bar_managers
-
     def _wx_enable_tool_bar(self, tool_bar, enabled):
         """ Enable/Disablea tool bar. """
 
@@ -225,7 +186,7 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.destroy()
             self._create_status_bar(self.control)
 
-    @observe("tool_bar_manager, tool_bar_managers.items")
+    @observe("tool_bar_managers.items")
     def _update_tool_bar_managers(self, event):
         if self.control is not None:
             self._create_tool_bar(self.control)

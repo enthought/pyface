@@ -12,7 +12,9 @@
 from traits.api import Instance, Property, Str, cached_property
 
 
-from pyface.tasks.api import Editor, Task, TaskPane
+from pyface.tasks.i_editor import IEditor
+from pyface.tasks.task import Task
+from pyface.tasks.i_task_pane import ITaskPane
 from pyface.action.listening_action import ListeningAction
 
 
@@ -74,7 +76,7 @@ class CentralPaneAction(TaskAction):
     # CentralPaneAction interface -----------------------------------------#
 
     #: The central pane with which the action is associated.
-    central_pane = Property(Instance(TaskPane), observe="task")
+    central_pane = Property(Instance(ITaskPane), observe="task")
 
     # ------------------------------------------------------------------------
     # Protected interface.
@@ -101,7 +103,7 @@ class DockPaneAction(TaskAction):
     # DockPaneAction interface ---------------------------------------------
 
     #: The dock pane with which the action is associated. Set by the framework.
-    dock_pane = Property(Instance(TaskPane), observe="task")
+    dock_pane = Property(Instance(ITaskPane), observe="task")
 
     #: The ID of the dock pane with which the action is associated.
     dock_pane_id = Str()
@@ -132,7 +134,7 @@ class EditorAction(CentralPaneAction):
 
     #: The active editor in the central pane with which the action is associated.
     active_editor = Property(
-        Instance(Editor), observe="central_pane.active_editor"
+        Instance(IEditor), observe="central_pane.active_editor"
     )
 
     # ------------------------------------------------------------------------

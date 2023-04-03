@@ -45,7 +45,7 @@ class ActionManager(HasTraits):
     enabled = Bool(True)
 
     #: All of the contribution groups in the manager.
-    groups = Property(List(Group))
+    groups = Property(List(Instance(Group)), observe='_groups.items')
 
     #: The manager's unique identifier (if it has one).
     id = Str()
@@ -61,7 +61,7 @@ class ActionManager(HasTraits):
     # Private interface ----------------------------------------------------
 
     #: All of the contribution groups in the manager.
-    _groups = List(Group)
+    _groups = List(Instance(Group))
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -272,6 +272,8 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
+        group : Group
+            The group to walk.
         fn : callable
             A callable to apply to the tree of groups and items.
         """
@@ -290,6 +292,9 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
+        item : item
+            The item to walk.  This may be a submenu or similar in addition to
+            simple Action items.
         fn : callable
             A callable to apply to the tree of items and subgroups.
         """

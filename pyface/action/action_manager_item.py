@@ -32,7 +32,7 @@ class ActionManagerItem(HasTraits):
     id = Str()
 
     #: The group the item belongs to.
-    parent = Instance("pyface.action.api.Group")
+    parent = Instance("pyface.action.group.Group")
 
     #: Is the item enabled?
     enabled = Bool(True)
