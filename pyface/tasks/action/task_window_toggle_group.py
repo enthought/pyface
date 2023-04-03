@@ -9,8 +9,9 @@
 # Thanks for using Enthought open source!
 
 
-from pyface.action.api import Action, ActionItem, Group
 from traits.api import Any, Instance, List, Property, Str, observe
+
+from pyface.action.api import Action, Group
 
 
 class TaskWindowToggleAction(Action):
@@ -94,6 +95,8 @@ class TaskWindowToggleGroup(Group):
     # -------------------------------------------------------------------------
 
     def _get_items(self):
+        from pyface.action.action_item import ActionItem
+
         items = []
         for window in self.application.windows:
             active = window == self.application.active_window

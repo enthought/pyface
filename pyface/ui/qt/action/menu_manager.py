@@ -18,15 +18,17 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, List, Str
+from traits.api import Instance, List, Str, provides
 
 
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.action_item import _Tool, Action
+from pyface.action.i_menu_manager import IMenuManager
 from pyface.action.group import Group
 
 
+@provides(IMenuManager)
 class MenuManager(ActionManager, ActionManagerItem):
     """ A menu manager realizes itself in a menu control.
 

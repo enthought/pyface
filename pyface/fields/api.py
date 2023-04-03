@@ -14,6 +14,7 @@ API for the ``pyface.fields`` subpackage.
 
 - :class:`~.CheckBoxField`
 - :class:`~.ComboField`
+- :class:`~.ImageField`
 - :class:`~.RadioButtonField`
 - :class:`~.SpinField`
 - :class:`~.TextField`
@@ -23,7 +24,9 @@ API for the ``pyface.fields`` subpackage.
 Interfaces
 ----------
 - :class:`~.IComboField`
+- :class:`~.IEditableField`
 - :class:`~.IField`
+- :class:`~.IImageField`
 - :class:`~.ISpinField`
 - :class:`~.ITextField`
 - :class:`~.ITimeField`
@@ -32,6 +35,7 @@ Interfaces
 """
 
 from .i_combo_field import IComboField
+from .i_editable_field import IEditableField
 from .i_field import IField
 from .i_image_field import IImageField
 from .i_spin_field import ISpinField
@@ -39,11 +43,52 @@ from .i_text_field import ITextField
 from .i_time_field import ITimeField
 from .i_toggle_field import IToggleField
 
-from .combo_field import ComboField
-from .image_field import ImageField
-from .spin_field import SpinField
-from .text_field import TextField
-from .time_field import TimeField
-from .toggle_field import (
-    CheckBoxField, RadioButtonField, ToggleButtonField,
-)
+
+# ----------------------------------------------------------------------------
+# Deferred imports
+# ----------------------------------------------------------------------------
+
+# These imports have the side-effect of performing toolkit selection
+
+_toolkit_imports = {
+    'CheckBoxField': 'toggle_field',
+    'ComboField': 'combo_field',
+    'EditableField': 'editale_field',
+    'Field': 'field',
+    'ImageField': 'image_field',
+    'RadioButtonField': 'toggle_field',
+    'SpinField': 'spin_field',
+    'TextField': 'text_field',
+    'TimeField': 'time_field',
+    'ToggleButtonField': 'toggle_field',
+}
+
+
+def __getattr__(name):
+    """Lazily load attributes with side-effects
+
+    In particular, lazily load toolkit backend names.  For efficiency, lazily
+    loaded objects are injected into the module namespace
+    """
+    # sentinel object for no result
+    not_found = object()
+    result = not_found
+
+    if name in _toolkit_imports:
+        from pyface.toolkit import toolkit_object
+        source = _toolkit_imports[name]
+        result = toolkit_object(f"fields.{source}:{name}")
+
+    if result is not_found:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+    globals()[name] = result
+    return result
+
+
+# ----------------------------------------------------------------------------
+# Introspection support
+# ----------------------------------------------------------------------------
+
+def __dir__():
+    return sorted(set(globals()) | set(_toolkit_imports))

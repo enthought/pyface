@@ -78,7 +78,8 @@ from .schema import (
     SMenuBar,
     SToolBar,
 )
-from .schema_addition import SchemaAddition
+# deprecated: will be removed in a future Pyface release
+from pyface.action.schema.schema_addition import SchemaAddition
 from .task_action import (
     CentralPaneAction,
     DockPaneAction,
