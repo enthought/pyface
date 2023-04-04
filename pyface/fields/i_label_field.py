@@ -11,7 +11,7 @@
 """ The text field interface. """
 
 
-from traits.api import Bool, Enum, HasTraits, Str
+from traits.api import HasTraits, Str
 
 from pyface.fields.i_field import IField
 from pyface.ui_traits import Image

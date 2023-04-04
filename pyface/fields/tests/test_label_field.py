@@ -17,7 +17,7 @@ from ..label_field import LabelField
 from .field_mixin import FieldMixin
 
 
-class LabelFieldMixin(FieldMixin):
+class TestLabelField(FieldMixin, unittest.TestCase):
 
     def _create_widget_simple(self, **traits):
         traits.setdefault("value", "Label")
