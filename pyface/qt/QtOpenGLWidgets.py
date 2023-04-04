@@ -10,13 +10,15 @@
 from . import qt_api
 
 if qt_api == "pyqt5":
-    from PyQt5.QtNetwork import *
+    from PyQt5.QtOpenGL import *
+    from PyQt5.QtWidgets import QOpenGLWidget
 
 elif qt_api == "pyqt6":
-    from PyQt6.QtNetwork import *
+    from PyQt6.QtOpenGLWidgets import *
 
 elif qt_api == "pyside6":
-    from PySide6.QtNetwork import *
+    from PySide6.QtOpenGLWidgets import *
 
 else:
-    from PySide2.QtNetwork import *
+    from PySide2.QtOpenGL import *
+    from PySide2.QtWidgets import QOpenGLWidget

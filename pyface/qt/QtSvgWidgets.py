@@ -10,13 +10,15 @@
 from . import qt_api
 
 if qt_api == "pyqt5":
-    from PyQt5.QtNetwork import *
+    # Forwards compatibility imports
+    from PyQt5.QtSvg import *
 
 elif qt_api == "pyqt6":
-    from PyQt6.QtNetwork import *
+    from PyQt6.QtSvgWidgets import *
 
 elif qt_api == "pyside6":
-    from PySide6.QtNetwork import *
+    from PySide6.QtSvgWidgets import *
 
 else:
-    from PySide2.QtNetwork import *
+    # Forwards compatibility imports
+    from PySide2.QtSvg import *

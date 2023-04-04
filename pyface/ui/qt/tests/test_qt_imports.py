@@ -21,10 +21,13 @@ class TestPyfaceQtImports(unittest.TestCase):
         import pyface.qt.QtGui  # noqa: F401
         import pyface.qt.QtNetwork  # noqa: F401
         import pyface.qt.QtOpenGL  # noqa: F401
+        import pyface.qt.QtOpenGLWidgets  # noqa: F401
         import pyface.qt.QtSvg  # noqa: F401
+        import pyface.qt.QtSvgWidgets  # noqa: F401
         import pyface.qt.QtTest  # noqa: F401
         import pyface.qt.QtMultimedia  # noqa: F401
         import pyface.qt.QtMultimediaWidgets  # noqa: F401
+        import pyface.qt.QtWidgets  # noqa: F401
 
     @unittest.skipIf(sys.version_info > (3, 6), "WebKit is not available")
     def test_import_web_kit(self):
