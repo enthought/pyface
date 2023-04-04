@@ -19,7 +19,7 @@ class ImageControl(wx.Window):
     """A wxPython control that displays an image.
     """
 
-    def __init__(self, parent, bitmap, padding=10):
+    def __init__(self, parent, bitmap=None, padding=10):
         """Initializes the object."""
         if bitmap is not None:
             size = wx.Size(
