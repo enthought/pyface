@@ -9,16 +9,82 @@ to a Traits interface, so that you can use them in a cross-toolkit manner.
 
 Where possible, these classes share a common API for the same functionality.
 In particular, all classes have a
-:py:attr:`~pyface.fields.i_field.IField.value` trait which holds the (usually
-user-editable) value displayed in the field.  Code using the field can listen
-to changes in this trait to react to the user entering a new value for the
-field without needing to know anything about the underlying toolkit event
-signalling mechanisms.
+:py:attr:`~pyface.fields.i_field.IField.value` trait which holds the value
+displayed in the field.
 
-All fields also provide a trait for setting the
-:py:attr:`~pyface.fields.i_field.IField.context_menu` of the field. Context
-menus should be :py:class:`~pyface.action.menu_manager.MenuManager`
-instances.
+Fields where the value is user-editable rather than simply displayed implement
+the :py:attr:`~pyface.fields.i_editable_field.IEditableField` interface.  Code
+using the field can listen to changes in the value trait to react to the user
+entering a new value for the field without needing to know anything about the
+underlying toolkit event signalling mechanisms.
+
+Fields inherit from :py:class:`~pyface.i_widget.IWidget` and
+:py:class:`~pyface.i_layout_widget.ILayoutWidget` which have a number of
+additional traits with usefule features:
+
+:py:attr:`~pyface.i_widget.IWidget.tooltip`
+    A tooltip for the widget, which should hold string.
+
+:py:attr:`~pyface.i_widget.IWidget.context_menu`
+    A context menu for the widget, which should hold an
+    :py:class:`~pyface.action.i_menu_manager.IMenuManager`instances.
+
+:py:attr:`~pyface.i_layout_widget.ILayoutWidget.minimum_size`
+    A tuple holding the minimum size of a layout widget.
+
+:py:attr:`~pyface.i_layout_widget.ILayoutWidget.maximum_size`
+    A tuple holding the minimum size of a layout widget.
+
+:py:attr:`~pyface.i_layout_widget.ILayoutWidget.stretch`
+    A tuple holding information about the distribution of addtional space into
+    the widget when growing in a layout.  Higher numbers mean proportinally
+    more space.
+
+:py:attr:`~pyface.i_layout_widget.ILayoutWidget.size_policy`
+    A tuple holding information about how the widget can grow and shrink.
+
+:py:attr:`~pyface.fields.i_field.IField.alignment`
+    A value holding the horizontal alignment of the contents of the field.
+
+ComboField
+==========
+
+The :py:class:`~pyface.fields.i_combo_field.IComboField` interface has an arbitrary
+:py:attr:`~pyface.fields.i_combo_field.IComboField.value` that must come from a list
+of valid :py:attr:`~pyface.fields.i_combo_field.IComboField.values`.  For non-text
+values, a :py:attr:`~pyface.fields.i_combo_field.IComboField.formatter` function
+should be provided - this defaults to either :py:func:`str` (Python 3+) or
+:py:func:`unicode` (Python 2).
+
+LabelField
+==========
+
+The :py:class:`~pyface.fields.i_label_field.ILabelField` interface has a string
+for the :py:attr:`~pyface.fields.i_label_field.ILabelField.value` which is not
+user-editable.
+
+In the Qt backend they can have an image for an
+:py:attr:`~pyface.fields.i_label_field.ILabelField.icon`.
+
+ImageField
+==========
+
+The :py:class:`~pyface.fields.i_image_field.IImageField` interface has an
+:py:class:`~pyface.i_image.IImage` for its
+:py:attr:`~pyface.fields.i_image_field.IImageField.value` which is not
+user-editable.
+
+SpinField
+=========
+
+The :py:class:`~pyface.fields.i_spin_field.ISpinField` interface has an integer
+for the :py:attr:`~pyface.fields.i_spin_field.ISpinField.value`, and also
+requires a range to be set, either via setting the min/max values as a tuple to
+the :py:attr:`~pyface.fields.i_spin_field.ISpinField.range` trait, or by setting
+values individually to :py:attr:`~pyface.fields.i_spin_field.ISpinField.minimum`
+and :py:attr:`~pyface.fields.i_spin_field.ISpinField.maximum`.  The
+:py:attr:`~pyface.fields.i_spin_field.ISpinField.wrap` trait determines whether
+the spinner wraps around at the extreme values.
 
 TextField
 =========
@@ -40,26 +106,6 @@ also be set to conceal typed text by setting
 the Qt backend has a number of other options as well).  The text field can be
 set to read-only mode via the
 :py:attr:`~pyface.fields.i_text_field.ITextField.read_only` trait.
-
-SpinField
-=========
-
-The :py:class:`~pyface.fields.i_spin_field.ISpinField` interface has an integer
-for the :py:attr:`~pyface.fields.i_spin_field.ISpinField.value`, and also
-requires a range to be set, either via setting the min/max values as a tuple to
-the :py:attr:`~pyface.fields.i_spin_field.ISpinField.range` trait, or by setting
-values individually to :py:attr:`~pyface.fields.i_spin_field.ISpinField.minimum`
-and :py:attr:`~pyface.fields.i_spin_field.ISpinField.maximum`.
-
-ComboField
-==========
-
-The :py:class:`~pyface.fields.i_combo_field.IComboField` interface has an arbitrary
-:py:attr:`~pyface.fields.i_combo_field.IComboField.value` that must come from a list
-of valid :py:attr:`~pyface.fields.i_combo_field.IComboField.values`.  For non-text
-values, a :py:attr:`~pyface.fields.i_combo_field.IComboField.formatter` function
-should be provided - this defaults to either :py:func:`str` (Python 3+) or
-:py:func:`unicode` (Python 2).
 
 TimeField
 ==========
