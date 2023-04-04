@@ -26,6 +26,13 @@ class TestSystemMetrics(unittest.TestCase):
         height = self.metrics.screen_height
         self.assertGreaterEqual(height, 0)
 
+    def test_screen_sizes(self):
+        screens = self.metrics.screen_sizes
+        self.assertTrue(all(
+            (isinstance(screen, tuple) and len(screen) == 2)
+            for screen in screens
+        ))
+
     def test_background_color(self):
         color = self.metrics.dialog_background_color
         self.assertIn(len(color), [3, 4])

@@ -15,7 +15,7 @@
 from pyface.qt import QtGui, is_qt4
 
 
-from traits.api import HasTraits, Int, Property, provides, Tuple
+from traits.api import HasTraits, Int, List, Property, provides, Tuple
 
 
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
@@ -29,9 +29,14 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     # 'ISystemMetrics' interface -------------------------------------------
 
+    #: The width of the main screen in pixels.
     screen_width = Property(Int)
 
+    #: The height of the main screen in pixels.
     screen_height = Property(Int)
+
+    #: The height and width of each screen in pixels
+    screen_sizes = Property(List(Tuple(Int, Int)))
 
     dialog_background_color = Property(Tuple)
 
@@ -40,26 +45,28 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_screen_width(self):
-        # QDesktopWidget.screenGeometry() is deprecated and Qt docs
-        # suggest using screens() instead, but screens in not available in qt
-        # see issue: enthought/pyface#721
-        if not is_qt4:
-            return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
+        screens = self.screen_sizes
+        if len(screens) == 0:
+            return 0
         else:
-            return QtGui.QApplication.instance().desktop().availableGeometry().width()
+            return screens[0]
 
     def _get_screen_height(self):
-        # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
-        # suggest using screens() instead, but screens in not available in qt
-        # see issue: enthought/pyface#721
-        if not is_qt4:
-            return (
-                QtGui.QApplication.instance().screens()[0].availableGeometry().height()
-            )
+        screens = self.screen_sizes
+        if len(screens) == 0:
+            return 0
         else:
-            return (
-                QtGui.QApplication.instance().desktop().availableGeometry().height()
+            return screens[0]
+
+    def _get_screen_sizes(self):
+        screens = QtGui.QApplication.instance().screens()
+        return [
+            (
+                screen.availableGeometry().width(),
+                screen.availableGeometry().height(),
             )
+            for screen in screens
+        ]
 
     def _get_dialog_background_color(self):
         color = (
