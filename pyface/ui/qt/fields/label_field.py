@@ -14,7 +14,7 @@
 from traits.api import provides
 
 from pyface.fields.i_label_field import ILabelField, MLabelField
-from pyface.qt.QtGui import QIcon, QLabel
+from pyface.qt.QtGui import QLabel, QPixmap
 from .field import Field
 
 
@@ -44,6 +44,6 @@ class LabelField(MLabelField, Field):
     def _set_control_icon(self, icon):
         """ Toolkit specific method to set the control's icon. """
         if icon is not None:
-            self.control.setIcon(icon.create_icon())
+            self.control.setPixmap(self.icon.create_bitmap())
         else:
-            self.control.setIcon(QIcon())
+            self.control.setPixmap(QPixmap())

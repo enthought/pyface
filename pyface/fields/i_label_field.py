@@ -30,6 +30,12 @@ class ILabelField(IField):
 class MLabelField(HasTraits):
     """ The text field mix-in. """
 
+    #: The value held by the field.
+    value = Str()
+
+    #: The icon to display with the toggle.
+    icon = Image()
+
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
