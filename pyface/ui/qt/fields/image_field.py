@@ -10,7 +10,7 @@
 
 """ The Qt-specific implementation of the text field class """
 
-from pyface.qt.QtGui import QLabel
+from pyface.qt.QtGui import QLabel, QPixmap
 
 from traits.api import provides
 
@@ -50,7 +50,7 @@ class ImageField(MImageField, Field):
         """ Toolkit specific method to set the control's value. """
         if value is None:
             self._toolkit_value = None
-            self.control.clear()
+            self.control.setPixmap(QPixmap())
         else:
             self._toolkit_value = self.value.create_bitmap()
             self.control.setPixmap(self._toolkit_value)
