@@ -15,6 +15,7 @@ API for the ``pyface.fields`` subpackage.
 - :class:`~.CheckBoxField`
 - :class:`~.ComboField`
 - :class:`~.ImageField`
+- :class:`~.LabelField`
 - :class:`~.RadioButtonField`
 - :class:`~.SpinField`
 - :class:`~.TextField`
@@ -27,6 +28,7 @@ Interfaces
 - :class:`~.IEditableField`
 - :class:`~.IField`
 - :class:`~.IImageField`
+- :class:`~.ILabelField`
 - :class:`~.ISpinField`
 - :class:`~.ITextField`
 - :class:`~.ITimeField`
@@ -38,6 +40,7 @@ from .i_combo_field import IComboField
 from .i_editable_field import IEditableField
 from .i_field import IField
 from .i_image_field import IImageField
+from .i_label_field import ILabelField
 from .i_spin_field import ISpinField
 from .i_text_field import ITextField
 from .i_time_field import ITimeField
@@ -56,6 +59,7 @@ _toolkit_imports = {
     'EditableField': 'editale_field',
     'Field': 'field',
     'ImageField': 'image_field',
+    'LabelField': 'label_field',
     'RadioButtonField': 'toggle_field',
     'SpinField': 'spin_field',
     'TextField': 'text_field',

@@ -19,28 +19,28 @@ entering a new value for the field without needing to know anything about the
 underlying toolkit event signalling mechanisms.
 
 Fields inherit from :py:class:`~pyface.i_widget.IWidget` and
-:py:class:`~pyface.i_layout_widget.ILayoutWidget` which have a number of
-additional traits with usefule features:
+:py:class:`~pyface.i_layout_item.ILayoutItem` which have a number of
+additional traits with useful features:
 
 :py:attr:`~pyface.i_widget.IWidget.tooltip`
     A tooltip for the widget, which should hold string.
 
 :py:attr:`~pyface.i_widget.IWidget.context_menu`
     A context menu for the widget, which should hold an
-    :py:class:`~pyface.action.i_menu_manager.IMenuManager`instances.
+    :py:class:`~pyface.action.i_menu_manager.IMenuManager` instance.
 
-:py:attr:`~pyface.i_layout_widget.ILayoutWidget.minimum_size`
+:py:attr:`~pyface.i_layout_item.ILayoutItem.minimum_size`
     A tuple holding the minimum size of a layout widget.
 
-:py:attr:`~pyface.i_layout_widget.ILayoutWidget.maximum_size`
+:py:attr:`~pyface.i_layout_item.ILayoutItem.maximum_size`
     A tuple holding the minimum size of a layout widget.
 
-:py:attr:`~pyface.i_layout_widget.ILayoutWidget.stretch`
+:py:attr:`~pyface.i_layout_item.ILayoutItem.stretch`
     A tuple holding information about the distribution of addtional space into
     the widget when growing in a layout.  Higher numbers mean proportinally
     more space.
 
-:py:attr:`~pyface.i_layout_widget.ILayoutWidget.size_policy`
+:py:attr:`~pyface.i_layout_item.ILayoutItem.size_policy`
     A tuple holding information about how the widget can grow and shrink.
 
 :py:attr:`~pyface.fields.i_field.IField.alignment`
@@ -53,8 +53,7 @@ The :py:class:`~pyface.fields.i_combo_field.IComboField` interface has an arbitr
 :py:attr:`~pyface.fields.i_combo_field.IComboField.value` that must come from a list
 of valid :py:attr:`~pyface.fields.i_combo_field.IComboField.values`.  For non-text
 values, a :py:attr:`~pyface.fields.i_combo_field.IComboField.formatter` function
-should be provided - this defaults to either :py:func:`str` (Python 3+) or
-:py:func:`unicode` (Python 2).
+should be provided, defaulting to :py:func:`str`.
 
 LabelField
 ==========
@@ -80,7 +79,7 @@ SpinField
 The :py:class:`~pyface.fields.i_spin_field.ISpinField` interface has an integer
 for the :py:attr:`~pyface.fields.i_spin_field.ISpinField.value`, and also
 requires a range to be set, either via setting the min/max values as a tuple to
-the :py:attr:`~pyface.fields.i_spin_field.ISpinField.range` trait, or by setting
+the :py:attr:`~pyface.fields.i_spin_field.ISpinField.bounds` trait, or by setting
 values individually to :py:attr:`~pyface.fields.i_spin_field.ISpinField.minimum`
 and :py:attr:`~pyface.fields.i_spin_field.ISpinField.maximum`.  The
 :py:attr:`~pyface.fields.i_spin_field.ISpinField.wrap` trait determines whether
