@@ -37,7 +37,7 @@ class ShadowedModuleLoader(Loader):
     new_name : str
         The full name of the corresponding "real" module.
         Eg. "pyface.ui.qt.foo"
-    new_spec : ModuleSpec instance
+    new_spec : ModuleSpec
         The spec object for the corresponding "real" module.
     """
 

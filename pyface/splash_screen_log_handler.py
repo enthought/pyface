@@ -22,7 +22,7 @@ class SplashScreenLogHandler(Handler):
 
         Parameters
         ----------
-        splash_screen : ISplashScreen instance
+        splash_screen : ISplashScreen
             The splash screen being used to display the log messages
         """
         # Base class constructor.
@@ -36,7 +36,7 @@ class SplashScreenLogHandler(Handler):
 
         Parameters
         ----------
-        record : logging record instance
+        record : logging record
             The log record to be displayed.
         """
         self._splash_screen.text = str(record.getMessage()) + "..."

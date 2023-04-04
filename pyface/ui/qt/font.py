@@ -187,7 +187,7 @@ def map_to_nearest(target, mapping):
 
     Returns
     -------
-    value : any
+    value : Any
         The value corresponding to the nearest key.  In the case of a tie,
         the first value is returned.
     """

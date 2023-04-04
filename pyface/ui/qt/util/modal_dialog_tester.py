@@ -86,7 +86,7 @@ class ModalDialogTester(object):
 
         Parameters
         ----------
-        when_opened : callable
+        when_opened : Callable
             A callable to be called when the dialog has been created and
             opened. The callable with be called with the tester instance
             as argument.
@@ -142,7 +142,7 @@ class ModalDialogTester(object):
 
         Parameters
         ----------
-        when_opened : callable
+        when_opened : Callable
             A callable to be called when the dialog has been created and
             opened. The callable with be called with the tester instance
             as argument.

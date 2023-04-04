@@ -116,7 +116,7 @@ class GUIApplication(Application):
 
         Returns
         -------
-        window : IWindow instance or None
+        window : IWindow  or None
             The new IWindow instance.
         """
         window = self.window_factory(application=self, **kwargs)

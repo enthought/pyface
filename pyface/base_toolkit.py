@@ -179,7 +179,7 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
 
     Returns
     -------
-    toolkit_object : callable
+    toolkit_object : Callable
         A callable object that implements the Toolkit interface.
 
     Raises
@@ -251,12 +251,12 @@ def find_toolkit(
     toolkits : collection of strings
         Only consider toolkits which match the given strings, ignore other
         ones.
-    priorities : callable
+    priorities : Callable
         A callable function that returns an priority for each plugin.
 
     Returns
     -------
-    toolkit : Toolkit instance
+    toolkit : Toolkit
         A callable object that implements the Toolkit interface.
 
     Raises

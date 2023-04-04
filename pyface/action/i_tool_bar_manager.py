@@ -45,6 +45,6 @@ class IToolBarManager(IActionManager):
         ----------
         parent : toolkit control
             The toolkit control that owns the toolbar.
-        controller : ActionController
+        controller : pyface.action.action_controller.ActionController
             An optional ActionController for all items in the toolbar.
         """

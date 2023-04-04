@@ -38,7 +38,7 @@ class IPythonShell(ILayoutWidget):
 
         Returns
         -------
-        interpreter : InteractiveInterpreter instance
+        interpreter : InteractiveInterpreter
             Returns the InteractiveInterpreter instance.
         """
 
@@ -49,7 +49,7 @@ class IPythonShell(ILayoutWidget):
         ----------
         name : str
             The python idetifier to bind the value to.
-        value : any
+        value : Any
             The python object to be bound into the interpreter's namespace.
         """
 
@@ -118,7 +118,7 @@ class MPythonShell(HasTraits):
         ----------
         name : str
             The python idetifier to bind the value to.
-        value : any
+        value : Any
             The python object to be bound into the interpreter's namespace.
         """
         self.interpreter().locals[name] = value

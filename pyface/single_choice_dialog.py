@@ -38,7 +38,7 @@ def choose_one(parent, message, choices, title="Choose", cancel=True):
 
     Returns
     -------
-    choice : any
+    choice : Any
         The selected object, or None if cancelled.
     """
     dialog = SingleChoiceDialog(

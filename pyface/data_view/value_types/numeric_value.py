@@ -51,7 +51,7 @@ class NumericValue(EditableValue):
             The row in the data model being queried.
         column : sequence of int
             The column in the data model being queried.
-        value : any
+        value : Any
             The value to validate.
 
         Returns

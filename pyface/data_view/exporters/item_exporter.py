@@ -26,9 +26,9 @@ class ItemExporter(AbstractDataExporter):
 
         Parameters
         ----------
-        data_wrapper : DataWrapper instance
+        data_wrapper : DataWrapper
             The data wrapper that will be used to export data.
-        model : AbstractDataModel instance
+        model : AbstractDataModel
             The data model holding the data.
         indices : list of (row, column) index pairs
             The indices where the data is to be stored.
@@ -42,14 +42,14 @@ class ItemExporter(AbstractDataExporter):
 
         Parameters
         ----------
-        model : AbstractDataModel instance
+        model : AbstractDataModel
             The data model holding the data.
         indices : list of (row, column) index pairs
             The indices where the data is to be stored.
 
         Returns
         -------
-        data : any
+        data : Any
             The data, of a type that can be serialized by the format.
         """
         if len(indices) != 1:

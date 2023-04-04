@@ -121,7 +121,7 @@ class TasksApplication(GUIApplication):
 
         Parameters
         ----------
-        layout : TaskLayout instance or None
+        layout : TaskLayout  or None
             The pane layout for the window.
         **kwargs : dict
             Additional keyword arguments to pass to the window factory.
@@ -129,7 +129,7 @@ class TasksApplication(GUIApplication):
 
         Returns
         -------
-        window : ITaskWindow instance or None
+        window : ITaskWindow  or None
             The new TaskWindow.
         """
         from pyface.tasks.task_window_layout import TaskWindowLayout

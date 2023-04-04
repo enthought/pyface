@@ -14,6 +14,49 @@ The following GUI backends are supported:
 - PyQt5 (stable) and PyQt6 (in development)
 - wxPython 4 (experimental)
 
+Example
+-------
+
+The following code creates a window with a simple Python shell:
+
+..  code-block:: python
+
+    from pyface.api import ApplicationWindow, GUI, IPythonShell
+
+    class MainWindow(ApplicationWindow):
+        """ The main application window. """
+
+        #: The PythonShell that forms the contents of the window
+        shell = Instance(IPythonShell, allow_none=False)
+
+        def _create_contents(self, parent):
+            """ Create the editor. """
+            self.shell.create(parent)
+            return self.shell.control
+
+        def destroy(self):
+            self.shell.destroy()
+            super().destroy()
+
+        def _shell_default(self):
+            from pyface.api import PythonShell
+            return PythonShell()
+
+    # Application entry point.
+    if __name__ == "__main__":
+        # Create the GUI.
+        gui = GUI()
+
+        # Create and open the main window.
+        window = MainWindow(title="Python Shell", size=(640, 480))
+        window.open()
+
+        # Start the GUI event loop!
+        gui.start_event_loop()
+
+..  image:: shell_window.png
+    :alt: A Pyface GUI window containing a Python shell.
+
 Installation
 ------------
 

@@ -40,6 +40,6 @@ class IMenuManager(IActionManager):
         ----------
         parent : toolkit control
             The toolkit control that owns the menu.
-        controller : ActionController
+        controller : pyface.action.action_controller.ActionController
             An optional ActionController for all items in the menu.
         """

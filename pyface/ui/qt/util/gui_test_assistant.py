@@ -159,7 +159,7 @@ class GuiTestAssistant(UnittestTools):
 
         Parameters
         ----------
-        condition : callable
+        condition : Callable
             A callable to determine if the stop criteria have been met. This
             should accept no arguments.
         timeout : float
@@ -197,7 +197,7 @@ class GuiTestAssistant(UnittestTools):
 
         Parameters
         ----------
-        condition : callable() -> bool
+        condition : Callable() -> bool
             Callable accepting no arguments and returning a bool.
         timeout : float
             Maximum length of time to wait for the condition to become
@@ -224,11 +224,11 @@ class GuiTestAssistant(UnittestTools):
 
         Parameters
         ----------
-        obj : HasTraits
+        obj : traits.has_traits.HasTraits
             The HasTraits instance whose trait will change.
         trait : str
             The extended trait name of trait changes to listen to.
-        condition : callable
+        condition : Callable
             A callable to determine if the stop criteria have been met. This
             takes obj as the only argument.
         count : int
@@ -269,7 +269,7 @@ class GuiTestAssistant(UnittestTools):
 
         Paramaters
         ----------
-        traits_object : HasTraits instance
+        traits_object : traits.has_traits.HasTraits
             The object on which to listen for a trait events
         traits : one or more str
             The names of the traits to listen to for events
@@ -345,7 +345,7 @@ class GuiTestAssistant(UnittestTools):
         type_ : type
             A subclass of QWidget to use for an initial type filter while
             walking the tree
-        test : callable
+        test : Callable
             A filter function that takes one argument (the current widget being
             evaluated) and returns either True or False to determine if the
             widget matches the required criteria.

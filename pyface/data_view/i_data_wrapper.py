@@ -93,7 +93,7 @@ class IDataWrapper(Interface):
 
         Returns
         -------
-        data : any
+        data : Any
             The data decoded for the given format.
         """
         raise NotImplementedError()
@@ -105,7 +105,7 @@ class IDataWrapper(Interface):
         ----------
         format : DataFormat
             A data format object.
-        data : any
+        data : Any
             The data to be encoded and stored.
         """
         raise NotImplementedError()
@@ -171,7 +171,7 @@ class MDataWrapper(HasStrictTraits):
 
         Returns
         -------
-        data : any
+        data : Any
             The data decoded for the given format.
         """
         return format.deserialize(self.get_mimedata(format.mimetype))
@@ -183,7 +183,7 @@ class MDataWrapper(HasStrictTraits):
         ----------
         format : DataFormat
             A data format object.
-        data : any
+        data : Any
             The data to be encoded and stored.
         """
         self.set_mimedata(format.mimetype, format.serialize(data))

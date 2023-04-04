@@ -343,7 +343,7 @@ class Font(HasStrictTraits):
 
         Parameters
         ----------
-        toolkit_font : any
+        toolkit_font : Any
             A toolkit font to be converted to a corresponding class instance,
             within the limitations of the options supported by the class.
         """
@@ -358,7 +358,7 @@ class Font(HasStrictTraits):
 
         Returns
         -------
-        toolkit_font : any
+        toolkit_font : Any
             A toolkit font which matches the property of the font as
             closely as possible given the constraints of the toolkit.
         """

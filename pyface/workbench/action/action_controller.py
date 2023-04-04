@@ -10,12 +10,12 @@
 """ The action controller for workbench menu and tool bars. """
 
 
-from pyface.action.api import ActionController
+from pyface.action.api import ActionController as PyfaceActionController
 from pyface.workbench.api import WorkbenchWindow
 from traits.api import Instance
 
 
-class ActionController(ActionController):
+class ActionController(PyfaceActionController):
     """ The action controller for workbench menu and tool bars.
 
     The controller is used to 'hook' the invocation of every action on the menu

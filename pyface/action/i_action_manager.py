@@ -65,7 +65,7 @@ class IActionManager(Interface):
 
         Parameters
         ----------
-        items : collection of strings, Group, or ActionManagerItem instances
+        items : collection of strings, Group, or ActionManagerItem s
             Positional arguments are interpreted as Items or Groups
             managed by the action manager.
         traits : additional traits
@@ -90,7 +90,7 @@ class IActionManager(Interface):
 
         Parameters
         ----------
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to append.
 
         Notes
@@ -117,7 +117,7 @@ class IActionManager(Interface):
         ----------
         index : int
             The position at which to insert the object
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to insert.
 
         Notes
@@ -140,7 +140,7 @@ class IActionManager(Interface):
 
         Returns
         -------
-        group : Group instance
+        group : Group
             The group which matches the id, or None if no such group exists.
         """
 
@@ -166,7 +166,7 @@ class IActionManager(Interface):
 
         Parameters
         ----------
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of groups and items, starting with
             the manager.
         """
@@ -180,7 +180,7 @@ class IActionManager(Interface):
         ----------
         group : Group
             The group to walk.
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of groups and items.
         """
 
@@ -194,6 +194,6 @@ class IActionManager(Interface):
         item : item
             The item to walk.  This may be a submenu or similar in addition to
             simple Action items.
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of items and subgroups.
         """

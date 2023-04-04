@@ -124,7 +124,7 @@ class MImageResource(HasTraits):
 
         Returns
         -------
-        ref : ImageReference instance
+        ref : ImageReference
             The reference to the requested image.
         """
 
@@ -162,7 +162,7 @@ class MImageResource(HasTraits):
 
         Returns
         -------
-        not_found : ImageResource instance
+        not_found : ImageResource
             An image resource for the the 'not found' image.
         """
 
