@@ -3,10 +3,12 @@ Pyface: Traits-capable Windowing Framework
 ==========================================
 
 The Pyface project contains a toolkit-independent GUI abstraction layer,
-which is used to support the "visualization" features of the Traits package.
-Thus, you can write code in terms of the Traits API (views, items, editors,
-etc.), and let Pyface and your selected toolkit and back-end take care of
-the details of displaying them.
+which is used to support the "visualization" features of the Enthought Tool
+Suite libraries.  Pyface contains Traits-aware wrappers of standard GUI
+elements such as Windows, Dialogs and Fields, together with the "Tasks"
+application framework which provides a rich GUI experience with dock panes,
+tabbed editors, and so forth.  This permits you to write cross-platform
+interactive GUI code without needing to use the underlying GUI backend.
 
 The following GUI backends are supported:
 
@@ -60,30 +62,34 @@ The following code creates a window with a simple Python shell:
 Installation
 ------------
 
-GUI backends are marked as optional dependencies of Pyface. Some features
-or infrastructures may also require additional dependencies.
+Pyface is a pure Python package.  It depends on Traits which has a C-extension
+but wheels are available for most common platforms.  In most cases Pyface will
+be installable with ``pip``.
 
-To install with PySide2 dependencies::
+To install with a backend, choose one of the following, as appropriate:
+
+..  code-block:: console
 
     $ pip install pyface[pyside2]
 
-To install with PySide6 dependencies (experimental)::
-
     $ pip install pyface[pyside6]
-
-To install with PyQt5 dependencies::
 
     $ pip install pyface[pyqt5]
 
-To install with wxPython4 dependencies (experimental)::
-
     $ pip install pyface[wx]
 
-``pillow`` is an optional dependency for the PILImage class::
+Some optional functionality uses ``pillow`` and ``numpy`` and these can be
+installed using optional dependencies:
+
+..  code-block:: console
 
     $ pip install pyface[pillow]
 
-To install with additional test dependencies::
+    $ pip install pyface[numpy]
+
+For running tests a few more packages are required:
+
+..  code-block:: console
 
     $ pip install pyface[test]
 
@@ -93,20 +99,6 @@ Documentation
 * `Online Documentation <http://docs.enthought.com/pyface/>`_.
 
 * `API Documentation <http://docs.enthought.com/pyface/api/pyface.html>`_.
-
-Prerequisites
--------------
-
-Pyface depends on:
-
-* `Traits <https://github.com/enthought/traits>`_
-
-* a GUI toolkit as described above
-
-* Pygments for syntax highlighting in the Qt code editor widget.
-
-* some widgets may have additional optional dependencies such as NumPy or
-  Pillow.
 
 .. end_of_long_description
 
