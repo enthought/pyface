@@ -47,14 +47,14 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         if len(screens) == 0:
             return 0
         else:
-            return screens[0]
+            return screens[0][0]
 
     def _get_screen_height(self):
         screens = self.screen_sizes
         if len(screens) == 0:
             return 0
         else:
-            return screens[0]
+            return screens[0][1]
 
     def _get_screen_sizes(self):
         screens = QtGui.QApplication.instance().screens()
