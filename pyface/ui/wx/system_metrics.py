@@ -39,6 +39,8 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     #: The height and width of each screen in pixels
     screen_sizes = Property(List(Tuple(Int, Int)))
 
+    #: Background color of a standard dialog window as a tuple of RGB values
+    #: between 0.0 and 1.0.
     dialog_background_color = Property(Tuple)
 
     # ------------------------------------------------------------------------

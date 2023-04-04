@@ -11,14 +11,10 @@
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-
-from pyface.qt import QtGui, is_qt4
-
-
 from traits.api import HasTraits, Int, List, Property, provides, Tuple
 
-
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
+from pyface.qt import QtGui
 
 
 @provides(ISystemMetrics)
@@ -38,6 +34,8 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     #: The height and width of each screen in pixels
     screen_sizes = Property(List(Tuple(Int, Int)))
 
+    #: Background color of a standard dialog window as a tuple of RGB values
+    #: between 0.0 and 1.0.
     dialog_background_color = Property(Tuple)
 
     # ------------------------------------------------------------------------
