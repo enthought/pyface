@@ -20,7 +20,6 @@ jobs:
     env:
       ETS_TOOLKIT: qt
       EXCLUDE_TESTS: wx
-      QT_DEBUG_PLUGINS: 1
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20  # should be plenty, it's usually < 5
