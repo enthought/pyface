@@ -95,7 +95,7 @@ dependencies = {
     "importlib_resources>=1.1.0",
     "traits" + TRAITS_VERSION_REQUIRES,
     "traitsui",
-    "numpy",
+    "numpy^=1.21.2-2 ",
     "pygments",
     "coverage",
     "flake8",
