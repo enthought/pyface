@@ -2,7 +2,7 @@
 # Note that some packages may not actually be installed from EDM but from
 # PyPI, see etstool.py implementations.
 
-name: Test with EDM
+name: Build docs with EDM
 
 on: [pull_request, workflow_dispatch]
 
@@ -13,7 +13,7 @@ env:
 jobs:
 
   # Build docs using EDM packages
-  test-with-edm:
+  docs-with-edm:
     strategy:
       matrix:
         os: [ubuntu-latest]
