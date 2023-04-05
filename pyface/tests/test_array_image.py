@@ -13,7 +13,8 @@ import unittest
 
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
-from ..array_image import ArrayImage
+if np is not None:
+    from ..array_image import ArrayImage
 
 
 @requires_numpy
