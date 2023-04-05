@@ -11,7 +11,7 @@
 
 from collections.abc import Sequence
 
-from traits.api import HasTraits, List, Str
+from traits.api import Directory, HasTraits, List, Str
 
 from pyface.i_image import IImage
 from pyface.resource.resource_path import resource_module, resource_path
@@ -34,7 +34,7 @@ class IImageResource(IImage):
 
     #: A list of directories, classes or instances that will be used to search
     #: for the image (see the resource manager for more details).
-    search_path = List()
+    search_path = List(Directory())
 
     @classmethod
     def image_size(cls, image):
