@@ -11,7 +11,7 @@
 """ The interface to system metrics (screen width and height etc). """
 
 
-from traits.api import HasTraits, Int, Interface, Tuple
+from traits.api import HasTraits, Int, Interface, List, Tuple
 
 
 class ISystemMetrics(Interface):
@@ -19,11 +19,14 @@ class ISystemMetrics(Interface):
 
     # 'ISystemMetrics' interface -------------------------------------------
 
-    #: The width of the screen in pixels.
+    #: The width of the main screen in pixels.
     screen_width = Int()
 
-    #: The height of the screen in pixels.
+    #: The height of the main screen in pixels.
     screen_height = Int()
+
+    #: The height and width of each screen in pixels
+    screen_sizes = List(Tuple(Int, Int))
 
     #: Background color of a standard dialog window as a tuple of RGB values
     #: between 0.0 and 1.0.

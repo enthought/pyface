@@ -15,12 +15,9 @@
 
 import sys
 
-
 import wx
 
-
-from traits.api import HasTraits, Int, Property, provides, Tuple
-
+from traits.api import HasTraits, Int, List, Property, provides, Tuple
 
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
@@ -33,10 +30,17 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     # 'ISystemMetrics' interface -------------------------------------------
 
+    #: The width of the main screen in pixels.
     screen_width = Property(Int)
 
+    #: The height of the main screen in pixels.
     screen_height = Property(Int)
 
+    #: The height and width of each screen in pixels
+    screen_sizes = Property(List(Tuple(Int, Int)))
+
+    #: Background color of a standard dialog window as a tuple of RGB values
+    #: between 0.0 and 1.0.
     dialog_background_color = Property(Tuple)
 
     # ------------------------------------------------------------------------
@@ -48,6 +52,9 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     def _get_screen_height(self):
         return wx.SystemSettings.GetMetric(wx.SYS_SCREEN_Y)
+
+    def _get_screen_sizes(self):
+        return [(self.screen_width, self.screen_height)]
 
     def _get_dialog_background_color(self):
         if sys.platform == "darwin":
