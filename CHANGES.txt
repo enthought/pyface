@@ -22,7 +22,7 @@ imports from ``pyface.ui.qt4...`` which can be enabled by:
 - explicitly adding the import hooks to `sys.meta_path`
 
 In particular the environment variables allow users of ETS-based applications
-such as Mayavi to continue to use those applications with newer versiosn of
+such as Mayavi to continue to use those applications with newer versions of
 Pyface until there is time to update their code to the new import locations.
 
 Additionally this release uses the module-level ``__getattr__`` system
@@ -35,7 +35,7 @@ this included adding formal interfaces for ``ActionManager`` and its subclasses
 In addition this release:
 
 - adds support for Python 3.11 and drops support for Python 3.6
-- adds support for PySide 6.4 and the new enum system
+- adds support for PySide 6.4+ and the new enum system
 - removes code supporting PyQt4, and supports more modern imports from
   `pyface.qt`, such as `pyface.qt.QtWidgets`.
 - removes many things flagged as deprecated in Pyface 7
@@ -68,6 +68,7 @@ Enhancements
 * Expose interfaces in ``api`` modules and other improvemnts to ``api`` modules
   (#1220, #1222, #1229)
 * remove deprecated modules and code (#1209, #1215)
+* PySide 6.5 support (#1238)
 * Python 3.11 and PySide 6.4 support (#1210)
 
 Fixes
