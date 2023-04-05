@@ -26,10 +26,10 @@ class IApplicationWindow(IWindow):
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
 
-    Usage
+    Notes
     -----
 
-    Create a sub-class of this class and override the
+    To use, create a sub-class of this class and override the
     :py:meth:`._create_contents` method.
     """
 

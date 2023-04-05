@@ -247,6 +247,11 @@ class FontStretch(BaseCFloat):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
+        """Validate the trait
+
+        This is a CFloat trait that also accepts percentage strings.  Values
+        must be in the range 50 to 200 inclusive
+        """
         if isinstance(value, str) and value.endswith('%'):
             value = value[:-1]
         value = STRETCHES.get(value, value)
@@ -256,6 +261,7 @@ class FontStretch(BaseCFloat):
         return value
 
     def info(self):
+        """Describe the trait"""
         info = (
             "a float from 50 to 200, "
             "a value that can convert to a float from 50 to 200, "
@@ -284,6 +290,11 @@ class FontSize(BaseCFloat):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
+        """Validate the trait
+
+        This is a CFloat trait that also accepts strings with 'pt' or 'px'
+        suffixes.  Values must be positive.
+        """
         if (
             isinstance(value, str)
             and (value.endswith('pt') or value.endswith('px'))
@@ -296,6 +307,7 @@ class FontSize(BaseCFloat):
         return value
 
     def info(self):
+        """Describe the trait"""
         info = (
             "a positive float, a value that can convert to a positive float, "
         )

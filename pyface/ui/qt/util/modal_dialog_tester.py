@@ -28,7 +28,7 @@ BUTTON_TEXT = {OK: "OK", CANCEL: "Cancel", YES: "Yes", NO: "No"}
 class ModalDialogTester(object):
     """ Test helper for code that open a traits ui or QDialog window.
 
-    Usage
+    Notes
     -----
     ::
 
