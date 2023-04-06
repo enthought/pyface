@@ -33,9 +33,35 @@ ALIGNMENT_MASK = (
 
 
 def alignment_to_qalignment(alignment):
+    """Convert an Alignment trait value to a Qt Alignment
+
+    Parameters
+    ----------
+    alignment : str
+        An Alignment trait value, one of "default", "left", "center", or
+        "right".
+
+    Returns
+    -------
+    qalignment : Qt.AlignmentFlag
+        A Qt.AlignmentFlag value
+    """
     return ALIGNMENT_TO_QALIGNMENT[alignment]
 
 
 def qalignment_to_alignment(alignment):
+    """Convert a Qt Alignment value to an Alignment trait
+
+    Parameters
+    ----------
+    qalignment : Qt.AlignmentFlag
+        A Qt.AlignmentFlag value
+
+    Returns
+    -------
+    alignment : str
+        An Alignment trait value, one of "default", "left", "center", or
+        "right".
+    """
     h_alignment = int(alignment & ALIGNMENT_MASK)
     return QALIGNMENT_TO_ALIGNMENT[h_alignment]

@@ -14,6 +14,8 @@ API for the ``pyface.fields`` subpackage.
 
 - :class:`~.CheckBoxField`
 - :class:`~.ComboField`
+- :class:`~.EditableField`
+- :class:`~.Field`
 - :class:`~.ImageField`
 - :class:`~.LabelField`
 - :class:`~.RadioButtonField`
