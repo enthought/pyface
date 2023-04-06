@@ -34,7 +34,7 @@ def do_later(callable, *args, **kwargs):
 
     Parameters
     ----------
-    callable : callable
+    callable : Callable
         The callable to call in 50ms time.
     args, kwargs : tuple, dict
         Arguments to be passed through to the callable.
@@ -51,7 +51,7 @@ def do_after(interval, callable, *args, **kwargs):
     ----------
     interval : float
         The time interval in milliseconds to wait before calling.
-    callable : callable
+    callable : Callable
         The callable to call.
     args
         Positional arguments to be passed through to the callable.

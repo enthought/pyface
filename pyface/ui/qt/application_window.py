@@ -141,6 +141,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _status_bar_manager_updated(self, event):
         if self.control is not None:
             if event.old is not None:
+                self.control.setStatusBar(None)
                 event.old.destroy()
             self._create_status_bar(self.control)
 
@@ -154,7 +155,8 @@ class ApplicationWindow(MApplicationWindow, Window):
                     child.deleteLater()
 
             # Add the new toolbars.
-            self._create_tool_bar(self.control)
+            if event.new is not None:
+                self._create_status_bar(self.control)
 
     @observe("icon")
     def _icon_updated(self, event):

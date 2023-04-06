@@ -72,7 +72,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        args : collection of strings, Group instances, or ActionManagerItem instances
+        args : collection of strings, Group instances, or ActionManagerItem s
             Positional arguments are interpreted as Items or Groups managed
             by the action manager.
 
@@ -142,7 +142,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to append.
 
         Notes
@@ -180,7 +180,7 @@ class ActionManager(HasTraits):
         ----------
         index : int
             The position at which to insert the object
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to insert.
 
         Notes
@@ -213,7 +213,7 @@ class ActionManager(HasTraits):
 
         Returns
         -------
-        group : Group instance
+        group : Group
             The group which matches the id, or None if no such group exists.
         """
         for group in self._groups:
@@ -256,7 +256,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of groups and items, starting with
             the manager.
         """
@@ -274,7 +274,7 @@ class ActionManager(HasTraits):
         ----------
         group : Group
             The group to walk.
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of groups and items.
         """
         fn(group)
@@ -295,7 +295,7 @@ class ActionManager(HasTraits):
         item : item
             The item to walk.  This may be a submenu or similar in addition to
             simple Action items.
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of items and subgroups.
         """
         if hasattr(item, "groups"):
@@ -314,7 +314,7 @@ class ActionManager(HasTraits):
 
         Returns
         -------
-        group : Group instance
+        group : Group
             The manager's default group.
         """
         group = self.find_group(self.DEFAULT_GROUP)
@@ -329,7 +329,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to be added to this ActionManager
 
         Returns

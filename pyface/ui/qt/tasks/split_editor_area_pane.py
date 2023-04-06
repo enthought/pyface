@@ -472,7 +472,7 @@ class EditorAreaWidget(QtGui.QSplitter):
     def __init__(self, editor_area, parent=None, tabwidget=None):
         """ Creates an EditorAreaWidget object.
 
-        editor_area : global SplitEditorAreaPane instance
+        editor_area : global SplitEditorAreaPane
         parent : parent splitter
         tabwidget : tabwidget object contained by this splitter
 
@@ -759,7 +759,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
     def __init__(self, editor_area, parent):
         """
-        editor_area : global SplitEditorAreaPane instance
+        editor_area : global SplitEditorAreaPane
         parent : parent of the tabwidget
         """
         super().__init__(parent)

@@ -79,7 +79,7 @@ class ConstantValue(AbstractValueType):
 
         Returns
         -------
-        color : Color instance
+        color : Color
             The color associated with the cell.
         """
         return self.color

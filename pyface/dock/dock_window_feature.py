@@ -302,7 +302,7 @@ class DockWindowFeature(HasPrivateTraits):
 
         Parameters
         ----------
-        object : any object
+        object : Any object
             The object being dropped onto the feature image
 
         Returns
@@ -329,7 +329,7 @@ class DockWindowFeature(HasPrivateTraits):
 
         Parameters
         ----------
-        object : any object
+        object : Any object
             The object being dragged onto the feature image
 
         Returns

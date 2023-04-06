@@ -94,7 +94,7 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        value : any
+        value : Any
             The value to edit.
         """
         return model.get_value(row, column)
@@ -113,7 +113,7 @@ class AbstractValueType(ABCHasStrictTraits):
             The row in the data model being queried.
         column : sequence of int
             The column in the data model being queried.
-        value : any
+        value : Any
             The value to set.
 
         Raises
@@ -228,7 +228,7 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        color : Color instance
+        color : Color
             The color associated with the cell.
         """
         return Color(rgba=(1.0, 1.0, 1.0, 1.0))

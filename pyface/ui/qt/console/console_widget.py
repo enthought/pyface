@@ -1874,7 +1874,7 @@ class ConsoleWidget(QtGui.QWidget):
         prompt : str, optional
             The prompt to print before reading the line.
 
-        callback : callable, optional
+        callback : Callable, optional
             A callback to execute with the read line. If not specified, input is
             read *synchronously* and this method does not return until it has
             been read.

@@ -2,6 +2,154 @@
 Pyface Changelog
 ================
 
+Release 8.0.0
+=============
+
+Highlights of this release
+--------------------------
+
+This is a major release which removes a number of things which have been
+deprecated for a number of years.  The most significant change in this release
+is that the Qt toolkit backend has been moved from the ``pyface.ui.qt4``
+package to the ``pyface.ui.qt`` package.  The "qt4" namespace had been an
+ongoing source of confusion as Qt5 and Qt6 became the most popular versions of
+Qt in use. Because this change has the potential to cause significant backwards
+compatibility issues, this release includes import hooks to continue to support
+imports from ``pyface.ui.qt4...`` which can be enabled by:
+
+- using "qt4" for the `ETS_TOOLKIT` or `ETSConfig.toolkit` values.
+- setting the `ETS_QT4_IMPORT` environment variable to a non-empty value
+- explicitly adding the import hooks to `sys.meta_path`
+
+In particular the environment variables allow users of ETS-based applications
+such as Mayavi to continue to use those applications with newer versions of
+Pyface until there is time to update their code to the new import locations.
+
+Additionally this release uses the module-level ``__getattr__`` system
+introduced in Python 3.7 to delay imports from the ``api`` modules which have
+side-effects, particularly toolkit selection.  This means that you can, for
+example, import ``pyface.api`` and toolkit selection will be deferred until
+you actually request a class or object which is toolkit-dependent.  Part of
+this included adding formal interfaces for ``ActionManager`` and its subclasses
+
+In addition this release:
+
+- adds support for Python 3.11 and drops support for Python 3.6
+- adds support for PySide 6.4+ and the new enum system
+- removes code supporting PyQt4, and supports more modern imports from
+  `pyface.qt`, such as `pyface.qt.QtWidgets`.
+- removes many things flagged as deprecated in Pyface 7
+- consistently add interface classes to ``api`` modules.
+- adds new Field subclasses, including an ImageField and LabelField
+- moves to a pyproject.toml-based packaging solution, removing setup.py
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Mark Dickinson
+* Dominik Gresch
+* JaRoSchm
+* Rahul Poruri
+* Corran Webster
+
+Features
+
+* Refactor IField and add IImageField and ILabelField Field classes (#1234)
+* Move ``pyface.ui.qt4`` to ``pyface.ui.qt`` (#1223, #1228)
+* Delayed imports with side-effects in ``api`` modules; new interfaces for
+  ``ActionManager`` and its subclasses (#1229)
+
+Enhancements
+
+* Better handling of sizes for multiple (or no) screens (#1237)
+* More arguments for the ``confirm`` function (#1221)
+* Expose interfaces in ``api`` modules and other improvemnts to ``api`` modules
+  (#1220, #1222, #1229)
+* remove deprecated modules and code (#1209, #1215)
+* PySide 6.5 support (#1238)
+* Python 3.11 and PySide 6.4 support (#1210)
+
+Fixes
+
+* Always use a no-delay timer for ``GUI`` ``invoke_later`` and
+  ``set_trait_later`` on Qt (#1226)
+* Work arounds for some end-of-process segfaults on PySide < 6.4.3 (#1214)
+* Use ``exec`` instead of ``exec_`` where possible (#1208)
+* Emit a warning rather than asserting in SplitTabWidget (#1192)
+* Remove required parent argument in Wx StatusBarManager (#1192)
+* Use integer division in DockSplitter.draw (#1190)
+
+Documentation
+
+* general updates and enhancements (#1238)
+* update copyright dates (#1191)
+
+CI
+
+* remove ``setup.py`` and use ``pyproject.toml`` (#1203, #1214)
+
+Release 7.4.4
+=============
+
+Highlights of this release
+--------------------------
+
+This is a quick bugfix release that resolves some issues with the 7.4.3 release
+on CI for downstream projects.  The issues were on testing code, and so
+shouldn't impact application code or behaviour.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Corran Webster
+
+Fixes
+
+* Don't raise ConditionTimeoutError if test doesn't time out (#1182)
+
+CI
+
+* get CI working again with ubuntu-current on GitHub (#1186)
+
+Release 7.4.3
+=============
+
+Highlights of this release
+--------------------------
+
+This is a bugfix release that collects a number of additional issues discovered
+and fixed since the 7.4.2 release.  Among the fixes, this pins PySide6 to less than
+6.4.0, as 6.4 has breaking changes in it.
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Alex Chabot-Leclerc
+* Mark Dickinson
+* Eric Larson
+* Steven Kern
+* Corran Webster
+
+Fixes
+
+* Fix code editor gutter widget on recent Python versions (#1176)
+* fix issues with FileDialog and DirectoryDialog close method on Linux (#1175)
+* update setup.py metadata (#1173)
+* restrict to PySide versions before 6.4.0 (#1169)
+* don't do unneccessary evaluations of conditions in EventLoopHelper (#1168)
+* fix a deleted object error in PyQt5 (#1161)
+* better reporting of toolkit errors (#1157)
+
+Documentation
+
+* fix some Python 2 style print statements in documentation (#1157)
+
 Release 7.4.2
 =============
 

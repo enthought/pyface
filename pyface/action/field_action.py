@@ -70,7 +70,7 @@ class FieldAction(Action):
 
         Parameters
         ----------
-        event : ActionEvent instance
+        event : ActionEvent
             The event which triggered the action.
         """
         if self.on_perform is not None:

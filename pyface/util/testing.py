@@ -11,9 +11,15 @@ from functools import wraps
 import re
 from unittest import TestSuite
 
+try:
+    from importlib.metadata import version
+except:
+    from importlib_metadata import version
+
 from packaging.version import Version
 
-from traits import __version__ as TRAITS_VERSION
+
+TRAITS_VERSION = version("traits")
 
 
 def filter_tests(test_suite, exclusion_pattern):

@@ -94,7 +94,7 @@ def _size_to_wx_size(size):
 
     Returns
     -------
-    wx_size : wx.Size instance
+    wx_size : wx.Size
         A corresponding wx Size instance.
     """
     return wx.Size(*(
@@ -108,7 +108,7 @@ def _wx_size_to_size(wx_size):
 
     Parameters
     ----------
-    wx_size : wx.Size instance
+    wx_size : wx.Size
         A wx Size instance.
 
     Returns

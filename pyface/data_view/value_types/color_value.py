@@ -34,7 +34,7 @@ class ColorValue(EditableValue):
             The row in the data model being queried.
         column : sequence of int
             The column in the data model being queried.
-        value : any
+        value : Any
             The value to test.
 
         Returns
@@ -168,7 +168,7 @@ class ColorValue(EditableValue):
 
         Returns
         -------
-        color : Color instance
+        color : Color
             The color associated with the cell.
         """
         return model.get_value(row, column)

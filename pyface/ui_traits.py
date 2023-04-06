@@ -149,7 +149,7 @@ class PyfaceColor(TraitType):
     """ A Trait which casts strings and tuples to a Pyface Color value.
     """
 
-    #: The default value should be a tuple (factory, args, kwargs)
+    #: The default value should be a tuple (factory, args, kwargs).
     default_value_type = DefaultValue.callable_and_args
 
     def __init__(self, value=None, **metadata):
@@ -161,6 +161,11 @@ class PyfaceColor(TraitType):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
+        """Validate the trait
+
+        This accepts, Color values, parseable strings and RGB(A) sequences
+        (including numpy arrays).
+        """
         if isinstance(value, Color):
             return value
         if isinstance(value, str):
@@ -182,6 +187,7 @@ class PyfaceColor(TraitType):
         self.error(object, name, value)
 
     def info(self):
+        """Describe the trait"""
         return (
             "a Pyface Color, a #-hexadecimal rgb or rgba string,  a standard "
             "color name, or a sequence of RGBA or RGB values between 0 and 1"
@@ -225,6 +231,10 @@ class PyfaceFont(TraitType):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
+        """Validate the trait
+
+        This accepts, Font values and parseable strings.
+        """
         if isinstance(value, Font):
             return value
         if isinstance(value, str):
@@ -236,6 +246,7 @@ class PyfaceFont(TraitType):
         self.error(object, name, value)
 
     def info(self):
+        """Describe the trait"""
         return (
             "a Pyface Font, or a string describing a Pyface Font"
         )
@@ -247,15 +258,18 @@ class PyfaceFont(TraitType):
 
 
 class BaseMB(ABCHasStrictTraits):
-    def __init__(self, *args, **traits):
-        """ Map posiitonal arguments to traits.
+    """ Base class for Margins and Borders
 
-        If one value is provided it is taken as the value for all sides.
-        If two values are provided, then the first argument is used for
-        left and right, while the second is used for top and bottom.
-        If 4 values are provided, then the arguments are mapped to
-        left, right, top, and bottom, respectively.
-        """
+    The constructor of this class maps posiitonal arguments to traits.
+
+    - If one value is provided it is taken as the value for all sides.
+    - If two values are provided, then the first argument is used for
+      left and right, while the second is used for top and bottom.
+    - If 4 values are provided, then the arguments are mapped to
+      left, right, top, and bottom, respectively.
+    """
+
+    def __init__(self, *args, **traits):
         n = len(args)
         if n > 0:
             if n == 1:
@@ -277,32 +291,34 @@ class BaseMB(ABCHasStrictTraits):
 
 
 class Margin(BaseMB):
+    """A HasTraits class that holds margin sizes."""
 
-    # The amount of padding/margin at the top:
+    #: The amount of padding/margin at the top.
     top = Range(-32, 32, 0)
 
-    # The amount of padding/margin at the bottom:
+    #: The amount of padding/margin at the bottom.
     bottom = Range(-32, 32, 0)
 
-    # The amount of padding/margin on the left:
+    #: The amount of padding/margin on the left.
     left = Range(-32, 32, 0)
 
-    # The amount of padding/margin on the right:
+    #: The amount of padding/margin on the right.
     right = Range(-32, 32, 0)
 
 
 class Border(BaseMB):
+    """A HasTraits class that holds border thicknesses."""
 
-    # The amount of border at the top:
+    #: The amount of border at the top.
     top = Range(0, 32, 0)
 
-    # The amount of border at the bottom:
+    #: The amount of border at the bottom.
     bottom = Range(0, 32, 0)
 
-    # The amount of border on the left:
+    #: The amount of border on the left.
     left = Range(0, 32, 0)
 
-    # The amount of border on the right:
+    #: The amount of border on the right.
     right = Range(0, 32, 0)
 
 
@@ -311,13 +327,13 @@ class HasMargin(TraitType):
         tuple value that can be converted to one.
     """
 
-    # The desired value class:
+    #: The desired value class.
     klass = Margin
 
-    # Define the default value for the trait:
+    #: Define the default value for the trait.
     default_value = Margin(0)
 
-    # A description of the type of value this trait accepts:
+    #: A description of the type of value this trait accepts.
     info_text = (
         "a Margin instance, or an integer in the range from -32 to 32 "
         "or a tuple with 1, 2 or 4 integers in that range that can be "
@@ -371,13 +387,13 @@ class HasBorder(HasMargin):
         or tuple value that can be converted to one.
     """
 
-    # The desired value class:
+    #: The desired value class.
     klass = Border
 
-    # Define the default value for the trait:
+    #: Define the default value for the trait.
     default_value = Border(0)
 
-    # A description of the type of value this trait accepts:
+    #: A description of the type of value this trait accepts.
     info_text = (
         "a Border instance, or an integer in the range from 0 to 32 "
         "or a tuple with 1, 2 or 4 integers in that range that can be "

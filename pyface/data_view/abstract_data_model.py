@@ -150,7 +150,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Returns
         -------
-        value : any
+        value : Any
             The value represented by the given row and column.
 
         Raises
@@ -202,7 +202,7 @@ class AbstractDataModel(ABCHasStrictTraits):
             The indices of the row as a sequence from root to leaf.
         column : sequence of int
             The indices of the column as a sequence of length 0 or 1.
-        value : any
+        value : Any
             The new value for the given row and column.
 
         Raises

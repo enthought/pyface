@@ -205,7 +205,7 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
 
         Returns
         -------
-        value : any
+        value : Any
             The value represented by the given row and column.
         """
         if self.can_set_value(row, column):

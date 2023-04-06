@@ -28,7 +28,7 @@ BUTTON_TEXT = {OK: "OK", CANCEL: "Cancel", YES: "Yes", NO: "No"}
 class ModalDialogTester(object):
     """ Test helper for code that open a traits ui or QDialog window.
 
-    Usage
+    Notes
     -----
     ::
 
@@ -86,7 +86,7 @@ class ModalDialogTester(object):
 
         Parameters
         ----------
-        when_opened : callable
+        when_opened : Callable
             A callable to be called when the dialog has been created and
             opened. The callable with be called with the tester instance
             as argument.
@@ -142,7 +142,7 @@ class ModalDialogTester(object):
 
         Parameters
         ----------
-        when_opened : callable
+        when_opened : Callable
             A callable to be called when the dialog has been created and
             opened. The callable with be called with the tester instance
             as argument.

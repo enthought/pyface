@@ -128,7 +128,7 @@ def find_qt_widget(start, type_, test=None):
     type_ : type
         A subclass of QWidget to use for an initial type filter while
         walking the tree
-    test : callable
+    test : Callable
         A filter function that takes one argument (the current widget being
         evaluated) and returns either True or False to determine if the
         widget matches the required criteria.

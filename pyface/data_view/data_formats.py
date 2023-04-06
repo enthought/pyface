@@ -23,9 +23,9 @@ def to_json(data, default=None):
 
     Parameters
     ----------
-    data : any
+    data : Any
         The data to be serialized.
-    default : callable or None
+    default : Callable or None
         Callable that takes a Python object and returns a JSON-serializable
         data structure.
 
@@ -45,13 +45,13 @@ def from_json(raw_data, object_hook=None):
     ----------
     raw_data : bytes
         The serialized JSON data as a byte string.
-    object_hook : callable
+    object_hook : Callable
         Callable that takes a dictionary and returns an corresponding
         Python object.
 
     Returns
     -------
-    data : any
+    data : Any
         The data extracted.
     """
     return json.loads(raw_data.decode('utf-8'), object_hook=object_hook)

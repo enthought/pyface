@@ -77,7 +77,7 @@ class IWidget(Interface):
         """ Creates the toolkit specific control.
 
         This method should create the control and assign it to the
-        :py:attr:``control`` trait.
+        :py:attr:`control` trait.
         """
 
     def destroy(self):
