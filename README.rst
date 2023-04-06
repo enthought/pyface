@@ -56,15 +56,14 @@ The following code creates a window with a simple Python shell:
         # Start the GUI event loop!
         gui.start_event_loop()
 
-..  image:: shell_window.png
+..  image:: https://raw.github.com/enthought/pyface/main/shell_window.png
     :alt: A Pyface GUI window containing a Python shell.
 
 Installation
 ------------
 
-Pyface is a pure Python package.  It depends on Traits which has a C-extension
-but wheels are available for most common platforms.  In most cases Pyface will
-be installable with ``pip``.
+Pyface is a pure Python package.  In most cases Pyface will be installable
+using a simple ``pip install`` command.
 
 To install with a backend, choose one of the following, as appropriate:
 
