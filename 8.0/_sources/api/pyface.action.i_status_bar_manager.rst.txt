@@ -1,0 +1,7 @@
+pyface.action.i\_status\_bar\_manager module
+============================================
+
+.. automodule:: pyface.action.i_status_bar_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

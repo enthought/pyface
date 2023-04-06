@@ -1,0 +1,7 @@
+pyface.fields.label\_field module
+=================================
+
+.. automodule:: pyface.fields.label_field
+   :members:
+   :undoc-members:
+   :show-inheritance:

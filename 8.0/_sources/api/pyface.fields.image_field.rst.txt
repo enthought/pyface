@@ -1,0 +1,7 @@
+pyface.fields.image\_field module
+=================================
+
+.. automodule:: pyface.fields.image_field
+   :members:
+   :undoc-members:
+   :show-inheritance:
