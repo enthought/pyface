@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The spin field widget. """
+""" The image field widget. """
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object

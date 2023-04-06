@@ -20,11 +20,7 @@ from pyface.fields.i_image_field import IImageField, MImageField
 
 @provides(IImageField)
 class ImageField(MImageField, Field):
-    """ The Qt-specific implementation of the field class
-
-    This is an abstract class which is not meant to be instantiated.  Because
-    many concrete QWidgets provide a `value` property, the default getters and
-    setters target this.
+    """ The Qt-specific implementation of the image field class
     """
 
     # ------------------------------------------------------------------------

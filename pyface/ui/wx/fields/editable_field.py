@@ -19,7 +19,7 @@ from pyface.ui.wx.fields.field import Field
 
 @provides(IEditableField)
 class EditableField(MEditableField, Field):
-    """ The Wx-specific implementation of the Editablefield class
+    """ The Wx-specific implementation of the EditableField class
 
     This is an abstract class which is not meant to be instantiated.
     """

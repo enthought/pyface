@@ -102,11 +102,11 @@ class MField(HasTraits):
 
     def _get_control_alignment(self):
         """ Toolkit specific method to get the control's read_only state. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_alignment(self, alignment):
         """ Toolkit specific method to set the control's alignment. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------
 

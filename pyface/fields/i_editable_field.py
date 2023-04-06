@@ -26,7 +26,7 @@ class IEditableField(IField):
 class MEditableField(HasTraits):
     """The editable field mix-in.
 
-    Classes which use this mixin should implemnt _observe_control_value to
+    Classes which use this mixin should implement _observe_control_value to
     connect a toolkit handler that calls _update_value.
     """
 

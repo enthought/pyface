@@ -56,7 +56,7 @@ from .i_toggle_field import IToggleField
 _toolkit_imports = {
     'CheckBoxField': 'toggle_field',
     'ComboField': 'combo_field',
-    'EditableField': 'editale_field',
+    'EditableField': 'editable_field',
     'Field': 'field',
     'ImageField': 'image_field',
     'LabelField': 'label_field',

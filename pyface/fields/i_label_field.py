@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The text field interface. """
+""" The label field interface. """
 
 
 from traits.api import HasTraits, Str
@@ -18,7 +18,7 @@ from pyface.ui_traits import Image
 
 
 class ILabelField(IField):
-    """ The text field interface. """
+    """ The label field interface. """
 
     #: The value held by the field.
     value = Str()

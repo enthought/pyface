@@ -19,11 +19,8 @@ from pyface.wx.image_control import ImageControl
 
 @provides(IImageField)
 class ImageField(MImageField, Field):
-    """ The Wx-specific implementation of the field class
+    """ The Wx-specific implementation of the image field class
 
-    This is an abstract class which is not meant to be instantiated.  Because
-    many concrete QWidgets provide a `value` property, the default getters and
-    setters target this.
     """
 
     # ------------------------------------------------------------------------
