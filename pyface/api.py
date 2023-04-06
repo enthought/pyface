@@ -259,8 +259,8 @@ def __getattr__(name):
         result = toolkit_object(f"{source}:{name}")
 
     elif name in _optional_imports:
+        from importlib import import_module
         import logging
-        from pyface.toolkit import toolkit_object
         from pyface.util._optional_dependencies import optional_import
         dependency, source = _optional_imports[name]
         with optional_import(
