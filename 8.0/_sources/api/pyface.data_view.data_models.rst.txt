@@ -1,0 +1,18 @@
+pyface.data\_view.data\_models package
+======================================
+
+.. automodule:: pyface.data_view.data_models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pyface.data_view.data_models.api
+   pyface.data_view.data_models.array_data_model
+   pyface.data_view.data_models.data_accessors
+   pyface.data_view.data_models.row_table_data_model
