@@ -268,7 +268,8 @@ def __getattr__(name):
             msg=f"{name} is not available due to missing {dependency}.",
             logger=logging.getLogger(__name__),
         ):
-            result = toolkit_object(f"{source}:{name}")
+            module = import_module(f"pyface.{source}")
+            result = getattr(module, name)
 
     if result is not_found:
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
