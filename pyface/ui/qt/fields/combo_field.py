@@ -19,11 +19,14 @@ from traits.api import provides
 from pyface.fields.i_combo_field import IComboField, MComboField
 from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QComboBox
-from .field import Field
+from pyface.ui.qt.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
+from .editable_field import EditableField
 
 
 @provides(IComboField)
-class ComboField(MComboField, Field):
+class ComboField(MComboField, EditableField):
     """ The Qt-specific implementation of the combo field class """
 
     # ------------------------------------------------------------------------
@@ -40,11 +43,6 @@ class ComboField(MComboField, Field):
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
-
-    def _update_value(self, value):
-        """ Handle a change to the value from user interaction
-        """
-        self.value = self._get_control_value()
 
     # Toolkit control interface ---------------------------------------------
 
@@ -101,3 +99,19 @@ class ComboField(MComboField, Field):
             self._set_control_value(current_value)
         else:
             self._set_control_value(self.value)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        # only works if combobox is ieditable, which currently is always False
+        line_edit = self.control.lineEdit()
+        if line_edit is not None:
+            return qalignment_to_alignment(line_edit.alignment())
+        else:
+            # no widget; cheat
+            return self.alignment
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        line_edit = self.control.lineEdit()
+        if line_edit is not None:
+            return line_edit.setAlignment(alignment_to_qalignment(alignment))

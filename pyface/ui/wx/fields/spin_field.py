@@ -19,11 +19,11 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ISpinField)
-class SpinField(MSpinField, Field):
+class SpinField(MSpinField, EditableField):
     """ The Wx-specific implementation of the spin field class """
 
     # ------------------------------------------------------------------------
@@ -65,3 +65,13 @@ class SpinField(MSpinField, Field):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         self.control.SetRange(*bounds)
+
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        return bool(self.control.GetWindowStyle() & wx.SP_WRAP)
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        if wrap != self._get_control_wrap():
+            self.control.ToggleWindowStyle(wx.SP_WRAP)
+            self.control.Refresh()

@@ -11,12 +11,12 @@
 """ The spin field interface. """
 
 
-from traits.api import HasTraits, Int, Property, Range, Tuple
+from traits.api import Bool, HasTraits, Int, Property, Range, Tuple
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ISpinField(IField):
+class ISpinField(IEditableField):
     """ The spin field interface.
 
     This is for spinners holding integer values.
@@ -34,6 +34,9 @@ class ISpinField(IField):
     #: The maximum value
     maximum = Property(Int, observe="bounds")
 
+    #: Whether the values wrap around at maximum and minimum.
+    wrap = Bool()
+
 
 class MSpinField(HasTraits):
 
@@ -48,6 +51,9 @@ class MSpinField(HasTraits):
 
     #: The maximum value for the spinner
     maximum = Property(Int, observe="bounds")
+
+    #: Whether the values wrap around at maximum and minimum.
+    wrap = Bool()
 
     # ------------------------------------------------------------------------
     # object interface
@@ -69,20 +75,23 @@ class MSpinField(HasTraits):
         super()._initialize_control()
         self._set_control_bounds(self.bounds)
         self._set_control_value(self.value)
+        self._set_control_wrap(self.wrap)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super()._add_event_listeners()
         self.observe(self._bounds_updated, "bounds", dispatch="ui")
+        self.observe(self._wrap_updated, "wrap", dispatch="ui")
         if self.control is not None:
             self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
         self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
+        )
+        self.observe(
+            self._wrap_updated, "wrap", dispatch="ui", remove=True
         )
         super()._remove_event_listeners()
 
@@ -95,6 +104,14 @@ class MSpinField(HasTraits):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         raise NotImplementedError()
+
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        raise NotImplementedError
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        raise NotImplementedError
 
     # Trait property handlers -----------------------------------------------
 
@@ -130,3 +147,7 @@ class MSpinField(HasTraits):
     def _bounds_updated(self, event):
         if self.control is not None:
             self._set_control_bounds(self.bounds)
+
+    def _wrap_updated(self, event):
+        if self.control is not None:
+            self._set_control_wrap(event.new)

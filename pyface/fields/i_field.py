@@ -14,6 +14,7 @@
 from traits.api import Any, HasTraits
 
 from pyface.i_layout_widget import ILayoutWidget
+from pyface.ui_traits import Alignment
 
 
 class IField(ILayoutWidget):
@@ -26,6 +27,9 @@ class IField(ILayoutWidget):
     #: The value held by the field.
     value = Any()
 
+    #: The alignment of the field's content.
+    alignment = Alignment()
+
 
 class MField(HasTraits):
     """ The field mix-in. """
@@ -33,24 +37,11 @@ class MField(HasTraits):
     #: The value held by the field.
     value = Any()
 
+    #: The alignment of the text in the field.
+    alignment = Alignment()
+
     # ------------------------------------------------------------------------
     # IWidget interface
-    # ------------------------------------------------------------------------
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super()._add_event_listeners()
-        self.observe(self._value_updated, "value", dispatch="ui")
-
-    def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        self.observe(
-            self._value_updated, "value", dispatch="ui", remove=True
-        )
-        super()._remove_event_listeners()
-
-    # ------------------------------------------------------------------------
-    # Private interface
     # ------------------------------------------------------------------------
 
     def create(self, parent=None):
@@ -64,12 +55,33 @@ class MField(HasTraits):
         self.show(self.visible)
         self.enable(self.enabled)
 
-    def _update_value(self, value):
-        """ Handle a change to the value from user interaction
-
-        This is a method suitable for calling from a toolkit event handler.
+    def _initialize_control(self):
+        """ Perform any post-creation initialization for the control.
         """
-        self.value = self._get_control_value()
+        super()._initialize_control()
+        self._set_control_value(self.value)
+        if self.alignment != 'default':
+            self._set_control_alignment(self.alignment)
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super()._add_event_listeners()
+        self.observe(self._value_updated, "value", dispatch="ui")
+        self.observe(self._alignment_updated, "alignment", dispatch="ui")
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        self.observe(
+            self._value_updated, "value", dispatch="ui", remove=True
+        )
+        self.observe(
+            self._alignment_updated, "alignment", dispatch="ui", remove=True
+        )
+        super()._remove_event_listeners()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
 
     def _get_control(self):
         """ If control is not passed directly, get it from the trait. """
@@ -88,8 +100,12 @@ class MField(HasTraits):
         """ Toolkit specific method to set the control's value. """
         raise NotImplementedError()
 
-    def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        raise NotImplementedError()
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
         raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------
@@ -98,3 +114,8 @@ class MField(HasTraits):
         value = event.new
         if self.control is not None:
             self._set_control_value(value)
+
+    def _alignment_updated(self, event):
+        alignment = event.new
+        if self.control is not None:
+            self._set_control_alignment(alignment)
