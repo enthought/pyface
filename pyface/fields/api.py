@@ -14,6 +14,10 @@ API for the ``pyface.fields`` subpackage.
 
 - :class:`~.CheckBoxField`
 - :class:`~.ComboField`
+- :class:`~.EditableField`
+- :class:`~.Field`
+- :class:`~.ImageField`
+- :class:`~.LabelField`
 - :class:`~.RadioButtonField`
 - :class:`~.SpinField`
 - :class:`~.TextField`
@@ -23,7 +27,10 @@ API for the ``pyface.fields`` subpackage.
 Interfaces
 ----------
 - :class:`~.IComboField`
+- :class:`~.IEditableField`
 - :class:`~.IField`
+- :class:`~.IImageField`
+- :class:`~.ILabelField`
 - :class:`~.ISpinField`
 - :class:`~.ITextField`
 - :class:`~.ITimeField`
@@ -32,7 +39,10 @@ Interfaces
 """
 
 from .i_combo_field import IComboField
+from .i_editable_field import IEditableField
 from .i_field import IField
+from .i_image_field import IImageField
+from .i_label_field import ILabelField
 from .i_spin_field import ISpinField
 from .i_text_field import ITextField
 from .i_time_field import ITimeField
@@ -48,6 +58,10 @@ from .i_toggle_field import IToggleField
 _toolkit_imports = {
     'CheckBoxField': 'toggle_field',
     'ComboField': 'combo_field',
+    'EditableField': 'editable_field',
+    'Field': 'field',
+    'ImageField': 'image_field',
+    'LabelField': 'label_field',
     'RadioButtonField': 'toggle_field',
     'SpinField': 'spin_field',
     'TextField': 'text_field',

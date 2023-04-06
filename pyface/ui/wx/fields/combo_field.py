@@ -16,11 +16,11 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_combo_field import IComboField, MComboField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(IComboField)
-class ComboField(MComboField, Field):
+class ComboField(MComboField, EditableField):
     """ The Wx-specific implementation of the combo field class """
 
     # ------------------------------------------------------------------------

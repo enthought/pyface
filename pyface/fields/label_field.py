@@ -8,17 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
+""" The label field widget. """
 
-from pyface.testing.layout_widget_mixin import LayoutWidgetMixin
+# Import the toolkit specific version.
+from pyface.toolkit import toolkit_object
 
-
-class FieldMixin(LayoutWidgetMixin):
-    """ Mixin which provides standard methods for all fields. """
-
-    def test_text_field_alignment(self):
-        self._create_widget_control()
-
-        self.widget.alignment = 'right'
-        self.gui.process_events()
-
-        self.assertEqual(self.widget._get_control_alignment(), 'right')
+LabelField = toolkit_object("fields.label_field:LabelField")

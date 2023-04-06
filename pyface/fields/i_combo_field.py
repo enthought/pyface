@@ -13,10 +13,10 @@
 
 from traits.api import Callable, HasTraits, Enum, List
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class IComboField(IField):
+class IComboField(IEditableField):
     """ The combo field interface.
 
     This is for comboboxes holding a list of values.
@@ -64,7 +64,6 @@ class MComboField(HasTraits):
     def _initialize_control(self):
         super()._initialize_control()
         self._set_control_values(self.values)
-        self._set_control_value(self.value)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
@@ -72,13 +71,9 @@ class MComboField(HasTraits):
         self.observe(
             self._values_updated, "values.items,formatter", dispatch="ui"
         )
-        if self.control is not None:
-            self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
         self.observe(
             self._values_updated,
             "values.items,formatter",

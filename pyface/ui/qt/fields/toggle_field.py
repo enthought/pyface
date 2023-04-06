@@ -17,11 +17,11 @@ from pyface.fields.i_toggle_field import IToggleField, MToggleField
 from pyface.qt.QtGui import (
     QCheckBox, QIcon, QPushButton, QRadioButton
 )
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(IToggleField)
-class ToggleField(MToggleField, Field):
+class ToggleField(MToggleField, EditableField):
     """ The Qt-specific implementation of the toggle field class """
 
     # ------------------------------------------------------------------------
@@ -59,6 +59,16 @@ class ToggleField(MToggleField, Field):
             self.control.toggled.disconnect(self._update_value)
         else:
             self.control.toggled.connect(self._update_value)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        # dummy implementation
+        return self.alignment
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        # use stylesheet for button alignment
+        self.control.setStyleSheet(f"text-align: {alignment}")
 
 
 class CheckBoxField(ToggleField):
