@@ -33,7 +33,7 @@ class TestApi(unittest.TestCase):
         attrs = [
             name
             for name in dir(api)
-            if not name.startswith('_') or name in api._optional_imports
+            if not (name.startswith('_') or name in api._optional_imports)
         ]
         for attr in attrs:
             with self.subTest(attr=attr):
