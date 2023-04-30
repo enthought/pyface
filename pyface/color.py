@@ -25,8 +25,8 @@ from traits.api import (
     Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
+from pyface.color_tuple import ColorTuple
 from pyface.util.color_helpers import channels_to_ints, is_dark
-from pyface.util.color_helpers import ints_to_channels  # noqa: F401
 from pyface.util.color_parser import parse_text
 
 
@@ -55,8 +55,7 @@ class Color(HasStrictTraits):
 
     Colors implement equality testing, but are not hashable as they are
     mutable, and so are not suitable for use as dictionary keys.  If you
-    need a dictionary key, use an appropriate channel tuple from the
-    object.
+    need a dictionary key, use a ColorTuple.
     """
 
     #: A tuple holding the red, green, blue, and alpha channels.
@@ -93,7 +92,7 @@ class Color(HasStrictTraits):
     is_dark = Property(Bool, observe='rgba')
 
     @classmethod
-    def from_str(cls, text, **traits):
+    def from_str(cls, text: str, **traits):
         """ Create a new Color object from a string.
 
         Parameters
@@ -154,7 +153,17 @@ class Color(HasStrictTraits):
         rgba_to_toolkit_color = toolkit_object('color:rgba_to_toolkit_color')
         return rgba_to_toolkit_color(self.rgba)
 
-    def hex(self):
+    def to_color_tuple(self) -> ColorTuple:
+        """ Create a new Color object from a ColorTuple.
+
+        Returns
+        -------
+        color_tuple : ColorTuple
+            A ColorTuple instance.
+        """
+        return ColorTuple(*self.rgba)
+
+    def hex(self) -> str:
         """ Provide a hex representation of the Color object.
 
         Note that because the hex value is restricted to 0-255 integer values

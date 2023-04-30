@@ -8,10 +8,16 @@
 #
 # Thanks for using Enthought open source!
 
-from unittest import TestCase
+from unittest import TestCase, skipIf
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 from pyface.util.color_helpers import (
-    channels_to_ints, ints_to_channels, is_dark, relative_luminance
+    channels_to_ints, ints_to_channels, is_dark, relative_luminance,
+    int_to_color_tuple, sequence_to_rgba_tuple
 )
 
 
@@ -162,3 +168,101 @@ class TestIsDark(TestCase):
         rgb = (0.5, 0.5, 0.5)
         result = is_dark(rgb)
         self.assertFalse(result)
+
+
+class TestIntToColorTuple(TestCase):
+
+    def test_good(self):
+        cases = {
+            0x000000: (0.0, 0.0, 0.0),
+            0xffffff: (1.0, 1.0, 1.0),
+            0x663399: (0.4, 0.2, 0.6),
+        }
+        for value, result in cases.items():
+            with self.subTest(value=value):
+                self.assertEqual(int_to_color_tuple(value), result)
+
+    def test_bad(self):
+        cases = [-1, 0x1000000]
+        for value in cases:
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    int_to_color_tuple(value)
+
+
+class TestSequenceToRGBATuple(TestCase):
+
+    def test_good(self):
+        cases = [
+            (0.4, 0.2, 0.6, 1.0),
+            [0.4, 0.2, 0.6, 1.0],
+            (0x66, 0x33, 0x99, 0xff),
+            [0x66, 0x33, 0x99, 0xff],
+            (0.4, 0.2, 0.6),
+            [0.4, 0.2, 0.6],
+            (0x66, 0x33, 0x99),
+            [0x66, 0x33, 0x99],
+        ]
+
+        for value in cases:
+            with self.subTest(value=value):
+                self.assertEqual(
+                    sequence_to_rgba_tuple(value),
+                    (0.4, 0.2, 0.6, 1.0),
+                )
+
+    @skipIf(np is None, "NumPy is needed for test")
+    def test_good_numpy(self):
+        rgba_float_dtype = np.dtype([
+            ('red', "float64"),
+            ('green', "float64"),
+            ('blue', "float64"),
+            ('alpha', "float64"),
+        ])
+        rgba_uint8_dtype = np.dtype([
+            ('red', "uint8"),
+            ('green', "uint8"),
+            ('blue', "uint8"),
+            ('alpha', "uint8"),
+        ])
+        rgb_float_dtype = np.dtype([
+            ('red', "float64"),
+            ('green', "float64"),
+            ('blue', "float64"),
+        ])
+        rgb_uint8_dtype = np.dtype([
+            ('red', "uint8"),
+            ('green', "uint8"),
+            ('blue', "uint8"),
+        ])
+
+        cases = [
+            np.array([0.4, 0.2, 0.6, 1.0]),
+            np.array([(0.4, 0.2, 0.6, 1.0)], dtype=rgba_float_dtype)[0],
+            np.array([0x66, 0x33, 0x99, 0xff], dtype='uint8'),
+            np.array([(0x66, 0x33, 0x99, 0xff)], dtype=rgba_uint8_dtype)[0],
+            np.array([0.4, 0.2, 0.6]),
+            np.array([(0.4, 0.2, 0.6)], dtype=rgb_float_dtype)[0],
+            np.array([0x66, 0x33, 0x99], dtype='uint8'),
+            np.array([(0x66, 0x33, 0x99)], dtype=rgb_uint8_dtype)[0],
+        ]
+
+        for value in cases:
+            with self.subTest(value=value):
+                self.assertEqual(
+                    sequence_to_rgba_tuple(value),
+                    (0.4, 0.2, 0.6, 1.0),
+                )
+
+    def test_bad(self):
+        cases = [
+            (0.4, 0.2),
+            (0.4, 0.2, 0.3, 1.0, 1.0),
+            (0.0, 1.00001, 0.9, 1.0),
+            (0.0, -0.00001, 0.9, 1.0),
+            (0, -1, 250, 255),
+        ]
+        for value in cases:
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    sequence_to_rgba_tuple(value)

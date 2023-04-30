@@ -16,10 +16,12 @@ pyface.color.Color class to_toolkit and from_toolkit methods.
 
 import wx
 
-from pyface.color import channels_to_ints, ints_to_channels
+from pyface.util.color_helpers import (
+    channels_to_ints, ints_to_channels, RGBATuple
+)
 
 
-def toolkit_color_to_rgba(wx_colour):
+def toolkit_color_to_rgba(wx_colour: wx.Colour) -> RGBATuple:
     """ Convert a wx.Colour to an RGBA tuple.
 
     Parameters
@@ -41,7 +43,7 @@ def toolkit_color_to_rgba(wx_colour):
     return ints_to_channels(values)
 
 
-def rgba_to_toolkit_color(rgba):
+def rgba_to_toolkit_color(rgba: RGBATuple) -> wx.Colour:
     """ Convert an RGBA tuple to a wx.Colour.
 
     Parameters
