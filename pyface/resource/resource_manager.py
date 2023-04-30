@@ -29,7 +29,7 @@ try:
 except ImportError:
     from importlib_resources import files
 
-from traits.api import HasTraits, Instance, List
+from traits.api import Directory, HasTraits, Instance, List
 from traits.util.resource import get_path
 
 from pyface.resource.resource_factory import ResourceFactory
@@ -48,7 +48,7 @@ class ResourceManager(HasTraits):
 
     # A list of additional search paths. These paths are fallbacks, and hence
     # have lower priority than the paths provided by resource objects.
-    extra_paths = List()
+    extra_paths = List(Directory)
 
     # The resource factory is responsible for actually creating resources.
     # This is used so that (for example) different GUI toolkits can create
