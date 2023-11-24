@@ -51,3 +51,11 @@ class TestSpinField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget._get_control_bounds(), (10, 50))
         self.assertEqual(self.widget._get_control_value(), 10)
         self.assertEqual(self.widget.value, 10)
+
+    def test_spin_field_wrap(self):
+        self._create_widget_control()
+
+        self.widget.wrap = True
+        self.gui.process_events()
+
+        self.assertTrue(self.widget._get_control_wrap())

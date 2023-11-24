@@ -17,9 +17,9 @@ Application class by overriding the `_run` method to perform the desired
 computation.
 """
 
-
 import argparse
-from pyface.application import Application
+
+from pyface.api import Application
 from traits.api import Str
 
 

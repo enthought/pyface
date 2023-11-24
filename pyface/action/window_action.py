@@ -13,11 +13,10 @@
 """ Abstract base class for all window actions. """
 
 
-from pyface.window import Window
 from traits.api import Instance, Property
 
-
 from pyface.action.listening_action import ListeningAction
+from pyface.i_window import IWindow
 
 
 class WindowAction(ListeningAction):
@@ -30,7 +29,7 @@ class WindowAction(ListeningAction):
     # 'WindowAction' interface -----------------------------------------------
 
     #: The window that the action is associated with.
-    window = Instance(Window)
+    window = Instance(IWindow)
 
     # ------------------------------------------------------------------------
     # Protected interface.

@@ -110,7 +110,7 @@ class EventLoopHelper(HasStrictTraits):
 
         Parameters
         ----------
-        condition : callable
+        condition : Callable
             A callable to determine if the stop criteria have been met. This
             should accept no arguments.
 

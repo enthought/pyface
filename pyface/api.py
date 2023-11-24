@@ -16,6 +16,7 @@ API for the ``pyface`` package.
 - :class:`~.ApplicationWindow`
 - :attr:`~.clipboard`
 - :class:`~.Clipboard`
+- :func:`~.find_toolkit`
 - :class:`~.GUI`
 - :class:`~.GUIApplication`
 - :class:`~.ImageResource`
@@ -24,6 +25,7 @@ API for the ``pyface`` package.
 - :class:`~.SplitApplicationWindow`
 - :class:`~.SplitPanel`
 - :class:`~.SystemMetrics`
+- :class:`~.Toolkit`
 - :class:`~.Window`
 - :class:`~.Widget`
 
@@ -134,87 +136,15 @@ Wx-specific classes
 
 """
 
-import logging as _logging
+# Imports which don't select the toolkit as a side-effect.
 
-from .about_dialog import AboutDialog
 from .application import Application
-from .application_window import ApplicationWindow
-from .beep import beep
-from .clipboard import clipboard, Clipboard
-from .confirmation_dialog import confirm, ConfirmationDialog
+from .base_toolkit import Toolkit, find_toolkit
 from .color import Color
 from .constant import OK, CANCEL, YES, NO
-from .dialog import Dialog
-from .directory_dialog import DirectoryDialog
-from .drop_handler import BaseDropHandler, FileDropHandler
-from .file_dialog import FileDialog
 from .filter import Filter
 from .font import Font
-from .gui import GUI
 from .gui_application import GUIApplication
-from .heading_text import HeadingText
-from .image_cache import ImageCache
-from .image_resource import ImageResource
-from .key_pressed_event import KeyPressedEvent
-from .layered_panel import LayeredPanel
-from .message_dialog import error, information, warning, MessageDialog
-from .progress_dialog import ProgressDialog
-
-from .util._optional_dependencies import optional_import as _optional_import
-
-# Excuse numpy dependency, otherwise re-raise
-with _optional_import(
-        "numpy",
-        msg="ArrayImage not available due to missing numpy.",
-        logger=_logging.getLogger(__name__)):
-
-    # We need to manually try importing numpy because the ``ArrayImage``
-    # import will end up raising a ``TraitError`` exception instead of an
-    # ``ImportError``, which isnt caught by ``_optional_import``.
-    import numpy
-
-    from .array_image import ArrayImage
-
-    del numpy
-
-# Excuse pillow dependency, otherwise re-raise
-with _optional_import(
-        "pillow",
-        msg="PILImage not available due to missing pillow.",
-        logger=_logging.getLogger(__name__)):
-    from .pil_image import PILImage
-
-# Excuse pygments dependency (for Qt), otherwise re-raise
-with _optional_import(
-        "pygments",
-        msg="PythonEditor not available due to missing pygments.",
-        logger=_logging.getLogger(__name__)):
-    from .python_editor import PythonEditor
-
-with _optional_import(
-        "pygments",
-        msg="PythonShell not available due to missing pygments.",
-        logger=_logging.getLogger(__name__)):
-    from .python_shell import PythonShell
-
-from .sorter import Sorter
-from .single_choice_dialog import choose_one, SingleChoiceDialog
-from .splash_screen import SplashScreen
-from .split_application_window import SplitApplicationWindow
-from .split_dialog import SplitDialog
-from .split_panel import SplitPanel
-from .system_metrics import SystemMetrics
-from .ui_traits import (
-    Alignment, Border, HasBorder, HasMargin, Image, Margin, Orientation,
-    Position, PyfaceColor, PyfaceFont
-)
-from .window import Window
-from .widget import Widget
-
-# ----------------------------------------------------------------------------
-# Public Interfaces
-# ----------------------------------------------------------------------------
-
 from .i_about_dialog import IAboutDialog
 from .i_application_window import IApplicationWindow
 from .i_clipboard import IClipboard
@@ -241,27 +171,122 @@ from .i_split_widget import ISplitWidget
 from .i_system_metrics import ISystemMetrics
 from .i_widget import IWidget
 from .i_window import IWindow
+from .sorter import Sorter
+from .ui_traits import (
+    Alignment, Border, HasBorder, HasMargin, Image, Margin, Orientation,
+    Position, PyfaceColor, PyfaceFont
+)
 
 # ----------------------------------------------------------------------------
-# Legacy and Wx-specific imports.
+# Deferred imports
 # ----------------------------------------------------------------------------
 
-# These widgets currently only have Wx implementations
-# will return Unimplemented for Qt.
+# These imports have the side-effect of performing toolkit selection
 
-from .expandable_panel import ExpandablePanel
-from .image_widget import ImageWidget
-from .mdi_application_window import MDIApplicationWindow
-from .mdi_window_menu import MDIWindowMenu
-from .multi_toolbar_window import MultiToolbarWindow
+_toolkit_imports = {
+    'AboutDialog': 'about_dialog',
+    'ApplicationWindow': "application_window",
+    'BaseDropHandler': "drop_handler",
+    'beep': "beep",
+    'Clipboard': "clipboard",
+    'ConfirmationDialog': "confirmation_dialog",
+    'Dialog': "dialog",
+    'DirectoryDialog': "directory_dialog",
+    'FileDropHandler': "drop_handler",
+    'FileDialog': "file_dialog",
+    'GUI': 'gui',
+    'HeadingText': "heading_text",
+    'ImageCache': "image_cache",
+    'ImageResource': "image_resource",
+    'KeyPressedEvent': "key_pressed_event",
+    'LayeredPanel': "layered_panel",
+    'MessageDialog': "message_dialog",
+    'ProgressDialog': "progress_dialog",
+    'SingleChoiceDialog': "single_choice_dialog",
+    'SplashScreen': "splash_screen",
+    'SystemMetrics': "system_metrics",
+    'Window': "window",
+    'Widget': "widget",
 
-# This code isn't toolkit widget code, but is wx-specific
-from traits.etsconfig.api import ETSConfig
+    # Wx-only (or legacy) imports
+    'ExpandablePanel': "expandable_panel",
+    'ImageWidget': "image_widget",
+    'MDIApplicationWindow': "mdi_application_window",
+    'MDIWindowMenu': "mdi_window_menu",
+    'MultiToolbarWindow': "multi_toolbar_window",
+}
 
-if ETSConfig.toolkit == "wx":
+# These are pyface.* imports that have selection as a side-effect
+# TODO: refactor to delay imports where possible
+_relative_imports = {
+    'choose_one': "single_choice_dialog",
+    'clipboard': "clipboard",
+    'confirm': "confirmation_dialog",
+    'error': "message_dialog",
+    'information': "message_dialog",
+    'SplitApplicationWindow': "split_application_window",
+    'SplitDialog': "split_dialog",
+    'SplitPanel': "split_panel",
+    'warning': "message_dialog",
+}
+_optional_imports = {
+    'ArrayImage': ("numpy", "array_image"),
+    'PILImage': ("pillow", "pil_image"),
+    'PythonEditor': ("pygments", "python_editor"),
+    'PythonShell': ("pygments", "python_shell"),
+}
 
-    # Fix for broken Pycrust introspect module.
-    # XXX move this somewhere better? - CJW 2017
-    from .util import fix_introspect_bug
 
-del ETSConfig
+def __getattr__(name):
+    """Lazily load attributes with side-effects
+
+    In particular, lazily load toolkit backend names.  For efficiency, lazily
+    loaded objects are injected into the module namespace
+    """
+    # sentinel object for no result
+    not_found = object()
+    result = not_found
+
+    if name in _relative_imports:
+        from importlib import import_module
+        source = _relative_imports[name]
+        module = import_module(f"pyface.{source}")
+        result = getattr(module, name)
+
+    elif name in _toolkit_imports:
+        from pyface.toolkit import toolkit_object
+        source = _toolkit_imports[name]
+        result = toolkit_object(f"{source}:{name}")
+
+    elif name in _optional_imports:
+        from importlib import import_module
+        import logging
+        from pyface.util._optional_dependencies import optional_import
+        dependency, source = _optional_imports[name]
+        with optional_import(
+            dependency,
+            msg=f"{name} is not available due to missing {dependency}.",
+            logger=logging.getLogger(__name__),
+        ):
+            module = import_module(f"pyface.{source}")
+            result = getattr(module, name)
+
+    if result is not_found:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+    globals()[name] = result
+    return result
+
+
+# ----------------------------------------------------------------------------
+# Introspection support
+# ----------------------------------------------------------------------------
+
+# the list of available names we report for introspection purposes
+_extra_names = (
+    set(_toolkit_imports) | set(_relative_imports) | set(_optional_imports)
+)
+
+
+def __dir__():
+    return sorted(set(globals()) | _extra_names)

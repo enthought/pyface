@@ -7,12 +7,8 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from . import qt_api
 
-if qt_api == "pyqt":
-    from PyQt4.QtScript import *
 
-else:
-    import warnings
+import warnings
 
-    warnings.warn(DeprecationWarning("QtScript is not supported in PyQt5/PySide2"))
+warnings.warn(DeprecationWarning("QtScript is not supported after Qt4"))

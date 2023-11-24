@@ -17,13 +17,14 @@
 
 import sys
 
+from traits.api import provides
 
 from pyface.qt import QtGui
-
-
 from pyface.action.action_manager import ActionManager
+from pyface.action.i_menu_bar_manager import IMenuBarManager
 
 
+@provides(IMenuBarManager)
 class MenuBarManager(ActionManager):
     """ A menu bar manager realizes itself in errr, a menu bar control. """
 

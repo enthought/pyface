@@ -95,7 +95,6 @@ dependencies = {
     "importlib_resources>=1.1.0",
     "traits" + TRAITS_VERSION_REQUIRES,
     "traitsui",
-    "numpy",
     "pygments",
     "coverage",
     "flake8",
@@ -112,8 +111,10 @@ if sys.platform == "darwin":
     )
     if b'AVX2' in result.stdout.split():
         dependencies.add('pillow_simd')
+        dependencies.add('numpy')
 else:
     dependencies.add('pillow_simd')
+    dependencies.add('numpy')
 
 
 source_dependencies = {

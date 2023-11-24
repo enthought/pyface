@@ -17,13 +17,16 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Enum, Instance, List, Str, Tuple
+from traits.api import Bool, Instance, List, Str, Tuple, provides
 
 
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
+from pyface.action.i_tool_bar_manager import IToolBarManager
+from pyface.ui_traits import Orientation
 
 
+@provides(IToolBarManager)
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
@@ -42,7 +45,7 @@ class ToolBarManager(ActionManager):
     name = Str("ToolBar")
 
     # The orientation of the toolbar.
-    orientation = Enum("horizontal", "vertical")
+    orientation = Orientation("horizontal")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)

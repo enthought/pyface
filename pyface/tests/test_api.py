@@ -26,6 +26,19 @@ class TestApi(unittest.TestCase):
         # required dependencies, including in the absence of toolkit backends.
         from pyface import api   # noqa: F401
 
+    def test_public_attrs(self):
+        # make sure everything advertised by dir() is available except optional
+        from pyface import api
+
+        attrs = [
+            name
+            for name in dir(api)
+            if not (name.startswith('_') or name in api._optional_imports)
+        ]
+        for attr in attrs:
+            with self.subTest(attr=attr):
+                self.assertIsNotNone(getattr(api, attr, None))
+
 
 @unittest.skipIf(not is_qt, "This test is for qt.")
 class TestApiQt(unittest.TestCase):
@@ -191,7 +204,6 @@ class TestApiWx(unittest.TestCase):
             clipboard,
             confirm,
             error,
-            fix_introspect_bug,
             information,
             warning,
             # Interfaces

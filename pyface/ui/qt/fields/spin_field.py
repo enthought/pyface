@@ -18,11 +18,11 @@ from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
 from pyface.qt.QtGui import QSpinBox
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ISpinField)
-class SpinField(MSpinField, Field):
+class SpinField(MSpinField, EditableField):
     """ The Qt-specific implementation of the spin field class """
 
     # ------------------------------------------------------------------------
@@ -39,21 +39,6 @@ class SpinField(MSpinField, Field):
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _get_control_value(self):
-        """ Toolkit specific method to get the control's value. """
-        return self.control.value()
-
-    def _set_control_value(self, value):
-        """ Toolkit specific method to set the control's value. """
-        self.control.setValue(value)
-
-    def _observe_control_value(self, remove=False):
-        """ Toolkit specific method to change the control value observer. """
-        if remove:
-            self.control.valueChanged[int].disconnect(self._update_value)
-        else:
-            self.control.valueChanged[int].connect(self._update_value)
-
     def _get_control_bounds(self):
         """ Toolkit specific method to get the control's bounds. """
         return (self.control.minimum(), self.control.maximum())
@@ -61,3 +46,11 @@ class SpinField(MSpinField, Field):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         self.control.setRange(*bounds)
+
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        return self.control.wrapping()
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        self.control.setWrapping(wrap)

@@ -52,7 +52,7 @@ class TestTextField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget._get_control_echo(), "password")
 
     @unittest.skipIf(
-        is_wx, "Can't change password mode for wx after control " "creation."
+        is_wx, "Can't change password mode for wx after control creation."
     )
     def test_text_field_echo_change(self):
         self._create_widget_control()
@@ -71,17 +71,6 @@ class TestTextField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget._get_control_placeholder(), "test")
 
     def test_text_field_readonly(self):
-        self.widget.read_only = True
-        self._create_widget_control()
-
-        self.gui.process_events()
-
-        self.assertEqual(self.widget._get_control_read_only(), True)
-
-    @unittest.skipIf(
-        is_wx, "Can't change read_only mode for wx after control " "creation."
-    )
-    def test_text_field_readonly_change(self):
         self._create_widget_control()
 
         self.widget.read_only = True

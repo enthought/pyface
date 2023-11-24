@@ -10,7 +10,6 @@
 """ A Group for toggling the visibility of a task's dock panes. """
 
 
-from pyface.action.api import Action, ActionItem, Group
 from traits.api import (
     cached_property,
     Instance,
@@ -21,6 +20,7 @@ from traits.api import (
 )
 
 
+from pyface.action.api import Action, Group
 from pyface.tasks.i_dock_pane import IDockPane
 
 
@@ -123,6 +123,7 @@ class DockPaneToggleGroup(Group):
     def _dock_panes_updated(self, event):
         """Recreate the group items when dock panes have been added/removed.
         """
+        from pyface.action.action_item import ActionItem
 
         # Remove the previous group items.
         self.destroy()

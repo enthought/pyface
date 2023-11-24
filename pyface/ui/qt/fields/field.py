@@ -15,14 +15,40 @@ from traits.api import Any, provides
 
 from pyface.fields.i_field import IField, MField
 from pyface.ui.qt.layout_widget import LayoutWidget
+from pyface.ui.qt.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
 
 
 @provides(IField)
 class Field(MField, LayoutWidget):
     """ The Qt-specific implementation of the field class
 
-    This is an abstract class which is not meant to be instantiated.
+    This is an abstract class which is not meant to be instantiated.  Because
+    many concrete QWidgets provide a `value` property, the default getters and
+    setters target this.
     """
 
     #: The value held by the field.
     value = Any()
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
+        return self.control.value()
+
+    def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
+        self.control.setValue(value)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        # default implementation
+        return qalignment_to_alignment(self.control.alignment())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        self.control.setAlignment(alignment_to_qalignment(alignment))

@@ -45,7 +45,7 @@ class ActionManager(HasTraits):
     enabled = Bool(True)
 
     #: All of the contribution groups in the manager.
-    groups = Property(List(Group))
+    groups = Property(List(Instance(Group)), observe='_groups.items')
 
     #: The manager's unique identifier (if it has one).
     id = Str()
@@ -61,7 +61,7 @@ class ActionManager(HasTraits):
     # Private interface ----------------------------------------------------
 
     #: All of the contribution groups in the manager.
-    _groups = List(Group)
+    _groups = List(Instance(Group))
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -72,7 +72,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        args : collection of strings, Group instances, or ActionManagerItem instances
+        args : collection of strings, Group instances, or ActionManagerItem s
             Positional arguments are interpreted as Items or Groups managed
             by the action manager.
 
@@ -142,7 +142,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to append.
 
         Notes
@@ -180,7 +180,7 @@ class ActionManager(HasTraits):
         ----------
         index : int
             The position at which to insert the object
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to insert.
 
         Notes
@@ -213,7 +213,7 @@ class ActionManager(HasTraits):
 
         Returns
         -------
-        group : Group instance
+        group : Group
             The group which matches the id, or None if no such group exists.
         """
         for group in self._groups:
@@ -256,7 +256,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        fn : callable
+        fn : Callable
             A callable to apply to the tree of groups and items, starting with
             the manager.
         """
@@ -272,7 +272,9 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        fn : callable
+        group : Group
+            The group to walk.
+        fn : Callable
             A callable to apply to the tree of groups and items.
         """
         fn(group)
@@ -290,7 +292,10 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        fn : callable
+        item : item
+            The item to walk.  This may be a submenu or similar in addition to
+            simple Action items.
+        fn : Callable
             A callable to apply to the tree of items and subgroups.
         """
         if hasattr(item, "groups"):
@@ -309,7 +314,7 @@ class ActionManager(HasTraits):
 
         Returns
         -------
-        group : Group instance
+        group : Group
             The manager's default group.
         """
         group = self.find_group(self.DEFAULT_GROUP)
@@ -324,7 +329,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        item : string, Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem
             The item to be added to this ActionManager
 
         Returns

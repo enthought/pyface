@@ -32,7 +32,7 @@ class ActionManagerItem(HasTraits):
     id = Str()
 
     #: The group the item belongs to.
-    parent = Instance("pyface.action.api.Group")
+    parent = Instance("pyface.action.group.Group")
 
     #: Is the item enabled?
     enabled = Bool(True)
@@ -53,7 +53,7 @@ class ActionManagerItem(HasTraits):
             The parent of the new menu item control.
         menu : toolkit menu
             The menu to add the action item to.
-        controller : ActionController instance or None
+        controller : pyface.action.action_controller.ActionController  or None
             The controller to use.
         """
         raise NotImplementedError()
@@ -67,9 +67,9 @@ class ActionManagerItem(HasTraits):
             The parent of the new menu item control.
         tool_bar : toolkit toolbar
             The toolbar to add the action item to.
-        image_cache : ImageCache instance
+        image_cache : ImageCache
             The image cache for resized images.
-        controller : ActionController instance or None
+        controller : pyface.action.action_controller.ActionController  or None
             The controller to use.
         show_labels : bool
             Should the toolbar item show a label.

@@ -7,26 +7,25 @@ the TraitsUI package. Thus, you can write code in the abstraction of the
 Pyface API and the selected toolkit and backend take care of the details of
 displaying them.
 
-Pyface
-======
-
 Pyface enables programmers to interact with generic GUI objects, such as an
-"MDI Application Window", rather than with raw GUI widgets. (Pyface is named by
-analogy to JFace in Java.) TraitsUI uses Pyface to implement views and editors
-for displaying and editing Traits-based objects.
+"Application Window", rather than with raw GUI widgets.  TraitsUI uses Pyface
+to implement views and editors for displaying and editing Traits-based objects.
+In addition to wrappers around fields and dialogs, Pyface includes an
+application framework called "Tasks" for building full-featured
+applications featuring dock panes, tabbed editor areas and so forth.
 
 Toolkit Backends
 ================
 
-TraitsUI and Pyface define APIs that are independent of any GUI toolkit.
-However, in order to actually produce user interfaces with them, you must
+Pyface defines APIs that are independent of any GUI toolkit.  However, in
+order to actually produce user interfaces with them, you must
 install a supported Python-based GUI toolkit and the appropriate
 toolkit-specific backend project. Conversely, a "null" backend is
 automatically used in the absence of a real backend.
 
 Currently, the GUI toolkits are
 
-* PySide2 (stable) and PySide6 (experimental)
+* PySide2 and PySide6 (stable)
 * PyQt5 (stable) and PyQt6 (in development)
 * wxPython 4 (experimental)
 

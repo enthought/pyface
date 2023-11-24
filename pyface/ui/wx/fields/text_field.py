@@ -16,11 +16,11 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ITextField)
-class TextField(MTextField, Field):
+class TextField(MTextField, EditableField):
     """ The Wx-specific implementation of the text field class """
 
     # ------------------------------------------------------------------------

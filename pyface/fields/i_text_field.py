@@ -13,10 +13,10 @@
 
 from traits.api import Bool, Enum, HasTraits, Str
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ITextField(IField):
+class ITextField(IEditableField):
     """ The text field interface. """
 
     #: The value held by the field.
@@ -58,12 +58,10 @@ class MTextField(HasTraits):
     # ------------------------------------------------------------------------
 
     def _initialize_control(self):
+        super()._initialize_control()
         self._set_control_echo(self.echo)
-        self._set_control_value(self.value)
         self._set_control_placeholder(self.placeholder)
         self._set_control_read_only(self.read_only)
-
-        super()._initialize_control()
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
@@ -74,17 +72,15 @@ class MTextField(HasTraits):
         self.observe(self._read_only_updated, "read_only", dispatch="ui")
         if self.control is not None:
             if self.update_text == "editing_finished":
+                self._observe_control_value(remove=True)
                 self._observe_control_editing_finished()
-            else:
-                self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
             if self.update_text == "editing_finished":
                 self._observe_control_editing_finished(remove=True)
-            else:
-                self._observe_control_value(remove=True)
+                self._observe_control_value()
         self.observe(
             self._update_text_updated,
             "update_text",

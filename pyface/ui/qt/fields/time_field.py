@@ -17,11 +17,11 @@ from pyface.qt.QtGui import QTimeEdit
 
 from pyface.fields.i_time_field import ITimeField, MTimeField
 from pyface.ui.qt.util.datetime import pytime_to_qtime, qtime_to_pytime
-from .field import Field
+from .editable_field import EditableField
 
 
 @provides(ITimeField)
-class TimeField(MTimeField, Field):
+class TimeField(MTimeField, EditableField):
     """ The Qt-specific implementation of the time field class """
 
     # ------------------------------------------------------------------------

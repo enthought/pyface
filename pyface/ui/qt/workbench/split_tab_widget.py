@@ -19,8 +19,7 @@
 import sys
 import warnings
 
-
-from pyface.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtGui
 
 from pyface.image_resource import ImageResource
 
@@ -299,15 +298,6 @@ class SplitTabWidget(QtGui.QSplitter):
 
     def _focus_changed(self, old, new):
         """ Handle a change in focus that affects the current tab. """
-
-        # It is possible for the C++ layer of this object to be deleted between
-        # the time when the focus change signal is emitted and time when the
-        # slots are dispatched by the Qt event loop. This may be a bug in PyQt4.
-        if qt_api == "pyqt":
-            import sip
-
-            if sip.isdeleted(self):
-                return
 
         if self._repeat_focus_changes:
             self.focus_changed.emit(old, new)

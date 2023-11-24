@@ -14,10 +14,10 @@ from datetime import time
 
 from traits.api import HasTraits, Time
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 
 
-class ITimeField(IField):
+class ITimeField(IEditableField):
     """ The time field interface.
 
     This is for a field that edits a datetime.time value.
@@ -36,22 +36,6 @@ class MTimeField(HasTraits):
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
-
-    def _initialize_control(self):
-        super(MTimeField, self)._initialize_control()
-        self._set_control_value(self.value)
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super(MTimeField, self)._add_event_listeners()
-        if self.control is not None:
-            self._observe_control_value()
-
-    def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
-        super(MTimeField, self)._remove_event_listeners()
 
     # Trait defaults --------------------------------------------------------
 

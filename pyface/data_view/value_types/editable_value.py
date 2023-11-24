@@ -40,7 +40,7 @@ class EditableValue(AbstractValueType):
             The row in the data model being queried.
         column : sequence of int
             The column in the data model being queried.
-        value : any
+        value : Any
             The value to validate.
 
         Returns
@@ -85,7 +85,7 @@ class EditableValue(AbstractValueType):
             The row in the data model being set.
         column : sequence of int
             The column in the data model being set.
-        value : any
+        value : Any
             The value being set.
 
         Raises

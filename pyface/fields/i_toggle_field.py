@@ -13,11 +13,11 @@
 
 from traits.api import Bool, HasTraits, Str
 
-from pyface.fields.i_field import IField
+from pyface.fields.i_editable_field import IEditableField
 from pyface.ui_traits import Image
 
 
-class IToggleField(IField):
+class IToggleField(IEditableField):
     """ The toggle field interface.
 
     This is for a toggle between two states, represented by a boolean value.
@@ -62,13 +62,9 @@ class MToggleField(HasTraits):
         super()._add_event_listeners()
         self.observe(self._text_updated, "text", dispatch="ui")
         self.observe(self._icon_updated, "icon", dispatch="ui")
-        if self.control is not None:
-            self._observe_control_value()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self._observe_control_value(remove=True)
         self.observe(self._text_updated, "text", dispatch="ui", remove=True)
         self.observe(self._icon_updated, "icon", dispatch="ui", remove=True)
         super()._remove_event_listeners()

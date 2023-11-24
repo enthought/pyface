@@ -16,14 +16,16 @@
 import wx
 
 
-from traits.api import Str, Bool
+from traits.api import Str, Bool, provides
 
 
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.group import Group
+from pyface.action.i_menu_manager import IMenuManager
 
 
+@provides(IMenuManager)
 class MenuManager(ActionManager, ActionManagerItem):
     """ A menu manager realizes itself in a menu control.
 

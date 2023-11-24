@@ -25,14 +25,14 @@ class ActionController(HasTraits):
 
         Parameters
         ----------
-        action : Action instance
+        action : Action
             The action to perform.
-        event : ActionEvent instance
+        event : ActionEvent
             The event that triggered the action.
 
         Returns
         -------
-        result : any
+        result : Any
             The result of the action's perform method (usually None).
         """
         return action.perform(event)
@@ -42,7 +42,7 @@ class ActionController(HasTraits):
 
         Parameters
         ----------
-        action : Action instance
+        action : Action
             The action to consider.
 
         Returns
@@ -57,7 +57,7 @@ class ActionController(HasTraits):
 
         Parameters
         ----------
-        action : Action instance
+        action : Action
             The action added to the menu.
         """
         pass
@@ -67,7 +67,7 @@ class ActionController(HasTraits):
 
         Parameters
         ----------
-        action : Action instance
+        action : Action
             The action to consider.
 
         Returns
@@ -82,7 +82,7 @@ class ActionController(HasTraits):
 
         Parameters
         ----------
-        action : Action instance
+        action : Action
             The action added to the toolbar.
         """
         pass

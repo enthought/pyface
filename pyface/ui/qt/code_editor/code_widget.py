@@ -844,14 +844,6 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
 if __name__ == "__main__":
 
-    def set_trace():
-        from PyQt4.QtCore import pyqtRemoveInputHook
-
-        pyqtRemoveInputHook()
-        import pdb
-
-        pdb.Pdb().set_trace(sys._getframe().f_back)
-
     app = QtGui.QApplication(sys.argv)
     window = AdvancedCodeWidget(None)
 

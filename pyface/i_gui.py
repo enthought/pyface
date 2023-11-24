@@ -49,7 +49,7 @@ class IGUI(Interface):
 
         Parameters
         ----------
-        splash_screen : ISplashScreen instance or None
+        splash_screen : ISplashScreen or None
             An optional splash screen that will be displayed until the event
             loop is started.
         """
@@ -78,7 +78,7 @@ class IGUI(Interface):
         ----------
         millisecs : float
             Delay in milliseconds
-        callable : callable
+        callable : Callable
             Callable to be called after the delay
         args, kwargs :
             Arguments and keyword arguments to be used when calling.
@@ -90,7 +90,7 @@ class IGUI(Interface):
 
         Parameters
         ----------
-        callable : callable
+        callable : Callable
             Callable to be called after the delay
         args, kwargs :
             Arguments and keyword arguments to be used when calling.
@@ -104,11 +104,11 @@ class IGUI(Interface):
         ----------
         millisecs : float
             Delay in milliseconds
-        obj : HasTraits instance
+        obj : traits.has_traits.HasTraits
             Object on which the trait is to be set
         trait_name : str
             The name of the trait to set
-        new : any
+        new : Any
             The value to set.
         """
 
@@ -118,11 +118,11 @@ class IGUI(Interface):
 
         Parameters
         ----------
-        obj : HasTraits instance
+        obj : traits.has_traits.HasTraits
             Object on which the trait is to be set
         trait_name : str
             The name of the trait to set
-        new : any
+        new : Any
             The value to set.
         """
 

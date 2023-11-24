@@ -52,12 +52,12 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
 
         Returns
         -------
-        value : any
+        value : Any
             The data value contained in the object.
         """
         raise NotImplementedError()
@@ -67,7 +67,7 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
 
         Returns
@@ -82,9 +82,9 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
-        value : any
+        value : Any
             The data value to set.
 
         Raises
@@ -119,12 +119,12 @@ class ConstantDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             An object.
 
         Returns
         -------
-        value : any
+        value : Any
             The data value contained in this class' value trait.
         """
         return self.value
@@ -149,12 +149,12 @@ class AttributeDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
 
         Returns
         -------
-        value : any
+        value : Any
             The data value contained in the object's attribute.
         """
         return xgetattr(obj, self.attr)
@@ -164,7 +164,7 @@ class AttributeDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
 
         Returns
@@ -211,7 +211,7 @@ class IndexDataAccessor(AbstractDataAccessor):
 
         Returns
         -------
-        value : any
+        value : Any
             The data value contained in the object at the index.
         """
         return obj[self.index]
@@ -221,7 +221,7 @@ class IndexDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
 
         Returns
@@ -236,9 +236,9 @@ class IndexDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
-        value : any
+        value : Any
             The data value to set.
 
         Raises
@@ -280,7 +280,7 @@ class KeyDataAccessor(AbstractDataAccessor):
 
         Returns
         -------
-        value : any
+        value : Any
             The data value contained in the given key of the object.
         """
         return obj[self.key]
@@ -292,7 +292,7 @@ class KeyDataAccessor(AbstractDataAccessor):
         ----------
         obj : mapping
             The object that contains the data.
-        value : any
+        value : Any
             The data value to set.
 
         Raises
@@ -307,9 +307,9 @@ class KeyDataAccessor(AbstractDataAccessor):
 
         Parameters
         ----------
-        obj : any
+        obj : Any
             The object that contains the data.
-        value : any
+        value : Any
             The data value to set.
 
         Raises

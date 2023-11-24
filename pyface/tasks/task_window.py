@@ -11,8 +11,6 @@
 import logging
 
 
-from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
-from pyface.api import ApplicationWindow
 from traits.api import (
     Bool,
     Callable,
@@ -26,13 +24,17 @@ from traits.api import (
 )
 
 
+from pyface.action.i_menu_bar_manager import IMenuBarManager
+from pyface.action.i_status_bar_manager import IStatusBarManager
+from pyface.action.i_tool_bar_manager import IToolBarManager
+from pyface.application_window import ApplicationWindow
 from pyface.tasks.action.task_action_manager_builder import (
     TaskActionManagerBuilder,
 )
 from pyface.tasks.i_dock_pane import IDockPane
 from pyface.tasks.i_task_pane import ITaskPane
+from pyface.tasks.i_task_window_backend import ITaskWindowBackend
 from pyface.tasks.task import Task, TaskLayout
-from pyface.tasks.task_window_backend import TaskWindowBackend
 from pyface.tasks.task_window_layout import TaskWindowLayout
 
 # Logging.
@@ -81,7 +83,7 @@ class TaskWindow(ApplicationWindow):
     _active_state = Instance("pyface.tasks.task_window.TaskState")
     _states = List(Instance("pyface.tasks.task_window.TaskState"))
     _title = Str()
-    _window_backend = Instance(TaskWindowBackend)
+    _window_backend = Instance(ITaskWindowBackend)
 
     # ------------------------------------------------------------------------
     # 'Widget' interface.
@@ -403,6 +405,7 @@ class TaskWindow(ApplicationWindow):
     # Trait initializers ---------------------------------------------------
 
     def __window_backend_default(self):
+        from pyface.tasks.task_window_backend import TaskWindowBackend
         return TaskWindowBackend(window=self)
 
     # Trait property getters/setters ---------------------------------------
@@ -448,15 +451,29 @@ class TaskState(HasStrictTraits):
         with an attached Task.
     """
 
+    #: The Task that the state comes from.
     task = Instance(Task)
+
+    #: The layout of panes in the TaskWindow.
     layout = Instance(TaskLayout)
+
+    #: Whether the task state has been initialized.
     initialized = Bool(False)
 
+    #: The central pane of the TaskWindow
     central_pane = Instance(ITaskPane)
-    dock_panes = List(IDockPane)
-    menu_bar_manager = Instance(MenuBarManager)
-    status_bar_manager = Instance(StatusBarManager)
-    tool_bar_managers = List(ToolBarManager)
+
+    #: The list of all dock panes.
+    dock_panes = List(Instance(IDockPane))
+
+    #: The TaskWindow's menu bar manager instance.
+    menu_bar_manager = Instance(IMenuBarManager)
+
+    #: The TaskWindow's status bar instance.
+    status_bar_manager = Instance(IStatusBarManager)
+
+    #: The TaskWindow's tool bar instances.
+    tool_bar_managers = List(Instance(IToolBarManager))
 
     def get_dock_pane(self, id):
         """ Returns the dock pane with the specified id, or None if no such dock

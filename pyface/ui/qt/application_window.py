@@ -18,17 +18,10 @@
 
 import sys
 
+from traits.api import observe, provides, Str
 
 from pyface.qt import QtGui
-
-
-from pyface.action.api import MenuBarManager, StatusBarManager
-from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, observe, provides, Str
-
-
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
-from pyface.ui_traits import Image
 from .image_resource import ImageResource
 from .window import Window
 
@@ -38,23 +31,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     """ The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
-
-    # 'IApplicationWindow' interface ---------------------------------------
-
-    #: The icon to display in the application window title bar.
-    icon = Image()
-
-    #: The menu bar manager for the window.
-    menu_bar_manager = Instance(MenuBarManager)
-
-    #: The status bar manager for the window.
-    status_bar_manager = Instance(StatusBarManager)
-
-    #: DEPRECATED: The tool bar manager for the window.
-    tool_bar_manager = Instance(ToolBarManager)
-
-    #: The collection of tool bar managers for the window.
-    tool_bar_managers = List(ToolBarManager)
 
     # 'IWindow' interface -------------------------------------------------#
 
@@ -90,7 +66,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             status_bar.setVisible(self.status_bar_manager.visible)
 
     def _create_tool_bar(self, parent):
-        tool_bar_managers = self._get_tool_bar_managers()
+        tool_bar_managers = self.tool_bar_managers
         visible = self.control.isVisible()
         for tool_bar_manager in tool_bar_managers:
             # Add the tool bar and make sure it is visible.
@@ -150,18 +126,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _get_tool_bar_managers(self):
-        """ Return all tool bar managers specified for the window. """
-
-        # fixme: V3 remove the old-style single toolbar option!
-        if self.tool_bar_manager is not None:
-            tool_bar_managers = [self.tool_bar_manager]
-
-        else:
-            tool_bar_managers = self.tool_bar_managers
-
-        return tool_bar_managers
-
     # Trait change handlers ------------------------------------------------
 
     # QMainWindow takes ownership of the menu bar and the status bar upon
@@ -177,10 +141,11 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _status_bar_manager_updated(self, event):
         if self.control is not None:
             if event.old is not None:
+                self.control.setStatusBar(None)
                 event.old.destroy()
             self._create_status_bar(self.control)
 
-    @observe("tool_bar_manager, tool_bar_managers.items")
+    @observe("tool_bar_managers.items")
     def _update_tool_bar_managers(self, event):
         if self.control is not None:
             # Remove the old toolbars.
@@ -190,7 +155,8 @@ class ApplicationWindow(MApplicationWindow, Window):
                     child.deleteLater()
 
             # Add the new toolbars.
-            self._create_tool_bar(self.control)
+            if event.new is not None:
+                self._create_status_bar(self.control)
 
     @observe("icon")
     def _icon_updated(self, event):
