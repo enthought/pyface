@@ -50,7 +50,7 @@ using::
 
     python etstool.py test-all
 
-Currently supported runtime values include ``3.6``, and currently
+Currently supported runtime values are ``3.8`` and ``3.11``, and currently
 supported toolkits are ``null``, ``pyqt5``, ``pyqt6``, ``pyside2``, ``pyside6``
 and ``wx``.  Not all combinations of toolkits and runtimes will work, but the
 tasks will fail with a clear error if that is the case.
@@ -84,6 +84,17 @@ import click
 
 supported_combinations = {
     "3.8": {"pyside6", "pyqt6"},
+    "3.11": {"pyside6", "pyqt6"},
+}
+
+# EDS platform strings, for egg building, keyed by runtime and platform.
+EDS_PLATFORMS = {
+    ("3.8", "linux"): "rh7-x86_64",
+    ("3.8", "windows"): "win-x86_64",
+    ("3.8", "macos"): "osx-x86_64",
+    ("3.11", "linux"): "rh8-x86_64",
+    ("3.11", "windows"): "win-x86_64",
+    ("3.11", "macos"): "osx-x86_64",
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -206,7 +217,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
 
     # edm commands to setup the development environment
     commands = [
-        "edm environments create {environment} --force --version={runtime}",
+        "edm environments create {environment} --force --version={runtime} --platform={platform}",
         "{edm} install -y -e {environment} --add-repository enthought/lgpl --add-repository enthought/gpl " + packages,  # noqa: E501
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         install_pyface,
@@ -485,7 +496,7 @@ def get_parameters(edm, runtime, toolkit, environment):
     if edm is None:
         edm = locate_edm()
     parameters["edm"] = edm
-
+    parameters["platform"] = EDS_PLATFORMS[runtime, current_platform()]
     return parameters
 
 
@@ -574,6 +585,20 @@ def locate_edm():
         edm = os.path.join(os.path.dirname(edm), "embedded", "edm.exe")
 
     return edm
+
+
+def current_platform() -> str:
+    """Return the current platform as a string."""
+    platform = sys.platform
+
+    if platform.startswith("win32"):
+        return "windows"
+    elif platform.startswith("linux"):
+        return "linux"
+    elif platform.startswith("darwin"):
+        return "macos"
+    else:
+        raise click.ClickException(f"Platform {platform} not supported")
 
 
 if __name__ == "__main__":
