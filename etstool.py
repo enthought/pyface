@@ -99,12 +99,13 @@ def current_platform():
         raise click.ClickException(f"Platform {sys.platform} not supported")
 
 
+# Supported toolkits for each runtime.
 supported_combinations = {
     "3.8": {"pyside6", "pyqt6"},
     "3.11": {"pyside6", "pyqt6"},
 }
 
-# EDS platform strings, for egg building, keyed by runtime and platform.
+# EDS platform strings, keyed by runtime and platform (as returned by current_platform()).
 EDS_PLATFORMS = {
     ("3.8", "linux"): "rh7-x86_64",
     ("3.8", "windows"): "win-x86_64",
