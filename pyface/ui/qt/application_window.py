@@ -156,7 +156,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
             # Add the new toolbars.
             if event.new is not None:
-                self._create_status_bar(self.control)
+                self._create_tool_bar(self.control)
 
     @observe("icon")
     def _icon_updated(self, event):
