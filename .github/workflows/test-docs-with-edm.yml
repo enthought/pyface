@@ -38,7 +38,7 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v4
+        uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
@@ -48,7 +48,7 @@ jobs:
       - name: Build docs
         run: xvfb-run -a edm run -- python etstool.py docs --toolkit=${{ matrix.toolkit }}
       - name: Archive HTML docs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.1
         with:
           name: html-doc-bundle
           path: docs/build/html
