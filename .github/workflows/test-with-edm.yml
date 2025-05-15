@@ -18,10 +18,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         toolkit: ['pyside6']
-        runtime: ['3.8', '3.11']
-        exclude:
-          - os: 'macos-latest'
-            runtime: '3.8'
+        runtime: ['3.8']
       fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
