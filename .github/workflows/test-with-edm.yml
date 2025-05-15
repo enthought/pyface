@@ -7,7 +7,7 @@ name: Test with EDM
 on: pull_request
 
 env:
-  INSTALL_EDM_VERSION: 3.5.0
+  INSTALL_EDM_VERSION: 4.1.1
   QT_MAC_WANTS_LAYER: 1
 
 jobs:
@@ -16,10 +16,9 @@ jobs:
   test-with-edm:
     strategy:
       matrix:
-        # Note: MacOS support is contingent on not hitting any issues with
-        # unsupported CPU features such as AVX2 and so may be unstable.
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         toolkit: ['pyside6']
+        runtime: ['3.8']
       fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
@@ -40,13 +39,13 @@ jobs:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v2
+        uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }} --runtime=${{ matrix.runtime }}
       - name: Run tests (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: xvfb-run -a edm run -- python etstool.py test --toolkit=${{ matrix.toolkit }}
