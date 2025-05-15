@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -156,7 +156,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
             # Add the new toolbars.
             if event.new is not None:
-                self._create_status_bar(self.control)
+                self._create_tool_bar(self.control)
 
     @observe("icon")
     def _icon_updated(self, event):

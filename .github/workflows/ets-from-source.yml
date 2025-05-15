@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  INSTALL_EDM_VERSION: 3.5.0
+  INSTALL_EDM_VERSION: 4.1.1
   QT_MAC_WANTS_LAYER: 1
 
 jobs:
@@ -26,17 +26,17 @@ jobs:
       # relative path between the site-packages and the source directory.
       EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Qt dependencies
         uses: ./.github/actions/install-qt-support
         if: matrix.toolkit != 'wx'
       - name: Cache EDM packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v2
+        uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
