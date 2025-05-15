@@ -189,8 +189,9 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
 
         app.observe(on_started, "started")
 
-        with self.assertMultiTraitChanges([app], EVENTS, []):
-            result = app.run()
+        with self.assertLogs("pyface.application", "WARNING") as logs_cm:
+            with self.assertMultiTraitChanges([app], EVENTS, []):
+                result = app.run()
 
         self.assertTrue(result)
         self.assertFalse(app.exit_vetoed)
@@ -198,6 +199,10 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
         self.assertEqual(app.windows, [])
+
+        self.assertEqual(len(logs_cm.output), 1)
+        [log_output] = logs_cm.output
+        self.assertIn("Error preparing for application exit", log_output)
 
     def test_veto_exit(self):
         app = TestingApp(veto_exit=True)
