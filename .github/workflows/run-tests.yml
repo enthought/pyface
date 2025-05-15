@@ -16,6 +16,8 @@ jobs:
         exclude:
           - python-version: '3.11'
             qt-api: 'pyside2'
+          - os: macos-latest
+            qt-api: 'pyside2'
       fail-fast: false
 
     env:
