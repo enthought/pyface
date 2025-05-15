@@ -74,6 +74,7 @@ how to run commands within an EDM environment.
 
 import glob
 import os
+import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
@@ -81,6 +82,22 @@ from tempfile import mkdtemp
 from contextlib import contextmanager
 
 import click
+
+
+def current_platform():
+    """Return the current platform as a string."""
+    if sys.platform.startswith("win32"):
+        return "windows"
+    elif sys.platform.startswith("linux"):
+        return "linux"
+    elif sys.platform.startswith("darwin"):
+        if platform.machine() == "arm64":
+            return "macos-arm"
+        else:
+            return "macos"
+    else:
+        raise click.ClickException(f"Platform {sys.platform} not supported")
+
 
 supported_combinations = {
     "3.8": {"pyside6", "pyqt6"},
@@ -91,10 +108,11 @@ supported_combinations = {
 EDS_PLATFORMS = {
     ("3.8", "linux"): "rh7-x86_64",
     ("3.8", "windows"): "win-x86_64",
-    ("3.8", "macos"): "osx-arm64",
+    ("3.8", "macos"): "osx-x86_64",
     ("3.11", "linux"): "rh8-x86_64",
     ("3.11", "windows"): "win-x86_64",
-    ("3.11", "macos"): "osx-arm64",
+    ("3.11", "macos"): "osx-x86_64",
+    ("3.11", "macos-arm"): "osx-arm64",
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -114,7 +132,7 @@ dependencies = {
 }
 
 # if on mac, see if we can handle pillow_simd - do we have AVX2? - see #1207
-if sys.platform == "darwin":
+if current_platform() == "mac":
     result = subprocess.run(
         ['sysctl', 'machdep.cpu.leaf7_features'],
         capture_output=True,
@@ -585,20 +603,6 @@ def locate_edm():
         edm = os.path.join(os.path.dirname(edm), "embedded", "edm.exe")
 
     return edm
-
-
-def current_platform() -> str:
-    """Return the current platform as a string."""
-    platform = sys.platform
-
-    if platform.startswith("win32"):
-        return "windows"
-    elif platform.startswith("linux"):
-        return "linux"
-    elif platform.startswith("darwin"):
-        return "macos"
-    else:
-        raise click.ClickException(f"Platform {platform} not supported")
 
 
 if __name__ == "__main__":
