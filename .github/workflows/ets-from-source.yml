@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  INSTALL_EDM_VERSION: 3.5.0
+  INSTALL_EDM_VERSION: 4.1.1
   QT_MAC_WANTS_LAYER: 1
 
 jobs:
