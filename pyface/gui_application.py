@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -264,7 +264,7 @@ class GUIApplication(Application):
 
         additions = [
             "<h1>{}</h1>".format(escape(self.name)),
-            "Copyright &copy; 2023 {}, all rights reserved".format(
+            "Copyright &copy; 2025 {}, all rights reserved".format(
                 escape(self.company)
             ),
             "",

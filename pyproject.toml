@@ -2,7 +2,7 @@
 name = 'pyface'
 description = 'Traits-capable windowing framework'
 readme = 'README.rst'
-requires-python = '>=3.7'
+requires-python = '>=3.8'
 authors = [{name='Enthought', email='info@enthought.com'}]
 keywords = ['gui', 'traits', 'traitsui', 'pyqt', 'pyside', 'wxpython']
 classifiers = [

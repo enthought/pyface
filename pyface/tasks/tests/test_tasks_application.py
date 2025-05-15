@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -134,10 +134,14 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         app = TasksApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.observe(lambda _: app.add_window(window), "started")
+
+        def on_started(event):
+            app.add_window(window)
+            self.gui.invoke_after(100, app.exit)
+
+        app.observe(on_started, "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)

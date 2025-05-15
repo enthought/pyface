@@ -7,7 +7,7 @@ name: Build docs with EDM
 on: [pull_request, workflow_dispatch]
 
 env:
-  INSTALL_EDM_VERSION: 3.5.0
+  INSTALL_EDM_VERSION: 4.1.1
   QT_MAC_WANTS_LAYER: 1
 
 jobs:
@@ -33,12 +33,12 @@ jobs:
         uses: ./.github/actions/install-qt-support
         if: matrix.toolkit != 'wx'
       - name: Cache EDM packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache
           key: ${{ runner.os }}-${{ matrix.toolkit }}-${{ hashFiles('etstool.py') }}
       - name: Setup EDM
-        uses: enthought/setup-edm-action@v2
+        uses: enthought/setup-edm-action@v4.1
         with:
           edm-version: ${{ env.INSTALL_EDM_VERSION }}
       - name: Install click to the default EDM environment
@@ -48,7 +48,7 @@ jobs:
       - name: Build docs
         run: xvfb-run -a edm run -- python etstool.py docs --toolkit=${{ matrix.toolkit }}
       - name: Archive HTML docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html-doc-bundle
           path: docs/build/html

@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -50,7 +50,7 @@ using::
 
     python etstool.py test-all
 
-Currently supported runtime values include ``3.6``, and currently
+Currently supported runtime values are ``3.8`` and ``3.11``, and currently
 supported toolkits are ``null``, ``pyqt5``, ``pyqt6``, ``pyside2``, ``pyside6``
 and ``wx``.  Not all combinations of toolkits and runtimes will work, but the
 tasks will fail with a clear error if that is the case.
@@ -74,6 +74,7 @@ how to run commands within an EDM environment.
 
 import glob
 import os
+import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
@@ -82,8 +83,37 @@ from contextlib import contextmanager
 
 import click
 
+
+def current_platform():
+    """Return the current platform as a string."""
+    if sys.platform.startswith("win32"):
+        return "windows"
+    elif sys.platform.startswith("linux"):
+        return "linux"
+    elif sys.platform.startswith("darwin"):
+        if "RELEASE_ARM64" in platform.uname().version:
+            return "macos-arm"
+        else:
+            return "macos"
+    else:
+        raise click.ClickException(f"Platform {sys.platform} not supported")
+
+
+# Supported toolkits for each runtime.
 supported_combinations = {
     "3.8": {"pyside6", "pyqt6"},
+    "3.11": {"pyside6", "pyqt6"},
+}
+
+# EDS platform strings, keyed by runtime and platform (as returned by current_platform()).
+EDS_PLATFORMS = {
+    ("3.8", "linux"): "rh7-x86_64",
+    ("3.8", "windows"): "win-x86_64",
+    ("3.8", "macos"): "osx-x86_64",
+    ("3.11", "linux"): "rh8-x86_64",
+    ("3.11", "windows"): "win-x86_64",
+    ("3.11", "macos"): "osx-x86_64",
+    ("3.11", "macos-arm"): "osx-arm64",
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
@@ -102,8 +132,8 @@ dependencies = {
     "packaging",
 }
 
-# if on mac, see if we can handle pillow_simd - do we have AVX2? - see #1207
-if sys.platform == "darwin":
+# if on mac/Intel, see if we can handle pillow_simd - do we have AVX2? - see #1207
+if current_platform() == "macos":
     result = subprocess.run(
         ['sysctl', 'machdep.cpu.leaf7_features'],
         capture_output=True,
@@ -206,7 +236,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
 
     # edm commands to setup the development environment
     commands = [
-        "edm environments create {environment} --force --version={runtime}",
+        "edm environments create {environment} --force --version={runtime} --platform={platform}",
         "{edm} install -y -e {environment} --add-repository enthought/lgpl --add-repository enthought/gpl " + packages,  # noqa: E501
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         install_pyface,
@@ -485,7 +515,7 @@ def get_parameters(edm, runtime, toolkit, environment):
     if edm is None:
         edm = locate_edm()
     parameters["edm"] = edm
-
+    parameters["platform"] = EDS_PLATFORMS[runtime, current_platform()]
     return parameters
 
 
