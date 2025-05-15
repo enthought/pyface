@@ -19,6 +19,7 @@ try:
 except ImportError:
     from importlib_resources import as_file, files
 
+from pyface.qt import is_qt5
 from pyface.util._optional_dependencies import optional_import
 
 Image = None
@@ -35,6 +36,7 @@ image_source = files("pyface.tests") / "images" / "core.png"
 
 
 @unittest.skipIf(Image is None, "Pillow not available")
+@unittest.skipIf(is_qt5, "PIL.ImageQt does not support Qt 5")
 class TestPILImage(unittest.TestCase):
 
     def test_create_image(self):
