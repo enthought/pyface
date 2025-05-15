@@ -91,7 +91,7 @@ def current_platform():
     elif sys.platform.startswith("linux"):
         return "linux"
     elif sys.platform.startswith("darwin"):
-        if platform.machine() == "arm64":
+        if "RELEASE_ARM64" in platform.uname().version:
             return "macos-arm"
         else:
             return "macos"
