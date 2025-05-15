@@ -1,4 +1,4 @@
-# Copyright (c) 2005-2023, Enthought Inc.
+# Copyright (c) 2005-2025, Enthought Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
