@@ -131,8 +131,8 @@ dependencies = {
     "packaging",
 }
 
-# if on mac, see if we can handle pillow_simd - do we have AVX2? - see #1207
-if current_platform() == "mac":
+# if on mac/Intel, see if we can handle pillow_simd - do we have AVX2? - see #1207
+if current_platform() == "macos":
     result = subprocess.run(
         ['sysctl', 'machdep.cpu.leaf7_features'],
         capture_output=True,
