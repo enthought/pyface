@@ -48,7 +48,7 @@ jobs:
       - name: Build docs
         run: xvfb-run -a edm run -- python etstool.py docs --toolkit=${{ matrix.toolkit }}
       - name: Archive HTML docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html-doc-bundle
           path: docs/build/html
