@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -167,8 +167,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         window = ApplicationWindow()
         app.observe(lambda _: app.add_window(window), "started")
 
+        def on_started(event):
+            self.gui.invoke_after(100, app.exit)
+
+        app.observe(on_started, "started")
+
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -180,9 +184,14 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(exit_prepared_error=True)
         self.connect_listeners(app)
 
-        with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(1000, app.exit)
-            result = app.run()
+        def on_started(event):
+            self.gui.invoke_after(100, app.exit)
+
+        app.observe(on_started, "started")
+
+        with self.assertLogs("pyface.application", "WARNING") as logs_cm:
+            with self.assertMultiTraitChanges([app], EVENTS, []):
+                result = app.run()
 
         self.assertTrue(result)
         self.assertFalse(app.exit_vetoed)
@@ -190,6 +199,10 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
         self.assertEqual(app.windows, [])
+
+        self.assertEqual(len(logs_cm.output), 1)
+        [log_output] = logs_cm.output
+        self.assertIn("Error preparing for application exit", log_output)
 
     def test_veto_exit(self):
         app = TestingApp(veto_exit=True)
@@ -211,8 +224,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(veto_open_window=True)
         self.connect_listeners(app)
 
-        with self.assertMultiTraitChanges([app], EVENTS, []):
+        def on_started(event):
             self.gui.invoke_after(1000, app.exit)
+
+        app.observe(on_started, "started")
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
             result = app.run()
 
         self.assertTrue(result)
@@ -227,9 +244,13 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(veto_close_window=True)
         self.connect_listeners(app)
 
-        with self.assertMultiTraitChanges([app], EVENTS, []):
+        def on_started(event):
             self.gui.invoke_after(1000, app.exit)
             self.gui.invoke_after(2000, app.exit, force=True)
+
+        app.observe(on_started, "started")
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
             result = app.run()
 
         self.assertTrue(result)
@@ -243,8 +264,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(do_exit=True, force_exit=True, veto_exit=True)
         self.connect_listeners(app)
 
-        with self.assertMultiTraitChanges([app], EVENTS, []):
+        def on_started(event):
             self.gui.invoke_after(100, app.exit, True)
+
+        app.observe(on_started, "started")
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
             result = app.run()
 
         self.assertTrue(result)
@@ -258,8 +283,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(do_exit=True, force_exit=True, veto_close_window=True)
         self.connect_listeners(app)
 
+        def on_started(event):
+            self.gui.invoke_after(100, app.exit, True)
+
+        app.observe(on_started, "started")
+
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
         self.assertTrue(result)
@@ -285,8 +314,12 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(stop_cleanly=False)
         self.connect_listeners(app)
 
+        def on_started(event):
+            self.gui.invoke_after(100, app.exit)
+
+        app.observe(on_started, "started")
+
         with self.assertMultiTraitChanges([app], EVENTS[:-1], EVENTS[-1:]):
-            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
         self.assertFalse(result)

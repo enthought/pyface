@@ -1,4 +1,4 @@
-# (C) Copyright 2005-2023 Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2025 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,6 +13,7 @@
 from pyface.workbench.api import IView, WorkbenchWindow
 from traits.api import Any, HasTraits, Instance, List, Str
 from traits.api import TraitError, Undefined
+from traits.adaptation.api import adapt
 from traitsui.api import Item, TreeEditor, TreeNode, View
 from traitsui.menu import Action  # fixme: Non-api import!
 
@@ -94,7 +95,8 @@ class IViewTreeNode(TreeNode):
         # By checking for 'is obj' here, we are *not* allowing adaptation (if
         # we were allowing adaptation it would be 'is not None'). See the class
         # doc string for details.
-        return IView(obj, Undefined) is obj
+        adapted = adapt(obj, IView, default=Undefined)
+        return adapted is obj
 
     def get_icon(self, obj, is_expanded):
         """ Returns the icon for a specified object. """
