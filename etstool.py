@@ -91,10 +91,10 @@ supported_combinations = {
 EDS_PLATFORMS = {
     ("3.8", "linux"): "rh7-x86_64",
     ("3.8", "windows"): "win-x86_64",
-    ("3.8", "macos"): "osx-x86_64",
+    ("3.8", "macos"): "osx-arm64",
     ("3.11", "linux"): "rh8-x86_64",
     ("3.11", "windows"): "win-x86_64",
-    ("3.11", "macos"): "osx-x86_64",
+    ("3.11", "macos"): "osx-arm64",
 }
 
 # Traits version requirement (empty string to mean no specific requirement).
