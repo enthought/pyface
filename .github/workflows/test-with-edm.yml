@@ -20,6 +20,7 @@ jobs:
         # unsupported CPU features such as AVX2 and so may be unstable.
         os: [ubuntu-latest, macos-latest, windows-latest]
         toolkit: ['pyside6']
+        runtime: ['3.8', '3.11']
       fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
@@ -46,7 +47,7 @@ jobs:
       - name: Install click to the default EDM environment
         run: edm install -y wheel click coverage
       - name: Install test environment
-        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }}
+        run: edm run -- python etstool.py install --toolkit=${{ matrix.toolkit }} --runtime=${{ matrix.runtime }}
       - name: Run tests (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: xvfb-run -a edm run -- python etstool.py test --toolkit=${{ matrix.toolkit }}
