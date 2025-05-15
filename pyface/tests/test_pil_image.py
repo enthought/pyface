@@ -42,7 +42,7 @@ image_source = files("pyface.tests") / "images" / "core.png"
 
 
 @unittest.skipIf(Image is None, "Pillow not available")
-@unittest.skipIf(using_qt5, "PIL.ImageQt does not support Qt 5")
+@unittest.skipIf(is_qt5, "PIL.ImageQt does not support Qt 5")
 class TestPILImage(unittest.TestCase):
 
     def test_create_image(self):
