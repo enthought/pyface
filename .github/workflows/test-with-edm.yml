@@ -4,7 +4,7 @@
 
 name: Test with EDM
 
-on: pull_request
+on: [pull_request, workflow_dispatch]
 
 env:
   INSTALL_EDM_VERSION: 4.1.1
@@ -19,15 +19,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         toolkit: ['pyside6']
         runtime: ['3.8']
-      fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
-    env:
-      # Set root directory, mainly for Windows, so that the EDM Python
-      # environment lives in the same drive as the cloned source. Otherwise
-      # 'pip install' raises an error while trying to compute
-      # relative path between the site-packages and the source directory.
-      EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
       - uses: actions/checkout@v4
       - name: Install Qt dependencies

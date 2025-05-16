@@ -18,15 +18,8 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         toolkit: ['pyside6']
-      fail-fast: false
     timeout-minutes: 20  # should be plenty, it's usually < 5
     runs-on: ${{ matrix.os }}
-    env:
-      # Set root directory, mainly for Windows, so that the EDM Python
-      # environment lives in the same drive as the cloned source. Otherwise
-      # 'pip install' raises an error while trying to compute
-      # relative path between the site-packages and the source directory.
-      EDM_ROOT_DIRECTORY: ${{ github.workspace }}/.edm
     steps:
       - uses: actions/checkout@v4
       - name: Install Qt dependencies
