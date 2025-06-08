@@ -24,12 +24,20 @@ point and integer values.
 """
 
 import re
+from typing import cast, Dict, Optional, Tuple, Union
 
-from .color_helpers import ints_to_channels
+from .color_helpers import ints_to_channels, RGBATuple, RGBTuple, _is_rgb_tuple, _is_rgba_tuple
+
+
+# the type signature of a parser return value
+ParserReturnValue = Tuple[str, Union[RGBTuple, RGBATuple]]
+
+# the type signature of a sub-parser return value
+SubparserReturnValue = Optional[ParserReturnValue]
 
 
 #: A dictionary mapping known color names to rgba tuples.
-color_table = {
+color_table: Dict[str, RGBATuple] = cast(Dict[str, RGBATuple], {
     "aliceblue": (0.941, 0.973, 1.000, 1.0),
     "antiquewhite": (0.980, 0.922, 0.843, 1.0),
     "aqua": (0.000, 1.000, 1.000, 1.0),
@@ -183,13 +191,13 @@ color_table = {
     "clear": (0.0, 0.0, 0.0, 0.0),
     "transparent": (0.0, 0.0, 0.0, 0.0),
     "none": (0.0, 0.0, 0.0, 0.0),
-}
+})
 
 # Translation table for stripping extraneous characters out of names.
 ignored = str.maketrans({' ': None, '-': None, '_': None})
 
 
-def _parse_name(text):
+def _parse_name(text: str) -> SubparserReturnValue:
     """ Parse a color name.
 
     Parameters
@@ -214,7 +222,7 @@ def _parse_name(text):
     return None
 
 
-def _parse_hex(text):
+def _parse_hex(text: str) -> SubparserReturnValue:
     """ Parse a hex form of a color.
 
     Parameters
@@ -249,8 +257,13 @@ def _parse_hex(text):
         (int(text[i:i+step], 16) for i in range(0, len(text), step)),
         maximum=maximum,
     )
-    space = 'rgb' if len(channels) == 3 else 'rgba'
-    return space, channels
+    if _is_rgb_tuple(channels):
+        return 'rgb', channels
+    elif _is_rgba_tuple(channels):
+        return 'rgba', channels
+    else:
+        # shouldn't get here, but makes mypy happy
+        return None
 
 
 class ColorParseError(ValueError):
@@ -258,7 +271,7 @@ class ColorParseError(ValueError):
     pass
 
 
-def parse_text(text):
+def parse_text(text: str) -> ParserReturnValue:
     """ Parse a text representation of a color.
 
     Parameters
@@ -287,7 +300,7 @@ def parse_text(text):
     ColorParseError
         If the string cannot be converted to a valid color.
     """
-    result = None
+    result: SubparserReturnValue = None
     for parser in _parse_hex, _parse_name:
         result = parser(text)
         if result is not None:
