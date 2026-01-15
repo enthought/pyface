@@ -170,7 +170,7 @@ class ProgressDialog(MProgressDialog, Window):
     # Private Interface
     # -------------------------------------------------------------------------
 
-    def reject(self, event):
+    def reject(self, event = None):
         self._user_cancelled = True
         self.close()
 
@@ -201,7 +201,7 @@ class ProgressDialog(MProgressDialog, Window):
         # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
 
         if self.can_cancel:
-            buttons.rejected.connect(dialog.reject)
+            buttons.rejected.connect(self.reject)
             self._connections_to_remove.append(
                 (buttons.rejected, dialog.reject)
             )
