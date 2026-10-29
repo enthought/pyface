@@ -8,10 +8,39 @@
 #
 # Thanks for using Enthought open source!
 
-from pyface.api import FileDialog, OK
+"""Demonstrate opening and saving a file with Pyface file dialogs."""
+
+from pyface.api import OK, FileDialog
 
 
-# display a file dialog for saving a Python file
-dialog = FileDialog(parent=None, action="save as", wildcard="*.py")
-if dialog.open() == OK:
-    print(f"Save to {dialog.path}")
+def main():
+    """Open a Python file and choose where to save a copy."""
+    wildcard = "Python files (*.py)|*.py|All files (*.*)|*.*"
+    open_dialog = FileDialog(
+        parent=None,
+        title="Open a Python file",
+        action="open",
+        wildcard=wildcard,
+    )
+    if open_dialog.open() != OK:
+        print("Open cancelled")
+        return
+
+    save_dialog = FileDialog(
+        parent=None,
+        title="Save a copy",
+        action="save as",
+        default_directory=open_dialog.directory,
+        default_filename=f"copy_{open_dialog.filename}",
+        wildcard=wildcard,
+    )
+    if save_dialog.open() != OK:
+        print("Save cancelled")
+        return
+
+    print(f"Selected {open_dialog.path}")
+    print(f"Save to {save_dialog.path}")
+
+
+if __name__ == "__main__":
+    main()
