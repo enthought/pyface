@@ -10,7 +10,7 @@
 
 """Demonstrate opening and saving a file with Pyface file dialogs."""
 
-from pyface.api import CANCEL, OK, FileDialog
+from pyface.api import OK, FileDialog
 
 
 def main():
