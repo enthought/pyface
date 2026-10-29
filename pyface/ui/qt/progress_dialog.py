@@ -28,7 +28,6 @@ class ProgressDialog(MProgressDialog, Window):
 
     """
 
-    # FIXME: buttons are not set up correctly yet
 
     #: The progress bar widget
     progress_bar = Instance(QtGui.QProgressBar)
@@ -170,7 +169,7 @@ class ProgressDialog(MProgressDialog, Window):
     # Private Interface
     # -------------------------------------------------------------------------
 
-    def reject(self, event):
+    def reject(self, event=None):
         self._user_cancelled = True
         self.close()
 
@@ -198,12 +197,10 @@ class ProgressDialog(MProgressDialog, Window):
         if self.can_ok:
             buttons.addButton(QtGui.QDialogButtonBox.StandardButton.Ok)
 
-        # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
-
         if self.can_cancel:
-            buttons.rejected.connect(dialog.reject)
+            buttons.rejected.connect(self.reject)
             self._connections_to_remove.append(
-                (buttons.rejected, dialog.reject)
+                (buttons.rejected, self.reject)
             )
         if self.can_ok:
             buttons.accepted.connect(dialog.accept)

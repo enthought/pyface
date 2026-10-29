@@ -72,6 +72,29 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.assertIsNone(self.dialog.control)
         self.gui.process_events()
 
+    def test_cancel_button(self):
+        from pyface.qt import QtCore, QtGui
+
+        self.dialog.can_cancel = True
+        self.dialog.min = 0
+        self.dialog.max = 10
+        self.dialog.open()
+
+        buttons = self.dialog.control.findChild(QtGui.QDialogButtonBox)
+        cancel_button = next(
+            button
+            for button in buttons.buttons()
+            if buttons.buttonRole(button) == QtGui.QDialogButtonBox.ButtonRole.RejectRole
+        )
+        QtCore.QTimer.singleShot(0, cancel_button.click)
+
+        result = self.dialog.update(1)
+
+        self.assertEqual(result, (False, False))
+        self.assertTrue(self.dialog._user_cancelled)
+        self.assertIsNone(self.dialog.control)
+        self.gui.process_events()
+
     def test_update_no_control(self):
         # note: inconsistent implementation with Wx
         self.dialog.min = 0
