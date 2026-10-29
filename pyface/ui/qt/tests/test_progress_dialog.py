@@ -81,7 +81,11 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
 
         buttons = self.dialog.control.findChild(QtGui.QDialogButtonBox)
-        cancel_button = buttons.button(QtGui.QDialogButtonBox.ButtonRole.RejectRole)
+        cancel_button = next(
+            button
+            for button in buttons.buttons()
+            if buttons.buttonRole(button) == QtGui.QDialogButtonBox.ButtonRole.RejectRole
+        )
         QtCore.QTimer.singleShot(0, cancel_button.click)
 
         result = self.dialog.update(1)
